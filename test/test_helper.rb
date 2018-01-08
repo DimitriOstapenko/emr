@@ -16,5 +16,9 @@ class ActiveSupport::TestCase
   def log_in_as(user)
     session[:user_id] = user.id
   end
+  
+  def sign_in_as(user)
+	  post login_path, params: { 'session' => {:user_id => 1, :email => 'me@me.com'}}
+  end
 
 end

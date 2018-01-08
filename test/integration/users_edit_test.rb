@@ -5,9 +5,12 @@ require 'test_helper'
 #
 class UsersEditTest <  ActionDispatch::IntegrationTest #ActionController::TestCase   #ActionDispatch::IntegrationTest
 
+	include SessionsHelper
+
  def setup
     @user = users(:michael)
     @other_user = users(:archer)
+#    sign_in_as(:michael)
   end
 
 #  test "my - check session" do
@@ -25,8 +28,8 @@ class UsersEditTest <  ActionDispatch::IntegrationTest #ActionController::TestCa
 #    patch user_path(@user), params: { user: { name:  "",
 #                                              email: "foo@invalid",
 #                                              password:              "foo",
-#                                              password_confirmation: "bar" } }
-#
+#                                             password_confirmation: "bar" } }
+
 #    assert_template 'users/edit'
 #  end
   

@@ -1,0 +1,23 @@
+<%= form_for(@patient) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label 'Last Name' %>
+  <%= f.text_field :lname, class: 'form-control' %>
+
+  <%= f.label :'First Name' %>
+  <%= f.text_field :fname, class: 'form-control' %>
+  
+  <%= f.label :Sex %>
+  <%= f.text_field :sex, class: 'form-control' %>
+
+  <%= f.label 'Health Card Number' %>
+  <%= f.text_field :ohip_num, class: 'form-control' %>
+
+  <%= f.label :'Date Of Birth' %>
+  <%= f.text_field :dob, class: 'form-control' %>
+
+  <%= f.label :'Phone Number' %>
+  <%= f.text_field :phone, class: 'form-control' %>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>
