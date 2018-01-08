@@ -1,0 +1,16 @@
+<% provide(:title, @patient.full_name) %>
+
+<div>
+<h1> Patient profile </h1>
+
+<div class="row">
+  <aside class="col-md-4">
+    <section class="user_info">
+      <h1>
+	      <%= @patient.lname %>,  <%= @patient.fname %>  DOB: <%= @patient.dob %>  
+      </h1>
+    </section>
+  </aside>
+</div>
+
+</div>

@@ -9,5 +9,9 @@ module ApplicationHelper
         page_title + " | " + base_title
       end
     end
+
+    def project_url 
+	    'http://ruby.drlena.com'
+    end
     
 end
