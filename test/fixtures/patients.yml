@@ -1,17 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  lname: MyString
-  fname: MyString
+  lname: Murphy
+  fname: Anibal
   sex: 1
-  ohip_num: MyString
-  dob: 2018-01-07
-  phone: MyString
+  ohip_num: 1234567890 
+  dob: 2001-01-07
+  phone: 9052228888 
 
 two:
-  lname: MyString
-  fname: MyString
-  sex: 1
-  ohip_num: MyString
-  dob: 2018-01-07
-  phone: MyString
+  lname: Koch 
+  fname: Else
+  sex: 2
+  ohip_num: 0987654321 
+  dob: 1959-05-21
+  phone: 9052223242

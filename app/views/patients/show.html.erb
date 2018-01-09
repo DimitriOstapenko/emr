@@ -16,6 +16,15 @@
       </h1>
     </section>
   </aside>
+  <div class="col-md-8">
+    <% if @patient.visits.any? %>
+      <h3>Notes (<%= @patient.visits.count %>)</h3>
+      <ol class="microposts">
+        <%= render @visits %>
+      </ol>
+      <%= will_paginate @visits %>
+    <% end %>
+  </div>
 </div>
 
 </div>

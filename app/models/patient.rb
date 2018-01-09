@@ -1,13 +1,14 @@
 class Patient < ApplicationRecord
-	attr_accessor :full_name, :age, :sex_str
+        has_many :visits, dependent: :destroy
+	attr_accessor :full_name, :age, :sex_str 
+	#default_scope -> {order(lname: :asc)}
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, presence: true, length: { maximum: 50 }
 	validates :ohip_num, presence: true, length: { is: 10 },
 	           numericality: { only_integer: true },
                    uniqueness: { case_sensitive: false }
 	validates :dob, presence: true
-	validates :phone, presence: true, length: { is: 10 },
-	           numericality: { only_integer: true }
+	validates :phone, presence: true # , length: { is: 10 }, numericality: { only_integer: true }
 
   def full_name
     [fname, lname].join(', ')
@@ -22,5 +23,10 @@ class Patient < ApplicationRecord
       ssex = {1 =>'M', 2=>'F'}
       ssex[sex]
   end
+  
+  scope :cifind_by, lambda { |attribute, value| where("lower(#{attribute}) = ?", value.downcase) }
 
+  def myfind (attr, val)
+	  Patient.where("lower(#{attr}) = ?", val.downcase).first
+  end
 end

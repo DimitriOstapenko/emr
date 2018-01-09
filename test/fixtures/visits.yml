@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+murphy:
+  date: 2018-01-07 22:03:20
+  notes: MyText
+  diag_code: 700.22 
+  proc_code: MyString
+  patient: one
+
+sienna:
+  date: 2018-01-08 22:03:20
+  notes: MyText
+  diag_code: 600.11 
+  proc_code: MyString
+  patient: two

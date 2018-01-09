@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180107205513) do
+ActiveRecord::Schema.define(version: 20180109030320) do
 
   create_table "patients", force: :cascade do |t|
     t.string "lname"
@@ -31,6 +31,18 @@ ActiveRecord::Schema.define(version: 20180107205513) do
     t.string "password_digest"
     t.boolean "admin"
     t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "visits", force: :cascade do |t|
+    t.datetime "date"
+    t.text "notes"
+    t.decimal "diag_code"
+    t.string "proc_code"
+    t.integer "patient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
+    t.index ["patient_id"], name: "index_visits_on_patient_id"
   end
 
 end
