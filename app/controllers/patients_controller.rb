@@ -3,7 +3,18 @@ class PatientsController < ApplicationController
 	before_action :logged_in_user, only: [:index, :edit, :update]
 
   def index
-    @patients = Patient.paginate(page: params[:page]) #, per_page: 40)
+       if params[:findbox]
+	 last_name = params[:findbox][:findstr]
+         @patient = Patient.find_by(lname: last_name) 
+	 if @patient
+            redirect_to @patient
+	 else
+	    flash.alert = 'Patient ' + last_name.inspect + 'not found'
+            redirect_to patients_url
+	 end
+      else
+	  @patients = Patient.paginate(page: params[:page]) #, per_page: 40)
+      end
   end
 
   def show
@@ -15,9 +26,9 @@ class PatientsController < ApplicationController
   end
 
   def create
-  @patient = Patient.new(pat_params)
+     @patient = Patient.new(pat_params)
     if @patient.save
-#      log_in @user
+#     log_in @user
        flash[:success] = "Patient created"
        redirect_to @patient
     else

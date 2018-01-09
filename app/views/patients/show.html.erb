@@ -7,7 +7,12 @@
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
-	      <%= @patient.lname %>,  <%= @patient.fname %>  DOB: <%= @patient.dob %>  
+	   <pre>
+	      Name: <%= @patient.lname %>,  <%= @patient.fname %>
+	      DOB: <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex_str %>
+	      Health Card: <%= @patient.ohip_num %> 
+	      Phone: <%= @patient.phone %>
+           </pre>
       </h1>
     </section>
   </aside>
