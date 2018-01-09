@@ -1,0 +1,7 @@
+<li id="visit-<%= visit.id %>">
+  <span class="patient"><%= link_to visit.patient.lname, visit.patient %></span>
+  <span class="content"><%= visit.notes %></span>
+  <span class="timestamp">
+    Posted <%= time_ago_in_words(visit.created_at) %> ago.
+  </span>
+</li>

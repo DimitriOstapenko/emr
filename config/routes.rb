@@ -1,21 +1,29 @@
 Rails.application.routes.draw do
 
+  get 'daysheet/index'
+
 #  get 'sessions/new'
 # get 'users/new'
 
   root 'static_pages#home'
+#  root 'patients#index'
   get  '/help',    to: 'static_pages#help'
   get  '/about',   to: 'static_pages#about'
   get  '/contact', to: 'static_pages#contact'
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
-
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
+
   post '/patients',  to: 'patients#index'
+  get  '/patsignup', to: 'patients#new'
+  post '/patsignup', to: 'patients#create'
+
+  get '/daysheet',  to: 'daysheet#index'
 
   resources :users
   resources :patients
+  resources :visits, only: [:create, :destroy]
 
 end

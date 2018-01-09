@@ -7,8 +7,8 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #
 #
-User.create(name:  "Meme Me",
-	     email: "me@me.com",
+User.create(name:  "Meme Me2",
+	     email: "me@me2.com",
              password:              "foobar",
              password_confirmation: "foobar",
 	     admin: true)
@@ -26,7 +26,7 @@ User.create(name:  "Meme Me",
 
 
 i=0
-99.times do |n|
+559.times do |n|
   i = (i>9) ? 1 : i+1 
   lname  = Faker::Name.last_name
   fname  = Faker::Name.first_name
@@ -42,4 +42,17 @@ i=0
 
 end
 
+patients = Patient.order(:created_at).take(10)
+50.times do
+  notes = Faker::Lorem.sentence(5)
+  date = Faker::Date.birthday(min_age = 0, max_age = 2)
+  diag_code = Faker::Number.number(6)
+  proc_code = 'A09'
+  patients.each { |patient| patient.visits.create!(notes: notes,
+						 date: date,
+						 diag_code: diag_code,
+						 proc_code: proc_code
+						) }
+
+end
 
