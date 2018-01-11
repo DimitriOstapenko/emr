@@ -63,11 +63,12 @@ patients = Patient.order(:created_at).take(10)
   patients.each { |patient| patient.visits.create!(notes: notes,
 						 date: date,
 						 diag_code: diag_code,
-						 proc_code: proc_code
+						 proc_code: proc_code,
+  						 doc_id: 1
 						) }
 end
 
-# Seed doctros table
+# Seed doctors table
 #
 50.times do |n|
   	llname  = Faker::Name.last_name

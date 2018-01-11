@@ -1,0 +1,21 @@
+<% provide(:title, @patient.full_name + ' : '+ @visit.created_at.to_s) %>
+
+<div>
+	<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.created_at) =%> </h1>
+
+<div class="row">
+  <aside class="col-md-8">
+    <section class="user_info">
+      <h1>
+	   <pre>
+		Doctor :    <%= @doctor.lname %>
+		Diagnosis : <%= @visit.diag_code %>
+		Procedure : <%= @visit.proc_code %>
+		Notes: <%= @visit.notes %>	     
+           </pre>
+      </h1>
+    </section>
+  </aside>
+</div>
+
+</div>
