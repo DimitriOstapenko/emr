@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 #
 #
-User.create(name:  "Meme Me2",
+User.create( name:  "Meme Me2",
 	     email: "me@me2.com",
              password:              "foobar",
              password_confirmation: "foobar",
@@ -25,23 +25,35 @@ User.create(name:  "Meme Me2",
 #end
 
 
+# Seed patient table
 i=0
-559.times do |n|
+59.times do |n|
   i = (i>9) ? 1 : i+1 
   lname  = Faker::Name.last_name
   fname  = Faker::Name.first_name
   ohip_num = Faker::Number.number(10)
   dob =  Faker::Date.birthday(min_age = 18, max_age = 65) 
   phone  = Faker::PhoneNumber.phone_number
+  addr = Faker::Address.street_address
+  city = Faker::Address.city
+  country = Faker::Address.country
   Patient.create!(lname:  lname,
 		  fname:  fname, 
-		  sex: 1,
+		  sex: 'M',
 		  ohip_num: ohip_num,
 		  dob: dob,
-		  phone: phone)
-
+		  last_visit_date: Date.today - rand(3),
+		  phone: phone,
+		  addr: addr,
+		  city: city,
+                  prov: 'ON',
+		  postal: 'L9G1G1',
+  		  country: country
+		 )
 end
 
+# Seed visits for first 10 patients
+#
 patients = Patient.order(:created_at).take(10)
 50.times do
   notes = Faker::Lorem.sentence(5)
@@ -53,6 +65,18 @@ patients = Patient.order(:created_at).take(10)
 						 diag_code: diag_code,
 						 proc_code: proc_code
 						) }
-
 end
 
+# Seed doctros table
+#
+50.times do |n|
+  	llname  = Faker::Name.last_name
+  	fname  = Faker::Name.first_name
+  	cpso = Faker::Number.number(5)
+  	billing = Faker::Number.number(6)
+	Doctor.create!(lname: llname,
+		       fname: fname,
+		       cpso_num: cpso,
+		       billing_num: billing
+		      )
+end

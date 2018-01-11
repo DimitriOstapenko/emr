@@ -3,23 +3,37 @@ class PatientsController < ApplicationController
 	before_action :logged_in_user, only: [:index, :edit, :update]
 
   def index
-       if params[:findbox]
-	 last_name = params[:findbox][:findstr]
-         @patients = Patient.cifind_by('lname', last_name) 
-	 if @patients.any?
-	    flash.alert = 'Found: '+ @patients.size.to_s
-	    if @patients.size == 1
+	  @patients = Patient.paginate(page: params[:page]) #, per_page: 40)
+  end
+
+  def find
+      last_name = params[:findbox][:findstr]
+      @patients = Patient.cifind_by('lname', last_name) 
+      if @patients.any?
+	 flash.alert = 'Found: '+ @patients.size.to_s
+	 if @patients.size == 1
 	       @patient = @patients.first
 	       redirect_to @patient
-	    else
-	       render 'found_patients'
-            end
 	 else
+	       @patients = @patients.paginate(page: params[:page])
+	       render 'index'
+         end
+      else
 	    flash[:error] = 'Patient ' + last_name.inspect + ' was not found.'
             redirect_to patients_url
-	 end
+      end
+  end
+
+  def daysheet
+      date = params[:date]
+      flash.alert = date
+      @patients = Patient.cifind_by('last_visit_date', date) 
+      if @patients.any?
+	   @patients = @patients.paginate(page: params[:page])
+	   render 'index'
       else
-	  @patients = Patient.paginate(page: params[:page]) #, per_page: 40)
+	   flash[:error] = 'Day sheet for' + date.inspect + ' was not found.'
+           redirect_to patients_url
       end
   end
 
