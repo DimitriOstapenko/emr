@@ -1,8 +1,8 @@
 class DaysheetController < ApplicationController
 	
   def index
-      fdate = params[:datepicker][:mydate]
-      @patients = Patient.cifind_by('date', fdate)
+      date = params[:date]
+      @patients = Patient.cifind_by('date', date)
       if @patients.any?
          flash.alert = 'Found: '+ @patients.size.to_s
          if @patients.size == 1

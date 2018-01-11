@@ -21,10 +21,16 @@ class VisitsController < ApplicationController
     redirect_to request.referrer || root_url
   end
 
+  def show
+     @visit = Visit.find(params[:id])
+     @patient = Patient.find(@visit.patient_id)
+     @doctor = Doctor.find(@visit.doc_id)
+  end
+
   private
 
     def visit_params
-      params.require(:visit).permit(:notes,:date,:diag_code,:proc_code)
+      params.require(:visit).permit(:notes,:date,:diag_code,:proc_code,:patient_id,:doc_id)
     end      
 
     def correct_user

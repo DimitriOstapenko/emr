@@ -6,28 +6,23 @@
 
 <% if controller_name == 'patients' %>
        <li> 
-<!--	<form id='datepicker'> -->
-          <%= form_for :datepicker,method: :get  do |f| %>
+	       <%= form_with url: patients_path, method: :get, skip_enforcing_utfi8: :true  do |f| %>
 	     <div class="form-group form-group-sm">
                 <div class="col-xs-8">	     
-	          <%= f.text_field :datepicker, 'data-behaviour' => 'datepicker', 'name' => 'date', :value => Date.today, :onChange => 'javascript: this.form.submit()' %>
-<!--	  	  <input id="mydate" type="text" name="mydate" data-behaviour='datepicker' > -->
+			<%= f.text_field :datepicker, 'data-behaviour' => 'datepicker', 'name' => 'date',
+			   :value => Date.today, :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
        <% end %>
-<!--        </form>  -->
        </li>
 	<li class="nav-item active">
-<!--	   <form id="findbox">  -->
-          <%= form_for :findbox, method: :get, url: patients_path  do |f| %>
+	<%= form_with url: patients_path, method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
                 <div class="col-xs-10">
-<!--	  	  <input id="findbox" type="text" name="find_str" placeholder="Find patient"/>  -->
-		  <%= f.text_field :findstr, placeholder: 'Find patient' %>
+		  <%= f.search_field :findstr, placeholder: 'Find patient', :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
      <% end %>
-<!--           </form>  -->
 	</li>
 <% end %>
 
