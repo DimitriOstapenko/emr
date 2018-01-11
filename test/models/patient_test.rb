@@ -4,10 +4,15 @@ class PatientTest < ActiveSupport::TestCase
   def setup
     @pat = Patient.new(lname: "Last", 
 		       fname: "First", 
-		       sex: 1,
-                       phone: "9999999999", 
+		       ohip_num: 1234567899,
 		       dob: '1971-01-01',
-		       ohip_num: 1234567899
+		       sex: 'M',
+                       phone: "9999999999", 
+		       addr: '77 Main str W',
+		       city: 'Hamilton',
+		       prov: 'ON',
+		       postal: 'L9G1G1',
+		       country: 'Canada'
 		      )
   end
 

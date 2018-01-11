@@ -9,6 +9,7 @@ class Patient < ApplicationRecord
                    uniqueness: { case_sensitive: false }
 	validates :dob, presence: true
 	validates :phone, presence: true # , length: { is: 10 }, numericality: { only_integer: true }
+	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F) 
 
   def full_name
     [fname, lname].join(', ')
@@ -19,14 +20,11 @@ class Patient < ApplicationRecord
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
   end
 
-  def sex_str
-      ssex = {1 =>'M', 2=>'F'}
-      ssex[sex]
-  end
+#  def sex_str
+#      ssex = {1 =>'M', 2=>'F'}
+#      ssex[sex]
+#  end
   
   scope :cifind_by, lambda { |attribute, value| where("lower(#{attribute}) = ?", value.downcase) }
 
-  def myfind (attr, val)
-	  Patient.where("lower(#{attr}) = ?", val.downcase).first
-  end
 end
