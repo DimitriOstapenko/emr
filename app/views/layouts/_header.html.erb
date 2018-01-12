@@ -4,17 +4,20 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
 
-<% if controller_name == 'patients' %>
+<% if controller_name == 'visits' %>
        <li> 
-	       <%= form_with url: patients_path, method: :get, skip_enforcing_utfi8: :true  do |f| %>
+       <%= form_with url: visits_path, method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group form-group-sm">
-                <div class="col-xs-8">	     
-			<%= f.text_field :datepicker, 'data-behaviour' => 'datepicker', 'name' => 'date',
-			   :value => Date.today, :onChange => 'javascript: this.form.submit()' %>
+                <div class="col-sm-12">	     
+			<%# f.text_field :datepicker, 'name' => 'date', 'data-behaviour' => 'datepicker',
+	:onChange => 'javascript: this.form.submit()' %>
+		<%= f.date_field :datepicker, 'name' => 'date', :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
        <% end %>
        </li>
+<% end %>
+<% if controller_name == 'patients' %>
 	<li class="nav-item active">
 	<%= form_with url: patients_path, method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">

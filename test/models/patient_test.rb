@@ -74,9 +74,9 @@ class PatientTest < ActiveSupport::TestCase
 
   test "associated visits should be destroyed" do
     @pat.save
-    @pat.visits.create!(notes: "Lorem ipsum", diag_code: 700.11, proc_code: 'A9', date: '2018-01-01')
+    @pat.visits.create!(notes: "Lorem ipsum", doc_id: 1, diag_code: 700.11, proc_code: 'A9', date: '2018-01-01')
     assert_difference 'Visit.count', -1 do
-      @pat.destroy
+    @pat.destroy
     end
   end
 

@@ -18,10 +18,13 @@
 	  <th>Postal </th>
       </tr>
   </thead>
+  <tbody>
 
   <%= render @patients %>
 
-	</table>
+  </tbody>
+</table>
 </ul>
 <p>
 <%= will_paginate(@patients, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+

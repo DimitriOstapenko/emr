@@ -1,0 +1,8 @@
+en-US:
+  date:
+    datepicker:
+      default: "yyyy/mm/dd"
+      long: "dd, MM yyyy"
+    formats:
+      default: "dd/mm/yyyy"
+      long: ! '%B %d, %Y'
