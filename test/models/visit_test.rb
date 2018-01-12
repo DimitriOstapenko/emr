@@ -3,7 +3,8 @@ require 'test_helper'
 class VisitTest < ActiveSupport::TestCase
   def setup
     @patient = patients(:one)
-    @visit = Visit.new(notes: "Lorem ipsum", patient: @patient, date: '2018-01-07 7:55:06', diag_code: 702.22, proc_code: 'A09')
+    @doctor =  doctors(:one)
+    @visit = Visit.new(notes: "Lorem ipsum", patient: @patient, doc_id: @doctor.id, date: '2018-01-07 7:55:06', diag_code: 702.22, proc_code: 'A09')
   end
 
   test "should be valid" do

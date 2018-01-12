@@ -21,10 +21,28 @@ class VisitsController < ApplicationController
     redirect_to request.referrer || root_url
   end
 
+  def index
+     @visits = Visit.paginate(page: params[:page]) #, per_page: 40)
+  end
+
   def show
      @visit = Visit.find(params[:id])
      @patient = Patient.find(@visit.patient_id)
      @doctor = Doctor.find(@visit.doc_id)
+  end
+
+  def daysheet
+      date = params[:date]
+      flash.alert = 'Daysheet for ' + date
+      @visits = Visit.where("date(created_at) = ?", date)  
+      if @visits.any?
+	   @visits = @visits.paginate(page: params[:page])
+	   render 'index'
+      else
+	   flash[:error] = 'No visits found for date ' + date.inspect 
+#           redirect_to visits_url
+	    render "no_daysheet_found"
+      end
   end
 
   private

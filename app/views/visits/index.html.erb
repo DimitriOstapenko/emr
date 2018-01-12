@@ -1,0 +1,27 @@
+<% provide(:title, 'All visits') %>
+
+<%= will_paginate(@visits, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+<p>
+
+<ul class="users">
+<table style="width:1000px; padding: 10px;" >
+  <thead>
+      <tr>
+          <th>Pat Id</th>
+ 	  <th>Doc Id</th>
+          <th>Date</th>
+          <th>Notes</th>
+          <th>Diag Code</th>
+          <th>Proc Code</th>
+      </tr>
+  </thead>
+  <tbody>
+	  Visits: <%= @visits.count %> 
+
+  <%= render @visits %>
+  
+  </tbody>
+</table>
+</ul>
+<p>
+<%= will_paginate(@visits, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>

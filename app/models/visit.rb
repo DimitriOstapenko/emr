@@ -12,4 +12,5 @@ class Visit < ApplicationRecord
   def doctor
     Doctor.find(doc_id)
   end
+  
 end

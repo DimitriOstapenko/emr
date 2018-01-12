@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  lname: MyString
-  fname: MyString
-  cpso_num: 1
-  billing_num: 1
+  lname: "Evil" 
+  fname: "Bill"
+  cpso_num: 10000
+  billing_num: 999999
 
 two:
-  lname: MyString
-  fname: MyString
-  cpso_num: 1
-  billing_num: 1
+  lname: "Good"
+  fname: "Boy"
+  cpso_num: 99818
+  billing_num: 11000

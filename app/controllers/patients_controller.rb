@@ -24,19 +24,6 @@ class PatientsController < ApplicationController
       end
   end
 
-  def daysheet
-      date = params[:date]
-      flash.alert = 'Daysheet for ' + date
-      @patients = Patient.cifind_by('last_visit_date', date) 
-      if @patients.any?
-	   @patients = @patients.paginate(page: params[:page])
-	   render 'index'
-      else
-	   flash[:error] = 'No visits found for date ' + date.inspect 
-           redirect_to patients_url
-      end
-  end
-
   def show
     @patient = Patient.find(params[:id])
     @visits = @patient.visits.paginate(page: params[:page])
@@ -81,5 +68,9 @@ private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :dob, :sex, :ohip_num, :phone, :full_name, :addr, :city, :prov, :postal )
   end
-	
+ 
+# Find patient by last name or health card number, depending on input format  
+  def myfind (str)
+      	
+  end
 end

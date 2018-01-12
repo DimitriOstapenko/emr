@@ -25,19 +25,18 @@ Rails.application.routes.draw do
 #  post '/patients/:findbox' =>  'patients#find'
 #  get  '/patients/:lname', to: 'patients#show', as: :patient
    get '/patients' => 'patients#find', constraints: { query_string: /findstr/ }
-   get '/patients' => 'patients#daysheet', constraints: { query_string: /date/ }
-   #resources :patients 
 
   #post '/patients',  to: 'patients#index'
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
 
+   get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
 #  get '/daysheet',  to: 'patients#daysheet'
-   get '/daysheet', :to => redirect { |params, request| "/patients/?#{request.params.to_query}" }
+   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
   resources :users
   resources :patients
   resources :doctors
-  resources :visits, only: [:show, :create, :destroy]
+  resources :visits, only: [:show, :create, :destroy, :new, :index]
 
 end
