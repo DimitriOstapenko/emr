@@ -1,7 +1,12 @@
 <li id="visit-<%= visit.id %>">
-  <!--  <span class="patient"><%= link_to visit.patient.lname, visit.patient %></span> -->
-  <span class="patient"><%= link_to time_tag(visit.created_at), visits_path + '/'+ visit.id.to_s %>  </span> 
-  
+	<% if controller_name == "visits" %>
+	   <span class="patient"><%= link_to time_tag(visit.created_at), patient_visits_path %> </span>
+	<% else %>
+	   <span class="patient"><%= link_to time_tag(visit.created_at), patient_visit_path(@patient,visit) %> </span>
+	<% end %>
+
+  <p> 
+  <span class="doctor">Patient: <%= visit.patient.lname %></span>
   <span class="doctor">Doctor: <%= visit.doctor.lname %></span>
   <span class="doctor">Diag. Code: <%= visit.diag_code %></span>
   <span class="doctor">Proc. Code: <%= visit.proc_code %></span>

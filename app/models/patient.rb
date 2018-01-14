@@ -25,6 +25,6 @@ class Patient < ApplicationRecord
 #      ssex[sex]
 #  end
   
-  scope :cifind_by, lambda { |attribute, value| where("lower(#{attribute}) = ?", value.downcase) }
+# scope :cifind_by, lambda { |attribute, value| where("lower(#{attribute}) = ?", value.downcase) }
 
 end

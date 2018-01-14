@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
 
   get 'doctors/new'
-
   get 'doctors/show'
-
   get 'doctors/index'
-
   get 'daysheet/index'
 
 #  get 'sessions/new'
@@ -30,13 +27,15 @@ Rails.application.routes.draw do
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
 
-   get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
+ get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
+ get '/visits' => 'visits#index'
 #  get '/daysheet',  to: 'patients#daysheet'
-   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
+#   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
   resources :users
-  resources :patients
+  resources :patients  do
+     resources :visits  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
+  end
   resources :doctors
-  resources :visits, only: [:show, :create, :destroy, :new, :index]
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180111024951) do
+ActiveRecord::Schema.define(version: 20180113205848) do
 
   create_table "doctors", force: :cascade do |t|
     t.string "lname"
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20180111024951) do
   end
 
   create_table "visits", force: :cascade do |t|
-    t.datetime "date"
     t.text "notes"
     t.decimal "diag_code"
     t.string "proc_code"

@@ -1,0 +1,12 @@
+<% pat = Patient.find(visit.patient_id)
+%>
+
+<tr>
+	<td><%= pat.full_name %></td>
+	<td><%= visit.doctor.lname %></td>
+	<td><%= visit.created_at %></td>
+	<td><%= visit.notes.to_s.first(40)+ '..'  %></td>
+	<td><%= visit.diag_code %></td>
+	<td><%= visit.proc_code %></td>
+
+</tr>

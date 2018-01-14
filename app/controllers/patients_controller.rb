@@ -7,10 +7,10 @@ class PatientsController < ApplicationController
   end
 
   def find
-      last_name = params[:findstr]
-      @patients = Patient.cifind_by('lname', last_name) 
+      str = params[:findstr]
+      @patients = myfind(str) 
       if @patients.any?
-	 flash.alert = 'Found: '+ @patients.size.to_s
+	 flash.now.alert = 'Found: '+ @patients.size.to_s
 	 if @patients.size == 1
 	       @patient = @patients.first
 	       redirect_to @patient
@@ -19,8 +19,7 @@ class PatientsController < ApplicationController
 	       render 'index'
          end
       else
-	    flash[:error] = 'Patient ' + last_name.inspect + ' was not found.'
-            redirect_to patients_url
+	    render 'patient_not_found'
       end
   end
 
@@ -71,6 +70,12 @@ private
  
 # Find patient by last name or health card number, depending on input format  
   def myfind (str)
-      	
+	if str.match(/^[[:digit:]]{10}$/)
+      	  Patient.where("ohip_num = ?", str) 
+	elsif str.match(/^[[:graph:]]+$/)
+      	  Patient.where("lower(lname)=?", str) 
+	else
+	  []
+	end
   end
 end
