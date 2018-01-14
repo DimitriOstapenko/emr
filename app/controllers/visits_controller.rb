@@ -4,13 +4,18 @@ class VisitsController < ApplicationController
 #	before_action :correct_user,   only: :destroy
 	before_action :admin_user,   only: :destroy
 
+  def new
+    @visit = Visit.new
+  end
+
   def create
-    @visit = current_user.visits.build(visit_params)
+    @patient = Patient.find(params[:patient_id])
+    @visit = @patient.visits.build(visit_params)
     if @visit.save
-      flash[:success] = "Visit created!"
-      redirect_to root_url
+       flash[:success] = "Visit created!"
+      redirect_to @patient
     else
-      @feed_items = []
+      flash.error = 'Error saving visit'
       render 'static_pages/home'
     end
   end
@@ -22,7 +27,15 @@ class VisitsController < ApplicationController
   end
 
   def index
-     @visits = Visit.paginate(page: params[:page]) #, per_page: 40)
+    @patient = Patient.find(params[:patient_id])
+    if @patient.visits.any?
+	    @visits = @patient.visits.paginate(page: params[:page])
+	   render 'index'
+      else
+	   flash[:error] = 'No visits found for date ' + date.inspect 
+	    render  body: nil
+    end
+
   end
 
   def show
@@ -31,8 +44,15 @@ class VisitsController < ApplicationController
      @doctor = Doctor.find(@visit.doc_id)
   end
 
-  def daysheet
-      date = params[:date]
+  def edit
+     @visit = Visit.find(params[:id])
+     @patient = Patient.find(@visit.patient_id)
+     @doctor = Doctor.find(@visit.doc_id)
+
+  end
+
+  def daysheet (defdate = Date.today)
+      date = params[:date] || defdate
       flash.alert = 'Daysheet for ' + date
       @visits = Visit.where("date(created_at) = ?", date)  
       if @visits.any?

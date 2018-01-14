@@ -1,2 +1,31 @@
-<h1>Daysheet#index</h1>
-<p>Find me in app/views/daysheet/index.html.erb</p>
+<% provide(:title, "Day Sheet for " + params[:date]  ) %>
+
+	  Visits this day: <%= @daysheet.count %> 
+
+  <p>
+<%= will_paginate(@daysheet, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+<p>
+
+<ul class="users">
+<table style="width:1000px; padding: 10px;" >
+  <thead>
+      <tr>
+          <th>Pat Id</th>
+ 	  <th>Doc Id</th>
+          <th>Date</th>
+          <th>Notes</th>
+          <th>Diag Code</th>
+          <th>Proc Code</th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <% @daysheet.each do |v| %>
+     <%= render 'visit', visit: v %>
+  <% end %>
+  
+  </tbody>
+</table>
+</ul>
+<p>
+<%= will_paginate(@daysheet, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>

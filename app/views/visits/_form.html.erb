@@ -1,0 +1,17 @@
+<%= form_with model: [@patient, @visit], :url => patient_visits_path  do |f| % > 
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :doctor %>
+  <%= f.text_field :doc_id, class: 'form-control' %>
+
+  <%= f.label :diag_code %>
+  <%= f.text_field :diag_code, class: 'form-control' %>
+  
+  <%= f.label :proc_code %>
+  <%= f.text_field :proc_code, class: 'form-control' %>
+
+  <%= f.label :Notes %>
+  <%= f.text_area :notes, class: 'form-control', cols: 20, rows: 20 %>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

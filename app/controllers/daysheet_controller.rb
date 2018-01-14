@@ -1,20 +1,20 @@
 class DaysheetController < ApplicationController
 	
   def index
-      date = params[:date]
-      @patients = Patient.cifind_by('date', date)
-      if @patients.any?
-         flash.alert = 'Found: '+ @patients.size.to_s
-         if @patients.size == 1
-               @patient = @patients.first
-               redirect_to @patient
+      date = params[:date] || Date.today
+      @daysheet = Visit.where("date(created_at) = ?", date)
+      if @daysheet.any?
+         if @daysheet.size == 1
+               @visit = @daysheet.first
+               redirect_to @visit
          else
-               @patients = @patients.paginate(page: params[:page])
+               @daysheet = @daysheet.paginate(page: params[:page])
                render 'index'
          end
       else
-            flash[:error] = 'Patient ' + last_name.inspect + ' was not found.'
-            redirect_to patients_url
+	 flash.now[:error] = 'No visits were found for date ' + date.inspect 
+         render 'shared/empty_page'
       end
   end
+
 end
