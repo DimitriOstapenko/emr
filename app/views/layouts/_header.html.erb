@@ -4,6 +4,7 @@
     <nav>
       <ul class="nav navbar-nav navbar-right">
 
+<% if logged_in? %> 
 <% if controller_name == 'daysheet' %>
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
@@ -27,10 +28,11 @@
 	</li>
 <% end %>
 
-        <li><%= link_to "Patients", patients_path %></li>
-        <li><%= link_to "Day Sheet", daysheet_index_path %></li>
+<li><%= link_to "Patients", patients_path %></li>
+<li><%= link_to "Day Sheet", daysheet_index_path %></li>
 
-        <% if logged_in? && current_user.admin?  %>
+<% if  current_user.admin?  %>
+          <li> <%= link_to "Doctors", doctors_path, method: :get %> </li>
           <li> <%= link_to "Log out", logout_path, method: :delete %> </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -43,9 +45,11 @@
 	        <li><%= link_to "Users", users_path %></li>
             </ul>
           </li>
-        <% else %>
+<% end %>
+<% else %>
           <li><%= link_to "Log in", login_path %></li>
-        <% end %>
+<% end %>
+
       </ul>
     </nav>
   </div>

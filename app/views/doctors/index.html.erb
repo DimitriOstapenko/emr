@@ -1,2 +1,35 @@
-<h1>Doctors#index</h1>
-<p>Find me in app/views/doctors/index.html.erb</p>
+<% provide(:title, 'All doctors') %>
+
+<%= will_paginate(@doctors, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+<p>
+
+<ul class="users">
+<table style="width:1100px; padding: 10px;" >
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Id</th>
+          <th>Type</th>
+          <th>Service</th>
+          <th>Specialty</th>
+          <th>Provider#</th>
+          <th>Group#</th>
+          <th>District</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Prov</th>
+          <th>Postal </th>
+          <th>Phone </th>
+          <th>email </th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @doctors %>
+
+  </tbody>
+</table>
+</ul>
+<p>
+<%= will_paginate(@doctors, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+
