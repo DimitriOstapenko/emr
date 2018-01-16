@@ -11,13 +11,8 @@ class PatientsController < ApplicationController
       @patients = myfind(str) 
       if @patients.any?
 	 flash.now.alert = 'Found: '+ @patients.size.to_s
-	 if @patients.size == 1
-	       @patient = @patients.first
-	       redirect_to @patient
-	 else
 	       @patients = @patients.paginate(page: params[:page])
 	       render 'index'
-         end
       else
 	    render 'patient_not_found'
       end
@@ -25,7 +20,7 @@ class PatientsController < ApplicationController
 
   def show
     @patient = Patient.find(params[:id])
-    @visits = @patient.visits.paginate(page: params[:page])
+    @visits = @patient.visits.paginate(page: params[:page], per_page: 12)
   end
 
   def new
