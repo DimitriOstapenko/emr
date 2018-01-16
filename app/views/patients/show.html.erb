@@ -1,6 +1,5 @@
 <% provide(:title, @patient.full_name) %>
 
-<div>
 	<h1><%= @patient.full_name %> -  Patient profile </h1>
 
 <div class="row">
@@ -32,9 +31,8 @@
       <ol class="microposts">
         <%= render @visits %>
       </ol>
-      <%= will_paginate @visits %>
     <% end %>
+<%= will_paginate(@visits) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
   </div>
 </div>
 
-</div>

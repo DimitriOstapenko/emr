@@ -2,10 +2,11 @@
 	<% if controller_name == "visits" %>
 	   <span class="patient"><%= link_to time_tag(visit.created_at), patient_visits_path %> </span>
 	<% else %>
-	   <span class="patient"><%= link_to time_tag(visit.created_at), patient_visit_path(@patient,visit) %> </span>
+           <% if @patient %>
+	     <span class="patient"><%= link_to time_tag(visit.created_at), patient_visit_path(@patient,visit) %> </span>
+          <% end %> 
 	<% end %>
 
-  <p> 
   <span class="doctor">Patient: <%= visit.patient.lname %></span>
   <span class="doctor">Doctor: <%= visit.doctor.lname %></span>
   <span class="doctor">Diag. Code: <%= visit.diag_code %></span>

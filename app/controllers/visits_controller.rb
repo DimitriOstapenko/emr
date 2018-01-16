@@ -1,23 +1,25 @@
 class VisitsController < ApplicationController
 
-	before_action :logged_in_user, only: [:create, :destroy]
+	before_action :logged_in_user, only: [:create, :destroy, :new, :index]
 #	before_action :correct_user,   only: :destroy
 	before_action :admin_user,   only: :destroy
 
   def new
-    @visit = Visit.new
+        @patient = Patient.find(params[:patient_id])
+        @visit = @patient.visits.new
   end
 
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
     if @visit.save
-       flash[:success] = "Visit created!"
-      redirect_to @patient
+      @patient.last_visit_date = @visit.created_at	    
+      @patient.save
+      flash[:success] = "Visit saved"
     else
       flash.error = 'Error saving visit'
-      render 'static_pages/home'
     end
+    redirect_to @patient
   end
 
   def destroy
@@ -35,7 +37,6 @@ class VisitsController < ApplicationController
 	   flash[:error] = 'No visits found for date ' + date.inspect 
 	    render  body: nil
     end
-
   end
 
   def show
@@ -48,7 +49,16 @@ class VisitsController < ApplicationController
      @visit = Visit.find(params[:id])
      @patient = Patient.find(@visit.patient_id)
      @doctor = Doctor.find(@visit.doc_id)
+  end
 
+  def update
+    @visit = Visit.find(params[:id])
+    if @visit.update_attributes(visit_params)
+      flash[:success] = "Visit updated"
+      redirect_to patient_path (@visit.patient_id)
+    else
+      render 'edit'
+    end
   end
 
   def daysheet (defdate = Date.today)

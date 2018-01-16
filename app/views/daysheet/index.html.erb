@@ -1,6 +1,7 @@
-<% provide(:title, "Day Sheet for " + params[:date]  ) %>
+<% date = params[date] || Date.today %>
+<% provide(:title, "Day Sheet for " + date.to_s  ) %>
 
-	  Visits this day: <%= @daysheet.count %> 
+<h1> Visits <%= date.to_s  %> (<%= @daysheet.count %>) </h1>
 
   <p>
 <%= will_paginate(@daysheet, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
@@ -10,9 +11,9 @@
 <table style="width:1000px; padding: 10px;" >
   <thead>
       <tr>
-          <th>Pat Id</th>
- 	  <th>Doc Id</th>
           <th>Date</th>
+	  <th>Patient</th>
+ 	  <th>Doctor</th>
           <th>Notes</th>
           <th>Diag Code</th>
           <th>Proc Code</th>
@@ -22,8 +23,9 @@
 
   <% @daysheet.each do |v| %>
      <%= render 'visit', visit: v %>
+     <%# render 'visits/visit', visit: v %>
   <% end %>
-  
+
   </tbody>
 </table>
 </ul>

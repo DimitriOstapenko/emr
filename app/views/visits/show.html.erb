@@ -15,6 +15,11 @@
            </pre>
       </h1>
     </section>
+
+  <% if logged_in? && current_user.admin?  %>
+     <%= button_to "Edit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
+  <% end %>
+
   </aside>
 </div>
 

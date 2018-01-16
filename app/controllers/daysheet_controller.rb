@@ -6,7 +6,9 @@ class DaysheetController < ApplicationController
       if @daysheet.any?
          if @daysheet.size == 1
                @visit = @daysheet.first
-               redirect_to @visit
+#	       render 'index'
+	       redirect_to patient_visit_path(@visit.patient_id, @visit.id)
+#               redirect_to @visit
          else
                @daysheet = @daysheet.paginate(page: params[:page])
                render 'index'
