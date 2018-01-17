@@ -1,0 +1,65 @@
+<%= form_for(@doctor) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label 'Last Name' %>
+  <%= f.text_field :lname, class: 'form-control' %>
+
+  <%= f.label :'First Name' %>
+  <%= f.text_field :fname, class: 'form-control' %>
+  
+  <%= f.label :service %>
+  <%= f.text_field :service, class: 'form-control' %>
+  
+  <%= f.label :'Type' %>
+  <%= f.text_field :ph_type, class: 'form-control' %>
+
+  <%= f.label :district %>
+  <%= f.text_field :district, class: 'form-control' %>
+
+  <%= f.label :bills %>
+  <%= f.text_field :bills, class: 'form-control' %>
+
+  <%= f.label :'CPSO Number' %>
+  <%= f.text_field :cpso_num, class: 'form-control' %>
+
+  <%= f.label :'Provider No' %>
+  <%= f.text_field :provider_no, class: 'form-control' %>
+  
+  <%= f.label :'Group No' %>
+  <%= f.text_field :group_no, class: 'form-control' %>
+  
+  <%= f.label :'License No' %>
+  <%= f.text_field :licence_no, class: 'form-control' %>
+
+  <%= f.label :specialty %>
+  <%= f.text_field :specialty, class: 'form-control' %>
+
+  <%= f.label :'Phone Number' %>
+  <%= f.text_field :phone, class: 'form-control' %>
+  
+  <%= f.label :'Phone Number' %>
+  <%= f.text_field :phone, class: 'form-control' %>
+
+  <%= f.label :'Mobile Number' %>
+  <%= f.text_field :mobile, class: 'form-control' %>
+
+  <%= f.label :address %>
+  <%= f.text_field :address, class: 'form-control' %>
+
+  <%= f.label :city %>
+  <%= f.text_field :city, class: 'form-control' %>
+
+  <%= f.label :'Province' %>
+  <%= f.text_field :prov, class: 'form-control' %>
+
+  <%= f.label :'Postal Code' %>
+  <%= f.text_field :postal, class: 'form-control' %>
+  
+  <%= f.label :office %>
+  <%= f.text_field :office, class: 'form-control' %>
+
+  <%= f.label :notes %>
+  <%= f.text_field :note, class: 'form-control' %>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>

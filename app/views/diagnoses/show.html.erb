@@ -1,0 +1,20 @@
+<% provide(:title, @diagnosis.diag_code) %>
+
+	<h1>Diagnoses <%= @diagnosis.diag_code %> - details  </h1>
+
+<div class="row">
+  <aside class="col-md-10">
+    <section class="user_info">
+      <h1>
+	   <pre>
+
+	      Code:         <%= @diagnosis.diag_code %>
+	      Description:  <%= @diagnosis.diag_descr %>
+	      Problem type: <%= @diagnosis.prob_type %>
+
+           </pre>
+      </h1>
+    </section>
+  </aside>
+</div>
+
