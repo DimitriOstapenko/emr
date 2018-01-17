@@ -1,2 +1,35 @@
-<h1>Doctors#show</h1>
-<p>Find me in app/views/doctors/show.html.erb</p>
+<% provide(:title, @doctor.full_name) %>
+
+	<h1><%= @doctor.full_name %> -  Doctor's profile </h1>
+
+<div class="row">
+  <aside class="col-md-6">
+    <section class="user_info">
+      <h1>
+	   <pre>
+	      Name: <%= @doctor.full_name %>
+	      Billing Number: <%= @doctor.billing_num %> 
+	      CPSO Number: <%= @doctor.cpso_num %>
+	      License Number: <%= @doctor.licence_no %>
+	      Provider Number: <%= @doctor.provider_no %>
+	      Group Number: <%= @doctor.group_no %>
+	      Service : <%= @doctor.service %>
+	      Type: <%= @doctor.ph_type %> 
+	      Bills?: <%= @doctor.bills %>
+	      Phone: <%= @doctor.phone %>
+	      Email: <%= @doctor.email %>
+	      Addr: <%= @doctor.address %>
+		    <%= @doctor.city %> <%= @doctor.prov %> 
+		    <%= @doctor.postal %>
+	      Office: <%= @doctor.office %>
+           </pre>
+      </h1>
+    </section>
+    <section class="doctor">
+	    
+	    <%= button_to "Back", doctors_path, class: "btn btn-primary", :method => "get" %>
+        
+    </section>
+  </aside>
+</div>
+

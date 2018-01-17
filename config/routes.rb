@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'diagnoses/new'
+
+  get 'diagnoses/show'
+
+  get 'diagnoses/index'
+
+  get 'diagnoses/edit'
+
   get 'doctors/new'
   get 'doctors/show'
   get 'doctors/index'
@@ -37,5 +45,6 @@ Rails.application.routes.draw do
      resources :visits  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
   end
   resources :doctors
+  resources :diagnoses
 
 end

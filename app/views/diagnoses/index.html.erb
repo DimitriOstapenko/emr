@@ -1,0 +1,30 @@
+<% provide(:title, 'All diagnoses') %>
+
+<%= will_paginate(@diagnoses, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+<p>
+
+<ul class="users">
+<table style="width:1100px; padding: 10px;" >
+  <thead>
+      <tr>
+          <th>Code</th>
+          <th>Description</th>
+          <th>Problem type </th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @diagnoses %>
+
+  </tbody>
+
+
+</table>
+</ul>
+<p>
+<%= will_paginate(@diagnoses, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+
+<p>
+    <section class="new_diag_code">
+	    <%= button_to "New Diagnostic Code", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
+    </section>
