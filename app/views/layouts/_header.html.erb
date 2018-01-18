@@ -32,6 +32,7 @@
 <li><%= link_to "Day Sheet", daysheet_index_path %></li>
 
 <% if  current_user.admin?  %>
+          <li> <%= link_to "Procedures", procedures_path, method: :get %> </li>
           <li> <%= link_to "Diagnoses", diagnoses_path, method: :get %> </li>
           <li> <%= link_to "Doctors", doctors_path, method: :get %> </li>
           <li> <%= link_to "Log out", logout_path, method: :delete %> </li>

@@ -1,0 +1,29 @@
+<%= form_for(@diagnosis) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <%= f.label :'Diagnostic Code' %>
+  <%= f.text_field :diag_code, class: 'form-control' %>
+
+  <%= f.label :'Description' %>
+  <%= f.text_field :diag_descr, class: 'form-control' %>
+
+  <%= f.label :'Problem Type' %>
+  <%= f.text_field :prob_type, class: 'form-control' %>
+
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+<% end %>
+
+t.string "code"
+    t.string "qcode"
+    t.string "ptype"
+    t.string "descr"
+    t.float "cost"
+    t.integer "unit"
+    t.boolean "fac_req"
+    t.boolean "adm_req"
+    t.boolean "diag_req"
+    t.boolean "ref_req"
+    t.integer "percent"
+    t.date "eff_date"
+    t.date "term_date"
+

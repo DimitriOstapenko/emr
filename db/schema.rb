@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117235301) do
+ActiveRecord::Schema.define(version: 20180118155647) do
 
   create_table "diagnoses", force: :cascade do |t|
     t.string "diag_code"
@@ -83,6 +83,25 @@ ActiveRecord::Schema.define(version: 20180117235301) do
     t.index ["ohip_num"], name: "index_patients_on_ohip_num"
     t.index ["pat_type"], name: "index_patients_on_pat_type"
     t.index ["phone"], name: "index_patients_on_phone"
+  end
+
+  create_table "procedures", force: :cascade do |t|
+    t.string "code"
+    t.string "qcode"
+    t.string "ptype"
+    t.string "descr"
+    t.float "cost"
+    t.integer "unit"
+    t.boolean "fac_req"
+    t.boolean "adm_req"
+    t.boolean "diag_req"
+    t.boolean "ref_req"
+    t.integer "percent"
+    t.date "eff_date"
+    t.date "term_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_procedures_on_code", unique: true
   end
 
   create_table "users", force: :cascade do |t|

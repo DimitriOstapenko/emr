@@ -39,7 +39,8 @@ csv.each do |row|
   if doc.save
      puts "#{doc.id} : #{doc.lname} saved"
   else
-     puts 'Problem doc: ', doc.inspect
+     puts 'Problem doc: '+ doc.lname
+     puts doc.errors.full_messages
   end
 
 end

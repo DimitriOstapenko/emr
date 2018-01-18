@@ -1,0 +1,30 @@
+<% provide(:title, @procedure.code) %>
+
+	<h1>Procedure <%= @procedure.code %> - details  </h1>
+
+<div class="row">
+  <aside class="col-md-10">
+    <section class="user_info">
+      <h1>
+	   <pre>
+
+	      Code:         <%= @procedure.code %>
+	      Type:         <%= @procedure.ptype %>
+	      Description:  <%= @procedure.descr %>
+	      Cost: <%= @procedure.cost %>
+	      Unit: <%= @procedure.unit %>
+	      Fac req?: <%= @procedure.faq_req %>
+	      Adm req?: <%= @procedure.adm_req %>
+	      Diag req?: <%= @procedure.diag_req %>
+	      Ref req?: <%= @procedure.ref_req %>
+	      Percent: <%= @procedure.percent %>
+	      Effective date: <%= @procedure.eff_date %>
+	      Termination date: <%= @procedure.term_date %>
+
+           </pre>
+      </h1>
+    </section>
+  </aside>
+</div>
+
+

@@ -1,5 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'procedures/new'
+
+  get 'procedures/show'
+
+  get 'procedures/index'
+
+  get 'procedures/edit'
+
   get 'diagnoses/new'
 
   get 'diagnoses/show'
@@ -27,24 +35,21 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-#  post '/patients/:findbox' =>  'patients#find'
-#  get  '/patients/:lname', to: 'patients#show', as: :patient
    get '/patients' => 'patients#find', constraints: { query_string: /findstr/ }
 
-  #post '/patients',  to: 'patients#index'
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
 
  get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
  get '/visits' => 'visits#index'
-#  get '/daysheet',  to: 'patients#daysheet'
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
   resources :users
   resources :patients  do
-     resources :visits  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
+  resources :visits  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
   end
   resources :doctors
   resources :diagnoses
+  resources :procedures
 
 end

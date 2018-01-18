@@ -20,13 +20,13 @@ User.create( name:  "Meme Me2",
              password_confirmation: "foobar",
 	     admin: true)
 
-5.times do |n|
-  name  = Faker::Name.name
-  email = "em-#{n+1}@walkin.com"
-  password = "foobar"
-  User.create!(name:  name,
-               email: email,
-               password:              password,
-               password_confirmation: password)
-end
+#5.times do |n|
+#  name  = Faker::Name.name
+#  email = "em-#{n+1}@walkin.com"
+#  password = "foobar"
+#  User.create!(name:  name,
+#               email: email,
+#               password:              password,
+#               password_confirmation: password)
+#end
 
