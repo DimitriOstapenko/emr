@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180117045326) do
+ActiveRecord::Schema.define(version: 20180117235301) do
 
   create_table "diagnoses", force: :cascade do |t|
     t.string "diag_code"
@@ -61,8 +61,28 @@ ActiveRecord::Schema.define(version: 20180117045326) do
     t.string "postal"
     t.string "prov"
     t.string "country"
+    t.string "ohip_ver"
+    t.string "hin_prov"
+    t.date "hin_expiry"
+    t.string "pat_type"
+    t.string "pharmacy"
+    t.string "pharm_phone"
+    t.string "file_no"
+    t.text "notes"
+    t.string "alt_contact_name"
+    t.string "alt_contact_phone"
+    t.string "email"
+    t.string "chart_file"
+    t.string "family_dr"
+    t.string "mobile"
+    t.index ["email"], name: "index_patients_on_email"
+    t.index ["file_no"], name: "index_patients_on_file_no"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"
+    t.index ["mobile"], name: "index_patients_on_mobile"
+    t.index ["ohip_num"], name: "index_patients_on_ohip_num"
+    t.index ["pat_type"], name: "index_patients_on_pat_type"
+    t.index ["phone"], name: "index_patients_on_phone"
   end
 
   create_table "users", force: :cascade do |t|

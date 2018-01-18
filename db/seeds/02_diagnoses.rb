@@ -1,6 +1,4 @@
-
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'diagfile_data.csv'))
-#csv_text = File.read('/Users/dmitri/rstuff/walkin/lib/seeds/diagfile_data.csv')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|

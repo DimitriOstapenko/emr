@@ -1,7 +1,7 @@
 class Patient < ApplicationRecord
         has_many :visits, dependent: :destroy
 	attr_accessor :full_name, :age
-	#default_scope -> {order(lname: :asc)}
+	default_scope -> {order(lname: :asc)}
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, presence: true, length: { maximum: 50 }
 	validates :ohip_num, presence: true, length: { is: 10 },

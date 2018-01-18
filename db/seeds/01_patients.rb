@@ -13,6 +13,8 @@ i=0
   addr = Faker::Address.street_address
   city = Faker::Address.city
   country = Faker::Address.country
+  exp = Faker::Date.forward(rand(1000))
+
   Patient.create!(lname:  lname,
                   fname:  fname,
                   sex: 'M',
@@ -24,7 +26,21 @@ i=0
                   city: city,
                   prov: 'ON',
                   postal: 'L9G1G1',
-                  country: country
+                  country: country,
+		  ohip_ver: 'XX',
+		  hin_prov: 'ON',
+		  hin_expiry: exp,
+		  pat_type: 'OHIP',
+		  pharmacy: 'Centennial Pkwy 5',
+		  pharm_phone: phone,
+		  file_no: ohip_num,
+		  notes: 'notes',
+		  alt_contact_name: 'Alt contact',
+		  alt_contact_phone: '999-999-9999',
+  		  email: "em-#{n+1}@walkin.com",
+		  chart_file: lname+','+fname,
+		  family_dr: 'Fam Dr',
+		  mobile: '888-888-8888'
                  )
 end
 
@@ -38,7 +54,7 @@ patients = Patient.order(:lname).take(10)
   patients.each { |patient| patient.visits.create!(notes: notes,
                                                  diag_code: diag_code,
                                                  proc_code: proc_code,
-                                                 doc_id: 1
+						 doc_id: rand(1..100)
                                                 ) }
 end
 
