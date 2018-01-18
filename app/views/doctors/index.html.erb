@@ -26,6 +26,13 @@
   </tbody>
 </table>
 </ul>
-<p>
 
 <%= will_paginate(@doctors) %>
+
+<% if  current_user.admin?  %>
+    <section class="new_diag_code">
+      <aside class="col-md-2">
+            <%= button_to "Add Doctor", new_doctor_path, class: "btn btn-primary", :method => "get" %>
+      </aside>
+    </section>
+<% end %>
