@@ -1,29 +1,43 @@
-<%= form_for(@diagnosis) do |f| %>
+<%= form_for(@procedure) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :'Diagnostic Code' %>
-  <%= f.text_field :diag_code, class: 'form-control' %>
+  <%= f.label :'Code' %>
+  <%= f.text_field :code, class: 'form-control' %>
+
+  <%= f.label :'Type' %>
+  <%= f.text_field :ptype, class: 'form-control' %>
 
   <%= f.label :'Description' %>
-  <%= f.text_field :diag_descr, class: 'form-control' %>
+  <%= f.text_field :descr, class: 'form-control' %>
 
-  <%= f.label :'Problem Type' %>
-  <%= f.text_field :prob_type, class: 'form-control' %>
+  <%= f.label :'Cost' %>
+  <%= f.text_field :cost, class: 'form-control' %>
+
+  <%= f.label :'Unit' %>
+  <%= f.text_field :unit, class: 'form-control' %>
+
+  <%= f.label :fac_req %>
+  <%= f.text_field :fac_req, class: 'form-control' %>
+
+  <%= f.label :adm_req %>
+  <%= f.text_field :adm_req, class: 'form-control' %>
+
+  <%= f.label :diag_req %>
+  <%= f.text_field :diag_req, class: 'form-control' %>
+
+  <%= f.label :ref_req %>
+  <%= f.text_field :ref_req, class: 'form-control' %>
+
+  <%= f.label :percent %>
+  <%= f.text_field :percent, class: 'form-control' %>
+
+  <%= f.label :eff_date %>
+  <%= f.text_field :eff_date, class: 'form-control' %>
+
+  <%= f.label :term_date %>
+  <%= f.text_field :term_date, class: 'form-control' %>
 
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
 
-t.string "code"
-    t.string "qcode"
-    t.string "ptype"
-    t.string "descr"
-    t.float "cost"
-    t.integer "unit"
-    t.boolean "fac_req"
-    t.boolean "adm_req"
-    t.boolean "diag_req"
-    t.boolean "ref_req"
-    t.integer "percent"
-    t.date "eff_date"
-    t.date "term_date"
 
