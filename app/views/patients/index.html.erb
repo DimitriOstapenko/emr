@@ -1,6 +1,5 @@
 <% provide(:title, 'All patients') %>
 
-<%= will_paginate(@patients, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
 <p>
 
 <ul class="users">
@@ -27,5 +26,5 @@
 </table>
 </ul>
 <p>
-<%= will_paginate(@patients, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
+<%= will_paginate(@patients) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
 

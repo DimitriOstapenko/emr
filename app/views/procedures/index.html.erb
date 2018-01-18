@@ -1,0 +1,38 @@
+<% provide(:title, 'All procedures') %>
+
+<p>
+<h1> Procedures </h1>
+<ul class="users">
+<table style="width:1100px; padding: 10px;" >
+  <thead>
+      <tr>
+          <th>Code</th>
+          <th>Type</th>
+          <th>Description </th>
+	  <th>Cost</th>
+	  <th>Unit</th>
+	  <th>fac req?</th>
+	  <th>adm req?</th>
+	  <th>diag req?</th>
+	  <th>ref req?</th>
+	  <th>percent</th>
+	  <th>Eff Date</th>
+	  <th>Term. Date</th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @procedures %>
+
+  </tbody>
+
+
+</table>
+</ul>
+<p>
+<%= will_paginate(@procedures) %>
+
+<p>
+    <section class="new_procedure_code">
+	    <%= button_to "New Procedure", new_procedure_path, class: "btn btn-primary", :method => "get" %>
+    </section>
