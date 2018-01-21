@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180118155647) do
+ActiveRecord::Schema.define(version: 20180121202532) do
 
   create_table "diagnoses", force: :cascade do |t|
     t.string "diag_code"
@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(version: 20180118155647) do
     t.string "pat_type"
     t.string "pharmacy"
     t.string "pharm_phone"
-    t.string "file_no"
     t.text "notes"
     t.string "alt_contact_name"
     t.string "alt_contact_phone"
@@ -75,8 +74,10 @@ ActiveRecord::Schema.define(version: 20180118155647) do
     t.string "chart_file"
     t.string "family_dr"
     t.string "mobile"
+    t.string "lastmod_by"
+    t.string "mname"
+    t.date "entry_date"
     t.index ["email"], name: "index_patients_on_email"
-    t.index ["file_no"], name: "index_patients_on_file_no"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"
     t.index ["mobile"], name: "index_patients_on_mobile"

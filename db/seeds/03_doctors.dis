@@ -5,9 +5,11 @@
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'doctors.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
+MAX_DOCTORS = 100
+docnum = 0
 csv.each do |row|
 #	 puts row.to_hash
-
+  break if docnum > MAX_DOCTORS
   name = row['name']	
   name.gsub /DR\S?/, ''
   names = name.split(%r{,\s*})
@@ -38,6 +40,7 @@ csv.each do |row|
 
   if doc.save
      puts "#{doc.id} : #{doc.lname} saved"
+     docnum = docnum + 1
   else
      puts 'Problem doc: '+ doc.lname
      puts doc.errors.full_messages
