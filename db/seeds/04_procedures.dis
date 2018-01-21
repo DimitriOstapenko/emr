@@ -31,7 +31,7 @@ csv.each do |row|
 
 end
 
-puts " #{Procedure.count} rows created in proctors table"
+puts " #{Procedure.count} rows created in procedures table"
 
 # HS: apply_hst,proc_code,qcode,proc_type,proc_desc,proc_cost,proc_unit,fac_req,adm_req,diag_req,percent,eff_date,term_date,ref_req
 #  t.string "code"

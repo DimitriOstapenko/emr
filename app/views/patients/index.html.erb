@@ -1,6 +1,10 @@
 <% provide(:title, 'All patients') %>
 
-<p>
+<% if @not_found %>
+		   <div id="error_explanation">
+		   Patient <%= params[:findstr] %> was not found"
+		   </div>
+<% end %>
 
 <ul class="users">
 <table style="width:1100px; padding: 10px;" >

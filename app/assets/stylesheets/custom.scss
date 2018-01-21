@@ -21,7 +21,7 @@ html,body {
 
 #container {
    min-height:100%;
-   position:fixed; /* relative */
+   position:relative; /* relative */
 }
 
 #header {
@@ -31,7 +31,7 @@ html,body {
 
 #body {
    padding:10px;
-   padding-bottom:0px;   /* Height of the footer */
+   padding-bottom:10px;   /* Height of the footer */
 }
 
 #footer {
