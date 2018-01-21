@@ -11,12 +11,14 @@ class PatientsController < ApplicationController
       str = params[:findstr]
       @patients = myfind(str) 
       if @patients.any?
+         @patients = @patients.paginate(page: params[:page])
 	 flash.now.alert = 'Found: '+ @patients.size.to_s
-	       @patients = @patients.paginate(page: params[:page])
-	       render 'index'
       else
-	    render 'patient_not_found'
+	  @patients = Patient.paginate(page: params[:page])
+	  @not_found = true
+	  #  render 'patient_not_found'
       end
+     render 'index'
   end
 
   def show
@@ -66,10 +68,10 @@ private
  
 # Find patient by last name or health card number, depending on input format  
   def myfind (str)
-	if str.match(/^[[:digit:]]{10}$/)
-      	  Patient.where("ohip_num = ?", str) 
+	if str.match(/^[[:digit:]]{,10}$/)
+      	  Patient.where("ohip_num like ?", "%#{str}%") 
 	elsif str.match(/^[[:graph:]]+$/)
-      	  Patient.where("lower(lname)=?", str) 
+      	  Patient.where("lower(lname) like ?", "%#{str}%") 
 	else
 	  []
 	end

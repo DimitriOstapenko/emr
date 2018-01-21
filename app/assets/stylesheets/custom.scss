@@ -21,17 +21,19 @@ html,body {
 
 #container {
    min-height:100%;
-   position:relative;
+   position:relative; /* relative */
 }
 
 #header {
    padding:10px;
    height:72px;
 }
+
 #body {
    padding:10px;
-   padding-bottom:72px;   /* Height of the footer */
+   padding-bottom:10px;   /* Height of the footer */
 }
+
 #footer {
    position:absolute;
    bottom:0;
@@ -139,7 +141,7 @@ footer {
 
 aside {
   section.user_info {
-    margin-top: 20px;
+    margin-top: 25px;
   }
   section {
     padding: 10px 0;
