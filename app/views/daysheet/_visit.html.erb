@@ -2,7 +2,7 @@
 %>
 
 <tr>
-	<td><%= link_to time_tag(visit.created_at), patient_visit_path(pat,visit) %> </td>
+	<td><%= link_to time_tag(visit.entry_ts), patient_visit_path(pat,visit) %> </td>
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= visit.doctor.lname %></td>
 	<td><%= visit.notes.to_s.first(40)+ '..'  %></td>

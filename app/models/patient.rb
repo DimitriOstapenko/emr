@@ -6,7 +6,7 @@ class Patient < ApplicationRecord
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, length: { maximum: 50 }
 	validates :mname, length: { maximum: 50 }, allow_blank: true
-	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, allow_blank: true
+#	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, allow_blank: true
 #	validates :dob, presence: true
 #       validates :phone, presence: true # , length: { is: 10 }, numericality: { only_integer: true }
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180121202532) do
+ActiveRecord::Schema.define(version: 20180124210547) do
 
   create_table "diagnoses", force: :cascade do |t|
     t.string "diag_code"
@@ -117,12 +117,18 @@ ActiveRecord::Schema.define(version: 20180121202532) do
 
   create_table "visits", force: :cascade do |t|
     t.text "notes"
-    t.decimal "diag_code"
+    t.string "diag_code"
     t.string "proc_code"
     t.integer "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "doc_id"
+    t.integer "status"
+    t.integer "duration"
+    t.string "vis_type"
+    t.string "entry_by"
+    t.string "doc_code"
+    t.datetime "entry_ts"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end

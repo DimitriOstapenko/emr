@@ -1,14 +1,20 @@
 <li id="visit-<%= visit.id %>">
 	<% if controller_name == "visits" %>
-	   <span class="patient"><%= link_to time_tag(visit.created_at), patient_visits_path %> </span>
+	   <span class="patient"><%= link_to time_tag(visit.entry_ts), patient_visits_path %> </span>
 	<% else %>
            <% if @patient %>
-	     <span class="patient"><%= link_to time_tag(visit.created_at), patient_visit_path(@patient,visit) %> </span>
+	     <span class="patient"><%= link_to time_tag(visit.entry_ts), patient_visit_path(@patient,visit) %> </span>
           <% end %> 
 	<% end %>
 
-  <span class="doctor">Patient: <%= visit.patient.lname %></span>
-  <span class="doctor">Doctor: <%= visit.doctor.lname %></span>
-  <span class="doctor">Diag. Code: <%= visit.diag_code %></span>
-  <span class="doctor">Proc. Code: <%= visit.proc_code %></span>
+  <span class="visit">Doctor: <%= visit.doctor.lname %></span>
+  <span class="visit">Diag. Code: <%= visit.diag_code %></span>
+  <span class="visit">Status: <%= visit.status %></span>
+  <span class="visit">Duration: <%= visit.duration %></span>
+  <span class="visit">Type: <%= visit.vis_type %></span>
+  <span class="visit">Entry by: <%= visit.entry_by %></span>
+  <span class="visit">Entered at: <%= visit.entry_ts %></span>
+  <span class="visit">Notes: <%= visit.notes %></span>
 </li>
+
+

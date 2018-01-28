@@ -1,17 +1,79 @@
-<%= form_with model: [@patient, @visit] do |f| %> <!-- <%#, :url => patient_visits_path  do |f| %> -->
+<%= form_with model: [@patient, @visit],  class: "form-horizontal" do |f| %> <!-- <%#, :url => patient_visits_path  do |f| %> -->
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :doctor %>
-  <%= f.text_field :doc_id, class: 'form-control' %>
+  <% @doctors = get_active_doctors %>
+  <%= f.label 'Doctor ', class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.select (:doc_id) do %>
+  <% @doctors.each do |d| -%>
+    <%= content_tag(:option, d.lname, value: d.id) %>
+  <% end %>
+  <% end %>
+  </div>
 
-  <%= f.label :diag_code %>
-  <%= f.text_field :diag_code, class: 'form-control' %>
+<%
+=begin %>
+  <% @diagnoses = get_diagnoses %>
+  <%= f.label "Diagnosis", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.select (:diag_code) do %>
+  <% @diagnoses.each do |d| -%>
+	  <%= content_tag(:option, d.diag_code, value: d.diag_code) %> 
+  <% end %>
+  <% end %>
+  </div>
+<%
+=end %>
+
+  <%= f.label "Diagnosis", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%=  f.collection_select(:diag_code, Diagnosis.all, :diag_code, :diag_code ) %> <!-- ,  {:selected => @visit.diag_code}) -->
+  </div>
   
-  <%= f.label :proc_code %>
-  <%= f.text_field :proc_code, class: 'form-control' %>
+  <%= f.label "Procedure", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.collection_select(:proc_code, Procedure.all, :code, :code)  %>
+  </div>
 
-  <%= f.label :Notes %>
-  <%= f.text_area :notes, class: 'form-control', cols: 20, rows: 20 %>
+<%
+=begin %>
+  <% @procedures = get_procedures %>
+  <%= f.label "Procedure", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.select (:proc_code) do %>
+  <% @procedures.each do |p| -%>
+    <%= content_tag(:option, p.code, value: p.code, selected: @visit.proc_code) %>
+  <% end %>
+  <% end %>
+  </div>
+<%
+=end %>
+  
+  <%= f.label "Visit Type", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.text_field :vis_type, class: 'form-control', placeholder: 'Visit type' %>
+  </div>
 
+  <%= f.label "Duration", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.text_field :duration, class: 'form-control', placeholder: 'Duration', default: '10'  %>
+  </div>
+
+  <%= f.label "Status", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.text_field :status, class: 'form-control', placeholder: 'Status' %>
+  </div>
+  
+  <%= f.label "Notes", class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.text_area :notes, class: 'form-control', cols: 25, rows: 5, placeholder: 'Notes' %>
+  </div>
+
+
+  <div class="col-sm-2"></div>
+  <div class="col-sm-10">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div
+
 <% end %>
+

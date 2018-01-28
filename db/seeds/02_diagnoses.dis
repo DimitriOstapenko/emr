@@ -1,6 +1,8 @@
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'diagfile_data.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
+Diagnosis.destroy_all 
+
 csv.each do |row|
   diag = Diagnosis.new   diag_code:  row['diag_code'],
 		   	 diag_descr: row['diag_desc'],
