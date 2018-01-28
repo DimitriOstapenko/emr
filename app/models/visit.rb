@@ -5,8 +5,8 @@ class Visit < ApplicationRecord
   
   validates :patient_id, presence: true
   validates :doc_id, presence: true
-  validates :diag_code, presence: true
-  validates :proc_code, presence: true
+#  validates :diag_code, presence: true
+#  validates :proc_code, presence: true
 
   def doctor
     Doctor.find(doc_id)

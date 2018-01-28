@@ -1,0 +1,3 @@
+#hst,pat_code,doc_code,loc_code,visit_date,ordno,claim_type,claim,proc_code,proc_count,fee,diagnosis,ref_phys,type,status,facilno,adm_date,man_review,amt_paid,paid_date,entry_date,shadow,write_off,surg2,category,subcateg,bilid,entry_by,office,submt_file,submt_year,remit_file,remit_year,rma_locn,rma_confid,batch_id,bill_patid,bill_btoid,locn_type,entry_time,mod_date,mod_time,mod_by,mohrefno,last_date,after_hrs,seq_no,incl_notes,tech_flag,inter_flag,serv_clas,bill_prov,submt_user,submt_date,submt_time,paid_user,paid_time,gst,pst,ohip_sli,bilateral,pc_rate,ineligible,overridden,overrid_by,overrid_dt,overrid_tm,serv_type,visit_time,ramq,modifier,special,accid_date,alt_ref_no
+
+

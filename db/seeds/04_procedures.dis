@@ -5,6 +5,8 @@
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'procfile_data.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
+Procedure.destroy_all 
+
 csv.each do |row|
 #	 puts row.to_hash
 

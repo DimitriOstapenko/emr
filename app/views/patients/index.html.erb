@@ -7,7 +7,7 @@
 <% end %>
 
 <ul class="users">
-<table style="width:1100px; padding: 10px;" >
+<table style="width:95%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
           <th>Name</th>
@@ -17,9 +17,7 @@
           <th>OHIP#</th>
           <th>Phone</th>
  	  <th>Address</th>
-	  <th>City</th>
-	  <th>Prov</th>
-	  <th>Postal </th>
+	  <th> </th>
       </tr>
   </thead>
   <tbody>
@@ -29,6 +27,5 @@
   </tbody>
 </table>
 </ul>
-<p>
 <%= will_paginate(@patients) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
 

@@ -1,7 +1,6 @@
 class VisitsController < ApplicationController
 
 	before_action :logged_in_user, only: [:create, :destroy, :new, :index]
-#	before_action :correct_user,   only: :destroy
 	before_action :admin_user,   only: :destroy
 
   def new
@@ -12,6 +11,8 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
+    @visit.entry_ts = DateTime.now
+    @visit.entry_by = current_user.name
     if @visit.save
       @patient.last_visit_date = @visit.created_at	    
       @patient.save
@@ -23,6 +24,7 @@ class VisitsController < ApplicationController
   end
 
   def destroy
+    @patient = Patient.find(params[:patient_id])
     @visit.destroy
     flash[:success] = "Visit deleted"
     redirect_to request.referrer || root_url
@@ -78,7 +80,7 @@ class VisitsController < ApplicationController
   private
 
     def visit_params
-      params.require(:visit).permit(:notes,:date,:diag_code,:proc_code,:patient_id,:doc_id)
+      params.require(:visit).permit(:vis_type,:diag_code,:proc_code,:patient_id,:doc_id,:notes,:entry_ts,:status,:duration,:entry_by )
     end      
 
     def correct_user
