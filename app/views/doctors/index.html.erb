@@ -27,7 +27,9 @@
 </table>
 </ul>
 
-<%= will_paginate(@doctors) %>
+<% if @doctors %>
+<%=  will_paginate(@doctors)  %>
+<% end %>
 
 <% if  current_user.admin?  %>
     <section class="new_diag_code">

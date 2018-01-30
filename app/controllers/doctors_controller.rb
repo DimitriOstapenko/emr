@@ -13,14 +13,15 @@ class DoctorsController < ApplicationController
 
   def find
       str = params[:findstr]
-      @doctors = myfind(str)
-      if @doctors.any?
-         flash.now.alert = 'Found: '+ @doctors.size.to_s
-               @doctors = @doctors.paginate(page: params[:page])
-               render 'index'
+      @docs = myfind(str)
+      if @docs.any?
+         flash.now.alert = "Found: #{@docs.size} doctors"
       else
-               render 'doctor_not_found'
+	 @docs = Doctor.all
+	 flash[:error] = "No doctors found" 
       end
+      @doctors = @docs.paginate(page: params[:page])
+      render 'index'
   end
 
   def show
@@ -45,7 +46,18 @@ private
   def doctor_params
 	  params.require(:doctor).permit(:lname, :fname, :full_name, :cpso_num, :billing_num, :service, :ph_type,
 					 :district, :bills, :addr, :city, :prov, :postal, :phone, :mobile, :licence_no,
-					 :note, :office, :provider_no, :group_no, :specialty, :email )
+					 :note, :office, :provider_no, :group_no, :specialty, :email, :doc_code )
+  end
+
+  # Find doctor by last name or provider number, depending on input format
+  def myfind (str)
+	  if str.match(/^[[:digit:]]{,6}$/)
+          Doctor.where("provider_no like ?", "%#{str}%")
+        elsif str.match(/^[[:graph:]]+$/)
+          Doctor.where("lower(lname) like ?", "%#{str}%")
+        else
+          []
+        end
   end
  
 	

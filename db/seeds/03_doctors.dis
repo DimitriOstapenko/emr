@@ -35,7 +35,8 @@ csv.each do |row|
 		     provider_no: row['provider'],
 		     group_no: row['group_no'],
 		     specialty: row['specialty'],
-		     email: row['email']
+		     email: row['email'],
+		     doc_code: row['docid']
 
   if doc.save
      puts "#{doc.id} : #{doc.lname} saved"
