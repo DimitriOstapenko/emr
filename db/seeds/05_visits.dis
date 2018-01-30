@@ -22,9 +22,14 @@ csv.each do |row|
 
   all += 1
   patient_id = row['pat_code']
+  doc = Doctor.where("doc_code = ?", row['doc_code'])
+  unless doc
+    puts "Doctor not found: #{doc.id}"
+    next
+  end
   
   unless Patient.exists?(patient_id)
-    puts "not found #{patient_id}" 
+    puts "Patient not found: #{patient_id}" 
     next
   end 
 
@@ -35,7 +40,7 @@ csv.each do |row|
   
   visit = patient.visits.build id: row['ordno'],
 	             		entry_ts: datetime, 
- 		     		doc_id: 1,
+ 		     		doc_id: doc.id,
 		     		doc_code: row['doc_code'],
 		     		status: row['status'],
 		     		proc_code: row['proc_code'],

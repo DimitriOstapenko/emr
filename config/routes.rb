@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
    get '/patients' => 'patients#find', constraints: { query_string: /findstr/ }
+   get '/doctors' => 'doctors#find', constraints: { query_string: /findstr/ }
 
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'

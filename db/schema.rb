@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180129212311) do
+ActiveRecord::Schema.define(version: 20180130161318) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_code"
@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 20180129212311) do
     t.string "group_no"
     t.string "specialty"
     t.string "email"
+    t.string "doc_code"
   end
 
   create_table "patients", force: :cascade do |t|
