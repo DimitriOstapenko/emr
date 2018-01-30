@@ -10,7 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180124210547) do
+ActiveRecord::Schema.define(version: 20180129212311) do
+
+  create_table "billings", force: :cascade do |t|
+    t.integer "pat_code"
+    t.string "doc_code"
+    t.date "visit_date"
+    t.integer "visit_id"
+    t.string "proc_code"
+    t.integer "proc_units"
+    t.float "fee"
+    t.string "btype"
+    t.string "diag_code"
+    t.string "status"
+    t.float "amt_paid"
+    t.date "paid_date"
+    t.float "write_off"
+    t.string "submit_file"
+    t.integer "submit_year"
+    t.string "remit_file"
+    t.integer "remit_year"
+    t.string "mohref"
+    t.string "bill_prov"
+    t.string "submit_user"
+    t.datetime "submit_ts"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pat_code", "visit_date", "created_at"], name: "index_billings_on_pat_code_and_visit_date_and_created_at"
+  end
 
   create_table "diagnoses", force: :cascade do |t|
     t.string "diag_code"

@@ -1,19 +1,13 @@
 Rails.application.routes.draw do
 
   get 'procedures/new'
-
   get 'procedures/show'
-
   get 'procedures/index'
-
   get 'procedures/edit'
 
   get 'diagnoses/new'
-
   get 'diagnoses/show'
-
   get 'diagnoses/index'
-
   get 'diagnoses/edit'
 
   get 'doctors/new'

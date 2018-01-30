@@ -10,6 +10,8 @@ class Patient < ApplicationRecord
 #	validates :dob, presence: true
 #       validates :phone, presence: true # , length: { is: 10 }, numericality: { only_integer: true }
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
+#	validates :ohip_ver, presence: true
+
 
   def full_name
     [fname, lname].join(', ')

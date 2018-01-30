@@ -31,9 +31,10 @@ class PatientsController < ApplicationController
   end
 
   def create
-     @patient = Patient.new(patient_params)
+    @patient = Patient.new(patient_params)
+    @patient.entry_date = DateTime.now
+    @patient.lastmod_by = current_user.name
     if @patient.save
-#     log_in @user
        flash[:success] = "Patient created"
        redirect_to @patient
     else
@@ -53,6 +54,7 @@ class PatientsController < ApplicationController
 
   def update
     @patient = Patient.find(params[:id])
+    @patient.lastmod_by = current_user.name
     if @patient.update_attributes(patient_params)
       flash[:success] = "Profile updated"
       redirect_to @patient
@@ -63,7 +65,12 @@ class PatientsController < ApplicationController
 
 private
   def patient_params
-	  params.require(:patient).permit(:lname, :fname, :dob, :sex, :ohip_num, :phone, :full_name, :addr, :city, :prov, :postal )
+	  params.require(:patient).permit(:lname, :fname, :dob, :sex, :ohip_num, :ohip_ver, 
+					  :phone, :mobile, :full_name, :addr, :city, :prov,
+					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
+					  :pat_type, :pharmacy, :pharm_phone, :notes, :alt_contact_name,
+					  :alt_contact_phone, :email, :family_dr, :lastmod_by
+					 )
   end
  
 # Find patient by last name or health card number, depending on input format  
