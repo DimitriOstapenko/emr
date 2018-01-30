@@ -29,5 +29,12 @@ module ApplicationHelper
     def get_diagnoses
 	    Diagnosis.all
     end    
+
+$sexes  = [['Male','M'],['Female','F'],['Unknown','X']] 
+
+$provinces = [['AB', 'AB'], ['BC', 'BC'], ['MB','MB'], ['NB','NB'],
+	      ['NL','NL'], ['NS','NS'],['NT','NT'],['NU','NU'],
+	      ['ON','ON'],['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
+	     ]
     
 end

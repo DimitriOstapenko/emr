@@ -1,0 +1,45 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pat_code: 1
+  doc_code: MyString
+  visit_date: 2018-01-29
+  visit_id: 1
+  proc_code: MyString
+  proc_units: 1
+  fee: 1.5
+  diag_code: 
+  status: MyString
+  amt_paid: 1.5
+  paid_date: 2018-01-29
+  write_off: 1.5
+  submit_file: MyString
+  submit_year: 1
+  remit_file: MyString
+  remit_year: 1
+  mohref: MyString
+  bill_prov: MyString
+  submit_user: MyString
+  submit_ts: 2018-01-29 22:23:11
+
+two:
+  pat_code: 1
+  doc_code: MyString
+  visit_date: 2018-01-29
+  visit_id: 1
+  proc_code: MyString
+  proc_units: 1
+  fee: 1.5
+  diag_code: 
+  status: MyString
+  amt_paid: 1.5
+  paid_date: 2018-01-29
+  write_off: 1.5
+  submit_file: MyString
+  submit_year: 1
+  remit_file: MyString
+  remit_year: 1
+  mohref: MyString
+  bill_prov: MyString
+  submit_user: MyString
+  submit_ts: 2018-01-29 22:23:11

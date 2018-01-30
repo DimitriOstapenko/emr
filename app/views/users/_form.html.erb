@@ -1,21 +1,39 @@
-<%= form_with model: @user do |f| %>
-  <%= render 'shared/error_messages', object: @user %>
+<%= form_for (@user), class: "form-horizontal" do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :Username %>
-  <%= f.text_field :name, class: 'form-control' %>
+  <%= f.label :Username, class: "col-sm-2 control-label"%>
+  <div class="col-sm-10">
+  <%= f.text_field :name, class: "form-control" %>
+  </div>
 
-  <%= f.label :Email %>
-  <%= f.email_field :email, class: 'form-control' %>
+  <%= f.label :Email, class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.email_field :email, class: "form-control" %>
+  </div>
 
-  <%= f.label :Password %>
+  <%= f.label :Password, class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
   <%= f.password_field :password, class: 'form-control' %>
+  </div>
 
-  <%= f.label :Password_confirmation %>
-  <%= f.password_field :password_confirmation, class: 'form-control' %>
 
-  <%= f.label :Administrator? %> 
-  <%= f.check_box :admin, class: "checkbox" %>
+  <div class="form-group">
+  <%= f.label :Password_confirmation, class: "col-sm-2 control-label" %>
+  <div class="col-sm-10">
+  <%= f.password_field :password_confirmation, class: "form-control" %>
+  </div>
+  </div>
 
-  <%= f.label :_ %>
+  <div class="col-sm-2">
+  <%= f.label :Administrator, class: "control-label" %> 
+  </div>
+  <div class="col-sm-8">
+  <%= f.check_box :admin  %>
+  </div>
+
+  <div class="col-sm-2">&nbsp;</div>
+  <div class="col-sm-12">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div
+
 <% end %>
