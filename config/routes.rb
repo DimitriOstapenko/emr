@@ -46,5 +46,6 @@ Rails.application.routes.draw do
   resources :doctors
   resources :diagnoses
   resources :procedures
+  resources :billings
 
 end

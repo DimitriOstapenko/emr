@@ -1,0 +1,35 @@
+<% provide(:title, 'All billing') %>
+  
+<% if @not_found %>
+  <div id="error_explanation">
+   Bill <%= params[:findstr] %> was not found"
+  </div>
+<% end %>
+
+<ul class="users">
+<table style="width:95%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
+  <thead>
+      <tr>
+          <th>pat_code</th>
+          <th>doc_code</th>
+          <th>visit_date</th>
+          <th>proc_code</th>
+          <th>proc_units</th>
+          <th>fee</th>
+          <th>diag_code</th>
+          <th>btype</th>
+          <th>status</th>
+          <th>submit_ts</th>
+	  <th>amt_paid</th>
+          <th>paid_date </th>
+          <th>mohref </th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @billings %>
+
+  </tbody>
+</table>
+</ul>
+<%= will_paginate(@billings) %> 
