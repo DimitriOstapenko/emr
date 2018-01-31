@@ -45,7 +45,7 @@ class PatientsController < ApplicationController
   def destroy
     Patient.find(params[:id]).destroy
     flash[:success] = "Patient deleted"
-    redirect_to patients_url
+    redirect_to patients_url, page: params[:page]
   end
 
   def edit

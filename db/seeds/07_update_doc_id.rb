@@ -2,7 +2,8 @@
 # Set doc_id field in billings and visits table to match doctor.id 
 #
 
-require_relative '../../config/environment'
+# need next line if run stand-alone
+ require_relative '../../config/environment'
 
   
 Doctor.all.each do |d|
@@ -12,3 +13,5 @@ Doctor.all.each do |d|
   Billing.where(doc_code: d.doc_code).update_all("doc_id = #{d.id}")
 
 end
+
+
