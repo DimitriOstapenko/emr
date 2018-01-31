@@ -3,7 +3,15 @@ class BillingsController < ApplicationController
         before_action :admin_user,   only: :destroy
 
   def index
-      @billings = Billing.paginate(page: params[:page]) #, per_page: 40)
+      date = params[:date] || Date.today
+      @billings = Billing.where("date(visit_date) = ?", date)
+      if @billings.any?
+               @billings = @billings.paginate(page: params[:page])
+               render 'index'
+      else
+         flash.now[:error] = 'No billings were found for date ' + date.inspect
+         render 'shared/empty_page'
+      end
   end
 
   def edit

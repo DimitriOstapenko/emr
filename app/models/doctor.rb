@@ -26,9 +26,7 @@ class Doctor < ApplicationRecord
         validates :email, length: { maximum: 255 }, allow_blank: true   #format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }, allow_blank: true
 
   def full_name
-    [fname, lname].join(', ')
+    return fname.blank? ? lname : [lname, fname].join(', ')
   end
 
-
 end
-

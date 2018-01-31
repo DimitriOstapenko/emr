@@ -5,7 +5,7 @@
       <ul class="nav navbar-nav navbar-right">
 
 <% if logged_in? %> 
-<% if controller_name == 'daysheet' %>
+<% if controller_name == 'daysheet' || controller_name == 'billings' %>
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group form-group-sm">
@@ -16,26 +16,16 @@
        <% end %>
        </li>
 <% end %>
-<% if controller_name == 'patients' %>
+<% if controller_name == 'patients' || controller_name == 'doctors' || controller_name == 'procedures' || controller_name == 'diagnoses' %>
 	<li class="nav-item active">
-	<%= form_with url: patients_path, method: :get, skip_enforcing_utf8: :true do |f| %>  
+	<%= form_with method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
                 <div class="col-xs-10">
-		  <%= f.search_field :findstr, placeholder: 'Find patient', :onChange => 'javascript: this.form.submit()' %>
+			<%= f.search_field :findstr, placeholder: "Find #{controller_name}", :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
      <% end %>
 	</li>
-<% elsif controller_name == 'doctors' %>
-	<li class="nav-item active">
-        <%= form_with url: doctors_path, method: :get, skip_enforcing_utf8: :true do |f| %>
-             <div class="form-group form-group-sm">
-                <div class="col-xs-10">
-                  <%= f.search_field :findstr, placeholder: 'Find doctor', :onChange => 'javascript: this.form.submit()' %>
-                </div>
-             </div>
-     <% end %>
-        </li>
 <% end %>
 
 <li><%= link_to "Patients", patients_path %></li>

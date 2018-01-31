@@ -62,4 +62,9 @@ private
           params.require(:procedure).permit(:code, :qcode, :ptype, :descr, :cost, :unit, :fac_req, :adm_req, :diag_req, :ref_req, :percent, :eff_date, :term_date)
   end
 
+# Find procedure by code 
+  def myfind (str)
+          Procedure.where("lower(code) like ?", "%#{str}%")
+  end
+
 end
