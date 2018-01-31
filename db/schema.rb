@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130161318) do
+ActiveRecord::Schema.define(version: 20180131123920) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_code"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20180130161318) do
     t.datetime "submit_ts"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "doc_id"
     t.index ["pat_code", "visit_date", "created_at"], name: "index_billings_on_pat_code_and_visit_date_and_created_at"
   end
 
