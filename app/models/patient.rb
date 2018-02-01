@@ -14,7 +14,7 @@ class Patient < ApplicationRecord
 
 
   def full_name
-    [fname, lname].join(', ')
+    return fname.blank? ? lname : [lname, fname].join(', ')
   end
 
   def age

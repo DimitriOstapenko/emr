@@ -1,18 +1,24 @@
-<% date = params[date] || Date.today %>
+<% date = params[:date] || Date.today %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 
-<h1> Visits <%= date.to_s  %> (<%= @daysheet.count %>) </h1>
+<h1> Visits <%= date.to_s  %> (<%= @daysheet.count %>)  </h1>
 
 <ul class="users">
-<table style="width:1000px; padding: 10px;" >
+<table style="width:100%; padding: 10px;" >
   <thead>
+  <col width="50">
+  <col width="120">
+  <col width="100">
+  <col width="50">
+  <col width="50">
+  <col width="150">
       <tr>
-          <th>Date</th>
+          <th>Time</th>
 	  <th>Patient</th>
  	  <th>Doctor</th>
-          <th>Notes</th>
           <th>Diag Code</th>
           <th>Proc Code</th>
+          <th>Notes</th>
       </tr>
   </thead>
   <tbody>

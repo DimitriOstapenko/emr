@@ -1,7 +1,7 @@
-<% provide(:title, @patient.full_name + ' : '+ @visit.created_at.to_s) %>
+<% provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") %>
 
 <div>
-	<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.created_at) =%> </h1>
+	<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) =%> </h1>
 
 <div class="row">
   <aside class="col-md-8">
@@ -11,16 +11,15 @@
 		Doctor :    <%= @doctor.lname %>
 		Diagnosis : <%= @visit.diag_code %>
 		Procedure : <%= @visit.proc_code %>
-		Notes: <%= @visit.notes %>	     
   		Status: <%= @visit.status %>
   		Duration: <%= @visit.duration %>
   		Type: <%= @visit.vis_type %>
   		Entry by: <%= @visit.entry_by %>
   		Entered at: <%= @visit.entry_ts %>
+		Notes: <%= @visit.notes %>	     
            </pre>
       </h1>
     </section>
-
 
 <% if current_user.admin?  %>
     <section class="new_visit">

@@ -1,0 +1,40 @@
+<% provide(:title, @billing.pat_name + ' : '+ @billing.visit_date.to_s) %>
+
+<div>
+	<h1> <%= @billing.pat_name %> : Visit of <%= time_tag(@billing.visit_date) =%> </h1>
+
+<div class="row">
+  <aside class="col-md-8">
+    <section class="user_info">
+      <h1>
+	   <pre>
+		Patient :   <%= @billing.pat_name %>
+		Doctor :    <%= @billing.doc_name %>
+		Diagnosis : <%= @billing.diag_code %>
+		Procedure : <%= @billing.proc_code %>
+		Units : <%= @billing.proc_units %>
+		Fee: <%= @billing.fee %>	     
+  		Status: <%= @billing.status %>
+  		Type: <%= @billing.btype %>
+  		Submitted by: <%= @billing.submit_user %>
+  		Paid amt: <%= @billing.amt_paid %>
+  		Remit file: <%= @billing.remit_file %>
+  		MOH Ref: <%= @billing.mohref %>
+           </pre>
+      </h1>
+    </section>
+
+
+<% if current_user.admin?  %>
+    <section class="new_visit">
+      <aside class="col-md-2">
+            <%= button_to "Edit Billing", edit_billing_path(@billing), class: "btn btn-primary", :method => "get" %>
+      </aside>
+    </section>
+<% end %>
+
+  </aside>
+</div>
+
+</div>
+

@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<h1> Billings for <%= params['date'] %> </h1>
+<h1> Billings for <%= params['date'] %> (<%= @billings.count %>)</h1>
 
 <ul class="users">
 <table style="width:100%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
@@ -34,4 +34,5 @@
   </tbody>
 </table>
 </ul>
+
 <%= will_paginate(@billings) %> 

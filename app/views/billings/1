@@ -7,18 +7,15 @@
     <section class="user_info">
       <h1>
 	   <pre>
-	      Name: <%= @patient.full_name %>
+	      Name: <%= @patient.lname %>,  <%= @patient.fname %>
 	      DOB: <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex %>
-      	      Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> Expires: <%= @patient.hin_expiry %>
+	      Health Card: <%= @patient.ohip_num %> 
 	      Phone: <%= @patient.phone %>
+	      Last Visit: <%= @patient.last_visit_date %>
 	      Addr: <%= @patient.addr %>
 		    <%= @patient.city %> <%= @patient.prov %> 
 		    <%= @patient.postal %>
 		    <%= @patient.country %>
-	      Family Dr. <%= @patient.family_dr %>
-	      Pharmacy: <%= @patient.pharmacy %> : <%= @patient.pharm_phone %>
-	      Alt. Contact: <% @patient.alt_contact_name %> : <% @patient.alt_contact_phone %>
-	      Last Visit: <%= @patient.last_visit_date %>
            </pre>
       </h1>
     </section>
@@ -26,7 +23,7 @@
 	    
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
     <p>
-    <%= button_to "New Billing", new_billing_path, class:"btn btn-primary", method: 'get' %>
+    <%= button_to "New Billing", new_billing_path(@patient), class:"btn btn-primary", method: 'get' %>
 
     </section>
   </aside>
