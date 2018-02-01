@@ -8,12 +8,12 @@ class Billing < ApplicationRecord
 #  validates :proc_code, presence: true
 
   def doc_name
-    doc = Doctor.find(doc_id)
+    doc = Doctor.find(doc_id) if doc_id
     doc.lname if doc
   end
   
   def pat_name
-    pat = Patient.find(pat_code)
+    pat = Patient.find(pat_code) if pat_code
     pat.full_name if pat
   end
 

@@ -1,8 +1,8 @@
 <% provide(:title, 'Edit patient') %>
 <% provide(:button_text, 'Save changes') %>
-<h1>Update patient's profile</h1>
+<h1><%= @patient.full_name  %> : patient's profile</h1>
 <div class="row">
-  <div class="col-md-6 col-md-offset-2">
+  <div class="col-md-10 col-md-offset-1">
     <%= render 'form' %>
   </div>
 </div>

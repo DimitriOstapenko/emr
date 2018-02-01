@@ -14,6 +14,15 @@ class BillingsController < ApplicationController
       end
   end
 
+  def show
+    @billing = Billing.find(params[:id])
+  end
+
+  def new
+    @billing = Billing.new
+  end
+
+
   def edit
   end
 

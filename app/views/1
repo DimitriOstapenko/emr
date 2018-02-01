@@ -8,10 +8,16 @@
 <% if controller_name == 'daysheet' || controller_name == 'billings' %>
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
-	     <div class="form-group">
+	     <div class="input-group date">
                 <div class="col-sm-12">	     
-		<%= f.date_field :datepicker, class: 'datepicker','name' => 'date', :onChange => 'javascript: this.form.submit()' %>
-
+		<%= f.text_field :datepicker, class: 'form-control', 'name' => 'date', :onChange => 'javascript: this.form.submit()' %>
+		
+<div class="input-group date">
+    <input type="text" class="form-control">
+    <div class="input-group-addon">
+        <span class="glyphicon glyphicon-th"></span>
+    </div>
+</div>
 		</div>
 	     </div>
        <% end %>
@@ -21,7 +27,7 @@
 	<li class="nav-item active">
 	<%= form_with method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
-                <div class="col-xs-12">
+                <div class="col-xs-10">
 			<%= f.search_field :findstr, placeholder: "Find #{controller_name.singularize}", :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
@@ -59,11 +65,9 @@
   </div>
 </header>
 
-<!--
 <script type="text/javascript">
 $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
     $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": false, "todayBtn": true, "todayHighlight": true});
 });
 
 </script>
--->

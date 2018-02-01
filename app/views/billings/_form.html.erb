@@ -1,0 +1,64 @@
+<%= form_for (@billing) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <pre>
+
+                Patient :   <%= @billing.pat_name %>
+                Doctor :    <%= @billing.doc_name %>
+                Diagnosis : <%= @billing.diag_code %>
+                Procedure : <%= @billing.proc_code %>
+                Units : <%= @billing.proc_units %>
+                Fee: <%= @billing.fee %>             
+                Status: <%= @billing.status %>
+                Type: <%= @billing.btype %>
+                Submitted by: <%= @billing.submit_user %>
+                Paid amt: <%= @billing.amt_paid %>
+                Remit file: <%= @billing.remit_file %>
+                MOH Ref: <%= @billing.mohref %>
+  </pre>
+
+
+  
+  <%= f.label :pat_code, class: "col-md-4 control-label" %>
+  <div class="col-md-6">
+  <%= f.text_field :pat_code %>
+  </div>
+
+  <div class="col-md-10">
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div>
+
+<% end %>
+
+
+<!--
+	<script>
+document.onkeypress = function(e) {
+    e = e || window.event;
+    var charCode = (typeof e.which == "number") ? e.which : e.keyCode;
+    // store it , in this example, i use localstorage
+    if(localStorage.getItem("ohip_num") && localStorage.getItem("ohip_num") != 'null') {
+        // append on every keypress
+        localStorage.setItem("ohip_num", localStorage.getItem("ohip_num") + String.fromCharCode(charCode));
+    } else {
+        // remove localstorage if it takes 300 ms (you can set it)
+        localStorage.setItem("ohip_num", String.fromCharCode(charCode));
+        setTimeout(function() {
+            localStorage.removeItem("ohip_num");
+        }, 300);
+    }
+    // when reach on certain length within 300 ms, it is not typed by a human being
+    if(localStorage.getItem("ohip_num").length == 8) {
+        // do some validation
+	    echo ("equals 8");
+       // if(passedonvalidation){
+            // do some action
+
+       // }
+    } else {
+	    echo ("not 8")
+    }
+    }
+	</script>
+
+	-->
