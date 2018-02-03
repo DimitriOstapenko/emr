@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180131123920) do
+ActiveRecord::Schema.define(version: 20180202122623) do
 
   create_table "billings", force: :cascade do |t|
-    t.integer "pat_code"
+    t.integer "pat_id"
     t.string "doc_code"
     t.date "visit_date"
     t.integer "visit_id"
@@ -37,15 +37,16 @@ ActiveRecord::Schema.define(version: 20180131123920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "doc_id"
-    t.index ["pat_code", "visit_date", "created_at"], name: "index_billings_on_pat_code_and_visit_date_and_created_at"
+    t.index ["pat_id", "visit_date", "created_at"], name: "index_billings_on_pat_id_and_visit_date_and_created_at"
   end
 
   create_table "diagnoses", force: :cascade do |t|
-    t.string "diag_code"
-    t.string "diag_descr"
+    t.string "code"
+    t.string "descr"
     t.string "prob_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_diagnoses_on_code"
   end
 
   create_table "doctors", force: :cascade do |t|
@@ -73,6 +74,7 @@ ActiveRecord::Schema.define(version: 20180131123920) do
     t.string "specialty"
     t.string "email"
     t.string "doc_code"
+    t.index ["provider_no"], name: "index_doctors_on_provider_no"
   end
 
   create_table "patients", force: :cascade do |t|

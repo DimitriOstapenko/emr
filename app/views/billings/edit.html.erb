@@ -1,0 +1,8 @@
+<% provide(:title, 'Edit Billing') %>
+<% provide(:button_text, 'Save changes') %>
+<h1><%= @patient.full_name  %> : visit <%= @visit.entry_ts.strftime("%d-%m-%Y") %></h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-2">
+    <%= render 'form' %>
+  </div>
+</div>

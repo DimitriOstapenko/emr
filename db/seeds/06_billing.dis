@@ -19,9 +19,9 @@ csv.each do |row|
 #  puts row.to_hash
   
   bill_id = row['bilid']
-  patient_id = row['pat_code']
-  unless Patient.exists?(patient_id)
-    puts "Patient not found: #{patient_id} for bill #{bill_id}" 
+  pat_id = row['pat_id']
+  unless Patient.exists?(pat_id)
+    puts "Patient not found: #{pat_id} for bill #{bill_id}" 
     next
   end 
 
@@ -36,7 +36,7 @@ csv.each do |row|
   submit_ts = ts(row['submt_date'] +' '+ row['submt_time'])
 
   billing = Billing.new  id: row['bill_id'],
-  			 pat_code: patient_id,
+  			 pat_id: pat_id,
                          doc_code: row['doc_code'],
 			 visit_date: visit_date,
 			 visit_id: visit_id,

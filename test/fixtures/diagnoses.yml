@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  diag_code: MyString
-  diag_descr: MyString
+  code: 700.111
+  descr: MyString
   prob_type: MyString
 
 two:
-  diag_code: MyString
-  diag_descr: MyString
+  code: 700.112
+  descr: MyString 222222
   prob_type: MyString

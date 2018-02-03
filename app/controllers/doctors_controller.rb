@@ -42,6 +42,27 @@ class DoctorsController < ApplicationController
     end
   end  
 
+  def destroy
+    Doctor.find(params[:id]).destroy
+    flash[:success] = "Doctor deleted"
+    redirect_to doctors_url, page: params[:page]
+  end
+
+  def edit
+    @doctor = Doctor.find(params[:id])
+  end
+
+  def update
+    @doctor = Doctor.find(params[:id])
+    if @doctor.update_attributes(doctor_params)
+      flash[:success] = "Profile updated"
+      redirect_to @doctor
+    else
+      render 'edit'
+    end
+  end
+
+
 private
   def doctor_params
 	  params.require(:doctor).permit(:lname, :fname, :full_name, :cpso_num, :billing_num, :service, :ph_type,

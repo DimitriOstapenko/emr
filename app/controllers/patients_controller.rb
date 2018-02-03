@@ -21,9 +21,14 @@ class PatientsController < ApplicationController
      render 'index'
   end
 
-  def show
-    @patient = Patient.find(params[:id])
-    @visits = @patient.visits.paginate(page: params[:page], per_page: 12)
+  def show 
+    if Patient.exists?(params[:id]) 
+       @patient = Patient.find(params[:id]) 
+       @visits = @patient.visits.paginate(page: params[:page], per_page: 12) 
+    else
+       redirect_to patients_path
+    end
+
   end
 
   def new

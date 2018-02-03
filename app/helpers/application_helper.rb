@@ -36,5 +36,21 @@ $provinces = [['AB', 'AB'], ['BC', 'BC'], ['MB','MB'], ['NB','NB'],
 	      ['NL','NL'], ['NS','NS'],['NT','NT'],['NU','NU'],
 	      ['ON','ON'],['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
 	     ]
-    
+
+$billing_statuses = [["3RD CLAIM"],
+		     ["DELETED"],
+		     ["WCB CLAIM"],
+		     ["HCP CLAIM"],
+		     ["INVOICED"],
+		     ["PAID BY 3RD"],
+		     ["PAID BY MOH"],
+		     ["WRITTEN OFF"]]    
+
+$billing_types = [["3RD","3RD"],
+		  ["RMB","RMB"],
+    		  ["WCB","WCB"],
+		  ["HCP","HCP"]] 
+
+
+
 end

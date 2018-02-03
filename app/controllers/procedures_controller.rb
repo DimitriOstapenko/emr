@@ -11,10 +11,11 @@ class ProceduresController < ApplicationController
       @procedures = myfind(str)
       if @procedures.any?
          flash.now.alert = 'Found: '+ @procedures.size.to_s
-               @procedures = @procedures.paginate(page: params[:page])
-               render 'index'
+         @procedures = @procedures.paginate(page: params[:page])
+         render 'index'
       else
-            render 'procedure_not_found'
+         flash[:danger] = "Procedure not found"
+	 redirect_to procedures_path 
       end
   end
 
@@ -64,7 +65,13 @@ private
 
 # Find procedure by code 
   def myfind (str)
-          Procedure.where("lower(code) like ?", "%#{str}%")
+	if str.match(/^\S?[[:digit:]]{,3}\S?$/)
+          Procedure.where("code like ?", "%#{str}%")
+        elsif str.match(/^[[:graph:]]+$/)
+          Procedure.where("lower(descr) like ?", "%#{str}%")
+        else
+          []
+        end
   end
 
 end

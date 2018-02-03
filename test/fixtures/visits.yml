@@ -1,15 +1,28 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 murphy:
-  date: 2018-01-07 22:03:20
-  notes: MyText
   diag_code: 700.22 
-  proc_code: MyString
-  patient: one
+  proc_code: Code1
+  patient_id: 112
+  doc_id: 401
+  status: 2
+  duration: 10
+  vis_type: HMO
+  entry_by: HS
+  doc_code: l&
+  entry_ts: 2018-01-07 22:03:20
+  notes: MyText
 
 sienna:
-  date: 2018-01-08 22:03:20
-  notes: MyText
   diag_code: 600.11 
-  proc_code: MyString
-  patient: two
+  proc_code: Code2
+  patient_id: 112
+  doc_id: 401
+  status: 2
+  duration: 10
+  vis_type: HMO
+  entry_by: HS
+  doc_code: l&
+  entry_ts: 2018-01-08 22:03:20
+  notes: MyText
+

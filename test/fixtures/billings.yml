@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  pat_code: 1
+  pat_id: 1
   doc_code: MyString
   visit_date: 2018-01-29
   visit_id: 1
@@ -23,10 +23,10 @@ one:
   submit_ts: 2018-01-29 22:23:11
 
 two:
-  pat_code: 1
+  pat_id: 1
   doc_code: MyString
   visit_date: 2018-01-29
-  visit_id: 1
+  visit_id: 2
   proc_code: MyString
   proc_units: 1
   fee: 1.5

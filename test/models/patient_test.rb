@@ -5,38 +5,42 @@ class PatientTest < ActiveSupport::TestCase
     @pat = Patient.new(lname: "Last", 
 		       fname: "First", 
 		       ohip_num: 1234567899,
+		       ohip_ver: 'PLL',
 		       dob: '1971-01-01',
 		       sex: 'M',
                        phone: "9999999999", 
+                       mobile: "9999999999", 
 		       addr: '77 Main str W',
 		       city: 'Hamilton',
 		       prov: 'ON',
 		       postal: 'L9G1G1',
-		       country: 'Canada'
+		       country: 'Canada',
+		       hin_prov: 'ON',
+		       hin_expiry: '2019-01-01'
 		      )
   end
 
-  test "should be valid" do
+  test "object should be valid" do
     assert @pat.valid?
   end
 
-  test "name should be present" do
+  test "lname should be present" do
     @pat.lname = "     "
     assert_not @pat.valid?
   end
 
-  test "email should be present" do
-    @pat.fname = "     "
-    assert_not @pat.valid?
-  end
-
-  test "name should not be too long" do
+  test "lname should not be too long" do
     @pat.lname = "a" * 51
     assert_not @pat.valid?
   end
 
-  test "email should not be too long" do
-    @pat.fname = "a" * 244 
+  test "ohip_num should be present" do
+    @pat.ohip_num = 123
+    assert_not @pat.valid?
+  end
+
+  test "ohip_num should be exactly 10 digits" do
+    @pat.ohip_num = 123456789 
     assert_not @pat.valid?
   end
 
@@ -74,7 +78,7 @@ class PatientTest < ActiveSupport::TestCase
 
   test "associated visits should be destroyed" do
     @pat.save
-    @pat.visits.create!(notes: "Lorem ipsum", doc_id: 1, diag_code: 700.11, proc_code: 'A9', date: '2018-01-01')
+    @pat.visits.create!(notes: "Lorem ipsum", doc_id: 1, patient_id: 1, diag_code: '700.11', proc_code: 'A9', entry_ts: '2018-01-01 7:55:06')
     assert_difference 'Visit.count', -1 do
     @pat.destroy
     end

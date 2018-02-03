@@ -5,9 +5,21 @@ one:
   fname: "Bill"
   cpso_num: 10000
   billing_num: 999999
+  service: "GENP"
+  ph_type: "GP"
+  district: "G"
+  bills: true
+  provider_no: 123456
+  doc_code: 'l&'
 
 two:
   lname: "Good"
   fname: "Boy"
   cpso_num: 99818
   billing_num: 11000
+  service: "GENP"
+  ph_type: "GP"
+  district: "G"
+  bills: true
+  provider_no: 123456
+  doc_code: 'l&'

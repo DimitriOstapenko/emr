@@ -4,11 +4,11 @@
 	<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) =%> </h1>
 
 <div class="row">
-  <aside class="col-md-8">
+  <aside class="col-md-6">
     <section class="user_info">
       <h1>
 	   <pre>
-		Doctor :    <%= @doctor.lname %>
+		Doctor :    <%= @visit.doctor.lname %>
 		Diagnosis : <%= @visit.diag_code %>
 		Procedure : <%= @visit.proc_code %>
   		Status: <%= @visit.status %>
@@ -21,16 +21,23 @@
       </h1>
     </section>
 
+    <%= button_to "Add Billing", new_patient_visit_billing_path(@patient,@visit), class:"btn btn-primary", method: 'get' %>
+
 <% if current_user.admin?  %>
-    <section class="new_visit">
-      <aside class="col-md-2">
+		   <p>
             <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
-      </aside>
-    </section>
 <% end %>
 
   </aside>
-</div>
 
+ <div class="col-md-6">
+    <h3>Billings: (<%= @visit.billings.count %>)</h3>
+    <% if @visit.billings.any? %>
+      <ol class="microposts">
+        <%= render @billings %>
+      </ol>
+    <% end %>
+<%= will_paginate(@billings) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
+  </div>
 </div>
 
