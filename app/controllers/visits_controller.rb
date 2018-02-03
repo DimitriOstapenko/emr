@@ -11,10 +11,10 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
+    @visit.entry_ts = DateTime.now
+    @visit.entry_by = current_user.name
     if @visit.save
       @patient.last_visit_date = @visit.created_at	    
-      @visit.entry_ts = DateTime.now
-      @visit.entry_by = current_user.name
       @patient.save
       flash[:success] = "Visit saved"
       redirect_to @patient
