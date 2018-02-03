@@ -51,6 +51,10 @@ $billing_types = [["3RD","3RD"],
     		  ["WCB","WCB"],
 		  ["HCP","HCP"]] 
 
+$statuses = [["Arrived", 1],
+	     ["Assessed", 2],
+	     ["Cancelled", 3],
+	     ["Billed", 4]]
 
-
+$visit_types = ['WI','PC']
 end

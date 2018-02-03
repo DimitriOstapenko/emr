@@ -9,11 +9,11 @@
       <h1>
 	   <pre>
 		Doctor :    <%= @visit.doctor.lname %>
-		Diagnosis : <%= @visit.diag_code %>
-		Procedure : <%= @visit.proc_code %>
-  		Status: <%= @visit.status %>
-  		Duration: <%= @visit.duration %>
+		Diagnosis : <%= @visit.diag_code %> (<%= Diagnosis.find_by(code: @visit.diag_code).descr %>)
+		Procedure : <%= @visit.proc_code %> (<%= Procedure.find_by(code: @visit.proc_code).descr %>)
   		Type: <%= @visit.vis_type %>
+  		Duration: <%= @visit.duration %>
+		Status: <%= $statuses[@visit.status] %> <%= @visit.status %>
   		Entry by: <%= @visit.entry_by %>
   		Entered at: <%= @visit.entry_ts %>
 		Notes: <%= @visit.notes %>	     
@@ -21,23 +21,12 @@
       </h1>
     </section>
 
-    <%= button_to "Add Billing", new_patient_visit_billing_path(@patient,@visit), class:"btn btn-primary", method: 'get' %>
-
-<% if current_user.admin?  %>
 		   <p>
+<% if current_user.admin?  %>
             <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
 <% end %>
 
   </aside>
 
- <div class="col-md-6">
-    <h3>Billings: (<%= @visit.billings.count %>)</h3>
-    <% if @visit.billings.any? %>
-      <ol class="microposts">
-        <%= render @billings %>
-      </ol>
-    <% end %>
-<%= will_paginate(@billings) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
-  </div>
 </div>
 

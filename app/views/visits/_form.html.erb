@@ -1,4 +1,4 @@
-<%= form_with model: [@patient, @visit],  class: "form-horizontal" do |f| %> <!-- <%#, :url => patient_visits_path  do |f| %> -->
+<%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
 
   <%= f.label "Doctor", class: "col-sm-2 control-label" %>
@@ -18,24 +18,23 @@
 
   <%= f.label "Visit Type", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
-  <%= f.text_field :vis_type, class: 'form-control', placeholder: 'Visit type' %>
+  <%= f.text_field :vis_type, placeholder: 'Visit type', default: 'WS' %>
   </div>
 
   <%= f.label "Duration", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
-  <%= f.text_field :duration, class: 'form-control', placeholder: 'Duration', default: '10'  %>
+  <%= f.text_field :duration, placeholder: 'Duration', default: '10'  %>
   </div>
 
   <%= f.label "Status", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
-  <%= f.text_field :status, class: 'form-control', placeholder: 'Status' %>
+  <%= f.select :status, $statuses, placeholder: 'Status' %>
   </div>
   
   <%= f.label "Notes", class: "col-sm-2 control-label" %>
   <div class="col-sm-10">
-  <%= f.text_area :notes, class: 'form-control', cols: 25, rows:10, placeholder: 'Notes' %>
+  <%= f.text_area :notes,  cols: 25, rows:10, placeholder: 'Notes' %>
   </div>
-
 
   <div class="col-sm-2"></div>
   <div class="col-sm-10">

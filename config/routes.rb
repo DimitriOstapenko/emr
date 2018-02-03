@@ -46,12 +46,11 @@ Rails.application.routes.draw do
 
   resources :users
   resources :patients  do
-    resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
-      resources :billings
-    end
+    resources :visits   # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
   end
   resources :doctors
   resources :diagnoses
   resources :procedures
-
+#  resources :billings
+  
 end
