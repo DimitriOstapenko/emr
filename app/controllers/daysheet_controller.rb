@@ -7,7 +7,7 @@ class DaysheetController < ApplicationController
                @daysheet = @daysheet.paginate(page: params[:page])
                render 'index'
       else
-	 flash.now[:error] = 'No visits were found for date ' + date.inspect 
+	 flash.now[:warning] = 'No visits were found for date ' + date.inspect 
          render 'shared/empty_page'
       end
   end

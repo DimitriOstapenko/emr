@@ -1,6 +1,6 @@
 <% provide(:title, 'New Visit') %>
 <% provide(:button_text, 'Save') %>
-<h1>New Visit - <%= Patient.find(params[:patient_id]).full_name %></h1>
+<h1>New Visit - <%= @patient.full_name %></h1>
 
 <div class="row">
   <div class="col-md-7 col-md-offset-2">

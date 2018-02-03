@@ -1,7 +1,6 @@
 class Visit < ApplicationRecord
   belongs_to :patient
-  has_many :billings, dependent: :destroy
-  accepts_nested_attributes_for :billings, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :patient, :reject_if => :all_blank, :allow_destroy => true
   default_scope -> { order(created_at: :desc) }
   attr_accessor :doctor
   

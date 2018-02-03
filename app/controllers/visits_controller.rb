@@ -11,16 +11,16 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    @visit.entry_ts = DateTime.now
-    @visit.entry_by = current_user.name
     if @visit.save
       @patient.last_visit_date = @visit.created_at	    
+      @visit.entry_ts = DateTime.now
+      @visit.entry_by = current_user.name
       @patient.save
       flash[:success] = "Visit saved"
+      redirect_to @patient
     else
-      flash.error = 'Error saving visit'
+      render 'new'
     end
-    redirect_to @patient
   end
 
   def destroy
@@ -45,7 +45,6 @@ class VisitsController < ApplicationController
      @visit = Visit.find(params[:id])
      @patient = Patient.find(@visit.patient_id)
      @doctor = Doctor.find(@visit.doc_id)
-     @billings = @visit.billings.paginate(page: params[:page], per_page: 12)
   end
 
   def edit
@@ -56,9 +55,12 @@ class VisitsController < ApplicationController
 
   def update
     @visit = Visit.find(params[:id])
+    @patient = Patient.find(@visit.patient_id)
     if @visit.update_attributes(visit_params)
+      @patient.last_visit_date = @visit.created_at
+      @patient.save
       flash[:success] = "Visit updated"
-      redirect_to patient_path (@visit.patient_id)
+      redirect_to patient_path @patient 
     else
       render 'edit'
     end

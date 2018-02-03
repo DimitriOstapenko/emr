@@ -1,5 +1,4 @@
 class Billing < ApplicationRecord
-  belongs_to :visit
  
   default_scope -> { order(visit_date: :desc) }
   attr_accessor :doc_name, :pat_name

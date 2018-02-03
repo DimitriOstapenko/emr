@@ -1,10 +1,15 @@
-<li id="billing-<%= billing.id %>">
+<tr>
+	
+	<td><%= Patient.find(billing.patient_id).lname %> </td>
+	<td><%= Doctor.find(billing.doc_id).lname %> </td>
+	<td><%= billing.proc_code %></td>
+	<td><%= billing.duration %></td>
+	<td><%= billing.diag_code %></td>
+	<td><%= 'fee here'  %></td>
+	<td><%= billing.vis_type %></td>
+	<td><%= billing.status %></td>
+	<td><%= billing.entry_by %></td>
+	<td><%= billing.entry_ts %></td>
+	<td><%= billing.notes %></td>
 
-  <span class="billing">Diag. Code: <%= billing.diag_code %></span>
-  <span class="billing">Proc Code: <%= billing.proc_code %></span>
-  <span class="billing">Fee <%= billing.fee %></span>
-  <span class="billing">Submitted: <%= billing.submit_ts %></span>
-  <span class="billing">Status: <%= billing.status %></span>
-</li>
-
-
+</tr>
