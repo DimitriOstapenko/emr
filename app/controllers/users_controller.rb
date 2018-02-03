@@ -21,7 +21,6 @@ class UsersController < ApplicationController
     if @user.save
      #  log_in @user
       flash[:success] = "User #{@user.name} created"
-     # redirect_to @user
        redirect_to users_url
     else
       render 'new'
@@ -42,7 +41,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to @user
+      redirect_to users_url
     else
       render 'edit'
     end

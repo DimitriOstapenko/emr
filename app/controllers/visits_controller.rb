@@ -45,6 +45,7 @@ class VisitsController < ApplicationController
      @visit = Visit.find(params[:id])
      @patient = Patient.find(@visit.patient_id)
      @doctor = Doctor.find(@visit.doc_id)
+     @billings = @visit.billings.paginate(page: params[:page], per_page: 12)
   end
 
   def edit

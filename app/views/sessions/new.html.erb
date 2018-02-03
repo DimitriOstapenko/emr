@@ -2,7 +2,7 @@
 <h1>Log in</h1>
 
 <div class="row">
-  <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-4 col-md-offset-4">
     <%= form_for(:session, url: login_path) do |f| %>
 
       <%= f.label :email %>
@@ -14,6 +14,53 @@
       <%= f.submit "Log in", class: "btn btn-primary" %>
     <% end %>
 
-    <p>New user? <%= link_to "Sign up now!", signup_path %></p>
+    <p>
+    New user? <%= link_to "Sign up now!", signup_path %></p>
   </div>
+</div>
+
+
+<div class="row">
+	<div class="col-sm-3 col-md-offset-1">
+<form>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+</form>
+    </div>
+    <div class="col-sm-2">
+	    <form>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+	    </form>
+    </div>
+    <div class="col-sm-5">
+	    <form>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+		    <%= label :f, :password %>
+		    <%= text_field :f, :email %>
+	    </form>
+    </div>
 </div>

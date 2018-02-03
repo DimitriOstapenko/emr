@@ -1,18 +1,10 @@
-<tr>
-	<td><%= link_to billing.pat_name, billing %> </td>
-	  <td><%= billing.doc_name %></td>
-	  <td><%= billing.proc_code %></td>
-	  <td><%= billing.proc_units %></td>
-	  <td><%= billing.fee %></td>
-	  <td><%= billing.diag_code %></td>
-	  <td><%= billing.btype %></td>
-	  <td><%= billing.status %></td>
-	  <td><%= billing.remit_file %></td>
-	  <td><%= billing.submit_ts.to_date %></td>
-	  <td><%= billing.paid_date %> </td>
-	  <td><%= billing.amt_paid %> </td>
-	  <td><%= billing.mohref %> </td>
-</tr>
+<li id="billing-<%= billing.id %>">
 
+  <span class="billing">Diag. Code: <%= billing.diag_code %></span>
+  <span class="billing">Proc Code: <%= billing.proc_code %></span>
+  <span class="billing">Fee <%= billing.fee %></span>
+  <span class="billing">Submitted: <%= billing.submit_ts %></span>
+  <span class="billing">Status: <%= billing.status %></span>
+</li>
 
 

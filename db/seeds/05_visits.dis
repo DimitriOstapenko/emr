@@ -21,19 +21,19 @@ csv.each do |row|
 #  puts row.to_hash
 
   all += 1
-  patient_id = row['pat_code']
+  pat_id = row['pat_id']
   doc = Doctor.where("doc_code = ?", row['doc_code'])
   unless doc
     puts "Doctor not found: #{doc.id}"
     next
   end
   
-  unless Patient.exists?(patient_id)
-    puts "Patient not found: #{patient_id}" 
+  unless Patient.exists?(pat_id)
+    puts "Patient not found: #{pat_id}" 
     next
   end 
 
-  patient = Patient.find(patient_id)
+  patient = Patient.find(pat_id)
  
   found += 1
   datetime = ts(row['entry_date'] +' '+ row['entry_time'])

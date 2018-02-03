@@ -1,9 +1,10 @@
 <% provide(:title, 'New Billing') %>
 <% provide(:button_text, 'Save') %>
-<h1>New billing </h1>
+
+<h1><%= @patient.full_name %> : New billing : Visit <%= @visit.entry_ts %>  </h1>
 
 <div class="row">
-  <div class="col-md-10 col-md-offset-1">
+  <div class="col-md-6 col-md-offset-2">
     <%= render 'form' %>
   </div>
 </div>

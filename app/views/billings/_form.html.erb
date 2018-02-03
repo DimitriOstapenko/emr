@@ -1,27 +1,33 @@
-<%= form_for (@billing) do |f| %>
+<%= form_for [@patient,@visit,@billing] do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <pre>
 
-                Patient :   <%= @billing.pat_name %>
-                Doctor :    <%= @billing.doc_name %>
-                Diagnosis : <%= @billing.diag_code %>
-                Procedure : <%= @billing.proc_code %>
-                Units : <%= @billing.proc_units %>
-                Fee: <%= @billing.fee %>             
+                Patient :   <%= @patient.full_name %>
+                Doctor :    <%= @visit.doctor.lname %>
+                Duration : <%= @visit.duration %>
                 Status: <%= @billing.status %>
-                Type: <%= @billing.btype %>
-                Submitted by: <%= @billing.submit_user %>
-                Paid amt: <%= @billing.amt_paid %>
-                Remit file: <%= @billing.remit_file %>
-                MOH Ref: <%= @billing.mohref %>
+
   </pre>
 
-
-  
-  <%= f.label :pat_code, class: "col-md-4 control-label" %>
+  <%= f.label :Diagnosis, class: "col-md-4 control-label" %>
   <div class="col-md-6">
-  <%= f.text_field :pat_code %>
+   <%= f.collection_select(:diag_code, Diagnosis.all.first(10), :code, :descr,{:prompt => 'Select'})  %>
+  </div>
+  
+  <%= f.label :Procedure, class: "col-md-4 control-label" %>
+  <div class="col-md-6">
+   <%= f.collection_select(:proc_code, Procedure.all.first(10), :code, :descr, {:prompt => 'Select'})  %>
+  </div>
+  
+  <%= f.label :Units, class: "col-md-4 control-label" %>
+  <div class="col-md-6">
+  <%= f.select(:proc_units, [[1,1],[2,2],[3,3],[4,4],[5,5]] ) %>
+  </div>
+
+  <%= f.label :Type, class: "col-md-4 control-label" %>
+  <div class="col-md-6">
+  <%= f.select(:btype, $billing_types ) %>
   </div>
 
   <div class="col-md-10">
@@ -29,6 +35,7 @@
   </div>
 
 <% end %>
+
 
 
 <!--

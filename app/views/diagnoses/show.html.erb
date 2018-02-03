@@ -1,6 +1,6 @@
-<% provide(:title, @diagnosis.diag_code) %>
+<% provide(:title, @diagnosis.code) %>
 
-	<h1>Diagnoses <%= @diagnosis.diag_code %> - details  </h1>
+	<h1>Diagnoses <%= @diagnosis.code %> - details  </h1>
 
 <div class="row">
   <aside class="col-md-10">
@@ -8,8 +8,8 @@
       <h1>
 	   <pre>
 
-	      Code:         <%= @diagnosis.diag_code %>
-	      Description:  <%= @diagnosis.diag_descr %>
+	      Code:         <%= @diagnosis.code %>
+	      Description:  <%= @diagnosis.descr %>
 	      Problem type: <%= @diagnosis.prob_type %>
 
            </pre>

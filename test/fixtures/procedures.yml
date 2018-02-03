@@ -1,31 +1,32 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  proc_code: MyString
-  string: MyString
+  code: Code1
   qcode: MyString
-  proc_descr: MyString
-  proc_cost: 9.99
-  proc_unit: 9.99
+  ptype: MyString
+  descr: MyString
+  cost: 29.99
+  unit: 1 
   fac_req: false
   adm_req: false
   diag_req: false
-  percent: 9.99
+  ref_req: false
+  percent: 100 
   eff_date: 2018-01-18
   term_date: 2018-01-18
-  ref_req: false
 
 two:
-  proc_code: MyString
-  string: MyString
+  code: Code2
   qcode: MyString
-  proc_descr: MyString
-  proc_cost: 9.99
-  proc_unit: 9.99
+  ptype: MyString
+  descr: MyString
+  cost: 29.99
+  unit: 1 
   fac_req: false
   adm_req: false
   diag_req: false
-  percent: 9.99
+  ref_req: false
+  percent: 100 
   eff_date: 2018-01-18
   term_date: 2018-01-18
-  ref_req: false
+

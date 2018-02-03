@@ -23,6 +23,8 @@ gem 'bootstrap-datepicker-rails'
 group :development, :test do
   gem 'sqlite3', '1.3.13'
   gem 'byebug',  '9.0.6', platform: :mri
+  gem 'capybara', '~> 2.13'
+  gem 'selenium-webdriver'
 end
 
 group :development do

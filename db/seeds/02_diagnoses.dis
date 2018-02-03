@@ -4,11 +4,11 @@ csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 Diagnosis.destroy_all 
 
 csv.each do |row|
-  diag = Diagnosis.new   diag_code:  row['diag_code'],
-		   	 diag_descr: row['diag_desc'],
-		         prob_type:  row['prob_type']
+  diag = Diagnosis.new   code:  row['diag_code'],
+		   	 descr: row['diag_desc'],
+		         prob_type: row['prob_type']
   if diag.save		         
-	  puts "#{diag.id} #{diag.diag_code} saved"
+	  puts "#{diag.id} #{diag.code} saved"
   else
 	  puts 'Problem code: ', diag.inspect
   end

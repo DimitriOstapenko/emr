@@ -3,22 +3,22 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 #  root 'patients#index'
   
-  get '/procedures' => 'procedures#find', constraints: { query_string: /findstr/ }
-#  get 'procedures/new'
-#  get 'procedures/show'
-#  get 'procedures/index'
-#  get 'procedures/edit'
+  get '/procedures/index' => 'procedures#find', constraints: { query_string: /findstr/ }
+  get 'procedures/new'
+  get 'procedures/show'
+  get 'procedures/index'
+  get 'procedures/edit'
 #
-   get '/diagnoses' => 'diagnoses#find', constraints: { query_string: /findstr/ }
-#  get 'diagnoses/new'
-#  get 'diagnoses/show'
-#  get 'diagnoses/index'
-#  get 'diagnoses/edit'
+  get '/diagnoses/index' => 'diagnoses#find', constraints: { query_string: /findstr/ }
+  get 'diagnoses/new'
+  get 'diagnoses/show'
+  get 'diagnoses/index'
+  get 'diagnoses/edit'
 
   get '/doctors' => 'doctors#find', constraints: { query_string: /findstr/ }
-#  get 'doctors/new'
-#  get 'doctors/show'
-# get 'doctors/index'
+  get 'doctors/new'
+  get 'doctors/show'
+  get 'doctors/index'
   
   get 'daysheet/index'
 
@@ -41,15 +41,17 @@ Rails.application.routes.draw do
 
  get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
  get '/visits' => 'visits#index'
+ get '/billings' => 'billings#index'
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
   resources :users
   resources :patients  do
-   resources :visits  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
+    resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
+      resources :billings
+    end
   end
   resources :doctors
   resources :diagnoses
   resources :procedures
-  resources :billings
 
 end

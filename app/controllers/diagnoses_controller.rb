@@ -12,10 +12,11 @@ class DiagnosesController < ApplicationController
       @diagnoses = myfind(str) 
       if @diagnoses.any?
 	 flash.now.alert = 'Found: '+ @diagnoses.size.to_s
-	       @diagnoses = @diagnoses.paginate(page: params[:page])
-	       render 'index'
+	 @diagnoses = @diagnoses.paginate(page: params[:page])
+         render 'index'
       else
-	    render 'diagnosis_not_found'
+         flash[:danger] = "Diagnosis not found"
+	 redirect_to diagnoses_path 
       end
   end
 
@@ -60,15 +61,15 @@ class DiagnosesController < ApplicationController
 
 private
   def diagnosis_params
-          params.require(:diagnosis).permit(:diag_code, :diag_descr, :prob_type)
+          params.require(:diagnosis).permit(:code, :descr, :prob_type)
   end
 
 # Find diagnosis by code or description 
   def myfind (str)
         if str.match(/^[[:digit:]]{,7}$/)
-          Diagnosis.where("diag_code like ?", "%#{str}%")
+          Diagnosis.where("code like ?", "%#{str}%")
         elsif str.match(/^[[:graph:]]+$/)
-          Diagnosis.where("lower(diag_descr) like ?", "%#{str}%")
+          Diagnosis.where("lower(descr) like ?", "%#{str}%")
         else
           []
         end
