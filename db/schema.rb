@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180202104719) do
+ActiveRecord::Schema.define(version: 20180204194245) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 20180202104719) do
     t.string "prob_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: false
     t.index ["code"], name: "index_diagnoses_on_code"
   end
 
@@ -133,6 +134,7 @@ ActiveRecord::Schema.define(version: 20180202104719) do
     t.date "term_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active", default: false
     t.index ["code"], name: "index_procedures_on_code", unique: true
   end
 
@@ -160,6 +162,14 @@ ActiveRecord::Schema.define(version: 20180202104719) do
     t.string "entry_by"
     t.string "doc_code"
     t.datetime "entry_ts"
+    t.float "fee", default: 0.0
+    t.float "fee2", default: 0.0
+    t.float "fee3", default: 0.0
+    t.integer "units", default: 0
+    t.integer "units2", default: 0
+    t.integer "units3", default: 0
+    t.float "fee4", default: 0.0
+    t.integer "units4", default: 0
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end

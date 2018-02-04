@@ -9,8 +9,8 @@
       <h1>
 	   <pre>
 		Doctor :    <%= @visit.doctor.lname %>
-		Diagnosis : <%= @visit.diag_code %> (<%= Diagnosis.find_by(code: @visit.diag_code).descr %>)
-		Procedure : <%= @visit.proc_code %> (<%= Procedure.find_by(code: @visit.proc_code).descr %>)
+		Diagnosis : <%= @visit.diag_code %> 
+		Procedure : <%= @visit.proc_code %>
   		Type: <%= @visit.vis_type %>
   		Duration: <%= @visit.duration %>
 		Status: <%= $statuses[@visit.status] %> <%= @visit.status %>
