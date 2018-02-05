@@ -61,12 +61,12 @@ class DiagnosesController < ApplicationController
 
 private
   def diagnosis_params
-          params.require(:diagnosis).permit(:code, :descr, :prob_type)
+          params.require(:diagnosis).permit(:code, :descr, :prob_type, :active)
   end
 
 # Find diagnosis by code or description 
   def myfind (str)
-        if str.match(/^[[:digit:]]{,7}$/)
+        if str.match(/^[[:digit:]]{,3}\.?[[:digit:]]{,3}$/)
           Diagnosis.where("code like ?", "%#{str}%")
         elsif str.match(/^[[:graph:]]+$/)
           Diagnosis.where("lower(descr) like ?", "%#{str}%")

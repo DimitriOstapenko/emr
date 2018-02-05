@@ -2,10 +2,8 @@
 
 	<h1>Diagnoses <%= @diagnosis.code %> - details  </h1>
 
-<div class="row">
-  <aside class="col-md-10">
-    <section class="user_info">
-      <h1>
+<div class="row justify-content-md-center">
+    <div class="col-md-6 col-md-offset-3">
 	   <pre>
 
 	      Code:         <%= @diagnosis.code %>
@@ -13,9 +11,7 @@
 	      Problem type: <%= @diagnosis.prob_type %>
 
            </pre>
-      </h1>
-    </section>
   <%= button_to "Edit", edit_diagnosis_path(@diagnosis), class: "btn btn-primary", :method => "get" %>
-  </aside>
+    </div>
 </div>
 

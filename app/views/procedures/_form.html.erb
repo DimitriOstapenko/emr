@@ -1,43 +1,74 @@
-<%= form_for(@procedure) do |f| %>
+<%= form_for @procedure do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label :'Code' %>
-  <%= f.text_field :code, class: 'form-control' %>
+<div class="row">
+  <div class="col-md-4 col-md-offset-1">
 
-  <%= f.label :'Type' %>
-  <%= f.text_field :ptype, class: 'form-control' %>
+	  <%= f.label :Code %>
+          <%= f.text_field :code %>
+  
+	  <%= f.label :type %>
+          <%= f.text_field :ptype %>
 
-  <%= f.label :'Description' %>
-  <%= f.text_field :descr, class: 'form-control' %>
+	  <%= f.label :description %>
+	  <%= f.text_field :descr %>
 
-  <%= f.label :'Cost' %>
-  <%= f.text_field :cost, class: 'form-control' %>
+	  <%= f.label :cost %>
+	  <%= f.text_field :cost %>
 
-  <%= f.label :'Unit' %>
-  <%= f.text_field :unit, class: 'form-control' %>
+	  <%= f.label :units %>
+	  <%= f.text_field :unit %>
+  </div>
 
-  <%= f.label :fac_req %>
-  <%= f.text_field :fac_req, class: 'form-control' %>
+  <div class="col-md-4 ">
 
-  <%= f.label :adm_req %>
-  <%= f.text_field :adm_req, class: 'form-control' %>
+	  <%= f.label :percent %>
+	  <%= f.text_field :percent %>
 
-  <%= f.label :diag_req %>
-  <%= f.text_field :diag_req, class: 'form-control' %>
+	  <%= f.label :'Eff. Date' %>
+	  <%= f.date_field :eff_date %>
 
-  <%= f.label :ref_req %>
-  <%= f.text_field :ref_req, class: 'form-control' %>
+	  <%= f.label :'Term Date' %>
+	  <%= f.date_field :term_date %>
+	  
+     
+    <div class="col-md-12"> &nbsp; </div>
+    <div class="col-md-2">
+          <%= f.label :faq %>
+          <%= f.check_box :fac_req %>
+    </div>
 
-  <%= f.label :percent %>
-  <%= f.text_field :percent, class: 'form-control' %>
+    <div class="col-md-2">
+          <%= f.label :adm %>
+          <%= f.check_box :adm_req %>
+    </div>
 
-  <%= f.label :eff_date %>
-  <%= f.text_field :eff_date, class: 'form-control' %>
+    <div class="col-md-2">
+          <%= f.label :diag %>
+          <%= f.check_box :diag_req %>
+    </div>
 
-  <%= f.label :term_date %>
-  <%= f.text_field :term_date, class: 'form-control' %>
+    <div class="col-md-2">
+          <%= f.label :ref %>
+          <%= f.check_box :ref_req %>
+    </div>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+    <div class="col-md-2">
+          <%= f.label :active %>
+          <%= f.check_box :active  %>
+    </div>
+
+  
+  </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-1">
+    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+    </div>
+</div>
+
+
 <% end %>
 
 

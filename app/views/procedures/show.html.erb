@@ -2,10 +2,8 @@
 
 	<h1>Procedure <%= @procedure.code %> - details  </h1>
 
-<div class="row">
-  <aside class="col-md-10">
-    <section class="user_info">
-      <h1>
+<div class="row justify-content-md-center">
+    <div class="col-md-6 col-md-offset-3">
 	   <pre>
 
 	      Code:         <%= @procedure.code %>
@@ -20,12 +18,11 @@
 	      Percent: <%= @procedure.percent %>
 	      Effective date: <%= @procedure.eff_date %>
 	      Termination date: <%= @procedure.term_date %>
+	      Active?: <%= @procedure.active %>
 
            </pre>
-      </h1>
-    </section>
     <%= button_to "Edit", edit_procedure_path(@procedure), class: "btn btn-primary", :method => "get" %>
-  </aside>
+  </div>
 </div>
 
 

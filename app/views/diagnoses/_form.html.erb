@@ -1,6 +1,10 @@
 <%= form_for(@diagnosis) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
+
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+
   <%= f.label :'Diagnostic Code' %>
   <%= f.text_field :code, class: 'form-control' %>
 
@@ -10,5 +14,19 @@
   <%= f.label :'Problem Type' %>
   <%= f.text_field :prob_type, class: 'form-control' %>
 
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+    <div class="col-md-2">
+          <%= f.label :active %>
+          <%= f.check_box :active  %>
+    </div>
+  
+  </div>
+</div>  
+
+<p>
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+    </div>
+</div>
+
 <% end %>
