@@ -83,7 +83,9 @@ class VisitsController < ApplicationController
   private
 
     def visit_params
-      params.require(:visit).permit(:vis_type,:diag_code,:proc_code,:patient_id,:doc_id,:notes,:entry_ts,:status,:duration,:entry_by )
+      params.require(:visit).permit(:vis_type,:diag_code,:proc_code, :proc_code2, :proc_code3, :proc_code4,
+				    :units, :units2, :units3, :units4, :fee, :fee2, :fee3, :fee4,
+				    :patient_id,:doc_id,:notes,:entry_ts,:status,:duration,:entry_by )
     end      
 
     def correct_user
