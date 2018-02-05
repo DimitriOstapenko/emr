@@ -1,45 +1,80 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label "Doctor", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
-  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname)  %>
+<div class="row">
+  <div class="col-md-4 ">
+
+  <%= f.label "Doctor" %>
+  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {:prompt => 'Select'})  %>
+
+  <%= f.label "Diagnosis" %>
+  <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code, {:prompt => 'Select'} ) %> <!-- ,  {:selected => @visit.code}) -->
+
+  <%= f.label "Duration" %>
+  <%= f.select :duration, $durations, default: 10, prompt: 'Select'  %>
+
   </div>
 
-  <%= f.label "Diagnosis", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
-  <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code ) %> <!-- ,  {:selected => @visit.code}) -->
+  <div class="col-md-8"> </div>
+  <div class="col-md-2">
+  <%= f.label "Procedure" %>
+  <%= f.collection_select(:proc_code, get_procedures, :code, :code, prompt: 'Select')  %>
+  </div>
+
+  <div class="col-md-2">
+  <%= f.label "Procedure" %>
+  <%= f.collection_select(:proc_code2, get_procedures, :code, :code, prompt: 'Select')  %>
   </div>
   
-  <%= f.label "Procedure", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
-  <%= f.collection_select(:proc_code, Procedure.all, :code, :code)  %>
+  <div class="col-md-2">
+  <%= f.label "Procedure" %>
+  <%= f.collection_select(:proc_code3, get_procedures, :code, :code, prompt: 'Select')  %>
+  </div>
+  
+  <div class="col-md-2">
+  <%= f.label "Procedure" %>
+  <%= f.collection_select(:proc_code4, get_procedures, :code, :code, prompt: 'Select')  %>
   </div>
 
-  <%= f.label "Visit Type", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
-  <%= f.text_field :vis_type, placeholder: 'Visit type', default: 'WS' %>
+  <div class="col-md-8"> </div>
+  <div class="col-md-2">
+  <%= f.label :units %>
+  <%= f.select :units, $units, prompt:  'Select' %>
   </div>
 
-  <%= f.label "Duration", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
-  <%= f.text_field :duration, placeholder: 'Duration', default: '10'  %>
+  <div class="col-md-2">
+  <%= f.label :units %>
+  <%= f.select :units2, $units, prompt: 'Select' %>
   </div>
 
-  <%= f.label "Status", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
+  <div class="col-md-2">
+  <%= f.label :units %>
+  <%= f.select :units3, $units, prompt: 'Select' %>
+  </div>
+
+  <div class="col-md-2">
+  <%= f.label :units %>
+  <%= f.select :units4, $units, prompt: 'Select' %>
+  </div>
+
+  <div class="col-md-4">
+  <%= f.label "Status" %>
   <%= f.select :status, $statuses, placeholder: 'Status' %>
   </div>
+
+  <div class="col-md-4">
+  <%= f.label "Visit Type" %>
+  <%= f.text_field :vis_type, placeholder: 'Visit type', default: 'WS' %>
+  </div>
   
-  <%= f.label "Notes", class: "col-sm-2 control-label" %>
-  <div class="col-sm-10">
-  <%= f.text_area :notes,  cols: 25, rows:10, placeholder: 'Notes' %>
   </div>
 
-  <div class="col-sm-2"></div>
-  <div class="col-sm-10">
+  <div class="col-md-14">
+
+  <%= f.text_area :notes,  cols: 20, rows:10, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-  </div
+  </div>
+</div>
 
 <% end %>
 
