@@ -51,7 +51,7 @@ class ProceduresController < ApplicationController
   def update
     @procedure = Procedure.find(params[:id])
     if @procedure.update_attributes(procedure_params)
-      flash[:success] = "Profile updated"
+      flash[:success] = "Procedure updated"
       redirect_to @procedure
     else
       render 'edit'
@@ -60,7 +60,7 @@ class ProceduresController < ApplicationController
 
 private
   def procedure_params
-          params.require(:procedure).permit(:code, :qcode, :ptype, :descr, :cost, :unit, :fac_req, :adm_req, :diag_req, :ref_req, :percent, :eff_date, :term_date)
+          params.require(:procedure).permit(:code, :qcode, :ptype, :descr, :cost, :unit, :fac_req, :adm_req, :diag_req, :ref_req, :percent, :eff_date, :term_date, :active)
   end
 
 # Find procedure by code 

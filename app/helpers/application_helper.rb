@@ -22,12 +22,12 @@ module ApplicationHelper
 
 # List of procedures, most popular first
     def get_procedures
-	    Procedure.all
+	    Procedure.where("active")
     end    
     
 # List of diagnosis, most popular first
     def get_diagnoses
-	    Diagnosis.all
+	    Diagnosis.where("active")
     end    
 
 $sexes  = [['Male','M'],['Female','F'],['Unknown','X']] 
