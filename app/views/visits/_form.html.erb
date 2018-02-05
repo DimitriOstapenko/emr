@@ -2,13 +2,13 @@
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <div class="col-md-4 ">
+  <div class="col-md-3 col-md-offset-1 ">
 
   <%= f.label "Doctor" %>
-  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {:prompt => 'Select'})  %>
+  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select')  %>
 
   <%= f.label "Diagnosis" %>
-  <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code, {:prompt => 'Select'} ) %> <!-- ,  {:selected => @visit.code}) -->
+  <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code, prompt: 'Select' ) %> <!-- ,  {:selected => @visit.code}) -->
 
   <%= f.label "Duration" %>
   <%= f.select :duration, $durations, default: 10, prompt: 'Select'  %>
@@ -16,60 +16,62 @@
   </div>
 
   <div class="col-md-8"> </div>
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code, get_procedures, :code, :code, prompt: 'Select')  %>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code2, get_procedures, :code, :code, prompt: 'Select')  %>
   </div>
   
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code3, get_procedures, :code, :code, prompt: 'Select')  %>
   </div>
   
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code4, get_procedures, :code, :code, prompt: 'Select')  %>
   </div>
 
   <div class="col-md-8"> </div>
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label :units %>
   <%= f.select :units, $units, prompt:  'Select' %>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label :units %>
   <%= f.select :units2, $units, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label :units %>
   <%= f.select :units3, $units, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-1">
   <%= f.label :units %>
   <%= f.select :units4, $units, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-8"> </div>
+
+  <div class="col-md-2">
   <%= f.label "Status" %>
   <%= f.select :status, $statuses, placeholder: 'Status' %>
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-2">
   <%= f.label "Visit Type" %>
   <%= f.text_field :vis_type, placeholder: 'Visit type', default: 'WS' %>
   </div>
   
   </div>
 
-  <div class="col-md-14">
+  <div class="col-md-8 col-md-offset-1">
 
   <%= f.text_area :notes,  cols: 20, rows:10, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
