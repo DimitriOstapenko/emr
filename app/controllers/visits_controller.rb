@@ -1,6 +1,7 @@
 class VisitsController < ApplicationController
 
 	before_action :logged_in_user, only: [:create, :destroy, :new, :index]
+        before_action :current_doctor_set, only: :new  
 	before_action :admin_user,   only: :destroy
 
   def new

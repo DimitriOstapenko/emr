@@ -1,16 +1,14 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
 
-  <% doc_id = @visit.doctor.id ||  current_doctor.id %>
-
 <div class="row">
-  <div class="col-md-3 col-md-offset-1">
+  <div class="col-md-3 col-md-offset-1 ">
 
   <%= f.label "Doctor" %>
-  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select', selected: doc_id) %>  
+  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select', selected: current_doctor.lname)  %>
 
   <%= f.label "Diagnosis" %>
-  <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code, prompt: 'Select')  %> 
+  <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code, prompt: 'Select' ) %> <!-- ,  {:selected => @visit.code}) -->
 
   <%= f.label "Duration" %>
   <%= f.select :duration, $durations, default: 10, prompt: 'Select'  %>

@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   include SessionsHelper
+  include DaysheetHelper
 
   private
 
@@ -13,6 +14,15 @@ class ApplicationController < ActionController::Base
         redirect_to login_url
       end
     end
+
+# confirms current_doctor set
+   def current_doctor_set
+	 unless current_doctor
+	   store_location
+	   flash[:danger] = "Please set current doctor"
+	   redirect_to set_doctor_url
+	 end
+   end
 
 # Confirms an admin user.
     def admin_user
