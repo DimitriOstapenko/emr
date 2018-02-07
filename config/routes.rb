@@ -15,11 +15,13 @@ Rails.application.routes.draw do
   get 'diagnoses/index'
   get 'diagnoses/edit'
 
-  get '/doctors' => 'doctors#find', constraints: { query_string: /findstr/ }
+  get '/doctors/index' => 'doctors#find', constraints: { query_string: /findstr/ }
   get 'doctors/new'
   get 'doctors/show'
   get 'doctors/index'
   
+  post '/daysheet/index', to: 'daysheet#set_doctor' 
+  get '/set_doctor', to: 'daysheet#set_doctor' 
   get 'daysheet/index'
 
 #  get 'sessions/new'

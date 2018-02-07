@@ -1,23 +1,26 @@
-<% date = params[:date] || Date.today %>
+<% date = params[:date]  || Date.today %>
+<% date.to_date %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
+<% provide(:button_text, 'Save changes') %>
 
-<h1> Visits <%= date.to_s  %> (<%= @daysheet.count %>)  </h1>
+<% if @daysheet.count >0 %>
+	<h1> Visits <%= date.to_s  %> (<%= @daysheet.count %>)  Current doctor : <%= current_doctor.lname rescue '' %> </h1> 
 
 <ul class="users">
 <table style="width:100%; padding: 10px;" >
   <thead>
   <col width="50">
-  <col width="120">
   <col width="100">
+  <col width="80">
   <col width="50">
   <col width="50">
-  <col width="150">
+  <col width="200">
       <tr>
           <th>Time</th>
 	  <th>Patient</th>
  	  <th>Doctor</th>
-          <th>Diag Code</th>
-          <th>Proc Code</th>
+          <th>Diagnosis</th>
+          <th>Procedure(s)</th>
           <th>Notes</th>
       </tr>
   </thead>
@@ -28,8 +31,15 @@
      <%# render 'visits/visit', visit: v %>
   <% end %>
 
+     <tr><td>&nbsp;</td></tr>
   </tbody>
 </table>
 </ul>
 <p>
-<%= will_paginate(@daysheet) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
+<%= will_paginate(@daysheet) %>
+
+<% end %>
+
+<% if date.today? && !current_doctor %>
+   <%= render 'set_doctor' %> 
+<% end %>

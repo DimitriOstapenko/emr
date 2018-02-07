@@ -2,7 +2,8 @@ class Doctor < ApplicationRecord
         attr_accessor :full_name, :age
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-        default_scope -> {order(lname: :asc)}
+        default_scope -> {order( bills: :desc, lname: :asc)}
+
         validates :lname, presence: true, length: { maximum: 50 }
         validates :fname, length: { maximum: 50 }, allow_blank: true
 	validates :service, presence: true, length: { is: 4}

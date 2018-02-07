@@ -1,12 +1,11 @@
-<% pat = Patient.find(visit.patient_id)
-%>
+<% pat = Patient.find(visit.patient_id) %>
 
 <tr>
 	<td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %> </td>
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= visit.doctor.lname %></td>
 	<td><%= visit.diag_code %></td>
-	<td><%= visit.proc_code %></td>
+	<td><%= visit.proc_codes %></td>
 	<td><%= visit.notes.to_s.first(40)+ '..'  %></td>
 
 </tr>
