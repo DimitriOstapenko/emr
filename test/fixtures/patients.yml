@@ -1,19 +1,21 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 1
+  id: 57445
   lname: Murphy
   fname: Anibal
-  sex: 1
+  sex: M
   ohip_num: 1234567890 
   dob: 2001-01-07
   phone: 9052228888 
+  ohip_ver: PNA
 
 two:
-  id: 2
+  id: 52187
   lname: Koch 
   fname: Else
-  sex: 2
+  sex: F
   ohip_num: 0987654321 
   dob: 1959-05-21
   phone: 9052223242
+  ohip_ver: PNB

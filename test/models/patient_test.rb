@@ -18,6 +18,7 @@ class PatientTest < ActiveSupport::TestCase
 		       hin_prov: 'ON',
 		       hin_expiry: '2019-01-01'
 		      )
+    @visit = visits(:one)
   end
 
   test "object should be valid" do
@@ -35,7 +36,7 @@ class PatientTest < ActiveSupport::TestCase
   end
 
   test "ohip_num should be present" do
-    @pat.ohip_num = 123
+    @pat.ohip_num = nil
     assert_not @pat.valid?
   end
 
@@ -44,43 +45,26 @@ class PatientTest < ActiveSupport::TestCase
     assert_not @pat.valid?
   end
 
-#  test "email validation should accept valid addresses" do
-#    valid_addresses = %w[user@example.com USER@foo.COM A_US-ER@foo.bar.org
-#                         first.last@foo.jp alice+bob@baz.cn]
-#    valid_addresses.each do |valid_address|
-#      @pat.email = valid_address
-#      assert @pat.valid?, "#{valid_address.inspect} should be valid"
-#    end
-#  end
+  test "ohip_num should be unique" do
+    duplicate_user = @pat.dup
+    @pat.save
+    assert_not duplicate_user.valid?
+  end
 
-#  test "email validation should reject invalid addresses" do
-#    invalid_addresses = %w[user@example,com user_at_foo.org user.name@example.
-#                           foo@bar_baz.com foo@bar+baz.com]
-#    invalid_addresses.each do |invalid_address|
-#      @pat.email = invalid_address
-#      assert_not @pat.valid?, "#{invalid_address.inspect} should be invalid"
-#    end
-#  end
-
-#  test "email addresses should be unique" do
-#    duplicate_user = @pat.dup
-#    duplicate_user.email = @pat.email.upcase
-#    @pat.save
-#    assert_not duplicate_user.valid?
-#  end
-
-#  test "email addresses should be saved as lower-case" do
-#    mixed_case_email = "Foo@ExAMPle.CoM"
-#    @pat.email = mixed_case_email
-#    @pat.save
-#    assert_equal mixed_case_email.downcase, @pat.reload.email
-#  end
+  test "email addresses should be saved as lower-case" do
+    mixed_case_email = "Foo@ExAMPle.CoM"
+    @pat.email = mixed_case_email
+    @pat.save
+    assert_equal mixed_case_email.downcase, @pat.reload.email
+  end
 
   test "associated visits should be destroyed" do
     @pat.save
-    @pat.visits.create!(notes: "Lorem ipsum", doc_id: 1, patient_id: 1, diag_code: '700.11', proc_code: 'A9', entry_ts: '2018-01-01 7:55:06')
+    @visit.patient_id = @pat.id 
+    @visit.save
+#   @pat.visits.create!(notes: "Lorem ipsum", doc_id: 1, doc_code:'l&', diag_code: '700.11', proc_code: 'A9', units: 1, fee: 29.99,  entry_ts: '2018-01-01 7:55:06')
     assert_difference 'Visit.count', -1 do
-    @pat.destroy
+      @pat.destroy
     end
   end
 

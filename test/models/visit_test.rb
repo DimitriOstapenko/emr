@@ -4,10 +4,15 @@ class VisitTest < ActiveSupport::TestCase
   def setup
     @patient = patients(:one)
     @doctor =  doctors(:one)
-    @visit = @patient.visits.new(notes: "Lorem ipsum",
+    @visit = @patient.visits.new(
+	    	       notes: "Lorem ipsum",
 		       diag_code: "702.22",
 		       proc_code: 'A09',
-		       patient_id: @patient.id,
+		       units: 1,
+		       fee: 29.99,
+		       proc_code2: 'A10B',
+		       units2: 1,
+		       fee2: 12.99,
 		       doc_id: @doctor.id,
 		       doc_code: @doctor.doc_code,
 		       status: 4,
@@ -18,12 +23,23 @@ class VisitTest < ActiveSupport::TestCase
 		      )
   end
 
+
   test "Object should be valid" do
-    assert @visit.valid?
+	 assert @visit.valid? 
   end
 
   test "patient_id should be present" do
     @visit.patient_id = nil
+    assert_not @visit.valid?
+  end
+  
+  test "doc_id should be present" do
+    @visit.doc_id = nil
+    assert_not @visit.valid?
+  end
+  
+  test "doc_code should be present" do
+    @visit.doc_code = nil
     assert_not @visit.valid?
   end
   
@@ -33,7 +49,7 @@ class VisitTest < ActiveSupport::TestCase
   end
 
   test "diag_code should be present" do
-    @visit.diag_code = "   "
+    @visit.diag_code = nil
     assert_not @visit.valid?
   end
   
@@ -42,5 +58,10 @@ class VisitTest < ActiveSupport::TestCase
     assert_not @visit.valid?
   end
 
+  test "units should be positive integer" do
+	  @visit.units = 0.5
+    assert_not @visit.valid?
+  end
+  
 
 end

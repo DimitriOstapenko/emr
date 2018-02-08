@@ -2,10 +2,12 @@
 
 one:
   code: 700.111
-  descr: MyString
-  prob_type: MyString
+  descr: Descr 1
+  prob_type: MyString1
+  active: 1
 
 two:
   code: 700.112
-  descr: MyString 222222
-  prob_type: MyString
+  descr: Descr 2
+  prob_type: MyString2
+  active: 0

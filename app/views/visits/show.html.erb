@@ -12,10 +12,10 @@
 	   <pre>
 		Doctor :    <%= @visit.doctor.lname %>
 		Diagnosis : <%= @visit.diag_code %> : <%= diag.descr %>
-		Procedure(s) : <%=  codes.join(',') %>
+		Procedure(s) : <%=  @visit.proc_codes %>
   		Type: <%= @visit.vis_type %>
   		Duration: <%= @visit.duration %> minutes
-		Status: <%= $statuses[@visit.status][0] %> 
+		Status: <%= @visit.status_str %> 
   		Entry by: <%= @visit.entry_by %>
   		Entered at: <%= @visit.entry_ts %>
 		Notes: <%= @visit.notes %>	     

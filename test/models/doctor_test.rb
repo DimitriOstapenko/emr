@@ -33,27 +33,3 @@ class DoctorTest < ActiveSupport::TestCase
 
 end
 
-#    t.string "lname"
-#    t.string "fname"
-#    t.integer "cpso_num"
-#    t.integer "billing_num"
-#    t.datetime "created_at", null: false
-#    t.datetime "updated_at", null: false
-#    t.string "service"
-#    t.string "ph_type"
-#    t.string "district"
-#    t.boolean "bills"
-#    t.string "address"
-#    t.string "city"
-#    t.string "prov"
-#    t.string "postal"
-#    t.string "phone"
-#    t.string "mobile"
-#    t.string "licence_no"
-#    t.text "note"
-#    t.string "office"
-#    t.string "provider_no"
-#    t.string "group_no"
-#    t.string "specialty"
-#    t.string "email"
-#    t.string "doc_code"

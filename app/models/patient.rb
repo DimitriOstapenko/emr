@@ -3,6 +3,7 @@ class Patient < ApplicationRecord
 	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age
 	default_scope -> {order(lname: :asc)}
+	before_save { email.downcase! rescue '' }
 
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, length: { maximum: 50 }
@@ -11,7 +12,7 @@ class Patient < ApplicationRecord
 	validates :dob, presence: true
 #       validates :phone, presence: true # , length: { is: 10 }, numericality: { only_integer: true }
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
-#	validates :ohip_ver, presence: true
+	validates :ohip_ver, presence: true
 
   def full_name
     return fname.blank? ? lname : [lname, fname].join(', ')

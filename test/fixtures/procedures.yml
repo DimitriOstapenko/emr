@@ -2,9 +2,9 @@
 
 one:
   code: Code1
-  qcode: MyString
-  ptype: MyString
-  descr: MyString
+  qcode: QCode1
+  ptype: HCP 
+  descr: Description 2
   cost: 29.99
   unit: 1 
   fac_req: false
@@ -12,14 +12,15 @@ one:
   diag_req: false
   ref_req: false
   percent: 100 
-  eff_date: 2018-01-18
-  term_date: 2018-01-18
+  eff_date: 2008-01-18
+  term_date: 2019-01-18
+  active: 1
 
 two:
   code: Code2
-  qcode: MyString
-  ptype: MyString
-  descr: MyString
+  qcode: QCode2
+  ptype: HCP
+  descr: Description 1 
   cost: 29.99
   unit: 1 
   fac_req: false
@@ -27,6 +28,7 @@ two:
   diag_req: false
   ref_req: false
   percent: 100 
-  eff_date: 2018-01-18
-  term_date: 2018-01-18
+  eff_date: 2009-01-18
+  term_date: 2019-01-18
+  active: 1
 

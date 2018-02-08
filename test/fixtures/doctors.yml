@@ -9,7 +9,19 @@ one:
   ph_type: "GP"
   district: "G"
   bills: true
-  provider_no: 123456
+  address: '1 James st w, Unit 5'
+  city: 'Hamilton'
+  prov: 'ON'
+  postal: 'L9G1G1'
+  phone: 9991112221
+  mobile: 1112223332
+  licence_no: 12231
+  note: 'blah'
+  office: '2 John str w 905-551-2212'
+  provider_no: 123455
+  group_no: 1234
+  specialty: '00'
+  email: doc1@docs.com
   doc_code: 'l&'
 
 two:
@@ -21,5 +33,17 @@ two:
   ph_type: "GP"
   district: "G"
   bills: true
+  address: '1 James st w, Unit 6'
+  city: 'Hamilton'
+  prov: 'ON'
+  postal: 'L9G1G1'
+  phone: 9991112222
+  mobile: 1112223333
+  licence_no: 12232
+  note: 'blah'
+  office: '1 John str w 905-551-2212'
   provider_no: 123456
-  doc_code: 'l&'
+  group_no: 1235
+  specialty: '00'
+  email: doc2@docs.com
+  doc_code: 'l:'

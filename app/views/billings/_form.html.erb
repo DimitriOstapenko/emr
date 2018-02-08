@@ -6,7 +6,7 @@
                 Patient :   <%= @patient.full_name %>
                 Doctor :    <%= @visit.doctor.lname %>
                 Duration : <%= @visit.duration %>
-                Status: <%= @billing.status %>
+                Status: <%= @billing.status_str %>
 
   </pre>
 
@@ -22,7 +22,7 @@
   
   <%= f.label :Units, class: "col-md-4 control-label" %>
   <div class="col-md-6">
-  <%= f.select(:proc_units, [[1,1],[2,2],[3,3],[4,4],[5,5]] ) %>
+  <%= f.select(:proc_units, $units ) %>
   </div>
 
   <%= f.label :Type, class: "col-md-4 control-label" %>
