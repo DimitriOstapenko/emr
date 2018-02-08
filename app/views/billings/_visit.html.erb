@@ -1,0 +1,13 @@
+<tr>
+	
+	<td><%= Patient.find(visit.patient_id).lname %> </td>
+	<td><%= Doctor.find(visit.doc_id).lname %> </td>
+	<td><%= visit.proc_codes %></td>
+	<td><%= visit.duration %></td>
+	<td><%= visit.diag_code %></td>
+	<td><%= visit.total_fee %></td>
+	<td><%= visit.status_str %></td>
+	<td><%= visit.entry_by %></td>
+	<td><%= visit.entry_ts %></td>
+
+</tr>

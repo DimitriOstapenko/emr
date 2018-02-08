@@ -21,6 +21,7 @@
   <div class="col-md-1">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code, get_procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.hidden_field(:fee, id: :fee) %>  
   </div>
 
   <div class="col-md-1">

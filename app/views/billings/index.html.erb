@@ -8,19 +8,17 @@
       <tr>
           <th>Patient</th>
           <th>Doctor</th>
-          <th>Procedure</th>
+          <th>Procedure(s)</th>
           <th>Duration</th>
           <th>Diagnosis</th>
           <th>Fee</th>
-          <th>Type</th>
           <th>Status</th>
 	  <th>Entry By</th>
 	  <th>Entry Date</th>
-	  <th>Note</th>
       </tr>
   </thead>
   <tbody>
-	  <%= render partial: "billing", collection: @visits %>
+	  <%= render partial: "visit", collection: @visits %>
   </tbody>
 </table>
 </ul>

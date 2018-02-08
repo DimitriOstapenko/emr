@@ -4,7 +4,7 @@ class Billing < ApplicationRecord
   attr_accessor :doc_name, :pat_name
 
   validates :pat_id, presence: true
-#  validates :doc_code, presence: true
+  validates :doc_code, presence: true
   validates :doc_id, presence: true
   validates :diag_code, presence: true
   validates :proc_code, presence: true

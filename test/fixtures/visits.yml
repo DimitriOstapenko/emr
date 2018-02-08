@@ -1,8 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-murphy:
+one:
   diag_code: 700.22 
   proc_code: Code1
+  units: 1
+  fee: 29.99
   patient_id: 112
   doc_id: 401
   status: 2
@@ -13,9 +15,11 @@ murphy:
   entry_ts: 2018-01-07 22:03:20
   notes: MyText
 
-sienna:
+two:
   diag_code: 600.11 
   proc_code: Code2
+  units: 1
+  fee: 29.99
   patient_id: 112
   doc_id: 401
   status: 2
