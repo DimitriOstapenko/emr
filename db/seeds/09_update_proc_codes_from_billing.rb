@@ -6,11 +6,11 @@
 
 require_relative '../../config/environment'
 
-Visit.first(100) do |v|
+Visit.all.each do |v|
   puts "visit : #{v.id}"
   billings = Billing.where(visit_id: v.id)
   billings.each_with_index do | b, index |
-#   puts "proc: #{b.proc_code}"
+#    puts "proc: #{b.proc_code}"
     case index
     when 0 
 	    v.proc_code = b.proc_code
