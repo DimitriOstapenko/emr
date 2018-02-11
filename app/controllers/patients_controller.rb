@@ -113,10 +113,12 @@ private
   end
 
   def make_label ( pat )
+     dob = pat.dob.strftime("%d-%b-%Y") if !pat.dob.blank?
+     exp_date = pat.hin_expiry.strftime("%m/%y") if !pat.hin_expiry.blank?	 
      label = "#{pat.full_name} 
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal} 
-     DOB: #{pat.dob.strftime("%d-%b-%Y")} #{pat.age} y.o #{pat.sex} 
-     H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{pat.hin_expiry.strftime("%m/%y")}
+     DOB: #{dob} #{pat.age} y.o #{pat.sex} 
+     H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{exp_date}
      Tel: #{pat.phone} File: #{pat.id}"
   end
 
