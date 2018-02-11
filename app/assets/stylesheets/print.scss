@@ -1,0 +1,5 @@
+@media print {
+  div.info, div#editStuff, div#navigation, div#debug {
+    display: none;
+  }
+}

@@ -3,6 +3,7 @@ class PatientsController < ApplicationController
 	before_action :logged_in_user, only: [:index, :edit, :update]
 	before_action :admin_user,   only: :destroy
 
+
   def index
 	  @patients = Patient.paginate(page: params[:page]) #, per_page: 40)
   end
@@ -68,6 +69,28 @@ class PatientsController < ApplicationController
     end
   end
 
+  def label
+
+	require 'prawn'
+	require "prawn/measurement_extensions"
+
+    @patient = Patient.find(params[:id])
+    @label = make_label (@patient)
+    pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,3.mm,1.mm,1.mm])
+    pdf.font "Courier", :style => :bold
+    pdf.text_box @label, :at => [5.mm,26.mm],
+         :width => 82.mm,
+         :height => 27.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 2.mm
+
+    send_data pdf.render,
+	  filename: "label_#{@patient.full_name}",
+          type: 'application/pdf',
+          disposition: 'inline' 
+
+  end
+
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :dob, :sex, :ohip_num, :ohip_ver, 
@@ -88,4 +111,13 @@ private
 	  []
 	end
   end
+
+  def make_label ( pat )
+     label = "#{pat.full_name} 
+     #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal} 
+     DOB: #{pat.dob.strftime("%d-%b-%Y")} #{pat.age} y.o #{pat.sex} 
+     H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{pat.hin_expiry.strftime("%m/%y")}
+     Tel: #{pat.phone} File: #{pat.id}"
+  end
+
 end

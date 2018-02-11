@@ -2,6 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
 
   <% doc_id = @visit.doctor.id ||  current_doctor.id %>
+  <% @procedures = get_procedures %>
 
 <div class="row">
   <div class="col-md-3 col-md-offset-1">
@@ -20,23 +21,23 @@
   <div class="col-md-8"> </div>
   <div class="col-md-1">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code, get_procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code, @procedures, :code, :code, prompt: 'Select')  %>
   <%= f.hidden_field(:fee, id: :fee) %>  
   </div>
 
   <div class="col-md-1">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code2, get_procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code2, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
   
   <div class="col-md-1">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code3, get_procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code3, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
   
   <div class="col-md-1">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code4, get_procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code4, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
 
   <div class="col-md-8"> </div>

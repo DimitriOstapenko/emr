@@ -27,6 +27,8 @@
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
     <p>
     <%= button_to "Edit Patient", edit_patient_path(@patient), class:"btn btn-primary", method: 'get' %>
+    <p>
+    <%= button_to "Print Label", label_patient_path(@patient), class: "btn btn-primary", method: 'get'  %>
 
     </section>
   </aside>
@@ -40,4 +42,5 @@
 <%= will_paginate(@visits) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
   </div>
 </div>
+
 
