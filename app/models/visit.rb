@@ -6,7 +6,7 @@ class Visit < ApplicationRecord
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true, numericality: { only_integer: true }
-  validates :doc_code, presence: true
+#  validates :doc_code, presence: true
   validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
   validates :proc_code, presence: true, length: { maximum: 10 }
   validates :units, numericality: { only_integer: true, only_positive: true }

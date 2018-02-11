@@ -14,6 +14,9 @@ class VisitsController < ApplicationController
     @visit = @patient.visits.build(visit_params)
     @visit.entry_ts = DateTime.now
     @visit.entry_by = current_user.name
+
+    set_visit_fees ( @visit )
+
     if @visit.save
       @patient.last_visit_date = @visit.created_at	    
       @patient.save
@@ -57,7 +60,8 @@ class VisitsController < ApplicationController
   def update
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
-    if @visit.update_attributes(visit_params)
+    set_visit_fees( @visit )
+    if @visit.save
       @patient.last_visit_date = @visit.created_at
       @patient.save
       flash[:success] = "Visit updated"
@@ -99,5 +103,23 @@ class VisitsController < ApplicationController
       redirect_to root_url unless current_user.admin?
     end
 	
+    def set_visit_fees ( visit )
+      if !visit.proc_code.blank? 
+	      p = Procedure.find_by(code: visit.proc_code) 
+	      visit.fee = p.cost
+      end
+      if !visit.proc_code2.blank? 
+	      p = Procedure.find_by(code: visit.proc_code2) 
+	      visit.fee2 = p.cost
+      end  
+      if !visit.proc_code3.blank? 
+	      p = Procedure.find_by(code: visit.proc_code3) 
+	      visit.fee3 = p.cost
+      end  
+      if !visit.proc_code4.blank? 
+	      p = Procedure.find_by(code: visit.proc_code4) 
+	      visit.fee4 = p.cost
+      end  
+    end
 
 end

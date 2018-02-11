@@ -36,7 +36,9 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-   get '/patients' => 'patients#find', constraints: { query_string: /findstr/ }
+  get '/patients' => 'patients#find', constraints: { query_string: /findstr/ }
+#  get '/patients/:id/label', to: 'patients#label'
+
 
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
@@ -47,7 +49,8 @@ Rails.application.routes.draw do
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
   resources :users
-  resources :patients  do
+  resources :patients do
+    get 'label', on: :member
     resources :visits   # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
   end
   resources :doctors
