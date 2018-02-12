@@ -1,0 +1,34 @@
+#
+# Set historical fees in visits table 
+#
+#
+
+
+require_relative '../../config/environment'
+
+Visit.all.each do |v|
+  puts "visit : #{v.id}"
+
+  if !v.proc_code.blank?
+    proc = Procedure.find_by(code: v.proc_code) 
+    v.fee = proc.cost if proc
+  end
+
+  if !v.proc_code2.blank?
+    proc2 = Procedure.find_by(code: v.proc_code2)
+    v.fee2 = proc2.cost if proc2
+  end
+
+  if !v.proc_code3.blank?
+  proc3 = Procedure.find_by(code: v.proc_code3) 
+   v.fee3 = proc3.cost if proc3
+  end
+
+  if !v.proc_code4.blank?
+    proc4 = Procedure.find_by(code: v.proc_code4)
+    v.fee4 = proc4.cost if proc4
+  end
+
+  v.save
+
+end
