@@ -14,12 +14,13 @@ class PatientsController < ApplicationController
       if @patients.any?
          @patients = @patients.paginate(page: params[:page])
 	 flash.now.alert = 'Found: '+ @patients.size.to_s
+         render 'index'
       else
-	  @patients = Patient.paginate(page: params[:page])
-	  @not_found = true
-	  #  render 'patient_not_found'
+	 @patients = Patient.paginate(page: params[:page])
+	 @patients = Patient.new
+	 flash.now[:danger] = 'Not found'
+	 render 'no_patients_found'
       end
-     render 'index'
   end
 
   def show 
@@ -70,7 +71,6 @@ class PatientsController < ApplicationController
   end
 
   def label
-
 	require 'prawn'
 	require "prawn/measurement_extensions"
 
@@ -88,7 +88,43 @@ class PatientsController < ApplicationController
 	  filename: "label_#{@patient.full_name}",
           type: 'application/pdf',
           disposition: 'inline' 
+  end
 
+  def card
+    @patient = Patient.find(params[:id])
+    @cardstr = params[:cardstr] rescue nil
+    if !@cardstr.blank?
+       @cardnum = @cardstr[7,10]
+       @patient = Patient.find_by(ohip_num: @cardnum)
+    end
+    if @cardstr 
+       flash.now[:success] = "Card info received: #{@cardstr}"
+       respond_to do |format|
+         format.html { render 'show_card' }
+#	 format.js { render js: "alert('format.js: The cardstr: #{@cardstr} : #{@patient.full_name}')" }
+	 format.js { render js: "$('#status').html('Found patient: #{@patient.full_name}')" }
+       end
+    else     
+       flash.now[:success] = "Card not received yet  #{params.inspect}"
+       @patient = Patient.find(params[:id])
+       render 'card'
+    end
+  end
+
+  def card2 
+#	  debugger
+    @params = params
+    @cardstr = params[:patient][:cardstr] rescue nil
+    @cardstr ||= params[:cardstr] rescue nil
+#    render js: "alert('The number is: #{params}')"
+    if @cardstr 
+       flash.now[:success] = "Card info received: #{@cardstr}"
+       render 'show_card' 
+    else     
+       flash.now[:success] = "Card not received yet  #{params.inspect}"
+       @patient = Patient.find(params[:id])
+       render 'card'
+    end
   end
 
 private
@@ -97,16 +133,19 @@ private
 					  :phone, :mobile, :full_name, :addr, :city, :prov,
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :notes, :alt_contact_name,
-					  :alt_contact_phone, :email, :family_dr, :lastmod_by
+					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr
 					 )
   end
  
 # Find patient by last name or health card number, depending on input format  
   def myfind (str)
 	if str.match(/^[[:digit:]]{,10}$/)
-      	  Patient.where("ohip_num like ?", "%#{str}%") 
+      	  Patient.where("ohip_num like ?", "%#{str}%")  
+	elsif str.match(/^%B6/)
+	  hcnum = str[8,10]
+	  Patient.find_by(ohip_num: hcnum)
 	elsif str.match(/^[[:graph:]]+$/)
-      	  Patient.where("lower(lname) like ?", "%#{str}%") 
+	  Patient.where("lower(lname) like ?", "%#{str.downcase}%") 
 	else
 	  []
 	end

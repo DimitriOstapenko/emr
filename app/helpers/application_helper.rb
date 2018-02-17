@@ -1,4 +1,6 @@
 module ApplicationHelper
+       
+#	include ActionView::Helpers::NumberHelper 
   
 # Returns the full title on a per-page basis.
     def full_title(page_title = '')
@@ -14,7 +16,6 @@ module ApplicationHelper
 	    'http://ruby.drlena.com'
     end
 
-
 # Get list of active doctors in the clinic
     def get_active_doctors
 	    Doctor.where("bills = 't'" )
@@ -29,6 +30,12 @@ module ApplicationHelper
     def get_diagnoses
 	    Diagnosis.where("active")
     end    
+
+# Health card validation
+    
+    def hcard_validation ( str )
+       return 777
+    end
 
 $sexes  = [['Male','M'],['Female','F'],['Unknown','X']] 
 
@@ -62,5 +69,6 @@ $durations = [[10,10], [20,20], [30,30], [40,40]]
 
 $units = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]]
 
-@current_doc = 413
+$true_false = [['True', 1],['False',0]]
+
 end

@@ -19,10 +19,10 @@
 <% end %>
 <% if controller_name == 'patients' || controller_name == 'doctors' || controller_name == 'procedures' || controller_name == 'diagnoses' %>
 	<li class="nav-item active">
-	<%= form_with method: :get, skip_enforcing_utf8: :true do |f| %>  
+		<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
                 <div class="col-xs-12">
-			<%= f.search_field :findstr, placeholder: "Find #{controller_name.singularize}", :onChange => 'javascript: this.form.submit()' %>
+			<%= f.search_field :findstr, placeholder: "Find #{controller_name.singularize}", id: "findstr", :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
      <% end %>
@@ -59,11 +59,3 @@
   </div>
 </header>
 
-<!--
-<script type="text/javascript">
-$(document).on("focus", "[data-behaviour~='datepicker']", function(e){
-    $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": false, "todayBtn": true, "todayHighlight": true});
-});
-
-</script>
--->

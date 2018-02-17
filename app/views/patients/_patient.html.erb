@@ -1,11 +1,11 @@
-     <tr>
+    <tr>
 	<td><%= link_to "#{patient.lname}, #{patient.fname}", patient %> </td>
 	<td><%= patient.sex %></td> 
 	<td><%= patient.last_visit_date %> </td> 
 	<td><%= patient.age %></td>
 	<td><%= patient.ohip_num %> </td>
 	<td><%= patient.phone %> </td> 
-	<td><%= patient.addr+' '+patient.city+', '+patient.prov+' '+patient.postal %> </td> 
+	<td><%= "#{patient.addr} #{patient.city}, #{patient.prov} #{patient.postal}" %> </td> 
 
   	<% if current_user.admin?  %>
 		<td> <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %> </td>

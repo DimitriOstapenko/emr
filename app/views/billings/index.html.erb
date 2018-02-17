@@ -1,20 +1,22 @@
 <% provide(:title, 'All billing') %>
+<% date = params[:date].to_date rescue Date.today %>
   
-<h1> Billings for <%= params['date'] %> (<%= @visits.count %>)</h1>
+<h1> Billings for <%= date.to_s %> (<%= @visits.count %>)</h1>
 
 <ul class="users">
 <table style="width:100%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
+	  <th>Time</th>
+	  <th>Visit Id</th>
           <th>Patient</th>
           <th>Doctor</th>
           <th>Procedure(s)</th>
           <th>Duration</th>
           <th>Diagnosis</th>
-          <th>Fee</th>
+          <th>Ttl. Fee</th>
           <th>Status</th>
 	  <th>Entry By</th>
-	  <th>Entry Date</th>
       </tr>
   </thead>
   <tbody>

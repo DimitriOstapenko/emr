@@ -31,10 +31,8 @@
 
   <div class="col-md-4">
   <%= f.label :bills %>
-  <%= f.select :bills, $true_false %>
+  <%= f.text_field :bills %>
   </div>
-
-  <div class="col-md-10"></div>
 
   <div class="col-md-4">
   <%= f.label :'CPSO Number' %>
@@ -79,7 +77,7 @@
 
   <div class="col-md-4">
   <%= f.label :'Province' %>
-  <%= f.select(:prov, $provinces ) %>
+  <%= f.text_field :prov %>
   </div>
 
   <div class="col-md-4">
@@ -92,12 +90,12 @@
 
   <div class="col-md-4">
   <%= f.label :'Phone Number' %>
-  <%= f.telephone_field :phone, placeholder: 'xxx-xxx-xxxx' %>
+  <%= f.text_field :phone %>
   </div>
 
   <div class="col-md-4">
   <%= f.label :'Mobile Number' %>
-  <%= f.telephone_field :mobile %>
+  <%= f.text_field :mobile %>
   </div>
 
   <div class="col-md-4">
@@ -109,7 +107,8 @@
 </div>
 
   <div class="row">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="col-md-9 col-md-offset-1">
+     <%= f.label :notes %>
      <%= f.text_area :note, rows:5, placeholder: 'Notes' %>
      <p>
      <%= f.submit yield(:button_text), class: "btn btn-primary" %>

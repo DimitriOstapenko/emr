@@ -9,16 +9,19 @@
 	   <pre>
 	      Name: <%= @patient.full_name %>
 	      DOB: <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex %>
-      	      Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> Expires: <%= @patient.hin_expiry %>
-	      Phone: <%= @patient.phone %>
+	      Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) Expires: <%= @patient.hin_expiry %>
+	      Phone: <%= number_to_phone(@patient.phone) %>
+	      Mobile: <%= number_to_phone(@patient.mobile) %>
 	      Addr: <%= @patient.addr %>
 		    <%= @patient.city %> <%= @patient.prov %> 
 		    <%= @patient.postal %>
 		    <%= @patient.country %>
-	      Family Dr. <%= @patient.family_dr %>
-	      Pharmacy: <%= @patient.pharmacy %> : <%= @patient.pharm_phone %>
+	      Family Doctor: Dr. <%= @patient.family_dr %>
+	      Pharmacy: <%= @patient.pharmacy %> : <%= number_to_phone(@patient.pharm_phone) %>
 	      Alt. Contact: <% @patient.alt_contact_name %> : <% @patient.alt_contact_phone %>
 	      Last Visit: <%= @patient.last_visit_date %>
+	      Created: <%= @patient.entry_date %>
+	      Last Mod By: <%= @patient.lastmod_by %>
            </pre>
       </h1>
     </section>

@@ -11,13 +11,13 @@
       <h1>
 	   <pre>
 		Doctor :    <%= @visit.doctor.lname %>
-		Diagnosis : <%= @visit.diag_code %> : <%= diag.descr %>
+		Diagnosis : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
 		Procedure(s) : <%=  @visit.proc_codes %>
   		Type: <%= @visit.vis_type %>
   		Duration: <%= @visit.duration %> minutes
 		Status: <%= @visit.status_str %> 
   		Entry by: <%= @visit.entry_by %>
-  		Entered at: <%= @visit.entry_ts %>
+  		Entered at: <%= @visit.entry_ts.in_time_zone %>
 		Notes: <%= @visit.notes %>	     
            </pre>
       </h1>
@@ -28,6 +28,8 @@
             <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
 <% end %>
 
+    <p>
+    <%= button_to "Print Visit Form", visitform_patient_visit_path(@visit), class: "btn btn-primary", method: 'get'  %>
   </aside>
 
 </div>
