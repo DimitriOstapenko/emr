@@ -36,9 +36,10 @@ Rails.application.routes.draw do
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
-  get '/patients' => 'patients#find', constraints: { query_string: /findstr/ }
-#  get '/patients/:id/label', to: 'patients#label'
-
+  get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
+  patch '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
+#  post  '/patients(/:id)/card', to: 'patients#card'
+#  get '/patients(/:id)/card', to: 'patients#card'
 
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
@@ -50,8 +51,14 @@ Rails.application.routes.draw do
 
   resources :users
   resources :patients do
+#    scope :ujs, defaults: { format: :ujs } do
+#      patch 'card' => 'patients#card'
+#    end
+
     get 'label', on: :member
-    resources :visits   # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
+    resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
+      get 'visitform', on: :member
+    end
   end
   resources :doctors
   resources :diagnoses

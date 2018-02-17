@@ -1,10 +1,14 @@
-<% date = params[:date]  || Date.today %>
-<% date.to_date %>
+<% date = params[:date].to_date rescue Date.today %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 <% provide(:button_text, 'Save changes') %>
 
+<% if date.today? %>
+	<% doc_name = current_doctor.lname rescue '' %>
+	<% suffix = 'Current doctor: ' + doc_name %>
+<% end %>
+
 <% if @daysheet.count >0 %>
-	<h1> Visits <%= date.to_s  %> (<%= @daysheet.count %>)  Current doctor : <%= current_doctor.lname rescue '' %> </h1> 
+		   <h1> Visits for <%= date.to_s  %> (<%= @daysheet.count %>)  <%= suffix %> </h1> 
 
 <ul class="users">
 <table style="width:100%; padding: 10px;" >

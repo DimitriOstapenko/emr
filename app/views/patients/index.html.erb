@@ -1,10 +1,8 @@
 <% provide(:title, 'All patients') %>
 
-<% if @not_found %>
-		   <div id="error_explanation">
-		   Patient <%= params[:findstr] %> was not found"
-		   </div>
-<% end %>
+<p>
+<div> id='status'></div>
+<p>
 
 <ul class="users">
 <table style="width:95%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
@@ -30,3 +28,45 @@
 
 <%= will_paginate(@patients) %> 
 
+<p>
+<div class="col-md-10 col-md-offset-1">
+<%= button_to "New Patient", new_patient_path, class: "btn btn-primary", method: 'get'  %>
+</div>
+
+<!--
+<script>
+             var success = function (data) {
+                        $("#status").text("Success!");
+                        var line1 = data['line1'];
+                        var cardnum = line1.substring(7, 17);
+		        var ver = line1.substring(61,63);
+		        var exp = line1.substring(45,49);
+                        var names = line1.substring(18,44);
+                        var arr = names.split('/');
+		        var dob = line1.substring(53,61);
+		        
+
+		     alert('NAME: ' + arr[0] + ', ' + arr[1]+ "\n"+
+			   'HCN: ' + cardnum + "  " + ver + ' EXP: ' + exp + "\n"+ 
+			   'DOB: ' + dob 
+		     	   );
+
+	    		$("#findstr").val(cardnum);
+		        window.location = "/patients?findstr="+cardnum;
+	     }
+	      var error = function () {
+                        alert("Failed");
+                        $("#status").text("Failed!");
+                        $(".line").text("");
+                }
+
+                $.cardswipe({
+                        success: success,
+                        firstLineOnly: true,
+                        parsers: [ "generic"  ],
+                        error: error,
+                        debug: true
+                });
+
+</script>
+-->
