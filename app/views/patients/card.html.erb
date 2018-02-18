@@ -14,19 +14,11 @@
 
 	<p>Scanning a card will not interfere with form fields. Type a few characters into the field below and start a scan.</p>
 
-	<%= form_with url: patients_path, method: 'get', local: true, remote: :false, skip_enforcing_utf8: :true, id:'form' do |f| %>
-	<%= f.text_field :findstr, id: :hidden, :onChange => 'javascript: this.form.submit()' %>
-	<%= f.submit :submit, id: 'submit' %>
-	<% end %>
+<table id="my_table">
+        <%= render @patient %>
+</table>
 
-params:	<%= @params.inspect %>
-<br>
-cardstr:<%= @cardstr.inspect %>
-
-<!--
 <script type="text/javascript">
-
-//  Called on a successful scan, where one of the parsers recognizes the card data.
 
 	     var success = function (data) {
 			$("#status").text("Success!");
@@ -36,17 +28,7 @@ cardstr:<%= @cardstr.inspect %>
 		        var names = line1.substring(18,44);
 		        var arr = names.split('/');
 
-//			alert("Success!");
-//			alert( cardnum + " : " + arr[0] + ', ' + arr[1] );
-			
-//jQuery.ajaxSetup({async:false});
-//		     $.post({ url : "/patients/" + id + "/card", type : "POST", data : { cardstr: data["line1"] }, dataType: "script", success:function(json) { alert("Success2") } });
-
-//$("#hidden").val(cardnum);
-//$("#form").submit();
-
-$.ajax({url: "/patients/" + id + "/card", data: { cardstr: data["line1"]}, dataType: "script", type: "POST" });
-alert ("back in card");
+	     $.ajax({url: "/patients/" + id + "/card", data: { cardstr: line1 }, dataType: "script", type: "POST" });
 
 		}
 
@@ -66,19 +48,6 @@ alert ("back in card");
 
 </script>
 
--->
-
-<!--
-
-var array = [1, 2, 3, 4, 5];
-
-$.ajax({
-        url : "/customurl",
-        type : "post",
-        data : { data_value: JSON.stringify(array) }
-    });
-
--->
 
 
 

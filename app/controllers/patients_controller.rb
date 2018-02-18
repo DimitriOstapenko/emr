@@ -91,18 +91,15 @@ class PatientsController < ApplicationController
   end
 
   def card
-    @patient = Patient.find(params[:id])
     @cardstr = params[:cardstr] rescue nil
-    if !@cardstr.blank?
+    if @cardstr
        @cardnum = @cardstr[7,10]
        @patient = Patient.find_by(ohip_num: @cardnum)
-    end
-    if @cardstr 
        flash.now[:success] = "Card info received: #{@cardstr}"
        respond_to do |format|
-         format.html { render 'show_card' }
+         format.html 
 #	 format.js { render js: "alert('format.js: The cardstr: #{@cardstr} : #{@patient.full_name}')" }
-	 format.js { render js: "$('#status').html('Found patient: #{@patient.full_name}')" }
+	 format.js 
        end
     else     
        flash.now[:success] = "Card not received yet  #{params.inspect}"
