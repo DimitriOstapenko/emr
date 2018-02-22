@@ -90,6 +90,6 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
  
 # ADDED BY ME
-  config.assets.digest = true
+#  config.assets.digest = true
 end
 

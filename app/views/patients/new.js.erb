@@ -1,5 +1,4 @@
+//alert ("new.js.erb called <%= @patient.full_name %>");
 
-alert ("new.js.erb called");
-
-$('#result').html("<%= j (render 'form') %>");
-$('result').slideDown(350);
+$('#result').html("<h2> New Patient </h2><%= j render 'form' %>");
+$('#page').hide();

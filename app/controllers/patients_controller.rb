@@ -90,37 +90,37 @@ class PatientsController < ApplicationController
           disposition: 'inline' 
   end
 
-  def card
+  def card 
     @cardstr = params[:cardstr] rescue nil
-    if @cardstr
-       @cardnum = @cardstr[7,10]
-       @patient = Patient.find_by(ohip_num: @cardnum)
-       flash.now[:success] = "Card info received: #{@cardstr}"
-       respond_to do |format|
-         format.html 
-#	 format.js { render js: "alert('format.js: The cardstr: #{@cardstr} : #{@patient.full_name}')" }
-	 format.js 
+    if @cardstr 
+       @patient = Patient.find_by(ohip_num: @cardstr[7,10])
+       if @patient
+          redirect_to @patient 
+       else 
+	  @patient = create_patient_from_card ( @cardstr )
+#    	  @patient = Patient.new
+#          @patient.entry_date = DateTime.now
+#          @patient.lastmod_by = current_user.name
+#	  names = @cardstr[18,26].split('/')
+#	  @patient.ohip_num = @cardnum rescue '' 
+#	  @patient.ohip_ver = @cardstr[61,2]
+#	  @patient.lname = names[0] rescue '' 
+#	  @patient.fname = names[1] rescue '' 
+#	  sdob = @cardstr[53,8]
+#	  @patient.dob = Date.strptime(sdob, '%Y%m%d')
+#	  exp_dt = @cardstr[45,4] + sdob[6,2]
+#	  @patient.hin_expiry = Date.strptime(exp_dt,'%y%m%d')
+#	  @patient.sex = $sex[@cardstr[52]]
+          respond_to do |format|
+            format.html 
+	    format.js 
+          end
+	  render 'new'
        end
     else     
        flash.now[:success] = "Card not received yet  #{params.inspect}"
        @patient = Patient.find(params[:id])
-       render 'card'
-    end
-  end
-
-  def card2 
-#	  debugger
-    @params = params
-    @cardstr = params[:patient][:cardstr] rescue nil
-    @cardstr ||= params[:cardstr] rescue nil
-#    render js: "alert('The number is: #{params}')"
-    if @cardstr 
-       flash.now[:success] = "Card info received: #{@cardstr}"
-       render 'show_card' 
-    else     
-       flash.now[:success] = "Card not received yet  #{params.inspect}"
-       @patient = Patient.find(params[:id])
-       render 'card'
+       redirect_to :back
     end
   end
 
@@ -156,6 +156,25 @@ private
      DOB: #{dob} #{pat.age} y.o #{pat.sex} 
      H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{exp_date}
      Tel: #{pat.phone} File: #{pat.id}"
+  end
+
+# Accept 1st line from health card, return new patient with known data prefilled
+  def create_patient_from_card ( str )
+    sex = {'1' =>'M', '2'=>'F'}
+    pat = Patient.new
+    pat.entry_date = DateTime.now
+    pat.lastmod_by = current_user.name
+    names = str[18,26].split('/')
+    pat.ohip_num = str[7,10] rescue ''
+    pat.ohip_ver = str[61,2] rescue ''
+    pat.lname = names[0] rescue ''
+    pat.fname = names[1] rescue ''
+    sdob = str[53,8]
+    pat.dob = Date.strptime(sdob, '%Y%m%d')
+    exp_dt = str[45,4] + sdob[6,2]
+    pat.hin_expiry = Date.strptime(exp_dt,'%y%m%d')
+    pat.sex = sex[str[52]]
+    return pat
   end
 
 end

@@ -16,7 +16,7 @@ class Patient < ApplicationRecord
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, length: { maximum: 50 }
 	validates :mname, length: { maximum: 50 }, allow_blank: true
-	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true
+	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true #add validate_hnum here (defined below)
 	validates :ohip_ver, presence: true, length: { maximum: 3 }
 	validates :dob, presence: true
         validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
@@ -33,6 +33,23 @@ class Patient < ApplicationRecord
     return unless dob
     now = Date.today
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
+
+  def validate_hnum (number)
+    arr = number.split('')
+    last_digit = arr[-1].to_i
+
+    def sumDigits(num, base = 10)
+       num.to_s(base).split(//).inject(0) {|z, x| z + x.to_i(base)}
+    end
+
+    sum = 0
+    arr[0..arr.length-2].each_with_index do |dig, i|
+        sum += i.odd? ? dig.to_i : sumDigits(dig.to_i * 2)
+    end
+
+    return if (last_digit == (10 - sum.to_s[-1].to_i))
+    errors[:base] << "Health Card number faild checksum test"
   end
 
 #  def get_last_visit_date
