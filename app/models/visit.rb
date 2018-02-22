@@ -9,8 +9,14 @@ class Visit < ApplicationRecord
 #  validates :doc_code, presence: true
   validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
   validates :proc_code, presence: true, length: { maximum: 10 }
+  validates :proc_code2, length: { maximum: 10 }
+  validates :proc_code3, length: { maximum: 10 }
+  validates :proc_code4, length: { maximum: 10 }
   validates :units, numericality: { only_integer: true, only_positive: true }
-  validates :fee, numericality: { only_positive: true }
+  validates :units2, numericality: { only_integer: true, only_positive: true }
+  validates :units3, numericality: { only_integer: true, only_positive: true }
+  validates :units4, numericality: { only_integer: true, only_positive: true }
+  validates :duration, numericality: { only_integer: true, only_positive: true }
   validates :entry_ts, presence: true
 
   def doctor

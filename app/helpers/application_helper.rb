@@ -33,15 +33,28 @@ module ApplicationHelper
 
 # Health card validation
     
-    def hcard_validation ( str )
-       return 777
+    def hcard_valid?( str )
+      return unless @number.length == 10
+      arr = @number.split('')
+      last_digit = arr[-1].to_i
+
+      def sumDigits(num, base = 10)
+        num.to_s(base).split(//).inject(0) {|z, x| z + x.to_i(base)}
+      end
+
+      sum = 0
+      arr[0..arr.length-2].each_with_index do |dig, i|
+        sum += i.odd? ? dig.to_i : sumDigits(dig.to_i * 2)
+      end
+
+      last_digit == (10 - sum.to_s[-1].to_i)
     end
 
 $sexes  = [['Male','M'],['Female','F'],['Unknown','X']] 
 
-$provinces = [['AB', 'AB'], ['BC', 'BC'], ['MB','MB'], ['NB','NB'],
+$provinces = [['ON','ON'],['AB', 'AB'], ['BC', 'BC'], ['MB','MB'], ['NB','NB'],
 	      ['NL','NL'], ['NS','NS'],['NT','NT'],['NU','NU'],
-	      ['ON','ON'],['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
+	      ['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
 	     ]
 
 $billing_statuses = [["3RD CLAIM"],

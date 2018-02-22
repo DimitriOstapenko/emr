@@ -15,13 +15,15 @@
 	<p>Scanning a card will not interfere with form fields. Type a few characters into the field below and start a scan.</p>
 
 <table id="my_table">
+	<tbody>
         <%= render @patient %>
+	</tbody>
 </table>
 
 <script type="text/javascript">
 
 	     var success = function (data) {
-			$("#status").text("Success!");
+//			$("#status").text("Success!");
 			var id = "<%= @patient.id %>"
 		        var line1 = data['line1'];
 		        var cardnum = line1.substring(7, 17);

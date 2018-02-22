@@ -14,7 +14,7 @@
   <%=  f.collection_select(:diag_code, Diagnosis.all, :code, :code, prompt: 'Select')  %> 
 
   <%= f.label "Duration" %>
-  <%= f.select :duration, $durations, default: 10, prompt: 'Select'  %>
+  <%= f.select :duration, $durations, default: 10  %>
 
   </div>
 

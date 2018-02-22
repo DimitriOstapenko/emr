@@ -1,9 +1,10 @@
 <% provide(:title, 'All patients') %>
 
 <p>
-<div id='status'></div>
+<div id='result'></div>
 <p>
 
+<div id="page">
 <ul class="users">
 <table style="width:95%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
   <thead>
@@ -31,6 +32,7 @@
 <p>
 <div class="col-md-10 col-md-offset-1">
 <%= button_to "New Patient", new_patient_path, class: "btn btn-primary", method: 'get'  %>
+</div>
 </div>
 
 <!--

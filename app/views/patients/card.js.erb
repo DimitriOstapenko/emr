@@ -1,2 +1,4 @@
 
+//$('#status').hide().after('<%= j render("form")  %>');
+$("#status").html("<%= j link_to @patient.full_name, @patient %>");
 $("#my_table tbody").html("<%= j render @patient %>"); 
