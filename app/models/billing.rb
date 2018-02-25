@@ -5,11 +5,11 @@ class Billing < ApplicationRecord
 
   validates :pat_id, presence: true
   validates :doc_code, presence: true
-  validates :doc_id, presence: true
-  validates :diag_code, presence: true
+#!validates :doc_id, presence: true
+#!  validates :diag_code, presence: true
   validates :proc_code, presence: true
   validates :visit_id, presence: true
-  validates :visit_date, presence: true
+#!  validates :visit_date, presence: true
   validates :fee, presence: true
 
   def doc_name

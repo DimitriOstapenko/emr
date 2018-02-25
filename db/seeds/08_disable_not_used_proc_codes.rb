@@ -1,9 +1,11 @@
 #
-# Set doc_id field in billings and visits table to match doctor.id 
+# Set active to false for procedures not found in billings table
 #
 
 # need next line if run stand-alone
  require_relative '../../config/environment'
+
+puts "About to disable procedures not found in billings table"
 
 Procedure.all.each do |p|
 

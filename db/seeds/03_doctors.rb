@@ -1,7 +1,13 @@
-# Seed doctors table with real data from CSV file
 #
-#require 'csv'
-#csv_text = File.read('/Users/dmitri/rstuff/walkin/lib/seeds/doctors.csv')
+# Seed doctors table from CSV file
+#
+# Next 3 lines allow to run it in stand-alone mode
+require_relative '../../config/environment'
+require 'date'
+require 'csv'
+
+puts "About to seed doctors table. Validity checks for all but lname, billing_num should be off"
+
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'doctors.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
