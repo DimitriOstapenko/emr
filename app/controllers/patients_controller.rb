@@ -90,6 +90,7 @@ class PatientsController < ApplicationController
           disposition: 'inline' 
   end
 
+# Get card string from listener, find patient or show form to create one
   def card 
     @cardstr = params[:cardstr] rescue nil
     if @cardstr 
@@ -98,19 +99,6 @@ class PatientsController < ApplicationController
           redirect_to @patient 
        else 
 	  @patient = create_patient_from_card ( @cardstr )
-#    	  @patient = Patient.new
-#          @patient.entry_date = DateTime.now
-#          @patient.lastmod_by = current_user.name
-#	  names = @cardstr[18,26].split('/')
-#	  @patient.ohip_num = @cardnum rescue '' 
-#	  @patient.ohip_ver = @cardstr[61,2]
-#	  @patient.lname = names[0] rescue '' 
-#	  @patient.fname = names[1] rescue '' 
-#	  sdob = @cardstr[53,8]
-#	  @patient.dob = Date.strptime(sdob, '%Y%m%d')
-#	  exp_dt = @cardstr[45,4] + sdob[6,2]
-#	  @patient.hin_expiry = Date.strptime(exp_dt,'%y%m%d')
-#	  @patient.sex = $sex[@cardstr[52]]
           respond_to do |format|
             format.html 
 	    format.js 
@@ -136,12 +124,12 @@ private
  
 # Find patient by last name or health card number, depending on input format  
   def myfind (str)
-	if str.match(/^[[:digit:]]{,10}$/)
+	if str.match(/^[[:digit:]]{,10}$/)               # ohip_num
       	  Patient.where("ohip_num like ?", "%#{str}%")  
-	elsif str.match(/^%B6/)
+	elsif str.match(/^%B6/)  			 # scanned card
 	  hcnum = str[8,10]
 	  Patient.find_by(ohip_num: hcnum)
-	elsif str.match(/^[[:graph:]]+$/)
+	elsif str.match(/^[[:graph:]]+$/)  		 # last name
 	  Patient.where("lower(lname) like ?", "%#{str.downcase}%") 
 	else
 	  []

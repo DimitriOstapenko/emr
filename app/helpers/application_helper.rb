@@ -49,32 +49,31 @@ module ApplicationHelper
 
       last_digit == (10 - sum.to_s[-1].to_i)
     end
-
-$sexes  = [['Male','M'],['Female','F'],['Unknown','X']] 
+$sexes  = [['Male','M'],['Female','F'],['Unknown','X']]
 
 $provinces = [['ON','ON'],['AB', 'AB'], ['BC', 'BC'], ['MB','MB'], ['NB','NB'],
-	      ['NL','NL'], ['NS','NS'],['NT','NT'],['NU','NU'],
-	      ['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
-	     ]
+              ['NL','NL'], ['NS','NS'],['NT','NT'],['NU','NU'],
+              ['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
+             ]
 
 $billing_statuses = [["3RD CLAIM"],
-		     ["DELETED"],
-		     ["WCB CLAIM"],
-		     ["HCP CLAIM"],
-		     ["INVOICED"],
-		     ["PAID BY 3RD"],
-		     ["PAID BY MOH"],
-		     ["WRITTEN OFF"]]    
+                     ["DELETED"],
+                     ["WCB CLAIM"],
+                     ["HCP CLAIM"],
+                     ["INVOICED"],
+                     ["PAID BY 3RD"],
+                     ["PAID BY MOH"],
+                     ["WRITTEN OFF"]]
 
 $billing_types = [["3RD","3RD"],
-		  ["RMB","RMB"],
-    		  ["WCB","WCB"],
-		  ["HCP","HCP"]] 
+                  ["RMB","RMB"],
+                  ["WCB","WCB"],
+                  ["HCP","HCP"]]
 
 $statuses = [["Arrived", 1],
-	     ["Assessed", 2],
-	     ["Cancelled", 3],
-	     ["Billed", 4]]
+             ["Assessed", 2],
+             ["Cancelled", 3],
+             ["Billed", 4]]
 
 $visit_types = ['WI','PC']
 
@@ -83,5 +82,6 @@ $durations = [[10,10], [20,20], [30,30], [40,40]]
 $units = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]]
 
 $true_false = [['True', 1],['False',0]]
+
 
 end

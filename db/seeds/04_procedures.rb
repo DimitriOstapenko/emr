@@ -1,7 +1,14 @@
-# Seed proctors table with real data from CSV file
 #
-#require 'csv'
-#csv_text = File.read('/Users/dmitri/rstuff/walkin/lib/seeds/procfile_data.csv')
+# Seed procedures table from CSV file
+#
+#
+# Next 3 lines allow to run it in stand-alone mode
+require_relative '../../config/environment'
+require 'date'
+require 'csv'
+
+puts "About to seed procedures table; validity checks for all but code, cost should be off" 
+
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'procfile_data.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 

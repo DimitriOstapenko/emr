@@ -1,13 +1,16 @@
 #
-# Seed visits table
+# Seed visits table from CSV file
 #
 
-#require 'date'
-#require 'csv'
-#csv_text = File.read('/Users/dmitri/walkin/lib/seeds/schedule_data.csv')
+# Next 3 lines allow to run it in stand-alone mode
+require_relative '../../config/environment'
+require 'date'
+require 'csv'
+
+puts "About to seed procedures table; validity checks for all but code, cost should be off" 
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'schedule_data.csv'))
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   #  .first(1000)
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   #.first(10)
 
 def ts( str, format="%m/%d/%Y %k:%M:%S" )
 	DateTime.strptime(str,format) rescue DateTime.new(1900,1,1)
@@ -21,10 +24,11 @@ csv.each do |row|
 #  puts row.to_hash
 
   all += 1
-  pat_id = row['pat_id']
-  doc = Doctor.where("doc_code = ?", row['doc_code'])
+  pat_id = row['pat_code']
+  doc_code = row['doc_code']
+  doc = Doctor.find_by(doc_code: doc_code)
   unless doc
-    puts "Doctor not found: #{doc.id}"
+    puts "Doctor not found: #{doc_code}"
     next
   end
   
@@ -41,7 +45,7 @@ csv.each do |row|
   visit = patient.visits.build id: row['ordno'],
 	             		entry_ts: datetime, 
  		     		doc_id: doc.id,
-		     		doc_code: row['doc_code'],
+		     		doc_code: doc_code,
 		     		status: row['status'],
 		     		proc_code: row['proc_code'],
 		     		diag_code: row['diagnosis'],

@@ -1,10 +1,10 @@
 #
-# Set historical fees in visits table 
+# Set historical fees in visits table  ??????
 #
 #
-
-
 require_relative '../../config/environment'
+
+puts "About to set visits.fees from procedures table"
 
 Visit.all.each do |v|
   puts "visit : #{v.id}"

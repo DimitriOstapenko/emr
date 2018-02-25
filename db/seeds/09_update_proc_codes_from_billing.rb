@@ -1,10 +1,12 @@
 #
-# Find billings for each visit and assign procedures to corresponding fields in visits
+# Find billings for each visit and assign billed procedures to corresponding fields in visits
 #
 #
-
 
 require_relative '../../config/environment'
+
+puts "About to set proc_code,units and fee in visits table from billings table"
+
 
 Visit.all.each do |v|
   puts "visit : #{v.id}"

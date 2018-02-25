@@ -1,7 +1,7 @@
 class VisitsController < ApplicationController
 
 	before_action :logged_in_user, only: [:create, :destroy, :new, :index]
-        before_action :current_doctor_set, only: :new  
+        before_action :current_doctor_set, only: [:new, :visitform]  
 	before_action :admin_user,   only: :destroy
 
   def new
@@ -34,14 +34,15 @@ class VisitsController < ApplicationController
     redirect_to request.referrer || root_url
   end
 
-  def index
+  def index (defdate = Date.today )
+    date = params[:date] || defdate
     @patient = Patient.find(params[:patient_id])
     if @patient.visits.any?
 	    @visits = @patient.visits.paginate(page: params[:page])
 	   render 'index'
       else
 	   flash[:error] = 'No visits found for date ' + date.inspect 
-	    render  body: nil
+	   render  body: nil
     end
   end
 
@@ -168,8 +169,8 @@ class VisitsController < ApplicationController
 	 :min_font_size => 9
 
     pdf.draw_text 'Medications:', :at => [105.mm,252.mm]
-    pdf.draw_text "Provider: Dr. #{current_doctor.lname}", :at => [5.mm,210.mm]
-    pdf.draw_text "Family Doctor: Dr. #{current_doctor.lname}", :at => [5.mm,200.mm]
+    pdf.draw_text "Provider: Dr. #{current_doctor.lname}", :at => [5.mm,205.mm]
+    pdf.draw_text "Family Doctor: Dr. #{current_doctor.lname}", :at => [5.mm,195.mm]
   
     date_time = "Date: #{visit.entry_ts.strftime("%d-%m-%Y")}
 		 Time: #{visit.entry_ts.strftime("%H:%M")}

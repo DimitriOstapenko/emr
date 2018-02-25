@@ -1,13 +1,13 @@
 class Visit < ApplicationRecord
-  belongs_to :patient
-  accepts_nested_attributes_for :patient, :reject_if => :all_blank, :allow_destroy => true
+  belongs_to :patient, inverse_of: :visits, counter_cache: true, autosave: true
+#  accepts_nested_attributes_for :patient, :reject_if => :all_blank, :allow_destroy => true
   default_scope -> { order(created_at: :desc) }
   attr_accessor :doctor, :proc_codes, :total_fee, :status_str
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true, numericality: { only_integer: true }
 #  validates :doc_code, presence: true
-  validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
+#!  validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
   validates :proc_code, presence: true, length: { maximum: 10 }
   validates :proc_code2, length: { maximum: 10 }
   validates :proc_code3, length: { maximum: 10 }

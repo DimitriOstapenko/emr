@@ -2,12 +2,15 @@
 # Seed patient table
 #
 
+# Next 3 lines allow to run it in stand-alone
+require_relative '../../config/environment'
 require 'date'
-#require 'csv'
-#csv_text = File.read('/Users/dmitri/rstuff/walkin/lib/seeds/patdata.csv')
-#csv_text = File.read('/Users/dmitri/rstuff/walkin/lib/seeds/patdata.csv').force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
+require 'csv'
+
+puts "About to seed patients table. Validity checks for all but lname,dob,ohip_num (if ohip), ohip_ver (if ohip) should be off"
+
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'patdata.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )  #.first(2000)
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   # .first(200)
 
 def valid_date?( str, format="%m/%d/%Y" )
   Date.strptime(str,format) rescue false
@@ -32,8 +35,8 @@ csv.each do |row|
   ohip_num = row['ohip'].gsub(/\s/,'')
 
   dob = Date.strptime(row['bdate'], '%m/%d/%Y') if valid_date?(row['bdate'])
-  hin_expiry = Date.strptime(row['hin_expir'], '%m/%d/%Y') if valid_date?(row['hin_expir'])
-  entry_date = Date.strptime(row['entry_date'], '%m/%d/%Y') if valid_date?(row['entry_date'])
+  hin_expiry = Date.strptime(row['hin_expir'], '%m/%d/%Y') rescue nil #if valid_date?(row['hin_expir'])
+  entry_date = Date.strptime(row['entry_date'], '%m/%d/%Y') rescue nil #if valid_date?(row['entry_date'])
 
   patient = Patient.new  id: row['patid'],
   			 lname: row['sname'],
@@ -76,23 +79,4 @@ end
 
 puts "#{Patient.count} patients added to patients table "
 
-# Seed visits for first 10 patients alphabetically
-#
-#patients = Patient.order(:lname).take(10)
-#50.times do
-#  notes = Faker::Lorem.sentence(5)
-#  diag_code = Faker::Number.number(6)
-#  proc_code = 'A09'
-#  entry_ts =  Faker::Date.birthday(min_age = 0, max_age = 3)
-#  patients.each { |patient| patient.visits.create!(notes: notes,
-#                                                 diag_code: diag_code.to_s,
-#                                                 proc_code: proc_code,
-#						  doc_id: 1,
-#						  duration: 10,
-#						  visit_type: 1,
-#						  entry_by: 'HS',
-#						  entry_ts: 
-#                                                )
-#                 }
-#end
 

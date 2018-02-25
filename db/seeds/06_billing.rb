@@ -1,13 +1,16 @@
 #
-# Seed visits table
+# Seed billings table (historical billings only)
 #
 
-#require 'date'
-#require 'csv'
-#csv_text = File.read('/Users/dmitri/walkin/lib/seeds/billing_short.csv')
+# Next 3 lines allow to run it in stand-alone mode
+require_relative '../../config/environment'
+require 'date'
+require 'csv'
 
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'billing.csv'))
-csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' ).first(1000)
+puts "About to seed billings table; validity checks should be on for: pat_id, doc_id, visit_id, proc_code, fee" 
+
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'billing.csv'))  # billing_short.csv
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' ) # .first(10000)
 
 def ts( str, format="%m/%d/%Y %k:%M:%S" )
         DateTime.strptime(str,format) rescue DateTime.new(1900,1,1)
@@ -19,7 +22,7 @@ csv.each do |row|
 #  puts row.to_hash
   
   bill_id = row['bilid']
-  pat_id = row['pat_id']
+  pat_id = row['pat_code']
   unless Patient.exists?(pat_id)
     puts "Patient not found: #{pat_id} for bill #{bill_id}" 
     next
@@ -35,7 +38,7 @@ csv.each do |row|
   paid_date = ts(row['paid_date'], '%m/%d/%Y')
   submit_ts = ts(row['submt_date'] +' '+ row['submt_time'])
 
-  billing = Billing.new  id: row['bill_id'],
+  billing = Billing.new  id: bill_id,
   			 pat_id: pat_id,
                          doc_code: row['doc_code'],
 			 visit_date: visit_date,

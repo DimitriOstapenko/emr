@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   get 'procedures/show'
   get 'procedures/index'
   get 'procedures/edit'
-#
+
   get '/diagnoses/index' => 'diagnoses#find', constraints: { query_string: /findstr/ }
   get 'diagnoses/new'
   get 'diagnoses/show'
@@ -51,10 +51,6 @@ Rails.application.routes.draw do
 
   resources :users
   resources :patients do
-#    scope :ujs, defaults: { format: :ujs } do
-#      patch 'card' => 'patients#card'
-#    end
-
     get 'label', on: :member
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
