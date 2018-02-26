@@ -28,3 +28,8 @@
 
 # Ignore public assets
 /public/assets/**
+
+# Ignore vendor bundle
+/vendor/*
+
+/passenger.80.pid
