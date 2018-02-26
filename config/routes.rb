@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
 
+  get 'reports/index'
+  get 'reports/new'
+  get 'reports/create'
+  get 'reports/delete'
+
   root 'static_pages#home'
 #  root 'patients#index'
   
@@ -48,6 +53,7 @@ Rails.application.routes.draw do
  get '/visits' => 'visits#index'
  get '/billings' => 'billings#index'
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
+
 
   resources :users
   resources :patients do
