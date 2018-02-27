@@ -2,6 +2,14 @@
   <div class="container">
     <%= link_to "Walk-In EMR", root_path, id: "logo" %>
     <nav>
+	<span class="navbar-text">
+	 <% if current_doctor %>
+	        <%= form_with url: daysheet_index_path do |f| %>
+        	<%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {:selected => current_doctor.id}, {onchange: "this.form.submit()"} ) %>
+		<% end %>
+
+         <% end %>
+  	</span>
       <ul class="nav navbar-nav navbar-right">
 
 <% if logged_in? %> 
@@ -33,7 +41,7 @@
 <li><%= link_to "Day Sheet", daysheet_index_path %></li>
 <li><%= link_to "Billing", billings_path %></li>
 <li><%= link_to "Reports", reports_index_path %></li>
-<li> <%= link_to "Log out", logout_path, method: :delete %> </li>
+<li><%= link_to "Log out", logout_path, method: :delete %> </li>
 
 <% if  current_user.admin?  %>
           <li class="dropdown">

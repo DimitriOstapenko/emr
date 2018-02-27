@@ -4,7 +4,6 @@
     <td>
 <%= form_with url: daysheet_index_path do |f| %>
 	<%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {prompt: 'Assign Doctor for Next Shift'}, {onchange: "this.form.submit()"} ) %>
-<%= f.submit :Submit, class: "btn btn-primary" %> </td></tr>
 <% end %>
    </td>
   </tr>

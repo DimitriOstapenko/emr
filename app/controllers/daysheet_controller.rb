@@ -16,8 +16,8 @@ class DaysheetController < ApplicationController
 	 session[:doc_id] = params[:doc_id]
 	 doc = Doctor.find(params[:doc_id]) || Doctor.new()
 	 flash[:info] = "Current Doctor set to Dr. #{doc.lname}"
-#	 redirect_back(fallback_location: daysheet_index_path)
-	 redirect_to daysheet_index_path
+	 redirect_back(fallback_location: daysheet_index_path)
+#	 redirect_to daysheet_index_path
       else
 	 render '_set_doctor'
       end

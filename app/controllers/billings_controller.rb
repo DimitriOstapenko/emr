@@ -30,6 +30,26 @@ class BillingsController < ApplicationController
   def update
   end
 
+  def export
+    date = params[:date] || Date.today
+    @visits = Visit.where("date(entry_ts) = ? AND status=4", date)
+   
+    fname = Rails.root.join('export', date.to_s + '.csv')
+    begin
+      file = File.open(fname, 'w')
+      @visits.all.each do |v| 
+        p = Patient.find(v.patient_id)
+        str="#{v.doctor.provider_no} : #{p.lname} : #{p.fname} : #{p.sex} : #{p.dob.strftime("%d/%m/%Y")} : #{p.ohip_num} : #{p.ohip_ver} : #{v.diag_code} : #{v.proc_codes} : #{v.entry_ts.strftime("%d/%m/%Y")} : #{v.units} \n"
+        file.write( str )
+      end 
+      rescue IOError => e
+      ensure
+       file.close unless file.nil?
+    end
+    flash[:info] = "Export file created for date #{date}"
+    redirect_to billings_path
+  end
+
 private
 
 #  def billing_params

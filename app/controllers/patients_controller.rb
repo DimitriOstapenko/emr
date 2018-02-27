@@ -27,6 +27,10 @@ class PatientsController < ApplicationController
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
        @visits = @patient.visits.paginate(page: params[:page], per_page: 12) 
+       expiry = @patient.hin_expiry.to_date rescue '1900-01-01'.to_date
+       if expiry < Date.today
+	  flash.now[:danger] = "Health card is expired/no expiry date"
+       end
     else
        redirect_to patients_path
     end
@@ -42,7 +46,8 @@ class PatientsController < ApplicationController
     @patient.entry_date = DateTime.now
     @patient.lastmod_by = current_user.name
     if @patient.save
-       flash[:success] = "Patient created"
+       suffix  = ' (Health card is expired)' if @patient.hin_expiry.to_date < Date.today
+       flash[:success] = "Patient created" + suffix
        redirect_to @patient
     else
        render 'new'
@@ -118,7 +123,7 @@ private
 					  :phone, :mobile, :full_name, :addr, :city, :prov,
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :notes, :alt_contact_name,
-					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr
+					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count
 					 )
   end
  

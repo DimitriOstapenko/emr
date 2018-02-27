@@ -6,13 +6,12 @@
 	<td><%= doctor.provider_no %> </td>
 	<td><%= doctor.group_no %> </td> 
 	<td><%= doctor.bills %> </td> 
+	<td><%= doctor.address %> </td> 
 	<td><%= doctor.city %> </td> 
 	<td><%= doctor.phone %> </td> 
+
+  <% if current_user.admin?  %>
+	  <td> <%= link_to "delete", doctor, method: :delete, data: { confirm: "You sure?" } %> </td>
+  <% end %>
+
      </tr>
-
-
-<%#  <% if current_user.admin?  %>
-<%#    | <%= link_to "delete", doctor, method: :delete,
-<%#                                  data: { confirm: "You sure?" } %>
-<%#  <% end %>
-

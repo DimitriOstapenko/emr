@@ -18,6 +18,8 @@ module SessionsHelper
 # Logs out the current user.
   def log_out
     session.delete(:user_id)
+    session.delete(:doc_id)
+    @current_doctor = nil
     @current_user = nil
   end
 

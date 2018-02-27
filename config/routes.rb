@@ -52,6 +52,8 @@ Rails.application.routes.draw do
  get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
  get '/visits' => 'visits#index'
  get '/billings' => 'billings#index'
+ post '/billings/export', to: 'billings#export'
+
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
 
