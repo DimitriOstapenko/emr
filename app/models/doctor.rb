@@ -14,7 +14,7 @@ class Doctor < ApplicationRecord
 	validates :bills, inclusion: { in: [true, false] }
         validates :phone, length: { maximum: 15 }  #, numericality: { only_integer: true }
         validates :mobile, length: {maximum: 15}, allow_blank: true
-	validates :provider_no, numericality: { only_integer: true }, length: { is: 6 }, allow_blank: true
+	validates :provider_no, numericality: { only_integer: true }, length: { is: 6 }, allow_blank: true 
 	validates :group_no, numericality: { only_integer: true }, length: {is: 4}, allow_blank: true
 	validates :specialty, numericality: { only_integer: true }, length: {is: 2}, allow_blank: true 
         validates :district, length: { is: 1 }
@@ -26,8 +26,15 @@ class Doctor < ApplicationRecord
         validates :office, length: {maximum: 15}, allow_blank: true
         validates :email, length: { maximum: 255 }, allow_blank: true   #format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }, allow_blank: true
 
+	validate :provider_no_required_if_bills
+
   def full_name
     return fname.blank? ? lname : [lname, fname].join(', ')
+  end
+
+  def provider_no_required_if_bills
+    errors.add(:provider_no, "is required for billing doctors") if 
+      bills? and provider_no.blank?
   end
 
 end

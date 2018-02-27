@@ -1,5 +1,5 @@
 class Visit < ApplicationRecord
-  belongs_to :patient, inverse_of: :visits, counter_cache: true, autosave: true
+  belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
 #  accepts_nested_attributes_for :patient, :reject_if => :all_blank, :allow_destroy => true
   default_scope -> { order(created_at: :desc) }
   attr_accessor :doctor, :proc_codes, :total_fee, :status_str
@@ -24,8 +24,7 @@ class Visit < ApplicationRecord
   end
 
   def proc_codes
-    codes = [proc_code, proc_code2, proc_code3, proc_code4]
-    return codes.join(',')
+    [proc_code, proc_code2, proc_code3, proc_code4].reject(&:blank?).join(',')
   end
 
   def total_fee
@@ -33,7 +32,7 @@ class Visit < ApplicationRecord
   end
 
   def status_str
-	  return $statuses[status-1][0] if status.between?(1,4)
+	  return $statuses.invert[status] if status.between?(1,4)
   end
 
 end

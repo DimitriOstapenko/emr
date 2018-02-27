@@ -6,7 +6,7 @@
 	<td><%= visit.doctor.lname %></td>
 	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= $statuses[visit.status-1][0] rescue '' %></td>
+	<td><%= $statuses.invert[visit.status] rescue '' %></td>
 	<td><%= visit.notes.to_s.first(40)+ '..'  %></td>
 
 </tr>

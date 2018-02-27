@@ -1,7 +1,9 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-#  config.time_zone = "America/New_York"
+  config.time_zone = "America/New_York"
+  config.active_record.default_timezone = :local
+  config.active_record.time_zone_aware_attributes = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

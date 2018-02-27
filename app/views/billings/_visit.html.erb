@@ -9,7 +9,7 @@
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.duration %></td>
 	<td><%= link_to visit.diag_code, diagnosis %></td>
-	<td><%= visit.total_fee %></td>
+	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td><%= visit.status_str %></td>
 	<td><%= visit.entry_by %></td>
 

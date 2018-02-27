@@ -21,14 +21,14 @@ module ApplicationHelper
 	    Doctor.where("bills = 't'" )
     end
 
-# List of procedures, most popular first
-    def get_procedures
-	    Procedure.where("active")
+# List of active procedures
+    def get_active_procedures
+	    Procedure.where("active = 't'")
     end    
     
-# List of diagnosis, most popular first
-    def get_diagnoses
-	    Diagnosis.where("active")
+# List of active diagnoses
+    def get_active_diagnoses
+	    Diagnosis.where("active = 't'")
     end    
 
 # Health card validation
@@ -70,14 +70,18 @@ $billing_types = [["3RD","3RD"],
                   ["WCB","WCB"],
                   ["HCP","HCP"]]
 
-$statuses = [["Arrived", 1],
-             ["Assessed", 2],
-             ["Cancelled", 3],
-             ["Billed", 4]]
+#$statuses = [["Arrived", 1],
+#             ["Assessed", 2],
+#             ["Cancelled", 3],
+#             ["Billed", 4]]
+
+$statuses = { Arrived: 1, Assessed: 2, Cancelled: 3, Billed: 4}
 
 $visit_types = ['WI','PC']
 
 $durations = [[10,10], [20,20], [30,30], [40,40]]
+
+$timeframes = [['Day',1],['Month',2],['Year',3]]
 
 $units = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]]
 
