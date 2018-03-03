@@ -34,7 +34,6 @@ class PatientsController < ApplicationController
     else
        redirect_to patients_path
     end
-
   end
 
   def new
@@ -76,8 +75,8 @@ class PatientsController < ApplicationController
   end
 
   def label
-	require 'prawn'
-	require "prawn/measurement_extensions"
+    require 'prawn'
+    require "prawn/measurement_extensions"
 
     @patient = Patient.find(params[:id])
     @label = make_label (@patient)

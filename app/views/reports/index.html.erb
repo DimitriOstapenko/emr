@@ -1,23 +1,35 @@
 <h1>Reports</h1>
+<% provide(:title, 'All Reports') %>
 
-<%= form_with do |f| %>
+<p>
+<div id='result'></div>
+<p>
 
-<div class="row">
-  <div class="col-md-2 col-md-offset-2">
-  <%= f.label "Select Doctor" %>
-    <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select Doctor' ) %>
-  </div>
+<div id="page" class="col-md-8 col-md-offset-2">
+<table class="table table-hover table-condensed" > 
+  <thead>
+      <tr>
+          <th>Name</th>
+          <th>Doc_id</th>
+          <th>Type</th>
+          <th>Sdate</th>
+          <th>Edate</th>
+          <th>Year</th>
+          <th>Month</th>
+      </tr>
+  </thead>
+  <tbody>
 
-  <div class="col-md-2">
-  <%= f.label "Select Time Frame" %>
-  <%= f.select :timeframe, $timeframes, placeholder: 'Select Time Frame' %>
-  </div>
+  <%= render @reports %>
 
-  <div class="col-md-8"></div>
-  <div class="col-md-4 col-md-offset-2">
-  <%= f.submit 'Generate Report', class: "btn btn-primary" %>
-  </div>
-<% end %>
+  </tbody>
+</table>
 
-  </div>
 </div>
+<%= will_paginate(@reports) %>
+
+<p>
+<div class="col-md-8 col-md-offset-2">
+<%= button_to "Create New Report", new_report_path, class: "btn btn-primary", method: 'get'  %>
+</div>
+

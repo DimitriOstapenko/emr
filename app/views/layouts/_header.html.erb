@@ -17,19 +17,19 @@
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group">
-                <div class="col-sm-12">	     
-		<%= f.date_field :datepicker, class: 'datepicker','name' => 'date', :onChange => 'javascript: this.form.submit()' %>
+                <div class="col-sm-11">	     
+		<%= f.date_field :datepicker, class: 'datepicker', name: :date, onChange: 'this.form.submit()' %>
 
 		</div>
 	     </div>
        <% end %>
        </li>
 <% end %>
-<% if controller_name == 'patients' || controller_name == 'doctors' || controller_name == 'procedures' || controller_name == 'diagnoses' %>
+<% if controller_name == 'patients' || controller_name == 'doctors' || controller_name == 'procedures' || controller_name == 'diagnoses' || controller_name == 'reports' %>
 	<li class="nav-item active">
 		<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
-                <div class="col-xs-12">
+                <div class="col-sm-10">
 			<%= f.search_field :findstr, placeholder: "Find #{controller_name.singularize}", id: "findstr", :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>

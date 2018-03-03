@@ -70,11 +70,6 @@ $billing_types = [["3RD","3RD"],
                   ["WCB","WCB"],
                   ["HCP","HCP"]]
 
-#$statuses = [["Arrived", 1],
-#             ["Assessed", 2],
-#             ["Cancelled", 3],
-#             ["Billed", 4]]
-
 $statuses = { Arrived: 1, Assessed: 2, Cancelled: 3, Billed: 4}
 
 $visit_types = ['WI','PC']
@@ -87,5 +82,6 @@ $units = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]]
 
 $true_false = [['True', 1],['False',0]]
 
+$report_types = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}
 
 end

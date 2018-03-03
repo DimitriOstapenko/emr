@@ -1,2 +1,5 @@
-<h1>Reports#new</h1>
-<p>Find me in app/views/reports/new.html.erb</p>
+<% provide(:title, 'New Report') %>
+<% provide(:button_text, "Generate Report") %>
+<h1>Create Report</h1>
+
+    <%= render 'form' %>
