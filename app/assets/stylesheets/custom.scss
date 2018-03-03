@@ -23,6 +23,9 @@ html,body {
 	width:99%;
 }
 
+table {
+  width: 100%;
+}
 
 #container {
    min-height:100%;
@@ -60,6 +63,10 @@ textarea {
   h1 {
     margin-bottom: 8px;
   }
+}
+
+.hidden {
+   display: none;
 }
 
 /* typography */

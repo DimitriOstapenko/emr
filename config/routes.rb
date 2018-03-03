@@ -1,23 +1,24 @@
 Rails.application.routes.draw do
 
+  get '/procedures/index' => 'reports#find', constraints: { query_string: /findstr/ }
   get 'reports/index'
   get 'reports/new'
-  get 'reports/create'
-  get 'reports/delete'
+  get 'reports/show'
+#  get 'reports/create'
 
   root 'static_pages#home'
 #  root 'patients#index'
   
   get '/procedures/index' => 'procedures#find', constraints: { query_string: /findstr/ }
+  get 'procedures/index'
   get 'procedures/new'
   get 'procedures/show'
-  get 'procedures/index'
   get 'procedures/edit'
 
   get '/diagnoses/index' => 'diagnoses#find', constraints: { query_string: /findstr/ }
+  get 'diagnoses/index'
   get 'diagnoses/new'
   get 'diagnoses/show'
-  get 'diagnoses/index'
   get 'diagnoses/edit'
 
   get '/doctors/index' => 'doctors#find', constraints: { query_string: /findstr/ }
@@ -67,6 +68,8 @@ Rails.application.routes.draw do
   resources :doctors
   resources :diagnoses
   resources :procedures
-#  resources :billings
+  resources :reports
+
+#  resources :billing     # historical billing table
   
 end

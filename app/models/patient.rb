@@ -30,6 +30,10 @@ class Patient < ApplicationRecord
     return fname.blank? ? lname : [lname, fname].join(', ')
   end
 
+  def ohip_num_full
+    return ohip_ver.blank? ? lname : [ohip_num, ohip_ver].join(' ')
+  end
+
   def age
     return unless dob
     now = Date.today
