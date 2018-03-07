@@ -19,17 +19,20 @@ class PatientsController < ApplicationController
 	 @patients = Patient.paginate(page: params[:page])
 	 @patients = Patient.new
 	 flash.now[:danger] = 'Not found'
-	 render 'no_patients_found'
+	 render  inline: '', layout: true
       end
   end
 
   def show 
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
+       if @patient.chart_file.blank?
+          chart = Dir.glob("#{Rails.root}/charts/**/#{@patient.lname}\,#{@patient.fname}*\.pdf")
+          @patient.update_attribute(:chart_file, chart[0]) if !chart.blank?
+       end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 12) 
-       expiry = @patient.hin_expiry.to_date rescue '1900-01-01'.to_date
-       if expiry < Date.today
-	  flash.now[:danger] = "Health card is expired/no expiry date"
+       if !@patient.valid?
+	  flash.now[:danger] = @patient.errors.full_messages.to_sentence
        end
     else
        redirect_to patients_path
@@ -56,7 +59,7 @@ class PatientsController < ApplicationController
   def destroy
     Patient.find(params[:id]).destroy
     flash[:success] = "Patient deleted"
-    redirect_to patients_url, page: params[:page]
+    redirect_back(fallback_location: patients_path )
   end
 
   def edit
@@ -114,6 +117,12 @@ class PatientsController < ApplicationController
        @patient = Patient.find(params[:id])
        redirect_to :back
     end
+  end
+
+  def chart
+    @patient = Patient.find(params[:id])
+    send_file( @patient.chart_file, type: "application/pdf", disposition: "attachment", filename: "#{@patient.lname}_#{@patient.fname}\.pdf")
+#     render  inline: '', layout: true
   end
 
 private

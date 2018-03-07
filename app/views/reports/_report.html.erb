@@ -4,8 +4,6 @@
 	<td><%= $report_types.invert[report.rtype] %></td> 
 	<td><%= report.sdate %></td>
 	<td><%= report.edate %></td>
-	<td><%= report.year %></td>
-	<td><%= report.month %></td>
 
   	<% if current_user.admin?  %>
 		<td> <%= link_to "delete", report, method: :delete, data: { confirm: "Are you sure you want to delete #{report.name}?" } %> </td>

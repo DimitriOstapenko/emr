@@ -5,17 +5,17 @@ class Patient < ApplicationRecord
 	default_scope -> { order(lname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
-        before_validation { ohip_num.tr!('- ','') }
+	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') }
 	before_validation { ohip_ver.upcase! }
-	before_validation { phone.tr!('- ','') }
-	before_validation { mobile.tr!('- ','') rescue '' }
-	before_validation { pharm_phone.tr!('- ','')  rescue '' }
-	before_validation { postal.tr!('- ','') rescue '' }
+	before_validation { phone.gsub!(/\D/,'') }
+	before_validation { mobile.gsub!(/\D/,'') rescue '' }
+	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
+	before_validation { postal.tr!(' -','') rescue '' }
 	before_validation { postal.upcase! rescue '' }
 
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
-	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true #add validate_hnum here (defined below)
+	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true #plus ohip_num_checksum defined below
 	validates :ohip_ver, presence: true, length: { maximum: 3 }
 	validates :dob, presence: true
         validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
@@ -24,7 +24,7 @@ class Patient < ApplicationRecord
 #        validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 #        validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
-	validate :ohip_num_checksum
+	validate :hc_checksum_and_expiry 
 
   def full_name
     return fname.blank? ? lname : [lname, fname].join(', ')
@@ -40,9 +40,18 @@ class Patient < ApplicationRecord
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
   end
 
-  def ohip_num_checksum
+  def hc_checksum_and_expiry
     arr = ohip_num.split('')
     last_digit = arr[-1].to_i
+
+# Don't validate out of province or non-ohip numbers   
+    return if (hin_prov != 'ON' ||  pat_type != 'O')
+
+    expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
+    if expiry < Date.today
+       errors.add('Health Card:', "Card is expired") 
+       return 
+    end
 
     def sumDigits(num, base = 10)
        num.to_s(base).split(//).inject(0) {|z, x| z + x.to_i(base)}
@@ -54,7 +63,12 @@ class Patient < ApplicationRecord
     end
 
     return if (last_digit == (10 - sum.to_s[-1].to_i))
-    errors.add('Card Invalid:', "Failed checksum test") 
+    errors.add('Health Card:', "Failed checksum test") 
+  end
+
+  def valid_attribute?( attribute_name )
+    self.valid?
+    self.errors[attribute_name].blank?
   end
 
 end

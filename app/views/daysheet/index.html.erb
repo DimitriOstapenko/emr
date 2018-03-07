@@ -11,23 +11,20 @@
 		   <h1> Visits for <%= date.to_s  %> (<%= @daysheet.count %>)  <%= suffix %> </h1> 
 
 <ul class="users">
-<table style="width:100%; padding: 10px;" >
+<table class="tbl" >
   <thead>
-  <col width="50">
-  <col width="100">
-  <col width="80">
-  <col width="50">
-  <col width="50">
-  <col width="30">
-  <col width="200">
       <tr>
-          <th>Time</th>
-	  <th>Patient</th>
- 	  <th>Doctor</th>
-          <th>Diagnosis</th>
-          <th>Procedure(s)</th>
-          <th>Status</th>
-          <th>Notes</th>
+	  <th class="tbl_sm">Time</th>
+          <th class="tbl_md">Patient</th>
+          <th class="tbl_lsm">Health #</th>
+          <th class="tbl_xs">Ver.</th>
+          <th class="tbl_sm">Doctor</th>
+          <th class="tbl_sm">Diagnosis</th>
+          <th class="tbl_xmd">Procedures</th>
+          <th class="tbl_xs">Units</th>
+          <th class="tbl_xs">Type</th>
+          <th class="tbl_sm">Status</th>
+          <th class="tbl_sm"> </th>
       </tr>
   </thead>
   <tbody>
@@ -37,7 +34,6 @@
      <%# render 'visits/visit', visit: v %>
   <% end %>
 
-     <tr><td>&nbsp;</td></tr>
   </tbody>
 </table>
 </ul>

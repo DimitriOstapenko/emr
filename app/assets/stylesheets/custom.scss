@@ -232,3 +232,57 @@ input {
     padding-right:0;
     padding-left:0;
 }
+
+/* Patient list table */
+.tbl {
+  table-layout: fixed;
+  width: 100%;
+  white-space: nowrap;
+}
+
+/* Column widths are based on these cells */
+.tbl_xs {       /* ver, sex, age */
+  width: 2%;
+}
+.tbl_sm {       /* File# */
+  width: 4%;
+}
+.tbl_lsm {      /* Dates */ 
+  width: 6%;
+}
+.tbl_xmd {      /* Phones */
+  width: 8%;
+}
+.tbl_md {      
+  width: 10%;
+}
+.tbl_lmd {      /* full name */
+  width: 15%;
+}
+.tbl_xlg {      
+  width: 20%;
+}
+.tbl_lg {      /* address */
+  width: 25%;
+}
+.tbl_llg {
+  width: 30%;
+}
+
+.tbl td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tbl th {
+  background: grey;
+  color: white;
+}
+.tbl td,
+.tbl th {
+  text-align: left;
+  padding: 0px 5px;
+}
+.tbl tr:nth-child(even) {
+  background: lightblue;
+}

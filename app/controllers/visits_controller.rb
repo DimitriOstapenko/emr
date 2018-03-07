@@ -15,6 +15,13 @@ class VisitsController < ApplicationController
     @visit.entry_ts = DateTime.now
     @visit.entry_by = current_user.name
 
+    if @visit.doc_id != current_doctor.id
+	 session[:doc_id] = @visit.doc_id
+	 session[:expires_at] = Time.now.midnight + 1.day
+#         doc = Doctor.find(params[:doc_id]) || Doctor.new()
+	 flash[:info] = "Current Doctor set to Dr. #{@visit.doctor.lname}"
+    end
+
     set_visit_fees ( @visit )
 
     if @visit.save
@@ -169,8 +176,8 @@ class VisitsController < ApplicationController
 	 :min_font_size => 9
 
     pdf.draw_text 'Medications:', :at => [105.mm,252.mm]
-    pdf.draw_text "Provider: Dr. #{current_doctor.lname}", :at => [5.mm,205.mm]
-    pdf.draw_text "Family Doctor: Dr. #{current_doctor.lname}", :at => [5.mm,195.mm]
+    pdf.draw_text "Provider: Dr. #{visit.doctor.lname}", :at => [5.mm,205.mm]
+    pdf.draw_text "Family Doctor: Dr. #{pat.family_dr}", :at => [5.mm,195.mm]
   
     date_time = "Date: #{visit.entry_ts.strftime("%d-%m-%Y")}
 		 Time: #{visit.entry_ts.strftime("%H:%M")}

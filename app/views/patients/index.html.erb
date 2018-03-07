@@ -6,17 +6,24 @@
 
 <div id="page">
 <ul class="users">
-<table style="width:95%; padding: 10px;"> <!--class="table table-hover table-condensed" > -->
+<table class="tbl"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
-          <th>Name</th>
-          <th>Sex</th>
-	  <th>Last Visit </th>
-          <th>Age</th>
-          <th>OHIP#</th>
-          <th>Phone</th>
- 	  <th>Address</th>
-	  <th> </th>
+          <th class="tbl_md">Name</th>
+          <th class="tbl_xs">Gen</th>
+          <th class="tbl_lsm">Health #</th>
+          <th class="tbl_xs">Ver</th>
+	  <th class="tbl_sm">Expiry</th> 
+	  <th class="tbl_xs">Type</th> 
+	  <th class="tbl_sm">DOB</th> 
+          <th class="tbl_xs">Age</th>
+	  <th class="tbl_lsm">Last Visit </th>
+	  <th class="tbl_xs">Visits</th>
+          <th class="tbl_lsm">Phone</th>
+ 	  <th class="tbl_sm">File#</th>
+ 	  <th class="tbl_lg">Address</th>
+ 	  <th class="tbl_sm">Chart</th>
+	  <th class="tbl_sm"> </th>
       </tr>
   </thead>
   <tbody>
@@ -35,40 +42,4 @@
 </div>
 </div>
 
-<!--
-<script>
-             var success = function (data) {
-                        $("#status").text("Success!");
-                        var line1 = data['line1'];
-                        var cardnum = line1.substring(7, 17);
-		        var ver = line1.substring(61,63);
-		        var exp = line1.substring(45,49);
-                        var names = line1.substring(18,44);
-                        var arr = names.split('/');
-		        var dob = line1.substring(53,61);
-		        
 
-		     alert('NAME: ' + arr[0] + ', ' + arr[1]+ "\n"+
-			   'HCN: ' + cardnum + "  " + ver + ' EXP: ' + exp + "\n"+ 
-			   'DOB: ' + dob 
-		     	   );
-
-	    		$("#findstr").val(cardnum);
-		        window.location = "/patients?findstr="+cardnum;
-	     }
-	      var error = function () {
-                        alert("Failed");
-                        $("#status").text("Failed!");
-                        $(".line").text("");
-                }
-
-                $.cardswipe({
-                        success: success,
-                        firstLineOnly: true,
-                        parsers: [ "generic"  ],
-                        error: error,
-                        debug: true
-                });
-
-</script>
--->

@@ -9,8 +9,6 @@
 	      Doctor:     <%= @report.doctor.lname rescue 'All Active'%>
 	      Start Date: <%= @report.sdate %>
 	      End Date:   <%= @report.edate %>
-	      Year:       <%= @report.year %>
-	      Month:      <%= @report.month %>
 	      Visits:     <%= @visits.count %>
 	      Grand Total: <%= @total.round(2) %>
            </pre>

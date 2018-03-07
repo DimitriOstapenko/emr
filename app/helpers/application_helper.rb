@@ -70,10 +70,6 @@ $billing_types = [["3RD","3RD"],
                   ["WCB","WCB"],
                   ["HCP","HCP"]]
 
-$statuses = { Arrived: 1, Assessed: 2, Cancelled: 3, Billed: 4}
-
-$visit_types = ['WI','PC']
-
 $durations = [[10,10], [20,20], [30,30], [40,40]]
 
 $timeframes = [['Day',1],['Month',2],['Year',3]]
