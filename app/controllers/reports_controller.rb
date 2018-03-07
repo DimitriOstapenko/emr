@@ -27,7 +27,6 @@ class ReportsController < ApplicationController
   end
 
   def create
-#  Visit.where(doc_id: 423).where(entry_ts: ('2017-01-01'.to_date..'2018-01-01'.to_date))	  
     @report = Report.new(report_params)
     year = params[:date][:year]
     month  = params[:date][:month]
@@ -46,7 +45,7 @@ class ReportsController < ApplicationController
 		 @report.sdate = @report.sdate.to_date
 		 @report.edate = @report.edate.to_date + 24.hours
 	when 5   # all time
-	  	 @report.sdate = Date.new(1900,01,01)
+	  	 @report.sdate = Date.new(1950,01,01)
 	  	 @report.edate = @report.sdate + 100.years
 	else     # invalid
    	 	 flash.now[:danger] = "Invalid report type #[@report.rtype]"

@@ -4,19 +4,21 @@
 <h1> Billings for <%= date.to_s %> (<%= @visits.count %>)</h1>
 
 <ul class="users">
-<table> <!--class="table table-hover table-condensed" > -->
+<table class="tbl"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
-	  <th>Time</th>
-	  <th>Visit Id</th>
-          <th>Patient</th>
-          <th>Doctor</th>
-          <th>Procedure(s)</th>
-          <th>Duration</th>
-          <th>Diagnosis</th>
-          <th>Ttl. Fee</th>
-          <th>Status</th>
-	  <th>Entry By</th>
+	  <th class="tbl_lsm">Time</th>
+          <th class="tbl_md">Doctor</th>
+	  <th class="tbl_lsm">Visit Id</th>
+          <th class="tbl_lg">Patient</th>
+          <th class="tbl_md">Health #</th>
+          <th class="tbl_sm">Ver</th>
+          <th class="tbl_lmd">Procedure(s)</th>
+          <th class="tbl_sm">Duration</th>
+          <th class="tbl_md">Diagnosis</th>
+          <th class="tbl_sm">Ttl. Fee</th>
+          <th class="tbl_sm">Status</th>
+	  <th class="tbl_sm">Entry By</th>
       </tr>
   </thead>
   <tbody>
@@ -28,6 +30,12 @@
 
 <%= will_paginate(@visits) %> 
 
-	  <div class="col-md-6 col-md-offset-2">
-	  <%= button_to "Export Payment File", billings_export_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
+<div class='row'>
+	  <div class="col-md-2 col-md-offset-0">
+	  <%= button_to "Export Payment File (CSV)", billings_export_csv_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
 	  </div>
+
+	  <div class="col-md-2 col-md-offset-1">
+	  <%= button_to "Export Payment File (HCP)", billings_export_edt_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
+	  </div>
+</div>

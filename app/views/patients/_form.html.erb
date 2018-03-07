@@ -6,16 +6,19 @@
 
   <%= f.label 'H Card', class: "col-md-1 control-label" %>
   <div class="col-md-2 padding-0">
-  <%= f.text_field :ohip_num %>
+  <%= f.text_field :ohip_num, placeholder: 'XXX XXXX XXX'%>
   </div>
 
-  <div class="col-md-1">
-  <%= f.text_field :ohip_ver %>
+  <div class="col-sm-1">
+  <%= f.text_field :ohip_ver, placeholder: 'XX' %>
   </div>
   
-  <%= f.label 'Prov', class: "col-md-1 control-label" %>
   <div class="col-md-1">
   <%= f.select :hin_prov, $provinces %>
+  </div>
+  
+  <div class="col-md-1">
+  <%= f.select :pat_type, PATIENT_TYPES %>
   </div>
   
   <%= f.label 'Expires', class: "col-md-1 control-label" %>
@@ -35,20 +38,20 @@
   <%= f.text_field :fname %>
   </div>
 
-  <%= f.label :Sex, class: "col-md-1 control-label" %>
+  <%= f.label :Gender, class: "col-md-1 control-label" %>
   <div class="col-md-2">
   <%= f.select(:sex, $sexes ) %>
   </div>
   
   <div class="col-md-12"> &nbsp; </div>
 
-  <%= f.label :"DOB", class: "col-md-1 control-label" %>
+  <%= f.label :'Date Of Birth', class: "col-md-1 control-label" %>
   <div class="col-md-2">
 	  <%= f.date_field :dob, class: "datepicker", start_year: 1900, end_year: Date.today.year %>
   </div>
 
   <%= f.label :Phone, class: "col-md-1 control-label" %>
-  <div class="col-md-2 padding-0">
+  <div class="col-md-2">
 	  <%= f.phone_field :phone, value: number_to_phone(@patient.phone)  %>
   </div>
   
@@ -60,19 +63,23 @@
   <div class="col-md-12"> &nbsp; </div>
 
   <%= f.label :Address, class: "col-md-1 control-label" %>
-  <div class="col-md-3 padding-0">
+  <div class="col-md-2">
   <%= f.text_field :addr %>
   </div>
 
-  <%= f.label :City, class: "col-md-1 control-label" %>
-  <div class="col-md-2 padding-0">
-  <%= f.text_field :city, class: "padding-0" %>
+  <div class="col-md-2">
+  <%= f.text_field :city,  placeholder: 'City' %>
   </div>
   
   <div class="col-md-1">
   <%= f.select(:prov, $provinces ) %>
   </div>
+  
+  <div class="col-md-1">
+  <%= f.text_field(:country, value: 'Canada' ) %>
+  </div>
 
+  <%= f.label :postal, class: "col-md-1" %>
   <div class="col-md-1">
   <%= f.text_field :postal, placeholder: 'Postal'%>
   </div>

@@ -1,6 +1,6 @@
 class Report < ApplicationRecord
 
-	default_scope -> { order(name: :desc) }
+	default_scope -> { order(id: :desc) }
 	attr_accessor :doctor
 
 	validates :name, presence: true, length: { maximum: 30 }

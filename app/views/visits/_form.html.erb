@@ -1,7 +1,7 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
 
-  <% doc_id = @visit.doctor.id ||  current_doctor.id %>
+  <% doc_id = @visit.doctor.id || current_doctor.id %>
   <% @procedures = get_active_procedures %>
 
 <div class="row">
@@ -65,12 +65,12 @@
 
   <div class="col-md-2">
   <%= f.label "Status" %>
-  <%= f.select :status, $statuses, placeholder: 'Status' %>
+  <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
   </div>
 
   <div class="col-md-2">
   <%= f.label "Visit Type" %>
-  <%= f.text_field :vis_type, placeholder: 'Visit type', default: 'WS' %>
+  <%= f.select :vis_type, VISIT_TYPES, placeholder: 'Visit type', default: 'WS' %>
   </div>
   
   </div>

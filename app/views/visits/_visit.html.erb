@@ -9,7 +9,7 @@
 
 	<span class="visit"><b>Doctor:</b> <%= visit.doctor.lname %></span>
 	<span class="visit"><b>Diagnosis:</b> <%= visit.diag_code %></span>
-	<span class="visit"><b>Status:</b> <%= $statuses.invert[visit.status] %></span>
+	<span class="visit"><b>Status:</b> <%= VISIT_STATUSES.invert[visit.status] %></span>
 	<span class="visit"><b>Duration:</b> <%= visit.duration %> min</span>
 	<span class="visit"><b>Type:</b> <%= visit.vis_type %></span>
 </li>

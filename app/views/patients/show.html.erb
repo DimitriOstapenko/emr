@@ -7,7 +7,7 @@
     <section class="user_info">
       <h1>
 	   <pre>
-	<b>Name:</b> <%= @patient.full_name %>
+	<b>Name:</b> <%= @patient.full_name %> <b>Type:</b> <%= @patient.pat_type %>
 	<b>DOB:</b> <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex %>
 	<b>Health Card:</b> <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) <b>Expires:</b> <%= @patient.hin_expiry %>
 	<b>Phone:</b> <%= number_to_phone(@patient.phone) %>
@@ -22,6 +22,9 @@
 	<b>Last Visit:</b> <%= @patient.last_visit_date %>
 	<b>Created:</b> <%= @patient.entry_date %>
 	<b>Last Modification By:</b> <%= @patient.lastmod_by %>
+        <% if !@patient.chart_file.blank? %>
+	<b>Chart File:</b> <%= link_to 'Chart', chart_patient_path(@patient) %>
+        <% end %>
            </pre>
       </h1>
     </section>

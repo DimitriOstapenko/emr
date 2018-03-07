@@ -30,7 +30,7 @@ class BillingsController < ApplicationController
   def update
   end
 
-  def export
+  def export_csv
     date = params[:date] || Date.today
     @visits = Visit.where("date(entry_ts) = ? AND status=4", date)
    
@@ -39,15 +39,80 @@ class BillingsController < ApplicationController
       file = File.open(fname, 'w')
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
-        str="#{v.doctor.provider_no} : #{p.lname} : #{p.fname} : #{p.sex} : #{p.dob.strftime("%d/%m/%Y")} : #{p.ohip_num} : #{p.ohip_ver} : #{v.diag_code} : #{v.proc_codes} : #{v.entry_ts.strftime("%d/%m/%Y")} : #{v.units} \n"
+        str="#{v.doctor.provider_no} : #{p.lname} : #{p.fname} : #{p.sex} : #{p.dob.strftime("%d/%m/%Y")} :"+
+	    "#{p.ohip_num} : #{p.ohip_ver} : #{v.diag_code} : #{v.proc_codes} : #{v.entry_ts.strftime("%d/%m/%Y")} : #{v.units} \n"
         file.write( str )
       end 
-      rescue IOError => e
+      rescue Errno::ENOENT => e
+	flash[:danger] = e.message
+	error = 1
+      ensure
+        file.close unless file.nil?
+    end
+    flash[:info] = "CSV Export file created for date #{date}" unless error
+    redirect_back(fallback_location: billings_path )
+  end
+
+  def export_edt
+    date = params[:date] || Date.today
+   
+    @visits = Visit.where("date(entry_ts) = ? AND status=4", date)
+    ext = Time.now.day.to_s.rjust(4,'0')
+    fname = Rails.root.join('EDT', "HL#{GROUP_NO}.#{ext}")
+    heh_count = het_count = 0
+    date_str = date.to_date.strftime("%Y%m%d")
+    begin
+      file = File.open(fname, 'w')
+      last_doc_id = 0
+      @visits.all.each do |v| 
+        pat = Patient.find(v.patient_id)
+        if (v.doctor.id != last_doc_id)
+          if (last_doc_id != 0)
+	    hee = "HEE#{heh_count.to_s.rjust(4,'0')}#{'0'*4}#{het_count.to_s.rjust(5,'0')}\n"
+            file.write( hee )
+            heh_count = het_count = 0
+          end	  
+	  heb = "HEBV03G#{date_str}#{ext}#{' '*6}#{GROUP_NO}#{v.doctor.provider_no}\n"
+          file.write( heb )
+	end
+	next unless is_hcp_procedure?(v.proc_code) 
+	heh = "HEH#{pat.ohip_num}#{pat.ohip_ver}#{pat.dob.strftime("%Y%m%d")}#{v.id.to_s.rjust(8,'0')}HCPP\n"
+        file.write( heh )
+	heh_count += 1
+	het = "HET#{v.proc_code}  #{(v.fee*v.units*100).to_i.to_s.rjust(6,'0')}#{v.units.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+	file.write( het )
+	het_count += 1
+        if !v.proc_code2.blank?
+	  next unless is_hcp_procedure?(v.proc_code) 
+	  het2 = "HET#{v.proc_code2}  #{(v.fee2*v.units2*100).to_i.to_s.rjust(6,'0')}#{v.units2.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+	  file.write( het2 )
+	  het_count += 1
+        end
+        if !v.proc_code3.blank?
+	  next unless is_hcp_procedure?(v.proc_code) 
+	  het3 = "HET#{v.proc_code3}  #{(v.fee3*v.units3*100).to_i.to_s.rjust(6,'0')}#{v.units3.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+	  file.write( het3 )
+	  het_count += 1
+        end
+        if !v.proc_code4.blank?
+	  next unless is_hcp_procedure?(v.proc_code) 
+	  het4 = "HET#{v.proc_code4}  #{(v.fee4*v.units4*100).to_i.to_s.rjust(6,'0')}#{v.units4.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+	  file.write( het4 )
+	  het_count += 1
+        end
+        last_doc_id = v.doctor.id
+      end 
+      hee = "HEE#{heh_count.to_s.rjust(4,'0')}#{'0'*4}#{het_count.to_s.rjust(5,'0')}\n"
+      file.write( hee )
+      rescue Errno::ENOENT => e
+	  flash[:danger] = e.message
+	  error = 1
       ensure
        file.close unless file.nil?
     end
-    flash[:info] = "Export file created for date #{date}"
-    redirect_to billings_path
+
+    flash[:info] = "EDT Export file created for date #{date}" unless error
+    redirect_back(fallback_location: billings_path )
   end
 
 private
@@ -57,5 +122,9 @@ private
 #				       :amt_paid, :paid_date, :write_off, :submit_file, :remit_file, :remit_year, :moh_ref,
 #				       :bill_prov, :submit_user, :submit_ts, :doc_id )
 #  end
+
+  def is_hcp_procedure?(proc_code)
+    Procedure.find_by(code: proc_code).ptype == 'HCP' rescue 0
+  end
 
 end

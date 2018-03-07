@@ -2,14 +2,6 @@
   <div class="container">
     <%= link_to "Walk-In EMR", root_path, id: "logo" %>
     <nav>
-	<span class="navbar-text">
-	 <% if current_doctor %>
-	        <%= form_with url: daysheet_index_path do |f| %>
-        	<%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {:selected => current_doctor.id}, {onchange: "this.form.submit()"} ) %>
-		<% end %>
-
-         <% end %>
-  	</span>
       <ul class="nav navbar-nav navbar-right">
 
 <% if logged_in? %> 
@@ -18,7 +10,7 @@
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group">
                 <div class="col-sm-11">	     
-		<%= f.date_field :datepicker, class: 'datepicker', name: :date, onChange: 'this.form.submit()' %>
+		<%= f.date_field :datepicker, class: 'datepckr', name: :date, onChange: 'this.form.submit()' %>
 
 		</div>
 	     </div>

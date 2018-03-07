@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  get '/procedures/index' => 'reports#find', constraints: { query_string: /findstr/ }
+  get '/reports/index' => 'reports#find', constraints: { query_string: /findstr/ }
   get 'reports/index'
   get 'reports/new'
   get 'reports/show'
@@ -53,14 +53,15 @@ Rails.application.routes.draw do
  get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
  get '/visits' => 'visits#index'
  get '/billings' => 'billings#index'
- post '/billings/export', to: 'billings#export'
+ post '/billings/export_csv', to: 'billings#export_csv'
+ post '/billings/export_edt', to: 'billings#export_edt'
 
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
-
 
   resources :users
   resources :patients do
     get 'label', on: :member
+    get 'chart', on: :member
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
     end

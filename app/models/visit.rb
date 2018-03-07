@@ -1,6 +1,5 @@
 class Visit < ApplicationRecord
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
-#  accepts_nested_attributes_for :patient, :reject_if => :all_blank, :allow_destroy => true
   default_scope -> { order(created_at: :desc) }
   attr_accessor :doctor, :proc_codes, :total_fee, :status_str
   
@@ -29,10 +28,6 @@ class Visit < ApplicationRecord
 
   def total_fee
 	  fee + fee2 + fee3 + fee4
-  end
-
-  def status_str
-	  return $statuses.invert[status] if status.between?(1,4)
   end
 
 end
