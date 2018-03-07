@@ -1,0 +1,7 @@
+class AddDateColumsToReports < ActiveRecord::Migration[5.1]
+  def change
+    add_column :reports, :year, :integer
+    add_column :reports, :month, :integer
+    add_column :reports, :day, :integer
+  end
+end
