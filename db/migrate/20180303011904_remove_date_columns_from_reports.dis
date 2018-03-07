@@ -1,0 +1,7 @@
+class RemoveDateColumnsFromReports < ActiveRecord::Migration[5.1]
+  def change
+    remove_column :reports, :year, :integer
+    remove_column :reports, :month, :integer
+    remove_column :reports, :day, :integer
+  end
+end
