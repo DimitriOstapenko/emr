@@ -10,7 +10,7 @@ class ProceduresController < ApplicationController
       str = params[:findstr]
       @procedures = myfind(str)
       if @procedures.any?
-         flash.now.alert = 'Found: '+ @procedures.size.to_s
+         flash.now[:info] = "Found: #{@procedures.count} procedures"
          @procedures = @procedures.paginate(page: params[:page])
          render 'index'
       else

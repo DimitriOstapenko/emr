@@ -1,12 +1,9 @@
 <% provide(:title, 'All patients') %>
 
-<p>
-<div id='result'></div>
-<p>
+<%# 'doc session expires '+session[:expires_at] %>
 
-<div id="page">
-<ul class="users">
-<table class="tbl"> <!--class="table table-hover table-condensed" > -->
+<h1> Patients </h1>
+<table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
           <th class="tbl_md">Name</th>
@@ -23,7 +20,9 @@
  	  <th class="tbl_sm">File#</th>
  	  <th class="tbl_lg">Address</th>
  	  <th class="tbl_sm">Chart</th>
+      <% if current_user.admin?  %>
 	  <th class="tbl_sm"> </th>
+      <% end %>
       </tr>
   </thead>
   <tbody>
@@ -32,14 +31,11 @@
 
   </tbody>
 </table>
-</ul>
 
-<%= will_paginate(@patients) %> 
+<%= will_paginate @patients %>  
 
-<p>
-<div class="col-md-10 col-md-offset-1">
+<div class="bottom_buttons">
+<div class="col-md-2 col-md-offset-0">
 <%= button_to "New Patient", new_patient_path, class: "btn btn-primary", method: 'get'  %>
 </div>
 </div>
-
-

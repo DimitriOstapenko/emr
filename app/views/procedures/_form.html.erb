@@ -13,11 +13,18 @@
 	  <%= f.label :description %>
 	  <%= f.text_field :descr %>
 
-	  <%= f.label :cost %>
+	  <%= f.label :provider_fee %>
 	  <%= f.text_field :cost %>
 
-	  <%= f.label :units %>
-	  <%= f.text_field :unit %>
+	  <%= f.label 'Specialist Fee' %>
+	  <%= f.text_field :spec_fee %>
+	  
+	  <%= f.label 'Assistant Fee' %>
+	  <%= f.text_field :ass_fee %>
+     
+	  <%= f.label 'Anesthesiologist Fee' %>
+	  <%= f.text_field :ana_fee %>
+     
   </div>
 
   <div class="col-md-4 ">
@@ -25,13 +32,16 @@
 	  <%= f.label :percent %>
 	  <%= f.text_field :percent %>
 
-	  <%= f.label :'Eff. Date' %>
+	  <%= f.label :'Effective Date' %>
 	  <%= f.date_field :eff_date %>
 
 	  <%= f.label :'Term Date' %>
 	  <%= f.date_field :term_date %>
 	  
-     
+	  <%= f.label :units %>
+	  <%= f.text_field :unit %>
+	  
+	  
     <div class="col-md-12"> &nbsp; </div>
     <div class="col-md-2">
           <%= f.label :faq %>
@@ -57,11 +67,11 @@
           <%= f.label :active %>
           <%= f.check_box :active  %>
     </div>
-
   
   </div>
 </div>
 
+<div class="row"><div> &nbsp; </div> </div>
 <div class="row">
     <div class="col-md-8 col-md-offset-1">
     <%= f.submit yield(:button_text), class: "btn btn-primary" %>

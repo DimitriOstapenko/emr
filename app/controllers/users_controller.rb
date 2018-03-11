@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
      #  log_in @user
-      flash[:success] = "User #{@user.name} created"
+       flash[:success] = "User #{@user.name} created"
        redirect_to users_url
     else
       render 'new'

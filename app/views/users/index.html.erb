@@ -4,7 +4,21 @@
 <%= will_paginate(@users, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
 
 <ul class="users">
+<table class="tbl table-hover">
+   <thead>
+      <tr>
+          <th>Username</th>
+          <th>Type</th>
+          <th>Email</th>
+          <th>Active</th>
+      </tr>
+  </thead>
+  <tbody>
+
   <%= render @users %>
+
+  </tbody>
+</table>
 </ul>
 
 <%= will_paginate(@users, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>

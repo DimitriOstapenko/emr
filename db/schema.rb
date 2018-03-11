@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303011904) do
+ActiveRecord::Schema.define(version: 20180309021134) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -135,6 +135,11 @@ ActiveRecord::Schema.define(version: 20180303011904) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: false
+    t.integer "prov_fee"
+    t.integer "ass_fee"
+    t.integer "spec_fee"
+    t.integer "ana_fee"
+    t.integer "non_ana_fee"
     t.index ["code"], name: "index_procedures_on_code", unique: true
   end
 

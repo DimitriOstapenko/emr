@@ -1,9 +1,8 @@
 <% provide(:title, 'All doctors') %>
 
-<p>
-
+<h1> Doctors </h1>
 <ul class="users">
-<table style="width:1100px; padding: 10px;" >
+<table class="tbl table-hover"> 
   <thead>
       <tr>
           <th>Name</th>
@@ -13,8 +12,12 @@
           <th>Provider#</th>
           <th>Group#</th>
           <th>Bills?</th>
+	  <th> Address</th>
           <th>City</th>
           <th>Phone </th>
+	 <% if  current_user.admin?  %>
+          <th> </th>
+  	 <% end %>
       </tr>
   </thead>
   <tbody>
@@ -23,16 +26,16 @@
 
   </tbody>
 </table>
-</ul>
 
 <% if @doctors %>
 <%=  will_paginate(@doctors)  %>
 <% end %>
 
 <% if  current_user.admin?  %>
-    <section class="new_diag_code">
-      <aside class="col-md-2">
+<div class="bottom_buttons">
+<div class="col-md-2 col-md-offset-0">
             <%= button_to "Add New Doctor", new_doctor_path, class: "btn btn-primary", :method => "get" %>
-      </aside>
-    </section>
+</div>
+</div>
 <% end %>
+</ul>
