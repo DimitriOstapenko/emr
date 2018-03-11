@@ -1,7 +1,9 @@
 <% provide(:title, 'All diagnoses') %>
+ 
+<h1> List of Diagnoses </h1>
 
 <ul class="users">
-<table style="width:1100px;" >
+<table class="tbl table-hover"> 
   <thead>
       <tr>
           <th>Code</th>
@@ -16,14 +18,14 @@
 
   </tbody>
 </table>
-</ul>
 
 <%= will_paginate(@diagnoses) %>
 
 <% if  current_user.admin?  %>
-    <section class="new_diag_code">
-      <aside class="col-md-2">
+    <div class="bottom_button">
+      <div class="col-md-2">
 	    <%= button_to "Add Diagnostic Code", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
-      </aside>
-    </section>
+      </div>
+    </div>
 <% end %>
+</ul>

@@ -1,12 +1,7 @@
 <h1>Reports</h1>
 <% provide(:title, 'All Reports') %>
 
-<p>
-<div id='result'></div>
-<p>
-
-<div id="page" class="col-md-8 col-md-offset-2">
-	<table class="tbl table-hover">  <!--table table-hover table-condensed" >  -->
+<table class="tbl table-hover">  <!--table table-hover table-condensed" >  -->
   <thead>
       <tr>
           <th>Name</th>
@@ -24,11 +19,11 @@
   </tbody>
 </table>
 
-</div>
 <%= will_paginate(@reports) %>
 
-<p>
-<div class="col-md-8 col-md-offset-2">
+<div class="bottom_buttons">
+<div class="col-md-2 col-md-offset-0">
 <%= button_to "Create New Report", new_report_path, class: "btn btn-primary", method: 'get'  %>
+</div>
 </div>
 

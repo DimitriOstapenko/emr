@@ -16,38 +16,33 @@ $gray-medium-light: #eaeaea;
 html,body {
   height: 100%;
   margin: 0;
-  padding-top: 0; 
+  padding-top: 15; 
 }
 
 .container {
-	width:99%;
+   width:100%;
 }
 
 table {
   width: 100%;
 }
 
-#container {
-   min-height:100%;
-   position:relative; 
-   width:98%;
-}
-
 #header {
    padding:10px;
-   height:52px;
+   height:50px;
 }
 
 #body {
-   padding:10px;
-   padding-bottom:10px;   /* Height of the footer */
+   padding:5px;
+   padding-bottom:5px;   /* Height of the footer */
 }
 
 #footer {
-   position:absolute;
+   background: white;
+   position:fixed;
+   padding-right: 15px;
    bottom:0;
    width:100%;
-   height:72px;   /* (72) Height of the footer */
 }
 
 section {
@@ -78,14 +73,14 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 1.4em;
   letter-spacing: -1px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
 h2 {
   font-size: 1.2em;
   letter-spacing: -1px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   text-align: center;
   font-weight: normal;
   color: $gray-light;
@@ -117,7 +112,8 @@ p {
 /* footer */
 
 footer {
-  margin-top: 85px;
+  margin-right: 15px;
+  margin-top: 5px;
   padding-top: 5px;
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
@@ -132,6 +128,7 @@ footer {
   }
   ul {
     float: right;
+    margin-right: 15px;
     list-style: none;
     li {
       float: left;
@@ -148,6 +145,17 @@ footer {
   width: 100%;
   margin-top: 45px;
   @include box_sizing;
+}
+
+.bottom_buttons {
+  clear: both;
+  float: left;
+  margin-top: 10px;
+  width: 100%;
+
+/*  bottom:40px;
+  position: fixed;
+*/
 }
 
 /* sidebar */
@@ -176,15 +184,6 @@ aside {
       margin-top: 0px;
     }
   }
-}
-
-.gravatar {
-  float: left;
-  margin-right: 10px;
-}
-
-.gravatar_edit {
-  margin-top: 15px;
 }
 
 /* forms */
@@ -240,6 +239,7 @@ input {
   white-space: nowrap;
 }
 
+/* Table with adjustable column widths */
 /* Column widths are based on these cells */
 .tbl_xs {       /* ver, sex, age */
   width: 2%;
@@ -286,3 +286,43 @@ input {
 .tbl tr:nth-child(even) {
   background: lightblue;
 }
+
+/* Pagination */
+
+.pagination {
+    font-size: 12px;
+}
+
+.pagination > * {
+    margin-right: 0.1em;
+    padding: 0.1em 0.1em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.pagination a:hover_ {
+    background: #202020 none repeat scroll 0 0;
+    text-shadow: 1px 1px 1px #171717;
+}
+
+.pagination a:active {
+    text-shadow: none;
+}
+
+.pagination .current {
+    background: #202020 none repeat scroll 0 0;
+    color: white;
+    text-shadow: 1px 1px 1px #171717;
+}
+
+.pagination .disabled {
+    color: #C0C0C0;
+}
+
+#doc_in {
+  float: left;
+/*  font-size: 0.8em; */
+  position: fixed;
+}
+
+

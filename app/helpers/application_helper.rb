@@ -2,6 +2,19 @@ module ApplicationHelper
        
 #	include ActionView::Helpers::NumberHelper 
   
+# Guess device type 	
+# /mobile|android|iphone|blackberry|iemobile|kindle/
+    def device_type
+      ua  = request.user_agent.downcase
+      if ua.match(/mac os|windows/)
+#	 $per_page = 30 
+	 return 'desktop'
+      else 
+  	 $per_page = 15 
+	 return 'mobile'
+      end
+    end
+
 # Returns the full title on a per-page basis.
     def full_title(page_title = '')
       base_title = "Walk-In EMR"
@@ -13,8 +26,13 @@ module ApplicationHelper
     end
 
     def project_url 
-	    'http://ruby.drlena.com'
+	    'http://walkin.drlena.com'
     end
+
+# Calculate current wait time based on daysheet patient's status    
+    def current_wait_time
+      (Visit.where("date(entry_ts) = ? AND status = 1", Date.today).count rescue 0) * AVG_MINS_PER_PATIENT
+    end	    
 
 # Get list of active doctors in the clinic
     def get_active_doctors
@@ -79,5 +97,6 @@ $units = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]]
 $true_false = [['True', 1],['False',0]]
 
 $report_types = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}
+
 
 end

@@ -3,15 +3,14 @@
     <%= link_to "Walk-In EMR", root_path, id: "logo" %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-
+	      
 <% if logged_in? %> 
 <% if controller_name == 'daysheet' || controller_name == 'billings' %>
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group">
                 <div class="col-sm-11">	     
-		<%= f.date_field :datepicker, class: 'datepckr', name: :date, onChange: 'this.form.submit()' %>
-
+		<%= f.date_field :date, id: '_datepicker',  onChange: 'this.form.submit()', value: params[:date] || Time.now.strftime('%Y-%m-%d') %>
 		</div>
 	     </div>
        <% end %>
@@ -43,8 +42,8 @@
             <ul class="dropdown-menu">
 	      <li><%= link_to "Profile", edit_user_path(current_user) %></li>
 	      <li><%= link_to "Add User", signup_path(current_user) %></li>
+	      <li><%= link_to "Users", users_path %></li>
               <li class="divider"></li>
-	        <li><%= link_to "Users", users_path %></li>
           	<li> <%= link_to "Procedures", procedures_path, method: :get %> </li>
          	<li> <%= link_to "Diagnoses", diagnoses_path, method: :get %> </li>
          	<li> <%= link_to "Doctors", doctors_path, method: :get %> </li>
@@ -59,4 +58,5 @@
     </nav>
   </div>
 </header>
+
 

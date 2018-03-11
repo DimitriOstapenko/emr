@@ -3,13 +3,16 @@
 	<h1>Procedure <%= @procedure.code %> - details  </h1>
 
 <div class="row justify-content-md-center">
-    <div class="col-md-6 col-md-offset-3">
+  <div class="col-md-6 col-md-offset-3">
 	   <pre>
 
 	      Code:         <%= @procedure.code %>
 	      Type:         <%= @procedure.ptype %>
 	      Description:  <%= @procedure.descr %>
-	      Cost: <%= @procedure.cost %>
+	      Provider fee: <%= sprintf '$%.2f',@procedure.prov_fee/100 %>
+	      Specialist fee: <%= sprintf '$%.2f', @procedure.spec_fee/100.round %>
+	      Assistant fee: <%= sprintf '$%.2f', @procedure.ass_fee/100.round %>
+	      Anesthesiologist fee: <%= sprintf '$%.2f', @procedure.ana_fee/100 %>
 	      Unit: <%= @procedure.unit %>
 	      Fac req?: <%= @procedure.fac_req %>
 	      Adm req?: <%= @procedure.adm_req %>

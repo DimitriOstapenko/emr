@@ -3,15 +3,15 @@
 <h1> List of Procedures </h1>
 
 <ul class="users">
-<table style="width:1100px; padding: 10px;" >
+<table class="tbl table-hover" >
   <thead>
       <tr>
           <th>Code</th>
           <th>Type</th>
-          <th>Description </th>
-	  <th>Cost</th>
-	  <th>Unit</th>
-	  <th>diag req?</th>
+          <th class="tbl_lg">Description </th>
+	  <th>Prov. Fee</th>
+	  <th>Units</th>
+	  <th>Diag req?</th>
 	  <th>Eff Date</th>
 	  <th>Active</th>
       </tr>
@@ -22,17 +22,16 @@
 
   </tbody>
 
-
 </table>
-</ul>
-<p>
+
 <%= will_paginate(@procedures) %>
 
 <% if  current_user.admin?  %>
-    <section class="new_diag_code">
-      <aside class="col-md-2">
+    <div class="bottom_buttons">
+      <div class="col-md-2">
             <%= button_to "Add Procedure", new_procedure_path, class: "btn btn-primary", :method => "get" %>
-      </aside>
-    </section>
+      </div>
+    </div>
 <% end %>
 
+</ul>

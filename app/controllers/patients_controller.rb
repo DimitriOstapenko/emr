@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
 
 
   def index
-	  @patients = Patient.paginate(page: params[:page]) #, per_page: 40)
+      @patients = Patient.paginate(page: params[:page], per_page: $per_page)
   end
 
   def find
@@ -48,8 +48,8 @@ class PatientsController < ApplicationController
     @patient.entry_date = DateTime.now
     @patient.lastmod_by = current_user.name
     if @patient.save
-       suffix  = ' (Health card is expired)' if @patient.hin_expiry.to_date < Date.today
-       flash[:success] = "Patient created" + suffix
+	    suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  @patient.hin_expiry.to_date < Date.today)
+       flash[:success] = "Patient created #{suffix}"
        redirect_to @patient
     else
        render 'new'

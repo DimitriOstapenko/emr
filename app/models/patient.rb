@@ -15,8 +15,8 @@ class Patient < ApplicationRecord
 
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
-	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true #plus ohip_num_checksum defined below
-	validates :ohip_ver, presence: true, length: { maximum: 3 }
+	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true, if: Proc.new { |a| a.hin_prov == 'ON' ||  a.pat_type == 'O'}
+	validates :ohip_ver, presence: true, length: { maximum: 3 }, if: Proc.new { |a| a.hin_prov == 'ON' ||  a.pat_type == 'O'}
 	validates :dob, presence: true
         validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
@@ -41,11 +41,11 @@ class Patient < ApplicationRecord
   end
 
   def hc_checksum_and_expiry
-    arr = ohip_num.split('')
-    last_digit = arr[-1].to_i
-
 # Don't validate out of province or non-ohip numbers   
     return if (hin_prov != 'ON' ||  pat_type != 'O')
+    
+    arr = ohip_num.split('')
+    last_digit = arr[-1].to_i
 
     expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
     if expiry < Date.today

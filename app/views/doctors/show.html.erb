@@ -2,10 +2,8 @@
 
 	<h1><%= @doctor.full_name %> -  Doctor's profile </h1>
 
-<div class="row">
-  <aside class="col-md-6">
-    <section class="user_info">
-      <h1>
+<div class="row justify-content-md-center">
+  <div class="col-md-6 col-md-offset-3">
 	   <pre>
 	      Name: <%= @doctor.full_name %>
 	      Billing Number: <%= @doctor.billing_num %> 
@@ -23,13 +21,10 @@
 		    <%= @doctor.city %> <%= @doctor.prov %> <%= @doctor.postal %>
 	      Office: <%= @doctor.office %>
            </pre>
-      </h1>
-    </section>
-    <section class="doctor">
+
 	    
 	    <%= button_to "Edit", edit_doctor_path(@doctor), class: "btn btn-primary", :method => "get" %>
         
-    </section>
-  </aside>
+  </div>
 </div>
 

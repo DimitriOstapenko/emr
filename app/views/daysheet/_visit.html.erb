@@ -2,10 +2,10 @@
 
 <tr>
 	<td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %> </td>
+	<td><%= visit.doctor.lname %></td>
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= pat.ohip_num %></td>
 	<td><%= pat.ohip_ver %></td>
-	<td><%= visit.doctor.lname %></td>
 	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.units %></td>

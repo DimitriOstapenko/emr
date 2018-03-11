@@ -2,7 +2,10 @@
 # App constants 
 #
 
+DEBUG_FLAG = 0
+
 GROUP_NO = "0078".freeze
+AVG_MINS_PER_PATIENT = 10.freeze
 CLINIC_NAME = 'Stoney Creek Medical Walk-In Clinic'.freeze
 CLINIC_ADDR = '140 Centennial Parkway North, Unit 2A, STONEY CREEK, ON L8E 1H9'.freeze
 CLINIC_PHONE = '(905) 561-9255'.freeze
@@ -15,3 +18,4 @@ VISIT_STATUSES = { Arrived: 1, Assessed: 2, 'Ready To Bill': 3, Billed: 4, Cance
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
 
+BILLING_FORMAT='EDT'.freeze  # CSV/EDT

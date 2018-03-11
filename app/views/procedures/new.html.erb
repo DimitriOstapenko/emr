@@ -1,2 +1,9 @@
-<h1>Procedures#new</h1>
-<p>Find me in app/views/procedures/new.html.erb</p>
+<% provide(:title, 'New Diagnostic Code') %>
+<% provide(:button_text, 'Save') %>
+<h1>New Procedure </h1>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-10 col-md-offset-2">
+    <%= render 'form' %>
+  </div>
+</div>

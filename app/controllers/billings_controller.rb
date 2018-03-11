@@ -4,7 +4,7 @@ class BillingsController < ApplicationController
 
   def index
       date = params[:date] || Date.today
-      @visits = Visit.where("date(entry_ts) = ? AND status=4", date)
+      @visits = Visit.where("date(entry_ts) = ? AND (status=3 OR status=4) ", date)
       if @visits.any?
                @visits = @visits.paginate(page: params[:page])
                render 'index'
@@ -32,7 +32,7 @@ class BillingsController < ApplicationController
 
   def export_csv
     date = params[:date] || Date.today
-    @visits = Visit.where("date(entry_ts) = ? AND status=4", date)
+    @visits = Visit.where("date(entry_ts) = ? AND status=3", date)
    
     fname = Rails.root.join('export', date.to_s + '.csv')
     begin
@@ -42,6 +42,7 @@ class BillingsController < ApplicationController
         str="#{v.doctor.provider_no} : #{p.lname} : #{p.fname} : #{p.sex} : #{p.dob.strftime("%d/%m/%Y")} :"+
 	    "#{p.ohip_num} : #{p.ohip_ver} : #{v.diag_code} : #{v.proc_codes} : #{v.entry_ts.strftime("%d/%m/%Y")} : #{v.units} \n"
         file.write( str )
+	v.update_attribute(:status, 4) 
       end 
       rescue Errno::ENOENT => e
 	flash[:danger] = e.message
@@ -56,7 +57,7 @@ class BillingsController < ApplicationController
   def export_edt
     date = params[:date] || Date.today
    
-    @visits = Visit.where("date(entry_ts) = ? AND status=4", date)
+    @visits = Visit.where("date(entry_ts) = ? AND status=3", date)
     ext = Time.now.day.to_s.rjust(4,'0')
     fname = Rails.root.join('EDT', "HL#{GROUP_NO}.#{ext}")
     heh_count = het_count = 0
@@ -78,6 +79,7 @@ class BillingsController < ApplicationController
 	next unless is_hcp_procedure?(v.proc_code) 
 	heh = "HEH#{pat.ohip_num}#{pat.ohip_ver}#{pat.dob.strftime("%Y%m%d")}#{v.id.to_s.rjust(8,'0')}HCPP\n"
         file.write( heh )
+	v.update_attribute(:status, 4) 
 	heh_count += 1
 	het = "HET#{v.proc_code}  #{(v.fee*v.units*100).to_i.to_s.rjust(6,'0')}#{v.units.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
 	file.write( het )

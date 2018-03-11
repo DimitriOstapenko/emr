@@ -1,6 +1,5 @@
 #
-# Validate ohip numbers of all patients;
-# Print all validation errors 
+# Set chart_file attribute for all patients that don't have it set 
 # 
 
 require_relative '../config/environment'

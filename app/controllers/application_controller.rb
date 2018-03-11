@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include DaysheetHelper
 
+#  def initialize
+#    WillPaginate.per_page = 10 if device_type == 'desktop'
+#  end
+
   private
 
 # Confirms a logged-in user.
@@ -19,7 +23,7 @@ class ApplicationController < ActionController::Base
    def current_doctor_set
 	 unless current_doctor
 	   store_location
-	   flash[:danger] = "Please set current doctor"
+	   flash[:danger] = "Current doctor is not set"
 	   redirect_to set_doctor_url
 	 end
    end
