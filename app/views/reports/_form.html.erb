@@ -8,9 +8,9 @@
     <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'All Active' ) %>
 </div>
     
-<div class="col-md-1" >
+<div class="col-md-2" >
   <%= f.label "Report type" %>
-    <%= f.select :rtype, $report_types, prompt: 'Select Type' %>
+  <%= f.select :rtype, REPORT_TYPES, prompt: 'Select Type' %>
 </div>
 
   <div class="col-md-10"></div>
@@ -39,7 +39,7 @@
 </div>
 
   <div class="col-md-10"></div>
-  <div class="col-md-3 col-md-offset-3">
+  <div class="col-md-4 col-md-offset-3">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
 
@@ -52,7 +52,10 @@ $(document).ready(function () {
     $('#new_report select[name="report[rtype]"]').change(function () {
 	switch ( $('#new_report select[name="report[rtype]"]').val() ) {
 		case "1":              	// Daily
+			$('#edate').hide();
 			$('#sdate').show();
+			$('#year').hide();
+			$('#month').hide();
 		  	break;
 		case "2":		// Monthly
 			$('#edate').hide();

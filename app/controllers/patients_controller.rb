@@ -9,7 +9,7 @@ class PatientsController < ApplicationController
   end
 
   def find
-      str = params[:findstr]
+      str = params[:findstr].strip
       @patients = myfind(str) 
       if @patients.any?
          @patients = @patients.paginate(page: params[:page])
@@ -28,7 +28,7 @@ class PatientsController < ApplicationController
        @patient = Patient.find(params[:id]) 
        if @patient.chart_file.blank?
           chart = Dir.glob("#{Rails.root}/charts/**/#{@patient.lname}\,#{@patient.fname}*\.pdf")
-          @patient.update_attribute(:chart_file, chart[0]) if !chart.blank?
+	  @patient.update_attribute(:chart_file, chart[0]) if (!chart.blank? && chart.count == 1)
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 12) 
        if !@patient.valid?
@@ -121,7 +121,13 @@ class PatientsController < ApplicationController
 
   def chart
     @patient = Patient.find(params[:id])
-    send_file( @patient.chart_file, type: "application/pdf", disposition: "attachment", filename: "#{@patient.lname}_#{@patient.fname}\.pdf")
+    begin
+    send_file( @patient.chart_file, type: "application/pdf", disposition: "attachment", filename: "#{@patient.lname}_#{@patient.fname}\.pdf") 
+      rescue StandardError => e
+	flash[:danger] =  e.message  
+        redirect_to @patient 
+    end
+
 #     render  inline: '', layout: true
   end
 

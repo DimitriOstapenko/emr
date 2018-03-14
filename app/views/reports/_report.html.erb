@@ -1,7 +1,7 @@
     <tr>
 	<td><%= link_to "#{report.name}", report %> </td>
 	<td><%= report.doctor.lname rescue 'All' %> </td> 
-	<td><%= $report_types.invert[report.rtype] %></td> 
+	<td><%= REPORT_TYPES.invert[report.rtype] %></td> 
 	<td><%= report.sdate %></td>
 	<td><%= report.edate %></td>
 

@@ -99,7 +99,7 @@ class VisitsController < ApplicationController
         pdf = build_visit_form( @patient, @visit )
 
         send_data pdf.render,
-          filename: "label_#{@patient.full_name}",
+          filename: "form_#{@patient.full_name}",
           type: 'application/pdf',
           disposition: 'inline'
   end  
@@ -107,8 +107,11 @@ class VisitsController < ApplicationController
   private
 
     def visit_params
-      params.require(:visit).permit(:vis_type,:diag_code,:proc_code, :proc_code2, :proc_code3, :proc_code4,
-				    :units, :units2, :units3, :units4, :fee, :fee2, :fee3, :fee4,
+      params.require(:visit).permit(:vis_type,:diag_code,
+				    :proc_code, :proc_code2, :proc_code3, :proc_code4,
+				    :units, :units2, :units3, :units4, 
+				    :fee, :fee2, :fee3, :fee4,
+				    :bil_type, :bil_type2, :bil_type3, :bil_type4,
 				    :patient_id,:doc_id,:notes,:entry_ts,:status,:duration,:entry_by )
     end      
 
