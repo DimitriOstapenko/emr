@@ -72,6 +72,6 @@ Rails.application.routes.draw do
   resources :procedures
   resources :reports
 
-#  resources :billing     # historical billing table
+ resources :billings     # historical billing table
   
 end

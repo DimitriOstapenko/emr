@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180309021134) do
+ActiveRecord::Schema.define(version: 20180313000133) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -189,6 +189,10 @@ ActiveRecord::Schema.define(version: 20180309021134) do
     t.string "proc_code2"
     t.string "proc_code3"
     t.string "proc_code4"
+    t.integer "bil_type"
+    t.integer "bil_type2"
+    t.integer "bil_type3"
+    t.integer "bil_type4"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end

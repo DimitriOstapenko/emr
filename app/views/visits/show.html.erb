@@ -10,15 +10,16 @@
     <section class="user_info">
       <h1>
 	   <pre>
-		Doctor :    <%= @visit.doctor.lname %>
-		Diagnosis : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
-		Procedure(s) : <%=  @visit.proc_codes %>
-  		Type: <%= @visit.vis_type %>
-  		Duration: <%= @visit.duration %> minutes
-		Status: <%= VISIT_STATUSES.invert[@visit.status] %> 
-  		Entry by: <%= @visit.entry_by %>
-  		Entered at: <%= @visit.entry_ts %>
-		Notes: <%= @visit.notes %>	     
+		<b>Doctor</b> :    <%= @visit.doctor.lname %>
+		<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
+		<b>Procedure(s)</b> : <%=  @visit.proc_codes %>
+		<b>Billing Type(s) </b>: <%= @visit.bil_types %> 
+		<b>Visit Type:</b> <%= VISIT_TYPES.invert[@visit.vis_type] %>
+		<b>Duration </b>: <%= @visit.duration %> minutes
+		<b>Status </b>: <%= VISIT_STATUSES.invert[@visit.status] %> 
+		<b>Entry by </b>: <%= @visit.entry_by %>
+		<b>Entered at </b>: <%= @visit.entry_ts %>
+		<b>Notes </b>: <%= @visit.notes %>	     
            </pre>
       </h1>
     </section>

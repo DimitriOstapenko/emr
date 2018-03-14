@@ -32,17 +32,20 @@ class BillingsController < ApplicationController
 
   def export_csv
     date = params[:date] || Date.today
-    @visits = Visit.where("date(entry_ts) = ? AND status=3", date)
+    billed = VISIT_STATUSES[:Billed]
+    ready = VISIT_STATUSES[:'Ready To Bill']
+    @visits = Visit.where("date(entry_ts) = ? AND status=?", date,ready)
    
     fname = Rails.root.join('export', date.to_s + '.csv')
     begin
       file = File.open(fname, 'w')
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
+	next unless hcp_procedure?(v.proc_code) 
         str="#{v.doctor.provider_no} : #{p.lname} : #{p.fname} : #{p.sex} : #{p.dob.strftime("%d/%m/%Y")} :"+
 	    "#{p.ohip_num} : #{p.ohip_ver} : #{v.diag_code} : #{v.proc_codes} : #{v.entry_ts.strftime("%d/%m/%Y")} : #{v.units} \n"
         file.write( str )
-	v.update_attribute(:status, 4) 
+	v.update_attribute(:status, billed) 
       end 
       rescue Errno::ENOENT => e
 	flash[:danger] = e.message
@@ -56,6 +59,7 @@ class BillingsController < ApplicationController
 
   def export_edt
     date = params[:date] || Date.today
+    billed = VISIT_STATUSES[:Billed]
    
     @visits = Visit.where("date(entry_ts) = ? AND status=3", date)
     ext = Time.now.day.to_s.rjust(4,'0')
@@ -64,41 +68,39 @@ class BillingsController < ApplicationController
     date_str = date.to_date.strftime("%Y%m%d")
     begin
       file = File.open(fname, 'w')
-      last_doc_id = 0
+      last_doc_id = @visits.first.doc_id
       @visits.all.each do |v| 
         pat = Patient.find(v.patient_id)
-        if (v.doctor.id != last_doc_id)
-          if (last_doc_id != 0)
+        if (v.doc_id != last_doc_id)
 	    hee = "HEE#{heh_count.to_s.rjust(4,'0')}#{'0'*4}#{het_count.to_s.rjust(5,'0')}\n"
             file.write( hee )
             heh_count = het_count = 0
-          end	  
+	    last_doc_id = v.doc_id
+        else	  
 	  heb = "HEBV03G#{date_str}#{ext}#{' '*6}#{GROUP_NO}#{v.doctor.provider_no}\n"
           file.write( heb )
 	end
-	next unless is_hcp_procedure?(v.proc_code) 
-	heh = "HEH#{pat.ohip_num}#{pat.ohip_ver}#{pat.dob.strftime("%Y%m%d")}#{v.id.to_s.rjust(8,'0')}HCPP\n"
-        file.write( heh )
-	v.update_attribute(:status, 4) 
-	heh_count += 1
-	het = "HET#{v.proc_code}  #{(v.fee*v.units*100).to_i.to_s.rjust(6,'0')}#{v.units.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
-	file.write( het )
-	het_count += 1
-        if !v.proc_code2.blank?
-	  next unless is_hcp_procedure?(v.proc_code) 
-	  het2 = "HET#{v.proc_code2}  #{(v.fee2*v.units2*100).to_i.to_s.rjust(6,'0')}#{v.units2.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+	if hcp_procedure?(v.proc_code) 
+	  heh = "HEH#{pat.ohip_num}#{pat.ohip_ver}#{pat.dob.strftime("%Y%m%d")}#{v.id.to_s.rjust(8,'0')}HCPP\n"
+          file.write( heh )
+	  v.update_attribute(:status, billed) 
+	  heh_count += 1
+	  het = "HET#{v.proc_code}  #{(v.fee*v.units*100).to_i.to_s.rjust(6,'0')}#{v.units.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}".ljust(79,' ') + "\n"
+	  file.write( het )
+	  het_count += 1
+	end
+        if !v.proc_code2.blank? && hcp_procedure?(v.proc_code2) 
+	  het2 = "HET#{v.proc_code2}  #{(v.fee2*v.units2*100).to_i.to_s.rjust(6,'0')}#{v.units2.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}".ljust(79,' ') + "\n"
 	  file.write( het2 )
 	  het_count += 1
         end
-        if !v.proc_code3.blank?
-	  next unless is_hcp_procedure?(v.proc_code) 
-	  het3 = "HET#{v.proc_code3}  #{(v.fee3*v.units3*100).to_i.to_s.rjust(6,'0')}#{v.units3.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+        if !v.proc_code3.blank? && hcp_procedure?(v.proc_code3) 
+	  het3 = "HET#{v.proc_code3}  #{(v.fee3*v.units3*100).to_i.to_s.rjust(6,'0')}#{v.units3.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}".ljust(79,' ') + "\n"
 	  file.write( het3 )
 	  het_count += 1
         end
-        if !v.proc_code4.blank?
-	  next unless is_hcp_procedure?(v.proc_code) 
-	  het4 = "HET#{v.proc_code4}  #{(v.fee4*v.units4*100).to_i.to_s.rjust(6,'0')}#{v.units4.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}\n"
+        if !v.proc_code4.blank? && hcp_procedure?(v.proc_code4) 
+	  het4 = "HET#{v.proc_code4}  #{(v.fee4*v.units4*100).to_i.to_s.rjust(6,'0')}#{v.units4.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}".ljust(79,' ') + "\n"
 	  file.write( het4 )
 	  het_count += 1
         end
@@ -113,7 +115,7 @@ class BillingsController < ApplicationController
        file.close unless file.nil?
     end
 
-    flash[:info] = "EDT Export file created for date #{date}" unless error
+    flash[:info] = "HL#{GROUP_NO}.#{ext} EDT Export file created for date #{date}" unless error
     redirect_back(fallback_location: billings_path )
   end
 
@@ -125,7 +127,7 @@ private
 #				       :bill_prov, :submit_user, :submit_ts, :doc_id )
 #  end
 
-  def is_hcp_procedure?(proc_code)
+  def hcp_procedure?(proc_code)
     Procedure.find_by(code: proc_code).ptype == 'HCP' rescue 0
   end
 

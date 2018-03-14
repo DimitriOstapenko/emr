@@ -42,7 +42,22 @@
     <h3>Visits: (<%= @patient.visits.count %>)</h3>
     <% if @patient.visits.any? %>
       <ol class="microposts">
+        <table class="tbl">
+  	  <thead>
+	  <tr>
+	    <th class="tbl_xlg">Date</th>
+	    <th class="tbl_lg">Doctor</th>
+	    <th>Diagnosis</th>
+	    <th class="tbl_xlg">Procedure(s)</th>
+	    <th>Type</th>
+	    <th>Status</th>
+	  </tr>
+	  <tbody>
+
         <%= render @visits %>
+
+          </tbody>
+	</table>
       </ol>
     <% end %>
 <%= will_paginate(@visits) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->

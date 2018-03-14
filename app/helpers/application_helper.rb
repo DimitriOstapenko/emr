@@ -67,36 +67,6 @@ module ApplicationHelper
 
       last_digit == (10 - sum.to_s[-1].to_i)
     end
-$sexes  = [['Male','M'],['Female','F'],['Unknown','X']]
-
-$provinces = [['ON','ON'],['AB', 'AB'], ['BC', 'BC'], ['MB','MB'], ['NB','NB'],
-              ['NL','NL'], ['NS','NS'],['NT','NT'],['NU','NU'],
-              ['PE','PE'], ['QC','QC'], ['SK','SK'], ['YT','YT']
-             ]
-
-$billing_statuses = [["3RD CLAIM"],
-                     ["DELETED"],
-                     ["WCB CLAIM"],
-                     ["HCP CLAIM"],
-                     ["INVOICED"],
-                     ["PAID BY 3RD"],
-                     ["PAID BY MOH"],
-                     ["WRITTEN OFF"]]
-
-$billing_types = [["3RD","3RD"],
-                  ["RMB","RMB"],
-                  ["WCB","WCB"],
-                  ["HCP","HCP"]]
-
-$durations = [[10,10], [20,20], [30,30], [40,40]]
-
-$timeframes = [['Day',1],['Month',2],['Year',3]]
-
-$units = [[1,1],[2,2],[3,3],[4,4],[5,5],[6,6],[7,7],[8,8],[9,9],[10,10]]
-
-$true_false = [['True', 1],['False',0]]
-
-$report_types = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}
 
 
 end

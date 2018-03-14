@@ -12,14 +12,14 @@ class ReportsController < ApplicationController
       @reports = myfind(str)
       if @reports.any?
          @reports = @reports.paginate(page: params[:page])
-         flash.now.alert = 'Found: '+ @reports.size.to_s
-         render 'index'
+	 flash.now[:info] = "Found: #{@reports.count} #{'report'.pluralize(@reports.count)}"
       else
-         @reports = Report.paginate(page: params[:page])
          @reports = Report.new
-         flash.now[:danger] = 'Not found'
-	 redirect_to @reports 
+         @reports = Report.paginate(page: params[:page])
+         flash.now[:info] = 'Not found'
+#	 redirect_to @reports 
       end
+      render 'index'
   end
 
   def new
@@ -86,8 +86,8 @@ private
 
   # Find report(s) by name or type, depending on input format
   def myfind (str)
-        if str.match(/^[[:digit:]]{,10}$/)               # rtype
-          Report.where("rtype like ?", "%#{str}%")
+        if str.match(/^[[:digit:]]$/)               # rtype
+          Report.where(rtype: str)
         elsif str.match(/^[[:graph:]]+$/)                # name
           Report.where("lower(name) like ?", "%#{str.downcase}%")
         else

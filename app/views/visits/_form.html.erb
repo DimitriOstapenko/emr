@@ -13,9 +13,19 @@
   <%= f.label "Diagnosis" %>
   <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :code, prompt: 'Select')  %> 
 
+  <div class="col-md-4 padding-0">
   <%= f.label "Duration" %>
-  <%= f.select :duration, $durations, default: 10  %>
+  <%= f.select :duration, DURATIONS, default: 10  %>
+  </div>
 
+  <div class="col-md-8 ">
+  <%= f.label "Visit Type" %>
+  <%= f.select :vis_type, VISIT_TYPES, placeholder: 'Visit type', default: 'WS' %>
+  </div>
+
+  <%= f.label "Status" %>
+  <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
+  
   </div>
 
   <div class="col-md-8"> </div>
@@ -43,38 +53,46 @@
   <div class="col-md-8"> </div>
   <div class="col-md-1">
   <%= f.label :units %>
-  <%= f.select :units, $units, prompt:  'Select' %>
+  <%= f.select :units, UNITS, prompt:  'Select' %>
   </div>
 
   <div class="col-md-1">
   <%= f.label :units %>
-  <%= f.select :units2, $units, prompt: 'Select' %>
+  <%= f.select :units2, UNITS, prompt: 'Select' %>
   </div>
 
   <div class="col-md-1">
   <%= f.label :units %>
-  <%= f.select :units3, $units, prompt: 'Select' %>
+  <%= f.select :units3, UNITS, prompt: 'Select' %>
   </div>
 
   <div class="col-md-1">
   <%= f.label :units %>
-  <%= f.select :units4, $units, prompt: 'Select' %>
+  <%= f.select :units4, UNITS, prompt: 'Select' %>
   </div>
 
   <div class="col-md-8"> </div>
-
-  <div class="col-md-2">
-  <%= f.label "Status" %>
-  <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
+  <div class="col-md-1">
+  <%= f.label "Bill Type" %>
+  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-2">
-  <%= f.label "Visit Type" %>
-  <%= f.select :vis_type, VISIT_TYPES, placeholder: 'Visit type', default: 'WS' %>
-  </div>
-  
+  <div class="col-md-1">
+  <%= f.label "Bill Type" %>
+  <%= f.select :bil_type2, BILLING_TYPES, prompt: 'Select' %>
   </div>
 
+  <div class="col-md-1">
+  <%= f.label "Bill Type" %>
+  <%= f.select :bil_type3, BILLING_TYPES,  prompt: 'Select' %>
+  </div>
+
+  <div class="col-md-1">
+  <%= f.label "Bill Type" %>
+  <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select'%>
+  </div>
+
+  <div class="col-md-12"> </div>
   <div class="col-md-7 col-md-offset-1">
 
   <%= f.text_area :notes, rows:10, placeholder: 'Notes' %>

@@ -5,7 +5,7 @@
 <div class="row justify-content-md-center">
     <div class="col-md-8 col-md-offset-2">
 	   <pre>
-	      Type:       <%= $report_types.invert[@report.rtype] %>
+	      Type:       <%= REPORT_TYPES.invert[@report.rtype] %>
 	      Doctor:     <%= @report.doctor.lname rescue 'All Active'%>
 	      Start Date: <%= @report.sdate %>
 	      End Date:   <%= @report.edate %>
@@ -22,7 +22,7 @@
           <th>OHIP#</th>
           <th>Diagnosis</th>
           <th>Procedure(s)</th>
-          <th>Duration</th>
+          <th>Bill.Type</th>
           <th>Ttl. Fee</th>
           <th>Status</th>
           <th>Entry By</th>

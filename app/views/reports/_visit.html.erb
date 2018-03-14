@@ -3,12 +3,12 @@
 <% diagnosis = Diagnosis.find_by(code: visit.diag_code) %>
 <tr>
 	<td><%= visit.entry_ts.strftime("%d/%m/%Y %H:%M") %></td>
-	<td><%= link_to visit.id, patient_visit_path(patient,visit) %></td>
-	<td><%= link_to patient.full_name, patient %> </td>
+	<td><%= visit.id %></td>
+	<td><%= patient.full_name %> </td>
 	<td><%= patient.ohip_num_full %> </td>
-	<td><%= link_to visit.diag_code, diagnosis %></td>
+	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= visit.duration %></td>
+	<td><%= visit.bil_types %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td><%= visit.status_str %></td>
 	<td><%= visit.entry_by %></td>
