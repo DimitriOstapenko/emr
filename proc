@@ -1,7 +1,0 @@
-proc_code:string qcode:string proc_descr:string proc_cost:decimal, precision: 8, scale: 2 proc_unit:decimal fac_req:boolean adm_req:boolean diag_req:boolean percent:decimal eff_date:date term_date:date ref_req:boolean  
-
-
-
-
-
-apply_hst,proc_code,qcode,proc_type,proc_desc,proc_cost,proc_unit,fac_req,adm_req,diag_req,percent,eff_date,term_date,ref_req,category,subcateg,alt_cost1,alt_cost2,specialty,serv_class,add_on_prc,mult_unit,fee_determ,anaes_type,bill_prov,apply_gst,apply_pst,bilateral,serv_type,prem_types
