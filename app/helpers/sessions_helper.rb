@@ -13,7 +13,9 @@ module SessionsHelper
 
 # Returns true if the user is logged in, false otherwise.
   def logged_in?
-    log_out if session[:expires_at] < Time.now
+    if !session[:expires_at].blank? 
+       log_out if session[:expires_at] < Time.now
+    end
     !current_user.nil?
   end  
 
@@ -21,6 +23,7 @@ module SessionsHelper
   def log_out
     session.delete(:user_id)
     session.delete(:doc_id)
+    session.delete(:expires_at)
     @current_doctor = nil
     @current_user = nil
   end
