@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
 
 # Confirms an admin user.
     def admin_user
-      redirect_to(root_url) unless current_user.admin?
+      redirect_to(root_url) unless current_user && current_user.admin?
     end
 
 end
