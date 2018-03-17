@@ -1,12 +1,13 @@
 class VisitsController < ApplicationController
 
-	before_action :logged_in_user, only: [:create, :destroy, :new, :index]
-        before_action :current_doctor_set, only: [:new, :visitform]  
-	before_action :admin_user,   only: :destroy
+	before_action :logged_in_user #, only: [:create, :destroy, :index]
+        before_action :current_doctor_set, only: [:create, :visitform, :receipt]  
+	before_action :admin_user, only: :destroy
 
   def new
         @patient = Patient.find(params[:patient_id])
         @visit = @patient.visits.new
+        current_doctor_set
   end
 
   def create
@@ -16,9 +17,7 @@ class VisitsController < ApplicationController
     @visit.entry_by = current_user.name
 
     if @visit.doc_id != current_doctor.id
-	 session[:doc_id] = @visit.doc_id
-	 session[:expires_at] = Time.now.midnight + 1.day
-#         doc = Doctor.find(params[:doc_id]) || Doctor.new()
+	 set_doc_session ( @visit.doc_id )
 	 flash[:info] = "Current Doctor set to Dr. #{@visit.doctor.lname}"
     end
 
@@ -48,7 +47,7 @@ class VisitsController < ApplicationController
 	    @visits = @patient.visits.paginate(page: params[:page])
 	   render 'index'
       else
-	   flash[:error] = 'No visits found for date ' + date.inspect 
+	   flash.now[:warning] = "No visits found for date: #{date.inspect}" 
 	   render  body: nil
     end
   end
@@ -87,12 +86,13 @@ class VisitsController < ApplicationController
 	   @visits = @visits.paginate(page: params[:page])
 	   render 'index'
       else
-	   flash[:error] = 'No visits found for date ' + date.inspect 
+	      flash.now[:warning] = "No visits found for date: #{date.inspect}" 
 #           redirect_to visits_url
 	    render "no_daysheet_found"
       end
   end
 
+# Generate visit form in PDF
   def visitform
         @visit = Visit.find(params[:id])
 	@patient = Patient.find(@visit.patient_id)
@@ -104,26 +104,40 @@ class VisitsController < ApplicationController
           disposition: 'inline'
   end  
 
+# Generate receipt for 3RD party services in PDF  
+  def receipt
+        @visit = Visit.find(params[:id])
+	@patient = Patient.find(@visit.patient_id)
+        pdf = build_receipt( @patient, @visit )
+
+        send_data pdf.render,
+          filename: "receipt_#{@patient.full_name}",
+          type: 'application/pdf',
+          disposition: 'inline'
+
+#    render inline: '', layout: true
+  end
+
   private
 
     def visit_params
-      params.require(:visit).permit(:vis_type,:diag_code,
+      params.require(:visit).permit(:vis_type, :diag_code, :patient_id, :doc_id, #:services,
 				    :proc_code, :proc_code2, :proc_code3, :proc_code4,
 				    :units, :units2, :units3, :units4, 
 				    :fee, :fee2, :fee3, :fee4,
-				    :bil_type, :bil_type2, :bil_type3, :bil_type4,
-				    :patient_id,:doc_id,:notes,:entry_ts,:status,:duration,:entry_by )
+				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
+				    :notes, :entry_ts, :status, :duration, :entry_by )
     end      
 
-    def correct_user
-      @visit = current_user.visits.find_by(id: params[:id])
-      redirect_to root_url if @visit.nil?
-    end
+#    def correct_user
+#      @visit = current_user.visits.find_by(id: params[:id])
+#      redirect_to root_url if @visit.nil?
+#    end
 
-    def admin_user
-      @visit = current_user.visits.find_by(id: params[:id])
-      redirect_to root_url unless current_user.admin?
-    end
+#    def admin_user
+#      @visit = current_user.visits.find_by(id: params[:id])
+#      redirect_to root_url unless current_user.admin?
+#    end
 	
     def set_visit_fees ( visit )
       if !visit.proc_code.blank? 
@@ -216,6 +230,89 @@ class VisitsController < ApplicationController
 	  pdf.horizontal_line 32.mm,195.mm, :at => 8.mm
     end
 	  
+    return pdf 
+  end
+
+# This PDF receipt is generated for 3RD party services only; 1 3RD party service per visit (1st)
+  def build_receipt ( pat, visit )
+    require 'prawn'
+    require "prawn/measurement_extensions"
+    
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
+
+    _3rdind = visit._3rd_index
+    return pdf if  _3rdind.nil?
+
+    serv  = visit.services[_3rdind]
+    today  = Date.today.strftime "%B %d, %Y"
+    pdf.font "Courier"
+    pdf.stroke_rectangle [0,240.mm], 200.mm,240.mm
+    pdf.text 'Receipt for Professional Services', size: 16, :align => :center
+    pdf.text 'Dr.' + visit.doctor.full_name,  size: 16, :align => :center
+
+    patinfo = "<b>Patient:</b> 
+    
+    	      #{ pat.full_name} (#{pat.sex})
+               #{pat.addr}
+               #{pat.city}, #{pat.prov} #{pat.postal}
+               Born: #{pat.dob} 
+               HCN: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})
+               Exp: #{pat.hin_expiry}
+	       File: #{pat.id}"
+
+    clinicinfo = "<b> Clinic: </b> 
+
+   	         #{CLINIC_NAME} 
+    		 #{CLINIC_ADDR} 
+		 Phone: #{CLINIC_PHONE}
+		 Fax:   #{CLINIC_FAX}
+		 
+		 Date: #{today}"
+
+#                              1         2         3         4         5         6         7
+#                     123456789012345678901234567890123456789012345678901234567890123456789012345
+
+     serviceinfo = "<b> Service details </b>:
+
+     		     Date          Descr          Qty       Charges     Payments    Balance   
+                    #{Date.today}    #{serv[:pcode]}         #{serv[:units]}          #{serv[:fee]}      #{serv[:fee]}       $0.00   
+                   "
+
+# Clinic address box
+    pdf.text_box clinicinfo, :at => [5.mm,237.mm],
+         :width => 95.mm,
+         :height => 45.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 9,
+    	 :inline_format => true
+
+# Patient Info box
+    pdf.text_box patinfo, :at => [105.mm,237.mm],
+         :width => 100.mm,
+         :height => 45.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 9,
+    	 :inline_format => true
+
+# Service description box:
+    pdf.text_box serviceinfo, :at => [5.mm,192.mm],
+         :width => 200.mm,
+         :height => 45.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 9,
+         :inline_format => true
+
+    pdf.draw_text "Notes: #{visit.notes}", :at => [5.mm,130.mm]
+
+    pdf.stroke do
+                pdf.line_width=1
+                pdf.horizontal_line 0,200.mm, :at => 195.mm
+                pdf.horizontal_line 0,200.mm, :at => 140.mm
+                pdf.horizontal_line 0,200.mm, :at => 126.mm
+                pdf.vertical_line 195.mm,240.mm, :at => 100.mm
+              end
+
+
     return pdf 
   end
 

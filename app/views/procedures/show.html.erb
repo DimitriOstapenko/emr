@@ -9,10 +9,11 @@
 	      Code:         <%= @procedure.code %>
 	      Type:         <%= @procedure.ptype %>
 	      Description:  <%= @procedure.descr %>
-	      Provider fee: <%= sprintf '$%.2f',@procedure.prov_fee/100 %>
-	      Specialist fee: <%= sprintf '$%.2f', @procedure.spec_fee/100.round %>
-	      Assistant fee: <%= sprintf '$%.2f', @procedure.ass_fee/100.round %>
-	      Anesthesiologist fee: <%= sprintf '$%.2f', @procedure.ana_fee/100 %>
+	      Fee: <%= sprintf '$%.2f',@procedure.cost rescue 0.00 %>
+	      Provider fee: <%= sprintf '$%.2f',@procedure.prov_fee/100 rescue 0.00 %>
+	      Specialist fee: <%= sprintf '$%.2f', @procedure.spec_fee/100 rescue 0.00 %>
+	      Assistant fee: <%= sprintf '$%.2f', @procedure.ass_fee/100  rescue 0.00 %>
+	      Anesthesiologist fee: <%= sprintf '$%.2f', @procedure.ana_fee/100 rescue 0.00 %>
 	      Unit: <%= @procedure.unit %>
 	      Fac req?: <%= @procedure.fac_req %>
 	      Adm req?: <%= @procedure.adm_req %>

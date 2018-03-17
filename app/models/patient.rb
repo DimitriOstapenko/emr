@@ -1,7 +1,7 @@
 class Patient < ApplicationRecord
         has_many :visits, dependent: :destroy, inverse_of: :patient
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
-	attr_accessor :full_name, :age, :cardstr
+	attr_accessor :full_name, :age, :cardstr, :phonestr
 	default_scope -> { order(lname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
@@ -32,6 +32,11 @@ class Patient < ApplicationRecord
 
   def ohip_num_full
     return ohip_ver.blank? ? lname : [ohip_num, ohip_ver].join(' ')
+  end
+
+# Formatted phone number
+  def phonestr
+    ActiveSupport::NumberHelper.number_to_phone(phone, area_code: :true)
   end
 
   def age

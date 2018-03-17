@@ -1,8 +1,7 @@
-<h1> Assign Doctor </h1>
-<div class="bottom_buttons">
-    <div class="col-md-4 col-md-offset-4">
+
+<h1> </h1>
+<div class="col-md-4 col-md-offset-4">
 <%= form_with url: daysheet_index_path do |f| %>
 	<%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {prompt: 'Please assign doctor for this shift'}, {onchange: "this.form.submit()"} ) %>
 <% end %>
-  </div>
 </div>

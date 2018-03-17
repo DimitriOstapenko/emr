@@ -1,8 +1,5 @@
 <% provide(:title, 'All procedures') %>
 
-<h1> List of Procedures </h1>
-
-<ul class="users">
 <table class="tbl table-hover" >
   <thead>
       <tr>
@@ -21,17 +18,9 @@
   <%= render @procedures %>
 
   </tbody>
-
 </table>
 
-<%= will_paginate(@procedures) %>
-
-<% if  current_user.admin?  %>
-    <div class="bottom_buttons">
-      <div class="col-md-2">
-            <%= button_to "Add Procedure", new_procedure_path, class: "btn btn-primary", :method => "get" %>
-      </div>
-    </div>
-<% end %>
-
-</ul>
+<div class="bottom_buttons ">
+<%= will_paginate @procedures, class: "btn" %>
+<%= button_to "Add Procedure", new_procedure_path, class: "btn btn-primary col-md-12", :method => "get" %>
+</div>

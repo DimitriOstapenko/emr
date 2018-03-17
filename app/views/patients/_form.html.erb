@@ -52,12 +52,12 @@
 
   <%= f.label :Phone, class: "col-md-1 control-label" %>
   <div class="col-md-2">
-	  <%= f.phone_field :phone, value: number_to_phone(@patient.phone)  %>
+	  <%= f.phone_field :phone, value: num_to_phone(@patient.phone)  %>
   </div>
   
   <%= f.label :Mobile, class: "col-md-1 control-label" %>
   <div class="col-md-2">
-  <%= f.phone_field :mobile, value: number_to_phone(@patient.mobile) %>
+  <%= f.phone_field :mobile, value: num_to_phone(@patient.mobile) %>
   </div>
   
   <div class="col-md-12"> &nbsp; </div>
@@ -100,7 +100,7 @@
 
   <%= f.label :pharm_phone, class: "col-md-1 control-label" %>
   <div class="col-md-2">
-  <%= f.phone_field :pharm_phone, value: number_to_phone(@patient.pharm_phone) %>
+  <%= f.phone_field :pharm_phone, value: num_to_phone(@patient.pharm_phone) %>
   </div>
   
   <%= f.label :'Alt Contact', class: "col-md-1 control-label" %>

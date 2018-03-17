@@ -3,18 +3,20 @@ class ProceduresController < ApplicationController
         before_action :admin_user,   only: :destroy
 
   def index
-          @procedures = Procedure.paginate(page: params[:page]) #, per_page: 40)
+     @procedures = Procedure.paginate(page: params[:page]) #, per_page: 40)
+     flash.now[:info] = "Showing All Procedures"
   end
 
   def find
       str = params[:findstr]
       @procedures = myfind(str)
       if @procedures.any?
-         flash.now[:info] = "Found: #{@procedures.count} procedures"
          @procedures = @procedures.paginate(page: params[:page])
+         flash.now[:info] = "Found: #{@procedures.count} procedures"
          render 'index'
       else
-         flash[:danger] = "Procedure not found"
+	 flash[:danger] = "Procedure not found #{str.inspect}"
+#	 render  inline: '', layout: true
 	 redirect_to procedures_path 
       end
   end
@@ -30,7 +32,6 @@ class ProceduresController < ApplicationController
   def create
      @procedure = Procedure.new(procedure_params)
     if @procedure.save
-#     log_in @user
        flash[:success] = "Procedure created"
        redirect_to @procedure
     else

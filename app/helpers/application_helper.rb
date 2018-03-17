@@ -1,13 +1,11 @@
 module ApplicationHelper
        
-#	include ActionView::Helpers::NumberHelper 
-  
 # Guess device type 	
 # /mobile|android|iphone|blackberry|iemobile|kindle/
     def device_type
       ua  = request.user_agent.downcase
       if ua.match(/mac os|windows/)
-#	 $per_page = 30 
+	 $per_page = 28
 	 return 'desktop'
       else 
   	 $per_page = 15 
@@ -26,7 +24,7 @@ module ApplicationHelper
     end
 
     def project_url 
-	    'http://walkin.drlena.com'
+	'http://walkin.drlena.com'
     end
 
 # Calculate current wait time based on daysheet patient's status    
@@ -49,7 +47,7 @@ module ApplicationHelper
 	    Diagnosis.where("active = 't'")
     end    
 
-# Health card validation
+# Health card validation using checksum method
     
     def hcard_valid?( str )
       return unless @number.length == 10
@@ -68,5 +66,9 @@ module ApplicationHelper
       last_digit == (10 - sum.to_s[-1].to_i)
     end
 
+    def num_to_phone( phone, area_code = true )
+      return 'N/A' if phone.blank?
+      number_to_phone(phone, area_code: :true)
+    end
 
 end

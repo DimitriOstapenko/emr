@@ -3,6 +3,7 @@ module SessionsHelper
 # Logs in the given user.
   def log_in(user)
     session[:user_id] = user.id
+    session[:expires_at] = Time.now.midnight + 1.day
   end
 
 # Returns the current logged-in user (if any).
@@ -12,6 +13,7 @@ module SessionsHelper
 
 # Returns true if the user is logged in, false otherwise.
   def logged_in?
+    log_out if session[:expires_at] < Time.now
     !current_user.nil?
   end  
 
@@ -35,7 +37,6 @@ module SessionsHelper
     user == current_user
   end
  
-  
 # Redirects to stored location (or to the default).
   def redirect_back_or(default)
     redirect_to(session[:forwarding_url] || default)

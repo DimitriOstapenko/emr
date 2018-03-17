@@ -65,6 +65,7 @@ Rails.application.routes.draw do
     get 'chart', on: :member
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
+      get 'receipt', on: :member
     end
   end
   resources :doctors

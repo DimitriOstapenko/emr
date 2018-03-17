@@ -5,6 +5,7 @@ class ReportsController < ApplicationController
 
   def index
     @reports = Report.paginate(page: params[:page])
+    flash.now[:info] = "Showing all reports"
   end
 
   def find
@@ -16,7 +17,7 @@ class ReportsController < ApplicationController
       else
          @reports = Report.new
          @reports = Report.paginate(page: params[:page])
-         flash.now[:info] = 'Not found'
+	 flash.now[:info] = 'Report #{str.inspect} was not found'
 #	 redirect_to @reports 
       end
       render 'index'
@@ -48,12 +49,12 @@ class ReportsController < ApplicationController
 	  	 @report.sdate = Date.new(1950,01,01)
 	  	 @report.edate = @report.sdate + 100.years
 	else     # invalid
-   	 	 flash.now[:danger] = "Invalid report type #[@report.rtype]"
+   	 	 flash.now[:danger] = "Invalid report type: #[@report.rtype]"
 	end
     
     @report.name = @report.filespec = "#{Time.now.to_i}_#{@report.doc_id}_#{@report.rtype}"
     if @report.save
-       flash.now[:success] = "Report created :" + @report.name
+       flash.now[:success] = "Report created : #{@report.name.inspect}"
        redirect_to @report
     else
        render 'new'

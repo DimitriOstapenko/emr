@@ -9,12 +9,12 @@
 	<td><%= patient.age %></td>
 	<td><%= patient.last_visit_date %> </td> 
 	<td><%= patient.visits.count %> </td>
-	<td><%= number_to_phone(patient.phone, area_code: :true) %> </td> 
+	<td><%= num_to_phone(patient.phone) %> </td> 
 	<td><%= patient.id %> </td>
 	<td><%= "#{patient.addr} #{patient.city}, #{patient.prov} #{patient.postal}" %> </td> 
 	<td>
         <% if !patient.chart_file.blank? %>
-	  <%= link_to 'Chart', chart_patient_path(patient) %> 
+	      <%= link_to 'Chart', chart_patient_path(patient) %> 
 	<% end %>
 	</td>
 
