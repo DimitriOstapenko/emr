@@ -6,10 +6,11 @@
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= pat.ohip_num %></td>
 	<td><%= pat.ohip_ver %></td>
+	<td><%= visit.vis_type %></td>
 	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.units %></td>
-	<td><%= visit.vis_type %></td>
+	<td><%= BILLING_TYPES.invert[visit.bil_type] %></td>
 	<td><%= VISIT_STATUSES.invert[visit.status] rescue '' %></td>
 	
 	<% if current_user.admin?  %>

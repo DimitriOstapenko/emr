@@ -10,14 +10,14 @@
 	<b>Name:</b> <%= @patient.full_name %> <b>Type:</b> <%= @patient.pat_type %>
 	<b>DOB:</b> <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex %>
 	<b>Health Card:</b> <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) <b>Expires:</b> <%= @patient.hin_expiry %>
-	<b>Phone:</b> <%= number_to_phone(@patient.phone) %>
-	<b>Mobile:</b> <%= number_to_phone(@patient.mobile) %>
+	<b>Phone:</b> <%= num_to_phone(@patient.phone) %>
+	<b>Mobile:</b> <%= num_to_phone(@patient.mobile) %>
 	<b>Address:</b> <%= @patient.addr %>
 		    <%= @patient.city %> <%= @patient.prov %> 
 		    <%= @patient.postal %>
 		    <%= @patient.country %>
 	<b>Family Doctor: </b> <%= @patient.family_dr %>
-	<b>Pharmacy:</b> <%= @patient.pharmacy %> : <%= number_to_phone(@patient.pharm_phone) %>
+	<b>Pharmacy:</b> <%= @patient.pharmacy %> : <%= num_to_phone(@patient.pharm_phone) %>
 	<b>Emergency Contact:</b> <% @patient.alt_contact_name %> <b> Phone: </b> <% @patient.alt_contact_phone %>
 	<b>Last Visit:</b> <%= @patient.last_visit_date %>
 	<b>Created:</b> <%= @patient.entry_date %>
@@ -41,7 +41,6 @@
   <div class="col-md-6">
     <h3>Visits: (<%= @patient.visits.count %>)</h3>
     <% if @patient.visits.any? %>
-      <ol class="microposts">
         <table class="tbl">
   	  <thead>
 	  <tr>
@@ -58,9 +57,8 @@
 
           </tbody>
 	</table>
-      </ol>
+	<%= will_paginate @visits %> 
     <% end %>
-<%= will_paginate(@visits) %> <!-- , :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %> -->
   </div>
 </div>
 

@@ -1,8 +1,6 @@
 <% provide(:title, 'All billing') %>
 <% date = params[:date].to_date rescue Date.today %>
   
-<h1> Billings for <%= date.to_s %> (<%= @visits.count %>)</h1>
-
 <table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
@@ -21,18 +19,15 @@
   </thead>
   <tbody>
 	  <%= render partial: "visit", collection: @visits %>
-	  
   </tbody>
 </table>
 
-<%= will_paginate(@visits) %> 
+<div class="bottom_buttons ">
+  <%= will_paginate @visits, class: "btn" %>
+  <% if BILLING_FORMAT == 'EDT' %>
+         <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
+     <% else %>
+	  <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
+     <% end %>
+</div>
 
-<div class="bottom_buttons">
-<div class="col-md-2 col-md-offset-0">
-	<% if BILLING_FORMAT == 'EDT' %>
-	  <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
-        <% else %>
-	  <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
-        <% end %>
-</div>
-</div>

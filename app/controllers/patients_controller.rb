@@ -3,9 +3,9 @@ class PatientsController < ApplicationController
 	before_action :logged_in_user, only: [:index, :edit, :update]
 	before_action :admin_user,   only: :destroy
 
-
   def index
-      @patients = Patient.paginate(page: params[:page], per_page: $per_page)
+      @patients = Patient.paginate(page: params[:page]) #, per_page: $per_page)
+      flash.now[:info] = "Showing All Patients"
   end
 
   def find
@@ -13,12 +13,12 @@ class PatientsController < ApplicationController
       @patients = myfind(str) 
       if @patients.any?
          @patients = @patients.paginate(page: params[:page])
-	 flash.now.alert = 'Found: '+ @patients.size.to_s
+	 flash.now[:info] = "Found #{@patients.count} #{'patient'.pluralize(@patients.count)} matching string #{str.inspect}"
          render 'index'
       else
 	 @patients = Patient.paginate(page: params[:page])
 	 @patients = Patient.new
-	 flash.now[:danger] = 'Not found'
+	 flash.now[:warning] = "Patient  #{str.inspect} was not found"
 	 render  inline: '', layout: true
       end
   end
@@ -30,7 +30,7 @@ class PatientsController < ApplicationController
           chart = Dir.glob("#{Rails.root}/charts/**/#{@patient.lname}\,#{@patient.fname}*\.pdf")
 	  @patient.update_attribute(:chart_file, chart[0]) if (!chart.blank? && chart.count == 1)
        end
-       @visits = @patient.visits.paginate(page: params[:page], per_page: 12) 
+       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
 	  flash.now[:danger] = @patient.errors.full_messages.to_sentence
        end
@@ -113,7 +113,7 @@ class PatientsController < ApplicationController
 	  render 'new'
        end
     else     
-       flash.now[:success] = "Card not received yet  #{params.inspect}"
+       flash.now[:success] = "Card number not read yet  #{params.inspect}"
        @patient = Patient.find(params[:id])
        redirect_to :back
     end
@@ -127,8 +127,6 @@ class PatientsController < ApplicationController
 	flash[:danger] =  e.message  
         redirect_to @patient 
     end
-
-#     render  inline: '', layout: true
   end
 
 private
@@ -158,11 +156,11 @@ private
   def make_label ( pat )
      dob = pat.dob.strftime("%d-%b-%Y") if !pat.dob.blank?
      exp_date = pat.hin_expiry.strftime("%m/%y") if !pat.hin_expiry.blank?	 
-     label = "#{pat.full_name} 
+     label = "#{pat.full_name} (#{pat.sex})
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal} 
-     DOB: #{dob} #{pat.age} y.o #{pat.sex} 
-     H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{exp_date}
-     Tel: #{pat.phone} File: #{pat.id}"
+     DOB: #{dob}, #{pat.age} y.o 
+     H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{exp_date} (#{pat.hin_prov})
+     Tel: #{pat.phonestr} File: #{pat.id}"
   end
 
 # Accept 1st line from health card, return new patient with known data prefilled

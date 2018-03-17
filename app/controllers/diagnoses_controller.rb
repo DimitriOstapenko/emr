@@ -4,14 +4,15 @@ class DiagnosesController < ApplicationController
 	before_action :admin_user,   only: :destroy
 
   def index
-	  @diagnoses = Diagnosis.paginate(page: params[:page]) #, per_page: 40)
+    @diagnoses = Diagnosis.paginate(page: params[:page]) #, per_page: 40)
+    flash.now[:info] = "Showing All Diagnoses"
   end
 
   def find
       str = params[:findstr]
       @diagnoses = myfind(str) 
       if @diagnoses.any?
-	 flash.now.alert = 'Found: '+ @diagnoses.size.to_s
+	 flash.now[:info] = "Found: #{@diagnoses.count} diagnoses"
 	 @diagnoses = @diagnoses.paginate(page: params[:page])
          render 'index'
       else

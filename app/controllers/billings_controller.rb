@@ -6,10 +6,11 @@ class BillingsController < ApplicationController
       date = params[:date] || Date.today
       @visits = Visit.where("date(entry_ts) = ? AND (status=3 OR status=4) ", date)
       if @visits.any?
-               @visits = @visits.paginate(page: params[:page])
-               render 'index'
+         @visits = @visits.paginate(page: params[:page]) #, per_page: $per_page)
+	 flash.now[:info] = "Billings for #{date} (#{@visits.count})"
+         render 'index'
       else
-         flash.now[:warning] = 'No billings were found for date ' + date.inspect
+         flash.now[:info] = "No billings were found for date #{date.inspect}"
          render 'shared/empty_page'
       end
   end
@@ -53,7 +54,7 @@ class BillingsController < ApplicationController
       ensure
         file.close unless file.nil?
     end
-    flash[:info] = "CSV Export file created for date #{date}" unless error
+    flash[:success] = "CSV Export file created for date #{date}" unless error
     redirect_back(fallback_location: billings_path )
   end
 
@@ -115,7 +116,7 @@ class BillingsController < ApplicationController
        file.close unless file.nil?
     end
 
-    flash[:info] = "HL#{GROUP_NO}.#{ext} EDT Export file created for date #{date}" unless error
+    flash[:success] = "HL#{GROUP_NO}.#{ext} EDT Export file created for date #{date}" unless error
     redirect_back(fallback_location: billings_path )
   end
 

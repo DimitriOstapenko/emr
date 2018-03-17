@@ -1,7 +1,5 @@
 <% provide(:title, 'All doctors') %>
 
-<h1> Doctors </h1>
-<ul class="users">
 <table class="tbl table-hover"> 
   <thead>
       <tr>
@@ -27,15 +25,7 @@
   </tbody>
 </table>
 
-<% if @doctors %>
-<%=  will_paginate(@doctors)  %>
-<% end %>
-
-<% if  current_user.admin?  %>
-<div class="bottom_buttons">
-<div class="col-md-2 col-md-offset-0">
-            <%= button_to "Add New Doctor", new_doctor_path, class: "btn btn-primary", :method => "get" %>
+<div class="bottom_buttons ">
+<%= will_paginate @doctors, class: "btn" %>
+<%= button_to "Add New Doctor", new_doctor_path, class: "btn btn-primary col-md-12", method: :get %>
 </div>
-</div>
-<% end %>
-</ul>

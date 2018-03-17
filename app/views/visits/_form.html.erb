@@ -1,6 +1,6 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
-
+  
   <% doc_id = @visit.doctor.id || current_doctor.id %>
   <% @procedures = get_active_procedures %>
 

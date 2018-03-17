@@ -5,17 +5,19 @@ class DaysheetController < ApplicationController
       @daysheet = Visit.where("date(entry_ts) = ?", date)
       if @daysheet.any?
          @daysheet = @daysheet.paginate(page: params[:page])
+	 flash.now[:info] = "Visits for #{date} (#{@daysheet.count}) "
+         render 'index'
       else
-	 flash.now[:warning] = 'No visits were found for date ' + date.inspect 
+	 flash.now[:info] = 'No visits were found for date ' + date.inspect 
+	 render  inline: '', layout: true
       end
-      render 'index'
   end
 
   def set_doctor 
-      if params[:doc_id]
-	 session[:doc_id] = params[:doc_id]
-	 session[:expires_at] = Time.now.midnight + 1.day
-	 doc = Doctor.find(params[:doc_id]) || Doctor.new()
+      doc_id = params[:doc_id]
+      if doc_id
+	 set_doc_session( doc_id )
+	 doc = Doctor.find( doc_id ) || Doctor.new()
 	 flash[:info] = "Current Doctor set to Dr. #{doc.lname}"
 #	 redirect_back(fallback_location: daysheet_index_path)
 	 redirect_to daysheet_index_path

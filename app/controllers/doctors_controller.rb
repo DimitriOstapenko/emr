@@ -8,17 +8,18 @@ class DoctorsController < ApplicationController
   end
 
   def index
-          @doctors = Doctor.paginate(page: params[:page]) #, per_page: 40)
+    @doctors = Doctor.paginate(page: params[:page]) #, per_page: 40)
+    flash.now[:info] = "Showing all doctors"
   end
 
   def find
       str = params[:findstr]
       @docs = myfind(str)
       if @docs.any?
-         flash.now.alert = "Found: #{@docs.size} doctors"
+	 flash.now[:info] = "Found #{@docs.count} #{'doctor'.pluralize(@docs.count)} matching string #{str.inspect}"
       else
 	 @docs = Doctor.all
-	 flash[:error] = "No doctors found" 
+	 flash[:danger] = "No doctors found" 
       end
       @doctors = @docs.paginate(page: params[:page])
       render 'index'

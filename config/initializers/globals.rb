@@ -22,7 +22,7 @@ PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS
 
 # Visits
 
-VISIT_STATUSES = { Arrived: 1, Assessed: 2, 'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 5, Deleted: 6, 'Written Off': 7}.freeze
+VISIT_STATUSES = { Arrived: 1, Assessed: 2, 'Ready To Bill': 3, Billed: 4, Paid: 5, Invoiced: 6, Cancelled: 7, Deleted: 8, 'Written Off': 9}.freeze
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
 u = {}
@@ -42,3 +42,4 @@ BILLING_FORMAT='EDT'.freeze  # CSV/EDT
 
 #TIMEFRAMES   = {Day: 1, Month: 2, Year: 3}.freeze
 REPORT_TYPES = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}.freeze
+
