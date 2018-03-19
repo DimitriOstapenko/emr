@@ -1,16 +1,14 @@
 <% provide(:title, 'All users') %>
-<h1>All users</h1>
 
-<%= will_paginate(@users, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
-
-<ul class="users">
 <table class="tbl table-hover">
    <thead>
       <tr>
           <th>Username</th>
-          <th>Type</th>
           <th>Email</th>
-          <th>Active</th>
+	  <th>Created</th>
+          <th>Admin</th>
+	  <th>&nbsp;</th>
+	  <th>&nbsp;</th>
       </tr>
   </thead>
   <tbody>
@@ -19,7 +17,10 @@
 
   </tbody>
 </table>
-</ul>
 
-<%= will_paginate(@users, :renderer =>  WillPaginate::ActionView::LinkRenderer, class: 'pagination-sm') %>
-
+<% if current_user.admin? %>
+<div class="bottom_buttons ">
+<%= will_paginate @users, class: "btn" %> 
+<%= button_to "Add User", new_user_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+</div>
+<% end %>

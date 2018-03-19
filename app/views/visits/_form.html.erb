@@ -31,7 +31,7 @@
   <div class="col-md-8"> </div>
   <div class="col-md-1">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code, @procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select'  %>
   <%= f.hidden_field(:fee, id: :fee) %>  
   </div>
 
@@ -102,3 +102,42 @@
 
 <% end %>
 
+<script>
+
+$('#new_visit select[name="visit[proc_code]"]').change(function () {
+  get_bil_type( $(this).val() , '');
+});
+$('#new_visit select[name="visit[proc_code2]"]').change(function () {
+  get_bil_type( $(this).val() , '2' );
+});
+$('#new_visit select[name="visit[proc_code3]"]').change(function () {
+  get_bil_type( $(this).val() , '3' );
+});
+$('#new_visit select[name="visit[proc_code4]"]').change(function () {
+  get_bil_type( $(this).val() , '4' );
+});
+
+function get_bil_type ( code, suff ) {
+	var request = "/procedures/get_by_code?code=" + code;
+	var aj = $.ajax({
+        url: request,
+        type: 'get',
+        data: $(this).serialize()
+    }).done(function (data) {
+        select_btype(data, suff);
+    }).fail(function (data) {
+         console.log('AJAX request has FAILED');
+    });
+}
+
+function select_btype( proc, suff ) {
+ var fname = 'visit_bil_type'+suff
+ var v = document.getElementById(fname);
+ for (var i = 0; i < v.options.length; i++) {
+    if (v.options[i].text === proc.ptype) {
+        v.selectedIndex = i;
+        break;
+    }
+ }
+}
+</script>

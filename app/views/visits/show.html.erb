@@ -1,4 +1,8 @@
-<% provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") %>
+<%   
+  @patient = Patient.find(@visit.patient_id) 
+  @doctor = Doctor.find(@visit.doc_id)
+  provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") 
+%>
 
 <div>
 	<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) =%> </h1>

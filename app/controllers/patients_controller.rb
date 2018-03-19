@@ -1,10 +1,10 @@
 class PatientsController < ApplicationController
 
-	before_action :logged_in_user, only: [:index, :edit, :update]
+	before_action :logged_in_user #, only: [:index, :edit, :update]
 	before_action :admin_user,   only: :destroy
 
   def index
-      @patients = Patient.paginate(page: params[:page]) #, per_page: $per_page)
+      @patients = Patient.paginate(page: params[:page], per_page: $per_page)
       flash.now[:info] = "Showing All Patients"
   end
 

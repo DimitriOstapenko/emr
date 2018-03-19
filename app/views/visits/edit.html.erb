@@ -1,5 +1,10 @@
-<% provide(:title, 'Edit Visit') %>
-<% provide(:button_text, 'Save changes') %>
+<% 
+   provide(:title, 'Edit Visit') 
+   provide(:button_text, 'Save changes') 
+   @patient = Patient.find(@visit.patient_id)
+   @doctor = Doctor.find(@visit.doc_id)
+%>
+
 <h1><%= @patient.full_name %> <%= @visit.entry_ts.strftime("%D %H:%M") %> : Update Visit Details</h1>
 
 <div class="row justify-content-md-center">

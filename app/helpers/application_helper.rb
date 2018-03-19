@@ -5,7 +5,7 @@ module ApplicationHelper
     def device_type
       ua  = request.user_agent.downcase
       if ua.match(/mac os|windows/)
-	 $per_page = 28
+	 $per_page = 36
 	 return 'desktop'
       else 
   	 $per_page = 15 
