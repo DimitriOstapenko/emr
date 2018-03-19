@@ -68,6 +68,8 @@ Rails.application.routes.draw do
       get 'receipt', on: :member
     end
   end
+  
+  get "/procedures/get_by_code", to: "procedures#get_by_code" 
   resources :doctors
   resources :diagnoses
   resources :procedures

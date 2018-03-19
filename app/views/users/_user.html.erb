@@ -1,6 +1,8 @@
  <tr>
   <td><%= link_to user.name, user %></td>
   <td><%= link_to user.email, user %></td>
+  <td><%= user.created_at.to_s %></td>
+  <td><%= user.admin %></td>
 
   <% if current_user.admin? %>
 	  <td> <%= link_to "Edit", edit_user_path(user)  %> </td>

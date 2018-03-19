@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page]) 
+    flash[:info] = 'Showing all users'
   end
 
   def show

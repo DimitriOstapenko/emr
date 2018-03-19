@@ -1,6 +1,6 @@
 class ProceduresController < ApplicationController
-        before_action :logged_in_user, only: [:index, :edit, :update]
-        before_action :admin_user,   only: :destroy
+        before_action :logged_in_user #, only: [:index, :edit, :update]
+        before_action :admin_user, only: :destroy
 
   def index
      @procedures = Procedure.paginate(page: params[:page]) #, per_page: 40)
@@ -19,6 +19,17 @@ class ProceduresController < ApplicationController
 #	 render  inline: '', layout: true
 	 redirect_to procedures_path 
       end
+  end
+
+# Called by JS in visit _form  
+  def get_by_code
+    code = params[:code]
+    proc = Procedure.find_by(code: code).as_json
+    respond_to do |format|
+        format.json {
+            render json: proc
+        }
+    end
   end
 
   def show

@@ -22,7 +22,7 @@ PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS
 
 # Visits
 
-VISIT_STATUSES = { Arrived: 1, Assessed: 2, 'Ready To Bill': 3, Billed: 4, Paid: 5, Invoiced: 6, Cancelled: 7, Deleted: 8, 'Written Off': 9}.freeze
+VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, 'Written Off': 7}.freeze
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
 u = {}
@@ -31,7 +31,7 @@ UNITS  = u.freeze
 d = {}
 %w(10 20 30 40).each {|k| d[k]=k}
 DURATIONS = d.freeze 
-BILLING_TYPES = {"HCP": 1,"3RD": 2, "RMB": 3, "WCB": 4}.freeze
+BILLING_TYPES = {HCP: 1, RMB: 2, "3RD": 3, CASH: 4, WCB: 5}.freeze
 
 # Billing
 
