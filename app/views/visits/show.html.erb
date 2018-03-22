@@ -21,6 +21,7 @@
 		<b>Billing Type(s) </b>: <%= BILLING_TYPES.invert[@visit.bil_type] %>, <%= BILLING_TYPES.invert[@visit.bil_type2] %>
 		<b>Units </b>: <%= @visit.units %>, <%= @visit.units2 %>
 		<b>Duration </b>: <%= @visit.duration %> minutes
+		<b>Reason </b>: <%= @visit.reason %>
 		<b>Status </b>: <%= VISIT_STATUSES.invert[@visit.status] %> 
 		<b>Total fee </b>: <%=  sprintf '$%.2f',@visit.total_fee %>
 		<b>Entry by </b>: <%= @visit.entry_by %>
@@ -38,6 +39,8 @@
  <% if @visit._3rd_index %> 
 <p>
  <%= button_to "Print Receipt", receipt_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
+<p>
+ <%= button_to "Print Invoice", invoice_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  <% end %>
 
   </aside>

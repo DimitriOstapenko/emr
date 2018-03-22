@@ -1,7 +1,7 @@
 class Visit < ApplicationRecord
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
   default_scope -> { order(created_at: :desc) }
-  attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode, :diag_descr, :_3rd_index, :services
+  attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode, :diag_descr, :proc_descr, :_3rd_index, :services
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true, numericality: { only_integer: true }
@@ -34,7 +34,8 @@ class Visit < ApplicationRecord
   
 # Find index of 3-rd party procedure in the list of procedures, if any
   def _3rd_index
-    bil_types('').index(BILLING_TYPES[:"3RD"].to_s)
+    bil_types('').index(BILLING_TYPES[:Invoice].to_s) ||
+    bil_types('').index(BILLING_TYPES[:Cash].to_s)
   end  
 
 # Service array to help deal with procedures/billings
@@ -59,6 +60,12 @@ class Visit < ApplicationRecord
   def diag_descr
     diag = Diagnosis.find_by(code: diag_code )	  
     return diag.descr rescue '' 
+  end
+
+# Return procedure description
+  def proc_descr ( code )
+    proc = Procedure.find_by(code: code )	  
+    return proc.descr rescue '' 
   end
 
   def status_str

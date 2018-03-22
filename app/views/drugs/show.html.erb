@@ -1,0 +1,31 @@
+<% provide(:title, @drug.name) %>
+
+	<h1>Medication:  <%= @drug.name %> - details  </h1>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6 col-md-offset-3">
+	   <pre>
+	        Dnum:       <%= @drug.dnum %>
+	        Strength:   <%= @drug.strength %>
+	        Dose:       <%= @drug.dose %>
+	        Frequency:  <%= @drug.freq %>
+	        Amount:     <%= @drug.amount %>
+	        Status:     <%= @drug.status %>
+	        Generic:    <%= @drug.generic %>
+	        IGCodes:    <%= @drug.igcodes %>
+	        Format:     <%= @drug.format %>
+	        Route:      <%= @drug.route %>
+	        Dur. Cnt:   <%= @drug.dur_cnt %>
+	        Dur. Unit:  <%= @drug.dur_unit %>
+	        Refills:    <%= @drug.refills %>
+	        Type:       <%= @drug.dtype %>
+	        Instructions: <%= @drug.instructions %>
+	        Notes:        <%= @drug.notes %>
+           </pre>
+
+    <%= button_to "Edit", edit_drug_path(@drug), class: "btn btn-primary", :method => "get" %>
+
+  </div>
+</div>
+
+

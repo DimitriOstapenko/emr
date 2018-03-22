@@ -1,0 +1,25 @@
+<% provide(:title, @provider.name) %>
+
+	<h1>Provider:  <%= @provider.name %> - details  </h1>
+
+<div class="row justify-content-md-center">
+  <div class="col-md-6 col-md-offset-3">
+	   <pre>
+
+	      Address:  <%= @provider.addr1 %>
+	                <%= @provider.addr2 %>
+	                <%= @provider.city %>
+	                <%= @provider.prov %>
+	                <%= @provider.postal %>
+	                <%= @provider.country %>
+
+	      Phone:    <%= @provider.phone1 %>
+	      Phone2:   <%= @provider.phone2 %>
+	      Fax : 	<%= @provider.fax %>
+
+           </pre>
+    <%= button_to "Edit", edit_provider_path(@provider), class: "btn btn-primary", :method => "get" %>
+  </div>
+</div>
+
+

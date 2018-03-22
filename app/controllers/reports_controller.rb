@@ -9,7 +9,7 @@ class ReportsController < ApplicationController
   end
 
   def find
-      str = params[:findstr]
+	  str = params[:findstr].strip
       @reports = myfind(str)
       if @reports.any?
          @reports = @reports.paginate(page: params[:page])

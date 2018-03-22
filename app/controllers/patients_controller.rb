@@ -135,7 +135,8 @@ private
 					  :phone, :mobile, :full_name, :addr, :city, :prov,
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :notes, :alt_contact_name,
-					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count
+					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count,
+				    	  :allergies, :medications
 					 )
   end
  

@@ -1,9 +1,9 @@
 class VisitsController < ApplicationController
 
-  include My::Reports
+  include My::Forms
 
 	before_action :logged_in_user #, only: [:create, :destroy, :index]
-        before_action :current_doctor_set, only: [:create, :visitform, :receipt]  
+        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 	before_action :admin_user, only: :destroy
 
   def index (defdate = Date.today )
@@ -103,7 +103,7 @@ class VisitsController < ApplicationController
           disposition: 'inline'
   end  
 
-# Generate receipt for 3RD party services in PDF  
+# Generate PDF receipt for 3RD party services  
   def receipt
         @visit = Visit.find(params[:id])
 	@patient = Patient.find(@visit.patient_id)
@@ -117,6 +117,18 @@ class VisitsController < ApplicationController
 #    render inline: '', layout: true
   end
 
+# Generate PDF invoice for 3-rd party service
+  def invoice
+	@visit = Visit.find(params[:id])
+        @patient = Patient.find(@visit.patient_id)
+        pdf = build_invoice( @patient, @visit )
+
+        send_data pdf.render,
+          filename: "invoice_#{@patient.full_name}",
+          type: 'application/pdf',
+          disposition: 'inline'
+  end
+
   private
 
     def visit_params
@@ -125,7 +137,7 @@ class VisitsController < ApplicationController
 				    :units, :units2, :units3, :units4, 
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
-				    :notes, :entry_ts, :status, :duration, :entry_by )
+				    :reason, :notes, :entry_ts, :status, :duration, :entry_by )
     end      
 
     def set_visit_fees ( visit )

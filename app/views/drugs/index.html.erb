@@ -1,0 +1,36 @@
+<% provide(:title, 'All drugs') %>
+
+<table class="tbl table-hover" >
+  <thead>
+      <tr>
+          <th class="tbl_md">Name</th>
+          <th class="tbl_md">Dnum</th>
+          <th>Streng.</th>
+	  <th>Dose</th>
+	  <th>Freq.</th>
+	  <th>Amount</th>
+	  <th>Status</th>
+	  <th>Generic</th>
+	  <th>Igcodes</th>
+	  <th>Format</th>
+	  <th>Route</th>
+	  <th>Dur.Cnt</th>
+	  <th>Dur.Unit</th>
+	  <th>Refills</th>
+	  <th>Type</th>
+	  <% if  current_user.admin? %>
+	     <th></th>
+     	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @drugs %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @drugs, class: "btn" %>
+<%= button_to "Add Medication", new_drug_path, class: "btn btn-primary col-md-12", :method => "get" %>
+</div>

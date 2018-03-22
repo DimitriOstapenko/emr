@@ -1,0 +1,24 @@
+     <tr>
+	<td><%= link_to drug.name, drug %> </td>
+	<td><%= drug.dnum %> </td> 
+	<td><%= drug.strength %></td> 
+	<td><%= drug.dose %></td> 
+	<td><%= drug.freq %></td> 
+	<td><%= drug.amount %></td> 
+	<td><%= drug.status %></td> 
+	<td><%= drug.generic %></td> 
+	<td><%= drug.igcodes %></td> 
+	<td><%= drug.format %></td> 
+	<td><%= drug.route %></td> 
+	<td><%= drug.dur_cnt %></td> 
+	<td><%= drug.dur_unit %></td> 
+	<td><%= drug.refills %></td> 
+	<td><%= drug.dtype %></td> 
+  	<% if current_user.admin?  %>
+		<td> <%= link_to "delete", drug, method: :delete, data: { confirm: "Are you sure you want to delete #{drug.name}?" } %> </td>
+	<% end %>
+     </tr>
+
+
+
+

@@ -15,8 +15,7 @@
 	     </div>
        <% end %>
        </li>
-<% end %>
-<% if controller_name == 'patients' || controller_name == 'doctors' || controller_name == 'procedures' || controller_name == 'diagnoses' || controller_name == 'reports' %>
+<% else %>
 	<li class="nav-item active">
 		<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
@@ -47,6 +46,8 @@
           	<li> <%= link_to "Procedures", procedures_path, method: :get %> </li>
          	<li> <%= link_to "Diagnoses", diagnoses_path, method: :get %> </li>
          	<li> <%= link_to "Doctors", doctors_path, method: :get %> </li>
+         	<li> <%= link_to "Ins. Providers", providers_path, method: :get %> </li>
+         	<li> <%= link_to "Medications", drugs_path, method: :get %> </li>
             </ul>
           </li>
 <% end %>

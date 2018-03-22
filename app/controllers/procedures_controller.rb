@@ -8,7 +8,7 @@ class ProceduresController < ApplicationController
   end
 
   def find
-      str = params[:findstr]
+      str = params[:findstr].strip
       @procedures = myfind(str)
       if @procedures.any?
          @procedures = @procedures.paginate(page: params[:page])

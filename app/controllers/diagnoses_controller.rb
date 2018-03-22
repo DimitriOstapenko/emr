@@ -9,7 +9,7 @@ class DiagnosesController < ApplicationController
   end
 
   def find
-      str = params[:findstr]
+      str = params[:findstr].strip
       @diagnoses = myfind(str) 
       if @diagnoses.any?
 	 flash.now[:info] = "Found: #{@diagnoses.count} diagnoses"

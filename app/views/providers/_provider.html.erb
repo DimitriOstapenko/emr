@@ -1,0 +1,16 @@
+     <tr>
+	<td><%= link_to "#{provider.name}", provider %> </td>
+	<td><%= "#{provider.addr1}  #{provider.addr2}" %> </td> 
+	<td><%= provider.city %></td> 
+	<td><%= provider.prov %></td> 
+	<td><%= provider.postal %></td> 
+	<td><%= provider.phone1 %></td> 
+	<td><%= provider.phone2 %></td> 
+	<td><%= provider.fax %></td> 
+  	<% if current_user.admin?  %>
+		<td> <%= link_to "delete", provider, method: :delete, data: { confirm: "Are you sure you want to delete #{provider.name}?" } %> </td>
+	<% end %>
+     </tr>
+
+
+

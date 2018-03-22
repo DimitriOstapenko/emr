@@ -13,7 +13,7 @@ class DoctorsController < ApplicationController
   end
 
   def find
-      str = params[:findstr]
+      str = params[:findstr].strip
       @docs = myfind(str)
       if @docs.any?
 	 flash.now[:info] = "Found #{@docs.count} #{'doctor'.pluralize(@docs.count)} matching string #{str.inspect}"
