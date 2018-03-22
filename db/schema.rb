@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313000133) do
+ActiveRecord::Schema.define(version: 20180322152509) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -78,6 +78,34 @@ ActiveRecord::Schema.define(version: 20180313000133) do
     t.index ["provider_no"], name: "index_doctors_on_provider_no"
   end
 
+  create_table "drugs", force: :cascade do |t|
+    t.string "name"
+    t.string "dnum"
+    t.string "strength"
+    t.string "dose"
+    t.string "freq"
+    t.string "amount"
+    t.string "status"
+    t.string "generic"
+    t.string "igcodes"
+    t.string "format"
+    t.string "route"
+    t.integer "dur_cnt"
+    t.string "dur_unit"
+    t.integer "refills"
+    t.integer "cost"
+    t.string "lu_code"
+    t.string "pharmacy"
+    t.string "aliases"
+    t.string "dtype"
+    t.boolean "odb"
+    t.string "filename"
+    t.text "notes"
+    t.text "instructions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "lname"
     t.string "fname"
@@ -109,6 +137,8 @@ ActiveRecord::Schema.define(version: 20180313000133) do
     t.string "lastmod_by"
     t.string "mname"
     t.date "entry_date"
+    t.string "allergies"
+    t.string "medications"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"
@@ -121,7 +151,7 @@ ActiveRecord::Schema.define(version: 20180313000133) do
   create_table "procedures", force: :cascade do |t|
     t.string "code"
     t.string "qcode"
-    t.string "ptype"
+    t.integer "ptype"
     t.string "descr"
     t.float "cost"
     t.integer "unit"
@@ -141,6 +171,22 @@ ActiveRecord::Schema.define(version: 20180313000133) do
     t.integer "ana_fee"
     t.integer "non_ana_fee"
     t.index ["code"], name: "index_procedures_on_code", unique: true
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.string "name"
+    t.string "addr1"
+    t.string "addr2"
+    t.string "city"
+    t.string "prov"
+    t.string "country"
+    t.string "postal"
+    t.string "phone1"
+    t.string "phone2"
+    t.string "fax"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reports", force: :cascade do |t|
@@ -193,6 +239,7 @@ ActiveRecord::Schema.define(version: 20180313000133) do
     t.integer "bil_type2"
     t.integer "bil_type3"
     t.integer "bil_type4"
+    t.string "reason"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end

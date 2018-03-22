@@ -1,0 +1,51 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  dnum: MyString
+  drug: MyString
+  strength: MyString
+  dose: MyString
+  freq: MyString
+  amount: MyString
+  status: MyString
+  generic: MyString
+  igcodes: MyString
+  format: MyString
+  route: MyString
+  dur_cnt: 1
+  dur_unit: MyString
+  refills: 1
+  cost: 1
+  lu_code: MyString
+  pharmacy: MyString
+  aliases: MyString
+  type: 
+  odb: false
+  filename: MyString
+  notes: MyText
+  instructions: MyText
+
+two:
+  dnum: MyString
+  drug: MyString
+  strength: MyString
+  dose: MyString
+  freq: MyString
+  amount: MyString
+  status: MyString
+  generic: MyString
+  igcodes: MyString
+  format: MyString
+  route: MyString
+  dur_cnt: 1
+  dur_unit: MyString
+  refills: 1
+  cost: 1
+  lu_code: MyString
+  pharmacy: MyString
+  aliases: MyString
+  type: 
+  odb: false
+  filename: MyString
+  notes: MyText
+  instructions: MyText

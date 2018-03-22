@@ -28,12 +28,12 @@
 
   <div class="col-md-12"> &nbsp; </div>
 
-  <%= f.label 'Last Name', class: "col-md-1 control-label" %>
+  <%= f.label 'Last Name', class: "col-md-1" %>
   <div class="col-md-2 padding-0">
   <%= f.text_field :lname %>
   </div>
 
-  <%= f.label :'First Name', class: "col-md-1 control-label" %>
+  <%= f.label :'First Name', class: "col-md-1" %>
   <div class="col-md-2">
   <%= f.text_field :fname %>
   </div>
@@ -45,9 +45,9 @@
   
   <div class="col-md-12"> &nbsp; </div>
 
-  <%= f.label :'Date Of Birth', class: "col-md-1 control-label" %>
+  <%= f.label :'Date Of Birth', class: "col-md-1" %>
   <div class="col-md-2">
-	  <%= f.date_field :dob, class: "datepicker", start_year: 1900, end_year: Date.today.year %>
+	  <%= f.date_field :dob, start_year: 1900, end_year: Date.today.year %>
   </div>
 
   <%= f.label :Phone, class: "col-md-1 control-label" %>
@@ -62,7 +62,7 @@
   
   <div class="col-md-12"> &nbsp; </div>
 
-  <%= f.label :Address, class: "col-md-1 control-label" %>
+  <%= f.label :Address, class: "col-md-1" %>
   <div class="col-md-2">
   <%= f.text_field :addr %>
   </div>
@@ -72,7 +72,7 @@
   </div>
   
   <div class="col-md-1">
-  <%= f.select(:prov, PROVINCES ) %>
+  <%= f.select :prov, PROVINCES %>
   </div>
   
   <div class="col-md-1">
@@ -87,7 +87,7 @@
   <div class="col-md-12"> &nbsp; </div>
 
   <%= f.label :family_doctor, class: "col-md-1 control-label" %>
-  <div class="col-md-2 padding-0">
+  <div class="col-md-2">
   <%= f.text_field :family_dr %>
   </div>
   
@@ -111,6 +111,18 @@
   <%= f.label :email, class: "col-md-1 control-label" %>
   <div class="col-md-2">
   <%= f.text_field :email %>
+  </div>
+  
+  <div class="col-md-12"> &nbsp; </div>
+  <%= f.label :allergies, class: "col-md-1 control-label" %>
+  <div class="col-md-8">
+  <%= f.text_field :allergies %>
+  </div>
+
+  <div class="col-md-12"> &nbsp; </div>
+  <%= f.label :medications, class: "col-md-1 control-label" %>
+  <div class="col-md-8">
+  <%= f.text_field :medications %>
   </div>
 
   <div class="col-md-13"> &nbsp; </div>

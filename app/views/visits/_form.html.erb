@@ -25,7 +25,7 @@
 
   <%= f.label "Status" %>
   <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
-  
+    
   </div>
 
   <div class="col-md-8"> </div>
@@ -90,6 +90,12 @@
   <div class="col-md-1">
   <%= f.label "Bill Type" %>
   <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select'%>
+  </div>
+
+  <div class="col-md-8"> </div>
+  <div class="col-md-4">
+  <%= f.label "Reason for Visit" %>
+  <%= f.text_field :reason %>
   </div>
 
   <div class="col-md-12"> </div>

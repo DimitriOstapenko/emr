@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
 
+  get 'drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }
+  get 'drugs/index'
+  get 'drugs/new'
+  get 'drugs/create'
+  get 'drugs/show'
+  get 'drugs/edit'
+
+  get 'providers/index' => 'providers#find', constraints: { query_string: /findstr/ }
+  get 'providers/index'
+  get 'providers/new'
+  get 'providers/create'
+  get 'providers/show'
+  get 'providers/edit'
+
   get '/reports/index' => 'reports#find', constraints: { query_string: /findstr/ }
   get 'reports/index'
   get 'reports/new'
@@ -66,6 +80,7 @@ Rails.application.routes.draw do
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member
+      get 'invoice', on: :member
     end
   end
   
@@ -74,6 +89,8 @@ Rails.application.routes.draw do
   resources :diagnoses
   resources :procedures
   resources :reports
+  resources :providers
+  resources :drugs
 
  resources :billings     # historical billing table
   

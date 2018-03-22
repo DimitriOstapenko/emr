@@ -1,0 +1,63 @@
+<%= form_for @drug do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+  <div class="col-md-5">
+  <%= f.label 'Name' %>
+  <%= f.text_field :name %>
+
+  <%= f.label 'Dnum' %>
+  <%= f.text_field :dnum %>
+
+  <%= f.label 'Strength' %>
+  <%= f.text_field :strength %>
+  
+  <%= f.label 'Dose' %>
+  <%= f.text_field :dose %>
+  
+  <%= f.label 'Frequency' %>
+  <%= f.text_field :freq %>
+  
+  <%= f.label 'Amount' %>
+  <%= f.text_field :amount %>
+  
+  <%= f.label 'Status' %>
+  <%= f.text_field :status %>
+  
+  <%= f.label 'Generic' %>
+  <%= f.text_field :generic %>
+  </div>
+  
+  <div class="col-md-5">
+  <%= f.label 'Igcodes' %>
+  <%= f.text_field :igcodes %>
+  
+  <%= f.label 'Format' %>
+  <%= f.text_field :format %>
+
+  <%= f.label 'Route' %>
+  <%= f.text_field :route %>
+  
+  <%= f.label 'Duration Count' %>
+  <%= f.text_field :dur_cnt %>
+  
+  <%= f.label 'Duration Unit' %>
+  <%= f.text_field :dur_unit %>
+  
+  <%= f.label 'Refills' %>
+  <%= f.text_field :refills %>
+
+  <%= f.label 'Type' %>
+  <%= f.text_field :dtype %>
+  
+  <%= f.label 'Cost' %>
+  <%= f.text_field :cost %>
+  </div>
+
+  <div class="col-md-10">
+  <%= f.text_area :instructions, rows:4, placeholder: 'Instructions' %>
+  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div>
+
+<% end %>
+

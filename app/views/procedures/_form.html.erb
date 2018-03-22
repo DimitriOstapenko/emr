@@ -8,7 +8,7 @@
           <%= f.text_field :code %>
   
 	  <%= f.label :type %>
-          <%= f.text_field :ptype %>
+          <%= f.select :ptype, PROC_TYPES %>
 
 	  <%= f.label :description %>
 	  <%= f.text_field :descr %>

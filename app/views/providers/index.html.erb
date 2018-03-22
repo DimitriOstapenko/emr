@@ -1,0 +1,29 @@
+<% provide(:title, 'All providers') %>
+
+<table class="tbl table-hover" >
+  <thead>
+      <tr>
+          <th class="tbl_lg">Name</th>
+          <th class="tbl_lg">Address</th>
+          <th>City</th>
+	  <th>Prov.</th>
+	  <th>Postal</th>
+	  <th>Phone</th>
+	  <th>Phone2</th>
+	  <th>Fax</th>
+	  <% if  current_user.admin? %>
+	     <th></th>
+     	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @providers %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @providers, class: "btn" %>
+<%= button_to "Add Provider", new_provider_path, class: "btn btn-primary col-md-12", :method => "get" %>
+</div>

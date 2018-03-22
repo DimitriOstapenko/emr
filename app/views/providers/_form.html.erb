@@ -1,0 +1,41 @@
+<%= form_for @provider do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+<div class="row">
+  <div class="col-md-5 col-md-offset-1">
+
+  <%= f.label 'Name' %>
+  <%= f.text_field :name %>
+
+  <%= f.label :'Address1' %>
+  <%= f.text_field :addr1 %>
+  
+  <%= f.label :addr2 %>
+  <%= f.text_field :addr2 %>
+  
+  <%= f.label :city %>
+  <%= f.text_field :city %>
+
+  <%= f.label :'Province' %>
+  <%= f.select(:prov, PROVINCES ) %>
+
+  <%= f.label :'Postal Code' %>
+  <%= f.text_field :postal %>
+  
+  <%= f.label :'Phone Number' %>
+  <%= f.telephone_field :phone1, placeholder: 'xxx-xxx-xxxx' %>
+
+  <%= f.label :'Alt. Phone Number' %>
+  <%= f.telephone_field :phone2 %>
+  
+  <%= f.label :'Fax' %>
+  <%= f.telephone_field :fax %>
+
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+
+     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div>
+</div>
+
+<% end %>
