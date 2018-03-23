@@ -175,12 +175,12 @@ function get_bil_type ( code, suff ) {
 }
 
 function select_btype( proc, suff ) {
-  var el = 'visit_bil_type'+suff
-  var v = document.getElementById(el);
+  var v = document.getElementById('visit_bil_type'+suff);
+	alert(proc.ptype);
   if ( proc.ptype == '1') {
-        v.selectedIndex = 1;
+        $(v).val('1');
      } else {
-	v.selectedIndex = 3;
+	$(v).val('3');
        $('#ins_provider').show();
   }
 }
