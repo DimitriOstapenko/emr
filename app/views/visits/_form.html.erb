@@ -100,6 +100,10 @@
 
   <div class="col-md-12"> </div>
   <div class="col-md-7 col-md-offset-1">
+	  
+  <div id="ins_provider"> <!--  style="display:none;"> -->
+  <%=  f.collection_select(:provider_id, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %> 
+  </div>
 
   <%= f.text_area :notes, rows:10, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
@@ -109,17 +113,51 @@
 <% end %>
 
 <script>
+$(document).ready(function() {
+    if ($("#visit_provider_id").val() > 0) {
+       $("#ins_provider").show();
+    } else{
+       $("#ins_provider").hide();
+    }
+});
 
-$('#new_visit select[name="visit[proc_code]"]').change(function () {
+// Show insurance Drop-Down if :Invoice is selected in bill type 1..4
+  var el = document.getElementById("visit_bil_type");
+  $(el).change(function () {
+        if ( $(el).val() == "3" ) {    //Invoice
+           $('#ins_provider').show();
+	} else {
+           $('#ins_provider').hide();
+	}
+  });
+
+  var el2 = document.getElementById("visit_bil_type2");
+  $(el2).change(function () {
+        if ( $(el2).val() == "3" ) {    //Invoice
+           $('#ins_provider').show();
+	} else {
+           $('#ins_provider').hide();
+	}
+  });
+
+// Select proper bill type for the procedure
+var pc = document.getElementById("visit_proc_code");
+$(pc).change(function () {
   get_bil_type( $(this).val() , '');
 });
-$('#new_visit select[name="visit[proc_code2]"]').change(function () {
+
+var pc2 = document.getElementById("visit_proc_code2");
+$(pc2).change(function () {
   get_bil_type( $(this).val() , '2' );
 });
-$('#new_visit select[name="visit[proc_code3]"]').change(function () {
+
+var pc3 = document.getElementById("visit_proc_code3");
+$(pc3).change(function () {
   get_bil_type( $(this).val() , '3' );
 });
-$('#new_visit select[name="visit[proc_code4]"]').change(function () {
+
+var pc4 = document.getElementById("visit_proc_code4");
+$(pc4).change(function () {
   get_bil_type( $(this).val() , '4' );
 });
 
@@ -137,13 +175,14 @@ function get_bil_type ( code, suff ) {
 }
 
 function select_btype( proc, suff ) {
- var fname = 'visit_bil_type'+suff
- var v = document.getElementById(fname);
- for (var i = 0; i < v.options.length; i++) {
-    if (v.options[i].text === proc.ptype) {
-        v.selectedIndex = i;
-        break;
-    }
- }
+  var el = 'visit_bil_type'+suff
+  var v = document.getElementById(el);
+  if ( proc.ptype == '1') {
+        v.selectedIndex = 1;
+     } else {
+	v.selectedIndex = 3;
+       $('#ins_provider').show();
+  }
 }
+
 </script>

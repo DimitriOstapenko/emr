@@ -1,33 +1,39 @@
 Rails.application.routes.draw do
 
+#  get 'invoices/index'
+#  get 'invoices/new'
+#  get 'invoices/create'
+#  get 'invoices/show'
+#  get 'invoices/edit'
+
   get 'drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }
-  get 'drugs/index'
-  get 'drugs/new'
-  get 'drugs/create'
-  get 'drugs/show'
-  get 'drugs/edit'
+#  get 'drugs/index'
+#  get 'drugs/new'
+#  get 'drugs/create'
+#  get 'drugs/show'
+#  get 'drugs/edit'
 
   get 'providers/index' => 'providers#find', constraints: { query_string: /findstr/ }
-  get 'providers/index'
-  get 'providers/new'
-  get 'providers/create'
-  get 'providers/show'
-  get 'providers/edit'
+#  get 'providers/index'
+#  get 'providers/new'
+#  get 'providers/create'
+#  get 'providers/show'
+#  get 'providers/edit'
 
   get '/reports/index' => 'reports#find', constraints: { query_string: /findstr/ }
-  get 'reports/index'
-  get 'reports/new'
-  get 'reports/show'
+#  get 'reports/index'
+#  get 'reports/new'
+#  get 'reports/show'
 #  get 'reports/create'
 
   root 'static_pages#home'
 #  root 'patients#index'
   
   get '/procedures/index' => 'procedures#find', constraints: { query_string: /findstr/ }
-  get 'procedures/index'
-  get 'procedures/new'
-  get 'procedures/show'
-  get 'procedures/edit'
+#  get 'procedures/index'
+#  get 'procedures/new'
+#  get 'procedures/show'
+#  get 'procedures/edit'
 
   get '/diagnoses/index' => 'diagnoses#find', constraints: { query_string: /findstr/ }
   get 'diagnoses/index'
@@ -91,6 +97,7 @@ Rails.application.routes.draw do
   resources :reports
   resources :providers
   resources :drugs
+  resources :invoices
 
  resources :billings     # historical billing table
   

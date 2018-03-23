@@ -31,11 +31,11 @@ UNITS  = u.freeze
 d = {}
 %w(10 20 30 40).each {|k| d[k]=k}
 DURATIONS = d.freeze 
-BILLING_TYPES = {HCP: 1, RMB: 2, "Invoice": 3, Cash: 4, WCB: 5}.freeze
+BILLING_TYPES = {HCP: 1, RMB: 2, "Invoice": 3, Cash: 4, WCB: 5, PRV: 6}.freeze
 
 # Procedures
  
-PROC_TYPES = {HCP: 1, RMB: 2}
+PROC_TYPES = {HCP: 1, '3RD': 2}
 
 # Billing
 

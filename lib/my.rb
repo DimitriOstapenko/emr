@@ -197,6 +197,7 @@ module My
 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
 
+
 # 3rd party service in the list of services?
     _3rdind = visit._3rd_index
     if  _3rdind.nil?
@@ -204,6 +205,7 @@ module My
       return pdf
     end
 
+    provider = Provider.find ( visit.provider_id )
     serv  = visit.services[_3rdind]
     today  = Date.today.strftime "%B %d, %Y"
     servstr = Date.today.to_s.ljust(85)
@@ -213,6 +215,7 @@ module My
     servstr[52] = "$#{serv[:fee]}"       
     servstr[65] = '$0.00'   
                   
+    inv_no = visit.invoice_id.to_s.rjust(3, "0")
     serviceinfo = "<b> Service details </b>:
 
                    Date           Descr         Qty       Charges     Payments     Balance   
@@ -226,7 +229,7 @@ module My
     pdf.text CLINIC_NAME, align: :center, size: 10
     pdf.text CLINIC_ADDR, align: :center, size: 10
 
-    pdf.draw_text "Invoice:[INV#]", at: [170.mm,243.mm], size: 10, style: :bold
+    pdf.draw_text "Invoice: #{inv_no}", at: [170.mm,243.mm], size: 10, style: :bold
     pdf.draw_text "NOTES: Please make payable to #{CLINIC_NAME}", at: [5.mm,132.mm]
 
     pdf.stroke do
@@ -245,9 +248,12 @@ module My
 	       
                Born: #{pat.dob} 
                File: #{pat.id}"
-     invoiceto = "<b>Invoice To</b>: [insurance company info here ]
+    invoiceto = "<b>Invoice To</b>: #{provider.name}
+ 	        #{provider.addr1}	
+ 	        #{provider.addr2}	
+                #{provider.city}, #{provider.prov} #{provider.postal}
      		  
-     		  Date: #{today} "
+     		 Date: #{today} "
 
     pdf.text_box patinfo, :at => [122.mm,237.mm],
          :width => 80.mm,
@@ -277,9 +283,9 @@ module My
 
     pdf.draw_text "Date: #{today}", at: [2.mm, 25.mm], size: 10
     pdf.draw_text "Patient: #{pat.full_name}", at: [2.mm, 18.mm], size: 10
-    pdf.draw_text "Billed To: [Insurance Company name here]", at: [2.mm, 11.mm], size: 10
+    pdf.draw_text "Billed To: #{provider.name}", at: [2.mm, 11.mm], size: 10
     
-    pdf.draw_text "Invoice: [INV # HERE]", at: [140.mm, 25.mm], size: 10
+    pdf.draw_text "Invoice: #{inv_no}", at: [140.mm, 25.mm], size: 10
     pdf.draw_text "Amount Billed: $#{serv[:fee]}", at: [140.mm, 18.mm], size: 10
     pdf.draw_text "Amount Paid: $", at: [140.mm, 11.mm], size: 10
     pdf.stroke { pdf.horizontal_line 170.mm,195.mm, :at => 11.mm }

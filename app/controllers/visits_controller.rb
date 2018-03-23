@@ -14,7 +14,7 @@ class VisitsController < ApplicationController
 	   render 'index'
       else
 	   flash.now[:warning] = "No visits found for date: #{date.inspect}" 
-	   render  body: nil
+	   render  inline: '', layout: true
     end
   end
 
@@ -121,12 +121,21 @@ class VisitsController < ApplicationController
   def invoice
 	@visit = Visit.find(params[:id])
         @patient = Patient.find(@visit.patient_id)
-        pdf = build_invoice( @patient, @visit )
+        if Invoice.exists?(visit_id: @visit.id)  
+	   flash.now[:danger] = "Invoice was already created. Only one invoice per visit is allowed" if Invoice.exists?(visit_id: @visit.id) 
+	   render  inline: '', layout: true
+	else
+		@invoice = Invoice.create( pat_id: @patient.id, billto: @visit.provider_id, visit_id: @visit.id, date: Date.today )   # amount missing for now!!!!
+	   @visit.invoice_id = @invoice.id
+	   @visit.save
+           pdf = build_invoice( @patient, @visit )
+	   pdf.render_file Rails.root.join('invoices',"invoice_#{@invoice.id}")
 
-        send_data pdf.render,
-          filename: "invoice_#{@patient.full_name}",
-          type: 'application/pdf',
-          disposition: 'inline'
+           send_data pdf.render,
+             filename: "invoice_#{@patient.full_name}",
+             type: 'application/pdf',
+             disposition: 'inline'
+	end
   end
 
   private
@@ -137,7 +146,7 @@ class VisitsController < ApplicationController
 				    :units, :units2, :units3, :units4, 
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
-				    :reason, :notes, :entry_ts, :status, :duration, :entry_by )
+				    :reason, :notes, :entry_ts, :status, :duration, :entry_by, :provider_id, :invoice_id )
     end      
 
     def set_visit_fees ( visit )
