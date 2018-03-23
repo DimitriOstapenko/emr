@@ -1,7 +1,7 @@
 class Visit < ApplicationRecord
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
   default_scope -> { order(created_at: :desc) }
-  attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode, :diag_descr, :proc_descr, :_3rd_index, :services
+  attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode #, :diag_descr, :proc_descr, :_3rd_index, :services, :invoiced?, :cash?
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true, numericality: { only_integer: true }
@@ -37,6 +37,14 @@ class Visit < ApplicationRecord
     bil_types('').index(BILLING_TYPES[:Invoice].to_s) ||
     bil_types('').index(BILLING_TYPES[:Cash].to_s)
   end  
+
+  def invoiced?
+    bil_types('').index(BILLING_TYPES[:Invoice].to_s) && 1
+  end
+
+  def cash?
+    bil_types('').index(BILLING_TYPES[:Cash].to_s) && 1
+  end
 
 # Service array to help deal with procedures/billings
   def services   

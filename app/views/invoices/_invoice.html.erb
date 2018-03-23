@@ -1,0 +1,16 @@
+<% 
+   @provider = Provider.find( invoice.billto )
+   @patient = Patient.find( invoice.pat_id )
+%>
+     <tr>
+	<td><%= link_to "#{invoice.id}", invoice %> </td>
+	<td><%= @provider.name %> </td> 
+	<td><%= @patient.full_name %></td> 
+	<td><%= invoice.date %></td> 
+  	<% if current_user.admin?  %>
+		<td> <%= link_to "delete", invoice, method: :delete, data: { confirm: "Are you sure you want to delete invoice # #{invoice.id}?" } %> </td>
+	<% end %>
+     </tr>
+
+
+

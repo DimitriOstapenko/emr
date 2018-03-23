@@ -75,10 +75,10 @@ private
           params.require(:procedure).permit(:code, :qcode, :ptype, :descr, :cost, :unit, :fac_req, :adm_req, :diag_req, :ref_req, :percent, :eff_date, :term_date, :active)
   end
 
-# Find procedure by code 
+# Find procedure by code/description
   def myfind (str)
 	if str.match(/^\S?[[:digit:]]{,3}\S?$/)
-          Procedure.where("code like ?", "%#{str}%")
+          Procedure.where("code like ?", "%#{str}%")  
         elsif str.match(/^[[:graph:]]+$/)
           Procedure.where("lower(descr) like ?", "%#{str}%")
         else

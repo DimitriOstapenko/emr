@@ -27,6 +27,10 @@
 		<b>Entry by </b>: <%= @visit.entry_by %>
 		<b>Entered at </b>: <%= @visit.entry_ts %>
 		<b>Notes </b>: <%= @visit.notes %>	     
+		<% if @visit._3rd_index %>
+	          <% prov = Provider.find( @visit.provider_id ) %>
+		<b>Insurance Provider </b>: <%= prov.name %>
+                <% end %>
            </pre>
       </h1>
     </section>
@@ -36,10 +40,12 @@
 <p>
  <%= button_to "Print Visit Form", visitform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
 
- <% if @visit._3rd_index %> 
 <p>
+ <% if @visit.cash? %> 
  <%= button_to "Print Receipt", receipt_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
-<p>
+ <% end %>
+ 
+ <% if @visit.invoiced? %> 
  <%= button_to "Print Invoice", invoice_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  <% end %>
 
