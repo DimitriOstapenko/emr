@@ -1,0 +1,27 @@
+<% provide(:title, 'All Vaccines') %>
+
+<table class="tbl table-hover" >
+  <thead>
+      <tr>
+          <th class="tbl_md">Name</th>
+          <th class="tbl_md">Target</th>
+          <th>Route</th>
+	  <th>Dose</th>
+	  <th>DIN</th>
+	  <th>Notes</th>
+	  <% if  current_user.admin? %>
+	     <th></th>
+     	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @vaccines %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @vaccines, class: "btn" %>
+<%= button_to "Add New Vaccine", new_vaccine_path, class: "btn btn-primary col-md-12", :method => "get" %>
+</div>

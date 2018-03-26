@@ -1,0 +1,15 @@
+     <tr>
+	<td><%= link_to vaccine.name, vaccine %> </td>
+	<td><%= vaccine.target %> </td> 
+	<td><%= vaccine.route %></td> 
+	<td><%= vaccine.dose %></td> 
+	<td><%= vaccine.din %></td> 
+	<td><%= vaccine.notes %></td> 
+  	<% if current_user.admin?  %>
+		<td> <%= link_to "delete", vaccine, method: :delete, data: { confirm: "Are you sure you want to delete #{vaccine.name}?" } %> </td>
+	<% end %>
+     </tr>
+
+
+
+

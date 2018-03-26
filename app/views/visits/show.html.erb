@@ -27,9 +27,9 @@
 		<b>Entry by </b>: <%= @visit.entry_by %>
 		<b>Entered at </b>: <%= @visit.entry_ts %>
 		<b>Notes </b>: <%= @visit.notes %>	     
-		<% if @visit._3rd_index %>
-	          <% prov = Provider.find( @visit.provider_id ) %>
-		<b>Insurance Provider </b>: <%= prov.name %>
+		<% if @visit.provider_id %>
+       	  	<% prov = Provider.find( @visit.provider_id ) %>
+		<b>Insurance Provider </b>: <%= prov.name rescue '' %>
                 <% end %>
            </pre>
       </h1>

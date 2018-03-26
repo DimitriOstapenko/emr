@@ -16,8 +16,8 @@ class ProceduresController < ApplicationController
          render 'index'
       else
 	 flash[:danger] = "Procedure not found #{str.inspect}"
-#	 render  inline: '', layout: true
-	 redirect_to procedures_path 
+	 render  inline: '', layout: true
+#	 redirect_to procedures_path 
       end
   end
 
