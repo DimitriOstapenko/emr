@@ -1,54 +1,24 @@
 Rails.application.routes.draw do
 
-#  get 'invoices/index'
-#  get 'invoices/new'
-#  get 'invoices/create'
-#  get 'invoices/show'
-#  get 'invoices/edit'
+  root 'static_pages#home'
 
   get 'drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }
-#  get 'drugs/index'
-#  get 'drugs/new'
-#  get 'drugs/create'
-#  get 'drugs/show'
-#  get 'drugs/edit'
-
+  get 'drugs/index' 
   get 'providers/index' => 'providers#find', constraints: { query_string: /findstr/ }
-#  get 'providers/index'
-#  get 'providers/new'
-#  get 'providers/create'
-#  get 'providers/show'
-#  get 'providers/edit'
-
+  get 'providers/index' 
   get '/reports/index' => 'reports#find', constraints: { query_string: /findstr/ }
-#  get 'reports/index'
-#  get 'reports/new'
-#  get 'reports/show'
-#  get 'reports/create'
-
-  root 'static_pages#home'
-#  root 'patients#index'
-  
+  get '/reports/index' 
   get '/procedures/index' => 'procedures#find', constraints: { query_string: /findstr/ }
-#  get 'procedures/index'
-#  get 'procedures/new'
-#  get 'procedures/show'
-#  get 'procedures/edit'
-
+  get '/procedures/index' 
   get '/diagnoses/index' => 'diagnoses#find', constraints: { query_string: /findstr/ }
-  get 'diagnoses/index'
-  get 'diagnoses/new'
-  get 'diagnoses/show'
-  get 'diagnoses/edit'
-
+  get '/diagnoses/index' 
   get '/doctors/index' => 'doctors#find', constraints: { query_string: /findstr/ }
-  get 'doctors/new'
-  get 'doctors/show'
-  get 'doctors/index'
-  
+  get '/doctors/index' 
   post '/daysheet/index', to: 'daysheet#set_doctor' 
   get '/set_doctor', to: 'daysheet#set_doctor' 
-  get 'daysheet/index'
+  get '/daysheet/index', to: 'daysheet#index', as: :daysheet
+  get '/vaccines/index', to:  "vaccines#find", constraints: { query_string: /findstr/ }
+  get '/vaccines/index' 
 
 #  get 'sessions/new'
 # get 'users/new'
@@ -64,7 +34,7 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
-  patch '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
+ # patch '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
 
@@ -98,7 +68,8 @@ Rails.application.routes.draw do
   resources :providers
   resources :drugs
   resources :invoices
+  resources :vaccines
 
- resources :billings     # historical billing table
+# resources :billings     # historical billing table - not used
   
 end

@@ -28,9 +28,9 @@
 <% end %>
 
 <li><%= link_to "Patients", patients_path %></li>
-<li><%= link_to "Day Sheet", daysheet_index_path %></li>
+<li><%= link_to "Day Sheet", daysheet_path %></li>
 <li><%= link_to "Billing", billings_path %></li>
-<li><%= link_to "Reports", reports_index_path %></li>
+<li><%= link_to "Reports", reports_path %></li>
 <li><%= link_to "Log out", logout_path, method: :delete %> </li>
 
 <% if  current_user.admin?  %>
@@ -49,6 +49,7 @@
          	<li> <%= link_to "Ins. Providers", providers_path, method: :get %> </li>
          	<li> <%= link_to "Medications", drugs_path, method: :get %> </li>
          	<li> <%= link_to "Invoices", invoices_path, method: :get %> </li>
+         	<li> <%= link_to "Vaccines", vaccines_path, method: :get %> </li>
             </ul>
           </li>
 <% end %>

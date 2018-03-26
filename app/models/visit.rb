@@ -22,12 +22,17 @@ class Visit < ApplicationRecord
     Doctor.find(doc_id) rescue Doctor.new 
   end
 
-# all procedure codes for this visit, comma delimited
-  def proc_codes
-    [proc_code, proc_code2, proc_code3, proc_code4].reject(&:blank?).join(',')
+# all procedure codes for this visit
+  def proc_codes(sep=',')
+    [proc_code, proc_code2, proc_code3, proc_code4].reject(&:blank?).join(sep)
+  end
+
+# hcp procedure codes for this visit
+  def hcp_proc_codes(sep = ',')  
+    [proc_code, proc_code2, proc_code3, proc_code4].grep(/^[[:upper:]]\d{3}[[:upper:]]$/).join(sep)   # A007A consider as HCP
   end
  
-# all billing types for procedures for this visit, comma delimited
+# all billing types for procedures for this visit
   def bil_types ( sep = ',' )
     [bil_type, bil_type2, bil_type3, bil_type4].reject(&:blank?).join(sep)
   end

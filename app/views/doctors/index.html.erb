@@ -13,7 +13,9 @@
 	  <th> Address</th>
           <th>City</th>
           <th>Phone </th>
-	  <% "<th> </th>" if  current_user.admin?  %>
+	  <% if  current_user.admin?  %>
+	      <th> </th>
+	  <% end %>
       </tr>
   </thead>
   <tbody>

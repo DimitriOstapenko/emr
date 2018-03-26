@@ -17,7 +17,7 @@ class ReportsController < ApplicationController
       else
          @reports = Report.new
          @reports = Report.paginate(page: params[:page])
-	 flash.now[:info] = 'Report #{str.inspect} was not found'
+	 flash.now[:info] = "Report #{str.inspect} was not found"
 #	 redirect_to @reports 
       end
       render 'index'
@@ -87,10 +87,12 @@ private
 
   # Find report(s) by name or type, depending on input format
   def myfind (str)
-        if str.match(/^[[:digit:]]$/)               # rtype
+        if str.match(/^[[:digit:]]$/)   	         # rtype
           Report.where(rtype: str)
         elsif str.match(/^[[:graph:]]+$/)                # name
-          Report.where("lower(name) like ?", "%#{str.downcase}%")
+	  doc = Doctor.where("lower(lname) like ? AND bills='t'", "%#{str.downcase}%")
+	  doc_id = doc[0].id rescue 0
+	  Report.where("doc_id = ?", doc_id) if !doc.nil?
         else
           []
         end

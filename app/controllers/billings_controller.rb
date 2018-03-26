@@ -35,17 +35,19 @@ class BillingsController < ApplicationController
     date = params[:date] || Date.today
     billed = VISIT_STATUSES[:Billed]
     ready = VISIT_STATUSES[:'Ready To Bill']
-    @visits = Visit.where("date(entry_ts) = ? AND status=?", date,ready)
+    @visits = Visit.where("date(entry_ts) = ? AND status=?", date,billed)
+    records = 0
    
     fname = Rails.root.join('export', date.to_s + '.csv')
     begin
       file = File.open(fname, 'w')
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
-	next unless hcp_procedure?(v.proc_code) 
-        str="#{v.doctor.provider_no} : #{p.lname} : #{p.fname} : #{p.sex} : #{p.dob.strftime("%d/%m/%Y")} :"+
-	    "#{p.ohip_num} : #{p.ohip_ver} : #{v.diag_code} : #{v.proc_codes} : #{v.entry_ts.strftime("%d/%m/%Y")} : #{v.units} \n"
+#	next unless hcp_procedure?(v.proc_code) 
+        str="#{v.doctor.provider_no}	#{p.lname}	#{p.fname}	#{p.sex}	#{p.dob.strftime("%d/%m/%Y")} 	"+
+		"#{p.ohip_num}	#{p.ohip_ver}	#{v.diag_code.to_s.rjust(3, "0")}	 #{v.hcp_proc_codes}	 #{v.entry_ts.strftime("%d/%m/%Y")}	#{v.units} \n"
         file.write( str )
+	records += 1
 	v.update_attribute(:status, billed) 
       end 
       rescue Errno::ENOENT => e
@@ -54,15 +56,16 @@ class BillingsController < ApplicationController
       ensure
         file.close unless file.nil?
     end
-    flash[:success] = "CSV Export file created for date #{date}" unless error
+    flash[:success] = "CSV Export file created for date #{date} (#{records} records)" unless error
     redirect_back(fallback_location: billings_path )
   end
 
   def export_edt
     date = params[:date] || Date.today
     billed = VISIT_STATUSES[:Billed]
+    ready = VISIT_STATUSES[:'Ready To Bill']
    
-    @visits = Visit.where("date(entry_ts) = ? AND status=3", date)
+    @visits = Visit.where("date(entry_ts) = ? AND status=?", billed, date)
     ext = Time.now.day.to_s.rjust(4,'0')
     fname = Rails.root.join('EDT', "HL#{GROUP_NO}.#{ext}")
     heh_count = het_count = 0
@@ -129,7 +132,7 @@ private
 #  end
 
   def hcp_procedure?(proc_code)
-    Procedure.find_by(code: proc_code).ptype == 'HCP' rescue 0
+    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue 0
   end
 
 end

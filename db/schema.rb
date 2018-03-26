@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180323142016) do
+ActiveRecord::Schema.define(version: 20180325192758) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -221,6 +221,17 @@ ActiveRecord::Schema.define(version: 20180323142016) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  create_table "vaccines", force: :cascade do |t|
+    t.string "name"
+    t.string "target"
+    t.string "route"
+    t.string "dose"
+    t.string "din"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "visits", force: :cascade do |t|
     t.text "notes"
     t.string "diag_code"
@@ -253,6 +264,9 @@ ActiveRecord::Schema.define(version: 20180323142016) do
     t.string "reason"
     t.integer "provider_id"
     t.integer "invoice_id"
+    t.integer "temp"
+    t.string "bp"
+    t.integer "pulse"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end
