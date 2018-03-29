@@ -4,8 +4,8 @@ class PatientsController < ApplicationController
 	before_action :admin_user,   only: :destroy
 
   def index
-      @patients = Patient.paginate(page: params[:page], per_page: $per_page)
-      flash.now[:info] = "Showing All Patients"
+      @patients = Patient.paginate(page: params[:page])
+      flash.now[:info] = "Showing All Patients "
   end
 
   def find

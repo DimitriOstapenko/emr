@@ -1,2 +1,21 @@
-<h1>Vaccines#show</h1>
-<p>Find me in app/views/vaccines/show.html.erb</p>
+<% provide(:title, @vaccine.name) %>
+
+	<h1>Vaccine:  <%= @vaccine.name %> - details  </h1>
+
+<div class="row justify-content-sm-center">
+  <div class="col-sm-6 col-sm-offset-3">
+	   <pre>
+	        Name:       <%= @vaccine.name %>
+	        Target:   <%= @vaccine.target %>
+	        Route:       <%= @vaccine.route %>
+	        Dose:       <%= @vaccine.dose %>
+	        DIN:       <%= @vaccine.din %>
+	        Notes:        <%= @vaccine.notes %>
+           </pre>
+
+    <%= button_to "Edit", edit_vaccine_path(@vaccine), class: "btn btn-primary", :method => "get" %>
+
+  </div>
+</div>
+
+

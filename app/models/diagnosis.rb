@@ -10,4 +10,8 @@ class Diagnosis < ApplicationRecord
 	def scode 
             code[0,3]
 	end
+
+	def code_with_descr
+		"#{code} : #{descr}"
+	end
 end

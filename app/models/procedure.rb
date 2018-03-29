@@ -1,6 +1,8 @@
 class Procedure < ApplicationRecord
         default_scope -> {order(code: :asc)}
         
+	attr_accessor :full_name, :age, :cardstr #, :prov_fee_real, :spec_fee_real, :ana_fee_real, :non_ana_fee_real
+
 	validates :code, presence: true, length: { maximum: 10 }, uniqueness: { case_sensitive: false }
 #        validates :qcode, length: { maximum: 50 }, allow_blank: true
 	validates :ptype, presence: true, length: { maximum: 5 }
@@ -15,6 +17,32 @@ class Procedure < ApplicationRecord
 #	validates :eff_date, allow_nil: true
 #	validates :term_date, allow_nil: true
 	
+#	before_save { self.prov_fee = (prov_fee*100).to_i  }
+#	before_save { self.ass_fee = (ass_fee*100).to_i  }
+#	before_save { self.spec_fee = (spec_fee*100).to_i  }
+#	before_save { self.ana_fee = (ana_fee*100).to_i  }
+#	before_save { self.non_ana_fee = (non_ana_fee*100).to_i  }
+	
+def prov_fee_real
+  sprintf '%.2f', prov_fee/100.0
+end
+
+def spec_fee_real
+  sprintf '%.2f', spec_fee/100.0
+end
+
+def ass_fee_real
+  sprintf '%.2f', ass_fee/100.0
+end
+
+def ana_fee_real
+  sprintf '%.2f', ana_fee/100.0
+end
+
+def non_ana_fee_real
+  sprintf '%.2f', non_ana_fee/100.0
+end
+
 end
 
 

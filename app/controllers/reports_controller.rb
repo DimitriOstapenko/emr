@@ -71,7 +71,7 @@ class ReportsController < ApplicationController
 	    @visits = Visit.where(entry_ts: (@report.sdate..@report.edate)).order(entry_ts: :asc)
 	    @total = Visit.where(entry_ts: (@report.sdate..@report.edate)).sum("fee+fee2+fee3+fee4")
     end
-    @visits = @visits.paginate(page: params[:page])
+    @visits = @visits.paginate(page: params[:page], per_page: 25)
   end
 
   def destroy

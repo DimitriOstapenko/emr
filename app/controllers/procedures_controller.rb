@@ -72,7 +72,8 @@ class ProceduresController < ApplicationController
 
 private
   def procedure_params
-          params.require(:procedure).permit(:code, :qcode, :ptype, :descr, :cost, :unit, :fac_req, :adm_req, :diag_req, :ref_req, :percent, :eff_date, :term_date, :active)
+          params.require(:procedure).permit(:code, :qcode, :ptype, :descr, :cost, :prov_fee, :ass_fee, :spec_fee, :ana_fee, :non_ana_fee,
+					    :unit, :fac_req, :adm_req, :diag_req, :ref_req, :percent, :eff_date, :term_date, :active)
   end
 
 # Find procedure by code/description

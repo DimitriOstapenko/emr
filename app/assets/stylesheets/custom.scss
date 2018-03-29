@@ -15,12 +15,16 @@ $gray-medium-light: #eaeaea;
 
 html,body {
   height: 100%;
-  margin: 0;
   padding-top: 0; 
 }
 
 .container {
    width:100%;
+   min-height: 100%;
+   height: auto !important; /* Stick footer to bottom in IE6 */
+   height: 100%;
+   margin: 0 auto -30px;  /* footer height */
+ /*  vertical-align: bottom; */
 }
 
 table {
@@ -37,13 +41,26 @@ table {
    padding-bottom:1px;  
 }
 
-#footer {
-   background: white;
+#footer, #pushup {
+   height: 30px;
+   padding-left: 15px;
+/*   background: white;
    position:fixed;
    padding-right: 15px;
    bottom:0;
    width:100%;
    z-index:999999;
+*/
+}
+
+.spacer-10 {
+  height: 10px;
+}
+.spacer-20 {
+  height: 20px;
+}
+.spacer-30 {
+  height: 30px;
 }
 
 section {
@@ -74,7 +91,8 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 1.4em;
   letter-spacing: -1px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  padding: 20px;
   text-align: center;
 }
 

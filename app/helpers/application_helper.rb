@@ -4,11 +4,11 @@ module ApplicationHelper
 # /mobile|android|iphone|blackberry|iemobile|kindle/
     def device_type
       ua  = request.user_agent.downcase
-      if ua.match(/mac os|windows/)
-	 $per_page = 36
+      if ua.match(/macintosh|windows/)
+#	 WillPaginate.per_page = 34  # doesnt work in multi-thread 
 	 return 'desktop'
       else 
-  	 $per_page = 15 
+#	 WillPaginate.per_page = 20
 	 return 'mobile'
       end
     end

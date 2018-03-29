@@ -2,7 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <div class="col-md-5 col-md-offset-1">
+  <div class="col-sm-5 col-sm-offset-1">
 
   <%= f.label 'Name' %>
   <%= f.text_field :name %>
@@ -10,7 +10,7 @@
   <%= f.label :'Address1' %>
   <%= f.text_field :addr1 %>
   
-  <%= f.label :addr2 %>
+  <%= f.label :Address2 %>
   <%= f.text_field :addr2 %>
   
   <%= f.label :city %>
@@ -25,11 +25,11 @@
   <%= f.label :'Phone Number' %>
   <%= f.telephone_field :phone1, placeholder: 'xxx-xxx-xxxx' %>
 
-  <%= f.label :'Alt. Phone Number' %>
-  <%= f.telephone_field :phone2 %>
+  <%= f.label :'Alt Phone Number' %>
+  <%= f.telephone_field :phone2, placeholder: 'xxx-xxx-xxxx' %>
   
   <%= f.label :'Fax' %>
-  <%= f.telephone_field :fax %>
+  <%= f.telephone_field :fax, placeholder: 'xxx-xxx-xxxx' %>
 
   <%= f.label :email %>
   <%= f.text_field :email %>

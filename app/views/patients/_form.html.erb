@@ -2,10 +2,10 @@
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <div class="col-md-13 col-md-offset-2">
+  <div class="col-sm-13 col-sm-offset-2">
 
-  <%= f.label 'H Card', class: "col-md-1 control-label" %>
-  <div class="col-md-2 padding-0">
+  <%= f.label 'H Card', class: "col-sm-1 control-label" %>
+  <div class="col-sm-2 padding-0">
   <%= f.text_field :ohip_num, placeholder: 'XXX XXXX XXX'%>
   </div>
 
@@ -13,121 +13,120 @@
   <%= f.text_field :ohip_ver, placeholder: 'XX' %>
   </div>
   
-  <div class="col-md-1">
+  <div class="col-sm-1">
   <%= f.select :hin_prov, PROVINCES %>
   </div>
   
-  <div class="col-md-1">
+  <div class="col-sm-1">
   <%= f.select :pat_type, PATIENT_TYPES %>
   </div>
   
-  <%= f.label 'Expires', class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label 'Expires', class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.date_field :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5 %>
   </div>
 
-  <div class="col-md-12"> &nbsp; </div>
+  <div class="col-sm-12"> &nbsp; </div>
 
-  <%= f.label 'Last Name', class: "col-md-1" %>
-  <div class="col-md-2 padding-0">
+  <%= f.label 'Last Name', class: "col-sm-1" %>
+  <div class="col-sm-2 padding-0">
   <%= f.text_field :lname %>
   </div>
 
-  <%= f.label :'First Name', class: "col-md-1" %>
-  <div class="col-md-2">
+  <%= f.label :'First Name', class: "col-sm-1" %>
+  <div class="col-sm-2">
   <%= f.text_field :fname %>
   </div>
 
-  <%= f.label :Gender, class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :Gender, class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.select(:sex, SEXES ) %>
   </div>
   
-  <div class="col-md-12"> &nbsp; </div>
+  <div class="col-sm-12"> &nbsp; </div>
 
-  <%= f.label :'Date Of Birth', class: "col-md-1" %>
-  <div class="col-md-2">
+  <%= f.label :'Date Of Birth', class: "col-sm-1" %>
+  <div class="col-sm-2">
 	  <%= f.date_field :dob, start_year: 1900, end_year: Date.today.year %>
   </div>
 
-  <%= f.label :Phone, class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :Phone, class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
 	  <%= f.phone_field :phone, value: num_to_phone(@patient.phone)  %>
   </div>
   
-  <%= f.label :Mobile, class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :Mobile, class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.phone_field :mobile, value: num_to_phone(@patient.mobile) %>
   </div>
   
-  <div class="col-md-12"> &nbsp; </div>
+  <div class="col-sm-12"> &nbsp; </div>
 
-  <%= f.label :Address, class: "col-md-1" %>
-  <div class="col-md-2">
+  <%= f.label :Address, class: "col-sm-1" %>
+  <div class="col-sm-3">
   <%= f.text_field :addr %>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-sm-2">
   <%= f.text_field :city,  placeholder: 'City' %>
   </div>
   
-  <div class="col-md-1">
+  <div class="col-sm-1">
   <%= f.select :prov, PROVINCES %>
   </div>
   
-  <div class="col-md-1">
-  <%= f.text_field(:country, value: 'Canada' ) %>
+  <div class="col-sm-1">
+  <%= f.text_field(:country, value: 'Canada', placeholder: 'Country' ) %>
   </div>
 
-  <%= f.label :postal, class: "col-md-1" %>
-  <div class="col-md-1">
+  <div class="col-sm-1">
   <%= f.text_field :postal, placeholder: 'Postal'%>
   </div>
 
-  <div class="col-md-12"> &nbsp; </div>
+  <div class="col-sm-12"> &nbsp; </div>
 
-  <%= f.label :family_doctor, class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :family_doctor, class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.text_field :family_dr %>
   </div>
   
-  <%= f.label :pharmacy, class: "col-md-2 control-label" %>
-  <div class="col-md-4">
+  <%= f.label :pharmacy, class: "col-sm-2 control-label" %>
+  <div class="col-sm-4">
   <%= f.text_field :pharmacy %>
   </div>
   
-  <div class="col-md-12"> &nbsp; </div>
+  <div class="col-sm-12"> &nbsp; </div>
 
-  <%= f.label :pharm_phone, class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :pharm_phone, class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.phone_field :pharm_phone, value: num_to_phone(@patient.pharm_phone) %>
   </div>
   
-  <%= f.label :'Alt Contact', class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :'Alt Contact', class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.text_field :alt_contact_name %>
   </div>
 
-  <%= f.label :email, class: "col-md-1 control-label" %>
-  <div class="col-md-2">
+  <%= f.label :email, class: "col-sm-1 control-label" %>
+  <div class="col-sm-2">
   <%= f.text_field :email %>
   </div>
   
-  <div class="col-md-12"> &nbsp; </div>
-  <%= f.label :allergies, class: "col-md-1 control-label" %>
-  <div class="col-md-8">
+  <div class="col-sm-12"> &nbsp; </div>
+  <%= f.label :allergies, class: "col-sm-1 control-label" %>
+  <div class="col-sm-8">
   <%= f.text_field :allergies %>
   </div>
 
-  <div class="col-md-12"> &nbsp; </div>
-  <%= f.label :medications, class: "col-md-1 control-label" %>
-  <div class="col-md-8">
+  <div class="col-sm-12"> &nbsp; </div>
+  <%= f.label :medications, class: "col-sm-1 control-label" %>
+  <div class="col-sm-8">
   <%= f.text_field :medications %>
   </div>
 
-  <div class="col-md-13"> &nbsp; </div>
+  <div class="col-sm-13"> &nbsp; </div>
 
-  <div class="col-md-9">
+  <div class="col-sm-9">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
 
