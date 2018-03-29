@@ -4,8 +4,7 @@
   provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") 
 %>
 
-<div>
-	<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) =%> </h1>
+<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) =%> </h1>
 
 <% diag = Diagnosis.find_by(code: @visit.diag_code) %>
 <% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>
@@ -16,12 +15,13 @@
 	   <pre>
 		<b>Visit Type:</b> <%= VISIT_TYPES.invert[@visit.vis_type] %>
 		<b>Doctor</b> :    <%= @visit.doctor.lname %>
+		<b>Reason for Visit </b>: <%= @visit.reason %>
+		<b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 		<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
 		<b>Procedure(s)</b> : <%=  @visit.proc_codes %>
 		<b>Billing Type(s) </b>: <%= BILLING_TYPES.invert[@visit.bil_type] %>, <%= BILLING_TYPES.invert[@visit.bil_type2] %>
 		<b>Units </b>: <%= @visit.units %>, <%= @visit.units2 %>
 		<b>Duration </b>: <%= @visit.duration %> minutes
-		<b>Reason </b>: <%= @visit.reason %>
 		<b>Status </b>: <%= VISIT_STATUSES.invert[@visit.status] %> 
 		<b>Total fee </b>: <%=  sprintf '$%.2f',@visit.total_fee %>
 		<b>Entry by </b>: <%= @visit.entry_by %>
@@ -50,6 +50,6 @@
  <% end %>
 
   </aside>
-
 </div>
+
 

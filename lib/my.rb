@@ -89,11 +89,10 @@ module My
     pdf.draw_text "Reason:", at: [5.mm,165.mm], style: :bold
     pdf.draw_text reason, at: [26.mm,165.mm]
     pdf.draw_text 'Vitals:', at: [5.mm,155.mm], style: :bold
-    pdf.draw_text "T", at: [35.mm,155.mm]
-    pdf.draw_text "P", at: [65.mm,155.mm]
-    pdf.draw_text "BP", at: [94.mm,155.mm]
-    pdf.draw_text "WT", at: [126.mm,155.mm]
-    pdf.draw_text "HR", at: [160.mm,155.mm]
+    pdf.draw_text "T: #{visit.temp}", at: [35.mm,155.mm]
+    pdf.draw_text "BP: #{visit.bp}", at: [69.mm,155.mm]
+    pdf.draw_text "WT: #{visit.weight}", at: [118.mm,155.mm]
+    pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,155.mm]
     
     pdf.draw_text "Notes:", at: [5.mm,148.mm], style: :bold
     pdf.text_box visit.notes, :at => [5.mm,140.mm],

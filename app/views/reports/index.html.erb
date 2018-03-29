@@ -3,12 +3,14 @@
 <table class="tbl table-hover">  <!--table table-hover table-condensed" >  -->
   <thead>
       <tr>
-          <th>Name</th>
-          <th>Doc_id</th>
+          <th>Report</th>
+          <th>Doctor</th>
           <th>Type</th>
-          <th>Sdate</th>
-          <th>Edate</th>
+          <th>From</th>
+          <th>To</th>
+	   <% if current_user.admin?  %>
           <th></th>
+	  <% end %>
       </tr>
   </thead>
   <tbody>

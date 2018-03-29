@@ -17,13 +17,13 @@
        </li>
 <% else %>
 	<li class="nav-item active">
-		<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
+ 	<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
                 <div class="col-sm-10">
 			<%= f.search_field :findstr, placeholder: "Find #{controller_name.singularize}", id: "findstr", :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
-     <% end %>
+        <% end %>
 	</li>
 <% end %>
 
@@ -40,7 +40,7 @@
             </a>
             <ul class="dropdown-menu">
 	      <li><%= link_to "Profile", edit_user_path(current_user) %></li>
-	      <li><%= link_to "Add User", signup_path(current_user) %></li>
+	      <li><%= link_to "Add User", signup_path %></li>
 	      <li><%= link_to "Users", users_path %></li>
               <li class="divider"></li>
           	<li> <%= link_to "Procedures", procedures_path, method: :get %> </li>

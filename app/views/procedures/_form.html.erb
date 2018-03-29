@@ -1,83 +1,103 @@
 <%= form_for @procedure do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
+  <!-- Row 1 -->
 <div class="row">
-  <div class="col-md-4 col-md-offset-1">
-
+  <div class="col-sm-2">
 	  <%= f.label :Code %>
           <%= f.text_field :code %>
+  </div>
   
+  <div class="col-sm-2">
 	  <%= f.label :type %>
           <%= f.select :ptype, PROC_TYPES %>
-
-	  <%= f.label :description %>
-	  <%= f.text_field :descr %>
-
-	  <%= f.label :provider_fee %>
-	  <%= f.text_field :cost %>
-
-	  <%= f.label 'Specialist Fee' %>
-	  <%= f.text_field :spec_fee %>
-	  
-	  <%= f.label 'Assistant Fee' %>
-	  <%= f.text_field :ass_fee %>
-     
-	  <%= f.label 'Anesthesiologist Fee' %>
-	  <%= f.text_field :ana_fee %>
-     
   </div>
 
-  <div class="col-md-4 ">
-
-	  <%= f.label :percent %>
-	  <%= f.text_field :percent %>
-
-	  <%= f.label :'Effective Date' %>
-	  <%= f.date_field :eff_date %>
-
-	  <%= f.label :'Term Date' %>
-	  <%= f.date_field :term_date %>
-	  
+  <div class="col-sm-2">
 	  <%= f.label :units %>
 	  <%= f.text_field :unit %>
-	  
-	  
-    <div class="col-md-12"> &nbsp; </div>
-    <div class="col-md-2">
-          <%= f.label :faq %>
-          <%= f.check_box :fac_req %>
+  </div>
+
+  <div class="col-sm-2">
+	  <%= f.label :percent %>
+	  <%= f.text_field :percent %>
+  </div>
+</div>
+
+  <!-- Row 2 -->
+<div class="row">
+  <div class="col-sm-8">
+	  <%= f.label :description %>
+	  <%= f.text_field :descr %>
+  </div>
+</div>
+
+  <!-- Row 3 -->
+
+<div class="row">
+  <div class="col-sm-2">
+          <%= f.label :provider_fee %>
+          <%= f.text_field :cost %>
+  </div>
+
+  <div class="col-sm-2">
+          <%= f.label 'Specialist Fee' %>
+          <%= f.text_field :spec_fee %>
+  </div>
+
+  <div class="col-sm-2">
+          <%= f.label 'Assistant Fee' %>
+          <%= f.text_field :ass_fee %>
+  </div>
+
+  <div class="col-sm-2">
+          <%= f.label 'Anesth Fee' %>
+          <%= f.text_field :ana_fee %>
+  </div>
+</div>
+
+  <!-- Row 4 -->
+
+<div class="row">
+    <div class="col-sm-2">
+          <%= f.label :'Effective Date' %>
+          <%= f.date_field :eff_date %>
     </div>
 
-    <div class="col-md-2">
-          <%= f.label :adm %>
+    <div class="col-sm-2">
+          <%= f.label :'Term Date' %>
+          <%= f.date_field :term_date %>
+    </div>
+    <div class="col-sm-1">
+          <%= f.label :adm? %>
           <%= f.check_box :adm_req %>
     </div>
 
-    <div class="col-md-2">
-          <%= f.label :diag %>
+    <div class="col-sm-1">
+          <%= f.label :diag? %>
           <%= f.check_box :diag_req %>
     </div>
 
-    <div class="col-md-2">
-          <%= f.label :ref %>
+    <div class="col-sm-1">
+          <%= f.label :ref? %>
           <%= f.check_box :ref_req %>
     </div>
 
-    <div class="col-md-2">
-          <%= f.label :active %>
+    <div class="col-sm-1">
+          <%= f.label :active? %>
           <%= f.check_box :active  %>
     </div>
-  
-  </div>
+
 </div>
 
-<div class="row"><div> &nbsp; </div> </div>
+  <!-- Row 5 -->
+
+  <div style="height: 20px;"></div>
 <div class="row">
-    <div class="col-md-8 col-md-offset-1">
+    <div class="col-sm-8">
     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     </div>
 </div>
-
 
 <% end %>
 

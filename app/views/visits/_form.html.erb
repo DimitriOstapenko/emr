@@ -4,111 +4,136 @@
   <% doc_id = @visit.doctor.id || current_doctor.id %>
   <% @procedures = get_active_procedures %>
 
-<div class="row">
-  <div class="col-md-3 col-md-offset-1">
+  <!-- Row 1 --> 
 
+  <div class="col-sm-4">
   <%= f.label "Doctor" %>
-  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select', selected: doc_id) %>  
-
-  <%= f.label "Diagnosis" %>
-  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :code, prompt: 'Select')  %> 
-
-  <div class="col-md-4 padding-0">
-  <%= f.label "Duration" %>
-  <%= f.select :duration, DURATIONS, default: 10  %>
+  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select', selected: doc_id) %>
   </div>
 
-  <div class="col-md-8 ">
-  <%= f.label "Visit Type" %>
-  <%= f.select :vis_type, VISIT_TYPES, placeholder: 'Visit type', default: 'WS' %>
-  </div>
-
-  <%= f.label "Status" %>
-  <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
-    
-  </div>
-
-  <div class="col-md-8"> </div>
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label "Procedure" %>
   <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select'  %>
-  <%= f.hidden_field(:fee, id: :fee) %>  
+  <%= f.hidden_field(:fee, id: :fee) %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code2, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
-  
-  <div class="col-md-1">
+
+  <div class="col-sm-2">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code3, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
-  
-  <div class="col-md-1">
+
+  <div class="col-sm-2">
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code4, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
 
-  <div class="col-md-8"> </div>
-  <div class="col-md-1">
+
+  <!-- Row 2 -->
+
+  <div class="col-sm-4">
+  <%= f.label "Diagnosis" %>
+  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :code_with_descr, prompt: 'Select')  %>
+  </div>
+
+  <div class="col-sm-2">
   <%= f.label :units %>
   <%= f.select :units, UNITS, prompt:  'Select' %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label :units %>
   <%= f.select :units2, UNITS, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label :units %>
   <%= f.select :units3, UNITS, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label :units %>
   <%= f.select :units4, UNITS, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-8"> </div>
-  <div class="col-md-1">
+  <!-- Row 3 -->
+
+  <div class="col-sm-2">
+  <%= f.label "Duration" %>
+  <%= f.select :duration, DURATIONS, default: 10  %>
+  </div>
+  <div class="col-sm-2 ">
+  <%= f.label "Visit Type" %>
+  <%= f.select :vis_type, VISIT_TYPES, placeholder: 'Visit type', default: 'WS' %>
+  </div>
+  
+  <div class="col-sm-2">
   <%= f.label "Bill Type" %>
   <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label "Bill Type" %>
   <%= f.select :bil_type2, BILLING_TYPES, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label "Bill Type" %>
   <%= f.select :bil_type3, BILLING_TYPES,  prompt: 'Select' %>
   </div>
 
-  <div class="col-md-1">
+  <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select'%>
+  <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select' %>
   </div>
 
-  <div class="col-md-8"> </div>
-  <div class="col-md-4">
+  <!-- Row 4 -->
+
+  <div class="col-sm-4">
+  <%= f.label "Visit Status" %>
+  <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.label :Temperature %>
+  <%= f.text_field :temp %>
+  </div>
+  <div class="col-sm-2">
+  <%= f.label 'Heart Rate' %>
+  <%= f.text_field :pulse %>
+  </div>
+  <div class="col-sm-2">
+  <%= f.label "Blood Pr H/L" %>
+  <%= f.text_field :bp %>
+  </div>
+  <div class="col-sm-2">
+  <%= f.label "Weight (kg)" %>
+  <%= f.text_field :weight %>
+  </div>
+
+  <!-- Row 5 -->
+
+  <div class="col-sm-12">
   <%= f.label "Reason for Visit" %>
-  <%= f.text_field :reason %>
+      <%= f.text_field :reason %>
   </div>
 
-  <div class="col-md-12"> </div>
-  <div class="col-md-7 col-md-offset-1">
-	  
-  <div id="ins_provider"> <!--  style="display:none;"> -->
+  <!-- Notes, reason, submit -->
+
+  <div class="col-sm-12">
+  <div id="ins_provider"> 
+  <%= f.label "Insurance Provider" %>
   <%=  f.collection_select(:provider_id, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %> 
   </div>
 
-  <%= f.text_area :notes, rows:10, placeholder: 'Notes' %>
+  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
-</div>
+
 
 <% end %>
 

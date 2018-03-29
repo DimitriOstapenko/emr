@@ -146,7 +146,8 @@ class VisitsController < ApplicationController
 				    :units, :units2, :units3, :units4, 
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
-				    :reason, :notes, :entry_ts, :status, :duration, :entry_by, :provider_id, :invoice_id )
+				    :reason, :notes, :entry_ts, :status, :duration, 
+				    :entry_by, :provider_id, :invoice_id, :temp, :bp, :pulse, :weight )
     end      
 
     def set_visit_fees ( visit )

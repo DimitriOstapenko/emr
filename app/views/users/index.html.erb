@@ -7,8 +7,10 @@
           <th>Email</th>
 	  <th>Created</th>
           <th>Admin</th>
+<% if current_user.admin? %>
 	  <th>&nbsp;</th>
 	  <th>&nbsp;</th>
+<% end %>
       </tr>
   </thead>
   <tbody>

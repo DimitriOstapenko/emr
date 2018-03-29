@@ -1,16 +1,25 @@
 class BillingsController < ApplicationController
 	before_action :logged_in_user #, only: [:index, :edit, :update]
         before_action :admin_user,   only: :destroy
+    
+    BILLED = VISIT_STATUSES[:Billed]
+    READY = VISIT_STATUSES[:'Ready To Bill']
 
   def index
-      date = params[:date] || Date.today
-      @visits = Visit.where("date(entry_ts) = ? AND (status=3 OR status=4) ", date)
+      date = params[:date] 
+      if date.blank? 
+         @visits = Visit.where("status=? ", READY)
+         flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found"
+      else 
+         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+         flashmsg = "Billings for #{date} (#{@visits.count})"
+      end
       if @visits.any?
          @visits = @visits.paginate(page: params[:page]) #, per_page: $per_page)
-	 flash.now[:info] = "Billings for #{date} (#{@visits.count})"
+	 flash.now[:info] = flashmsg
          render 'index'
       else
-         flash.now[:info] = "No billings were found for date #{date.inspect}"
+         flash.now[:info] = "No billings were found for date #{date}" if date
          render 'shared/empty_page'
       end
   end
@@ -32,10 +41,17 @@ class BillingsController < ApplicationController
   end
 
   def export_csv
-    date = params[:date] || Date.today
-    billed = VISIT_STATUSES[:Billed]
-    ready = VISIT_STATUSES[:'Ready To Bill']
-    @visits = Visit.where("date(entry_ts) = ? AND status=?", date,billed)
+    date = params[:date] 
+    if date.blank?
+       @visits = Visit.where("status=? ", READY)
+       date = Date.today
+       flashmsg = "#{date.to_s}.csv export file created. Includes all previously unbilled visits"
+    else
+       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+       flashmsg = "CSV Export file created for date #{date}" 
+    end
+
+    @visits = Visit.where("status=?", READY)
     records = 0
    
     fname = Rails.root.join('export', date.to_s + '.csv')
@@ -48,24 +64,23 @@ class BillingsController < ApplicationController
 		"#{p.ohip_num}	#{p.ohip_ver}	#{v.diag_code.to_s.rjust(3, "0")}	 #{v.hcp_proc_codes}	 #{v.entry_ts.strftime("%d/%m/%Y")}	#{v.units} \n"
         file.write( str )
 	records += 1
-	v.update_attribute(:status, billed) 
+	v.update_attribute(:status, BILLED) 
       end 
       rescue Errno::ENOENT => e
 	flash[:danger] = e.message
-	error = 1
       ensure
         file.close unless file.nil?
+        flash[:success] = "#{flashmsg} (#{records} alltogether)"
     end
-    flash[:success] = "CSV Export file created for date #{date} (#{records} records)" unless error
     redirect_back(fallback_location: billings_path )
   end
 
+# EDT format file  
   def export_edt
     date = params[:date] || Date.today
-    billed = VISIT_STATUSES[:Billed]
-    ready = VISIT_STATUSES[:'Ready To Bill']
    
-    @visits = Visit.where("date(entry_ts) = ? AND status=?", billed, date)
+#    @visits = Visit.where("date(entry_ts) = ? AND status=?", BILLED, date)
+    @visits = Visit.where("status=?", BILLED)
     ext = Time.now.day.to_s.rjust(4,'0')
     fname = Rails.root.join('EDT', "HL#{GROUP_NO}.#{ext}")
     heh_count = het_count = 0
@@ -87,7 +102,7 @@ class BillingsController < ApplicationController
 	if hcp_procedure?(v.proc_code) 
 	  heh = "HEH#{pat.ohip_num}#{pat.ohip_ver}#{pat.dob.strftime("%Y%m%d")}#{v.id.to_s.rjust(8,'0')}HCPP\n"
           file.write( heh )
-	  v.update_attribute(:status, billed) 
+	  v.update_attribute(:status, BILLED) 
 	  heh_count += 1
 	  het = "HET#{v.proc_code}  #{(v.fee*v.units*100).to_i.to_s.rjust(6,'0')}#{v.units.to_s.rjust(2,'0')}#{date_str}#{v.diag_code.to_i.to_s.rjust(3,'0')}".ljust(79,' ') + "\n"
 	  file.write( het )
