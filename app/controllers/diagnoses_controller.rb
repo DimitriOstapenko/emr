@@ -1,11 +1,13 @@
 class DiagnosesController < ApplicationController
 
+	helper_method :sort_column, :sort_direction
+
 	before_action :logged_in_user #, only: [:index, :edit, :update]
 	before_action :admin_user, only: :destroy
 
   def index
-    @diagnoses = Diagnosis.paginate(page: params[:page]) #, per_page: 40)
-    flash.now[:info] = "Showing All Diagnoses"
+    @diagnoses = Diagnosis.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) #, per_page: 40)
+    flash.now[:info] = "Showing All Diagnoses (#{@diagnoses.count})"
   end
 
   def find
@@ -74,6 +76,14 @@ private
         else
           []
         end
+  end
+
+  def sort_column
+	  Diagnosis.column_names.include?(params[:sort]) ? params[:sort] : "code"
+  end
+
+  def sort_direction
+	  %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

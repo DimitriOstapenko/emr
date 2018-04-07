@@ -18,6 +18,7 @@ TRUE_FALSE = {True: 1,False: 0}.freeze
 
 PATIENT_TYPES = {OHIP: 'O', Transient: 'T', Deceased: 'D', RMB: 'R', 'Self Pay': 'S', 'Waiting For HC': 'W', Imported: 'I'}.freeze
 SEXES  = {Male: 'M',Female: 'F',Unknown: 'X'}.freeze
+DIGSEXES = {'M' => 1, 'F' => 2}.freeze
 PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS', NT: 'NT', NU: 'NU', PE: 'PE', QC: 'QC', SK: 'SK', YT: 'YT'}
 
 # Visits
@@ -46,4 +47,7 @@ BILLING_FORMAT='CSV'.freeze  # CSV/EDT
 
 #TIMEFRAMES   = {Day: 1, Month: 2, Year: 3}.freeze
 REPORT_TYPES = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}.freeze
+
+# Charts
+CHARTS_PATH = Rails.root.join('charts').freeze
 

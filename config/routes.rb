@@ -2,10 +2,13 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-  get 'drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }
-  get 'drugs/index' 
-  get 'providers/index' => 'providers#find', constraints: { query_string: /findstr/ }
-  get 'providers/index' 
+
+  get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
+  get '/daily_charts/index', to: 'daily_charts#ind'
+  get '/drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }
+  get '/drugs/index' 
+  get '/providers/index' => 'providers#find', constraints: { query_string: /findstr/ }
+  get '/providers/index' 
   get '/reports/index' => 'reports#find', constraints: { query_string: /findstr/ }
   get '/reports/index' 
   get '/procedures/index' => 'procedures#find', constraints: { query_string: /findstr/ }
@@ -19,10 +22,6 @@ Rails.application.routes.draw do
   get '/daysheet/index', to: 'daysheet#index', as: :daysheet
   get '/vaccines/index', to:  "vaccines#find", constraints: { query_string: /findstr/ }
   get '/vaccines/index' 
-
-#  get 'sessions/new'
-# get 'users/new'
-
   get  '/help',    to: 'static_pages#help'
   get  '/about',   to: 'static_pages#about'
   get  '/contact', to: 'static_pages#contact'
@@ -46,6 +45,7 @@ Rails.application.routes.draw do
  get '/billings' => 'billings#index'
  post '/billings/export_csv', to: 'billings#export_csv'
  post '/billings/export_edt', to: 'billings#export_edt'
+  get "/procedures/get_by_code", to: "procedures#get_by_code" 
 
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
@@ -60,7 +60,6 @@ Rails.application.routes.draw do
     end
   end
   
-  get "/procedures/get_by_code", to: "procedures#get_by_code" 
   resources :doctors
   resources :diagnoses
   resources :procedures
@@ -69,6 +68,7 @@ Rails.application.routes.draw do
   resources :drugs
   resources :invoices
   resources :vaccines
+  resources :daily_charts
 
 # resources :billings     # historical billing table - not used
   

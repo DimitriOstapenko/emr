@@ -1,12 +1,12 @@
 <% provide(:title, 'All diagnoses') %>
- 
-<table class="tbl table-hover"> 
+
+<table class="tbl table-hover"> <!-- pretty -->
   <thead>
       <tr>
-          <th>Code</th>
-          <th>Description</th>
+	  <th><%= sortable 'code'  %></th>
+	  <th><%= sortable 'descr', :Description %></th>
           <th>Problem type </th>
-          <th>Active? </th>
+	  <th><%= sortable 'Active' %></th>
       </tr>
   </thead>
   <tbody>

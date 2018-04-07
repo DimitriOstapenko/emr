@@ -357,3 +357,30 @@ input {
   padding:0px 15px;
 }
 
+.hdr-link {
+ color: white;
+}
+
+/* used for sorting headers in diagnosis - disabled  */
+table.pretty {
+  border-collapse: collapse;
+}
+
+.pretty td, .pretty th {
+  padding: 4px 10px;
+  border: solid 1px #AAA;
+}
+
+.pretty th .current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}
+
+.pretty th .asc {
+  background-image: url(/images/up_arrow.gif);
+}
+
+.pretty th .desc {
+  background-image: url(/images/down_arrow.gif);
+}

@@ -1,0 +1,22 @@
+<% provide(:title, 'All Daily Charts') %>
+
+<table class="tbl table-hover"> <!-- pretty -->
+  <thead>
+      <tr>
+          <th><%= sortable 'date'  %></th>
+          <th><%= sortable 'filename', :FileName %></th>
+          <th><%= sortable 'pages' %></th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @daily_charts %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @daily_charts, class: "btn" %>
+<%= button_to "Add Daily Chart", new_daily_chart_path, class: "btn btn-primary col-md-12", :method => "get" %>
+</div>
+

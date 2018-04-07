@@ -37,7 +37,7 @@
 
   <div class="col-sm-4">
   <%= f.label "Diagnosis" %>
-  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :code_with_descr, prompt: 'Select')  %>
+  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select')  %>
   </div>
 
   <div class="col-sm-2">

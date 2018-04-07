@@ -1,0 +1,2 @@
+module DailyChartsHelper
+end
