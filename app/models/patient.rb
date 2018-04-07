@@ -39,6 +39,11 @@ class Patient < ApplicationRecord
     ActiveSupport::NumberHelper.number_to_phone(phone, area_code: :true)
   end
 
+# Sex: Male, Female, Unknown
+  def full_sex
+    SEXES.invert[sex].to_s rescue 'Unknown'
+  end
+
   def age
     return unless dob
     now = Date.today

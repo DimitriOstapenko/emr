@@ -5,7 +5,7 @@ class PatientsController < ApplicationController
 
   def index
       @patients = Patient.paginate(page: params[:page])
-      flash.now[:info] = "Showing All Patients "
+      flash.now[:info] = "Showing All Patients (#{@patients.count}) "
   end
 
   def find
@@ -16,7 +16,7 @@ class PatientsController < ApplicationController
 	 flash.now[:info] = "Found #{@patients.count} #{'patient'.pluralize(@patients.count)} matching string #{str.inspect}"
          render 'index'
       else
-	 @patients = Patient.paginate(page: params[:page])
+#	 @patients = Patient.paginate(page: params[:page])
 	 @patients = Patient.new
 	 flash.now[:warning] = "Patient  #{str.inspect} was not found"
 	 render  inline: '', layout: true

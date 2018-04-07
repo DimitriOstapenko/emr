@@ -66,7 +66,7 @@ class Visit < ApplicationRecord
 
 # Short version of diagnostic code
   def diag_scode
-    diag_code[0,3]
+	  diag_code[0,3].rjust(3,'0') if !diag_code.blank?
   end
 
 # Return diagnosis description

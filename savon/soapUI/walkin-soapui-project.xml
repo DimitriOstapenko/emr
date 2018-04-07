@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="1ab17858-5f07-49fd-9d21-8eda7a2eda24" activeEnvironment="Default" name="walkin" resourceRoot="" soapui-version="5.4.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ddce527c-4333-4077-903d-ee657cab31a0" wsaVersion="NONE" name="HCValidationPortBinding" type="wsdl" bindingName="{http://hcv.health.ontario.ca/}HCValidationPortBinding" soapVersion="1_1" anonymous="optional" definition="https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService?wsdl"><con:part><con:url>https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService?wsdl</con:url><con:content><![CDATA[<wsdl:definitions targetNamespace="http://hcv.health.ontario.ca/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp200409="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsp200607="http://www.w3.org/2006/07/ws-policy" xmlns:ns0="http://hcv.health.ontario.ca/">
+  <wsdl:types xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:schema>
+      <xsd:import schemaLocation="HCValidationService.xsd2.xsd" namespace="http://ebs.health.ontario.ca/"/>
+      <xsd:import schemaLocation="HCValidationService.xsd4.xsd" namespace="http://ebs.health.ontario.ca/"/>
+      <xsd:import schemaLocation="HCValidationService.xsd3.xsd" namespace="http://hcv.health.ontario.ca/"/>
+      <xsd:import schemaLocation="HCValidationService.xsd6.xsd" namespace="http://idp.ebs.health.ontario.ca/"/>
+      <xsd:import schemaLocation="HCValidationService.xsd5.xsd" namespace="http://msa.ebs.health.ontario.ca/"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="EBSHeader">
+    <wsdl:part name="ebsrequest_header" element="xsns:EBS" xmlns:xsns="http://ebs.health.ontario.ca/"/>
+  </wsdl:message>
+  <wsdl:message name="faultexception">
+    <wsdl:part name="Fault" element="xsns:EBSFault" xmlns:xsns="http://ebs.health.ontario.ca/"/>
+  </wsdl:message>
+  <wsdl:message name="IDPHeader">
+    <wsdl:part name="idprequest_header" element="xsns:IDP" xmlns:xsns="http://idp.ebs.health.ontario.ca/"/>
+  </wsdl:message>
+  <wsdl:message name="MSAHeader">
+    <wsdl:part name="msarequest_header" element="xsns:MSA" xmlns:xsns="http://msa.ebs.health.ontario.ca/"/>
+  </wsdl:message>
+  <wsdl:message name="validate">
+    <wsdl:part name="parameters" element="xsns:validate" xmlns:xsns="http://hcv.health.ontario.ca/"/>
+  </wsdl:message>
+  <wsdl:message name="validateResponse">
+    <wsdl:part name="parameters" element="xsns:validateResponse" xmlns:xsns="http://hcv.health.ontario.ca/"/>
+  </wsdl:message>
+  <wsdl:portType name="HCValidation">
+    <wsdl:operation name="validate">
+      <wsdl:input name="validateRequest" message="ns0:validate"/>
+      <wsdl:output name="validateResponse" message="ns0:validateResponse"/>
+      <wsdl:fault name="FaultException" message="ns0:faultexception"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HCValidationPortBinding" type="ns0:HCValidation">
+    <soap11:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <wsdl:operation name="validate">
+      <soap11:operation soapAction="" style="document"/>
+      <wsdl:input name="validateRequest">
+        <wsp:PolicyReference URI="#policy0" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"/>
+        <soap11:body parts="parameters" use="literal"/>
+        <soap11:header message="ns0:EBSHeader" part="ebsrequest_header" use="literal"/>
+        <soap11:header message="ns0:MSAHeader" part="msarequest_header" use="literal"/>
+        <soap11:header message="ns0:IDPHeader" part="idprequest_header" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="validateResponse">
+        <soap11:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FaultException">
+        <soap11:fault name="FaultException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HCValidationService">
+    <wsdl:port name="HCValidationPort.0" binding="ns0:HCValidationPortBinding">
+      <soap11:address location="https://204.41.14.78:1444/HCVService/HCValidationService"/>
+    </wsdl:port>
+    <wsdl:port name="HCValidationPort.1" binding="ns0:HCValidationPortBinding">
+      <soap11:address location="https://204.41.14.79:1444/HCVService/HCValidationService"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsp:Policy wsu:Id="policy0" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedSupportingTokens xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:UsernameToken>
+            <wsp:Policy>
+              <wsp:All>
+                <sp:NoPassword/>
+                <sp:WssUsernameToken10/>
+              </wsp:All>
+            </wsp:Policy>
+          </sp:UsernameToken>
+        </sp:SignedSupportingTokens>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="EBS" Namespace="http://ebs.health.ontario.ca/"/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="MSA" Namespace="http://msa.ebs.health.ontario.ca/"/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="SoftwareConformanceKey" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="AuditId" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="ServiceUserMUID" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="UserID" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="Timestamp" Namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+        </sp:RequiredParts>
+        <sp:SignedParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="EBS" Namespace="http://ebs.health.ontario.ca/"/>
+          <sp:Header Name="MSA" Namespace="http://msa.ebs.health.ontario.ca/"/>
+          <sp:Header Name="Timestamp" Namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+          <sp:Header Name="UsernameToken" Namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+          <sp:Body/>
+        </sp:SignedParts>
+      </wsp:All>
+      <wsp:All>
+        <sp:SignedSupportingTokens xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:UsernameToken>
+            <wsp:Policy>
+              <wsp:All>
+                <sp:WssUsernameToken10/>
+              </wsp:All>
+            </wsp:Policy>
+          </sp:UsernameToken>
+        </sp:SignedSupportingTokens>
+        <sp:SignedParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="EBS" Namespace="http://ebs.health.ontario.ca/"/>
+          <sp:Header Name="IDP" Namespace="http://idp.ebs.health.ontario.ca/"/>
+          <sp:Header Name="Timestamp" Namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+          <sp:Header Name="UsernameToken" Namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+          <sp:Body/>
+        </sp:SignedParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="EBS" Namespace="http://ebs.health.ontario.ca/"/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="IDP" Namespace="http://idp.ebs.health.ontario.ca/"/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="SoftwareConformanceKey" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="AuditId" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="ServiceUserMUID" Namespace=""/>
+        </sp:RequiredParts>
+        <sp:RequiredParts xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200512" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+          <sp:Header Name="Timestamp" Namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+        </sp:RequiredParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService.xsd2.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://ebs.health.ontario.ca/" version="1.0" xmlns:tns="http://ebs.health.ontario.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="EBSFault" type="tns:ebsFault"/>
+  <xs:complexType name="ebsFault">
+    <xs:sequence>
+      <xs:element name="code" type="xs:string"/>
+      <xs:element name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService.xsd4.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://ebs.health.ontario.ca/" version="1.0" xmlns:tns="http://ebs.health.ontario.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="EBS" type="tns:ebs_header"/>
+  <xs:simpleType name="key">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="36"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="uid">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ebs_header">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="SoftwareConformanceKey" type="tns:key"/>
+      <xs:element minOccurs="1" name="AuditId" type="tns:uid"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService.xsd3.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://hcv.health.ontario.ca/" version="1.0" xmlns:tns="http://hcv.health.ontario.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="validate" type="tns:validate"/>
+  <xs:element name="validateResponse" type="tns:validateResponse"/>
+  <xs:complexType name="validate">
+    <xs:sequence>
+      <xs:element name="requests" type="tns:requests"/>
+      <xs:element minOccurs="0" name="locale" type="tns:lc"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="lc">
+    <xs:restriction base="xs:string">
+      <xs:pattern value=""/>
+      <xs:pattern value="  "/>
+      <xs:pattern value="en"/>
+      <xs:pattern value="fr"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="requests">
+    <xs:sequence>
+      <xs:element maxOccurs="100" name="hcvRequest" type="tns:hcvRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hcvRequest">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="healthNumber" type="tns:hn"/>
+      <xs:element minOccurs="1" name="versionCode" type="tns:vc"/>
+      <xs:element maxOccurs="5" minOccurs="0" name="feeServiceCodes" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="hn">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[1-9]\d{9}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="vc">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{0,2}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="validateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="results" type="tns:hcvResults"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hcvResults">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="auditUID" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="1" name="results" nillable="true" type="tns:person"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="sex">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="M"/>
+      <xs:pattern value="F"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="person">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="dateOfBirth" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="expiryDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="firstName" type="xs:string"/>
+      <xs:element minOccurs="0" name="gender" type="tns:sex"/>
+      <xs:element minOccurs="1" name="healthNumber" type="tns:hn"/>
+      <xs:element minOccurs="0" name="lastName" type="xs:string"/>
+      <xs:element minOccurs="1" name="responseAction" type="xs:string"/>
+      <xs:element minOccurs="1" name="responseCode" type="xs:string"/>
+      <xs:element minOccurs="1" name="responseDescription" type="xs:string"/>
+      <xs:element minOccurs="1" name="responseID" type="tns:responseID"/>
+      <xs:element minOccurs="0" name="secondName" type="xs:string"/>
+      <xs:element minOccurs="1" name="versionCode" type="tns:vc"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="feeServiceDetails" type="tns:feeServiceDetails"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="feeServiceDetails">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="feeServiceCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="feeServiceDate" type="xs:dateTime"/>
+      <xs:element minOccurs="1" name="feeServiceResponseCode" type="xs:string"/>
+      <xs:element minOccurs="1" name="feeServiceResponseDescription" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="responseID">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="INFO_NOT_AVAIL"/>
+      <xs:enumeration value="LOST_STATE_ND"/>
+      <xs:enumeration value="LOST_STATE"/>
+      <xs:enumeration value="DAMAGED_STATE_ND"/>
+      <xs:enumeration value="DAMAGED_STATE"/>
+      <xs:enumeration value="IS_VOID_NEVER_ISS_ND"/>
+      <xs:enumeration value="IS_VOID_NEVER_ISS"/>
+      <xs:enumeration value="IS_CANCELLED_OR_VOIDED_ND"/>
+      <xs:enumeration value="IS_CANCELLED_OR_VOIDED"/>
+      <xs:enumeration value="IS_STOLEN_ND"/>
+      <xs:enumeration value="IS_STOLEN"/>
+      <xs:enumeration value="INVALID_VERSION_CODE_ND"/>
+      <xs:enumeration value="INVALID_VERSION_CODE"/>
+      <xs:enumeration value="RETURNED_MAIL_ND"/>
+      <xs:enumeration value="RETURNED_MAIL"/>
+      <xs:enumeration value="IS_THC_ND"/>
+      <xs:enumeration value="IS_THC"/>
+      <xs:enumeration value="IS_RQ_HAS_EXPIRED_ND"/>
+      <xs:enumeration value="IS_RQ_HAS_EXPIRED"/>
+      <xs:enumeration value="IS_RQ_FUTURE_ISSUE"/>
+      <xs:enumeration value="IS_RQ_FUTURE_ISSUE_ND"/>
+      <xs:enumeration value="HAS_NOTICE_ND"/>
+      <xs:enumeration value="HAS_NOTICE"/>
+      <xs:enumeration value="IS_ON_ACTIVE_ROSTER_ND"/>
+      <xs:enumeration value="IS_ON_ACTIVE_ROSTER"/>
+      <xs:enumeration value="NOT_ON_ACTIVE_ROSTER_ND"/>
+      <xs:enumeration value="NOT_ON_ACTIVE_ROSTER"/>
+      <xs:enumeration value="IS_NOT_ELIGIBLE_ND"/>
+      <xs:enumeration value="IS_NOT_ELIGIBLE"/>
+      <xs:enumeration value="IS_IN_DISTRIBUTED_STATUS"/>
+      <xs:enumeration value="FAILED_MOD10"/>
+      <xs:enumeration value="NOT_10_DIGITS"/>
+      <xs:enumeration value="SUCCESS"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService.xsd6.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://idp.ebs.health.ontario.ca/" version="1.0" xmlns:tns="http://idp.ebs.health.ontario.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="IDP" type="tns:idp_header"/>
+  <xs:simpleType name="muid">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="idp_header">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="ServiceUserMUID" type="tns:muid"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part><con:part><con:url>https://ws.conf.ebs.health.gov.on.ca:1444/HCVService/HCValidationService.xsd5.xsd</con:url><con:content><![CDATA[<xs:schema targetNamespace="http://msa.ebs.health.ontario.ca/" version="1.0" xmlns:tns="http://msa.ebs.health.ontario.ca/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="MSA" type="tns:msa_header"/>
+  <xs:simpleType name="user">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="muid">
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="msa_header">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="ServiceUserMUID" type="tns:muid"/>
+      <xs:element minOccurs="1" name="UserID" type="tns:user"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>https://204.41.14.78:1444/HCVService/HCValidationService</con:endpoint><con:endpoint>https://204.41.14.79:1444/HCVService/HCValidationService</con:endpoint></con:endpoints><con:operation id="5cdb418f-8b8d-4cb8-b1cc-f8577b453f04" isOneWay="false" action="" name="validate" bindingOperationName="validate" type="Request-Response" outputName="validateResponse" inputName="validateRequest" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="bd3c40ae-d0f0-411f-a9b6-8fdf59c45798" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>https://204.41.14.78:1444/HCVService/HCValidationService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:idp="http://idp.ebs.health.ontario.ca/" xmlns:msa="http://msa.ebs.health.ontario.ca/" xmlns:ebs="http://ebs.health.ontario.ca/" xmlns:hcv="http://hcv.health.ontario.ca/">
+   <soapenv:Header>
+      <idp:IDP>
+         <ServiceUserMUID>543700</ServiceUserMUID>
+      </idp:IDP>
+      <msa:MSA>
+         <ServiceUserMUID>543700</ServiceUserMUID>
+         <UserID>confsu339@outlook.com</UserID>
+      </msa:MSA>
+      <ebs:EBS>
+         <SoftwareConformanceKey>c58b5dfa-8aac-48e3-9467-195370360de7</SoftwareConformanceKey>
+         <AuditId>12345689</AuditId>
+      </ebs:EBS>
+   </soapenv:Header>
+   <soapenv:Body>
+      <hcv:validate>
+         <requests>
+            <!--1 to 100 repetitions:-->
+            <hcvRequest>
+               <healthNumber>1234567899</healthNumber>
+               <versionCode>PE</versionCode>
+               <!--0 to 5 repetitions:-->
+               <feeServiceCodes>?</feeServiceCodes>
+            </hcvRequest>
+         </requests>
+         <!--Optional:-->
+         <locale>?</locale>
+      </hcv:validate>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://hcv.health.ontario.ca/HCValidation/validateRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

@@ -1,5 +1,5 @@
 #
-# Seed vaccines table (insurance companies)
+# Seed vaccines table
 #
 # Next lines allow to run it stand-alone
 require_relative '../../config/environment'
