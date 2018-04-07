@@ -66,7 +66,7 @@ def patient_params
 # Find patient by last name or health card number, depending on input format  
   def myfind (str)
         if str.match(/^\d+/)               # ohip_num
-          DailyChart.where("date like ?", "%#{str}%")
+          DailyChart.where("filename like ?", "%#{str}%")
 	else 
 		[]
         end
