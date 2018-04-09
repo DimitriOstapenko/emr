@@ -305,6 +305,9 @@ module My
     pdf.text CLINIC_ADDR, align: :center, size: 12
     pdf.text 'Tel: '+CLINIC_PHONE + ' Fax: ' + CLINIC_FAX, align: :center, size: 10
 
+    meds = pat.medications[0,77] rescue ''
+    algies = pat.allergies[0,77] rescue ''
+
     pdf.stroke do
             pdf.line_width=0.2.mm
 	        pdf.horizontal_line 20.mm,195.mm, :at => 218.mm
@@ -356,9 +359,9 @@ module My
     pdf.draw_text "Reason for ", at: [2.mm, 133.mm], size: 10
     pdf.draw_text "Referral:", at: [2.mm, 126.mm], size: 10
     pdf.draw_text "Medications:", at: [2.mm, 60.mm], size: 10
-    pdf.draw_text "#{pat.medications[0,77]}", at: [32.mm, 61.mm], size: 10
+    pdf.draw_text "#{meds}", at: [32.mm, 61.mm], size: 10
     pdf.draw_text "Allergies:", at: [2.mm, 50.mm], size: 10
-    pdf.draw_text "#{pat.allergies[0,77]}", at: [32.mm, 51.mm], size: 10
+    pdf.draw_text "#{algies}", at: [32.mm, 51.mm], size: 10
     
     pdf.draw_text "Thank you for seeing this patient", at: [2.mm, 20.mm], size: 12, style: :bold
     
