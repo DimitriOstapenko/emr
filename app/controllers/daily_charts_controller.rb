@@ -9,11 +9,6 @@ class DailyChartsController < ApplicationController
       flash.now[:info] = "Showing All day charts (#{@daily_charts.count}) "
   end
 
-  def ind 
-      @daily_charts = DailyChart.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) #, per_page: 40)
-      flash.now[:info] = "Showing All day charts (#{@daily_charts.count}) "
-  end
-
   def find
       str = params[:findstr].strip
       @daily_charts = myfind(str)
@@ -30,6 +25,7 @@ class DailyChartsController < ApplicationController
   end
 
   def new
+    @chart = DailyChart.find( params[:id] )
   end
 
   def create
@@ -46,10 +42,8 @@ class DailyChartsController < ApplicationController
 
   end
 
-  def index
-  end
-
   def edit
+    @chart = DailyChart.find( params[:id] )
   end
 
   def update

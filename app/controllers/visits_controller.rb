@@ -125,17 +125,28 @@ class VisitsController < ApplicationController
 	   flash.now[:danger] = "Invoice was already created. Only one invoice per visit is allowed" if Invoice.exists?(visit_id: @visit.id) 
 	   render  inline: '', layout: true
 	else
-		@invoice = Invoice.create( pat_id: @patient.id, billto: @visit.provider_id, visit_id: @visit.id, date: Date.today )   # amount missing for now!!!!
+	   @invoice = Invoice.create( pat_id: @patient.id, billto: @visit.provider_id, visit_id: @visit.id, date: Date.today ) 
 	   @visit.invoice_id = @invoice.id
 	   @visit.save
            pdf = build_invoice( @patient, @visit )
-	   pdf.render_file Rails.root.join('invoices',"invoice_#{@invoice.id}")
 
            send_data pdf.render,
              filename: "invoice_#{@patient.full_name}",
              type: 'application/pdf',
              disposition: 'inline'
 	end
+  end
+
+# Generate referral form for this visit
+  def referralform
+	@visit = Visit.find(params[:id])
+        @patient = Patient.find(@visit.patient_id)
+	pdf = build_referral_form( @patient, @visit )
+        
+	send_data pdf.render,
+             filename: "referral_#{@patient.full_name}",
+             type: 'application/pdf',
+             disposition: 'inline'
   end
 
   private

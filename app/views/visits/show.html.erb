@@ -39,6 +39,8 @@
   <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
 <p>
  <%= button_to "Print Visit Form", visitform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
+<p>
+ <%= button_to "Print Referral Form", referralform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
 
 <p>
  <% if @visit.cash? %> 
