@@ -32,7 +32,6 @@
          <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
      <% else %>
 	  <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
-         <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
      <% end %>
 </div>
 

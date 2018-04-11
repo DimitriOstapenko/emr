@@ -14,7 +14,7 @@
 	<td><%= VISIT_STATUSES.invert[visit.status] rescue '' %></td>
 	
 	<% if current_user.admin?  %>
-		<td> <%= link_to "delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete #{visit.entry_ts.strftime('%H:%M')}?" } %> </td>
+		<td> <%= link_to "delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id}?" } %> </td>
 	<% end %>
 
 </tr>

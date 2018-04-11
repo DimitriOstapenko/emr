@@ -49,7 +49,7 @@ class VisitsController < ApplicationController
   end
 
   def destroy
-    @patient = Patient.find(params[:patient_id])
+    @visit = Visit.find(params[:id])
     @visit.destroy
     flash[:success] = "Visit deleted"
     redirect_to request.referrer || root_url

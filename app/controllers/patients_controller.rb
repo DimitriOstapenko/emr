@@ -28,8 +28,9 @@ class PatientsController < ApplicationController
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
        if @patient.chart_file.blank?
-          chart = Dir.glob("#{Rails.root}/charts/**/#{@patient.lname}\,#{@patient.fname}*\.pdf")
-	  @patient.update_attribute(:chart_file, chart[0]) if (!chart.blank? && chart.count == 1)
+	  lname_with_underscore = @patient.lname.gsub(' ','_')
+          chart = Dir.glob("#{Rails.root}/charts/**/#{lname_with_underscore}\,#{@patient.fname}*\.pdf")
+	  @patient.update_attribute(:chart_file, chart[0]) 
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
@@ -49,7 +50,7 @@ class PatientsController < ApplicationController
     @patient.entry_date = DateTime.now
     @patient.lastmod_by = current_user.name
     if @patient.save
-	    suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  @patient.hin_expiry.to_date < Date.today)
+       suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  @patient.hin_expiry.to_date < Date.today)
        flash[:success] = "Patient created #{suffix}"
        redirect_to @patient
     else
@@ -91,11 +92,13 @@ class PatientsController < ApplicationController
   def card 
     @cardstr = params[:cardstr] rescue nil
     if @cardstr 
+       cardpat = create_patient_from_card ( @cardstr )
        @patient = Patient.find_by(ohip_num: @cardstr[7,10])
        if @patient
+	  @patient.hin_expiry = cardpat.hin_expiry
           redirect_to @patient 
        else 
-	  @patient = create_patient_from_card ( @cardstr )
+	  @patient = cardpat 
           respond_to do |format|
             format.html 
 	    format.js 

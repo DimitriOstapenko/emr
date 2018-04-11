@@ -23,6 +23,7 @@ module My
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
  
     pdf.font "Courier"
+    pdf.font_size 10
     pdf.stroke_rectangle [0,260.mm], 200.mm,260.mm
 
     patinfo = "<b>Patient</b>:
@@ -105,7 +106,7 @@ module My
     pdf.draw_text "Diagnosis", at: [5.mm,25.mm]
     pdf.draw_text 'Signature:', at: [5.mm,15.mm]
 
-    pdf.draw_text CLINIC_NAME, at: [5.mm,5.mm], size: 10, style: :bold
+    pdf.draw_text CLINIC_NAME, at: [5.mm,5.mm], style: :bold
     pdf.draw_text "#{CLINIC_ADDR} t:#{CLINIC_PHONE} f:#{CLINIC_FAX}", at: [5.mm,1.mm], size: 9 #, style: [:bold,:italic] 
 
     return pdf
@@ -115,6 +116,8 @@ module My
   def build_receipt ( pat, visit )
 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
+    pdf.font "Courier"
+    pdf.font_size 10
     pdf.stroke_rectangle [0,240.mm], 200.mm,240.mm
 
     _3rdind = visit._3rd_index
@@ -195,6 +198,8 @@ module My
   def build_invoice ( pat, visit )
 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
+    pdf.font "Courier"
+    pdf.font_size 10
 
 # 3rd party service in the list of services?
     _3rdind = visit._3rd_index
@@ -224,10 +229,10 @@ module My
     pdf.text 'Invoice for Professional Services', size: 14, :align => :center
     pdf.text 'Dr.' + visit.doctor.full_name,  size: 14, :align => :center
     
-    pdf.text CLINIC_NAME, align: :center, size: 10
-    pdf.text CLINIC_ADDR, align: :center, size: 10
+    pdf.text CLINIC_NAME, align: :center
+    pdf.text CLINIC_ADDR, align: :center
 
-    pdf.draw_text "Invoice: #{inv_no}", at: [170.mm,243.mm], size: 10, style: :bold
+    pdf.draw_text "Invoice: #{inv_no}", at: [170.mm,243.mm], style: :bold
     pdf.draw_text "NOTES: Please make payable to #{CLINIC_NAME}", at: [5.mm,132.mm]
 
     pdf.stroke do
@@ -277,18 +282,18 @@ module My
     pdf.draw_text visit.proc_descr(serv[:pcode]), at: [5.mm, 162.mm]
 
 # Tear-off footer     
-    pdf.draw_text 'Submit this portion with your payment', at: [60.mm, 30.mm], size: 10, style: :bold
+    pdf.draw_text 'Submit this portion with your payment', at: [60.mm, 30.mm], style: :bold
 
-    pdf.draw_text "Date: #{today}", at: [2.mm, 25.mm], size: 10
-    pdf.draw_text "Patient: #{pat.full_name}", at: [2.mm, 18.mm], size: 10
-    pdf.draw_text "Billed To: #{provider.name}", at: [2.mm, 11.mm], size: 10
+    pdf.draw_text "Date: #{today}", at: [2.mm, 25.mm]
+    pdf.draw_text "Patient: #{pat.full_name}", at: [2.mm, 18.mm]
+    pdf.draw_text "Billed To: #{provider.name}", at: [2.mm, 11.mm]
     
-    pdf.draw_text "Invoice: #{inv_no}", at: [140.mm, 25.mm], size: 10
-    pdf.draw_text "Amount Billed: $#{serv[:fee]}", at: [140.mm, 18.mm], size: 10
-    pdf.draw_text "Amount Paid: $", at: [140.mm, 11.mm], size: 10
+    pdf.draw_text "Invoice: #{inv_no}", at: [140.mm, 25.mm]
+    pdf.draw_text "Amount Billed: $#{serv[:fee]}", at: [140.mm, 18.mm]
+    pdf.draw_text "Amount Paid: $", at: [140.mm, 11.mm]
     pdf.stroke { pdf.horizontal_line 170.mm,195.mm, :at => 11.mm }
 
-    pdf.draw_text "Please make cheque payable to: #{CLINIC_NAME}", at: [25.mm, 1.mm], size: 10, style: :italic
+    pdf.draw_text "Please make cheque payable to: #{CLINIC_NAME}", at: [25.mm, 1.mm], style: :italic
 
     return pdf
   end # build_invoice
@@ -297,13 +302,14 @@ module My
   def build_referral_form ( pat, visit )
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
     pdf.font "Courier"
+    pdf.font_size 10
 
     pdf.text "REFERRAL FORM ", align: :center, size: 12, style: :bold
     pdf.move_down 5.mm
 
     pdf.text CLINIC_NAME, align: :center, size: 12
     pdf.text CLINIC_ADDR, align: :center, size: 12
-    pdf.text 'Tel: '+CLINIC_PHONE + ' Fax: ' + CLINIC_FAX, align: :center, size: 10
+    pdf.text 'Tel: '+CLINIC_PHONE + ' Fax: ' + CLINIC_FAX, align: :center
 
     meds = pat.medications[0,77] rescue ''
     algies = pat.allergies[0,77] rescue ''
@@ -327,45 +333,46 @@ module My
 		pdf.horizontal_line 50.mm,195.mm, :at => 5.mm
               end
 
-    pdf.draw_text "To :", at: [2.mm, 218.mm], size: 10, style: :bold
-    pdf.draw_text "Tel:", at: [2.mm, 206.mm], size: 10, style: :bold
-    pdf.draw_text "Fax:", at: [107.mm, 206.mm], size: 10, style: :bold
+    pdf.draw_text "To :", at: [2.mm, 218.mm], style: :bold
+    pdf.draw_text "Tel:", at: [2.mm, 206.mm], style: :bold
+    pdf.draw_text "Fax:", at: [107.mm, 206.mm], style: :bold
 
-    pdf.draw_text "Patient:", at: [2.mm, 194.mm], size: 10, style: :bold
-    pdf.draw_text "Name:", at: [2.mm, 185.mm], size: 10
-    pdf.draw_text "#{pat.full_name} (#{pat.sex})", at: [16.mm, 185.mm], size: 10
-    pdf.draw_text "Address:", at: [2.mm, 177.mm], size: 10
-    pdf.draw_text "#{pat.addr}", at: [22.mm, 177.mm], size: 10
-    pdf.draw_text "Telephone:", at: [2.mm, 169.mm], size: 10
-    pdf.draw_text "#{pat.phonestr}", at: [25.mm, 169.mm], size: 10
-    pdf.draw_text "DOB:", at: [2.mm, 161.mm], size: 10
-    pdf.draw_text "#{pat.dob}", at: [12.mm, 161.mm], size: 10
-    pdf.draw_text "VisitId:", at: [55.mm, 161.mm], size: 10
-    pdf.draw_text "#{visit.id}", at: [75.mm, 161.mm], size: 10
-    pdf.draw_text "HC#:", at: [2.mm, 155.mm], size: 10
-    pdf.draw_text "#{pat.ohip_num} #{pat.ohip_ver}", at: [12.mm, 155.mm], size: 10
-    pdf.draw_text "File#:", at: [55.mm, 155.mm], size: 10
-    pdf.draw_text "#{pat.id}", at: [75.mm, 155.mm], size: 10
+    pdf.draw_text "Patient:", at: [2.mm, 194.mm], style: :bold
+    pdf.draw_text "Name:", at: [2.mm, 188.mm]
+    pdf.draw_text "#{pat.full_name} (#{pat.sex})", at: [16.mm, 188.mm]
+    pdf.draw_text "Address:", at: [2.mm, 182.mm]
+    pdf.draw_text "#{pat.addr}", at: [22.mm, 182.mm]
+    pdf.draw_text "#{pat.city}, #{pat.prov} #{pat.postal}", at: [22.mm, 177.mm]
+    pdf.draw_text "Telephone:", at: [2.mm, 168.mm]
+    pdf.draw_text "#{pat.phonestr}", at: [25.mm, 168.mm]
+    pdf.draw_text "DOB:", at: [2.mm, 161.mm]
+    pdf.draw_text "#{pat.dob}", at: [12.mm, 161.mm]
+    pdf.draw_text "VisitId:", at: [55.mm, 161.mm]
+    pdf.draw_text "#{visit.id}", at: [75.mm, 161.mm]
+    pdf.draw_text "HC#:", at: [2.mm, 155.mm]
+    pdf.draw_text "#{pat.ohip_num} #{pat.ohip_ver}", at: [12.mm, 155.mm]
+    pdf.draw_text "File#:", at: [55.mm, 155.mm]
+    pdf.draw_text "#{pat.id}", at: [75.mm, 155.mm]
     
-    pdf.draw_text "Referring Doctor:", at: [102.mm, 194.mm], size: 10, style: :bold
-    pdf.draw_text "Name:", at: [102.mm, 182.mm], size: 10
-    pdf.draw_text " Dr. #{visit.doctor.lname}", at: [128.mm, 182.mm], size: 10
-    pdf.draw_text "Billing No:", at: [102.mm, 174.mm], size: 10
-    pdf.draw_text "#{visit.doctor.provider_no}", at: [128.mm, 174.mm], size: 10
-    pdf.draw_text "Date:", at: [102.mm, 165.mm], size: 10
-    pdf.draw_text Date.today, at: [128.mm, 165.mm], size: 10
-    pdf.draw_text "Signature:", at: [102.mm, 156.mm], size: 10
+    pdf.draw_text "Referring Doctor:", at: [102.mm, 194.mm], style: :bold
+    pdf.draw_text "Name:", at: [102.mm, 182.mm]
+    pdf.draw_text " Dr. #{visit.doctor.lname}", at: [128.mm, 182.mm]
+    pdf.draw_text "Billing No:", at: [102.mm, 174.mm]
+    pdf.draw_text "#{visit.doctor.provider_no}", at: [128.mm, 174.mm]
+    pdf.draw_text "Date:", at: [102.mm, 165.mm]
+    pdf.draw_text Date.today, at: [128.mm, 165.mm]
+    pdf.draw_text "Signature:", at: [102.mm, 156.mm]
 
-    pdf.draw_text "Reason for ", at: [2.mm, 133.mm], size: 10
-    pdf.draw_text "Referral:", at: [2.mm, 126.mm], size: 10
-    pdf.draw_text "Medications:", at: [2.mm, 60.mm], size: 10
-    pdf.draw_text "#{meds}", at: [32.mm, 61.mm], size: 10
-    pdf.draw_text "Allergies:", at: [2.mm, 50.mm], size: 10
-    pdf.draw_text "#{algies}", at: [32.mm, 51.mm], size: 10
+    pdf.draw_text "Reason for ", at: [2.mm, 133.mm], style: :bold
+    pdf.draw_text "Referral:", at: [2.mm, 126.mm], style: :bold
+    pdf.draw_text "Medications:", at: [2.mm, 60.mm], style: :bold
+    pdf.draw_text "#{meds}", at: [32.mm, 61.mm]
+    pdf.draw_text "Allergies:", at: [2.mm, 50.mm], style: :bold
+    pdf.draw_text "#{algies}", at: [32.mm, 51.mm]
     
     pdf.draw_text "Thank you for seeing this patient", at: [2.mm, 20.mm], size: 12, style: :bold
     
-    pdf.draw_text "Appointment Date:", at: [2.mm, 5.mm], size: 10
+    pdf.draw_text "Appointment Date:", at: [2.mm, 5.mm], style: :bold
 
     return pdf
   end

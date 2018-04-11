@@ -31,7 +31,7 @@ class Patient < ApplicationRecord
   end
 
   def ohip_num_full
-    return ohip_ver.blank? ? lname : [ohip_num, ohip_ver].join(' ')
+    return ohip_ver.blank? ? ohip_num : [ohip_num, ohip_ver].join(' ')
   end
 
 # Formatted phone number

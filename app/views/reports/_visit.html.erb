@@ -4,7 +4,7 @@
 <tr>
 	<td><%= visit.entry_ts.strftime("%d/%m/%Y %H:%M") %></td>
 	<td><%= visit.id %></td>
-	<td><%= patient.full_name %> </td>
+	<td><%= patient.full_name[0,20] %> </td>
 	<td><%= patient.ohip_num_full %> </td>
 	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
