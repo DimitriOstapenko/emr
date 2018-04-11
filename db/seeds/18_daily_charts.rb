@@ -20,11 +20,11 @@ Find.find( dir ) do |path|
 	if chart.save
           puts "#{basename} saved"
   	else
-          puts 'Problem file: ', chart.inspect
-          puts chart.errors.full_messages
+          puts 'Already in: ', basename
+#          puts chart.errors.full_messages
   	end
 end
 
-puts " #{DailyChart.count} rows created in daily_charts table"
+puts "Now #{DailyChart.count} rows in daily_charts table"
 
 

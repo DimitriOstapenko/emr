@@ -3,9 +3,9 @@
 <table class="tbl table-hover" >
   <thead>
       <tr>
-          <th>Code</th>
-          <th>Type</th>
-          <th class="tbl_lg">Description </th>
+	  <th><%= sortable 'code' %></th>
+	  <th><%= sortable 'ptype', :Type %></th>
+	  <th class="tbl_lg"> <%= sortable 'descr', :Description %> </th>
 	  <th>Prov. Fee</th>
 	  <th>Units</th>
 	  <th>Diag req?</th>

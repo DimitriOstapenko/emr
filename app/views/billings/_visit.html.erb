@@ -2,11 +2,11 @@
 <% doctor = Doctor.find(visit.doc_id) %>
 <% diagnosis = Diagnosis.find_by(code: visit.diag_code) %>
 <tr>
-	 <% if filter %>
- 	    <td><%= visit.entry_ts.strftime("%H:%M") %></td>
-	 <% else %>
- 	    <td><%= visit.entry_ts.strftime("%Y-%m-%d %H:%M") %></td>
-	 <%end %>
+	<% if filter %>
+            <td><%= visit.entry_ts.strftime("%H:%M") %></td>
+         <% else %>
+            <td><%= visit.entry_ts.strftime("%Y-%m-%d %H:%M") %></td>
+         <%end %>
 	<td><%= link_to doctor.lname, doctor %> </td>
 	<td><%= link_to visit.id, patient_visit_path(patient,visit) %></td>
 	<td><%= link_to patient.full_name, patient %> </td>
