@@ -7,7 +7,7 @@ require_relative '../../config/environment'
 require 'date'
 require 'csv'
 
-puts "About to seed visits table; validity checks  should be off" 
+puts "About to update visits table; validity checks  should be off" 
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'schedule_data.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   #.first(10)
@@ -20,13 +20,11 @@ end
 
 added = 0
 csv.each do |row|
-#  puts row.to_hash
-
   visit_id = row['ordno'] 
   next if Visit.exists?(visit_id)
-  added += 1
+
   doc_code = row['doc_code']
-  doc = Doctor.find_by(doc_code: doc_code)
+  doc = Doctor.find_by(doc_code: doc_code) if !doc_code.blank?
   unless doc
     puts "Doctor not found: #{doc_code}"
     next
@@ -56,6 +54,7 @@ csv.each do |row|
 
   if visit.save
      patient.save
+     added += 1
 #     puts "*** #{visit.id} : #{datetime} saved"
   else
      puts "Problem visit: #{visit.id}"

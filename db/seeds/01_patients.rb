@@ -23,7 +23,6 @@ csv.each do |row|
 
   patid = row['patid']
   next if Patient.exists?(patid)
-  added += 1
 
   areacode = row['acres'] || ''
   phone = areacode + row['rtele']
@@ -75,6 +74,7 @@ csv.each do |row|
 
   if patient.save(validate: false)
      puts "*** #{patient.id} : #{patient.lname} saved"
+     added += 1
   else
      puts "Problem patient: #{patient.id}"
      puts patient.errors.full_messages
