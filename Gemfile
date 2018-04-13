@@ -22,6 +22,7 @@ gem 'bootstrap-datepicker-rails', 	'1.7.1.1'
 gem 'prawn',		       '2.2.2'
 gem 'prawn-table',	       '0.2.2'
 gem 'responders'
+gem 'pdf-reader'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'
@@ -29,7 +30,6 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'savon', '~> 2.0'
-  gem 'pdf-reader'
 end
 
 group :development do
