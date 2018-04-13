@@ -7,8 +7,9 @@ require_relative '../../config/environment'
 
 puts "About to set proc_code,units and fee in visits table from billings table"
 
+Visit.where("entry_ts > '2017-12-01'").each do |v| 
+#Visit.all.each do |v|
 
-Visit.all.each do |v|
   puts "visit : #{v.id}"
   billings = Billing.where(visit_id: v.id)
   billings.each_with_index do | b, index |

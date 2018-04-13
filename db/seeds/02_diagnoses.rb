@@ -13,7 +13,8 @@ csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 Diagnosis.destroy_all 
 
 csv.each do |row|
-  diag = Diagnosis.new   code:  row['diag_code'],
+  diag_code = row['diag_code'][0..2]
+  diag = Diagnosis.new   code:  diag_code,
 		   	 descr: row['diag_desc'],
 		         prob_type: row['prob_type']
   if diag.save		         

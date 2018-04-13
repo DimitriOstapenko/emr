@@ -64,7 +64,9 @@ Rails.application.routes.draw do
   resources :doctors
   resources :diagnoses
   resources :procedures
-  resources :reports
+  resources :reports do
+     get 'export', on: :member
+  end
   resources :providers
   resources :drugs
   resources :invoices

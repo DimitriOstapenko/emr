@@ -7,6 +7,7 @@ module My
   module Forms
 
     require 'prawn'
+    require 'prawn/table'
     require "prawn/measurement_extensions"
 
     CLINICINFO = "<b>Clinic:</b> 
@@ -388,6 +389,38 @@ module My
          :overflow => :shrink_to_fit,
          :min_font_size => 2.mm
 
+    return pdf
+  end
+  
+  def build_report( report, visits, total )
+    @doc = Doctor.find(report.doc_id)
+    date_range = report.rtype == 1 ? report.sdate : "#{report.sdate} - #{report.edate}" 
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
+
+    pdf.text "#{REPORT_TYPES.invert[report.rtype]} Report for", align: :center, size: 12, style: :bold
+    pdf.text "Doctor #{@doc.lname} Date: #{date_range}", align: :center, size: 12, style: :bold
+    pdf.move_down 10.mm
+
+    pdf.font "Courier"
+    pdf.font_size 10
+
+    data =  [[ "Visit Id",  "Patient", "OHIP#",  "Diag",  "Procedures", "Amount"]]
+    data += [["11112", "John Bolton Jr.", '1234567890 PE', '345', 'A007A,A003A,CASH', '$123.75' ]]*100
+
+    pdf.span(195.mm, position: :right) do
+    pdf.table data do |t|
+      t.cells.border_width = 0 
+      t.column_widths = [20.mm, 40.mm, 35.mm, 15.mm, 45.mm, 20.mm  ]
+      t.header = true 
+      t.row(0).font_style = :bold
+      t.position = :right
+    end
+#	    visits.all.each do |v|
+#		    pat = Patient.find(v.patient_id)
+#		    pdf.text "#{v.entry_ts.strftime('%d-%b-%Y %H:%M')} #{v.id} #{pat.full_name} #{pat.ohip_num_full} #{v.diag_code} #{v.proc_codes} #{BILLING_TYPES.invert[v.bil_type]} #{sprintf('%.2f',v.total_fee)} #{v.status_str} #{v.entry_by}"
+#	    end
+
+    end
     return pdf
   end
 

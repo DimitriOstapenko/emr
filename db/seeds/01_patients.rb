@@ -7,7 +7,7 @@ require_relative '../../config/environment'
 require 'date'
 require 'csv'
 
-puts "About to seed patients table. Validity checks for all but lname,dob,ohip_num (if ohip), ohip_ver (if ohip) should be off"
+puts "About to import patients into DB table from CSV file. Validity checks for all but lname,dob,ohip_num (if ohip), ohip_ver (if ohip) should be off"
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'patdata.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   # .first(200)
@@ -16,9 +16,14 @@ def valid_date?( str, format="%m/%d/%Y" )
   Date.strptime(str,format) rescue false
 end
 
-Patient.destroy_all
+added = 0
+#Patient.destroy_all
 csv.each do |row|
 #        puts row.to_hash
+
+  patid = row['patid']
+  next if Patient.exists?(patid)
+  added += 1
 
   areacode = row['acres'] || ''
   phone = areacode + row['rtele']
@@ -68,7 +73,7 @@ csv.each do |row|
 #			 mobile:
 #			 last_visit_date:
 
-  if patient.save
+  if patient.save(validate: false)
      puts "*** #{patient.id} : #{patient.lname} saved"
   else
      puts "Problem patient: #{patient.id}"
@@ -77,6 +82,6 @@ csv.each do |row|
 
 end
 
-puts "#{Patient.count} patients added to patients table "
+puts "#{Patient.count} patients now in patients table. Added #{added} patients."
 
 
