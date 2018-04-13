@@ -1,22 +1,25 @@
 <% provide(:title, @report.name) %>
 
-<h1>Report <%= @report.name %>  </h1>
-
-<div class="row justify-content-md-center">
-    <div class="col-md-8 col-md-offset-2">
+<p>
+    <div class="col-md-11 col-md-offset-1">
 	   <pre>
+	      Report: <b><%= @report.name %> </b>
+
 	      Type:       <%= REPORT_TYPES.invert[@report.rtype] %>
 	      Doctor:     <%= @report.doctor.lname rescue 'All Active'%>
-	      Start Date: <%= @report.sdate %>
+	      Date:	  <%= @report.sdate %>
+              <% if @report.rtype > 1 %>
 	      End Date:   <%= @report.edate %>
+	      <% end %>
 	      Visits:     <%= @visits.count %>
-	      Grand Total: <%= @total.round(2) %>
+
+	      Grand Total: <b><%= @total.round(2) %></b>
            </pre>
 
 <table> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
-          <th>Time</th>
+          <th>Date</th>
           <th>Visit Id</th>
           <th>Patient</th>
           <th>OHIP#</th>
@@ -33,10 +36,10 @@
   </tbody>
 </table>
 
-    <%= will_paginate @visits %>
-
+<div class="bottom_buttons ">
+    <%= will_paginate @visits, class: "btn" %>
     <%= button_to "Back", reports_path, class: "btn btn-primary", :method => "get" %>
-  </div>
+    <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get" %>
 </div>
 
-
+</div>

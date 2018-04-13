@@ -7,7 +7,7 @@ require_relative '../../config/environment'
 require 'date'
 require 'csv'
 
-puts "About to seed procedures table; validity checks for all but code, cost should be off" 
+puts "About to seed visits table; validity checks  should be off" 
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'schedule_data.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   #.first(10)
@@ -16,15 +16,15 @@ def ts( str, format="%m/%d/%Y %k:%M:%S" )
 	DateTime.strptime(str,format) rescue DateTime.new(1900,1,1)
 end
 
-Visit.destroy_all
+#Visit.destroy_all
 
-all = 0
-found = 0 
+added = 0
 csv.each do |row|
 #  puts row.to_hash
 
-  all += 1
-  pat_id = row['pat_code']
+  visit_id = row['ordno'] 
+  next if Visit.exists?(visit_id)
+  added += 1
   doc_code = row['doc_code']
   doc = Doctor.find_by(doc_code: doc_code)
   unless doc
@@ -32,6 +32,7 @@ csv.each do |row|
     next
   end
   
+  pat_id = row['pat_code']
   unless Patient.exists?(pat_id)
     puts "Patient not found: #{pat_id}" 
     next
@@ -39,7 +40,6 @@ csv.each do |row|
 
   patient = Patient.find(pat_id)
  
-  found += 1
   datetime = ts(row['entry_date'] +' '+ row['entry_time'])
   
   visit = patient.visits.build id: row['ordno'],
@@ -64,5 +64,4 @@ csv.each do |row|
 
 end
 
-puts "#{all} rows scanned; #{found} rows had associated patient record" 
-puts "#{Visit.count} records added to visits table "
+puts "#{Visit.count} records are now in visits table. Added #{added} visits. "

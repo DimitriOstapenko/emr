@@ -15,10 +15,10 @@ class Patient < ApplicationRecord
 
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
-	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true, if: Proc.new { |a| a.hin_prov == 'ON' ||  a.pat_type == 'O'}
-	validates :ohip_ver, presence: true, length: { maximum: 3 }, if: Proc.new { |a| a.hin_prov == 'ON' ||  a.pat_type == 'O'}
+	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
+	validates :ohip_ver, presence: true, length: { maximum: 3 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
-        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
+#        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
 	validates :postal, length: { is: 6 }, allow_blank: true
 #        validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true

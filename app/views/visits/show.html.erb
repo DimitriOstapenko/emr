@@ -20,7 +20,7 @@
 		<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
 		<b>Procedure(s)</b> : <%=  @visit.proc_codes %>
 		<b>Billing Type(s) </b>: <%= BILLING_TYPES.invert[@visit.bil_type] %>, <%= BILLING_TYPES.invert[@visit.bil_type2] %>
-		<b>Units </b>: <%= @visit.units %>, <%= @visit.units2 %>
+		<b>Units </b>: <%= @visit.units %>
 		<b>Duration </b>: <%= @visit.duration %> minutes
 		<b>Status </b>: <%= VISIT_STATUSES.invert[@visit.status] %> 
 		<b>Total fee </b>: <%=  sprintf '$%.2f',@visit.total_fee %>

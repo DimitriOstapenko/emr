@@ -1,15 +1,16 @@
 class ReportsController < ApplicationController
+        include My::Forms
 
 	before_action :logged_in_user #, only: [:index, :edit, :update]
 	before_action :admin_user, only: :destroy
 
   def index
     @reports = Report.paginate(page: params[:page])
-    flash.now[:info] = "Showing all reports"
+    flash.now[:info] = "Showing all reports (#{@reports.count})"
   end
 
   def find
-	  str = params[:findstr].strip
+      str = params[:findstr].strip
       @reports = myfind(str)
       if @reports.any?
          @reports = @reports.paginate(page: params[:page])
@@ -18,7 +19,6 @@ class ReportsController < ApplicationController
          @reports = Report.new
          @reports = Report.paginate(page: params[:page])
 	 flash.now[:info] = "Report #{str.inspect} was not found"
-#	 redirect_to @reports 
       end
       render 'index'
   end
@@ -52,7 +52,7 @@ class ReportsController < ApplicationController
    	 	 flash.now[:danger] = "Invalid report type: #[@report.rtype]"
 	end
     
-    @report.name = @report.filespec = "#{Time.now.to_i}_#{@report.doc_id}_#{@report.rtype}"
+    @report.name = @report.filespec = "#{@report.doc_id}_#{Time.now.to_i}_#{@report.rtype}"
     if @report.save
        flash.now[:success] = "Report created : #{@report.name.inspect}"
        redirect_to @report
@@ -64,14 +64,19 @@ class ReportsController < ApplicationController
   def show
     @report = Report.find(params[:id]) 
     redirect_to reports_path unless @report
-    if @report.doc_id 
-	    @visits = Visit.where(doc_id: @report.doc_id).where(entry_ts: (@report.sdate..@report.edate)).order(entry_ts: :asc) 
-	    @total = Visit.where(doc_id: @report.doc_id).where(entry_ts: (@report.sdate..@report.edate)).sum("fee+fee2+fee3+fee4")
-    else
-	    @visits = Visit.where(entry_ts: (@report.sdate..@report.edate)).order(entry_ts: :asc)
-	    @total = Visit.where(entry_ts: (@report.sdate..@report.edate)).sum("fee+fee2+fee3+fee4")
-    end
+    @visits, @total = get_visits( @report )
     @visits = @visits.paginate(page: params[:page], per_page: 25)
+  end
+
+# Generate PDF version of the report, save in reports directory
+  def export
+    @report = Report.find(params[:id])
+    @visits, @total = get_visits( @report )
+    pdf = build_report( @report,@visits,@total )
+    send_data pdf.render,
+          filename: "report_#{@report.name}",
+          type: 'application/pdf',
+          disposition: 'inline'
   end
 
   def destroy
@@ -96,6 +101,17 @@ private
         else
           []
         end
+  end
+
+  def get_visits (rep)
+    if rep.doc_id
+            visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
+            total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
+    else
+            visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
+            total = Visit.where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
+    end
+    return [visits, total]
   end
 
 end
