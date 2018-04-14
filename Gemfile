@@ -23,6 +23,7 @@ gem 'prawn',		       '2.2.2'
 gem 'prawn-table',	       '0.2.2'
 gem 'responders'
 gem 'pdf-reader'
+gem 'select2-rails',           '4.0.3'
 
 group :development, :test do
   gem 'sqlite3', '1.3.13'

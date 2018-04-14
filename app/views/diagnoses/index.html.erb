@@ -5,8 +5,8 @@
       <tr>
 	  <th><%= sortable 'code'  %></th>
 	  <th><%= sortable 'descr', :Description %></th>
-          <th>Problem type </th>
 	  <th><%= sortable 'Active' %></th>
+              <th> </th>
       </tr>
   </thead>
   <tbody>
@@ -18,6 +18,6 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @diagnoses, class: "btn" %>
-<%= button_to "Add Diagnostic Code", new_diagnosis_path, class: "btn btn-primary col-md-12", :method => "get" %>
+<%= button_to "Add Diagnostic Code", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
 </div>
 

@@ -64,9 +64,24 @@ class Visit < ApplicationRecord
     fee*units + fee2*units2 + fee3*units3 + fee4*units4
   end
 
+  def invoice_amount  
+     serv  = services[_3rd_index]
+     serv[:fee] rescue 0
+  end
+  
+  def invoice_units  
+     serv  = services[_3rd_index]
+     serv[:units] rescue 0
+  end
+
+  def invoice_pcode 
+     serv  = services[_3rd_index]
+     serv[:pcode] rescue 0
+  end
+
 # Short version of diagnostic code
   def diag_scode
-	  diag_code[0,3].rjust(3,'0') if !diag_code.blank?
+      diag_code[0,3].rjust(3,'0') if !diag_code.blank?
   end
 
 # Return diagnosis description

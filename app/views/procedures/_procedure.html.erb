@@ -7,12 +7,11 @@
 	<td><%= procedure.diag_req %></td> 
 	<td><%= procedure.eff_date %></td> 
 	<td><%= procedure.active %></td> 
+	<td>
+	<% if current_user.admin?  %>
+                <%= link_to "delete", procedure, method: :delete, data: { confirm: "You sure?" } %>
+        <% end %>
+	</td>
      </tr>
-
-
-<%#  <% if current_user.admin?  %>
-<%#    | <%= link_to "delete", patient, method: :delete,
-<%#                                  data: { confirm: "You sure?" } %>
-<%#  <% end %>
 
 

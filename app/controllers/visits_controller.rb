@@ -122,16 +122,16 @@ class VisitsController < ApplicationController
 	@visit = Visit.find(params[:id])
         @patient = Patient.find(@visit.patient_id)
         if Invoice.exists?(visit_id: @visit.id)  
-	   flash.now[:danger] = "Invoice was already created. Only one invoice per visit is allowed" if Invoice.exists?(visit_id: @visit.id) 
-	   render  inline: '', layout: true
+		redirect_to invoice_path(@visit.invoice_id)
 	else
-	   @invoice = Invoice.create( pat_id: @patient.id, billto: @visit.provider_id, visit_id: @visit.id, date: Date.today ) 
+	   @invoice = Invoice.create( pat_id: @patient.id, billto: @visit.provider_id, visit_id: @visit.id, date: Date.today, amount: @visit.invoice_amount ) 
 	   @visit.invoice_id = @invoice.id
 	   @visit.save
            pdf = build_invoice( @patient, @visit )
+	   pdf.render_file Rails.root.join('invoices',"inv_#{@invoice.id}")
 
            send_data pdf.render,
-             filename: "invoice_#{@patient.full_name}",
+             filename: "inv_#{@patient.full_name}",
              type: 'application/pdf',
              disposition: 'inline'
 	end

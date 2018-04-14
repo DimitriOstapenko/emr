@@ -6,6 +6,7 @@
 
   <!-- Row 1 --> 
 
+<div class="row">
   <div class="col-sm-4">
   <%= f.label "Doctor" %>
   <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select', selected: doc_id) %>
@@ -31,13 +32,14 @@
   <%= f.label "Procedure" %>
   <%= f.collection_select(:proc_code4, @procedures, :code, :code, prompt: 'Select')  %>
   </div>
-
+</div
 
   <!-- Row 2 -->
 
+<div class="row">
   <div class="col-sm-4">
   <%= f.label "Diagnosis" %>
-  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select')  %>
+  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select' )  %>
   </div>
 
   <div class="col-sm-2">
@@ -59,9 +61,11 @@
   <%= f.label :units %>
   <%= f.select :units4, UNITS, prompt: 'Select' %>
   </div>
+</div>
 
   <!-- Row 3 -->
 
+<div class="row">
   <div class="col-sm-2">
   <%= f.label "Duration" %>
   <%= f.select :duration, DURATIONS, default: 10  %>
@@ -90,9 +94,11 @@
   <%= f.label "Bill Type" %>
   <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select' %>
   </div>
+</div>
 
   <!-- Row 4 -->
 
+<div class="row">
   <div class="col-sm-4">
   <%= f.label "Visit Status" %>
   <%= f.select :status, VISIT_STATUSES, placeholder: 'Status' %>
@@ -114,9 +120,11 @@
   <%= f.label "Weight (kg)" %>
   <%= f.text_field :weight %>
   </div>
+</div>
 
   <!-- Row 5 -->
 
+<div class="row">
   <div class="col-sm-12">
   <%= f.label "Reason for Visit" %>
       <%= f.text_field :reason %>
@@ -133,7 +141,7 @@
   <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
-
+</div>
 
 <% end %>
 
@@ -144,6 +152,11 @@ $(document).ready(function() {
     } else{
        $("#ins_provider").hide();
     }
+    $('#visit_diag_code').select2();
+    $('#visit_proc_code').select2();
+    $('#visit_proc_code2').select2();
+    $('#visit_proc_code3').select2();
+    $('#visit_proc_code4').select2();
 });
 
 // Show insurance Drop-Down if :Invoice is selected in bill type 1..4
