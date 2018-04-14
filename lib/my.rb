@@ -127,7 +127,6 @@ module My
       return pdf 
     end
 
-    serv  = visit.services[_3rdind]
     today  = Date.today.strftime "%B %d, %Y"
     pdf.font "Courier"
     pdf.text 'Receipt for Professional Services', size: 16, :align => :center
@@ -143,10 +142,10 @@ module My
                File: #{pat.id}"
 
         servstr = Date.today.to_s.ljust(85)
-        servstr[15] = serv[:pcode]    
-	servstr[30] = serv[:units].to_s
-	servstr[40] = "$#{serv[:fee]}"      
-	servstr[52] = "$#{serv[:fee]}"       
+	servstr[15] = visit.invoice_pcode    
+	servstr[30] = visit.invoice_units.to_s
+	servstr[40] = "$#{visit.invoice_amount}"      
+	servstr[52] = "$#{visit.invoice_amount}"       
 	servstr[65] = '$0.00'   
                    
 #                             1         2         3         4         5         6         7
@@ -181,7 +180,7 @@ module My
          :min_font_size => 9,
          :inline_format => true
 
-    pdf.draw_text visit.proc_descr(serv[:pcode]), at: [5.mm, 162.mm]
+    pdf.draw_text visit.proc_descr(visit.invoice_pcode), at: [5.mm, 162.mm]
     pdf.draw_text "Notes: #{visit.notes[0,68]}", :at => [5.mm,130.mm]
 
     pdf.stroke do
@@ -210,14 +209,13 @@ module My
     end
 
     provider = Provider.find ( visit.provider_id )
-    serv  = visit.services[_3rdind]
     today  = Date.today.strftime "%B %d, %Y"
     servstr = Date.today.to_s.ljust(85)
-    servstr[15] = serv[:pcode]    
-    servstr[30] = serv[:units].to_s
-    servstr[40] = "$#{serv[:fee]}"      
-    servstr[52] = "$#{serv[:fee]}"       
-    servstr[65] = '$0.00'   
+    servstr[15] = visit.invoice_pcode    
+    servstr[30] = visit.invoice_units.to_s
+    servstr[40] = "$#{visit.invoice_amount}"      
+#    servstr[52] = "$#{visit.invoice_amount}" 
+#    servstr[65] = '$0.00'   
                   
     inv_no = visit.invoice_id.to_s.rjust(3, "0")
     serviceinfo = "<b> Service details </b>:
@@ -280,7 +278,7 @@ module My
          :min_font_size => 9,
          :inline_format => true
     
-    pdf.draw_text visit.proc_descr(serv[:pcode]), at: [5.mm, 162.mm]
+    pdf.draw_text visit.proc_descr(visit.invoice_pcode), at: [5.mm, 162.mm]
 
 # Tear-off footer     
     pdf.draw_text 'Submit this portion with your payment', at: [60.mm, 30.mm], style: :bold
@@ -290,7 +288,7 @@ module My
     pdf.draw_text "Billed To: #{provider.name}", at: [2.mm, 11.mm]
     
     pdf.draw_text "Invoice: #{inv_no}", at: [140.mm, 25.mm]
-    pdf.draw_text "Amount Billed: $#{serv[:fee]}", at: [140.mm, 18.mm]
+    pdf.draw_text "Amount Billed: $#{visit.invoice_amount}", at: [140.mm, 18.mm]
     pdf.draw_text "Amount Paid: $", at: [140.mm, 11.mm]
     pdf.stroke { pdf.horizontal_line 170.mm,195.mm, :at => 11.mm }
 

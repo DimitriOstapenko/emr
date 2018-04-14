@@ -61,7 +61,7 @@ class BillingsController < ApplicationController
     begin
       fname = Rails.root.join('export', date.to_s + '.csv')
       file = File.open(fname, 'w')
-      file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, Ref# \n")
+      file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, VisitNumber \n")
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
 	next unless hcp_procedure?(v.proc_code) 
@@ -218,8 +218,8 @@ private
 	  pcode = v.proc_code4; units = v.units4
 	end
      
-     "#{v.doctor.provider_no}, #{GROUP_NO.rjust(4,'0')},#{p.hin_prov}, #{p.ohip_num}, #{p.ohip_ver}, #{p.fname}, #{p.lname}, #{p.dob.strftime("%d/%m/%Y")}, #{p.full_sex},"+
-     ",#{v.diag_scode},,,, #{v.entry_ts.strftime("%d/%m/%Y")}, #{pcode}, #{units}, #{v.id}\n"
+     "#{v.doctor.provider_no}, #{GROUP_NO.rjust(4,'0')},#{p.hin_prov}, #{p.ohip_num}, #{p.ohip_ver}, #{p.fname}, #{p.lname}, #{p.dob.strftime("%m-%d-%Y")}, #{p.full_sex},"+
+	     ",#{v.diag_scode},,,, #{v.entry_ts.strftime("%m-%d-%Y")}, #{pcode}, #{units}, #{v.id} \n"
   end
 
 end

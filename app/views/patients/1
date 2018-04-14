@@ -57,7 +57,7 @@
   
 <div class="row">
 
-  <div class="col-sm-4 col-md-3">
+  <div class="col-sm-4 col-md-2">
   <%= f.label :Address %>
   <%= f.text_field :addr %>
   </div>
@@ -67,12 +67,12 @@
   <%= f.text_field :city,  placeholder: 'City' %>
   </div>
   
-  <div class="col-sm-1">
+  <div class="col-sm-2 col-md-1">
   <%= f.label :Province %>
   <%= f.select :prov, PROVINCES %>
   </div>
   
-  <div class="col-sm-2 col-md-1">
+  <div class="col-sm-1">
   <%= f.label :Country %>
   <%= f.text_field(:country, value: 'Canada', placeholder: 'Country' ) %>
   </div>
@@ -94,19 +94,19 @@
   <%= f.phone_field :mobile, value: num_to_phone(@patient.mobile) %>
   </div>
 
-  <div class="col-sm-3 col-md-2">
+  <div class="col-sm-2">
   <%= f.label :family_doctor %>
   <%= f.text_field :family_dr %>
   </div>
   
-  <div class="col-sm-3 col-md-2">
+  <div class="col-sm-2">
   <%= f.label :email  %>
   <%= f.text_field :email %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-4 col-md-2">
+  <div class="col-sm-2">
   <%= f.label :pharmacy %>
   <%= f.text_field :pharmacy %>
   </div>
@@ -126,12 +126,12 @@
   <%= f.text_field :alt_contact_phone %>
   </div>
   
-  <div class="col-sm-10 col-md-8">
+  <div class="col-sm-8">
   <%= f.label :allergies %>
   <%= f.text_field :allergies %>
   </div>
 
-  <div class="col-sm-10 col-md-8">
+  <div class="col-sm-8">
   <%= f.label :medications %>
   <%= f.text_field :medications %>
   </div>
@@ -139,7 +139,7 @@
 
 <div class="row">
   <div class="spacer-20"></div>
-  <div class="col-sm-10 col-md-8">
+  <div class="col-sm-8">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
 </div>

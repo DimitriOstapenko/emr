@@ -3,14 +3,12 @@
 <table class="tbl table-hover" >
   <thead>
       <tr>
-	  <th>Invoice </th>
-          <th class="tbl_lg">Bill To</th>
-          <th class="tbl_lg">Patient</th>
-          <th> Date </th>
-	  <th> Amount </th>
-	  <% if  current_user.admin? %>
-	     <th></th>
-     	  <% end %>
+	  <th><%= sortable 'id', 'Invoice' %> </th>
+	  <th class="tbl_lg"><%= sortable 'billto', 'Bill To' %></th>
+	  <th class="tbl_lg"><%= sortable 'pat_id', 'Patient' %></th>
+	  <th> <%= sortable 'date' %></th>
+	  <th> <%= sortable 'amount' %></th>
+	  <th></th>
       </tr>
   </thead>
   <tbody>

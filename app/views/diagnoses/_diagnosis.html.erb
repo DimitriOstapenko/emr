@@ -1,13 +1,11 @@
      <tr>
 	<td><%= link_to "#{diagnosis.code}", diagnosis %> </td>
 	<td><%= diagnosis.descr %></td> 
-	<td><%= diagnosis.prob_type %> </td> 
 	<td><%= diagnosis.active %> </td> 
+        <td>
+        <% if current_user.admin?  %>
+		<%= link_to "delete", diagnosis, method: :delete, data: { confirm: "You sure?" } %> 
+        <% end %>
+        </td>   
      </tr>
-
-
-<%#  <% if current_user.admin?  %>
-<%#    | <%= link_to "delete", patient, method: :delete,
-<%#                                  data: { confirm: "You sure?" } %>
-<%#  <% end %>
 

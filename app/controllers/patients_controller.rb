@@ -124,7 +124,7 @@ class PatientsController < ApplicationController
 
 private
   def patient_params
-	  params.require(:patient).permit(:lname, :fname, :dob, :sex, :ohip_num, :ohip_ver, 
+	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 
 					  :phone, :mobile, :full_name, :addr, :city, :prov,
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :notes, :alt_contact_name,
