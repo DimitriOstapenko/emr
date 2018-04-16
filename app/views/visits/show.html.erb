@@ -31,6 +31,7 @@
        	  	<% prov = Provider.find( @visit.provider_id ) %>
 		<b>Insurance Provider </b>: <%= prov.name rescue '' %>
                 <% end %>
+		<b>Export file </b>: <%= "#{@visit.export_file}" %>
            </pre>
       </h1>
     </section>

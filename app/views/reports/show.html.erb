@@ -38,8 +38,11 @@
 
 <div class="bottom_buttons ">
     <%= will_paginate @visits, class: "btn" %>
-    <%= button_to "Back", reports_path, class: "btn btn-primary", :method => "get" %>
-    <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get" %>
+    <% if @report.filespec.blank? %> 
+       <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get" %>
+    <% else %>
+       <%= button_to "Show PDF", show_pdf_report_path, class: "btn btn-primary", :method => "get" %>
+    <% end %>
 </div>
 
 </div>

@@ -52,7 +52,7 @@ class ReportsController < ApplicationController
    	 	 flash.now[:danger] = "Invalid report type: #[@report.rtype]"
 	end
     
-    @report.name = @report.filespec = "#{@report.doc_id}_#{Time.now.to_i}_#{@report.rtype}"
+    @report.name = "#{@report.doc_id}_#{Time.now.to_i}_#{@report.rtype}"
     if @report.save
        flash.now[:success] = "Report created : #{@report.name.inspect}"
        redirect_to @report
@@ -68,11 +68,24 @@ class ReportsController < ApplicationController
     @visits = @visits.paginate(page: params[:page], per_page: 25)
   end
 
+  def show_pdf
+   @report = Report.find( params[:id] )
+
+   send_file(Rails.root.join('reports', @report.filespec),
+	     filename: @report.name,
+             type: "application/pdf",
+             disposition: :inline)
+  end
+
 # Generate PDF version of the report, save in reports directory
   def export
     @report = Report.find(params[:id])
     @visits, @total = get_visits( @report )
-    pdf = build_report( @report,@visits,@total )
+    pdf = build_report( @report,@visits )
+    @report.filespec = @report.name+'.pdf'
+    @report.save
+
+    pdf.render_file Rails.root.join('reports',@report.filespec)
     send_data pdf.render,
           filename: "report_#{@report.name}",
           type: 'application/pdf',
