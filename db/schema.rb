@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180407162947) do
+ActiveRecord::Schema.define(version: 20180415190102) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"

@@ -1,6 +1,9 @@
 class BillingsController < ApplicationController
-	before_action :logged_in_user #, only: [:index, :edit, :update]
-        before_action :admin_user,   only: :destroy
+
+    helper_method :sort_column, :sort_direction
+
+    before_action :logged_in_user #, only: [:index, :edit, :update]
+    before_action :admin_user,   only: :destroy
     
     BILLED = VISIT_STATUSES[:Billed]
     READY = VISIT_STATUSES[:'Ready To Bill']
@@ -16,7 +19,7 @@ class BillingsController < ApplicationController
          flashmsg = "Billings for #{date} (#{@visits.count})"
       end
       if @visits.any?
-         @visits = @visits.paginate(page: params[:page]) #, per_page: $per_page)
+	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = flashmsg
 	 render 'index'
       else
@@ -49,34 +52,32 @@ class BillingsController < ApplicationController
     date = params[:date] 
     if date.blank?
        @visits = Visit.where("status=? ", READY)
-       date = Date.today
-       flashmsg = "#{date.to_s}.csv export file created. Includes all previously unbilled visits"
+       date = Date.today.strftime("%Y%m%d")
+       flashmsg = "#{date}.csv export file created. Includes all previously unbilled visits"
     else
        @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+       date = date.to_date.strftime("%Y%m%d") 
        flashmsg = "CSV Export file #{date}.csv created. It only includes records for this day" 
     end
 
+    fname = date+'.csv'
     records = 0
    
     begin
-      fname = Rails.root.join('export', date.to_s + '.csv')
-      file = File.open(fname, 'w')
+      filespec = Rails.root.join('export', fname)
+      file = File.open(filespec, 'w')
       file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, VisitNumber \n")
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
 	next unless hcp_procedure?(v.proc_code) 
 
-# :mdbilling  group billing not supported, need to bill by provider here
-#  str="#{p.lname}	#{p.fname}	#{p.sex}	#{p.dob.strftime("%d/%m/%Y")}	#{p.ohip_num}	#{p.ohip_ver}	"+
-#  "#{v.diag_scode}						#{v.hcp_proc_codes}	#{v.entry_ts.strftime("%d/%m/%Y")}	#{v.units} \n"
-	
-	for i in 1..4
-	    str = get_cabmd_str(i,p,v)	
-	    next if str.blank?
+	v.services.each do |s|
+	    str = get_cabmd_str(p,v,s)	
 	    file.write( str ) 
 	    records += 1
 	end
 	v.update_attribute(:status, BILLED) 
+	v.update_attribute(:export_file, fname) 
       end 
       rescue Errno::ENOENT => e
 	flash[:danger] = e.message
@@ -123,6 +124,7 @@ class BillingsController < ApplicationController
           file.write( heh_record(v,pat) )
 	  heh_count += 1
 	  v.update_attribute(:status, BILLED) 
+	  v.update_attribute(:export_file, fname) 
 	  if v.bil_type == RMB  		# only 1 RMB claim supported per visit right now	
 	    file.write( her_record(pat) )
 	    her_count +=1
@@ -201,25 +203,19 @@ private
     "HEE#{heh_count.to_s.rjust(4,'0')}#{her_count.to_s.rjust(4,'0')}#{het_count.to_s.rjust(5,'0')}".ljust(79,' ') + "\n"
   end
 
-# CabMD billing import TDV file
+# CabMD billing import CSV file
 # group billing ok, but each service code needs to be on a separate line	  
-  def get_cabmd_str(i,p,v)
-     case i
-     	when 1
-	  pcode = v.proc_code; units = v.units
-     	when 2
-	  return if v.proc_code2.blank?
-	  pcode = v.proc_code2; units = v.units2
-     	when 3
-	  return if v.proc_code3.blank?
-	  pcode = v.proc_code3; units = v.units3
-     	when 4
-	  return if v.proc_code4.blank?
-	  pcode = v.proc_code4; units = v.units4
-	end
-     
+  def get_cabmd_str( p,v,serv )
      "#{v.doctor.provider_no}, #{GROUP_NO.rjust(4,'0')},#{p.hin_prov}, #{p.ohip_num}, #{p.ohip_ver}, #{p.fname}, #{p.lname}, #{p.dob.strftime("%m-%d-%Y")}, #{p.full_sex},"+
-	     ",#{v.diag_scode},,,, #{v.entry_ts.strftime("%m-%d-%Y")}, #{pcode}, #{units}, #{v.id} \n"
+	     ",#{v.diag_scode},,,, #{v.entry_ts.strftime("%m-%d-%Y")}, #{serv[:pcode]}, #{serv[:units]}, #{v.id} \n"
+  end
+
+  def sort_column
+          Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
+  end
+
+  def sort_direction
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

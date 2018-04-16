@@ -53,10 +53,20 @@ class Visit < ApplicationRecord
 
 # Service array to help deal with procedures/billings
   def services   
-    [{pcode: proc_code,  units: units,  btype: bil_type,  fee: fee}, 
-     {pcode: proc_code2, units: units2, btype: bil_type2, fee: fee2},
-     {pcode: proc_code3, units: units3, btype: bil_type3, fee: fee3},
-     {pcode: proc_code4, units: units4, btype: bil_type4, fee: fee4}]
+    serv = []
+    if !proc_code.blank?
+       serv.push({pcode: proc_code,  units: units,  btype: bil_type,  fee: fee})
+    end
+    if !proc_code2.blank?
+       serv.push({pcode: proc_code2, units: units2, btype: bil_type2, fee: fee2})
+    end
+    if !proc_code3.blank?
+       serv.push({pcode: proc_code3, units: units3, btype: bil_type3, fee: fee3})
+    end
+    if !proc_code4.blank?
+       serv.push({pcode: proc_code4, units: units4, btype: bil_type4, fee: fee4})
+    end
+    return serv
   end
 
 # Total fee for this visit  

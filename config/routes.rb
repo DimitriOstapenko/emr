@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   resources :procedures
   resources :reports do
      get 'export', on: :member
+     get 'show_pdf', on: :member
   end
   resources :providers
   resources :drugs

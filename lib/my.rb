@@ -390,35 +390,66 @@ module My
     return pdf
   end
   
-  def build_report( report, visits, total )
+  def build_report( report, visits )
     @doc = Doctor.find(report.doc_id)
-    date_range = report.rtype == 1 ? report.sdate : "#{report.sdate} - #{report.edate}" 
+    sdate = report.sdate.strftime("%d %b %Y")
+    edate = report.edate.strftime("%d %b %Y")
+    date_range = report.rtype == 1 ? sdate : "#{sdate} - #{edate}" 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
 
-    pdf.text "#{REPORT_TYPES.invert[report.rtype]} Report for", align: :center, size: 12, style: :bold
-    pdf.text "Doctor #{@doc.lname} Date: #{date_range}", align: :center, size: 12, style: :bold
-    pdf.move_down 10.mm
+    pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
+    pdf.move_down 5.mm
+    pdf.text "#{REPORT_TYPES.invert[report.rtype]} Billing Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
+    pdf.text "For services performed:  #{date_range}", align: :center, size: 12, style: :bold
+    pdf.text "(Sorted by visit time, last to first)", align: :center, size: 10
+    pdf.move_down 5.mm
 
     pdf.font "Courier"
-    pdf.font_size 10
+    pdf.font_size 9
+    @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 =>0 }
+    @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 =>0 }
 
-    data =  [[ "Visit Id",  "Patient", "OHIP#",  "Diag",  "Procedures", "Amount"]]
-    data += [["11112", "John Bolton Jr.", '1234567890 PE', '345', 'A007A,A003A,CASH', '$123.75' ]]*100
-
-    pdf.span(195.mm, position: :right) do
-    pdf.table data do |t|
-      t.cells.border_width = 0 
-      t.column_widths = [20.mm, 40.mm, 35.mm, 15.mm, 45.mm, 20.mm  ]
-      t.header = true 
-      t.row(0).font_style = :bold
-      t.position = :right
+    rows =  [[ "Patient", "OHIP#", "DOB", "Serv.", "U", "Fee", "Diag", "Status", "Acct#"]]
+    visits.all.each do |v|
+      pat = Patient.find(v.patient_id)
+      next unless v.fee > 0
+      rows += [[ pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.units, v.fee, v.diag_scode, '20180308.csv', pat.id ]]
+      @totals[v.bil_type] += v.fee if v.bil_type
+      @servcounts[v.bil_type] += 1 if v.bil_type
+      serv = v.services
+      serv.shift
+      serv.each do |s|
+        rows += [[ '','','', s[:pcode], s[:units], s[:fee], v.diag_scode, '20180308.csv', pat.id ]]
+	@totals[s[:btype]] += s[:fee] if s[:btype]
+        @servcounts[s[:btype]] += 1 if s[:btype]
+      end
     end
-#	    visits.all.each do |v|
-#		    pat = Patient.find(v.patient_id)
-#		    pdf.text "#{v.entry_ts.strftime('%d-%b-%Y %H:%M')} #{v.id} #{pat.full_name} #{pat.ohip_num_full} #{v.diag_code} #{v.proc_codes} #{BILLING_TYPES.invert[v.bil_type]} #{sprintf('%.2f',v.total_fee)} #{v.status_str} #{v.entry_by}"
-#	    end
 
-    end
+      pdf.table rows do |t|
+        t.cells.border_width = 0 
+        t.column_widths = [43.mm, 30.mm, 25.mm, 18.mm, 6.mm, 15.mm, 12.mm, 28.mm, 15.mm  ]
+        t.header = true 
+        t.row(0).font_style = :bold
+        t.position = 10.mm
+      end
+      
+      pdf.move_down 10.mm
+      pdf.span(160.mm, :position => :center) do
+        pdf.text "Total Visits: #{visits.count}", size: 10
+        totals = [[ '', "HCP", "RMB", "INVOICE", "CASH", "WCB", "PRV", "Total" ]]
+        @fees = @totals.values
+        @fees.push(@fees.sum)
+        totals += [ @fees.map{|e| sprintf("$%-8.2f",e)}.unshift('Fees') ]
+        @services = @servcounts.values
+        @services.push(@services.sum)
+        totals += [ @services.unshift('Services') ]
+        pdf.table totals do |t|
+          t.cells.border_width = 1
+	  t.column_widths = 20.mm 
+          t.header = true
+          t.row(0).font_style = :bold
+        end
+      end
     return pdf
   end
 
