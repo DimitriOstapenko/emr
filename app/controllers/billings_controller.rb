@@ -69,9 +69,9 @@ class BillingsController < ApplicationController
       file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, VisitNumber \n")
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
-	next unless hcp_procedure?(v.proc_code) 
 
 	v.services.each do |s|
+	    next unless hcp_procedure?(s[:pcode]) 
 	    str = get_cabmd_str(p,v,s)	
 	    file.write( str ) 
 	    records += 1
@@ -83,7 +83,7 @@ class BillingsController < ApplicationController
 	flash[:danger] = e.message
       ensure
         file.close unless file.nil?
-        flash[:success] = "#{flashmsg} (#{records} alltogether)"
+        flash[:success] = "#{flashmsg} (#{records} services alltogether)"
     end
     redirect_back(fallback_location: billings_path )
   end
