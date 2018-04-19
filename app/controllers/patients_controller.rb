@@ -29,7 +29,7 @@ class PatientsController < ApplicationController
        @patient = Patient.find(params[:id]) 
        if @patient.chart_file.blank?
 	  lname_with_underscore = @patient.lname.gsub(' ','_')
-          chart = Dir.glob("#{Rails.root}/charts/**/#{lname_with_underscore}\,#{@patient.fname}*\.pdf")
+	  chart = Dir.glob("#{Rails.root}/charts/#{@patient.lname[0]}/#{lname_with_underscore}\,#{@patient.fname}*\.pdf")
 	  @patient.update_attribute(:chart_file, chart[0]) 
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 

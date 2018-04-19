@@ -27,7 +27,7 @@ class Patient < ApplicationRecord
 	validate :hc_checksum_and_expiry 
 
   def full_name
-    return fname.blank? ? lname : [lname, fname].join(', ')
+    return fname.blank? ? lname : [lname, fname + ' ' + mname].join(', ')
   end
 
   def ohip_num_full
