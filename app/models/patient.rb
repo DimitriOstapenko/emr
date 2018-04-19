@@ -2,7 +2,7 @@ class Patient < ApplicationRecord
         has_many :visits, dependent: :destroy, inverse_of: :patient
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age, :cardstr, :phonestr
-	default_scope -> { order(lname: :asc) }
+	default_scope -> { order(lname: :asc, fname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
 	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') }
