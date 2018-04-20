@@ -12,6 +12,7 @@
   <%= f.text_field :fname %>
   </div>
 
+
   <div class="col-sm-2">
   <%= f.label :'Middle Name' %>
   <%= f.text_field :mname %>
@@ -23,8 +24,15 @@
   </div>
   
   <div class="col-md-1 col-sm-2">
-  <%= f.label 'Patient Type' %>
+  <%= f.label 'Type' %>
   <%= f.select :pat_type, PATIENT_TYPES %>
+  </div>
+</div>
+
+<div class='row'>
+  <div class="col-sm-4" id="maiden_name" style="display:none;">
+  <%= f.label :'Maiden Name' %>
+  <%= f.text_field :mname %>
   </div>
 </div>
 
@@ -146,4 +154,17 @@
 
 <% end %>
 
+<script>
+$(document).ready(function () {
+	var sex = $('#edit_patient_<%= @patient.id %> select[name="patient[sex]"]');
+	sex.change(function () {
+        if ( sex.val() == 'F') {
+	  $('#maiden_name').show();
+	}else {
+	  $('#maiden_name').hide();
+	}
+    });
+});
+
+</script>
 
