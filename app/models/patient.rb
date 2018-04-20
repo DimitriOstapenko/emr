@@ -27,7 +27,7 @@ class Patient < ApplicationRecord
 	validate :hc_checksum_and_expiry 
 
   def full_name
-    return fname.blank? ? lname : [lname, fname + ' ' + mname].join(', ')
+    return fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
   end
 
   def ohip_num_full
@@ -57,11 +57,12 @@ class Patient < ApplicationRecord
     arr = ohip_num.split('')
     last_digit = arr[-1].to_i
 
-    expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
-    if expiry < Date.today
-       errors.add('Health Card:', "Card is expired") 
-       return 
-    end
+# Expiry check disabled for now to allow saving patient with expired card 
+#    expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
+#    if expiry < Date.today
+#       errors.add('Health Card:', "Card is expired") 
+#       return 
+#    end
 
     def sumDigits(num, base = 10)
        num.to_s(base).split(//).inject(0) {|z, x| z + x.to_i(base)}
