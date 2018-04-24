@@ -109,4 +109,23 @@ class Visit < ApplicationRecord
   def status_str
     VISIT_STATUSES.invert[status]
   end
+
+  def bil_type_str
+    BILLING_TYPES.invert[bil_type]
+  end
+  
+  def bil_type2_str
+    BILLING_TYPES.invert[bil_type2]
+  end
+  
+  def bil_type3_str
+    BILLING_TYPES.invert[bil_type3]
+  end
+  
+  def bil_type4_str
+    BILLING_TYPES.invert[bil_type4]
+  end
+
 end
+
+

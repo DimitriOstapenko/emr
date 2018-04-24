@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+#  get 'export_files/index'
+#  get 'export_files/show'
+#  get 'export_files/delete'
 
   get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
   get '/daily_charts/index'
@@ -73,6 +76,7 @@ Rails.application.routes.draw do
   resources :invoices
   resources :vaccines
   resources :daily_charts
+  resources :export_files
 
 # resources :billings     # historical billing table - not used
   

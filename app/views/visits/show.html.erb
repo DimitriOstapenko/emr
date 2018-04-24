@@ -19,10 +19,10 @@
 		<b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 		<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
 		<b>Procedure(s)</b> : <%=  @visit.proc_codes %>
-		<b>Billing Type(s) </b>: <%= BILLING_TYPES.invert[@visit.bil_type] %>, <%= BILLING_TYPES.invert[@visit.bil_type2] %>
+		<b>Billing Type(s) </b>: <%= @visit.bil_type_str %>, <%= @visit.bil_type2_str %>, <%= @visit.bil_type3_str %>, <%= @visit.bil_type4_str %>
 		<b>Units </b>: <%= @visit.units %>
 		<b>Duration </b>: <%= @visit.duration %> minutes
-		<b>Status </b>: <%= VISIT_STATUSES.invert[@visit.status] %> 
+		<b>Status </b>: <%= @visit.status_str %> 
 		<b>Total fee </b>: <%=  sprintf '$%.2f',@visit.total_fee %>
 		<b>Entry by </b>: <%= @visit.entry_by %>
 		<b>Entered at </b>: <%= @visit.entry_ts %>

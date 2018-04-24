@@ -1,0 +1,13 @@
+     <tr>
+	<td><%= link_to "#{export_file.name}", export_file %></td>
+	<td><%= export_file.sdate %></td> 
+	<td><%= export_file.edate %></td> 
+	<td><%= export_file.ttl_claims %></td> 
+	<td><%= export_file.hcp_claims %></td> 
+	<td><%= export_file.rmb_claims %></td> 
+	<td><%= export_file.wcb_claims %></td> 
+	<% if current_user.admin?  %>
+                <td> <%= link_to "delete", export_file, method: :delete, data: { confirm: "Are you sure you want to delete #{export_file.name}?" } %> </td>
+        <% end %>
+     </tr>
+

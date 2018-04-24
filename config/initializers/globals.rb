@@ -32,7 +32,6 @@ UNITS  = u.freeze
 d = {}
 %w(10 20 30 40).each {|k| d[k]=k}
 DURATIONS = d.freeze 
-BILLING_TYPES = {HCP: 1, RMB: 2, "Invoice": 3, Cash: 4, WCB: 5, PRV: 6}.freeze
 
 # Procedures
  
@@ -40,6 +39,7 @@ PROC_TYPES = {HCP: 1, '3RD': 2}.freeze
 
 # Billing
 
+BILLING_TYPES = {HCP: 1, RMB: 2, Invoice: 3, Cash: 4, WCB: 5, PRV: 6}.freeze
 BILLING_FORMAT='CSV'.freeze  # CSV/EDT
 #BILLING_STATUSES = { "No Claim Yet": 1, "Claim Generated": 2, Invoiced: 3, Deleted: 4, Paid: 5, 'Written Off': 6}.freeze
 
@@ -51,3 +51,5 @@ REPORT_TYPES = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}
 # Charts
 CHARTS_PATH = Rails.root.join('charts').freeze
 
+# Export files:
+EXPORT_PATH = Rails.root.join('export').freeze
