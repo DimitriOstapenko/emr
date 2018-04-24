@@ -67,7 +67,8 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
     set_visit_fees( @visit )
-    if @visit.update_attributes(visit_params)
+#    if @visit.update_attributes(visit_params)
+    if @visit.save
       @patient.last_visit_date = @visit.created_at
       @patient.save
       flash[:success] = "Visit updated"
@@ -164,19 +165,19 @@ class VisitsController < ApplicationController
     def set_visit_fees ( visit )
       if !visit.proc_code.blank? 
 	      p = Procedure.find_by(code: visit.proc_code) 
-	      visit.fee = p.cost
+	      visit.fee = p.cost rescue 0
       end
       if !visit.proc_code2.blank? 
 	      p2 = Procedure.find_by(code: visit.proc_code2) 
-	      visit.fee2 = p2.cost
+	      visit.fee2 = p2.cost rescue 0
       end  
       if !visit.proc_code3.blank? 
 	      p3 = Procedure.find_by(code: visit.proc_code3) 
-	      visit.fee3 = p3.cost
+	      visit.fee3 = p3.cost rescue 0
       end  
       if !visit.proc_code4.blank? 
 	      p4 = Procedure.find_by(code: visit.proc_code4) 
-	      visit.fee4 = p4.cost
+	      visit.fee4 = p4.cost rescue 0
       end  
     end
 
