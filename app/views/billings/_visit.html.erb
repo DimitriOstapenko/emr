@@ -5,7 +5,7 @@
 	<% if filter %>
             <td><%= visit.entry_ts.strftime("%H:%M") %></td>
          <% else %>
-            <td><%= visit.entry_ts.strftime("%Y-%m-%d %H:%M") %></td>
+            <td><%= visit.entry_ts %></td>
          <%end %>
 	<td><%= link_to doctor.lname, doctor %> </td>
 	<td><%= link_to visit.id, patient_visit_path(patient,visit) %></td>

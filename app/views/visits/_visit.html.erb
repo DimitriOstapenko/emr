@@ -1,6 +1,6 @@
 
 <tr>
-  <td><%= link_to visit.entry_ts.strftime("%Y-%m-%d %H:%M"), patient_visit_path(@patient,visit) %> </td>
+  <td><%= link_to visit.entry_ts, patient_visit_path(@patient,visit) %> </td>
   <td><%= visit.doctor.lname %></td>
   <td><%= visit.diag_scode %></td>
   <td><%= visit.proc_codes %></td>

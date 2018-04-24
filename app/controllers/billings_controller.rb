@@ -51,17 +51,20 @@ class BillingsController < ApplicationController
 
     date = params[:date] 
     if date.blank?
-       @visits = Visit.where("status=? ", READY)
+       @visits = Visit.where("status=? ", READY).order(:entry_ts)
        date = Date.today.strftime("%Y%m%d")
+       sdate = @visits.first.entry_ts.to_date
+       edate = @visits.last.entry_ts.to_date
        flashmsg = "#{date}.csv export file created. Includes all previously unbilled visits"
     else
        @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+       sdate = edate = date.to_date
        date = date.to_date.strftime("%Y%m%d") 
        flashmsg = "CSV Export file #{date}.csv created. It only includes records for this day" 
     end
 
     fname = date+'.csv'
-    records = 0
+    ttl_claims = hcp_claims = rmb_claims = wcb_claims = 0
    
     begin
       filespec = Rails.root.join('export', fname)
@@ -71,10 +74,13 @@ class BillingsController < ApplicationController
         p = Patient.find(v.patient_id)
 
 	v.services.each do |s|
-	    next unless hcp_procedure?(s[:pcode]) 
+	    next unless hcp_procedure?(s[:pcode])  # exclude 3-rd party
 	    str = get_cabmd_str(p,v,s)	
 	    file.write( str ) 
-	    records += 1
+	    ttl_claims += 1
+	    hcp_claims += 1 if s[:btype] == 1
+	    rmb_claims += 1 if s[:btype] == 2
+	    wcb_claims += 1 if s[:btype] == 5
 	end
 	v.update_attribute(:status, BILLED) 
 	v.update_attribute(:export_file, fname) 
@@ -83,7 +89,13 @@ class BillingsController < ApplicationController
 	flash[:danger] = e.message
       ensure
         file.close unless file.nil?
-        flash[:success] = "#{flashmsg} (#{records} services alltogether)"
+	expfile = ExportFile.where(name: fname).first_or_create(name: fname, sdate: sdate, edate: edate, ttl_claims: ttl_claims,
+							       	hcp_claims: hcp_claims, rmb_claims: rmb_claims, wcb_claims: wcb_claims)
+	if expfile.save
+           flash[:success] = "#{flashmsg} (#{ttl_claims} services alltogether)"
+	else
+	   flash[:danger] = "Error saving export file to DB " + expfile.errors.full_messages.join(',')	
+	end
     end
     redirect_back(fallback_location: billings_path )
   end

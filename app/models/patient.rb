@@ -57,12 +57,11 @@ class Patient < ApplicationRecord
     arr = ohip_num.split('')
     last_digit = arr[-1].to_i
 
-# Expiry check disabled for now to allow saving patient with expired card 
-#    expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
-#    if expiry < Date.today
-#       errors.add('Health Card:', "Card is expired") 
-#       return 
-#    end
+    expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
+    if expiry < Date.today
+       errors.add('Health Card:', "Card is expired") 
+       return 
+    end
 
     def sumDigits(num, base = 10)
        num.to_s(base).split(//).inject(0) {|z, x| z + x.to_i(base)}
@@ -74,7 +73,8 @@ class Patient < ApplicationRecord
     end
 
     return if (last_digit == (10 - sum.to_s[-1].to_i))
-    errors.add('Health Card:', "Failed checksum test") 
+    errors.add('OHIP patient:', "Verifying Health Card number") 
+    errors.add('Ontario Health Card:', "Number is invalid") 
   end
 
   def valid_attribute?( attribute_name )

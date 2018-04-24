@@ -30,7 +30,7 @@
 </div>
 
 <div class='row'>
-  <div class="col-sm-4" id="maiden_name" style="display:none;">
+  <div class="col-sm-4" id="maiden_name">
   <%= f.label :'Maiden Name' %>
   <%= f.text_field :mname %>
   </div>
@@ -135,14 +135,18 @@
   </div>
   
   <div class="col-sm-10 col-md-8">
-  <%= f.label :allergies %>
-  <%= f.text_field :allergies %>
+  <%= f.text_field :allergies, placeholder: :Allergies  %>
   </div>
 
   <div class="col-sm-10 col-md-8">
-  <%= f.label :medications %>
-  <%= f.text_field :medications %>
+  <%= f.text_field :medications, placeholder: :Medications %>
   </div>
+</div>
+
+<div class="row">
+<div class="col-sm-10 col-md-8">
+  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
+</div>
 </div>
 
 <div class="row">
@@ -156,15 +160,11 @@
 
 <script>
 $(document).ready(function () {
-	var sex = $('#edit_patient_<%= @patient.id %> select[name="patient[sex]"]');
-	sex.change(function () {
-        if ( sex.val() == 'F') {
-	  $('#maiden_name').show();
-	}else {
-	  $('#maiden_name').hide();
-	}
-    });
+   var sex = $('#edit_patient_<%= @patient.id %> select[name="patient[sex]"]');
+   (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
+   sex.change(function () {
+     (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
+   });
 });
-
 </script>
 
