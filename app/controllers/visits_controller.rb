@@ -167,16 +167,16 @@ class VisitsController < ApplicationController
 	      visit.fee = p.cost
       end
       if !visit.proc_code2.blank? 
-	      p = Procedure.find_by(code: visit.proc_code2) 
-	      visit.fee2 = p.cost
+	      p2 = Procedure.find_by(code: visit.proc_code2) 
+	      visit.fee2 = p2.cost
       end  
       if !visit.proc_code3.blank? 
-	      p = Procedure.find_by(code: visit.proc_code3) 
-	      visit.fee3 = p.cost
+	      p3 = Procedure.find_by(code: visit.proc_code3) 
+	      visit.fee3 = p3.cost
       end  
       if !visit.proc_code4.blank? 
-	      p = Procedure.find_by(code: visit.proc_code4) 
-	      visit.fee4 = p.cost
+	      p4 = Procedure.find_by(code: visit.proc_code4) 
+	      visit.fee4 = p4.cost
       end  
     end
 
