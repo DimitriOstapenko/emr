@@ -1,5 +1,11 @@
+
+<p>
+<div id='result'></div>
+<p>
+
 <% provide(:title, 'All patients') %>
 
+<div id="page">
 <table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
@@ -30,4 +36,4 @@
 <%= will_paginate @patients, class: "btn" %> 
 <%= button_to "New Patient", new_patient_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
 </div>
-
+</div>
