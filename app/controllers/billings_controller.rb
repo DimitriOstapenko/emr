@@ -69,7 +69,7 @@ class BillingsController < ApplicationController
     begin
       filespec = Rails.root.join('export', fname)
       file = File.open(filespec, 'w')
-      file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, VisitNumber \n")
+      file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, PatientInstNumber \n")
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
 
