@@ -1,0 +1,22 @@
+careProvider 
+	groupNumber
+	providerNumber
+
+patient 
+	firstName
+	lastName 
+	gender 
+	dateOfBirth
+	healthCard
+	versionCode
+	provinceCode 
+
+diagnosticCode 
+
+serviceDate 
+
+services (list of item 'service') 
+  serviceCode 
+  quantity 
+
+reference_id 

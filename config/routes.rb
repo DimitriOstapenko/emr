@@ -61,6 +61,7 @@ Rails.application.routes.draw do
       get 'receipt', on: :member
       get 'invoice', on: :member
       get 'referralform', on: :member
+      get 'showxml', on: :member
     end
   end
   

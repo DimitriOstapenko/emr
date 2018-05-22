@@ -59,6 +59,16 @@ class VisitsController < ApplicationController
      @visit = Visit.find(params[:id])
   end
 
+   def showxml
+       @visit = Visit.find(params[:id])
+       @patient = Patient.find(@visit.patient_id)
+       @doctor = Doctor.find(@visit.doc_id)
+#       patxml = @patient.attributes.to_xml(only: :lname)
+#       @str = render "show.xml"
+       @str = render_to_string "show.xml"
+       render inline:  @str
+  end
+
   def edit
      @visit = Visit.find(params[:id])
   end
