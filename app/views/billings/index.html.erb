@@ -30,8 +30,10 @@
   <%= will_paginate @visits, class: "btn" %>
   <% if BILLING_FORMAT == 'EDT' %>
          <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
-     <% else %>
+  <% elsif BILLING_FORMAT == 'CSV' %>
 	  <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
+  <% else %>
+	  <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}   %>
      <% end %>
 </div>
 

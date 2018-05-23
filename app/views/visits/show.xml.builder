@@ -21,6 +21,7 @@ xml.Claim do
  
   xml.services do  
 	  @visit.services.each do |serv|
+	    next unless hcp_procedure?(serv[:pcode])
 	    xml.service do	  
 		xml.serviceCode serv[:pcode]
 		xml.quantity serv[:units]
@@ -28,6 +29,6 @@ xml.Claim do
 	  end
   end
 
-#  xml.reference_id @visit.id
+  xml.reference_id @visit.id
 end
 

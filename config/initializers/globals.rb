@@ -40,7 +40,7 @@ PROC_TYPES = {HCP: 1, '3RD': 2}.freeze
 # Billing
 
 BILLING_TYPES = {HCP: 1, RMB: 2, Invoice: 3, Cash: 4, WCB: 5, PRV: 6}.freeze
-BILLING_FORMAT='CSV'.freeze  # CSV/EDT
+BILLING_FORMAT='CABMD'.freeze  # CSV/EDT/CABMD
 #BILLING_STATUSES = { "No Claim Yet": 1, "Claim Generated": 2, Invoiced: 3, Deleted: 4, Paid: 5, 'Written Off': 6}.freeze
 
 # Reports
