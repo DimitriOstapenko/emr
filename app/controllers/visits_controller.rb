@@ -60,13 +60,28 @@ class VisitsController < ApplicationController
   end
 
    def showxml
+       require 'net/http'
+       require 'uri'
+
        @visit = Visit.find(params[:id])
        @patient = Patient.find(@visit.patient_id)
        @doctor = Doctor.find(@visit.doc_id)
-#       patxml = @patient.attributes.to_xml(only: :lname)
-#       @str = render "show.xml"
-       @str = render_to_string "show.xml"
-       render inline:  @str
+       @xml = render_to_string "show.xml"
+
+       uri = URI.parse("https://api.cab.md/claims?apiKey=e679b103-f74d-4b2d-bb60-5f05ad4f9de1")
+       http= Net::HTTP.new(uri.host,uri.port)
+       http.use_ssl = true
+       
+       req = Net::HTTP::Post.new(uri.request_uri, {'Content-Type' => 'application/xml'})
+       req.body = @xml
+
+       res = http.request(req)
+       flash.now[:success] = "response: #{res.body}"
+
+#       rescue => e
+#	 flash[:danger] =  "failed:  #{e}"
+
+	 render inline: @xml
   end
 
   def edit
@@ -77,8 +92,7 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
     set_visit_fees( @visit )
-#    if @visit.update_attributes(visit_params)
-    if @visit.save
+    if @visit.update_attributes(visit_params)
       @patient.last_visit_date = @visit.created_at
       @patient.save
       flash[:success] = "Visit updated"

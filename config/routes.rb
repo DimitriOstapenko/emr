@@ -48,6 +48,7 @@ Rails.application.routes.draw do
  get '/billings' => 'billings#index'
  post '/billings/export_csv', to: 'billings#export_csv'
  post '/billings/export_edt', to: 'billings#export_edt'
+ post '/billings/export_cabmd', to: 'billings#export_cabmd'
   get "/procedures/get_by_code", to: "procedures#get_by_code" 
 
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }

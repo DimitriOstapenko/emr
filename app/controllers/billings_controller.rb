@@ -44,10 +44,8 @@ class BillingsController < ApplicationController
   def update
   end
 
- # CSV export file 
+  # CSV export file (cab.md - tested)
   def export_csv
-    targets  = {:mdbilling => 1, :cabmd => 2}
-    target = :cabmd
 
     date = params[:date] 
     if date.blank?
@@ -171,6 +169,46 @@ class BillingsController < ApplicationController
     redirect_back(fallback_location: billings_path )
   end
 
+# Send XML file directly to cab.md server
+  def export_cabmd
+    require 'net/http'
+    require 'uri'
+
+    date = params[:date] 
+    if date.blank?
+       @visits = Visit.where("status=? ", READY)
+       date = Date.today
+       flashmsg = "Batch sent to cab.md. Includes all previously unbilled visits (#{@visits.count} in all)"
+    else
+       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+       flashmsg = "Batch sent to cab.md for date #{date}. Includes previously billed and ready for billing visits (#{@visits.count} in all)"
+       date_str = date.to_date.strftime("%Y%m%d")
+    end
+      
+    @visits.all.each do |v| 
+       @visit = v
+       @patient = Patient.find(v.patient_id)
+       @doctor = Doctor.find(v.doc_id)
+       @xml = render_to_string "/visits/show.xml"
+
+       uri = URI.parse("https://api.cab.md/claims?apiKey=e679b103-f74d-4b2d-bb60-5f05ad4f9de1")
+       http= Net::HTTP.new(uri.host,uri.port)
+       http.use_ssl = true
+       
+       req = Net::HTTP::Post.new(uri.request_uri, {'Content-Type' => 'application/xml'})
+       req.body = @xml
+
+       res = http.request(req)
+
+#       v.update_attribute(:status, BILLED)
+#       v.update_attribute(:export_file, fname)
+#      flash.now[:success] = "response: #{res.body}"
+    end
+ 
+    flash[:success] = flashmsg 
+    redirect_back(fallback_location: billings_path )
+  end
+
 private
 
 #  def billing_params
@@ -179,9 +217,10 @@ private
 #				       :bill_prov, :submit_user, :submit_ts, :doc_id )
 #  end
 
-  def hcp_procedure?(proc_code)
-    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
-  end
+# moved to application controller
+#  def hcp_procedure?(proc_code)
+#    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
+#  end
 
   def heb_record(v, date, batch)
     "HEBV03G#{date}#{batch}#{' '*6}#{GROUP_NO}#{v.doctor.provider_no}00".ljust(79,' ') + "\n"
