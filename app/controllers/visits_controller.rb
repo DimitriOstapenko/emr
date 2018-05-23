@@ -68,7 +68,7 @@ class VisitsController < ApplicationController
        @doctor = Doctor.find(@visit.doc_id)
        @xml = render_to_string "show.xml"
 
-       uri = URI.parse("https://api.cab.md/claims?apiKey=e679b103-f74d-4b2d-bb60-5f05ad4f9de1")
+       uri = URI.parse(CABMDURL)
        http= Net::HTTP.new(uri.host,uri.port)
        http.use_ssl = true
        
