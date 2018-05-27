@@ -5,9 +5,6 @@ class BillingsController < ApplicationController
     before_action :logged_in_user #, only: [:index, :edit, :update]
     before_action :admin_user,   only: :destroy
     
-    BILLED = VISIT_STATUSES[:Billed]
-    READY = VISIT_STATUSES[:'Ready To Bill']
-    RMB = BILLING_TYPES[:RMB]
 
   def index
       date = params[:date] 
@@ -55,7 +52,7 @@ class BillingsController < ApplicationController
        edate = @visits.last.entry_ts.to_date
        flashmsg = "#{date}.csv export file created. Includes all previously unbilled visits"
     else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
        sdate = edate = date.to_date
        date = date.to_date.strftime("%Y%m%d") 
        flashmsg = "CSV Export file #{date}.csv created. It only includes records for this day" 
@@ -112,7 +109,7 @@ class BillingsController < ApplicationController
        date = Date.today
        flashmsg = "#{fname} EDT file created. Includes all previously unbilled visits"
     else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+	    @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
        flashmsg = "#{fname} EDT file created for date #{date}. Includes previously billed and ready for billing visits"
        date_str = date.to_date.strftime("%Y%m%d")
     end
@@ -178,15 +175,17 @@ class BillingsController < ApplicationController
     if date.blank?
        @visits = Visit.where("status=? ", READY)
        date = Date.today
-       flashmsg = "Batch sent to cab.md. Includes all previously unbilled visits (#{@visits.count} in all)"
+       flashmsg = "claims out of #{@visits.count} sent to cab.md. This includes all previously unbilled visits"
     else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
-       flashmsg = "Batch sent to cab.md for date #{date}. Includes previously billed and ready for billing visits (#{@visits.count} in all)"
-       date_str = date.to_date.strftime("%Y%m%d")
+       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
+       flashmsg = "claims out of #{@visits.count} sent to cab.md for date #{date}. This includes previously billed and ready for billing visits"
     end
-      
+    
+    claims_sent = 0
     @visits.all.each do |v| 
        @visit = v
+# Skip visits without insured services
+       next unless v.hcp_services?    
        @patient = Patient.find(v.patient_id)
        @doctor = Doctor.find(v.doc_id)
        @xml = render_to_string "/visits/show.xml"
@@ -199,13 +198,24 @@ class BillingsController < ApplicationController
        req.body = @xml
 
        res = http.request(req)
+       @xmlhash = JSON.parse(res.body)
+       if @xmlhash['success']
+	  fname = @xmlhash['accounting_number']
+          v.update_attribute(:status, BILLED)
+          v.update_attribute(:export_file, fname)
+	  claims_sent += 1
+       else
+	  errors = @xmlhash['errors']
+	  messages = @xmlhash['messages']
+	  flash[:danger] = "Error sending claim : #{@xmlhash}"
+          @visit.update_attribute(:status, READY)
+	  @visit.update_attribute(:export_file, errors.join(','))
+       end
 
-#       v.update_attribute(:status, BILLED)
-#       v.update_attribute(:export_file, fname)
-#      flash.now[:success] = "response: #{res.body}"
     end
  
-    flash[:success] = flashmsg 
+    respond_to(:html)
+    flash[:success] = "#{claims_sent} #{flashmsg}"
     redirect_back(fallback_location: billings_path )
   end
 

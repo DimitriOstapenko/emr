@@ -17,8 +17,8 @@
           <th class="tbl_lmd">Procedure(s)</th>
           <th class="tbl_md">Diagnosis</th>
           <th class="tbl_xmd">Ttl. Fee</th>
-          <th class="tbl_md">Status</th>
-	  <th class="tbl_sm">Entry By</th>
+          <th class="tbl_sm">Status</th>
+	  <th class="tbl_md">Cab Ref#</th>
       </tr>
   </thead>
   <tbody>
@@ -34,6 +34,8 @@
 	  <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
   <% else %>
 	  <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}   %>
+	  &nbsp;&nbsp;
+	  <%= button_to "Export Claims File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
      <% end %>
 </div>
 

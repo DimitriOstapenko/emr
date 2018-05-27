@@ -59,7 +59,7 @@ class VisitsController < ApplicationController
      @visit = Visit.find(params[:id])
   end
 
-   def showxml
+   def sendclaim
        require 'net/http'
        require 'uri'
 
@@ -76,12 +76,25 @@ class VisitsController < ApplicationController
        req.body = @xml
 
        res = http.request(req)
-       flash.now[:success] = "response: #{res.body}"
+       @xmlhash = JSON.parse(res.body)
+# {"success"=>true, "errors"=>[], "messages"=>[], "reference_id"=>"332933", "accounting_number"=>"0004MZ4Z"}
+       
+       if @xmlhash['success'] 
+	  fname = @xmlhash['accounting_number']
+          flash[:success] = "Claim #{fname} sent to cab.md " 
+          @visit.update_attribute(:status, BILLED)
+          @visit.update_attribute(:export_file, fname)
+       else
+	  errors = @xmlhash['errors']
+	  messages = @xmlhash['messages']
+	  flash[:danger] = "Error sending claim : #{@xmlhash}"
+          @visit.update_attribute(:status, READY)
+	  @visit.update_attribute(:export_file, errors.join(','))
+       end
 
-#       rescue => e
-#	 flash[:danger] =  "failed:  #{e}"
-
-	 render inline: @xml
+       respond_to(:html)
+       redirect_to patient_visit_path
+      
   end
 
   def edit
@@ -96,7 +109,7 @@ class VisitsController < ApplicationController
       @patient.last_visit_date = @visit.created_at
       @patient.save
       flash[:success] = "Visit updated"
-      redirect_to patient_path @patient 
+      redirect_to @patient 
     else
       render 'edit'
     end
