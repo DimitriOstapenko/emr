@@ -11,7 +11,6 @@
 <div class="row">
   <aside class="col-md-6 col-md-offset-3">
     <section class="user_info">
-      <h1>
 	   <pre>
 		<b>Visit Type:</b> <%= VISIT_TYPES.invert[@visit.vis_type] %>
 		<b>Doctor</b> :    <%= @visit.doctor.lname %>
@@ -33,7 +32,6 @@
                 <% end %>
 		<b>Export file </b>: <%= "#{@visit.export_file}" %>
            </pre>
-      </h1>
     </section>
 
 <p>
@@ -50,6 +48,10 @@
  
  <% if @visit.invoiced? %> 
  <%= button_to "Print Invoice", invoice_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
+ <% end %>
+
+ <% if @visit.ready_to_bill? %>
+ <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  <% end %>
 
   </aside>

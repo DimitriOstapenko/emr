@@ -43,13 +43,25 @@ class Visit < ApplicationRecord
     bil_types('').index(BILLING_TYPES[:Cash].to_s)
   end  
 
+# Are there HCP services in this visit?
+  def hcp_services?
+      !hcp_proc_codes.empty?
+  end
+
+# Is there invoiced service
   def invoiced?
     bil_types('').index(BILLING_TYPES[:Invoice].to_s) && 1
   end
 
+# Is there cash service?
   def cash?
     bil_types('').index(BILLING_TYPES[:Cash].to_s) && 1
   end
+
+# Is visit ready to bill?
+  def ready_to_bill?
+    status == 3
+  end  
 
 # Service array to help deal with procedures/billings
   def services   

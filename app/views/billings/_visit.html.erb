@@ -16,6 +16,6 @@
 	<td><%= link_to visit.diag_code, diagnosis %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td><%= VISIT_STATUSES.invert[visit.status] %></td>
-	<td><%= visit.entry_by %></td>
+	<td><%= visit.export_file %></td>
 
 </tr>
