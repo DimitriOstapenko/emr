@@ -83,12 +83,12 @@ class Visit < ApplicationRecord
 
 # Total fee for this visit  
   def total_fee
-    fee*units + fee2*units2 + fee3*units3 + fee4*units4
+    fee + fee2 + fee3 + fee4
   end
 
 # Total fee of insured services (HSP, RMB) 
   def total_insured_fees
-    services.select{|i| i[:btype] < 3}.sum{|s| s[:fee]}
+    services.select{|i| i[:btype] && i[:btype] < 3}.sum{|s| s[:fee]} rescue 0
   end
 
 # Total of other than insured services   

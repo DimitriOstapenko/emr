@@ -4,7 +4,7 @@
   provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") 
 %>
 
-<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) =%> </h1>
+<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) %>  </h1>
 
 <% diag = Diagnosis.find_by(code: @visit.diag_code) %>
 <% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>
@@ -19,9 +19,9 @@
 <b>Procedure(s)</b> : <%=  @visit.proc_codes %>
 <b>Billing Type(s) </b>: <%= @visit.bil_type_str %>, <%= @visit.bil_type2_str %>, <%= @visit.bil_type3_str %>, <%= @visit.bil_type4_str %>
 <b>Units </b>: <%= @visit.services.collect{|s| s[:units]}.join',' %>
+<b>Insured services: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %> <b>Total:</b> <%=  sprintf '$%.2f',@visit.total_fee %>
 <b>Duration </b>: <%= @visit.duration %> minutes
 <b>Status </b>: <%= @visit.status_str %> 
-<b>Insured services: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %> <b>Total:</b> <%=  sprintf '$%.2f',@visit.total_fee %>
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
 <b>Notes </b>: <%= @visit.notes %>	     
@@ -32,34 +32,32 @@
 <b>Export file </b>: <%= "#{@visit.export_file}" %>
 </pre>
 </div>
-</div>
 
-<div class="form-group col-sm-10 col-md-12 col-sm-offset-1 col-md-offset-1">
 <div class="row">
- <div class="col-sm-2">
+ <div class="col-sm-3">
   <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
  </div>
- <div class="col-sm-2">
+ <div class="col-sm-3">
  <%= button_to "Print Visit Form", visitform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  </div>
- <div class="col-sm-2">
+ <div class="col-sm-3">
  <%= button_to "Print Referral Form", referralform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  </div>
 
  <% if @visit.cash? %> 
- <div class="col-sm-2">
+ <div class="col-sm-3">
  <%= button_to "Print Receipt", receipt_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  </div>
  <% end %>
  
  <% if @visit.invoiced? %> 
- <div class="col-sm-2">
+ <div class="col-sm-3">
  <%= button_to "Print Invoice", invoice_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  </div>
  <% end %>
 
  <% if @visit.ready_to_bill? %>
- <div class="col-sm-2">
+ <div class="col-sm-3">
  <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  </div>
  <% end %>
