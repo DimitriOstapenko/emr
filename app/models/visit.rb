@@ -43,13 +43,25 @@ class Visit < ApplicationRecord
     bil_types('').index(BILLING_TYPES[:Cash].to_s)
   end  
 
+# Are there HCP services in this visit?
+  def hcp_services?
+      !hcp_proc_codes.empty?
+  end
+
+# Is there invoiced service
   def invoiced?
     bil_types('').index(BILLING_TYPES[:Invoice].to_s) && 1
   end
 
+# Is there cash service?
   def cash?
     bil_types('').index(BILLING_TYPES[:Cash].to_s) && 1
   end
+
+# Is visit ready to bill?
+  def ready_to_bill?
+    status == 3
+  end  
 
 # Service array to help deal with procedures/billings
   def services   
@@ -71,7 +83,17 @@ class Visit < ApplicationRecord
 
 # Total fee for this visit  
   def total_fee
-    fee*units + fee2*units2 + fee3*units3 + fee4*units4
+    fee + fee2 + fee3 + fee4
+  end
+
+# Total fee of insured services (HSP, RMB) 
+  def total_insured_fees
+    services.select{|i| i[:btype] && i[:btype] < 3}.sum{|s| s[:fee]} rescue 0
+  end
+
+# Total of other than insured services   
+  def total_non_insured_fees
+    total_fee - total_insured_fees
   end
 
   def invoice_amount  
@@ -109,4 +131,23 @@ class Visit < ApplicationRecord
   def status_str
     VISIT_STATUSES.invert[status]
   end
+
+  def bil_type_str
+    BILLING_TYPES.invert[bil_type]
+  end
+  
+  def bil_type2_str
+    BILLING_TYPES.invert[bil_type2]
+  end
+  
+  def bil_type3_str
+    BILLING_TYPES.invert[bil_type3]
+  end
+  
+  def bil_type4_str
+    BILLING_TYPES.invert[bil_type4]
+  end
+
 end
+
+

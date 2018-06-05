@@ -29,7 +29,7 @@ class PatientsController < ApplicationController
        @patient = Patient.find(params[:id]) 
        if @patient.chart_file.blank?
 	  lname_with_underscore = @patient.lname.gsub(' ','_')
-          chart = Dir.glob("#{Rails.root}/charts/**/#{lname_with_underscore}\,#{@patient.fname}*\.pdf")
+	  chart = Dir.glob("#{Rails.root}/charts/#{@patient.lname[0]}/#{lname_with_underscore}\,#{@patient.fname}*\.pdf")
 	  @patient.update_attribute(:chart_file, chart[0]) 
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
@@ -129,7 +129,7 @@ private
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :notes, :alt_contact_name,
 					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count,
-				    	  :allergies, :medications
+				    	  :allergies, :medications, :maid_name
 					 )
   end
  
@@ -140,6 +140,9 @@ private
 	elsif str.match(/^%B6/)  			 # scanned card
 	  hcnum = str[8,10]
 	  Patient.find_by(ohip_num: hcnum)
+	elsif str.match(/^[[:digit:]]{,2}-[[:alpha:]]{3}-[[:digit:]]{4}/) # Date Of Birth
+	  dob = str.to_date rescue '1900-01-01'
+	  Patient.where("dob = ?", dob)	
 	elsif str.match(/^[[:graph:]]+$/)  		 # last name
 	  Patient.where("lower(lname) like ?", "%#{str.downcase}%") 
 	else

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   include SessionsHelper
   include DaysheetHelper
+  helper_method :hcp_procedure?
 
 #  def initialize
 #    WillPaginate.per_page = 10 if device_type == 'desktop'
@@ -34,3 +35,8 @@ class ApplicationController < ActionController::Base
     end
 
 end
+
+# Is procedure OHIP covered?
+  def hcp_procedure?(proc_code)
+    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
+  end

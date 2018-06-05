@@ -5,7 +5,7 @@
 	<% if filter %>
             <td><%= visit.entry_ts.strftime("%H:%M") %></td>
          <% else %>
-            <td><%= visit.entry_ts.strftime("%Y-%m-%d %H:%M") %></td>
+            <td><%= visit.entry_ts %></td>
          <%end %>
 	<td><%= link_to doctor.lname, doctor %> </td>
 	<td><%= link_to visit.id, patient_visit_path(patient,visit) %></td>
@@ -16,6 +16,6 @@
 	<td><%= link_to visit.diag_code, diagnosis %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td><%= VISIT_STATUSES.invert[visit.status] %></td>
-	<td><%= visit.entry_by %></td>
+	<td><%= visit.export_file %></td>
 
 </tr>

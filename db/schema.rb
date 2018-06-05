@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180415190102) do
+ActiveRecord::Schema.define(version: 20180422152849) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -116,6 +116,18 @@ ActiveRecord::Schema.define(version: 20180415190102) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "export_files", force: :cascade do |t|
+    t.string "name"
+    t.date "sdate"
+    t.date "edate"
+    t.integer "ttl_claims"
+    t.integer "hcp_claims"
+    t.integer "rmb_claims"
+    t.integer "wcb_claims"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.string "pat_id"
     t.integer "billto"
@@ -160,6 +172,7 @@ ActiveRecord::Schema.define(version: 20180415190102) do
     t.date "entry_date"
     t.string "allergies"
     t.string "medications"
+    t.string "maid_name"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"
