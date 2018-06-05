@@ -36,6 +36,7 @@ class VisitsController < ApplicationController
 	 flash[:info] = "Current Doctor set to Dr. #{@visit.doctor.lname}"
     end
 
+# fee = cost*units    
     set_visit_fees ( @visit )
 
     if @visit.save
@@ -59,6 +60,44 @@ class VisitsController < ApplicationController
      @visit = Visit.find(params[:id])
   end
 
+   def sendclaim
+       require 'net/http'
+       require 'uri'
+
+       @visit = Visit.find(params[:id])
+       @patient = Patient.find(@visit.patient_id)
+       @doctor = Doctor.find(@visit.doc_id)
+       @xml = render_to_string "show.xml"
+
+       uri = URI.parse(CABMDURL)
+       http= Net::HTTP.new(uri.host,uri.port)
+       http.use_ssl = true
+       
+       req = Net::HTTP::Post.new(uri.request_uri, {'Content-Type' => 'application/xml'})
+       req.body = @xml
+
+       res = http.request(req)
+       @xmlhash = JSON.parse(res.body)
+# {"success"=>true, "errors"=>[], "messages"=>[], "reference_id"=>"332933", "accounting_number"=>"0004MZ4Z"}
+       
+       if @xmlhash['success'] 
+	  fname = @xmlhash['accounting_number']
+          flash[:success] = "Claim #{fname} sent to cab.md " 
+          @visit.update_attribute(:status, BILLED)
+          @visit.update_attribute(:export_file, fname)
+       else
+	  errors = @xmlhash['errors']
+	  messages = @xmlhash['messages']
+	  flash[:danger] = "Error sending claim : #{@xmlhash}"
+          @visit.update_attribute(:status, READY)
+	  @visit.update_attribute(:export_file, errors.join(','))
+       end
+
+       respond_to(:html)
+       redirect_to patient_visit_path
+      
+  end
+
   def edit
      @visit = Visit.find(params[:id])
   end
@@ -66,12 +105,13 @@ class VisitsController < ApplicationController
   def update
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
-    set_visit_fees( @visit )
     if @visit.update_attributes(visit_params)
       @patient.last_visit_date = @visit.created_at
       @patient.save
+      set_visit_fees( @visit )
+      @visit.save
       flash[:success] = "Visit updated"
-      redirect_to patient_path @patient 
+      redirect_to @patient 
     else
       render 'edit'
     end
@@ -164,19 +204,19 @@ class VisitsController < ApplicationController
     def set_visit_fees ( visit )
       if !visit.proc_code.blank? 
 	      p = Procedure.find_by(code: visit.proc_code) 
-	      visit.fee = p.cost
+	      visit.fee = p.cost*visit.units rescue 0
       end
       if !visit.proc_code2.blank? 
-	      p = Procedure.find_by(code: visit.proc_code2) 
-	      visit.fee2 = p.cost
+	      p2 = Procedure.find_by(code: visit.proc_code2) 
+	      visit.fee2 = p2.cost*visit.units2 rescue 0
       end  
       if !visit.proc_code3.blank? 
-	      p = Procedure.find_by(code: visit.proc_code3) 
-	      visit.fee3 = p.cost
+	      p3 = Procedure.find_by(code: visit.proc_code3) 
+	      visit.fee3 = p3.cost*visit.units3 rescue 0
       end  
       if !visit.proc_code4.blank? 
-	      p = Procedure.find_by(code: visit.proc_code4) 
-	      visit.fee4 = p.cost
+	      p4 = Procedure.find_by(code: visit.proc_code4) 
+	      visit.fee4 = p4.cost*visit.units4 rescue 0
       end  
     end
 

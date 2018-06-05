@@ -10,7 +10,7 @@ puts "About to set proc_code,units and fee in visits table from billings table"
 Visit.where("entry_ts > '2017-12-14'").each do |v| 
 #Visit.all.each do |v|
 
-  puts "visit : #{v.id}"
+	puts "visit : #{v.id} #{v.entry_ts}"
   billings = Billing.where(visit_id: v.id)
   billings.each_with_index do | b, index |
 #    puts "proc: #{b.proc_code}"

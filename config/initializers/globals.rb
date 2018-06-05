@@ -24,6 +24,10 @@ PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS
 # Visits
 
 VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, 'Written Off': 7}.freeze
+ASSESSED = VISIT_STATUSES[:Assessed]
+READY = VISIT_STATUSES[:'Ready To Bill']
+BILLED = VISIT_STATUSES[:Billed]
+
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
 u = {}
@@ -32,7 +36,6 @@ UNITS  = u.freeze
 d = {}
 %w(10 20 30 40).each {|k| d[k]=k}
 DURATIONS = d.freeze 
-BILLING_TYPES = {HCP: 1, RMB: 2, "Invoice": 3, Cash: 4, WCB: 5, PRV: 6}.freeze
 
 # Procedures
  
@@ -40,8 +43,15 @@ PROC_TYPES = {HCP: 1, '3RD': 2}.freeze
 
 # Billing
 
-BILLING_FORMAT='CSV'.freeze  # CSV/EDT
+CABMDURL = 'https://api.cab.md/claims?apiKey=e679b103-f74d-4b2d-bb60-5f05ad4f9de1'
+BILLING_FORMAT='CABMD'.freeze  # CSV/EDT/CABMD
 #BILLING_STATUSES = { "No Claim Yet": 1, "Claim Generated": 2, Invoiced: 3, Deleted: 4, Paid: 5, 'Written Off': 6}.freeze
+BILLING_TYPES = {HCP: 1, RMB: 2, Invoice: 3, Cash: 4, WCB: 5, PRV: 6}.freeze
+HCP_BILLING = BILLING_TYPES[:HCP]
+RMB_BILLING = BILLING_TYPES[:RMB]
+CASH_BILLING = BILLING_TYPES[:Cash]
+WCB_BILLING = BILLING_TYPES[:WCB]
+PRV_BILLING = BILLING_TYPES[:PRV]
 
 # Reports
 
@@ -51,3 +61,5 @@ REPORT_TYPES = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}
 # Charts
 CHARTS_PATH = Rails.root.join('charts').freeze
 
+# Export files:
+EXPORT_PATH = Rails.root.join('export').freeze

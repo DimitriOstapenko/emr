@@ -1,13 +1,12 @@
 <% provide(:title, @patient.full_name) %>
 
-	<h1><%= @patient.full_name %> <%= @patient.mname %> :  Patient profile </h1>
+	<h1><%= @patient.full_name %> :  Patient profile </h1>
 
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">
-      <h1>
-	   <pre class="pre-scrollable">
-	<b>Name:</b> <%= @patient.full_name %> <%= @patient.mname %> <b>Type:</b> <%= PATIENT_TYPES.invert[@patient.pat_type] %>
+	   <pre class="pre-scrollable" >
+	<b>Name:</b> <%= @patient.full_name %> <b>Type:</b> <%= PATIENT_TYPES.invert[@patient.pat_type] %>
 	<b>DOB:</b> <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex %>
 	<b>Health Card:</b> <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) <b>Expires:</b> <%= @patient.hin_expiry %>
 	<b>Phone:</b> <%= num_to_phone(@patient.phone) %>  <b>Mobile:</b> <%= num_to_phone(@patient.mobile) %> <b>Email:</b> <%= mail_to @patient.email %>
@@ -28,7 +27,6 @@
 	<b>Created:</b> <%= @patient.entry_date %>
 	<b>Last Modification By:</b> <%= @patient.lastmod_by %>
            </pre>
-      </h1>
     </section>
     <section class="buttons">
 	    

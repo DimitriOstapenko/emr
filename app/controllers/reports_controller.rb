@@ -64,7 +64,7 @@ class ReportsController < ApplicationController
   def show
     @report = Report.find(params[:id]) 
     redirect_to reports_path unless @report
-    @visits, @total = get_visits( @report )
+    @visits, @total, @insured, @uninsured = get_visits( @report )
     @visits = @visits.paginate(page: params[:page], per_page: 25)
   end
 
@@ -80,7 +80,7 @@ class ReportsController < ApplicationController
 # Generate PDF version of the report, save in reports directory
   def export
     @report = Report.find(params[:id])
-    @visits, @total = get_visits( @report )
+    @visits, @total,@insured,@uninsured = get_visits( @report )
     pdf = build_report( @report,@visits )
     @report.filespec = @report.name+'.pdf'
     @report.save
@@ -118,13 +118,17 @@ private
 
   def get_visits (rep)
     if rep.doc_id
-            visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
-            total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
+	    visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).order(entry_ts: :asc)
+	    total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).sum("fee+fee2+fee3+fee4")
+	    insured = 0
+	    visits.each{|v| insured += v.total_insured_fees}
     else
-            visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
-            total = Visit.where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
+	    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).order(entry_ts: :asc)
+	    total = Visit.where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).sum("fee+fee2+fee3+fee4")
+	    visits.each{|v| insured += v.total_insured_fees}
     end
-    return [visits, total]
+    uninsured = total - insured
+    return [visits, total, insured, uninsured]
   end
 
 end

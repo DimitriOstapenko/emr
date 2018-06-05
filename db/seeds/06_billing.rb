@@ -33,6 +33,8 @@ csv.each do |row|
 
   visit_id = row['ordno']
   visit_date = ts(row['visit_date'], '%m/%d/%Y')
+  next if visit_date < Date.today - 1.year
+
   paid_date = ts(row['paid_date'], '%m/%d/%Y')
   submit_ts = ts(row['submt_date'] +' '+ row['submt_time'])
 

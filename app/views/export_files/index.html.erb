@@ -1,0 +1,23 @@
+<% provide(:title, 'All export files') %>
+
+<table class="tbl table-hover" >
+  <thead>
+      <tr>
+	  <th> name  </th>
+	  <th> sdate </th>
+	  <th> edate </th>
+	  <th> #claims </th>
+	  <th> #HCP claims </th>
+	  <th> #RMB claims </th>
+	  <th> #WCB claims </th>
+	  <th></th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @export_files %>
+
+  </tbody>
+</table>
+
+<%= will_paginate @export_files, class: "btn" %>

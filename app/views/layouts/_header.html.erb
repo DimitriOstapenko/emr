@@ -15,7 +15,7 @@
 	     </div>
        <% end %>
        </li>
-<% else %>
+<% elsif controller_name != 'visits' %>
 	<li class="nav-item active">
  	<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
@@ -51,6 +51,7 @@
          	<li> <%= link_to "Invoices", invoices_path, method: :get %> </li>
          	<li> <%= link_to "Vaccines", vaccines_path, method: :get %> </li>
          	<li> <%= link_to "Daily Charts", daily_charts_path, method: :get %> </li>
+         	<li> <%= link_to "Export Files", export_files_path, method: :get %> </li>
             </ul>
           </li>
 <% end %>

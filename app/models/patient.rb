@@ -2,7 +2,7 @@ class Patient < ApplicationRecord
         has_many :visits, dependent: :destroy, inverse_of: :patient
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age, :cardstr, :phonestr
-	default_scope -> { order(lname: :asc) }
+	default_scope -> { order(lname: :asc, fname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
 	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') }
@@ -27,7 +27,7 @@ class Patient < ApplicationRecord
 	validate :hc_checksum_and_expiry 
 
   def full_name
-    return fname.blank? ? lname : [lname, fname].join(', ')
+    return fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
   end
 
   def ohip_num_full
@@ -73,7 +73,8 @@ class Patient < ApplicationRecord
     end
 
     return if (last_digit == (10 - sum.to_s[-1].to_i))
-    errors.add('Health Card:', "Failed checksum test") 
+    errors.add('OHIP patient:', "Verifying Health Card number") 
+    errors.add('Ontario Health Card:', "Number is invalid") 
   end
 
   def valid_attribute?( attribute_name )

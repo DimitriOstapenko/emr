@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+#  get 'export_files/index'
+#  get 'export_files/show'
+#  get 'export_files/delete'
 
   get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
   get '/daily_charts/index'
@@ -45,7 +48,8 @@ Rails.application.routes.draw do
  get '/billings' => 'billings#index'
  post '/billings/export_csv', to: 'billings#export_csv'
  post '/billings/export_edt', to: 'billings#export_edt'
-  get "/procedures/get_by_code", to: "procedures#get_by_code" 
+ post '/billings/export_cabmd', to: 'billings#export_cabmd'
+ get "/procedures/get_by_code", to: "procedures#get_by_code" 
 
 #   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
 
@@ -58,6 +62,7 @@ Rails.application.routes.draw do
       get 'receipt', on: :member
       get 'invoice', on: :member
       get 'referralform', on: :member
+      get 'sendclaim', on: :member
     end
   end
   
@@ -73,6 +78,7 @@ Rails.application.routes.draw do
   resources :invoices
   resources :vaccines
   resources :daily_charts
+  resources :export_files
 
 # resources :billings     # historical billing table - not used
   

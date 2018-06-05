@@ -5,9 +5,6 @@ class BillingsController < ApplicationController
     before_action :logged_in_user #, only: [:index, :edit, :update]
     before_action :admin_user,   only: :destroy
     
-    BILLED = VISIT_STATUSES[:Billed]
-    READY = VISIT_STATUSES[:'Ready To Bill']
-    RMB = BILLING_TYPES[:RMB]
 
   def index
       date = params[:date] 
@@ -44,37 +41,41 @@ class BillingsController < ApplicationController
   def update
   end
 
- # CSV export file 
+  # CSV export file (cab.md - tested)
   def export_csv
-    targets  = {:mdbilling => 1, :cabmd => 2}
-    target = :cabmd
 
     date = params[:date] 
     if date.blank?
-       @visits = Visit.where("status=? ", READY)
+       @visits = Visit.where("status=? ", READY).order(:entry_ts)
        date = Date.today.strftime("%Y%m%d")
+       sdate = @visits.first.entry_ts.to_date
+       edate = @visits.last.entry_ts.to_date
        flashmsg = "#{date}.csv export file created. Includes all previously unbilled visits"
     else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
+       sdate = edate = date.to_date
        date = date.to_date.strftime("%Y%m%d") 
        flashmsg = "CSV Export file #{date}.csv created. It only includes records for this day" 
     end
 
     fname = date+'.csv'
-    records = 0
+    ttl_claims = hcp_claims = rmb_claims = wcb_claims = 0
    
     begin
       filespec = Rails.root.join('export', fname)
       file = File.open(filespec, 'w')
-      file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, VisitNumber \n")
+      file.write ("ProviderNumber, GroupNumber, ProvinceCode, HealthNumber, VersionCode, FirstName, LastName, DOB, Gender, ReferringProviderNumber, DiagnosticCode, ServiceLocationType,MasterNumber,AdmissionDate,ServiceDate,ServiceCode,ServiceQty, PatientInstNumber \n")
       @visits.all.each do |v| 
         p = Patient.find(v.patient_id)
 
 	v.services.each do |s|
-	    next unless hcp_procedure?(s[:pcode]) 
+	    next unless hcp_procedure?(s[:pcode])  # exclude 3-rd party
 	    str = get_cabmd_str(p,v,s)	
 	    file.write( str ) 
-	    records += 1
+	    ttl_claims += 1
+	    hcp_claims += 1 if s[:btype] == 1
+	    rmb_claims += 1 if s[:btype] == 2
+	    wcb_claims += 1 if s[:btype] == 5
 	end
 	v.update_attribute(:status, BILLED) 
 	v.update_attribute(:export_file, fname) 
@@ -83,7 +84,13 @@ class BillingsController < ApplicationController
 	flash[:danger] = e.message
       ensure
         file.close unless file.nil?
-        flash[:success] = "#{flashmsg} (#{records} services alltogether)"
+	expfile = ExportFile.where(name: fname).first_or_create(name: fname, sdate: sdate, edate: edate, ttl_claims: ttl_claims,
+							       	hcp_claims: hcp_claims, rmb_claims: rmb_claims, wcb_claims: wcb_claims)
+	if expfile.save
+           flash[:success] = "#{flashmsg} (#{ttl_claims} services alltogether)"
+	else
+	   flash[:danger] = "Error saving export file to DB " + expfile.errors.full_messages.join(',')	
+	end
     end
     redirect_back(fallback_location: billings_path )
   end
@@ -102,7 +109,7 @@ class BillingsController < ApplicationController
        date = Date.today
        flashmsg = "#{fname} EDT file created. Includes all previously unbilled visits"
     else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+	    @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
        flashmsg = "#{fname} EDT file created for date #{date}. Includes previously billed and ready for billing visits"
        date_str = date.to_date.strftime("%Y%m%d")
     end
@@ -159,6 +166,59 @@ class BillingsController < ApplicationController
     redirect_back(fallback_location: billings_path )
   end
 
+# Send XML file directly to cab.md server
+  def export_cabmd
+    require 'net/http'
+    require 'uri'
+
+    date = params[:date] 
+    if date.blank?
+       @visits = Visit.where("status=? ", READY)
+       date = Date.today
+       flashmsg = "claims out of #{@visits.count} sent to cab.md. This includes all previously unbilled visits"
+    else
+       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
+       flashmsg = "claims out of #{@visits.count} sent to cab.md for date #{date}. This includes previously billed and ready for billing visits"
+    end
+    
+    claims_sent = 0
+    @visits.all.each do |v| 
+       @visit = v
+# Skip visits without insured services
+       next unless v.hcp_services?    
+       @patient = Patient.find(v.patient_id)
+       @doctor = Doctor.find(v.doc_id)
+       @xml = render_to_string "/visits/show.xml"
+
+       uri = URI.parse(CABMDURL)
+       http= Net::HTTP.new(uri.host,uri.port)
+       http.use_ssl = true
+       
+       req = Net::HTTP::Post.new(uri.request_uri, {'Content-Type' => 'application/xml'})
+       req.body = @xml
+
+       res = http.request(req)
+       @xmlhash = JSON.parse(res.body)
+       if @xmlhash['success']
+	  fname = @xmlhash['accounting_number']
+          v.update_attribute(:status, BILLED)
+          v.update_attribute(:export_file, fname)
+	  claims_sent += 1
+       else
+	  errors = @xmlhash['errors']
+	  messages = @xmlhash['messages']
+	  flash[:danger] = "Error sending claim : #{@xmlhash}"
+          @visit.update_attribute(:status, READY)
+	  @visit.update_attribute(:export_file, errors.join(','))
+       end
+
+    end
+ 
+    respond_to(:html)
+    flash[:success] = "#{claims_sent} #{flashmsg}"
+    redirect_back(fallback_location: billings_path )
+  end
+
 private
 
 #  def billing_params
@@ -167,9 +227,10 @@ private
 #				       :bill_prov, :submit_user, :submit_ts, :doc_id )
 #  end
 
-  def hcp_procedure?(proc_code)
-    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
-  end
+# moved to application controller
+#  def hcp_procedure?(proc_code)
+#    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
+#  end
 
   def heb_record(v, date, batch)
     "HEBV03G#{date}#{batch}#{' '*6}#{GROUP_NO}#{v.doctor.provider_no}00".ljust(79,' ') + "\n"
