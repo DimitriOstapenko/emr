@@ -14,23 +14,23 @@
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select'  %>
+  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   <%= f.hidden_field(:fee, id: :fee) %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code2, @procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code2, @procedures, :code, :code, prompt: 'Select', include_blank: 'None')  %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code3, @procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code3, @procedures, :code, :code, prompt: 'Select', include_blank: 'None')  %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code4, @procedures, :code, :code, prompt: 'Select')  %>
+  <%= f.collection_select(:proc_code4, @procedures, :code, :code, prompt: 'Select', include_blank: 'None')  %>
   </div>
 </div
 
@@ -77,22 +77,22 @@
   
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select' %>
+  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type2, BILLING_TYPES, prompt: 'Select' %>
+  <%= f.select :bil_type2, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type3, BILLING_TYPES,  prompt: 'Select' %>
+  <%= f.select :bil_type3, BILLING_TYPES,  prompt: 'Select', include_blank: 'None' %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select' %>
+  <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
   </div>
 </div>
 
@@ -181,22 +181,42 @@ $(document).ready(function() {
 // Select proper bill type for the procedure
 var pc = document.getElementById("visit_proc_code");
 $(pc).change(function () {
-  get_bil_type( $(this).val() , '');
+  if ($(this).val()) {
+    get_bil_type( $(this).val() , '');
+  } else {
+    var bt = document.getElementById('visit_bil_type');
+    $(bt).prop('selectedIndex',0);
+  }
 });
 
 var pc2 = document.getElementById("visit_proc_code2");
 $(pc2).change(function () {
-  get_bil_type( $(this).val() , '2' );
+  if ($(this).val()) {
+     get_bil_type( $(this).val() , '2' );
+  } else {
+    var bt2 = document.getElementById('visit_bil_type2');
+    $(bt2).prop('selectedIndex',0);
+  }
 });
 
 var pc3 = document.getElementById("visit_proc_code3");
 $(pc3).change(function () {
-  get_bil_type( $(this).val() , '3' );
+  if ($(this).val()) {
+     get_bil_type( $(this).val() , '3' );
+  } else {
+    var bt3 = document.getElementById('visit_bil_type3');
+    $(bt3).prop('selectedIndex',0);
+  }
 });
 
 var pc4 = document.getElementById("visit_proc_code4");
 $(pc4).change(function () {
-  get_bil_type( $(this).val() , '4' );
+  if ($(this).val()) {
+    get_bil_type( $(this).val() , '4' );
+  } else {
+    var bt4 = document.getElementById('visit_bil_type4');
+    $(bt4).prop('selectedIndex',0);
+  }
 });
 
 function get_bil_type ( code, suff ) {
@@ -208,7 +228,7 @@ function get_bil_type ( code, suff ) {
     }).done(function (data) {
         select_btype(data, suff);
     }).fail(function (data) {
-         console.log('AJAX request has FAILED');
+        console.log('AJAX request has FAILED');
     });
 }
 

@@ -76,7 +76,7 @@ private
 	  if str.match(/^[[:digit:]]{,6}$/)
           Doctor.where("provider_no like ?", "%#{str}%")
         elsif str.match(/^[[:graph:]]+$/)
-          Doctor.where("lower(lname) like ?", "%#{str}%")
+		Doctor.where("lower(lname) like ?", "%#{str.downcase}%")
         else
           []
         end

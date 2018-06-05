@@ -11,10 +11,13 @@ puts "About to seed doctors table. Validity checks for all but lname, billing_nu
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'doctors.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-Doctor.destroy_all
+#Doctor.destroy_all
 
+added = 0
 csv.each do |row|
 #	 puts row.to_hash
+  code = row['docid']
+  next if Doctor.exists?(doc_code: code)
   name = row['name']	
   name.gsub /DR\S?/, ''
   names = name.split(%r{,\s*})
@@ -42,10 +45,11 @@ csv.each do |row|
 		     group_no: row['group_no'],
 		     specialty: row['specialty'],
 		     email: row['email'],
-		     doc_code: row['docid']
+		     doc_code: code
 
   if doc.save
      puts "#{doc.id} : #{doc.lname} saved"
+     added += 1
   else
      puts 'Problem doc: '+ doc.lname
      puts doc.errors.full_messages
@@ -53,7 +57,7 @@ csv.each do |row|
 
 end
 
-puts " #{Doctor.count} rows created in doctors table"
+puts "Additional #{added} rows created. #{Doctor.count} now in doctors table"
 
 #
 #50.times do |n|

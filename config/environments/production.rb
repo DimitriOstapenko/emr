@@ -2,8 +2,8 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   
   config.time_zone = "America/New_York"
-  config.active_record.default_timezone = :local
-  config.active_record.time_zone_aware_attributes = false
+#  config.active_record.default_timezone = :local
+#  config.active_record.time_zone_aware_attributes = false
 
   # Code is not reloaded between requests.
   config.cache_classes = true
