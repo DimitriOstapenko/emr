@@ -8,7 +8,7 @@ class DaysheetController < ApplicationController
       @daysheet = Visit.where("date(entry_ts) = ?", date)
       if @daysheet.any?
          @daysheet = @daysheet.paginate(page: params[:page])
-	 flash.now[:info] = "Visits for #{date} (#{@daysheet.count}) "
+	 flash.now[:info] = "Daysheet for #{date} (#{@daysheet.count} visits) "
          render 'index'
       else
 	 flash.now[:info] = 'No visits were found for date ' + date.inspect 

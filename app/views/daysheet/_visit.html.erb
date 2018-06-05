@@ -12,9 +12,10 @@
 	<td><%= visit.units %></td>
 	<td><%= BILLING_TYPES.invert[visit.bil_type] %></td>
 	<td><%= VISIT_STATUSES.invert[visit.status] rescue '' %></td>
-	
+	<td><%= visit.export_file %></td>
+<!--	
 	<% if current_user.admin?  %>
 		<td> <%= link_to "delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id}?" } %> </td>
 	<% end %>
-
+-->
 </tr>
