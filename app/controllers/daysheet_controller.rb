@@ -1,5 +1,7 @@
 class DaysheetController < ApplicationController
 	
+	helper_method :sort_column, :sort_direction
+
 	before_action :logged_in_user
         before_action :admin_user, only: :destroy
 	
@@ -9,7 +11,8 @@ class DaysheetController < ApplicationController
       @totalfee = 0
       @daysheet.map{|v| @totalfee += v.total_fee}
       if @daysheet.any?
-         @daysheet = @daysheet.paginate(page: params[:page])
+#         @daysheet = @daysheet.paginate(page: params[:page])
+	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "Daysheet for #{date} (#{@daysheet.count} visits). Total fee: #{sprintf("$%.2f",@totalfee)}"
          render 'index'
       else
@@ -30,6 +33,15 @@ class DaysheetController < ApplicationController
       else
 	 render '_set_doctor'
       end
+  end
+
+
+  def sort_column
+          Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
+  end
+
+  def sort_direction
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
 end

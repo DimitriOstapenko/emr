@@ -1,6 +1,6 @@
 class Visit < ApplicationRecord
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
-  default_scope -> { order(created_at: :desc) }
+  default_scope -> { order(entry_ts: :desc) }
   attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode #, :diag_descr, :proc_descr, :_3rd_index, :services, :invoiced?, :cash?
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
