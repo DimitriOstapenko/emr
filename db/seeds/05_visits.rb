@@ -13,7 +13,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'schedule_data.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   #.first(10)
 
 def ts( str, format="%m/%d/%Y %k:%M:%S" )
-	DateTime.strptime(str,format) rescue DateTime.new(1900,1,1)
+    Time.strptime(str,format) rescue Time.new(1900,1,1)
 end
 
 #Visit.destroy_all
@@ -47,7 +47,7 @@ csv.each do |row|
 		     		status: row['status'],
 		     		proc_code: row['proc_code'],
 		     		diag_code: row['diagnosis'],
-		     		notes: row['importance'],
+#		     		notes: row['importance'],
 		     		duration: row['duration'], 
 		     		vis_type: row['enctype'],
 		     		entry_by: row['entry_by']
