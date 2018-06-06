@@ -13,7 +13,7 @@
 	<!--	<td><%= "#{patient.addr} #{patient.city}, #{patient.prov} #{patient.postal}" %> </td>  -->
 
   	<% if current_user.admin?  %>
-		<td> <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %> </td>
+		<td> <!-- <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %> -->  </td>
 	<% end %>
 
      </tr>

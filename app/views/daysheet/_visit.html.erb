@@ -9,9 +9,9 @@
 	<td><%= visit.vis_type %></td>
 	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= visit.units %></td>
-	<td><%= BILLING_TYPES.invert[visit.bil_type] %></td>
-	<td><%= VISIT_STATUSES.invert[visit.status] rescue '' %></td>
+	<td><%= visit.all_units.join',' %></td>
+	<td><%= visit.all_btypes_str.join',' %></td>
+	<td><%= visit.status_str %></td>
 	<td><%= visit.export_file %></td>
 <!--	
 	<% if current_user.admin?  %>

@@ -9,6 +9,7 @@ class BillingsController < ApplicationController
   def index
       date = params[:date] 
       if date.blank? 
+	 date = Date.today
          @visits = Visit.where("status=? ", READY)
          flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found"
       else 
@@ -17,10 +18,12 @@ class BillingsController < ApplicationController
       end
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = flashmsg
+	 @totalfee = 0
+         @visits.map{|v| @totalfee += v.total_fee}
+	 flash.now[:info] = flashmsg + "  Total fee: #{sprintf("$%.2f",@totalfee)}"
 	 render 'index'
       else
-         flash.now[:info] = "No billings were found for date #{date}" if date
+         flash.now[:info] = "No billings or ready to bill services found for date #{date}" if date
 	 render  inline: '', layout: true
       end
   end

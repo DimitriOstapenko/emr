@@ -4,18 +4,18 @@ class Visit < ApplicationRecord
   attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode #, :diag_descr, :proc_descr, :_3rd_index, :services, :invoiced?, :cash?
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
-#!  validates :doc_id, presence: true, numericality: { only_integer: true }
-  validates :doc_code, presence: true
+  validates :doc_id, presence: true, numericality: { only_integer: true }
+#  validates :doc_code, presence: true
 #  validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
   validates :proc_code, length: { maximum: 10 }
-#!  validates :proc_code2, length: { maximum: 10 }
-#!  validates :proc_code3, length: { maximum: 10 }
-#!  validates :proc_code4, length: { maximum: 10 }
+  validates :proc_code2, length: { maximum: 10 }
+  validates :proc_code3, length: { maximum: 10 }
+  validates :proc_code4, length: { maximum: 10 }
   validates :units, numericality: { only_integer: true, only_positive: true }
-#!  validates :units2, numericality: { only_integer: true, only_positive: true }
-#!  validates :units3, numericality: { only_integer: true, only_positive: true }
-#!  validates :units4, numericality: { only_integer: true, only_positive: true }
-#!  validates :duration, numericality: { only_integer: true, only_positive: true }
+  validates :units2, numericality: { only_integer: true, only_positive: true }
+  validates :units3, numericality: { only_integer: true, only_positive: true }
+  validates :units4, numericality: { only_integer: true, only_positive: true }
+  validates :duration, numericality: { only_integer: true, only_positive: true }
   validates :entry_ts, presence: true
 
   def doctor
@@ -60,7 +60,7 @@ class Visit < ApplicationRecord
 
 # Is visit ready to bill?
   def ready_to_bill?
-    status == 3
+    status == READY
   end  
 
 # Service array to help deal with procedures/billings
@@ -79,6 +79,26 @@ class Visit < ApplicationRecord
        serv.push({pcode: proc_code4, units: units4, btype: bil_type4, fee: fee4})
     end
     return serv
+  end
+
+# array of all units  
+  def all_units
+    services.map{|el| el[:units]}  
+  end
+
+# array of all proc codes
+  def all_pcodes
+    services.map{|el| el[:pcode]}  
+  end
+
+# array of all bill types (strings)
+  def all_btypes_str
+    services.map{|el| BILLING_TYPES.invert[el[:btype]].to_s}
+  end
+
+# array of all fees
+  def all_fees
+    services.map{|el| el[:fee]}
   end
 
 # Total fee for this visit  
