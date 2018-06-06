@@ -6,9 +6,11 @@ class DaysheetController < ApplicationController
   def index
       date = params[:date] || Date.today
       @daysheet = Visit.where("date(entry_ts) = ?", date)
+      @totalfee = 0
+      @daysheet.map{|v| @totalfee += v.total_fee}
       if @daysheet.any?
          @daysheet = @daysheet.paginate(page: params[:page])
-	 flash.now[:info] = "Daysheet for #{date} (#{@daysheet.count} visits) "
+	 flash.now[:info] = "Daysheet for #{date} (#{@daysheet.count} visits). Total fee: #{sprintf("$%.2f",@totalfee)}"
          render 'index'
       else
 	 flash.now[:info] = 'No visits were found for date ' + date.inspect 
