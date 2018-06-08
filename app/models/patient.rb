@@ -5,9 +5,9 @@ class Patient < ApplicationRecord
 	default_scope -> { order(lname: :asc, fname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
-	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') }
+	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') rescue '' }
 	before_validation { ohip_ver.upcase! }
-	before_validation { phone.gsub!(/\D/,'') }
+	before_validation { phone.gsub!(/\D/,'') rescue '' }
 	before_validation { mobile.gsub!(/\D/,'') rescue '' }
 	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
 	before_validation { postal.tr!(' -','') rescue '' }

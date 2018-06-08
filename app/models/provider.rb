@@ -7,9 +7,9 @@ class Provider < ApplicationRecord
 	before_validation { prov.upcase! rescue '' }
 	before_validation { city.upcase! rescue '' }
 	before_validation { country.upcase! rescue '' }
-	before_validation { phone1.gsub!(/\D/,'') }
-	before_validation { phone2.gsub!(/\D/,'') }
-	before_validation { fax.gsub!(/\D/,'') }
+	before_validation { phone1.gsub!(/\D/,'') rescue ''}
+	before_validation { phone2.gsub!(/\D/,'') rescue ''}
+	before_validation { fax.gsub!(/\D/,'') rescue ''}
 	before_validation { postal.gsub!(/\s/,'') rescue '' }
 
 #!	validates :prov,  length: { is: 2 }
