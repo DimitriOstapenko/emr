@@ -6,16 +6,12 @@
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= pat.ohip_num %></td>
 	<td><%= pat.ohip_ver %></td>
-	<td><%= visit.vis_type %></td>
 	<td><%= visit.diag_code %></td>
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.all_units.join',' %></td>
 	<td><%= visit.all_btypes_str.join',' %></td>
 	<td><%= visit.status_str %></td>
-	<td><%= visit.export_file %></td>
-<!--	
 	<% if current_user.admin?  %>
 		<td> <%= link_to "delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id}?" } %> </td>
 	<% end %>
--->
 </tr>
