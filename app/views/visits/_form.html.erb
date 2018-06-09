@@ -14,23 +14,23 @@
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
+  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None', selected: @visit.proc_code || 'A007A'  %>
   <%= f.hidden_field(:fee, id: :fee) %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code2, @procedures, :code, :code, prompt: 'Select', include_blank: 'None')  %>
+  <%= f.collection_select :proc_code2, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code3, @procedures, :code, :code, prompt: 'Select', include_blank: 'None')  %>
+  <%= f.collection_select :proc_code3, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select(:proc_code4, @procedures, :code, :code, prompt: 'Select', include_blank: 'None')  %>
+  <%= f.collection_select :proc_code4, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 </div
 
@@ -39,7 +39,7 @@
 <div class="row">
   <div class="col-sm-4">
   <%= f.label "Diagnosis" %>
-  <%=  f.collection_select(:diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select' )  %>
+  <%=  f.collection_select :diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select', selected: @visit.diag_code || '460.000' %>
   </div>
 
   <div class="col-sm-2">
@@ -77,7 +77,7 @@
   
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
+  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select', include_blank: 'None', selected: @visit.bil_type || 1 %>
   </div>
 
   <div class="col-sm-2">
