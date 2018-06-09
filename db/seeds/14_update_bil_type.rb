@@ -9,7 +9,7 @@ puts "About to update bil_type in visits table from billings table"
 
 count  = 0
 
-Visit.where("entry_ts > '2017-12-14'").each do |v|
+Visit.where("entry_ts > '2018-06-04'").each do |v|
 #Visit.all.each do |v|
 
   bills = Billing.where(visit_id: v.id)

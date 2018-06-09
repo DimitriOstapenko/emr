@@ -4,8 +4,8 @@ class Visit < ApplicationRecord
   attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode #, :diag_descr, :proc_descr, :_3rd_index, :services, :invoiced?, :cash?
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
-  validates :doc_id, presence: true, numericality: { only_integer: true }
-#  validates :doc_code, presence: true
+#!  validates :doc_id, presence: true, numericality: { only_integer: true }
+  validates :doc_code, presence: true
 #  validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
   validates :proc_code, length: { maximum: 10 }
   validates :proc_code2, length: { maximum: 10 }
