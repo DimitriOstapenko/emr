@@ -7,6 +7,7 @@ require_relative '../../config/environment'
 
 puts "About to set proc_code,units and fee in visits table from billings table"
 
+updated = 0
 Visit.where("entry_ts > '2018-06-04'").each do |v| 
 #Visit.all.each do |v|
 
@@ -34,7 +35,6 @@ Visit.where("entry_ts > '2018-06-04'").each do |v|
 	    puts "visit #{v.id} index #{index} is outside of [0..3]"
     end
 
-    updated = 0
     if v.save #(validate: false)
        puts "*** #{v.id} : patient #{v.patient_id} : #{v.entry_ts} updated"
        updated += 1
@@ -44,5 +44,6 @@ Visit.where("entry_ts > '2018-06-04'").each do |v|
     end
   end
   
-  puts "Updated #{updated} visits."
 end
+
+puts "Updated #{updated} visits."

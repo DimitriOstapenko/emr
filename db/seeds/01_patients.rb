@@ -72,7 +72,7 @@ csv.each do |row|
 #			 mobile:
 #			 last_visit_date:
 
-  if patient.save #(validate: false)
+  if patient.save(validate: false)
      puts "*** #{patient.id} : #{patient.lname} saved"
      added += 1
   else

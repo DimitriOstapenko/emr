@@ -7,20 +7,14 @@ class BillingsController < ApplicationController
     
 
   def index
-	  date = params[:date] || Date.today
-#      if date.blank? 
-#	 date = Date.today
-#         @visits = Visit.where("status=?", READY)
-#         flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found"
-#      else 
-         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
-         flashmsg = "Billings for #{date} (#{@visits.count})"
-#      end
+      date = params[:date] || Date.today
+      @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
+      @totalfee = 0
+      @visits.map{|v| @totalfee += v.total_fee}
+      flashmsg = "Billings for #{date} (#{@visits.count}) Total fee: #{sprintf("$%.2f",@totalfee)}"
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 @totalfee = 0
-         @visits.map{|v| @totalfee += v.total_fee}
-	 flash.now[:info] = flashmsg + "  Total fee: #{sprintf("$%.2f",@totalfee)}"
+	 flash.now[:info] = flashmsg 
 	 render 'index'
       else
          flash.now[:info] = "No billings or ready to bill services found for date #{date}" if params[:date]
@@ -178,7 +172,7 @@ class BillingsController < ApplicationController
     if date.blank?
        @visits = Visit.where("status=? ", READY)
        date = Date.today
-       flashmsg = "claims out of #{@visits.count} sent to cab.md. This includes all previously unbilled visits"
+       flashmsg = "claims out of #{@visits.count} ready to bill claims sent to Cab.md"
     else
        @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
        flashmsg = "claims out of #{@visits.count} sent to cab.md for date #{date}. This includes previously billed and ready for billing visits"
@@ -210,7 +204,8 @@ class BillingsController < ApplicationController
        else
 	  errors = @xmlhash['errors']
 	  messages = @xmlhash['messages']
-	  flash[:danger] = "Error sending claim : #{@xmlhash}"
+	  refid = @xmlhash['reference_id']
+	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
           @visit.update_attribute(:status, READY)
 	  @visit.update_attribute(:export_file, errors.join(','))
        end

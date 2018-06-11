@@ -9,7 +9,7 @@
 	<td><%= procedure.active %></td> 
 	<td>
 	<% if current_user.admin?  %>
-                <%= link_to "delete", procedure, method: :delete, data: { confirm: "You sure?" } %>
+		<%= link_to "delete", procedure, method: :delete, data: { confirm: "Are you sure you want to delete procedure #{procedure.code}?" } %>
         <% end %>
 	</td>
      </tr>
