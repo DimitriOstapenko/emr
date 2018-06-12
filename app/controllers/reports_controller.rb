@@ -118,13 +118,13 @@ private
 
   def get_visits (rep)
     if rep.doc_id
-	    visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).order(entry_ts: :asc)
-	    total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).sum("fee+fee2+fee3+fee4")
+	    visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
+	    total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
 	    insured = 0
 	    visits.each{|v| insured += v.total_insured_fees}
     else
-	    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).order(entry_ts: :asc)
-	    total = Visit.where(entry_ts: (rep.sdate..rep.edate)).where(status: BILLED).sum("fee+fee2+fee3+fee4")
+	    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
+	    total = Visit.where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
 	    visits.each{|v| insured += v.total_insured_fees}
     end
     uninsured = total - insured

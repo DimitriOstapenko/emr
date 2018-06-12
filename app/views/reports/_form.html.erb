@@ -1,23 +1,23 @@
 <%= form_for @report do |f| %>
-
+		
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label "Select Doctor" %>
-    <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'All Active' ) %>
+  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, prompt: 'All Active', selected: @report.doc_id || current_doctor.id %>
 </div>
     
 <div class="col-sm-2" >
   <%= f.label "Report type" %>
-  <%= f.select :rtype, REPORT_TYPES, prompt: 'Select Type' %>
+  <%= f.select :rtype, REPORT_TYPES, prompt: 'Select Type', selected: @report.rtype || DAILY %>
 </div>
 
   <div class="col-sm-10"></div>
 
-<div class="col-sm-2 col-sm-offset-4" id="sdate" style="display:none;">
+<div class="col-sm-2 col-sm-offset-4" id="sdate" >
   <%= f.label "Select Date" %>
-  <%= f.date_field :sdate, class: 'datepicker' %>
+  <%= f.date_field :sdate, class: 'datepicker', value: Time.now.strftime('%Y-%m-%d') %>
 </div>
 
   <div class="col-sm-10"></div>
