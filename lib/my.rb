@@ -22,54 +22,54 @@ module My
   def build_visit_form ( pat, visit )
 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
- 
+
     pdf.font "Courier"
-    pdf.font_size 10
+    pdf.font_size 12
     pdf.stroke_rectangle [0,260.mm], 200.mm,260.mm
 
     patinfo = "<b>Patient</b>:
-   	       #{pat.full_name} (#{pat.sex})
-    	       #{pat.addr}
-    	       #{pat.city}, #{pat.prov} #{pat.postal}
+               #{pat.full_name} (#{pat.sex})
+               #{pat.addr}
+               #{pat.city}, #{pat.prov} #{pat.postal}
 
-	       <b>Phone</b>: #{pat.phone} File: #{pat.id}
-	       <b>DOB</b>: #{pat.dob} Age: #{pat.age} 
-	       <b>HCN</b>: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov}) 
-	       <b>File#</b>: #{pat.id}"
+               <b>Phone</b>: #{pat.phone} File: #{pat.id}
+               <b>DOB</b>: #{pat.dob} Age: #{pat.age} 
+               <b>HCN</b>: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov}) 
+               <b>File#</b>: #{pat.id}"
 
     visitinfo="<b>Provider</b>: Dr. #{visit.doctor.lname}
-	      Family Doctor: #{pat.family_dr} 
+              Family Doctor: #{pat.family_dr} 
 
               Date: #{visit.entry_ts.strftime("%d-%m-%Y")}
-	      Time: #{visit.entry_ts.strftime("%H:%M")}
+              Time: #{visit.entry_ts.strftime("%H:%M")}
 
-	      Visit Type: Walk In
-	      Visit Ref#: #{visit.id}"
-    
+              Visit Type: Walk In
+              Visit Ref#: #{visit.id}"
+
     medinfo = "<b>Medications</b>: #{pat.medications}"
 
     pdf.stroke do
-		pdf.line_width=1
-		pdf.horizontal_line 0,200.mm, :at => 215.mm
-		pdf.horizontal_line 0,200.mm, :at => 183.mm
-		pdf.horizontal_line 0,200.mm, :at => 173.mm
-		pdf.horizontal_line 0,200.mm, :at => 163.mm
-		pdf.horizontal_line 0,200.mm, :at => 153.mm
-		pdf.vertical_line 215.mm,260.mm, :at => 100.mm
-          	pdf.horizontal_line 32.mm,195.mm, :at => 25.mm
-          	pdf.horizontal_line 32.mm,195.mm, :at => 15.mm
-   	      end
+                pdf.line_width=1
+                pdf.horizontal_line 0,200.mm, :at => 215.mm
+                pdf.horizontal_line 0,200.mm, :at => 183.mm
+                pdf.horizontal_line 0,200.mm, :at => 173.mm
+                pdf.horizontal_line 0,200.mm, :at => 163.mm
+                pdf.horizontal_line 0,200.mm, :at => 153.mm
+                pdf.vertical_line 215.mm,260.mm, :at => 100.mm
+                pdf.horizontal_line 32.mm,195.mm, :at => 25.mm
+                pdf.horizontal_line 32.mm,195.mm, :at => 15.mm
+              end
 
-# Patient Info box	   
-    pdf.text_box patinfo, :at => [5.mm,257.mm],
-	 :width => 100.mm,
-	 :height => 45.mm,
- 	 :overflow => :shrink_to_fit,
-	 :min_font_size => 9,
+# Provider Info box    
+    pdf.text_box visitinfo, :at => [5.mm,257.mm],
+         :width => 100.mm,
+         :height => 45.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 9,
          :inline_format => true
 
-# Visit Info box    
-    pdf.text_box visitinfo, :at => [105.mm,257.mm],
+# Patient Info box         
+    pdf.text_box patinfo, :at => [105.mm,257.mm],
          :width => 100.mm,
          :height => 45.mm,
          :overflow => :shrink_to_fit,
@@ -95,7 +95,7 @@ module My
     pdf.draw_text "BP: #{visit.bp}", at: [69.mm,155.mm]
     pdf.draw_text "WT: #{visit.weight}", at: [118.mm,155.mm]
     pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,155.mm]
-    
+
     pdf.draw_text "Notes:", at: [5.mm,148.mm], style: :bold
     pdf.text_box visit.notes, :at => [5.mm,140.mm],
          :width => 195.mm,
@@ -112,6 +112,13 @@ module My
 
     return pdf
   end # build_visit_form
+
+
+
+
+
+
+
 
 # This PDF receipt is generated for 3RD party services only; 1 3RD party service per visit (1st)
   def build_receipt ( pat, visit )
@@ -379,11 +386,11 @@ module My
 # Generate patient's label
   def build_label ( pat )
     @label = label_string ( pat )
-    pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,3.mm,1.mm,1.mm])
+    pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,2.mm,1.mm,1.mm])
     pdf.font "Courier", :style => :bold
-    pdf.text_box @label, :at => [5.mm,26.mm],
-         :width => 82.mm,
-         :height => 27.mm,
+    pdf.text_box @label, :at => [3.mm,26.mm],
+         :width => 84.mm,
+         :height => 25.mm,
          :overflow => :shrink_to_fit,
          :min_font_size => 2.mm
 
@@ -413,13 +420,13 @@ module My
     visits.all.each do |v|
       pat = Patient.find(v.patient_id)
       next unless v.fee > 0
-      rows += [[ pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.units, v.fee, v.diag_scode, '20180308.csv', pat.id ]]
+      rows += [[ pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.units, v.fee, v.diag_scode, v.export_file, pat.id ]]
       @totals[v.bil_type] += v.fee if v.bil_type
       @servcounts[v.bil_type] += 1 if v.bil_type
       serv = v.services
       serv.shift
       serv.each do |s|
-        rows += [[ '','','', s[:pcode], s[:units], s[:fee], v.diag_scode, '20180308.csv', pat.id ]]
+	rows += [[ '','','', s[:pcode], s[:units], s[:fee], v.diag_scode, v.export_file, pat.id ]]
 	@totals[s[:btype]] += s[:fee] if s[:btype]
         @servcounts[s[:btype]] += 1 if s[:btype]
       end
@@ -435,7 +442,7 @@ module My
       
       pdf.move_down 10.mm
       pdf.span(160.mm, :position => :center) do
-        pdf.text "Total Visits: #{visits.count}", size: 10
+        pdf.text "Total Claims: #{visits.count}", size: 10
         totals = [[ '', "HCP", "RMB", "INVOICE", "CASH", "WCB", "PRV", "Total" ]]
         @fees = @totals.values
         @fees.push(@fees.sum)

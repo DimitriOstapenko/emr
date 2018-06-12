@@ -14,7 +14,7 @@
 
   <div class="col-sm-2">
   <%= f.label "Procedure" %>
-  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None' #, selected: @visit.proc_code || 'A007A'  %>
+  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None' %> <!--#, selected: @visit.proc_code || 'A007A'  -->
   <%= f.hidden_field(:fee, id: :fee) %>
   </div>
 
@@ -39,7 +39,7 @@
 <div class="row">
   <div class="col-sm-4">
   <%= f.label "Diagnosis" %>
-  <%=  f.collection_select :diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select'  #, selected: @visit.diag_code || '460.000' %>
+  <%=  f.collection_select :diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select' %> <!--  #, selected: @visit.diag_code || '460.000' -->
   </div>
 
   <div class="col-sm-2">

@@ -11,9 +11,9 @@
               <% if @report.rtype > 1 %>
 	      End Date:   <%= @report.edate %>
 	      <% end %>
-	      Visits:     <%= @visits.count %>
+	      Total claims:     <%= @visits.count %>
 
-	      Grand Total: <b>$<%= @total.round(2) %></b> Insured: <b>$<%= @insured.round(2) %></b> Uninsured: <b>$<%= @uninsured.round(2) %></b>
+	      Total Amount: <b>$<%= @total.round(2) %></b> Insured: <b>$<%= @insured.round(2) %></b> Uninsured: <b>$<%= @uninsured.round(2) %></b>
            </pre>
 
 <table> <!--class="table table-hover table-condensed" > -->
