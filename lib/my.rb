@@ -28,16 +28,17 @@ module My
     pdf.stroke_rectangle [0,260.mm], 200.mm,260.mm
 
     patinfo = "<b>Patient</b>:
-               #{pat.full_name} (#{pat.sex})
+               <b>#{pat.full_name}</b> (#{pat.sex})
                #{pat.addr}
                #{pat.city}, #{pat.prov} #{pat.postal}
 
-               <b>Phone</b>: #{pat.phone} File: #{pat.id}
-               <b>DOB</b>: #{pat.dob} Age: #{pat.age} 
-               <b>HCN</b>: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov}) 
-               <b>File#</b>: #{pat.id}"
+               <b>Phone: #{pat.phonestr} </b>File: #{pat.id}
 
-    visitinfo="<b>Provider</b>: Dr. #{visit.doctor.lname}
+               <b>DOB</b>: #{pat.dob} Age: #{pat.age} 
+               <b>HCN</b>: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})"
+
+    visitinfo="<b>Provider</b>:
+	      Dr. #{visit.doctor.lname}
               Family Doctor: #{pat.family_dr} 
 
               Date: #{visit.entry_ts.strftime("%d-%m-%Y")}
@@ -51,10 +52,10 @@ module My
     pdf.stroke do
                 pdf.line_width=1
                 pdf.horizontal_line 0,200.mm, :at => 215.mm
+                pdf.horizontal_line 0,200.mm, :at => 193.mm
                 pdf.horizontal_line 0,200.mm, :at => 183.mm
                 pdf.horizontal_line 0,200.mm, :at => 173.mm
                 pdf.horizontal_line 0,200.mm, :at => 163.mm
-                pdf.horizontal_line 0,200.mm, :at => 153.mm
                 pdf.vertical_line 215.mm,260.mm, :at => 100.mm
                 pdf.horizontal_line 32.mm,195.mm, :at => 25.mm
                 pdf.horizontal_line 32.mm,195.mm, :at => 15.mm
@@ -86,17 +87,17 @@ module My
 
     allergies = pat.allergies[0,65] rescue ''
     reason = visit.reason[0,68] rescue ''
-    pdf.draw_text "Allergies: ", :at => [5.mm,175.mm], style: :bold
-    pdf.draw_text allergies, :at => [35.mm,175.mm]
-    pdf.draw_text "Reason:", at: [5.mm,165.mm], style: :bold
-    pdf.draw_text reason, at: [26.mm,165.mm]
-    pdf.draw_text 'Vitals:', at: [5.mm,155.mm], style: :bold
-    pdf.draw_text "T: #{visit.temp}", at: [35.mm,155.mm]
-    pdf.draw_text "BP: #{visit.bp}", at: [69.mm,155.mm]
-    pdf.draw_text "WT: #{visit.weight}", at: [118.mm,155.mm]
-    pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,155.mm]
+    pdf.draw_text "Allergies: ", :at => [5.mm,185.mm], style: :bold
+    pdf.draw_text allergies, :at => [35.mm,185.mm]
+    pdf.draw_text "Reason:", at: [5.mm,175.mm], style: :bold
+    pdf.draw_text reason, at: [26.mm,175.mm]
+    pdf.draw_text 'Vitals:', at: [5.mm,165.mm], style: :bold
+    pdf.draw_text "T: #{visit.temp}", at: [35.mm,165.mm]
+    pdf.draw_text "BP: #{visit.bp}", at: [69.mm,165.mm]
+    pdf.draw_text "WT: #{visit.weight}", at: [118.mm,165.mm]
+    pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,165.mm]
 
-    pdf.draw_text "Notes:", at: [5.mm,148.mm], style: :bold
+    pdf.draw_text "Notes:", at: [5.mm,158.mm], style: :bold
     pdf.text_box visit.notes, :at => [5.mm,140.mm],
          :width => 195.mm,
          :height => 110.mm,
