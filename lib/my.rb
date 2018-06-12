@@ -98,7 +98,7 @@ module My
     pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,165.mm]
 
     pdf.draw_text "Notes:", at: [5.mm,158.mm], style: :bold
-    pdf.text_box visit.notes, :at => [5.mm,140.mm],
+    pdf.text_box visit.notes, :at => [5.mm,152.mm],
          :width => 195.mm,
          :height => 110.mm,
          :overflow => :shrink_to_fit,
@@ -113,13 +113,6 @@ module My
 
     return pdf
   end # build_visit_form
-
-
-
-
-
-
-
 
 # This PDF receipt is generated for 3RD party services only; 1 3RD party service per visit (1st)
   def build_receipt ( pat, visit )
@@ -388,12 +381,13 @@ module My
   def build_label ( pat )
     @label = label_string ( pat )
     pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,2.mm,1.mm,1.mm])
-    pdf.font "Courier", :style => :bold
-    pdf.text_box @label, :at => [3.mm,26.mm],
-         :width => 84.mm,
+    pdf.font "Courier", size: 10 
+    pdf.text_box @label, :at => [2.mm,26.mm],
+         :width => 80.mm,
          :height => 25.mm,
          :overflow => :shrink_to_fit,
-         :min_font_size => 2.mm
+         :min_font_size => 9,
+         :inline_format => true
 
     return pdf
   end
@@ -467,11 +461,12 @@ private
      dob = pat.dob.strftime("%d-%b-%Y") rescue ''
      exp_date = pat.hin_expiry.strftime("%m/%y") rescue ''
 
-     "#{pat.full_name} (#{pat.sex})
+     "<b>#{pat.full_name} (#{pat.sex}), #{pat.age} y.o</b> 
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal} 
-     DOB: #{dob}, #{pat.age} y.o 
-     H#: #{pat.ohip_num} V:#{pat.ohip_ver} Exp:#{exp_date} (#{pat.hin_prov})
-     Tel: #{pat.phonestr} File: #{pat.id}"
+     DOB: <b>#{dob}</b>
+     H#: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})
+     Tel: #{pat.phonestr}
+     File: #{pat.id}"
   end
 
   end # Forms
