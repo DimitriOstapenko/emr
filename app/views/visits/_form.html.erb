@@ -126,8 +126,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.label "Reason for Visit" %>
-      <%= f.text_field :reason %>
+  <%= f.text_area :reason, rows: 2, placeholder: 'Reason for visit' %>
   </div>
 
   <!-- Notes, reason, submit -->
@@ -138,7 +137,7 @@
   <%=  f.collection_select(:provider_id, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %> 
   </div>
 
-  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
+  <%= f.text_area :notes, rows:2, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
 </div>

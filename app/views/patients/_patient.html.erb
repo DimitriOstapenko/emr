@@ -1,11 +1,11 @@
     <tr>
 	<td><%= link_to "#{patient.full_name}", patient %> </td>
 	<td><%= patient.sex %></td> 
+	<td><%= patient.age %></td>
 	<td><%= patient.pat_type %> </td>
 	<td><%= "#{patient.ohip_num} #{patient.ohip_ver}" %> </td>
 	<td><%= patient.hin_expiry %> </td>
 	<td><%= patient.dob %> </td>
-	<td><%= patient.age %></td>
 	<td><%= patient.last_visit_date %> </td> 
 	<td><%= patient.visits.count %> </td>
 	<td><%= num_to_phone(patient.phone) %> </td> 
@@ -13,7 +13,7 @@
 	<!--	<td><%= "#{patient.addr} #{patient.city}, #{patient.prov} #{patient.postal}" %> </td>  -->
 
   	<% if current_user.admin?  %>
-		<td>  <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td>
+	<!--	<td>  <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> -->
 	<% end %>
 
      </tr>

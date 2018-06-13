@@ -34,7 +34,7 @@ module My
 
                <b>Phone: #{pat.phonestr} </b>File: #{pat.id}
 
-               <b>DOB</b>: #{pat.dob} Age: #{pat.age} 
+               <b>DOB</b>: #{pat.dob} <b>Age</b>: #{pat.age} 
                <b>HCN</b>: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})"
 
     visitinfo="<b>Provider</b>:
@@ -98,12 +98,14 @@ module My
     pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,165.mm]
 
     pdf.draw_text "Notes:", at: [5.mm,158.mm], style: :bold
-    pdf.text_box visit.notes, :at => [5.mm,152.mm],
+    if !visit.notes.nil?
+      pdf.text_box visit.notes, :at => [5.mm,152.mm],
          :width => 195.mm,
          :height => 110.mm,
          :overflow => :shrink_to_fit,
          :min_font_size => 9,
          :inline_format => true
+    end
 
     pdf.draw_text "Diagnosis", at: [5.mm,25.mm]
     pdf.draw_text 'Signature:', at: [5.mm,15.mm]
