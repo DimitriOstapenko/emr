@@ -31,6 +31,7 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
     year = params[:date][:year]
     month  = params[:date][:month]
+    prefix = @report.doc_id || 'all'
 
     case @report.rtype
        	when 1   # date
@@ -52,7 +53,7 @@ class ReportsController < ApplicationController
    	 	 flash.now[:danger] = "Invalid report type: #[@report.rtype]"
 	end
     
-    @report.name = "#{@report.doc_id}_#{Time.now.to_i}_#{@report.rtype}"
+    @report.name = "#{prefix}_#{Time.now.to_i}_#{@report.rtype}"
     if @report.save
        flash.now[:success] = "Report created : #{@report.name.inspect}"
        redirect_to @report
@@ -117,10 +118,10 @@ private
   end
 
   def get_visits (rep)
+    insured = 0
     if rep.doc_id
 	    visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
 	    total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
-	    insured = 0
 	    visits.each{|v| insured += v.total_insured_fees}
     else
 	    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)

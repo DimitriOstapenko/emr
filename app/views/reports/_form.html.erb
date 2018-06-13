@@ -1,12 +1,13 @@
 <%= form_for @report do |f| %>
 		
+<% doc_id = current_doctor.id if current_doctor %>
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label "Select Doctor" %>
-  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, prompt: 'All Active', selected: @report.doc_id || current_doctor.id %>
-</div>
+  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, prompt: 'All Active', selected: @report.doc_id || doc_id %>
+</div >
     
 <div class="col-sm-2" >
   <%= f.label "Report type" %>
