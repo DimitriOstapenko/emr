@@ -2,10 +2,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-#  get 'export_files/index'
-#  get 'export_files/show'
-#  get 'export_files/delete'
-
   get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
   get '/daily_charts/index'
   get '/drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }

@@ -2,17 +2,14 @@
 <% doctor = Doctor.find(visit.doc_id) %>
 <% diagnosis = Diagnosis.find_by(code: visit.diag_code) %>
 <tr>
-	<% if filter %>
-            <td><%= visit.entry_ts.strftime("%H:%M") %></td>
-         <% else %>
-            <td><%= visit.entry_ts %></td>
-         <%end %>
+        <td><%= visit.entry_ts.strftime("%H:%M") %></td>
 	<td><%= link_to doctor.lname, doctor %> </td>
 	<td><%= link_to visit.id, patient_visit_path(patient,visit) %></td>
 	<td><%= link_to patient.full_name, patient %> </td>
 	<td><%= patient.ohip_num %></td>
 	<td><%= patient.ohip_ver %></td>
 	<td><%= visit.proc_codes %></td>
+	<td><%= visit.all_units.join',' %></td>
 	<td><%= link_to visit.diag_code, diagnosis %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td><%= VISIT_STATUSES.invert[visit.status] %></td>

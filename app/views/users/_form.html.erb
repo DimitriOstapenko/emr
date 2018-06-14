@@ -2,7 +2,7 @@
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <%= f.label :Name, class: "col-sm-6 control-label"%>
+  <%= f.label :Username, class: "col-sm-6 control-label"%>
   <div class="col-sm-6">
   <%= f.text_field :name, class: "form-control" %>
   </div>
@@ -29,6 +29,7 @@
   </div>
 </div>
 
+<% if current_user.admin?  %>
 <div class="row">
   <div class="col-sm-6">
   <%= f.label :Administrator, class: "control-label" %> 
@@ -37,6 +38,7 @@
   <%= f.check_box :admin  %>
   </div>
 </div>
+<% end %>
 
 <div class="spacer-20"></div>
 <div class="row">
