@@ -1,6 +1,10 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "Walk-In EMR", root_path, id: "logo" %>
+    <% if logged_in? %> 
+      <%= link_to "Walk-In EMR", root_path, id: "logo" %>
+    <% else %>
+      <%= link_to "Stoney Creek Medical Walk-In Clinic", root_path, id: "logo" %>
+    <% end %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
 	      
@@ -15,7 +19,7 @@
 	     </div>
        <% end %>
        </li>
-<% elsif controller_name != 'visits' %>
+<% elsif controller_name != 'visits' && controller_name != 'users' && controller_name != 'static_pages' %>
 	<li class="nav-item active">
  	<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
 	     <div class="form-group form-group-sm">
@@ -33,7 +37,7 @@
 <li><%= link_to "Reports", reports_path %></li>
 <li><%= link_to "Log out", logout_path, method: :delete %> </li>
 
-<% if  current_user.admin?  %>
+  <% if  current_user.admin?  %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               Admin <b class="caret"></b>
@@ -54,7 +58,16 @@
          	<li> <%= link_to "Export Files", export_files_path, method: :get %> </li>
             </ul>
           </li>
-<% end %>
+  <% else %>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              User <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+	      <li><%= link_to "My Profile", edit_user_path(current_user) %></li>
+	    </ul>
+	  </li>
+  <% end %>
 <% else %>
           <li><%= link_to "Log in", login_path %></li>
 <% end %>

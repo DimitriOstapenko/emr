@@ -12,7 +12,5 @@
 	<td><%= visit.all_btypes_str.join',' %></td>
 	<td><%= visit.status_str %></td>
 	<td> <%= link_to "edit",  edit_patient_visit_path(pat,visit) %> </td>
-	<% if current_user.admin?  %>
-		<td> <%= link_to "delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id}?" } %> </td>
-	<% end %>
+		<td> <%= link_to "delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
 </tr>
