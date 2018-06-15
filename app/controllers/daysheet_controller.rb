@@ -3,12 +3,12 @@ class DaysheetController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
 	before_action :logged_in_user
-        before_action :admin_user, only: :destroy
+#        before_action :admin_user, only: :destroy
 	
   def index
       date = params[:date] || Date.today
       
-      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').size
+      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
       if params[:doc_id]
          @daysheet = Visit.where("date(entry_ts) = ?", date).where(doc_id: params[:doc_id])
