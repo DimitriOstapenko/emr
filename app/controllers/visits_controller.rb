@@ -43,7 +43,7 @@ class VisitsController < ApplicationController
       @patient.last_visit_date = @visit.created_at	    
       @patient.save
       flash[:success] = "Visit saved"
-      redirect_to @patient
+      redirect_to edit_patient_visit_path(@patient,@visit)
     else
       render 'new'
     end
@@ -111,7 +111,7 @@ class VisitsController < ApplicationController
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-      redirect_to @patient 
+      redirect_back(fallback_location: @patient)
     else
       render 'edit'
     end

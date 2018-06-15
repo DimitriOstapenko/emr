@@ -7,7 +7,17 @@ class DaysheetController < ApplicationController
 	
   def index
       date = params[:date] || Date.today
-      @daysheet = Visit.where("date(entry_ts) = ?", date)
+      
+      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').size
+      @docs = Doctor.find(@docs_visits.keys) rescue []
+      if params[:doc_id]
+         @daysheet = Visit.where("date(entry_ts) = ?", date).where(doc_id: params[:doc_id])
+         d = Doctor.find(params[:doc_id])
+         doctor = "Dr. #{d.lname}" if !d.nil?
+      else
+         @daysheet = Visit.where("date(entry_ts) = ?", date)
+      end
+
       @totalfee = 0
       @daysheet.map{|v| @totalfee += v.total_fee}
       if @daysheet.any?

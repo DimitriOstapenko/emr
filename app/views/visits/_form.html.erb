@@ -126,6 +126,7 @@
 
 <div class="row">
   <div class="col-sm-12">
+  <%= f.label "Reason for visit" %>
   <%= f.text_area :reason, rows: 2, placeholder: 'Reason for visit' %>
   </div>
 
@@ -137,12 +138,15 @@
   <%=  f.collection_select(:provider_id, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %> 
   </div>
 
-  <%= f.text_area :notes, rows:2, placeholder: 'Notes' %>
+  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <p>
   </div>
 </div>
 
 <% end %>
+
+  <%= button_to "Back To Patient", patient_path(@patient), class:"btn btn-primary", method: 'get' %>
 
 <script>
 $(document).ready(function() {
