@@ -8,10 +8,20 @@ class BillingsController < ApplicationController
 
   def index
       date = params[:date] || Date.today
-      @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
+
+# This day doctors/visits key: doc_id; value: number of visits      
+      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').size
+      @docs = Doctor.find(@docs_visits.keys) rescue []
+      if params[:doc_id]
+         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED).where(doc_id: params[:doc_id])
+	 d = Doctor.find(params[:doc_id])
+	 doctor = "Dr. #{d.lname}" if !d.nil?
+      else
+         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
+      end
       @totalfee = 0
       @visits.map{|v| @totalfee += v.total_fee}
-      flashmsg = "Billings for #{date} (#{@visits.count}) Total fee: #{sprintf("$%.2f",@totalfee)}"
+      flashmsg = "Billings for #{doctor}  #{date} (#{@visits.count}) Total fee: #{sprintf("$%.2f",@totalfee)}"
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = flashmsg 

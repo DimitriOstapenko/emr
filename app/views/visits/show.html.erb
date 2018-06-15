@@ -11,6 +11,7 @@
 
 <div class="form-group col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
 <div class="row">
+	<section>
 <pre>
 <b>Doctor</b> :    <%= @visit.doctor.lname %>
 <b>Reason for Visit </b>: <%= @visit.reason %>
@@ -24,13 +25,15 @@
 <b>Status </b>: <%= @visit.status_str %> 
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
-<b>Notes </b>: <%= @visit.notes %>	     
 <% if @visit.provider_id %>
 <% prov = Provider.find( @visit.provider_id ) %>
 <b>Insurance Provider </b>: <%= prov.name rescue '' %>
 <% end %>
 <b>Export file </b>: <%= "#{@visit.export_file}" %>
 </pre>
+
+<b>Notes </b>: <%= @visit.notes %>	     
+</section>
 </div>
 
 <div class="row">

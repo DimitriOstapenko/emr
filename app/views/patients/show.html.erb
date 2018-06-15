@@ -14,19 +14,14 @@
 		    <%= @patient.city %> <%= @patient.prov %> 
 		    <%= @patient.postal %>
 		    <%= @patient.country %>
-	<b>Family Doctor: </b> <%= @patient.family_dr %>
-	<b>Pharmacy:</b> <%= @patient.pharmacy %> : <%= num_to_phone(@patient.pharm_phone) %>
-	<b>Emergency Contact:</b> <% @patient.alt_contact_name %> <b> Phone: </b> <% @patient.alt_contact_phone %>
-	<b>Last Visit:</b> <%= @patient.last_visit_date %>
         <% if !@patient.chart_file.blank? %>
 	<b>Chart File:</b> <%= link_to 'Chart', chart_patient_path(@patient) %>
         <% end %>
 	<b>Allergies</b>: <%= @patient.allergies %>
 	<b>Medications</b>: <%= @patient.medications  %>
+         </pre>
+
 	<b>Notes</b>: <%= @patient.notes %>
-	<b>Created:</b> <%= @patient.entry_date %>
-	<b>Last Modification By:</b> <%= @patient.lastmod_by %>
-           </pre>
     </section>
     <section class="buttons">
 	    
