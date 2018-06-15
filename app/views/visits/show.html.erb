@@ -32,10 +32,14 @@
 <b>Export file </b>: <%= "#{@visit.export_file}" %>
 </pre>
 
+<% if !@visit.notes.empty? %>
 <b>Notes </b>: <%= @visit.notes %>	     
+<% end %>
+
 </section>
 </div>
 
+<p>
 <div class="row">
  <div class="col-sm-3">
   <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>

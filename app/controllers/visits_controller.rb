@@ -4,7 +4,7 @@ class VisitsController < ApplicationController
 
 	before_action :logged_in_user #, only: [:create, :destroy, :index]
         before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
-	before_action :admin_user, only: :destroy
+#	before_action :admin_user, only: :destroy
 
   def index (defdate = Date.today )
     date = params[:date] || defdate
@@ -53,7 +53,7 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @visit.destroy
     flash[:success] = "Visit deleted"
-    redirect_to request.referrer || root_url
+    redirect_to daysheet_path
   end
 
   def show

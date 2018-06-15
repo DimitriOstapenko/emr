@@ -10,7 +10,7 @@ class BillingsController < ApplicationController
       date = params[:date] || Date.today
 
 # This day doctors/visits key: doc_id; value: number of visits      
-      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').size
+      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
       if params[:doc_id]
          @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED).where(doc_id: params[:doc_id])
