@@ -212,7 +212,7 @@ class BillingsController < ApplicationController
           v.update_attribute(:export_file, fname)
 	  claims_sent += 1
        else
-	  errors = @xmlhash['errors']
+	  errors = @xmlhash['errors'] || []
 	  messages = @xmlhash['messages']
 	  refid = @xmlhash['reference_id']
 	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
