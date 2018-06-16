@@ -10,15 +10,20 @@
 	      
 <% if logged_in? %> 
 <% if controller_name == 'daysheet' || controller_name == 'billings' %>
+	<% date = params[:date] || Time.now.strftime('%Y-%m-%d') %>
+	<% prevday = Date.parse(date).prev_day.strftime('%Y-%m-%d') %>
+	<% nextday = Date.parse(date).next_day.strftime('%Y-%m-%d') %>
+       <li style="width: 40px;"><%= link_to "<", params.permit(:date).merge(date: prevday )  %></li>
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group">
-                <div class="col-sm-11">	     
-		<%= f.date_field :date, id: '_datepicker',  onChange: 'this.form.submit()', value: params[:date] || Time.now.strftime('%Y-%m-%d') %>
+                <div class="col-sm-12 padding-0">	     
+		  <%= f.date_field :date, id: '_datepicker',  onChange: 'this.form.submit()', value: date %>
 		</div>
 	     </div>
        <% end %>
        </li>
+       <li style="width: 40px; align:left"><%= link_to ">", params.permit(:date).merge(date: nextday )  %></li>
 <% elsif controller_name != 'visits' && controller_name != 'users' && controller_name != 'static_pages' %>
 	<li class="nav-item active">
  	<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  

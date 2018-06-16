@@ -6,15 +6,19 @@
       <tr>
 	  <th class="tbl_lsm"><%= sortable 'entry_ts', :Time %></th>
           <th class="tbl_md">
+	  <% if @docs.size > 1 %>	  
           <span class="dropdown" >
-		  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white"> Doctor <b class="caret"></b></font> </a>
+	    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white">Doctor<b class="caret"></b></font></a>
             <ul class="dropdown-menu">
-              <li><%= link_to "All", billings_path(date: params[:date]) %></li>
+              <li><%= link_to "All", params.permit(:date).merge(date: params[:date]) %></li>
 	      <% @docs.each do | doc | %>
-		 <li><%= link_to doc.lname, billings_path(date: params[:date], doc_id: doc.id) %></li>
+		<li><%= link_to doc.lname, params.permit(:doc_id,:date).merge(doc_id: doc.id, date: params[:date]) %> </li>
 	      <% end %>
 	    </ul>
 	  </span>
+  	  <% else %>
+             Doctor
+	  <% end %>
 	  </th>
 
 	  <th class="tbl_lmd">Patient</th>
