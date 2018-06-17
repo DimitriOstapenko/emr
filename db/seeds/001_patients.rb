@@ -37,8 +37,10 @@ csv.each do |row|
   patid = row['patid']
   next if entry_date != target_date
 
-  if Patient.exists?(lname: row['sname'])
-	  puts "patient #{row['sname']} already in DB - skipping"
+  ohip_num = row['ohip'].gsub(/\s/,'')
+  pat = Patient.find_by(ohip_num: ohip_num)
+  if Patient.exists?(pat.id)
+	  puts "patient #{row['sname']}, #{row['gname']} : #{row['ohip_num']} already in DB - skipping. Old/new: pat_id = #{pat.id} if pat_id == #{patid}"
 	  next
   end
 
@@ -54,7 +56,6 @@ csv.each do |row|
   sex ='X' unless %w[M F X].include? sex
 
   addr2 = row['address2'] || ''
-  ohip_num = row['ohip'].gsub(/\s/,'')
 
   dob = Date.strptime(row['bdate'], '%m/%d/%Y') if valid_date?(row['bdate'])
   hin_expiry = Date.strptime(row['hin_expir'], '%m/%d/%Y') rescue nil #if valid_date?(row['hin_expir'])
@@ -88,11 +89,11 @@ csv.each do |row|
 #			 mobile:
 #			 last_visit_date:
 
-  if patient.save(validate: false)
+  if patient.save(validate: true)
      puts "*** HS patid: #{patid} Our id: #{patient.id} : Last name: #{patient.lname} saved"
      added += 1
   else
-     puts "Problem patient: #{patient.id}"
+     puts "Problem patient: #{row['sname']}, #{row['gname']} : #{ohip_num} "
      puts patient.errors.full_messages
   end           
 

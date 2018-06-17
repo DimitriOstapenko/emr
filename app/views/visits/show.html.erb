@@ -32,7 +32,7 @@
 <b>Export file </b>: <%= "#{@visit.export_file}" %>
 </pre>
 
-<% if !@visit.notes.empty? %>
+<% if @visit.notes.present? %>
 <b>Notes </b>: <%= @visit.notes %>	     
 <% end %>
 
