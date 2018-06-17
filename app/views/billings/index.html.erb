@@ -4,9 +4,14 @@
 <table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
-	  <th class="tbl_lsm"><%= sortable 'entry_ts', :Time %></th>
+	  <% if date  %>
+            <th class="tbl_lsm"><%= sortable 'entry_ts', :Time %></th>
+          <% else %>
+            <th class="tbl_md"><%= sortable 'entry_ts', :Date %></th>
+          <%end %>
+
           <th class="tbl_md">
-	  <% if @docs.size > 1 %>	  
+	  <% if @docs.present? && @docs.size > 1 %>	  
           <span class="dropdown" >
 	    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white">Doctor<b class="caret"></b></font></a>
             <ul class="dropdown-menu">
@@ -33,7 +38,7 @@
       </tr>
   </thead>
   <tbody>
-	  <%= render partial: "visit", collection: @visits, locals: {filter: date}  %>
+	  <%= render partial: "visit", collection: @visits, locals: {date: date}  %>
   </tbody>
 </table>
 
