@@ -7,27 +7,33 @@ class BillingsController < ApplicationController
     
 
   def index
-      date = params[:date] || Date.today
+      date = params[:date] 
 
 # This day doctors/visits key: doc_id; value: number of visits      
-      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
-      @docs = Doctor.find(@docs_visits.keys) rescue []
-      if params[:doc_id]
-         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED).where(doc_id: params[:doc_id])
-	 d = Doctor.find(params[:doc_id])
-	 doctor = "Dr. #{d.lname}" if !d.nil?
-      else
-         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
+      if date.blank? 
+	 @visits = Visit.where("status=? ", READY)
+	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found"
+      else # Date given - check doctor filter
+         @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
+         @docs = Doctor.find(@docs_visits.keys) rescue []
+         if params[:doc_id]
+           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED).where(doc_id: params[:doc_id])
+	   d = Doctor.find(params[:doc_id])
+	   doctor = "Dr. #{d.lname}" if d.present?
+	 else
+           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
+	 end
       end
+
       @totalfee = 0
       @visits.map{|v| @totalfee += v.total_fee}
-      flashmsg = "Billings for #{doctor}  #{date} (#{@visits.count}) Total fee: #{sprintf("$%.2f",@totalfee)}"
+      flashmsg = "Billings for #{doctor}  #{date} (#{@visits.count}) Total fee: #{sprintf("$%.2f",@totalfee)}" if date.present?
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = flashmsg 
 	 render 'index'
       else
-         flash.now[:info] = "No billings or ready to bill services found for date #{date}" if params[:date]
+	 flash.now[:info] = "No billings or ready to bill services found for date #{date}" if date.present?
 	 render  inline: '', layout: true
       end
   end
