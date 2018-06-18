@@ -54,7 +54,8 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @visit.destroy
     flash[:success] = "Visit deleted"
-    redirect_to daysheet_path
+#    redirect_to daysheet_path
+    redirect_back(fallback_location: daysheet_path)
   end
 
   def show
