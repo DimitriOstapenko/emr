@@ -35,6 +35,9 @@ csv.each do |row|
   sex = row['sex'].gsub(/\s/,'').upcase
   sex ='X' unless %w[M F X].include? sex
 
+  lname = row['sname']
+  next unless lname.match(/^[[:alpha:]]/)
+
   addr2 = row['address2'] || ''
   ohip_num = row['ohip'].gsub(/\s/,'')
 
@@ -42,8 +45,7 @@ csv.each do |row|
   hin_expiry = Date.strptime(row['hin_expir'], '%m/%d/%Y') rescue nil #if valid_date?(row['hin_expir'])
   entry_date = Date.strptime(row['entry_date'], '%m/%d/%Y') rescue nil #if valid_date?(row['entry_date'])
 
-  patient = Patient.new  id: row['patid'],
-  			 lname: row['sname'],
+  patient = Patient.new  lname: row['sname'], #id: row['patid'],
                      	 fname: row['gname'],
 			 mname: row['int'],
 			 ohip_num: ohip_num,
