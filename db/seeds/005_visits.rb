@@ -17,6 +17,10 @@ target_date = ARGV[0].to_date
     exit
 end
 
+def ts( str, format="%m/%d/%Y %k:%M:%S" )
+    Time.strptime(str,format) rescue Time.new(1900,1,1)
+end
+
 added = 0
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'schedule_data.csv'))
 
@@ -36,24 +40,20 @@ csv.each do |row|
   end
   
   pat_id = row['pat_code']
-  pat_id = 70761 if pat_id == 70727
-  pat_id = 70762 if pat_id == 70734 
-  pat_id = 70763 if pat_id == 70736 
-  pat_id = 70764 if pat_id == 70738 
-  pat_id = 70765 if pat_id == 70739
-
-
 
   unless Patient.exists?(pat_id)
     puts "Patient not found: #{pat_id}" 
     next
   end 
+  
+  patient = Patient.find(pat_id)
+  datetime = ts(row['entry_date'] +' '+ row['entry_time'])
 
   visit = patient.visits.build  entry_ts: datetime,  # id: row['ordno'],
  		     		doc_id: doc.id,
 		     		doc_code: doc_code,
 		     		status: row['status'],
-		     		proc_code: row['proc_code'],
+#		     		proc_code: row['proc_code'],  'OC' in this table!
 		     		diag_code: row['diagnosis'],
 #		     		notes: row['importance'],
 		     		duration: row['duration'], 
