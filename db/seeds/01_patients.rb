@@ -22,7 +22,8 @@ csv.each do |row|
 #        puts row.to_hash
 
   patid = row['patid']
-  next if Patient.exists?(patid)
+  ohip_num = row['ohip'].gsub(/\s/,'')
+  next if Patient.exists?(ohip_num: ohip_num)
 
   areacode = row['acres'] || ''
   phone = areacode + row['rtele']
@@ -39,13 +40,12 @@ csv.each do |row|
   next unless lname.match(/^[[:alpha:]]/)
 
   addr2 = row['address2'] || ''
-  ohip_num = row['ohip'].gsub(/\s/,'')
 
   dob = Date.strptime(row['bdate'], '%m/%d/%Y') if valid_date?(row['bdate'])
   hin_expiry = Date.strptime(row['hin_expir'], '%m/%d/%Y') rescue nil #if valid_date?(row['hin_expir'])
   entry_date = Date.strptime(row['entry_date'], '%m/%d/%Y') rescue nil #if valid_date?(row['entry_date'])
 
-  patient = Patient.new  lname: row['sname'], #id: row['patid'],
+  patient = Patient.new  lname: lname, #id: row['patid'],
                      	 fname: row['gname'],
 			 mname: row['int'],
 			 ohip_num: ohip_num,
