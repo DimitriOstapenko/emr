@@ -24,7 +24,7 @@ class Patient < ApplicationRecord
 #        validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 #        validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
-#!	validate :hc_checksum_and_expiry 
+	validate :hc_checksum_and_expiry 
 
   def full_name
     return fname.blank? ? lname : "#{lname}, #{fname} #{mname}"

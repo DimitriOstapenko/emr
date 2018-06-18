@@ -30,19 +30,24 @@ def valid_date?( str, format="%m/%d/%Y" )
   Date.strptime(str,format) rescue false
 end
 
+count = 0
 csv.each do |row|
 #  puts row.to_hash
 
   entry_date = Date.strptime(row['entry_date'], '%m/%d/%Y') rescue nil 
-  patid = row['patid']
   next if entry_date != target_date
-
+  patid = row['patid']
   ohip_num = row['ohip'].gsub(/\s/,'')
-  pat = Patient.find_by(ohip_num: ohip_num)
-  if Patient.exists?(pat.id)
+
+  count +=1
+  puts "#{count} : #{patid} : #{ohip_num}"
+
+  if (pat = Patient.exists?(ohip_num: ohip_num))
 	  puts "patient #{row['sname']}, #{row['gname']} : #{row['ohip_num']} already in DB - skipping. Old/new: pat_id = #{pat.id} if pat_id == #{patid}"
 	  next
   end
+
+  next
 
   areacode = row['acres'] || ''
   phone = areacode + row['rtele']

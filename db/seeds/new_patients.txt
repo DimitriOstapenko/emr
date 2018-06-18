@@ -1,0 +1,35 @@
+
+About to import new patients for date 09-Jun-2018 into DB from HS CSV file patdata.csv
+*** HS patid: 70716 Our id: 70760 : Last name:               ^200479921968040 saved  - Deleted!
+patient KAUR already in DB - skipping
+patient GAGIC already in DB - skipping
+patient SEN already in DB - skipping
+patient PIERCE already in DB - skipping
+61909 patients now in patients table. Added 1 patients.
+
+About to import new patients for date 11-Jun-2018 into DB from HS CSV file patdata.csv
+*** HS patid: 70727 Our id: 70761 : Last name: BAJADA saved
+patient AL-NAQEB already in DB - skipping
+patient AL-NAQEB already in DB - skipping
+patient HUN already in DB - skipping
+patient SINGH already in DB - skipping
+patient PRICE already in DB - skipping
+*** HS patid: 70734 Our id: 70762 : Last name: MOHAMMAD AMIN TAHA saved
+patient DIDIODATO already in DB - skipping
+*** HS patid: 70736 Our id: 70763 : Last name: WIDAWSKI saved
+patient GIBB already in DB - skipping
+61911 patients now in patients table. Added 3 patients.
+
+About to import new patients for date 12-Jun-2018 into DB from HS CSV file patdata.csv
+*** HS patid: 70738 Our id: 70764 : Last name: CROWELL saved
+*** HS patid: 70739 Our id: 70765 : Last name: TRIVISONNO saved
+patient ST CYR already in DB - skipping
+patient SCATTOLON already in DB - skipping
+patient CLARKE already in DB - skipping
+patient ROBINSON already in DB - skipping
+patient BLOM already in DB - skipping
+patient KHAMIS already in DB - skipping
+patient SPEHAR already in DB - skipping
+61913 patients now in patients table. Added 2 patients.
+
+
