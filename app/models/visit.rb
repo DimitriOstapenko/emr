@@ -40,7 +40,8 @@ class Visit < ApplicationRecord
 # Find index of 3-rd party procedure in the list of procedures, if any
   def _3rd_index
     bil_types('').index(BILLING_TYPES[:Invoice].to_s) ||
-    bil_types('').index(BILLING_TYPES[:Cash].to_s)
+    bil_types('').index(BILLING_TYPES[:Cash].to_s) ||
+    bil_types('').index(BILLING_TYPES[:PRV].to_s)
   end  
 
 # Are there HCP services in this visit?
