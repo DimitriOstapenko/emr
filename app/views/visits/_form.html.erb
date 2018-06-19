@@ -5,7 +5,7 @@
   <% @procedures = get_active_procedures %>
 
   <% if @visit.hcp_proc_codes.present?
-        disabled = [BILLED,PAID] 
+        disabled = [BILLED,PAID] unless @visit._3rd_index.present?
   elsif @visit.proc_codes.empty?
         disabled = [READY,BILLED,PAID] unless @visit.proc_codes.present? 
   end %>
