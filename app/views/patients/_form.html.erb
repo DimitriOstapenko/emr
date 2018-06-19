@@ -39,12 +39,12 @@
 <div class="row">
   <div class="col-sm-2">
   <%= f.label 'Health Card#' %>
-  <%= f.text_field :ohip_num, placeholder: 'XXX XXXX XXX'%>
+  <%= f.text_field :ohip_num %>
   </div>
 
   <div class="col-sm-2 col-md-1">
   <%= f.label 'Version' %>
-  <%= f.text_field :ohip_ver, placeholder: 'XX' %>
+  <%= f.text_field :ohip_ver  %>
   </div>
   
   <div class="col-sm-2 col-md-1">
@@ -72,7 +72,7 @@
   
   <div class="col-sm-2">
   <%= f.label :City %>
-  <%= f.text_field :city,  placeholder: 'City' %>
+  <%= f.text_field :city %>
   </div>
   
   <div class="col-sm-1">
@@ -82,12 +82,12 @@
   
   <div class="col-sm-2 col-md-1">
   <%= f.label :Country %>
-  <%= f.text_field(:country, value: 'Canada', placeholder: 'Country' ) %>
+  <%= f.text_field(:country, value: 'Canada' ) %>
   </div>
 
   <div class="col-sm-1">
   <%= f.label :Postal %>
-  <%= f.text_field :postal, placeholder: 'Postal'%>
+  <%= f.text_field :postal %>
   </div>
 </div>
 
@@ -162,6 +162,10 @@
 <script>
 $(document).ready(function () {
    var sex = $('#edit_patient_<%= @patient.id %> select[name="patient[sex]"]');
+   if (sex.val() == null) {
+      sex = $('#new_patient select[name="patient[sex]"]');
+   }
+
    (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
    sex.change(function () {
      (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();

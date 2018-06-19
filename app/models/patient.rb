@@ -5,17 +5,16 @@ class Patient < ApplicationRecord
 	default_scope -> { order(lname: :asc, fname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
-	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') rescue '' }
-	before_validation { ohip_ver.upcase! }
+	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') rescue nil }
+	before_validation :upcase_some_fields 
 	before_validation { phone.gsub!(/\D/,'') rescue '' }
 	before_validation { mobile.gsub!(/\D/,'') rescue '' }
 	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
 	before_validation { postal.tr!(' -','') rescue '' }
-	before_validation { postal.upcase! rescue '' }
 
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
-	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, presence:true, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
+	validates :ohip_num,  length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true, allow_nil: true, presence:true, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 #!	validates :ohip_ver, presence: true, length: { maximum: 3 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
 #        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
@@ -83,6 +82,17 @@ class Patient < ApplicationRecord
   def valid_attribute?( attribute_name )
     self.valid?
     self.errors[attribute_name].blank?
+  end
+
+protected
+
+  def upcase_some_fields
+	  ohip_ver.upcase! if ohip_ver.present?
+	  postal.upcase! if postal.present?
+	  lname.upcase! if lname.present?
+	  fname.upcase! if fname.present?
+	  mname.upcase! if mname.present?
+	  maid_name.upcase! if maid_name.present?
   end
 
 end

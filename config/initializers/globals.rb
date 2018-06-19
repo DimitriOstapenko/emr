@@ -27,6 +27,7 @@ VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid
 ASSESSED = VISIT_STATUSES[:Assessed]
 READY = VISIT_STATUSES[:'Ready To Bill']
 BILLED = VISIT_STATUSES[:Billed]
+PAID = VISIT_STATUSES[:Paid]
 
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
