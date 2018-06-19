@@ -26,10 +26,8 @@
 		   <b>Notes:</b> <%= @patient.notes %>
 	   </div>
 	</div>
-
     </section>
     <section class="buttons">
-	    
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
     <p>
     <%= button_to "Edit Patient", edit_patient_path(@patient), class:"btn btn-primary", method: 'get' %>

@@ -387,4 +387,12 @@ table.pretty {
 
 .panel-body {
 background: #FFCCFF;
+    max-height: 230px;
+    overflow-y: scroll;
+}
+
+// Notes scrollable PRE panels
+.pre-scrollable {
+    max-height: 140px;
+    overflow-y: scroll;
 }

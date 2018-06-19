@@ -75,7 +75,7 @@ module ApplicationHelper
     end
 
     def num_to_phone( phone, area_code = true )
-      return 'N/A' if phone.blank?
+      return '' if phone.blank?
       number_to_phone(phone, area_code: :true)
     end
 

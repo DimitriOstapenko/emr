@@ -95,8 +95,22 @@ class PatientsController < ApplicationController
        cardpat = create_patient_from_card ( @cardstr )
        @patient = Patient.find_by(ohip_num: @cardstr[7,10])
        if @patient
-	  @patient.hin_expiry = cardpat.hin_expiry
-          redirect_to @patient 
+#	  @patient.hin_expiry = cardpat.hin_expiry
+	  msg = nil
+	  msg = "Version code mismatch: card says '#{cardpat.ohip_ver}'" if cardpat.ohip_ver.casecmp(@patient.ohip_ver) !=0
+	  msg = "Last name mismatch: card says '#{cardpat.lname}'" if cardpat.lname.casecmp(@patient.lname) !=0
+	  msg = "First name mismatch: card says '#{cardpat.fname}'" if cardpat.fname.casecmp(@patient.fname) != 0
+	  msg = "Date of birth mismatch: card says #{cardpat.dob} " if cardpat.dob != @patient.dob
+	  msg = "Gender mismatch: #{cardpat.sex} on the card" if cardpat.sex.casecmp(@patient.sex) != 0
+	  msg = "Expiry date mismatch: card says #{cardpat.hin_expiry} " if cardpat.hin_expiry != @patient.hin_expiry
+
+	  if msg.present?
+	     flash[:info] = "Card found for #{@patient.lname}, #{@patient.fname} (#{@patient.sex}) #{msg}"
+	     redirect_to edit_patient_path(@patient.id)
+	  else
+	     flash[:info] = "Card found for #{cardpat.lname}, #{cardpat.fname} (#{cardpat.sex}). All data matches our records"
+             redirect_to @patient
+	  end
        else 
 	  @patient = cardpat 
           respond_to do |format|
@@ -159,8 +173,8 @@ private
     names = str[18,26].split('/')
     pat.ohip_num = str[7,10] rescue ''
     pat.ohip_ver = str[61,2] rescue ''
-    pat.lname = names[0] rescue ''
-    pat.fname = names[1] rescue ''
+    pat.lname = names[0].strip rescue ''
+    pat.fname = names[1].strip rescue ''
     sdob = str[53,8]
     pat.dob = Date.strptime(sdob, '%Y%m%d')
     exp_dt = str[45,4] + sdob[6,2]
