@@ -21,11 +21,14 @@
 	<b>Medications</b>: <%= @patient.medications  %>
          </pre>
 	 
+	 <% if @patient.notes.present? %> 
 	 <div class="panel panel-info">
 	   <div class="panel-body">
-		   <b>Notes:</b> <%= @patient.notes %>
+		   <% html_str = "<pre class='notes'> #{@patient.notes} </pre>" %>
+                   <%= html_str.html_safe %>
 	   </div>
 	</div>
+<% end %>
     </section>
     <section class="buttons">
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>

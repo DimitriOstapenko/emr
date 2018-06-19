@@ -396,3 +396,13 @@ background: #FFCCFF;
     max-height: 140px;
     overflow-y: scroll;
 }
+
+.notes {
+  background-color: transparent; 
+  overflow:auto; 
+  white-space: pre-wrap; 
+  border: 0;
+  padding: 10px;
+}
+
+

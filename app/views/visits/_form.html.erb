@@ -5,10 +5,24 @@
   <% @procedures = get_active_procedures %>
 
   <% if @visit.hcp_proc_codes.present?
-        disabled = [BILLED,PAID] unless @visit._3rd_index.present?
+#        disabled = [BILLED,PAID] unless @visit._3rd_index.present?
+	 disabled = []
   elsif @visit.proc_codes.empty?
-        disabled = [READY,BILLED,PAID] unless @visit.proc_codes.present? 
+#        disabled = [READY,BILLED,PAID] unless @visit.proc_codes.present? 
+	 disabled = []
   end %>
+
+
+  <!-- Row 0 if admin --> 
+
+<% if current_user.admin? %>
+<div class="row">
+  <div class="col-sm-4">
+  <%= f.label "Visit Time Stamp" %>
+  <%= f.datetime_field :entry_ts %>
+  </div>
+</div>
+<% end %>
 
   <!-- Row 1 --> 
 
@@ -105,7 +119,7 @@
   <!-- Row 4 -->
 
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-4" id="visit_statuses">
   <%= f.label "Visit Status" %>
   <%= f.select :status, VISIT_STATUSES, placeholder: 'Status', disabled: disabled %>
   </div>
@@ -164,6 +178,14 @@ $(document).ready(function() {
     $('#visit_proc_code2').select2();
     $('#visit_proc_code3').select2();
     $('#visit_proc_code4').select2();
+
+    var proccode = $('#new_visit select[name="visit[proc_code]"]');
+
+    (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
+    proccode.change(function () {
+      (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
+    });
+
 });
 
 // Show insurance Drop-Down if :Invoice is selected in bill type 1..4
