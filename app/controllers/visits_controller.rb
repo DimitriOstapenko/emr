@@ -21,6 +21,7 @@ class VisitsController < ApplicationController
   def new
         @patient = Patient.find(params[:patient_id])
         @visit = @patient.visits.new
+	@visit.entry_ts = Time.now
         current_doctor_set
 #        redirect_back(fallback_location: @visit ) #new_patient_visit_path
   end
@@ -28,8 +29,13 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    @visit.entry_ts = DateTime.now
     @visit.entry_by = current_user.name
+    if @visit.entry_ts.present?
+       @visit.entry_ts = Time.now if @visit.entry_ts > Date.tomorrow
+    else
+       @visit.entry_ts = Time.now
+    end
+
 
     if @visit.doc_id != current_doctor.id
 	 set_doc_session ( @visit.doc_id )
@@ -40,9 +46,9 @@ class VisitsController < ApplicationController
     set_visit_fees ( @visit )
 
     if @visit.save
-      @patient.last_visit_date = @visit.created_at	    
+      @patient.last_visit_date = @visit.entry_ts
       @patient.save
-      flash[:success] = "Visit saved"
+      flash[:success] = "Visit saved! #{params[:entry_ts]} "
       redirect_to @patient
 #      redirect_to edit_patient_visit_path(@patient,@visit)
     else
