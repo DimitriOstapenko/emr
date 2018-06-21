@@ -383,12 +383,13 @@ module My
   def build_label ( pat )
     @label = label_string ( pat )
     pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,2.mm,1.mm,1.mm])
-    pdf.font "Courier", size: 10 
+    pdf.font "Helvetica", size: 10 
     pdf.text_box @label, :at => [2.mm,25.mm],
-         :width => 88.mm,
-         :height => 27.mm,
+         :width => 60.mm,
+         :height => 28.mm,
          :overflow => :shrink_to_fit,
          :min_font_size => 9,
+	 :leading => 0,  # line spacing
          :inline_format => true
 
     return pdf
@@ -463,7 +464,7 @@ private
      dob = pat.dob.strftime("%d-%b-%Y") rescue ''
      exp_date = pat.hin_expiry.strftime("%m/%y") rescue ''
 
-     "<b>#{pat.full_name} (#{pat.sex}), #{pat.age} y.o</b> 
+     "<b>#{pat.lname}, #{pat.fname} (#{pat.sex}), #{pat.age} y.o</b> 
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal} 
      DOB: <b>#{dob}</b> File: #{pat.id}
      H#: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})
