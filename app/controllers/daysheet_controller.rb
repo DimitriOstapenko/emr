@@ -18,12 +18,14 @@ class DaysheetController < ApplicationController
          @daysheet = Visit.where("date(entry_ts) = ?", date)
       end
 
-      @totalfee = 0
+      @totalfee = @totalinsured = @totalcash = 0
       @daysheet.map{|v| @totalfee += v.total_fee}
+      @daysheet.map{|v| @totalcash += v.total_cash}
+      @daysheet.map{|v| @totalinsured += v.total_insured_fees}
       if @daysheet.any?
 #         @daysheet = @daysheet.paginate(page: params[:page])
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "Daysheet for #{date} (#{@daysheet.count} visits). Total fee: #{sprintf("$%.2f",@totalfee)}"
+	 flash.now[:info] = "Daysheet for #{date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}"
          render 'index'
       else
 	 flash.now[:info] = 'No visits were found for date ' + date.inspect 

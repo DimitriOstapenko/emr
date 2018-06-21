@@ -107,9 +107,14 @@ class Visit < ApplicationRecord
     fee + fee2 + fee3 + fee4
   end
 
-# Total fee of insured services (HSP, RMB) 
+# Total fee of insured services (HCP, RMB) 
   def total_insured_fees
     services.select{|i| i[:btype] && i[:btype] < 3}.sum{|s| s[:fee]} rescue 0
+  end
+
+# Total amount of cash 
+  def total_cash
+    services.select{|i| i[:btype] && i[:btype] == 4}.sum{|s| s[:fee]} rescue 0
   end
 
 # Total of other than insured services   

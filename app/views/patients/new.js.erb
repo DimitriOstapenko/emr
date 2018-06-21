@@ -1,5 +1,5 @@
 //alert ("new.js.erb called <%= @patient.full_name %>");
 
-$('#result').html("<h2> New Patient </h2><%= j render 'form' %>");
+$('#result').html("<h2><%= flash[:info] %><font color=red> <%= flash[:danger] %> </font></h2><%= j render 'form' %>");
 $('#page').hide();
 $('.alert').hide();

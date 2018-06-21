@@ -16,18 +16,20 @@ TRUE_FALSE = {True: 1,False: 0}.freeze
 
 # Patients
 
-PATIENT_TYPES = {OHIP: 'O', Transient: 'T', Deceased: 'D', RMB: 'R', 'Self Pay': 'S', 'Waiting For HC': 'W', Imported: 'I'}.freeze
+PATIENT_TYPES = {OHIP: 'O', Transient: 'T', Deceased: 'D', RMB: 'R', 'Self Pay': 'S', 'Waiting For HC': 'W', Clinic: 'C'}.freeze
 SEXES  = {Male: 'M',Female: 'F',Unknown: 'X'}.freeze
 DIGSEXES = {'M' => 1, 'F' => 2}.freeze
 PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS', NT: 'NT', NU: 'NU', PE: 'PE', QC: 'QC', SK: 'SK', YT: 'YT'}
 
 # Visits
 
-VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6}.freeze
+VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, Error: 7}.freeze
 ASSESSED = VISIT_STATUSES[:Assessed]
 READY = VISIT_STATUSES[:'Ready To Bill']
 BILLED = VISIT_STATUSES[:Billed]
 PAID = VISIT_STATUSES[:Paid]
+CANCELLED = VISIT_STATUSES[:Cancelled]
+ERROR = VISIT_STATUSES[:Error]
 
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
