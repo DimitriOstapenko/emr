@@ -174,6 +174,10 @@ class Visit < ApplicationRecord
     BILLING_TYPES.invert[bil_type4]
   end
 
+  def was_today?
+     entry_ts.to_date == Date.today
+  end
+
 end
 
 

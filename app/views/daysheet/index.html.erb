@@ -36,11 +36,14 @@
           <th class="tbl_sm">Ver.</th>
           <th class="tbl_lsm">Diagnosis</th>
           <th class="tbl_xmd">Procedures</th>
-          <th class="tbl_sm">Units</th>
           <th class="tbl_sm">Bil.Type</th>
           <th class="tbl_lsm">Status</th>
-          <th class="tbl_lsm"></th>
-          <th class="tbl_lsm"></th>
+	  <% if date == Date.today || current_user.admin? %>
+	    <th class="tbl_sm"></th>
+            <th class="tbl_sm"></th>
+            <th class="tbl_sm"></th>
+          <% end %>
+          <th class="tbl_sm"></th>
       </tr>
   </thead>
   <tbody>

@@ -46,7 +46,12 @@ class Patient < ApplicationRecord
   def age
     return unless dob
     now = Date.today
-    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+    years = now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+    years > 0 ? years : (dob.year * 12 + dob.month) - (now.year * 12 + now.month) 
+  end
+
+  def age_str
+    age > 0 ? "#{age} yr" : "#{-age} mo" 	  
   end
 
   def hc_checksum_and_expiry
