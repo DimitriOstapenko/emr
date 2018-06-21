@@ -7,7 +7,7 @@
     <section class="user_info">
 	   <pre class="pre-scrollable" >
 	<b>Name:</b> <%= @patient.full_name %> <b>Type:</b> <%= PATIENT_TYPES.invert[@patient.pat_type] %>
-	<b>DOB:</b> <%= @patient.dob %> : <%= @patient.age %> y/o  <%= @patient.sex %>
+	<b>DOB:</b> <%= @patient.dob %> : <%= @patient.age_str %>  <%= @patient.sex %>
 	<b>Health Card:</b> <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) <b>Expires:</b> <%= @patient.hin_expiry %>
 	<b>Phone:</b> <%= num_to_phone(@patient.phone) %>  <b>Mobile:</b> <%= num_to_phone(@patient.mobile) %> <b>Email:</b> <%= mail_to @patient.email %>
 	<b>Address:</b> <%= @patient.addr %>
@@ -35,7 +35,7 @@
     <p>
     <%= button_to "Edit Patient", edit_patient_path(@patient), class:"btn btn-primary", method: 'get' %>
     <p>
-    <%= button_to "Print Label", label_patient_path(@patient), class: "btn btn-primary", method: 'get'  %>
+    <%= button_to "Print Label", label_patient_path(@patient), class: "btn btn-primary", method: 'get' %> <!-- , data: {toggle: "modal", target: "#exampleModal"}   %> -->
 
     </section>
   </aside>

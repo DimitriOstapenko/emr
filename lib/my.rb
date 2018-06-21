@@ -464,7 +464,7 @@ private
      dob = pat.dob.strftime("%d-%b-%Y") rescue ''
      exp_date = pat.hin_expiry.strftime("%m/%y") rescue ''
 
-     "<b>#{pat.lname}, #{pat.fname} (#{pat.sex}), #{pat.age} y.o</b> 
+     "<b>#{pat.lname}, #{pat.fname} (#{pat.sex}), #{pat.age_str}</b> 
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal} 
      DOB: <b>#{dob}</b> File: #{pat.id}
      H#: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})

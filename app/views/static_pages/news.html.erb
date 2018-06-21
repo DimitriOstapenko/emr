@@ -1,0 +1,20 @@
+
+<% if logged_in? %>
+	
+	<h1> Recent changes to Walk-In EMR </h1
+	<section>
+
+		<ul>
+			<li> Patient's age is now shown in months or years. Negative integer is used internally to denote age in months. Please alert me if you see negative numbers for age anywhere </li>
+			<li> Label modified: different, larger font, smaller width, middle name is now omitted </li>
+			<li> Links added to day sheet for current day only: Label, Form. Both open in a new tab  </li>
+			<li> Delete link for visits are not accessible anymore in previous days </li>
+			<li> Visit status 'Error' added to mark visits with errors found in Cab.md/MOH </li>
+			<li> 'Clinic' patient type added </li>
+			<li> When card is swiped, search is now performed for patient with the same last name and DOB. Warning message issued if match found </li>
+			<li> Card fields are now compared with our records. Warning message and edit form are shown if mismatch is found</li>
+			<li> </li>
+		</ul>
+	</section>
+
+<% end %>
