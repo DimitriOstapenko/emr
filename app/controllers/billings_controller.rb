@@ -8,11 +8,12 @@ class BillingsController < ApplicationController
 
   def index
       date = params[:date] 
+      @totalfee = 0
 
 # This day doctors/visits key: doc_id; value: number of visits      
       if date.blank? 
-	 @visits = Visit.where("status=? ", READY)
-	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found"
+	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
+	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found." 
       else # Date given - check doctor filter
          @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
          @docs = Doctor.find(@docs_visits.keys) rescue []
@@ -23,14 +24,13 @@ class BillingsController < ApplicationController
 	 else
            @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
 	 end
+	 flashmsg = "Billings for #{doctor}  #{date} : #{@visits.count} visits. " 
       end
 
-      @totalfee = 0
       @visits.map{|v| @totalfee += v.total_fee}
-      flashmsg = "Billings for #{doctor}  #{date} (#{@visits.count}) Total fee: #{sprintf("$%.2f",@totalfee)}" if date.present?
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = flashmsg 
+	 flash.now[:info] = "#{flashmsg} Total fee: #{sprintf('$%.2f',@totalfee)}"
 	 render 'index'
       else
 	 flash.now[:info] = "No billings or ready to bill services found for date #{date}" if date.present?

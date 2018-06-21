@@ -1,4 +1,5 @@
-<% pat = Patient.find(visit.patient_id) %>
+<% pat = Patient.find(visit.patient_id) rescue nil %>
+<% return unless pat.present? %>
 
 <tr>
 	<td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %> </td>

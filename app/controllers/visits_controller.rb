@@ -21,7 +21,7 @@ class VisitsController < ApplicationController
   def new
         @patient = Patient.find(params[:patient_id])
         @visit = @patient.visits.new
-	@visit.entry_ts = Time.now
+        @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
         current_doctor_set
 #        redirect_back(fallback_location: @visit ) #new_patient_visit_path
   end

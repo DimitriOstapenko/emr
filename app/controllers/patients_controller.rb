@@ -112,11 +112,17 @@ class PatientsController < ApplicationController
              redirect_to @patient
 	  end
        else 
+	  msg = "Patient '#{cardpat.lname}' born #{cardpat.dob} already exists in database with different health card number" if Patient.exists?(lname: cardpat.lname, dob: cardpat.dob)
 	  @patient = cardpat 
+	  if msg.present?
+	     flash[:danger] = msg 
+	  else
+	     flash[:info] = 'New Patient'
+	  end
           respond_to do |format|
             format.html 
 	    format.js 
-          end
+	  end
 	  render 'new'
        end
     else     

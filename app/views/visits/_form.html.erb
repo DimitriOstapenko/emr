@@ -15,14 +15,21 @@
 
   <!-- Row 0 if admin --> 
 
-<% if current_user.admin? %>
-<div class="row">
-  <div class="col-sm-4">
-  <%= f.label "Visit Time Stamp" %>
-  <%= f.datetime_field :entry_ts %>
-  </div>
-</div>
-<% end %>
+  <% if current_user.admin? %> 
+     <div class="row">
+     <% if action_name == 'new' %>
+	<div class="col-sm-4">
+	   <%= f.label "Visit Date/time" %>
+	   <%= f.datetime_field :entry_ts, datetime_separator: ' at ' %>
+  	</div>
+     <% elsif action_name == 'edit' %>
+   	<div class="col-sm-6">
+  	  <%= f.label "Error message" %>
+ 	  <%= f.text_field :export_file %>
+  	</div>
+    <% end %>
+    </div>
+  <% end %>
 
   <!-- Row 1 --> 
 
