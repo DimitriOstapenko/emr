@@ -25,7 +25,7 @@ class DaysheetController < ApplicationController
       if @daysheet.any?
 #         @daysheet = @daysheet.paginate(page: params[:page])
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "Daysheet for #{date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}.    Click on the 'News' link below to see the list of most recent changes to the website"
+	 flash.now[:info] = "Daysheet for #{date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}."
          render 'index'
       else
 	 flash.now[:info] = 'No visits were found for date ' + date.inspect 
