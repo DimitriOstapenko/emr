@@ -24,6 +24,7 @@ PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS
 # Visits
 
 VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, Error: 7}.freeze
+ARRIVED = VISIT_STATUSES[:Arrived]
 ASSESSED = VISIT_STATUSES[:Assessed]
 READY = VISIT_STATUSES[:'Ready To Bill']
 BILLED = VISIT_STATUSES[:Billed]

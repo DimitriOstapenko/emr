@@ -1,20 +1,25 @@
 
 <% if logged_in? %>
 	
-	<h1> Recent changes to Walk-In EMR </h1
-	<section>
+  <h1> Recent changes to Walk-In EMR </h1>
 
-		<ul>
+	<div class="panel panel-default">
+		<div class="panel-body news-panel-body">
+			<li> "Reports" link in a header renamed to "Documents" drop-down. It now has 3 categories: Reports, Invoices and Daily Charts </li>
 			<li> Patient's age is now shown in months or years. Negative integer is used internally to denote age in months. Please alert me if you see negative numbers for age anywhere </li>
 			<li> Label modified: different, larger font, smaller width, middle name is now omitted </li>
 			<li> Links added to day sheet for current day only: Label, Form. Both open in a new tab  </li>
-			<li> Delete link for visits are not accessible anymore in previous days </li>
+			<li> Delete links for visits are not accessible anymore in previous days </li>
 			<li> Visit status 'Error' added to mark visits with errors found in Cab.md/MOH </li>
 			<li> 'Clinic' patient type added </li>
 			<li> When card is swiped, search is now performed for patient with the same last name and DOB. Warning message issued if match found </li>
 			<li> Card fields are now compared with our records. Warning message and edit form are shown if mismatch is found</li>
-			<li> </li>
-		</ul>
-	</section>
+		</div>
+	</div>
+	
+	Please email <a href="mailto:dosta@me.com?subject=EMR staff Inquiry&cc=ostadim1@gmail.com">Dimitri</a> if you have any questions or concerns about this website. iI will typically respond within 10 min.
+	If there's a problem, please provide screenshot, short description and health card string swiped right into email message body.
+	 
+	Thank you!
 
 <% end %>

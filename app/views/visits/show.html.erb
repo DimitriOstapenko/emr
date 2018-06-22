@@ -12,7 +12,7 @@
 <div class="form-group col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
 <div class="row">
 	<section>
-<pre>
+<pre class="pre-scrollable">
 <b>Doctor</b> :    <%= @visit.doctor.lname %>
 <b>Reason for Visit </b>: <%= @visit.reason %>
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
@@ -34,7 +34,7 @@
 
 <% if @visit.notes.present? %>
 <div class="panel panel-info">
-   <div class="panel-body">
+   <div class="visit-notes-panel-body">
 <b>Notes </b>: <%= @visit.notes %>	     
    </div>
 </div>
