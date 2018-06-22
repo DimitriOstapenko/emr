@@ -12,6 +12,9 @@
 	 disabled = []
   end %>
 
+  <% if @visit.status == ERROR && !current_user.admin? 
+	  disabled = [ARRIVED, ASSESSED, READY, BILLED, PAID, CANCELLED]
+  end %>
 
   <!-- Row 0 if admin --> 
 

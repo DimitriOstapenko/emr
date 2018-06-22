@@ -3,7 +3,7 @@
    @patient = Patient.find( invoice.pat_id )
 %>
      <tr>
-	<td><%= link_to "#{invoice.id}", invoice %> </td>
+	<td><%= link_to "#{invoice.id}", invoice, target: '_blank'%> </td>
 	<td><%= @provider.name %> </td> 
 	<td><%= @patient.full_name %></td> 
 	<td><%= invoice.date %></td> 

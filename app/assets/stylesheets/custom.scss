@@ -385,9 +385,21 @@ table.pretty {
   background-image: url(/images/down_arrow.gif);
 }
 
-.panel-body {
-background: #FFCCFF;
+.patient-notes-panel-body {
+    background: #FFCCFF;
     max-height: 230px;
+    overflow-y: scroll;
+}
+
+.visit-notes-panel-body {
+    background: #FAFAD2;
+    max-height: 230px;
+    overflow-y: scroll;
+}
+
+.news-panel-body {
+    background: #E6E6FA;
+    max-height: 500px;
     overflow-y: scroll;
 }
 
