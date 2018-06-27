@@ -50,7 +50,7 @@ PROC_TYPES = {HCP: 1, '3RD': 2}.freeze
 CABMDURL = 'https://api.cab.md/claims?apiKey=e679b103-f74d-4b2d-bb60-5f05ad4f9de1'
 BILLING_FORMAT='CABMD'.freeze  # CSV/EDT/CABMD
 #BILLING_STATUSES = { "No Claim Yet": 1, "Claim Generated": 2, Invoiced: 3, Deleted: 4, Paid: 5, 'Written Off': 6}.freeze
-BILLING_TYPES = {HCP: 1, RMB: 2, Invoice: 3, Cash: 4, WCB: 5, PRV: 6}.freeze
+BILLING_TYPES = {HCP: 1, RMB: 2, Cash: 4, WCB: 5, PRV: 6}.freeze
 HCP_BILLING = BILLING_TYPES[:HCP]
 RMB_BILLING = BILLING_TYPES[:RMB]
 CASH_BILLING = BILLING_TYPES[:Cash]

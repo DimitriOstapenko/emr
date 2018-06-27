@@ -103,7 +103,6 @@ class VisitsController < ApplicationController
 
        respond_to(:html)
        redirect_to patient_visit_path
-      
   end
 
   def edit
@@ -156,7 +155,7 @@ class VisitsController < ApplicationController
   def receipt
         @visit = Visit.find(params[:id])
 	@patient = Patient.find(@visit.patient_id)
-        pdf = build_receipt( @patient, @visit )
+        pdf = build_visit_receipt( @patient, @visit )
 
         send_data pdf.render,
           filename: "receipt_#{@patient.full_name}",
@@ -164,26 +163,6 @@ class VisitsController < ApplicationController
           disposition: 'inline'
 
 #    render inline: '', layout: true
-  end
-
-# Generate PDF invoice for 3-rd party service
-  def invoice
-	@visit = Visit.find(params[:id])
-        @patient = Patient.find(@visit.patient_id)
-        if Invoice.exists?(visit_id: @visit.id)  
-		redirect_to invoice_path(@visit.invoice_id)
-	else
-	   @invoice = Invoice.create( pat_id: @patient.id, billto: @visit.provider_id, visit_id: @visit.id, date: Date.today, amount: @visit.invoice_amount ) 
-	   @visit.invoice_id = @invoice.id
-	   @visit.save
-           pdf = build_invoice( @patient, @visit )
-	   pdf.render_file Rails.root.join('invoices',"inv_#{@invoice.id}")
-
-           send_data pdf.render,
-             filename: "inv_#{@patient.full_name}",
-             type: 'application/pdf',
-             disposition: 'inline'
-	end
   end
 
 # Generate referral form for this visit
@@ -207,7 +186,7 @@ class VisitsController < ApplicationController
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
-				    :entry_by, :provider_id, :invoice_id, :temp, :bp, :pulse, :weight, :export_file )
+				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file )
     end      
 
     def set_visit_fees ( visit )

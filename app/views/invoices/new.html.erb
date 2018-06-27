@@ -1,2 +1,8 @@
-<h1>Invoices#new</h1>
-<p>Find me in app/views/invoices/new.html.erb</p>
+<% 
+provide(:title, 'New Invoice') 
+provide(:button_text, 'Create Invoice')
+%>
+
+<h2>Create Invoice</h2>
+
+<%= render 'form' %>

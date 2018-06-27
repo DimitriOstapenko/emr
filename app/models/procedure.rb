@@ -17,7 +17,7 @@ class Procedure < ApplicationRecord
 #	validates :eff_date, allow_nil: true
 #	validates :term_date, allow_nil: true
 	
-#	before_save { self.prov_fee = (prov_fee*100).to_i  }
+	before_save { self.prov_fee = (cost*100).to_i  }
 #	before_save { self.ass_fee = (ass_fee*100).to_i  }
 #	before_save { self.spec_fee = (spec_fee*100).to_i  }
 #	before_save { self.ana_fee = (ana_fee*100).to_i  }

@@ -1,2 +1,10 @@
-<h1>Invoices#edit</h1>
-<p>Find me in app/views/invoices/edit.html.erb</p>
+<% 
+provide(:title, 'Edit Invoice') 
+provide(:button_text, 'Save Changes')
+%>
+
+<h2>Edit Invoice</h2>
+
+<%= render 'form' %>
+
+

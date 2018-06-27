@@ -161,6 +161,19 @@
   </div>
 </div>
 
+  <!-- Row 6: Insurance provider for invoiced visits -->
+
+<div class="row" id="ins_provider">
+  <div class="col-sm-8"> 
+  <%= f.label "Insurance Provider" %>
+  <%=  f.collection_select(:provider_id, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %> 
+  </div>
+
+  <div class="col-sm-4">
+  <%= f.label "Amount" %>
+  <%= f.number_field :amount, in: 1...250 %>
+  </div>
+</div>
 
 <!-- Row 7: Notes, submit button -->
 <div class="row">
@@ -176,6 +189,11 @@
 
 <script>
 $(document).ready(function() {
+    if ($("#visit_provider_id").val() > 0) {
+       $("#ins_provider").show();
+    } else{
+       $("#ins_provider").hide();
+    }
     $('#visit_diag_code').select2();
     $('#visit_proc_code').select2();
     $('#visit_proc_code2').select2();
@@ -190,6 +208,25 @@ $(document).ready(function() {
     });
 
 });
+
+// Show insurance Drop-Down if :Invoice is selected in bill type 1..4
+  var el = document.getElementById("visit_bil_type");
+  $(el).change(function () {
+        if ( $(el).val() == "3" ) {    //Invoice
+           $('#ins_provider').show();
+	} else {
+           $('#ins_provider').hide();
+	}
+  });
+
+  var el2 = document.getElementById("visit_bil_type2");
+  $(el2).change(function () {
+        if ( $(el2).val() == "3" ) {    //Invoice
+           $('#ins_provider').show();
+	} else {
+           $('#ins_provider').hide();
+	}
+  });
 
 // Select proper bill type for the procedure
 var pc = document.getElementById("visit_proc_code");
@@ -249,8 +286,10 @@ function select_btype( proc, suff ) {
   var v = document.getElementById('visit_bil_type'+suff);
   if ( proc.ptype == '1') {
         $(v).val('1');
+       $('#ins_provider').hide();
      } else {
-	$(v).val('4');
+	$(v).val('3');
+       $('#ins_provider').show();
   }
 }
 

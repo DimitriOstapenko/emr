@@ -53,10 +53,12 @@ Rails.application.routes.draw do
   resources :patients do
     get 'label', on: :member
     get 'chart', on: :member
+    resources :invoices do
+      get 'invoice', on: :member
+    end
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member
-      get 'invoice', on: :member
       get 'referralform', on: :member
       get 'sendclaim', on: :member
     end
