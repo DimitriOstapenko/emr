@@ -382,8 +382,8 @@ module My
     @label = label_string ( pat )
     pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,2.mm,1.mm,1.mm])
     pdf.font "Helvetica", size: 10 
-    pdf.text_box @label, :at => [2.mm,25.mm],
-         :width => 60.mm,
+    pdf.text_box @label, :at => [2.mm,26.mm],
+         :width => 65.mm,
          :height => 28.mm,
          :overflow => :shrink_to_fit,
          :min_font_size => 9,
