@@ -11,13 +11,13 @@ class ProceduresController < ApplicationController
 
   def find
       str = params[:findstr].strip
-      @procedures = myfind(str)
+      @procedures = myfind(str.upcase)
       if @procedures.any?
          @procedures = @procedures.paginate(page: params[:page])
          flash.now[:info] = "Found: #{@procedures.count} procedures"
          render 'index'
       else
-	 flash[:danger] = "Procedure not found #{str.inspect}"
+	 flash.now[:warning] = "Procedure not found #{str.inspect} - #{view_context.link_to('Add New?', new_procedure_path)} ".html_safe
 	 render  inline: '', layout: true
 #	 redirect_to procedures_path 
       end
@@ -43,10 +43,10 @@ class ProceduresController < ApplicationController
   end
 
   def create
-     @procedure = Procedure.new(procedure_params)
+    @procedure = Procedure.new(procedure_params)
     if @procedure.save
        flash[:success] = "Procedure created"
-       redirect_to @procedure
+       redirect_to procedures_path
     else
        render 'new'
     end
@@ -83,7 +83,7 @@ private
 	if str.match(/^\S?[[:digit:]]{,3}\S?$/)
           Procedure.where("code like ?", "%#{str}%")  
         elsif str.match(/^[[:graph:]]+$/)
-          Procedure.where("lower(descr) like ?", "%#{str}%")
+          Procedure.where("upper(descr) like ?", "%#{str}%")
         else
           []
         end

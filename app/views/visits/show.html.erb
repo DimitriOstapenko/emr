@@ -9,9 +9,10 @@
 <% diag = Diagnosis.find_by(code: @visit.diag_code) %>
 <% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>
 
-<div class="form-group col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+<div class="form-group col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
 <div class="row">
-	<section>
+	
+<section>
 <pre class="pre-scrollable">
 <b>Doctor</b> :    <%= @visit.doctor.lname %>
 <b>Reason for Visit </b>: <%= @visit.reason %>
@@ -25,11 +26,7 @@
 <b>Status </b>: <%= @visit.status_str %> 
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
-<% if @visit.provider_id %>
-<% prov = Provider.find( @visit.provider_id ) %>
-<b>Insurance Provider </b>: <%= prov.name rescue '' %>
-<% end %>
-<b>Export file </b>: <%= "#{@visit.export_file}" %>
+<b>Export file </b>: <%= @visit.export_file %>
 </pre>
 
 <% if @visit.notes.present? %>
@@ -40,36 +37,29 @@
 </div>
 <% end %>
 
-
 </section>
 </div>
 
 <p>
 <div class="row">
- <div class="col-sm-3">
+ <div class="col-sm-2">
   <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
  </div>
- <div class="col-sm-3">
- <%= button_to "Print Visit Form", visitform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
+ <div class="col-sm-2">
+ <%= button_to "Print Visit Form", visitform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get', formtarget: "_blank"  %>
  </div>
- <div class="col-sm-3">
- <%= button_to "Print Referral Form", referralform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
+ <div class="col-sm-2">
+ <%= button_to "Print Referral Form", referralform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get', formtarget: "_blank"  %>
  </div>
 
  <% if @visit.cash? %> 
- <div class="col-sm-3">
- <%= button_to "Print Receipt", receipt_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
+ <div class="col-sm-2">
+ <%= button_to "Print Receipt", receipt_patient_visit_path(@patient), class: "btn btn-primary", method: 'get', formtarget: "_blank"  %>
  </div>
  <% end %>
  
- <% if @visit.invoiced? %> 
- <div class="col-sm-3">
- <%= button_to "Print Invoice", invoice_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
- </div>
- <% end %>
-
  <% if @visit.ready_to_bill? %>
- <div class="col-sm-3">
+ <div class="col-sm-2">
  <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-primary", method: 'get'  %>
  </div>
  <% end %>

@@ -124,7 +124,7 @@ class Visit < ApplicationRecord
 
   def invoice_amount  
      serv  = services[_3rd_index]
-     serv[:fee] rescue 0
+     serv[:fee] > 1 ? serv[:fee] : amount
   end
   
   def invoice_units  
@@ -135,6 +135,15 @@ class Visit < ApplicationRecord
   def invoice_pcode 
      serv  = services[_3rd_index]
      serv[:pcode] rescue 0
+  end
+  
+  def invoice_pdescr 
+     pcode = invoice_pcode
+     if pcode == 'INVOICE'
+	reason
+     else
+	proc_descr( invoice_pcode )
+     end
   end
 
 # Short version of diagnostic code
@@ -149,7 +158,7 @@ class Visit < ApplicationRecord
   end
 
 # Return procedure description
-  def proc_descr ( code )
+  def proc_descr ( code = proc_code )
     proc = Procedure.find_by(code: code )	  
     return proc.descr rescue '' 
   end

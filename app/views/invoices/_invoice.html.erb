@@ -1,15 +1,19 @@
 <% 
-   @provider = Provider.find( invoice.billto )
-   @patient = Patient.find( invoice.pat_id )
+      provider = Provider.find(invoice.billto )
+      patient = Patient.find(invoice.patient_id)
 %>
-     <tr>
+
+    <tr>
 	<td><%= link_to "#{invoice.id}", invoice, target: '_blank'%> </td>
-	<td><%= @provider.name %> </td> 
-	<td><%= @patient.full_name %></td> 
+	<td><%= link_to provider.name, provider %> </td> 
+	<td><%= link_to patient.lname, patient %></td>
 	<td><%= invoice.date %></td> 
 	<td>$<%= invoice.amount %></td> 
+	<td><%= invoice.notes %></td> 
+	<td><%= invoice.paid %></td>
+	<td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
   	<% if current_user.admin?  %>
-		<td> <%= link_to "delete", invoice, method: :delete, data: { confirm: "Are you sure you want to delete invoice # #{invoice.id}?" } %> </td>
+		<td> <%= link_to "Delete", invoice, method: :delete, data: { confirm: "Are you sure you want to delete invoice # #{invoice.id} billed to #{provider.name} ?" } %> </td>
 	<% end %>
      </tr>
 

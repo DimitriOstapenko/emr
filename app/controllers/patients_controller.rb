@@ -141,6 +141,9 @@ class PatientsController < ApplicationController
         redirect_to @patient 
     end
   end
+  def invoices
+	  flash[:info] = params
+  end
 
 private
   def patient_params
