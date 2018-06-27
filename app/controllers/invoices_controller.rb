@@ -36,9 +36,8 @@ class InvoicesController < ApplicationController
    @invoice = Invoice.find( params[:id] )
 
    send_file(@invoice.filespec,
-	     filename: File.basename(@invoice.filespec), 
 	     type: "application/pdf", 
-	     disposition: :inline) rescue 'file missing'
+	     disposition: :inline) rescue 'Invoice file is missing'
   end
 
   def edit
