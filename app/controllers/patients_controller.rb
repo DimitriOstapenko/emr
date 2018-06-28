@@ -95,20 +95,26 @@ class PatientsController < ApplicationController
        cardpat = create_patient_from_card ( @cardstr )
        @patient = Patient.find_by(ohip_num: @cardstr[7,10])
        if @patient
-#	  @patient.hin_expiry = cardpat.hin_expiry
 	  msg = nil
-	  msg = "Version code mismatch: card says '#{cardpat.ohip_ver}'" if cardpat.ohip_ver.casecmp(@patient.ohip_ver) !=0
 	  msg = "Last name mismatch: card says '#{cardpat.lname}'" if cardpat.lname.casecmp(@patient.lname) !=0
 #	  msg = "First name mismatch: card says '#{cardpat.fname}'" if cardpat.fname.casecmp(@patient.fname) != 0
-	  msg = "Date of birth mismatch: card says #{cardpat.dob} " if cardpat.dob != @patient.dob
 	  msg = "Gender mismatch: #{cardpat.sex} on the card" if cardpat.sex.casecmp(@patient.sex) != 0
-	  msg = "Expiry date mismatch: card says #{cardpat.hin_expiry} " if cardpat.hin_expiry != @patient.hin_expiry
+
+	  if (cardpat.ohip_ver != @patient.ohip_ver) && (cardpat.ohip_ver.length == 2)
+	     @patient.update_attribute(:ohip_ver, cardpat.ohip_ver) 
+	  end
+	  if cardpat.dob != @patient.dob
+	     @patient.update_attribute(:dob, cardpat.dob) 
+	  end
+	  if cardpat.hin_expiry != @patient.hin_expiry
+	     @patient.update_attribute(:hin_expiry, cardpat.hin_expiry) 
+	  end
 
 	  if msg.present?
 	     flash[:danger] = "Card found for #{@patient.lname}, #{@patient.fname} (#{@patient.sex}) #{msg}"
 	     redirect_to edit_patient_path(@patient.id)
 	  else
-	     flash[:info] = "Card found for #{cardpat.lname}, #{cardpat.fname} (#{cardpat.sex}). All data matches our records"
+	     flash[:info] = "Card found for #{cardpat.lname}, #{cardpat.fname} (#{cardpat.sex})"
              redirect_to @patient
 	  end
        else 
