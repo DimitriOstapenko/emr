@@ -42,7 +42,7 @@
     <%= button_to "Print Label", label_patient_path(@patient), class: "btn btn-primary", method: 'get', formtarget: 'Label' %> <!-- , data: {toggle: "modal", target: "#exampleModal"}   %> -->
   </div>
   <div id="ins_provider" class="col-sm-3">
-    <%= button_to "Create Invoice", new_patient_invoice_path(@patient), class: "btn btn-primary", method: 'get', formtarget: 'Form' %> 
+    <%= button_to "Create Invoice", new_patient_invoice_path(@patient), class: "btn btn-primary", method: 'get' %> 
   </div>
 </div>
 
