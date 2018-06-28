@@ -51,6 +51,7 @@ class Patient < ApplicationRecord
   end
 
   def age_str
+    return '' unless age
     age > 0 ? "#{age} yr" : "#{-age} mo" 	  
   end
 
