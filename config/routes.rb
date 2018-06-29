@@ -52,6 +52,7 @@ Rails.application.routes.draw do
   resources :users
   resources :patients do
     get 'label', on: :member
+    get 'addrlabel', on: :member
     get 'chart', on: :member
     resources :invoices do
       get 'invoice', on: :member
