@@ -222,7 +222,7 @@ class BillingsController < ApplicationController
 	  messages = @xmlhash['messages']
 	  refid = @xmlhash['reference_id']
 	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
-          @visit.update_attribute(:status, READY)
+          @visit.update_attribute(:status, ERROR)
 	  @visit.update_attribute(:export_file, errors.join(','))
        end
 
