@@ -14,7 +14,7 @@ xml.Claim do
 	  xml.dateOfBirth @patient.dob.strftime("%Y-%m-%dT%H:%M:%S")
 	  xml.healthCard @patient.ohip_num
 	  xml.versionCode @patient.ohip_ver
-	  xml.provinceCode @patient.prov
+	  xml.provinceCode @patient.hin_prov
   end
 
   xml.serviceDate @visit.entry_ts.strftime("%Y-%m-%dT%H:%M:%S")
