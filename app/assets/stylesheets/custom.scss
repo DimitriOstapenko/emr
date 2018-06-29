@@ -44,13 +44,19 @@ table {
 #footer, #pushup {
    height: 30px;
    padding-left: 15px;
-/*   background: white;
-   position:fixed;
-   padding-right: 15px;
-   bottom:0;
-   width:100%;
-   z-index:999999;
-*/
+}
+
+/* navbar */
+.navbar-inverse {
+//    background-color: #333;
+    border-color: #E7E7E7;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    color: #FFF;
+#    background-color: #333;
 }
 
 .spacer-10 {
@@ -346,10 +352,6 @@ input {
 
 } 
 
-/*
-.btn-group { display: inline-block; }
-*/
-
 .alert {
   margin-bottom: 1px;
   height: 30px;
@@ -417,3 +419,9 @@ table.pretty {
   padding: 10px;
 }
 
+#my-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -88,6 +88,15 @@ class PatientsController < ApplicationController
           disposition: 'inline' 
   end
 
+  def addrlabel
+    @patient = Patient.find(params[:id])
+    pdf  = build_address_label(@patient)
+    send_data pdf.render,
+	  filename: "label_#{@patient.full_name}",
+          type: 'application/pdf',
+          disposition: 'inline' 
+  end
+
 # Get card string from listener, find patient or show form to create one
   def card 
     @cardstr = params[:cardstr] rescue nil
