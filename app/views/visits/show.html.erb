@@ -27,7 +27,9 @@
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
 <b>Export file </b>: <%= @visit.export_file %>
+<% if @visit.amount.present? %>
 <b>Amount Paid </b>: <%= sprintf '$%.2f', @visit.amount %>
+<% end %>
 </pre>
 
 <% if @visit.notes.present? %>
