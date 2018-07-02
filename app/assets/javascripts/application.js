@@ -15,11 +15,11 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
-// require bootstrap-datepicker/core
+// require bootstrap-datepicker
 //= require jquery.cardswipe.min.js 
 //= require select2
 
 //$(document).on("focus", "[data-behaviour~='datepicker']", function(e){
-//    $(this).datepicker({"format": "yyyy-mm-dd", "weekStart": 1, "autoclose": false, "todayBtn": true, "todayHighlight": true});
+//    $(this).datepicker({"format": "dd-mm-yyyy", "weekStart": 1, "autoclose": false, "todayBtn": true, "todayHighlight": true});
 //});
 
