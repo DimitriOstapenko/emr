@@ -10,22 +10,22 @@
 	      
 <% if logged_in? %> 
 <% if controller_name == 'daysheet' || controller_name == 'billings' %>
-	<% date = params[:date] || Time.now.strftime('%Y-%m-%d') %>
-	<% prevday = Date.parse(date).prev_day.strftime('%Y-%m-%d') %>
-	<% nextday = Date.parse(date).next_day.strftime('%Y-%m-%d') %>
+	<% date = Date.parse(params[:date]) rescue Time.now %>
+	<% prevday = date.prev_day.strftime('%Y-%m-%d') %>
+	<% nextday = date.next_day.strftime('%Y-%m-%d') %>
        <li style="width: 40px; align:left; top: 2px;"><%= link_to '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: prevday )  %></li>
        <li> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
 	     <div class="form-group">
                 <div class="col-sm-12 padding-0">	     
-		  <%= f.date_field :date, id: '_datepicker',  onChange: 'this.form.submit()', value: date %>
+		  <%= f.date_field :date, id: '_datepicker',  onChange: 'this.form.submit()', value: date.strftime('%Y-%m-%d') %>
 		</div>
 	     </div>
        <% end %>
        </li>
        
        <li style="width: 35px; align:left; top: 2px;">
-       <% if date.to_date < Date.today %>
+       <% if date < Date.today %>
 	       <%= link_to '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: nextday )  %>
        <% else %>
 	       &nbsp;
