@@ -34,7 +34,7 @@ module My
 
                <b>Phone: #{pat.phonestr} </b>File: #{pat.id}
 
-               <b>DOB</b>: #{pat.dob} <b>Age</b>: #{pat.age} 
+               <b>DOB</b>: #{pat.dob} <b>Age</b>: #{pat.age_str} 
                <b>HCN</b>: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})"
 
     visitinfo="<b>Provider</b>:

@@ -62,7 +62,7 @@ class Patient < ApplicationRecord
     if (hin_prov == 'ON' &&  pat_type == 'O')
       expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
       errors.add('Health Card:', "Card is expired") if expiry < Date.today
-      errors.add('Health Card:', "Card number for ON must be 10 digits long") if ohip_num.length != 10
+      errors.add('Health Card:', "Card number for ON must be 10 digits long") if ohip_num.present? && ohip_num.length != 10
     end 
 
 # Check sum test is disabled for now    
@@ -84,10 +84,10 @@ class Patient < ApplicationRecord
     errors.add('Ontario Health Card:', "Number is invalid") 
   end
 
-  def valid_attribute?( attribute_name )
-    self.valid?
-    self.errors[attribute_name].blank?
-  end
+#  def valid_attribute?( attribute_name )
+#   self.valid?
+#   self.errors[attribute_name].blank?
+#  end
 
 protected
 
