@@ -6,7 +6,7 @@ class DaysheetController < ApplicationController
 #        before_action :admin_user, only: :destroy
 	
   def index
-      date = params[:date] || Date.today
+      date = Date.parse(params[:date]) rescue Date.today
       
       @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
