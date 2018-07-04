@@ -16,10 +16,9 @@ Patient.all.each do |p|
      p.update_attribute(:last_visit_date, nil)
   else
      ts =  last_visit[0].entry_ts.in_time_zone("UTC") rescue nil
-     p.update_attribute(last_visit_date, ts) 
+     p.update_attribute(:last_visit_date, ts) 
      puts " #{p.id} : #{p.last_visit_date}" 
   end
-  p.save
   
 end
 

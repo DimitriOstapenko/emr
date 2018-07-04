@@ -9,6 +9,7 @@
 require_relative '../../config/environment'
 
 puts "About to merge patients: all visits will be moved to one patient record with ohip_num defined"
+problem_patients_count = 0
 merged_visits_count = 0
 
 patients = Patient.select("lname,fname,dob").group("lname,fname,dob").having("count(*)>1").order("count(*) desc")
@@ -28,15 +29,17 @@ patients.each do | p |
 
 	same_pats = Patient.where('lname=? AND fname=? AND dob=?', p.lname, p.fname, p.dob).where('id != ?', master_id)
 	same_pats.each do | sp |
+		problem_patients_count += 1
+#		sp.destroy if sp.visits.count < 1
 		puts "to merge: #{sp.id}"
 		puts "Visits to mod:  #{sp.visits.count}"
 		sp.visits.each do |v|
 		  puts "about to change pat_id : #{v.patient_id} to: #{master_id}" 
-		 # v.update_attribute(:patient_id, master_id)
+		  v.update_attribute(:patient_id, master_id)
 		  merged_visits_count += 1
 		end
 	end
 end
 
-puts "#{merged_visits_count} visits merged; Now purge patients with no visits"
+puts "#{problem_patients_count} problem patients; #{merged_visits_count} visits merged; Now run 12_update_last_visit_date and purge patients with no visits: delete from patients where last_visit_date is null and ohip_num is null;"
 

@@ -7,7 +7,7 @@ require_relative '../../config/environment'
 require 'date'
 require 'csv'
 
-puts "About to import patients into DB table from CSV file. Validity checks for all but lname,dob,ohip_num (if ohip), ohip_ver (if ohip) should be off"
+puts "About to import NEW patients into DB table from HS CSV file. Validity checks for all but lname,dob,ohip_num (if ohip), ohip_ver (if ohip) should be off"
 
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'patdata.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   # .first(200)
