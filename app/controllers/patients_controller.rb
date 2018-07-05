@@ -171,18 +171,28 @@ private
 					 )
   end
  
-# Find patient by last name or health card number, depending on input format  
+# Find patient by scanned string /last name[, first name]/ entered health card number/ DOB dd-mm-yyyy or dd-mmm-yyyy or dd/mm/yyyy depending on input format  
   def myfind (str)
-	if str.match(/^[[:digit:]]{,10}$/)               # ohip_num
+	if str.match(/^[[:digit:]]{,12}$/)               # ohip_num
       	  Patient.where("ohip_num like ?", "%#{str}%")  
 	elsif str.match(/^%B6/)  			 # scanned card
 	  hcnum = str[8,10]
 	  Patient.find_by(ohip_num: hcnum)
-	elsif str.match(/^[[:digit:]]{,2}-[[:alpha:]]{3}-[[:digit:]]{4}/) # Date Of Birth
+	elsif str.match(/^[[:digit:]]{,2}-[[:alpha:]]{3}-[[:digit:]]{4}/) || # Date Of Birth
+	      str.match(/^[[:digit:]]{,2}-[[:digit:]]{,2}-[[:digit:]]{,4}/)
 	  dob = str.to_date rescue '1900-01-01'
 	  Patient.where("dob = ?", dob)	
-	elsif str.match(/^[[:graph:]]+$/)  		 # last name
-	  Patient.where("lower(lname) like ?", "%#{str.downcase}%") 
+	elsif str.match(/^[[:graph:]]+/)  		 # last name[, fname]
+	  lname,fname = str.split(',')
+	  if lname.present?
+	     lname.strip! 
+	     if fname.present?
+		fname.strip!
+		Patient.where("upper(lname) like ? AND upper(fname) like ?", "%#{lname.upcase}%", "%#{fname.upcase}%") 
+	     else
+		Patient.where("upper(lname) like ?", "%#{lname.upcase}%") 
+	     end
+	  end
 	else
 	  []
 	end
