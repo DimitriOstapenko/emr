@@ -1,0 +1,2 @@
+class EdtFile < ApplicationRecord
+end

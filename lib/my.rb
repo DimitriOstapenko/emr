@@ -499,7 +499,7 @@ module My
     sdate = report.sdate.strftime("%d %b %Y")
     edate = report.edate.strftime("%d %b %Y")
     date_range = report.rtype == 1 ? sdate : "#{sdate} - #{edate}" 
-    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,20.mm,10.mm])
 
     pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
     pdf.move_down 5.mm
@@ -509,21 +509,21 @@ module My
     pdf.move_down 5.mm
 
     pdf.font "Courier"
-    pdf.font_size 9
+    pdf.font_size 8
     @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 =>0 }
     @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 =>0 }
 
-    rows =  [[ "Patient", "OHIP#", "DOB", "Serv.", "U", "Fee", "Diag", "Status", "Acct#"]]
+    rows =  [[ "Serv Date", "Patient", "OHIP#", "DOB", "Serv.", "Tp", "Fee", "Diag", "Status", "Acct#"]]
     visits.all.each do |v|
       pat = Patient.find(v.patient_id)
       next unless v.fee > 0
-      rows += [[ pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.units, v.fee, v.diag_scode, v.export_file, pat.id ]]
+      rows += [[ v.entry_ts.strftime("%d/%m/%Y"), pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, v.export_file, pat.id ]]
       @totals[v.bil_type] += v.fee if v.bil_type
       @servcounts[v.bil_type] += 1 if v.bil_type
       serv = v.services
       serv.shift
       serv.each do |s|
-	rows += [[ '','','', s[:pcode], s[:units], s[:fee], v.diag_scode, v.export_file, pat.id ]]
+	      rows += [[ '','','', '', s[:pcode], BILLING_TYPES.invert[s[:btype]].to_s, s[:fee], v.diag_scode, v.export_file, pat.id ]]
 	@totals[s[:btype]] += s[:fee] if s[:btype]
         @servcounts[s[:btype]] += 1 if s[:btype]
       end
@@ -531,15 +531,19 @@ module My
 
       pdf.table rows do |t|
         t.cells.border_width = 0 
-        t.column_widths = [43.mm, 30.mm, 25.mm, 18.mm, 6.mm, 15.mm, 12.mm, 28.mm, 15.mm  ]
+	t.column_widths = [22.mm, 38.mm, 28.mm, 22.mm, 15.mm, 8.mm, 12.mm, 10.mm, 22.mm, 12.mm  ]
         t.header = true 
         t.row(0).font_style = :bold
-        t.position = 10.mm
+        t.position = 5.mm
+	t.cells.padding = 3
+	t.cells.style do |c|
+		c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+         end
       end
       
       pdf.move_down 10.mm
       pdf.span(160.mm, :position => :center) do
-        pdf.text "Total Claims: #{visits.count}", size: 10
+        pdf.text "Total Claims: #{visits.count}", size: 9
         totals = [[ '', "HCP", "RMB", "INVOICE", "CASH", "WCB", "PRV", "Total" ]]
         @fees = @totals.values
         @fees.push(@fees.sum)

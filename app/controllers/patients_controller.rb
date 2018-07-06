@@ -178,8 +178,8 @@ private
 	elsif str.match(/^%B6/)  			 # scanned card
 	  hcnum = str[8,10]
 	  Patient.find_by(ohip_num: hcnum)
-	elsif str.match(/^[[:digit:]]{,2}-[[:alpha:]]{3}-[[:digit:]]{4}/) || # Date Of Birth
-	      str.match(/^[[:digit:]]{,2}-[[:digit:]]{,2}-[[:digit:]]{,4}/)
+	elsif str.match('^[[:digit:]]{,2}[/-][[:alpha:]]{3}[/-][[:digit:]]{4}') || # Date Of Birth
+	      str.match('^[[:digit:]]{,2}[/-][[:digit:]]{,2}[/-][[:digit:]]{4}')
 	  dob = str.to_date rescue '1900-01-01'
 	  Patient.where("dob = ?", dob)	
 	elsif str.match(/^[[:graph:]]+/)  		 # last name[, fname]

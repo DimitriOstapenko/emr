@@ -71,3 +71,7 @@ CHARTS_PATH = Rails.root.join('charts').freeze
 
 # Export files:
 EXPORT_PATH = Rails.root.join('export').freeze
+
+# EDT files:
+EDT_PATH = Rails.root.join('EDT').freeze
+EDT_FILE_TYPES = {Claim: 1, Batch: 2, Remit: 3, Error: 4}.freeze
