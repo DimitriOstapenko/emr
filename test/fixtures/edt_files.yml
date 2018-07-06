@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 1
+  name: MyString
+  pathname: MyString
+  upload_date: 2018-07-05
+  lines: 1
+  provider_no: MyString
+  group_no: MyString
+  claims: 1
+  total_amount: 1.5
+  body: MyText
+
+two:
+  type: 1
+  name: MyString
+  pathname: MyString
+  upload_date: 2018-07-05
+  lines: 1
+  provider_no: MyString
+  group_no: MyString
+  claims: 1
+  total_amount: 1.5
+  body: MyText

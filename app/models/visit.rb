@@ -168,19 +168,19 @@ class Visit < ApplicationRecord
   end
 
   def bil_type_str
-    BILLING_TYPES.invert[bil_type]
+	  BILLING_TYPES.invert[bil_type].to_s rescue ''
   end
   
   def bil_type2_str
-    BILLING_TYPES.invert[bil_type2]
+	  BILLING_TYPES.invert[bil_type2].to_s
   end
   
   def bil_type3_str
-    BILLING_TYPES.invert[bil_type3]
+	  BILLING_TYPES.invert[bil_type3].to_s
   end
   
   def bil_type4_str
-    BILLING_TYPES.invert[bil_type4]
+	  BILLING_TYPES.invert[bil_type4].to_s
   end
 
   def was_today?

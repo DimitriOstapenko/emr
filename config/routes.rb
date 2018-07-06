@@ -78,6 +78,7 @@ Rails.application.routes.draw do
   resources :vaccines
   resources :daily_charts
   resources :export_files
+  resources :edt_files
 
 # resources :billings     # historical billing table - not used
   

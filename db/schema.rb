@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180625193644) do
+ActiveRecord::Schema.define(version: 20180705232045) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -112,6 +112,21 @@ ActiveRecord::Schema.define(version: 20180625193644) do
     t.string "filename"
     t.text "notes"
     t.text "instructions"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "edt_files", force: :cascade do |t|
+    t.integer "type"
+    t.string "name"
+    t.string "pathname"
+    t.date "upload_date"
+    t.integer "lines"
+    t.string "provider_no"
+    t.string "group_no"
+    t.integer "claims"
+    t.float "total_amount"
+    t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
