@@ -112,6 +112,11 @@ class Visit < ApplicationRecord
     services.select{|i| i[:btype] && i[:btype] < 3}.sum{|s| s[:fee]} rescue 0
   end
 
+# Total number of insured services (HCP, RMB) 
+  def total_insured_services
+    services.select{|i| i[:btype] && i[:btype] < 3}.count rescue 0
+  end
+
 # Total amount of cash 
   def total_cash
     services.select{|i| i[:btype] && i[:btype] == 4}.sum{|s| s[:fee]} rescue 0
