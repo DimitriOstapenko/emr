@@ -7,8 +7,7 @@
 # ref,X,ohip_num,vc,XX,prov,name,dob,group,XX,XXX,sdate,proc_code,units,XXXX,sub_fee,pd_fee,XXXXX,XXXXXX,XXXXXXX
 
 # Next 3 lines allow to run it in stand-alone
-require_relative '../../config/environment'
-#require 'date'
+require_relative '../config/environment'
 require 'csv'
 require 'find'
 
@@ -78,7 +77,7 @@ end
 
 puts
 puts "Days worked: #{days} Patients seen: #{total_patients} Services billed: #{total_submitted_services}"
-puts "Submitted by us: $#{total_submitted_fees.round(2)} (#{total_submitted_services} svcs); Billed by CAB: $#{total_billed.round(2)} (#{total_billed_svcs} svcs) ; Paid by OHIP: $#{total_paid.round(2)} Cash received: $#{total_cash}.round(2)"
+puts "Submitted by us: $#{total_submitted_fees.round(2)} (#{total_submitted_services} svcs); Billed by CAB: $#{total_billed.round(2)} (#{total_billed_svcs} svcs) ; Paid by OHIP: $#{total_paid.round(2)} Cash received: $#{total_cash.round(2)}"
 return [total_paid, total_billed_svcs] 
 end
 

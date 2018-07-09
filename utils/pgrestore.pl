@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 # by Dimitri Ostapenko
 # restore is run on the same day as backup, but later of course; 
-# use this script on a backup server, run as postgres,or whoever is db owner
+# use this script on a backup server, run as postgres, or whoever the owner of walkin db is
 # 
-# N.B! dropdb will fail if db is accessed by other client(s) - stop apache beore running
+# N.B! dropdb will fail if db is accessed by other client(s) - stop apache before running! (root cron)
 #
 
 use strict;
