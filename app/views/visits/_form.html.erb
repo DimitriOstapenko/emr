@@ -1,7 +1,7 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
   
-  <% doc_id = @visit.doctor.id || current_doctor.id %>
+  <% doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) %>
   <% @procedures = get_active_procedures %>
 
   <% if @visit.hcp_proc_codes.present?

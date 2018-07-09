@@ -1,0 +1,2 @@
+module PaystubsHelper
+end

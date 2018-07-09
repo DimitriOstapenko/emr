@@ -3,7 +3,7 @@ class VisitsController < ApplicationController
   include My::Forms
 
 	before_action :logged_in_user #, only: [:create, :destroy, :index]
-        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
+##        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 #	before_action :admin_user, only: :destroy
 
   def index (defdate = Date.today )
@@ -22,8 +22,7 @@ class VisitsController < ApplicationController
         @patient = Patient.find(params[:patient_id])
         @visit = @patient.visits.new
         @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
-        current_doctor_set
-#        redirect_back(fallback_location: @visit ) #new_patient_visit_path
+##        current_doctor_set
   end
 
   def create
@@ -36,8 +35,7 @@ class VisitsController < ApplicationController
        @visit.entry_ts = Time.now
     end
 
-
-    if @visit.doc_id != current_doctor.id
+    if current_doctor.blank? || @visit.doc_id != current_doctor.id
 	 set_doc_session ( @visit.doc_id )
 	 flash[:info] = "Current Doctor set to Dr. #{@visit.doctor.lname}"
     end

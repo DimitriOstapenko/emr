@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  doc_id: 1
+  year: 1
+  month: 1
+  claims: 1
+  services: 1
+  gross_amt: 1.5
+  net_amt: 1.5
+  ohip_amt: 1.5
+  cash_amt: 1.5
+  ifh_amt: 1.5
+  monthly_premium_amt: 1.5
+  hc_dep_amt: 1.5
+
+two:
+  doc_id: 1
+  year: 1
+  month: 1
+  claims: 1
+  services: 1
+  gross_amt: 1.5
+  net_amt: 1.5
+  ohip_amt: 1.5
+  cash_amt: 1.5
+  ifh_amt: 1.5
+  monthly_premium_amt: 1.5
+  hc_dep_amt: 1.5

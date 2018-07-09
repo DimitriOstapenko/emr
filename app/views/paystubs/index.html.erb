@@ -1,0 +1,26 @@
+<% provide(:title, 'All Pay Stubs') %>
+
+<table class="tbl table-hover">  <!--table table-hover table-condensed" >  -->
+  <thead>
+      <tr>
+          <th>Paystub</th>
+          <th>Doctor</th>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Total Amt</th>
+	   <% if current_user.admin?  %>
+          <th></th>
+	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @paystubs %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @paystubs, class: "btn" %> 
+<%= button_to "Create New Paystub", new_paystub_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+</div>

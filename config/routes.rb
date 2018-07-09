@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get '/doctors/index' => 'doctors#find', constraints: { query_string: /findstr/ }
   get '/doctors/index' 
   post '/daysheet/index', to: 'daysheet#set_doctor' 
-  get '/set_doctor', to: 'daysheet#set_doctor' 
+  #get '/set_doctor', to: 'daysheet#set_doctor' 
   get '/daysheet/index', to: 'daysheet#index', as: :daysheet
   get '/vaccines/index', to:  "vaccines#find", constraints: { query_string: /findstr/ }
   get '/vaccines/index' 
@@ -32,22 +32,19 @@ Rails.application.routes.draw do
   delete '/logout',  to: 'sessions#destroy'
 
   get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
- # patch '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
 
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
 
- get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
- get '/visits' => 'visits#index'
- get '/billings' => 'billings#index'
- post '/billings/export_csv', to: 'billings#export_csv'
- post '/billings/export_edt', to: 'billings#export_edt'
- post '/billings/export_cabmd', to: 'billings#export_cabmd'
- get "/procedures/get_by_code", to: "procedures#get_by_code" 
-
-#   get '/daysheet', :to => redirect { |params, request| "/visits/?#{request.params.to_query}" }
+  get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
+  get '/visits' => 'visits#index'
+  get '/billings' => 'billings#index'
+  post '/billings/export_csv', to: 'billings#export_csv'
+  post '/billings/export_edt', to: 'billings#export_edt'
+  post '/billings/export_cabmd', to: 'billings#export_cabmd'
+  get "/procedures/get_by_code", to: "procedures#get_by_code" 
 
   resources :users
   resources :patients do
@@ -79,6 +76,7 @@ Rails.application.routes.draw do
   resources :daily_charts
   resources :export_files
   resources :edt_files
+  resources :paystubs
 
 # resources :billings     # historical billing table - not used
   

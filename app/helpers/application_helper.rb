@@ -13,12 +13,12 @@ module ApplicationHelper
       end
     end
 
-# used in diagnosis only for now 
+# used in diagnosis,daysheet,reports 
     def sortable(column, title = nil)
       title ||= ActiveSupport::Inflector.titleize(column)
 #      css_class = column == sort_column ? "current #{sort_direction}" : nil
       direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
-      link_to title, { :direction => direction, :sort => column, date: params[:date]}, {class: "hdr-link"}
+      link_to title, { direction: direction, sort: column, date: params[:date]}, {class: "hdr-link"}
     end
 
 # Returns the full title on a per-page basis.

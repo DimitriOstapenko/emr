@@ -1,0 +1,10 @@
+<tr>
+<td><%= paystub.id %></td>
+<td><%= paystub.doctor.lname %></td>
+<td><%= paystub.year %></td>
+<td><%= paystub.month %></td>
+<td><%= paystub.net_amt %></td>
+<% if current_user.admin?  %>
+<td>delete</td>
+<% end %>
+</tr>

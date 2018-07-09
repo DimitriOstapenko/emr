@@ -1,0 +1,82 @@
+About to merge patients: all visits will be moved to one patient record with ohip_num defined
+69378 : AL SAADI YOUSIF 23-Oct-2016 : 2 records for this pat with diff ohip_num : 5382744042:9877465899
+same patient, different card: 65897
+41004 : ATWAL ESHANVIR 16-Jan-2004 : 2 records for this pat with diff ohip_num : 9831341658:5426116942
+same patient, different card: 42579
+41005 : ATWAL HARSIMRAN 28-Apr-2008 : 2 records for this pat with diff ohip_num : 9795736483:9025737066
+same patient, different card: 41721
+24893 : BEAULIEU AVERY 31-Oct-2008 : 2 records for this pat with diff ohip_num : 9792367202:4695179384
+same patient, different card: 27854
+21189 : BOLLIVAR KARA 11-Feb-1987 : 2 records for this pat with diff ohip_num : 5970230420:0005375886
+same patient, different card: 18818
+3175 : CLINTON JASON 22-Mar-1971 : 2 records for this pat with diff ohip_num : 1883800078:1883800178
+same patient, different card: 803
+63062 : DHALIWAL KIRPAL 21-Mar-1974 : 2 records for this pat with diff ohip_num : 9751274379:2114965086
+same patient, different card: 63834
+36894 : DHALIWAL RAJVIR 24-Mar-1983 : 2 records for this pat with diff ohip_num : 9765094187:4389956709
+same patient, different card: 57210
+5739 : DONG PEIQIN 12-Apr-1971 : 2 records for this pat with diff ohip_num : 7864174649:5478641746
+same patient, different card: 9676
+39437 : DRABEK ANITA 27-Mar-1956 : 2 records for this pat with diff ohip_num : 0012243556:8546964274
+same patient, different card: 49545
+61970 : GHANGAS KULWINDER 20-Aug-1988 : 2 records for this pat with diff ohip_num : 9643091821:9756453989
+same patient, different card: 56169
+37125 : GREWAL RAWANDEEP 27-Aug-1989 : 2 records for this pat with diff ohip_num : 9784096016:6339643501
+same patient, different card: 39582
+42352 : JHANDI BAVANDEEP 02-May-2012 : 2 records for this pat with diff ohip_num : 9758653455:4304456686
+same patient, different card: 51186
+2554 : JHANDI HARPREET 27-Mar-1984 : 2 records for this pat with diff ohip_num : 4459214369:9763735795
+same patient, different card: 42353
+63654 : KEDDY CECELIA 27-Jan-2014 : 2 records for this pat with diff ohip_num : 0013504147:9394362165
+same patient, different card: 66360
+23890 : KHAN HAYAH 07-Sep-2008 : 2 records for this pat with diff ohip_num : 6014257650:8531176009
+same patient, different card: 26993
+16267 : KOSICK THOMAS 03-Oct-1980 : 2 records for this pat with diff ohip_num : 9052503587:2424501902
+same patient, different card: 16637
+56804 : KOVACI NERMINA 14-Sep-1997 : 2 records for this pat with diff ohip_num : 0012588919:6203849242
+same patient, different card: 58503
+2631 : LONG SHANNON 16-Sep-1985 : 2 records for this pat with diff ohip_num : 0010898674:3779844772
+same patient, different card: 22714
+34107 : MCREYNOLDS BERNARD 25-Aug-2005 : 2 records for this pat with diff ohip_num : 8000331473:5752289966
+same patient, different card: 55743
+49915 : MULTANI DIMPLE 30-May-1973 : 2 records for this pat with diff ohip_num : 2991722949:9736517423
+same patient, different card: 64868
+65898 : MULTANI JAGIR 01-Jan-1962 : 2 records for this pat with diff ohip_num : 9736738514:5977383909
+same patient, different card: 69691
+2479 : NORMINGTON AMBER 05-May-1983 : 2 records for this pat with diff ohip_num : 0009092149:3007664232
+same patient, different card: 15096
+15066 : PATEL PRATHNABEN 27-May-2007 : 2 records for this pat with diff ohip_num : 9484504270:1051874228
+same patient, different card: 18628
+15243 : PETROVIC KRISTIJAN 21-Sep-1996 : 2 records for this pat with diff ohip_num : 5392870446:5392070446
+same patient, different card: 17710
+1069 : POLL MIKIYA 18-Dec-2004 : 2 records for this pat with diff ohip_num : 0011944121:4030728606
+same patient, different card: 16848
+702 : QURESHI SHAHEEN 18-Jul-1965 : 2 records for this pat with diff ohip_num : 8749059880:0548749059
+same patient, different card: 3343
+62509 : REEVES STEVEN 28-Feb-1978 : 2 records for this pat with diff ohip_num : 2534086737:0013229802
+same patient, different card: 6694
+4176 : RIDGWAY RONALD 24-Feb-1947 : 2 records for this pat with diff ohip_num : 0010686624:3161765833
+same patient, different card: 18554
+64105 : ROBERTSON JAMES 26-Aug-1987 : 2 records for this pat with diff ohip_num : 9757023496:4704919770
+same patient, different card: 66162
+466 : ROI LAURA 27-Mar-1985 : 2 records for this pat with diff ohip_num : 9178781750:6865459504
+same patient, different card: 37014
+37655 : RYERSE-LAROSE HEATHER 23-Oct-1978 : 2 records for this pat with diff ohip_num : 9821628175:6256777175
+same patient, different card: 41088
+41089 : SIDHU GURJIT 24-Jul-1957 : 2 records for this pat with diff ohip_num : 9784289842:3650113107
+same patient, different card: 42445
+41680 : SIDHU MANPREET 27-Apr-1988 : 2 records for this pat with diff ohip_num : 9784291981:6693864263
+same patient, different card: 43590
+49731 : SMITH RITA 06-Oct-1953 : 2 records for this pat with diff ohip_num : 0011691540:5638566298
+same patient, different card: 53506
+25991 : SMITH TREVOR 08-Jan-1975 : 2 records for this pat with diff ohip_num : 1362475772:9784373402
+same patient, different card: 32233
+39151 : VANDERVELDE DAVID 22-May-1974 : 2 records for this pat with diff ohip_num : 9876105904:1243694831
+same patient, different card: 51597
+26803 : VENUK KEENAN 14-Sep-1987 : 2 records for this pat with diff ohip_num : 9796580299:6049491332
+same patient, different card: 45487
+1618 : WESTAWAY AARON 25-Aug-1977 : 2 records for this pat with diff ohip_num : 7303389857:7303389851
+same patient, different card: 17575
+13995 : WILLIS MARGARET 03-Jun-1934 : 2 records for this pat with diff ohip_num : 8270504932:8270304932
+same patient, different card: 28287
+0 visits merged; Now purge patients with no visits
