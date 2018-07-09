@@ -1,5 +1,7 @@
 class ReportsController < ApplicationController
         include My::Forms
+	
+	helper_method :sort_column, :sort_direction
 
 	before_action :logged_in_user #, only: [:index, :edit, :update]
 	before_action :admin_user, only: :destroy
@@ -66,7 +68,7 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id]) 
     redirect_to reports_path unless @report
     @visits, @total, @insured, @uninsured = get_visits( @report )
-    @visits = @visits.paginate(page: params[:page], per_page: 25)
+    @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 25)
   end
 
   def show_pdf
@@ -130,6 +132,14 @@ private
     end
     uninsured = total - insured
     return [visits, total, insured, uninsured]
+  end
+
+  def sort_column
+          Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
+  end
+
+  def sort_direction
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
   end
 
 end

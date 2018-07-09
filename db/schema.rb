@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180705232045) do
+ActiveRecord::Schema.define(version: 20180707154659) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20180705232045) do
     t.string "specialty"
     t.string "email"
     t.string "doc_code"
+    t.integer "percent_deduction"
     t.index ["provider_no"], name: "index_doctors_on_provider_no"
   end
 
@@ -197,6 +198,24 @@ ActiveRecord::Schema.define(version: 20180705232045) do
     t.index ["ohip_num"], name: "index_patients_on_ohip_num"
     t.index ["pat_type"], name: "index_patients_on_pat_type"
     t.index ["phone"], name: "index_patients_on_phone"
+  end
+
+  create_table "paystubs", force: :cascade do |t|
+    t.integer "doc_id"
+    t.integer "year"
+    t.integer "month"
+    t.integer "claims"
+    t.integer "services"
+    t.float "gross_amt"
+    t.float "net_amt"
+    t.float "ohip_amt"
+    t.float "cash_amt"
+    t.float "ifh_amt"
+    t.float "monthly_premium_amt"
+    t.float "hc_dep_amt"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "wcb_amt"
   end
 
   create_table "procedures", force: :cascade do |t|

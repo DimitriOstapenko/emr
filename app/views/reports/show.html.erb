@@ -16,18 +16,19 @@
 	      Total Amount: <b>$<%= @total.round(2) %></b> Insured: <b>$<%= @insured.round(2) %></b> Uninsured: <b>$<%= @uninsured.round(2) %></b>
            </pre>
 
-<table> <!--class="table table-hover table-condensed" > -->
+<% if @visits.present? %>
+<table class="tbl table-hover" > <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
-          <th>Date</th>
+	  <th><%= sortable 'entry_ts', :Date %></th>
           <th>Visit Id</th>
-          <th>Patient</th>
+	  <th>Patient</th>
           <th>OHIP#</th>
-          <th>Diagnosis</th>
+	  <th><%= sortable 'diag_code', :Diagnosis %></th>
           <th>Procedure(s)</th>
-          <th>Bill.Type</th>
+	  <th><%= sortable 'bil_type', 'Bill.Type' %></th>
           <th>Ttl. Fee</th>
-          <th>Status</th>
+	  <th><%= sortable 'status', :Status %></th>
           <th>Entry By</th>
       </tr>
   </thead>
@@ -35,6 +36,7 @@
           <%= render partial: "visit", collection: @visits %>
   </tbody>
 </table>
+<% end %>
 
 <div class="bottom_buttons ">
     <%= will_paginate @visits, class: "btn" %>

@@ -1,0 +1,49 @@
+<%= form_for @paystub do |f| %>
+		
+<% doc_id = current_doctor.id if current_doctor %>
+<%= render 'shared/error_messages', object: f.object %>
+
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4" >
+  <%= f.label "Select Doctor" %>
+  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, selected: @paystub.doc_id || doc_id %>
+</div >
+</div>
+    
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4">
+  <%= f.label "Year" %>
+  <%= select_year Time.now, start_year: Time.now.year-10, end_year: Time.now.year  %>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4" >
+  <%= f.label "Month" %>
+  <%= select_month Time.now %>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4" >
+  <%= f.label "Monthly Premium Payment" %>
+  <%= f.number_field :monthly_premium_amt%>
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4" >
+  <%= f.label :IFH_payment %>
+  <%= f.number_field :ifh_amt%>
+</div>
+</div>
+
+<div class="row">
+<div class="col-sm-4 col-sm-offset-4">
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+</div>
+</div>
+
+<% end %>
+
