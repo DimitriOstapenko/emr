@@ -14,7 +14,7 @@ class BillingsController < ApplicationController
 
 # This day doctors/visits key: doc_id; value: number of visits      
       if date.blank? 
-	 @visits = Visit.where("status=? OR status=? OR status=?", ARRIVED, READY, ERROR)
+	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
 	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found." 
       else # Date given - check doctor filter
          @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size

@@ -1,5 +1,9 @@
     <tr>
-	<td><%= link_to "#{report.name}", report %> </td>
+	<% if report.filespec.blank? %>
+          <td><%= link_to "#{report.name}", report  %> </td>
+ 	<% else %>
+          <td><%= link_to "#{report.name}", show_pdf_report_path(report), target: 'Form' %> </td>
+  	<% end %>
 	<td><%= report.doctor.lname rescue 'All' %> </td> 
 	<td><%= REPORT_TYPES.invert[report.rtype] %></td> 
 	<td><%= report.sdate %></td>

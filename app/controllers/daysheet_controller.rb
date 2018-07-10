@@ -17,6 +17,7 @@ class DaysheetController < ApplicationController
          doctor = "Dr. #{d.lname}" if !d.nil?
       else
          @daysheet = Visit.where("date(entry_ts) = ?", date)
+	 @previously_unbilled = Visit.where("date(entry_ts) <? AND status=?", Date.today, ARRIVED)
       end
 
       @totalfee = @totalinsured = @totalcash = 0
@@ -28,8 +29,14 @@ class DaysheetController < ApplicationController
 	 flash.now[:info] = "Daysheet for #{date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}."
          render 'index'
       else
-	 flash.now[:info] = 'No visits were found for date ' + date.inspect 
-	 render  inline: '', layout: true
+	 if @previously_unbilled.present? #&& date == Date.today
+	    flash.now[:info] = "No visits were found for today, but there are #{@previously_unbilled.count} previously unbilled visits:"
+	    @daysheet = @previously_unbilled.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+	    render 'index'
+	 else  
+	    flash.now[:info] = 'No visits were found for date ' + date.inspect 
+	    render  inline: '', layout: true
+	 end
       end
   end
 
