@@ -28,7 +28,7 @@ patients.each do | p |
 
 #	same_pats = Patient.where('lname=? AND fname=? AND dob=?', p.lname, p.fname, p.dob).where('id != ?', master_id)
 #	same_pats.each do | sp |
-#		problem_patients_count += 1
+		problem_patients_count += 1
 
 #		sp.destroy if sp.visits.count < 1
 #		puts "to merge: #{sp.id}"
@@ -41,5 +41,5 @@ patients.each do | p |
 #	end
 end
 
-#puts "#{problem_patients_count} problem patients; #{merged_visits_count} visits merged; Now run 12_update_last_visit_date and purge patients with no visits: delete from patients where last_visit_date is null and ohip_num is null;"
+puts "#{problem_patients_count} problem patients; #{merged_visits_count} visits merged; Now run 12_update_last_visit_date and purge patients with no visits: delete from patients where last_visit_date is null and ohip_num is null;"
 
