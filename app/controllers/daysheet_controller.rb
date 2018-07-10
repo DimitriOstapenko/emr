@@ -7,6 +7,7 @@ class DaysheetController < ApplicationController
 	
   def index
       date = Date.parse(params[:date]) rescue Date.today
+      store_location
       
       @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
@@ -23,7 +24,6 @@ class DaysheetController < ApplicationController
       @daysheet.map{|v| @totalcash += v.total_cash}
       @daysheet.map{|v| @totalinsured += v.total_insured_fees}
       if @daysheet.any?
-#         @daysheet = @daysheet.paginate(page: params[:page])
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "Daysheet for #{date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}."
          render 'index'
@@ -46,7 +46,6 @@ class DaysheetController < ApplicationController
 	 render '_set_doctor'
       end
   end
-
 
   def sort_column
           Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"

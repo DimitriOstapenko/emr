@@ -1,18 +1,16 @@
 #
-# Seed patient table
+# Parse CSV payment file from CAB.md and get totals for each day for all doctors 
 #
-
-# Next 3 lines allow to run it in stand-alone
-require_relative '../../config/environment'
+# CSV Header line:
+# ref,X,ohip_num,vc,XX,prov,name,dob,group,XX,XXX,sdate,proc_code,units,XXXX,sub_fee,pd_fee,XXXXX,XXXXXX,XXXXXXX
+#
+require_relative '../config/environment'
 require 'date'
 require 'csv'
 
-#num,ref,X,ohip_num,vc,XX,prov,name,dob,group,XX,XXX,sdate,proc_code,units,XXXX,sub_fee,pd_fee,XXXXX,XXXXXX,XXXXXXX
-
 puts "About to scan CAB.md monthly payment file and calculate payments for each doctor" 
 
-#csv_text = File.read(Rails.root.join('export', 'EO_June.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
-csv_text = File.read(Rails.root.join('export', 'June.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
+csv_text = File.read(Rails.root.join('export', 'JUN', 'ALL_JUN.csv')).encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   # .first(200)
 
 def valid_date?( str, format="%m/%d/%Y" )
