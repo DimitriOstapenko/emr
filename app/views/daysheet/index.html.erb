@@ -38,7 +38,7 @@
           <th class="tbl_xmd">Procedures</th>
           <th class="tbl_sm">Bil.Type</th>
           <th class="tbl_lsm">Status</th>
-	  <% if date == Date.today || current_user.admin? %>
+	  <% if (date == Date.today && !@previously_unbilled.present?) || current_user.admin? %>
 	    <th class="tbl_sm"></th>
             <th class="tbl_sm"></th>
             <th class="tbl_sm"></th>

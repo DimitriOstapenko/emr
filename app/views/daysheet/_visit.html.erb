@@ -2,7 +2,11 @@
 <% return unless pat.present? %>
 
 <tr>
-	<td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %> </td>
+	<% if visit.was_today? %>
+            <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
+         <% else %>
+            <td><%= link_to visit.entry_ts, patient_visit_path(pat,visit) %></td>
+         <%end %>
 	<td><%= visit.doctor.lname %></td>
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= pat.ohip_num %></td>
