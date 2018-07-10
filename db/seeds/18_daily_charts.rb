@@ -1,6 +1,7 @@
 #
 # Seed daily_charts table 
 # Traverse charts/Daily tree and find all [date].pdf files. Import names into db table
+# Ignore already imported files
 #
 # Next lines allow to run it stand-alone
 require_relative '../../config/environment'
@@ -20,7 +21,7 @@ Find.find( dir ) do |path|
 	if chart.save
           puts "#{basename} saved"
   	else
-          puts 'Already in: ', basename
+          puts "Already in: #{basename} - ignored"
 #          puts chart.errors.full_messages
   	end
 end
