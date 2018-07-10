@@ -41,9 +41,9 @@
 <div class="bottom_buttons ">
     <%= will_paginate @visits, class: "btn" %>
     <% if @report.filespec.blank? %> 
-       <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get" %>
+       <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
     <% else %>
-       <%= button_to "Show PDF", show_pdf_report_path, class: "btn btn-primary", :method => "get" %>
+       <%= button_to "Show PDF", show_pdf_report_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
     <% end %>
 </div>
 

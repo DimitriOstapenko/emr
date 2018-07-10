@@ -7,6 +7,8 @@ class ReportsController < ApplicationController
 	before_action :admin_user, only: :destroy
 
   def index
+    store_location
+
     @reports = Report.paginate(page: params[:page])
     flash.now[:info] = "Showing all reports (#{@reports.count})"
   end
