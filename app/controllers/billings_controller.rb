@@ -9,20 +9,22 @@ class BillingsController < ApplicationController
   def index
       date = params[:date] 
       @totalfee = 0
+      
+        store_location
 
 # This day doctors/visits key: doc_id; value: number of visits      
       if date.blank? 
-	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
+	 @visits = Visit.where("status=? OR status=? OR status=?", ARRIVED, READY, ERROR)
 	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found." 
       else # Date given - check doctor filter
          @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
          @docs = Doctor.find(@docs_visits.keys) rescue []
          if params[:doc_id]
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED).where(doc_id: params[:doc_id])
+           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=?) ", date, READY, BILLED, PAID).where(doc_id: params[:doc_id])
 	   d = Doctor.find(params[:doc_id])
 	   doctor = "Dr. #{d.lname}" if d.present?
 	 else
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, READY, BILLED)
+           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=? ) ", date, READY, BILLED, PAID)
 	 end
 	 flashmsg = "Billings for #{doctor}  #{date} : #{@visits.count} visits. " 
       end

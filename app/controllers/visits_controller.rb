@@ -116,8 +116,9 @@ class VisitsController < ApplicationController
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
- #     redirect_back(fallback_location: @patient)
-      redirect_to @patient
+#     redirect_back(fallback_location: @patient)
+#     redirect_to @patient
+       redirect_back_or( @patient )
     else
       render 'edit'
     end

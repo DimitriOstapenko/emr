@@ -3,17 +3,17 @@
 <% diagnosis = Diagnosis.find_by(code: visit.diag_code) %>
 <tr>
 	<% if date.present? %>
-            <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(patient,visit) %></td>
+            <td><%= link_to visit.entry_ts.strftime("%H:%M"), edit_patient_visit_path(patient,visit) %></td>
          <% else %>
-            <td><%= link_to visit.entry_ts, patient_visit_path(patient,visit) %></td>
+            <td><%= link_to visit.entry_ts, edit_patient_visit_path(patient,visit) %></td>
          <%end %>
 	<td><%= doctor.lname %> </td>
 	<td><%= link_to patient.full_name, patient %> </td>
 	<td><%= patient.ohip_num %></td>
 	<td><%= patient.ohip_ver %></td>
+	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= visit.all_units.join',' %></td>
-	<td><%= link_to visit.diag_code, diagnosis %></td>
+	<td><%= visit.total_insured_services %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td><%= VISIT_STATUSES.invert[visit.status] %></td>
 	<td><%= visit.export_file %></td>
