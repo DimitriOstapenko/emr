@@ -66,7 +66,7 @@ def HR4(s)
    pat_lname = s[31,14].strip    # spaces except for RMB claims
    pat_fname = s[45,5].strip     # spaces except for RMB claims
    province = s[50,2]
-   ohip_num = s[52,12]
+   ohip_num = s[52,12].strip
    ohip_ver = s[64,2]
    pmt_pgm = s[66,3]
    svc_loc = s[69,4]
