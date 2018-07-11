@@ -7,7 +7,7 @@ class Procedure < ApplicationRecord
 #        validates :qcode, length: { maximum: 50 }, allow_blank: true
 	validates :ptype, presence: true, length: { maximum: 5 }
 	validates :descr, length: { maximum: 100 }, presence: true
-	validates :cost, presence: true, numericality: {greater_than_or_equal_to: 0} 
+	validates :cost, presence: true, numericality: true #{greater_than_or_equal_to: 0} 
 	validates :unit, presence: true, inclusion: { in: 0..20 }
 	validates :fac_req, inclusion: { in: [true, false] }, allow_blank: true
 	validates :adm_req, inclusion: { in: [true, false] }, allow_blank: true
