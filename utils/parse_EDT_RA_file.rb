@@ -6,6 +6,7 @@
 require_relative '../config/environment'
 require 'date'
 require 'csv'
+require 'find'
 
 month = ARGV[0]
 unless month && month.match('^\w{3}$')
