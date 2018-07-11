@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  claim_no: MyString
+  tr_type: 1
+  svc_date: MyString
+  units: 1
+  svc_code: MyString
+  amt_subm: 1.5
+  amt_paid: 1.5
+  errcode: MyString
+
+two:
+  claim_no: MyString
+  tr_type: 1
+  svc_date: MyString
+  units: 1
+  svc_code: MyString
+  amt_subm: 1.5
+  amt_paid: 1.5
+  errcode: MyString

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180707154659) do
+ActiveRecord::Schema.define(version: 20180710231859) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -38,6 +38,28 @@ ActiveRecord::Schema.define(version: 20180707154659) do
     t.datetime "updated_at", null: false
     t.integer "doc_id"
     t.index ["pat_id", "visit_date", "created_at"], name: "index_billings_on_pat_id_and_visit_date_and_created_at"
+  end
+
+  create_table "claims", force: :cascade do |t|
+    t.string "claim_no"
+    t.string "provider_no"
+    t.string "accounting_no"
+    t.string "pat_lname"
+    t.string "pat_fname"
+    t.string "province"
+    t.string "ohip_num"
+    t.string "ohip_ver"
+    t.string "pmt_pgm"
+    t.string "moh_group_id"
+    t.string "cabmd_ref"
+    t.integer "visit_id"
+    t.string "ra_file"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "date_paid"
+    t.index ["accounting_no"], name: "index_claims_on_accounting_no"
+    t.index ["cabmd_ref"], name: "index_claims_on_cabmd_ref"
+    t.index ["claim_no"], name: "index_claims_on_claim_no", unique: true
   end
 
   create_table "daily_charts", force: :cascade do |t|
@@ -270,6 +292,22 @@ ActiveRecord::Schema.define(version: 20180707154659) do
     t.date "edate"
   end
 
+  create_table "services", force: :cascade do |t|
+    t.string "claim_no"
+    t.integer "tr_type"
+    t.date "svc_date"
+    t.integer "units"
+    t.string "svc_code"
+    t.integer "amt_subm"
+    t.integer "amt_paid"
+    t.string "errcode"
+    t.integer "claim_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["claim_id"], name: "index_services_on_claim_id"
+    t.index ["claim_no"], name: "index_services_on_claim_no"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -291,7 +329,46 @@ ActiveRecord::Schema.define(version: 20180707154659) do
     t.datetime "updated_at", null: false
   end
 
-# Could not dump table "visits" because of following StandardError
-#   Unknown type 'real' for column 'weight'
+  create_table "visits", force: :cascade do |t|
+    t.text "notes"
+    t.string "diag_code"
+    t.string "proc_code"
+    t.integer "patient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "doc_id"
+    t.integer "status"
+    t.integer "duration"
+    t.string "vis_type"
+    t.string "entry_by"
+    t.string "doc_code"
+    t.datetime "entry_ts"
+    t.float "fee", default: 0.0
+    t.float "fee2", default: 0.0
+    t.float "fee3", default: 0.0
+    t.integer "units", default: 0
+    t.integer "units2", default: 0
+    t.integer "units3", default: 0
+    t.float "fee4", default: 0.0
+    t.integer "units4", default: 0
+    t.string "proc_code2"
+    t.string "proc_code3"
+    t.string "proc_code4"
+    t.integer "bil_type"
+    t.integer "bil_type2"
+    t.integer "bil_type3"
+    t.integer "bil_type4"
+    t.string "reason"
+    t.integer "provider_id"
+    t.integer "invoice_id"
+    t.integer "temp"
+    t.string "bp"
+    t.integer "pulse"
+    t.float "weight"
+    t.string "export_file"
+    t.decimal "amount", precision: 8, scale: 2
+    t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
+    t.index ["patient_id"], name: "index_visits_on_patient_id"
+  end
 
 end

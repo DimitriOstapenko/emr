@@ -1,5 +1,5 @@
 class Patient < ApplicationRecord
-        has_many :visits, dependent: :destroy, inverse_of: :patient
+        has_many :visits, dependent: :destroy, inverse_of: :patients
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age, :cardstr, :phonestr
 	default_scope -> { order(lname: :asc, fname: :asc) }
