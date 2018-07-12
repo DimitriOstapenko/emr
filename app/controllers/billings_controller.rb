@@ -15,7 +15,7 @@ class BillingsController < ApplicationController
 # This day doctors/visits key: doc_id; value: number of visits      
       if date.blank? 
 	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
-	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found." 
+	 flashmsg = "#{@visits.count} ready to bill/claim with error #{'visit'.pluralize(@visits.count)} found." 
       else # Date given - check doctor filter
          @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
          @docs = Doctor.find(@docs_visits.keys) rescue []
@@ -35,7 +35,7 @@ class BillingsController < ApplicationController
 	 flash.now[:info] = "#{flashmsg} Total fee: #{sprintf('$%.2f',@totalfee)}"
 	 render 'index'
       else
-	 flash.now[:info] = "No billings or ready to bill services found for date #{date}" if date.present?
+	 flash.now[:info] = "No billed or ready to bill services found for date #{date}" if date.present?
 	 render  inline: '', layout: true
       end
   end
