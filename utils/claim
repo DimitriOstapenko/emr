@@ -1,5 +1,0 @@
-claim
-claim_no:string provider_no:string accounting_no:string pat_lname:string pat_fname:string province:string ohip_num:string ohip_ver:string pmt_pgm:string moh_group_id:string cabmd_ref:string visit_id:integer ra_file:string
-
-service
-claim_no:string tr_type:integer svc_date:string units:integer svc_code:string amt_subm:float amt_paid:float errcode:string

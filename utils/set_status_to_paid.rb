@@ -1,7 +1,15 @@
+# Reconcile claims with visits
+# Requires range of dates
+# 
+# Updates attributes : 
+#   - visit.status to PAID 
+#   - claim.visit_id : to visit id
+#   - visit.export_file : sets to a claim.accounting_no if match found in lookup by ohip_num, date 
 #
-# Parse monthly remittance advice (RA) file from MOH, get totals for each doctor and each day 
-#
-# ex: PG0078.398
+# Look up claims for each visit in the date range by accounting_no (same as cabmd_ref)
+# Mark visit as paid if the match is found
+# if there's no match (claims submitted manually from cabmd) attempt to find claim by ohip_num and visit date
+# if match found, update export_file field in visit with accounting_no from the claim
 #
 require_relative '../config/environment'
 require 'date'
@@ -23,12 +31,13 @@ ttl_amt_subm = ttl_amt_paid = 0
 paid_count = not_paid_count = revised_count = 0
 Visit.where("date(entry_ts) >= ? AND date(entry_ts) <= ?", start_date, end_date).each do |v| 
    next unless v.status == BILLED
-   next unless v.hcp_services?
+   next unless v.total_insured_services > 0
 
    cl = Claim.find_by(accounting_no: v.export_file)
    
    if cl.present?
       v.update_attribute(:status, PAID) 
+      cl.update_attribute(:visit_id, v.id)
       if cl.amt_subm == cl.amt_paid 	   
 #	   puts "Patient #{v.patient_id}, visit #{v.id}: submitted: #{v.total_insured_fees}; billed: #{cl.damt_subm} paid in full"
 	   ttl_amt_paid += cl.damt_paid
@@ -50,12 +59,13 @@ Visit.where("date(entry_ts) >= ? AND date(entry_ts) <= ?", start_date, end_date)
 		v.update_attribute(:status, PAID) 
 		found = true
 		puts "Patient #{v.patient_id}, visit #{v.id}: submitted: #{v.total_insured_fees.round(2)}; billed: #{c.damt_subm} paid in full"
+		c.update_attribute(:visit_id, v.id)
 		break
 	     end
 	   end
 	   next if found
 	   not_paid_count += 1
-	   puts "No paid claim found for pat #{v.patient_id} #{pat.ohip_num} visit #{v.id} #{v.entry_ts} by accounting_no or HC/visit date "
+	   puts "No paid claim found for pat #{v.patient_id} (#{pat.pat_type}) HC#: #{pat.ohip_num} visit #{v.id} #{v.entry_ts} (#{v.bil_type_str}) by accounting_no or HC/visit date "
    end
 end
 
