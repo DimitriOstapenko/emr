@@ -18,6 +18,7 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = Invoice.new(invoice_params)
+    @patient = Patient.find( @invoice.patient_id ) rescue Patient.new()
     if @invoice.save
        @invoice.update_attribute(:filespec, Rails.root.join('invoices',"inv_#{@invoice.id}.pdf")) 
        pdf = build_invoice( @invoice )
