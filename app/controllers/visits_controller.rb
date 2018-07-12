@@ -22,7 +22,6 @@ class VisitsController < ApplicationController
         @patient = Patient.find(params[:patient_id])
         @visit = @patient.visits.new
         @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
-##        current_doctor_set
   end
 
   def create
@@ -40,15 +39,13 @@ class VisitsController < ApplicationController
 	 flash[:info] = "Current Doctor set to Dr. #{@visit.doctor.lname}"
     end
 
-# fee = cost*units    
     set_visit_fees ( @visit )
 
     if @visit.save
-      @patient.last_visit_date = @visit.entry_ts
-      @patient.save
+      @patient.update_attribute(:last_visit_date, @visit.entry_ts)
+      @visit.update_attribute(:status, READY) if @visit.status == PAID && @visit.hcp_services?  # Force to READY if there are ohip services
       flash[:success] = "Visit saved! #{params[:entry_ts]} "
       redirect_to @patient
-#      redirect_to edit_patient_visit_path(@patient,@visit)
     else
       render 'new'
     end

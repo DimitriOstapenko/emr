@@ -1,7 +1,7 @@
 #
-# Parse monthly remittance advice (RA) file from MOH, get totals for each doctor and each day 
+# Import paid claims from monthly remittance advice (RA) file from MOH, load records into 'claims' and 'services' tables
 #
-# ex: PG0078.398
+# Files like: PG0078.398 (jun) in EDT/<MON>
 #
 require_relative '../config/environment'
 require 'date'
@@ -66,7 +66,7 @@ def HR4(s)
    pat_lname = s[31,14].strip    # spaces except for RMB claims
    pat_fname = s[45,5].strip     # spaces except for RMB claims
    province = s[50,2]
-   ohip_num = s[52,12].strip
+   ohip_num = s[52,12].strip     # Right padded with spaces!
    ohip_ver = s[64,2]
    pmt_pgm = s[66,3]
    svc_loc = s[69,4]
@@ -83,7 +83,7 @@ def HR5(s)
    tr_type = s[14]  		# Original (1) or Adjustment (2) claim?
    svc_date = s[15,8].to_date rescue '1900-01-01'
    units = s[23,2].to_i rescue 1
-   svc_code = s[25,5]
+   svc_code = s[25,5]		# Not saved
    amt_subm = s[31,6].to_i
    amt_paid = s[37,6].to_i
    amt_paid = -amt_paid if s[43] == '-'
@@ -97,27 +97,31 @@ already_done = true if Claim.exists?(ra_file: RA_BASENAME)
 
 content = File.readlines RA_FILE 
 claim = nil
+claims = services =0
 content.each do |str| 
   hdr = str[0,3]
   case hdr 
   when 'HR1'
 	  HR1(str)
+	  if already_done
+            puts "#{RA_BASENAME} was imported already - terminating"
+	    exit
+	  end
   when 'HR2'
 	  HR2(str)
   when 'HR3'
 	  HR3(str)
   when 'HR4'
-	  if already_done
-             puts "#{RA_BASENAME} was imported already - terminating"
-	     exit
-	  end
 	  claim.save if claim.present?
 	  claim = HR4(str)
+	  claims += 1
   when 'HR5'
 	  service = HR5(str)
 	  claim.services.build(service.attributes)
+	  services += 1
   else
   end	  
 
 end
 
+puts "Imported #{claims} claims, #{services} services"

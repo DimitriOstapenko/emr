@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180710231859) do
+ActiveRecord::Schema.define(version: 20180711224141) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -51,14 +51,12 @@ ActiveRecord::Schema.define(version: 20180710231859) do
     t.string "ohip_ver"
     t.string "pmt_pgm"
     t.string "moh_group_id"
-    t.string "cabmd_ref"
     t.integer "visit_id"
     t.string "ra_file"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "date_paid"
     t.index ["accounting_no"], name: "index_claims_on_accounting_no"
-    t.index ["cabmd_ref"], name: "index_claims_on_cabmd_ref"
     t.index ["claim_no"], name: "index_claims_on_claim_no", unique: true
   end
 

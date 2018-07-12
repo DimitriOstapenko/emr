@@ -5,11 +5,11 @@
   <% @procedures = get_active_procedures %>
 
   <% if @visit.hcp_proc_codes.present?
-#        disabled = [BILLED,PAID] unless @visit._3rd_index.present?
-	 disabled = []
+        disabled = [BILLED,PAID] 
   elsif @visit.proc_codes.empty?
-#        disabled = [READY,BILLED,PAID] unless @visit.proc_codes.present? 
-	 disabled = []
+        disabled = [READY,BILLED,PAID] 
+  else 
+	disabled = []
   end %>
 
   <% if @visit.status == ERROR && !current_user.admin? 
@@ -240,6 +240,7 @@ function get_bil_type ( code, suff ) {
         data: $(this).serialize()
     }).done(function (data) {
         select_btype(data, suff);
+	select_statuses(data);
     }).fail(function (data) {
         console.log('AJAX request has FAILED');
     });
@@ -253,5 +254,18 @@ function select_btype( proc, suff ) {
 	$(v).val('4');
   }
 }
+
+function select_statuses( proc ) {
+  var v = document.getElementById('visit_statuses').getElementsByTagName("option");
+  if ( proc.ptype == '1') {
+        v[2].disabled = false;
+        v[3].disabled = true;
+        v[4].disabled = true;
+     } else {
+        v[3].disabled = true;
+        v[4].disabled = false;
+  }
+}
+
 
 </script>
