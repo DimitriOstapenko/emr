@@ -511,8 +511,8 @@ module My
 
     pdf.font "Courier"
     pdf.font_size 8
-    @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 =>0 }
-    @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 =>0 }
+    @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
+    @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
 
     rows =  [[ "Serv Date", "Patient", "OHIP#", "DOB", "Serv.", "Tp", "Fee", "Diag", "Status", "Acct#"]]
     visits.all.each do |v|
@@ -543,9 +543,9 @@ module My
       end
       
       pdf.move_down 10.mm
-      pdf.span(160.mm, :position => :center) do
+      pdf.span(190.mm, :position => :center) do
         pdf.text "Total Claims: #{visits.count}", size: 9
-        totals = [[ '', "HCP", "RMB", "INVOICE", "CASH", "WCB", "PRV", "Total" ]]
+        totals = [[ '', "HCP", "RMB", "INVOICE", "CASH", "WCB", "PRV", 'IFH', "Total" ]]
         @fees = @totals.values
         @fees.push(@fees.sum)
         totals += [ @fees.map{|e| sprintf("$%-8.2f",e)}.unshift('Fees') ]
