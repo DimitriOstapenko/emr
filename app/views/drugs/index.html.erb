@@ -32,5 +32,7 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @drugs, class: "btn" %>
+<% if current_user.admin?  %>
 <%= button_to "Add Medication", new_drug_path, class: "btn btn-primary col-md-12", :method => "get" %>
+<% end %>
 </div>

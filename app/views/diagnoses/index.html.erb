@@ -18,6 +18,8 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @diagnoses, class: "btn" %>
+<% if current_user.admin?  %>
 <%= button_to "Add Diagnostic Code", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
+<% end %>
 </div>
 
