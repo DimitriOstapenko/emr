@@ -7,6 +7,7 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
   include ApplicationHelper
+  include SessionsHelper
 
   def is_logged_in?
     !session[:user_id].nil?
@@ -14,11 +15,14 @@ class ActiveSupport::TestCase
 
   # Log in as a particular user.
   def log_in_as(user)
-    session[:user_id] = user.id
+    puts "in log_in_user : #{user.id}"	  
+    controller.session[:user_id] = user.id
   end
   
-  def sign_in_as(user)
-	  post login_path, params: { 'session' => {:user_id => 1, :email => 'me@me.com'}}
+  def sign_in_as(user, pass: 'musia4391')
+	 # post login_path, params: { session: {user_id: user.id }}
+	  post login_path, params: { session: { email: 'tt@t.com', password: 'musia4391'} }
+	  puts 'curuser:', current_user.inspect
   end
 
 end

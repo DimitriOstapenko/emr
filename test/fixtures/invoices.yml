@@ -1,14 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  pat_id: MyString
+  patient_id: MyString
   billto: 1
   visit_id: 1
   amount: 9.99
   notes: MyText
 
 two:
-  pat_id: MyString
+  patient_id: MyString
   billto: 1
   visit_id: 1
   amount: 9.99

@@ -1,51 +1,51 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  dnum: MyString
-  drug: MyString
-  strength: MyString
-  dose: MyString
-  freq: MyString
-  amount: MyString
-  status: MyString
-  generic: MyString
-  igcodes: MyString
-  format: MyString
-  route: MyString
+  name: Drug1
+  dnum: Num1
+  strength: strength1
+  dose: dose1
+  freq: freq1
+  amount: amount1
+  status: status1
+  generic: generic1
+  igcodes: igcodes1
+  format: format1
+  route: route1
   dur_cnt: 1
-  dur_unit: MyString
+  dur_unit: durunit1
   refills: 1
   cost: 1
-  lu_code: MyString
-  pharmacy: MyString
-  aliases: MyString
-  type: 
+  lu_code: lu_code1
+  pharmacy: pharm1
+  aliases: aliases1
+  dtype: dtype1
   odb: false
-  filename: MyString
-  notes: MyText
-  instructions: MyText
+  filename: filename1
+  notes: Notes1
+  instructions: Instructions1
 
 two:
-  dnum: MyString
-  drug: MyString
-  strength: MyString
-  dose: MyString
-  freq: MyString
-  amount: MyString
-  status: MyString
-  generic: MyString
-  igcodes: MyString
-  format: MyString
-  route: MyString
-  dur_cnt: 1
-  dur_unit: MyString
-  refills: 1
-  cost: 1
-  lu_code: MyString
-  pharmacy: MyString
-  aliases: MyString
-  type: 
+  name: Drug2
+  dnum: Num2
+  strength: strength2
+  dose: dose2
+  freq: freq2
+  amount: amount2
+  status: status2
+  generic: generic2
+  igcodes: igcodes2
+  format: format2
+  route: route2
+  dur_cnt: 2
+  dur_unit: durunit2
+  refills: 2
+  cost: 2
+  lu_code: lu_code2
+  pharmacy: pharm2
+  aliases: aliases2
+  dtype: dtype2
   odb: false
-  filename: MyString
-  notes: MyText
-  instructions: MyText
+  filename: filename2
+  notes: Notes2
+  instructions: Instructions2
