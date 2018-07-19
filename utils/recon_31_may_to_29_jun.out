@@ -1,0 +1,196 @@
+using 31-May-2018 as start date
+using 29-Jun-2018 as end date
+Will go through *billed* visits in given range, look for match in claims table and assign paid status if match found
+No paid claim found for pat 44663 3452757713 visit 338217 29-Jun-2018 19:26 by accounting_no or HC/visit date 
+No paid claim found for pat 68240 7253877877 visit 338216 29-Jun-2018 19:16 by accounting_no or HC/visit date 
+No paid claim found for pat 35518 3145071787 visit 338215 29-Jun-2018 19:15 by accounting_no or HC/visit date 
+No paid claim found for pat 35517 1318350194 visit 338214 29-Jun-2018 18:46 by accounting_no or HC/visit date 
+No paid claim found for pat 53263 4988634384 visit 338212 29-Jun-2018 18:39 by accounting_no or HC/visit date 
+No paid claim found for pat 15227 6374511951 visit 338211 29-Jun-2018 18:38 by accounting_no or HC/visit date 
+No paid claim found for pat 55494 6532816821 visit 338210 29-Jun-2018 18:26 by accounting_no or HC/visit date 
+No paid claim found for pat 44867 2978934459 visit 338209 29-Jun-2018 18:24 by accounting_no or HC/visit date 
+No paid claim found for pat 44076 8430503204 visit 338208 29-Jun-2018 18:17 by accounting_no or HC/visit date 
+No paid claim found for pat 40384 3456052871 visit 338207 29-Jun-2018 18:05 by accounting_no or HC/visit date 
+No paid claim found for pat 70572 3191606247 visit 338206 29-Jun-2018 18:02 by accounting_no or HC/visit date 
+No paid claim found for pat 18341 2651244317 visit 338205 29-Jun-2018 18:01 by accounting_no or HC/visit date 
+No paid claim found for pat 3214 6323535028 visit 338204 29-Jun-2018 17:35 by accounting_no or HC/visit date 
+No paid claim found for pat 4473 3442867432 visit 338203 29-Jun-2018 17:08 by accounting_no or HC/visit date 
+No paid claim found for pat 15908 1633825995 visit 338202 29-Jun-2018 16:59 by accounting_no or HC/visit date 
+No paid claim found for pat 20759 5267080652 visit 338201 29-Jun-2018 16:46 by accounting_no or HC/visit date 
+No paid claim found for pat 66007 6364792835 visit 338200 29-Jun-2018 16:36 by accounting_no or HC/visit date 
+No paid claim found for pat 26025 7088528281 visit 338199 29-Jun-2018 16:27 by accounting_no or HC/visit date 
+No paid claim found for pat 51393 7380209929 visit 338198 29-Jun-2018 16:25 by accounting_no or HC/visit date 
+No paid claim found for pat 69744 778802010 visit 338197 29-Jun-2018 16:10 by accounting_no or HC/visit date 
+No paid claim found for pat 432 3181046800 visit 338196 29-Jun-2018 15:47 by accounting_no or HC/visit date 
+No paid claim found for pat 70032 3298298856 visit 338195 29-Jun-2018 15:21 by accounting_no or HC/visit date 
+No paid claim found for pat 37149 4582619930 visit 338194 29-Jun-2018 15:17 by accounting_no or HC/visit date 
+No paid claim found for pat 601 9078467389 visit 338193 29-Jun-2018 15:11 by accounting_no or HC/visit date 
+No paid claim found for pat 59711 8031847976 visit 338192 29-Jun-2018 15:10 by accounting_no or HC/visit date 
+No paid claim found for pat 2996 7414573563 visit 338191 29-Jun-2018 15:05 by accounting_no or HC/visit date 
+No paid claim found for pat 70946 6302280810 visit 338190 29-Jun-2018 15:01 by accounting_no or HC/visit date 
+No paid claim found for pat 43566 9072084321 visit 338189 29-Jun-2018 14:23 by accounting_no or HC/visit date 
+No paid claim found for pat 55126 1163863325 visit 338188 29-Jun-2018 14:15 by accounting_no or HC/visit date 
+No paid claim found for pat 2042 7237882340 visit 338187 29-Jun-2018 14:13 by accounting_no or HC/visit date 
+No paid claim found for pat 37285 1131759639 visit 338185 29-Jun-2018 14:11 by accounting_no or HC/visit date 
+No paid claim found for pat 9151 9912055622 visit 338184 29-Jun-2018 14:10 by accounting_no or HC/visit date 
+No paid claim found for pat 38159 6475977127 visit 338183 29-Jun-2018 14:09 by accounting_no or HC/visit date 
+No paid claim found for pat 70235 3944302060 visit 338182 29-Jun-2018 13:51 by accounting_no or HC/visit date 
+No paid claim found for pat 66245 3440521106 visit 338181 29-Jun-2018 13:51 by accounting_no or HC/visit date 
+No paid claim found for pat 56990 5771573713 visit 338180 29-Jun-2018 13:33 by accounting_no or HC/visit date 
+No paid claim found for pat 3844 2117687844 visit 338179 29-Jun-2018 13:28 by accounting_no or HC/visit date 
+No paid claim found for pat 64972 8335344811 visit 338178 29-Jun-2018 13:26 by accounting_no or HC/visit date 
+No paid claim found for pat 2324 9520020067 visit 338177 29-Jun-2018 13:20 by accounting_no or HC/visit date 
+No paid claim found for pat 50127 5507398468 visit 338176 29-Jun-2018 13:18 by accounting_no or HC/visit date 
+No paid claim found for pat 18398 5311249824 visit 338175 29-Jun-2018 13:16 by accounting_no or HC/visit date 
+No paid claim found for pat 9477 7374156938 visit 338174 29-Jun-2018 12:40 by accounting_no or HC/visit date 
+No paid claim found for pat 54429 7742874543 visit 338173 29-Jun-2018 12:36 by accounting_no or HC/visit date 
+No paid claim found for pat 70945  visit 338172 29-Jun-2018 12:00 by accounting_no or HC/visit date 
+No paid claim found for pat 64303 9334155943 visit 338170 29-Jun-2018 11:42 by accounting_no or HC/visit date 
+No paid claim found for pat 53206 2934249026 visit 338169 29-Jun-2018 11:34 by accounting_no or HC/visit date 
+No paid claim found for pat 70892 1557076393 visit 338167 29-Jun-2018 11:12 by accounting_no or HC/visit date 
+No paid claim found for pat 56260 1804956520 visit 338166 29-Jun-2018 11:07 by accounting_no or HC/visit date 
+No paid claim found for pat 67726 8314795512 visit 338165 29-Jun-2018 10:33 by accounting_no or HC/visit date 
+No paid claim found for pat 9564 7655912983 visit 338164 29-Jun-2018 10:29 by accounting_no or HC/visit date 
+No paid claim found for pat 10478 8446258868 visit 338163 29-Jun-2018 10:22 by accounting_no or HC/visit date 
+No paid claim found for pat 52561 7770949365 visit 338162 29-Jun-2018 10:09 by accounting_no or HC/visit date 
+No paid claim found for pat 33623 3358914285 visit 338161 29-Jun-2018 10:09 by accounting_no or HC/visit date 
+No paid claim found for pat 70944 8833110540 visit 338160 29-Jun-2018 10:05 by accounting_no or HC/visit date 
+No paid claim found for pat 16467 5237881692 visit 338159 29-Jun-2018 10:03 by accounting_no or HC/visit date 
+No paid claim found for pat 70943 1373540556 visit 338158 29-Jun-2018 09:48 by accounting_no or HC/visit date 
+No paid claim found for pat 3037 9958281124 visit 338157 29-Jun-2018 09:37 by accounting_no or HC/visit date 
+No paid claim found for pat 11898 4577379078 visit 338156 29-Jun-2018 09:31 by accounting_no or HC/visit date 
+No paid claim found for pat 50266 2409900178 visit 338155 29-Jun-2018 09:24 by accounting_no or HC/visit date 
+No paid claim found for pat 1370 3348332432 visit 338154 29-Jun-2018 09:14 by accounting_no or HC/visit date 
+No paid claim found for pat 70942 9110214625 visit 338153 29-Jun-2018 09:12 by accounting_no or HC/visit date 
+No paid claim found for pat 48196 5616088232 visit 338152 29-Jun-2018 09:11 by accounting_no or HC/visit date 
+No paid claim found for pat 61411 6339515931 visit 338151 29-Jun-2018 09:10 by accounting_no or HC/visit date 
+No paid claim found for pat 48198 9789825065 visit 338150 29-Jun-2018 09:09 by accounting_no or HC/visit date 
+No paid claim found for pat 65556 4223715287 visit 338149 29-Jun-2018 09:08 by accounting_no or HC/visit date 
+No paid claim found for pat 70941 9317212935 visit 338148 29-Jun-2018 09:07 by accounting_no or HC/visit date 
+No paid claim found for pat 14844 9364971474 visit 338147 29-Jun-2018 09:03 by accounting_no or HC/visit date 
+No paid claim found for pat 56842 1864042187 visit 338146 29-Jun-2018 09:01 by accounting_no or HC/visit date 
+No paid claim found for pat 70940 378598041 visit 338144 28-Jun-2018 19:47 by accounting_no or HC/visit date 
+No paid claim found for pat 10357 7347554656 visit 338143 28-Jun-2018 19:34 by accounting_no or HC/visit date 
+No paid claim found for pat 70939  visit 338142 28-Jun-2018 19:28 by accounting_no or HC/visit date 
+No paid claim found for pat 1694 4220922654 visit 338141 28-Jun-2018 19:05 by accounting_no or HC/visit date 
+No paid claim found for pat 2523 1526054133 visit 338140 28-Jun-2018 19:05 by accounting_no or HC/visit date 
+No paid claim found for pat 37425 1945347241 visit 338139 28-Jun-2018 18:49 by accounting_no or HC/visit date 
+No paid claim found for pat 16149 9737590852 visit 338138 28-Jun-2018 18:42 by accounting_no or HC/visit date 
+No paid claim found for pat 17829 8765692069 visit 338137 28-Jun-2018 18:32 by accounting_no or HC/visit date 
+No paid claim found for pat 70938 5454224675 visit 338136 28-Jun-2018 18:23 by accounting_no or HC/visit date 
+No paid claim found for pat 38111 4579741994 visit 338135 28-Jun-2018 18:22 by accounting_no or HC/visit date 
+No paid claim found for pat 10143 9757388328 visit 338134 28-Jun-2018 18:09 by accounting_no or HC/visit date 
+No paid claim found for pat 20869 4826515589 visit 338133 28-Jun-2018 18:06 by accounting_no or HC/visit date 
+No paid claim found for pat 60537 3828601553 visit 338132 28-Jun-2018 18:02 by accounting_no or HC/visit date 
+No paid claim found for pat 34403 3718063930 visit 338131 28-Jun-2018 18:00 by accounting_no or HC/visit date 
+No paid claim found for pat 27157 8989918142 visit 338130 28-Jun-2018 17:20 by accounting_no or HC/visit date 
+No paid claim found for pat 43525 5135869906 visit 338129 28-Jun-2018 17:19 by accounting_no or HC/visit date 
+No paid claim found for pat 13117 7438862109 visit 338128 28-Jun-2018 16:55 by accounting_no or HC/visit date 
+No paid claim found for pat 5313 1754397535 visit 338127 28-Jun-2018 16:38 by accounting_no or HC/visit date 
+No paid claim found for pat 44229 1295447849 visit 338126 28-Jun-2018 16:34 by accounting_no or HC/visit date 
+No paid claim found for pat 70937 8512028096 visit 338125 28-Jun-2018 16:32 by accounting_no or HC/visit date 
+No paid claim found for pat 43589 8298246946 visit 338124 28-Jun-2018 16:14 by accounting_no or HC/visit date 
+No paid claim found for pat 16518 3127734493 visit 338122 28-Jun-2018 16:07 by accounting_no or HC/visit date 
+No paid claim found for pat 47488 1443509128 visit 338121 28-Jun-2018 16:05 by accounting_no or HC/visit date 
+No paid claim found for pat 69299 8984941826 visit 338119 28-Jun-2018 15:50 by accounting_no or HC/visit date 
+No paid claim found for pat 70935 3513572572 visit 338118 28-Jun-2018 15:49 by accounting_no or HC/visit date 
+No paid claim found for pat 43048  visit 338116 28-Jun-2018 15:44 by accounting_no or HC/visit date 
+No paid claim found for pat 16327 1589823804 visit 338115 28-Jun-2018 15:36 by accounting_no or HC/visit date 
+No paid claim found for pat 56010 5574873658 visit 338114 28-Jun-2018 15:35 by accounting_no or HC/visit date 
+No paid claim found for pat 65515  visit 338113 28-Jun-2018 15:19 by accounting_no or HC/visit date 
+No paid claim found for pat 37571 1310212608 visit 338111 28-Jun-2018 15:10 by accounting_no or HC/visit date 
+No paid claim found for pat 8301 8274139842 visit 338110 28-Jun-2018 15:09 by accounting_no or HC/visit date 
+No paid claim found for pat 62602 4900368335 visit 338109 28-Jun-2018 15:06 by accounting_no or HC/visit date 
+No paid claim found for pat 64393 6235323042 visit 338108 28-Jun-2018 14:49 by accounting_no or HC/visit date 
+No paid claim found for pat 43285 7864319988 visit 338107 28-Jun-2018 14:40 by accounting_no or HC/visit date 
+No paid claim found for pat 65365 6913835861 visit 338106 28-Jun-2018 14:34 by accounting_no or HC/visit date 
+No paid claim found for pat 70934 740401106 visit 338105 28-Jun-2018 14:31 by accounting_no or HC/visit date 
+No paid claim found for pat 58914 2248159374 visit 338104 28-Jun-2018 14:27 by accounting_no or HC/visit date 
+No paid claim found for pat 70933 7566840992 visit 338103 28-Jun-2018 14:26 by accounting_no or HC/visit date 
+No paid claim found for pat 63084 9415988238 visit 338102 28-Jun-2018 14:07 by accounting_no or HC/visit date 
+No paid claim found for pat 22530 9019936435 visit 338100 28-Jun-2018 13:55 by accounting_no or HC/visit date 
+No paid claim found for pat 65738 5344810899 visit 338099 28-Jun-2018 13:40 by accounting_no or HC/visit date 
+No paid claim found for pat 70807 7114841526 visit 338098 28-Jun-2018 13:32 by accounting_no or HC/visit date 
+No paid claim found for pat 21092 3247228236 visit 338097 28-Jun-2018 13:28 by accounting_no or HC/visit date 
+No paid claim found for pat 66797 9526685590 visit 338096 28-Jun-2018 13:14 by accounting_no or HC/visit date 
+No paid claim found for pat 69287 3259871493 visit 338095 28-Jun-2018 13:11 by accounting_no or HC/visit date 
+No paid claim found for pat 63503 8203086452 visit 338094 28-Jun-2018 13:08 by accounting_no or HC/visit date 
+No paid claim found for pat 61030 4469342069 visit 338093 28-Jun-2018 12:45 by accounting_no or HC/visit date 
+No paid claim found for pat 4652 4924260526 visit 338092 28-Jun-2018 12:42 by accounting_no or HC/visit date 
+No paid claim found for pat 39920 1873223430 visit 338091 28-Jun-2018 12:41 by accounting_no or HC/visit date 
+No paid claim found for pat 12148 8839357046 visit 338088 28-Jun-2018 12:26 by accounting_no or HC/visit date 
+No paid claim found for pat 1419 9601958896 visit 338087 28-Jun-2018 12:08 by accounting_no or HC/visit date 
+No paid claim found for pat 30904 7427787002 visit 338086 28-Jun-2018 11:48 by accounting_no or HC/visit date 
+No paid claim found for pat 50503 8456387201 visit 338085 28-Jun-2018 11:40 by accounting_no or HC/visit date 
+No paid claim found for pat 68577 4775940796 visit 338084 28-Jun-2018 11:15 by accounting_no or HC/visit date 
+No paid claim found for pat 46247 5736583922 visit 338083 28-Jun-2018 11:06 by accounting_no or HC/visit date 
+No paid claim found for pat 62848 7948484618 visit 338082 28-Jun-2018 11:05 by accounting_no or HC/visit date 
+No paid claim found for pat 70931 7938649451 visit 338081 28-Jun-2018 10:45 by accounting_no or HC/visit date 
+No paid claim found for pat 66575 7377890244 visit 338080 28-Jun-2018 10:14 by accounting_no or HC/visit date 
+No paid claim found for pat 68025 1555286671 visit 338079 28-Jun-2018 09:58 by accounting_no or HC/visit date 
+No paid claim found for pat 70930 7949175736 visit 338078 28-Jun-2018 09:53 by accounting_no or HC/visit date 
+No paid claim found for pat 65150 1253399859 visit 338077 28-Jun-2018 09:42 by accounting_no or HC/visit date 
+No paid claim found for pat 60103 1456987898 visit 338076 28-Jun-2018 09:37 by accounting_no or HC/visit date 
+No paid claim found for pat 32169 4440733980 visit 338075 28-Jun-2018 09:35 by accounting_no or HC/visit date 
+No paid claim found for pat 69819 9576006580 visit 338074 28-Jun-2018 09:34 by accounting_no or HC/visit date 
+No paid claim found for pat 12265 4693068753 visit 338073 28-Jun-2018 09:24 by accounting_no or HC/visit date 
+No paid claim found for pat 70776 1379785247 visit 338072 28-Jun-2018 09:23 by accounting_no or HC/visit date 
+No paid claim found for pat 59995 8362900758 visit 338071 28-Jun-2018 09:20 by accounting_no or HC/visit date 
+No paid claim found for pat 6846 3441004995 visit 338070 28-Jun-2018 09:18 by accounting_no or HC/visit date 
+No paid claim found for pat 44553 5356150606 visit 338069 28-Jun-2018 09:12 by accounting_no or HC/visit date 
+No paid claim found for pat 20818 8907041118 visit 338068 28-Jun-2018 09:04 by accounting_no or HC/visit date 
+No paid claim found for pat 70929 7019220271 visit 338067 28-Jun-2018 09:01 by accounting_no or HC/visit date 
+No paid claim found for pat 68408 7872256586 visit 338066 28-Jun-2018 09:00 by accounting_no or HC/visit date 
+No paid claim found for pat 66660  visit 338060 27-Jun-2018 19:16 by accounting_no or HC/visit date 
+No paid claim found for pat 43716 1199914514 visit 338057 27-Jun-2018 18:59 by accounting_no or HC/visit date 
+No paid claim found for pat 61417 9375074367 visit 338045 27-Jun-2018 17:39 by accounting_no or HC/visit date 
+No paid claim found for pat 13790 6110795603 visit 338024 27-Jun-2018 14:55 by accounting_no or HC/visit date 
+Payment revised for patient 43254, Visit 338018 27-Jun-2018 14:21 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 57827 7616055013 visit 337968 26-Jun-2018 17:37 by accounting_no or HC/visit date 
+Payment revised for patient 48150, Visit 337943 26-Jun-2018 12:52 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Patient 70940, visit 337940: submitted: 33.7; billed: 33.7 paid in full
+Payment revised for patient 70910, Visit 337922 26-Jun-2018 10:03 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 66460 1649793302 visit 337915 26-Jun-2018 09:11 by accounting_no or HC/visit date 
+No paid claim found for pat 55800 9874682017 visit 337876 25-Jun-2018 15:53 by accounting_no or HC/visit date 
+No paid claim found for pat 618 8257424906 visit 337866 25-Jun-2018 15:09 by accounting_no or HC/visit date 
+No paid claim found for pat 2950 1299390862 visit 337854 25-Jun-2018 13:32 by accounting_no or HC/visit date 
+No paid claim found for pat 37910  visit 337849 25-Jun-2018 13:09 by accounting_no or HC/visit date 
+No paid claim found for pat 37288 4389800055 visit 337832 25-Jun-2018 09:59 by accounting_no or HC/visit date 
+Patient 64054, visit 337825: submitted: 39.65; billed: 39.65 paid in full
+Patient 16784, visit 337823: submitted: 33.7; billed: 33.7 paid in full
+No paid claim found for pat 70901 4502270517 visit 337770 23-Jun-2018 12:11 by accounting_no or HC/visit date 
+No paid claim found for pat 46756 3449891005 visit 337740 22-Jun-2018 19:27 by accounting_no or HC/visit date 
+Payment revised for patient 4223, Visit 337716 22-Jun-2018 15:33 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 63076, Visit 337714 22-Jun-2018 15:05 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 68193  visit 337699 22-Jun-2018 13:06 by accounting_no or HC/visit date 
+Patient 67189, visit 337613: submitted: 21.7; billed: 21.7 paid in full
+No paid claim found for pat 70882 9740284245 visit 337604 21-Jun-2018 11:48 by accounting_no or HC/visit date 
+Patient 64151, visit 337577: submitted: 21.7; billed: 21.7 paid in full
+Patient 63420, visit 337556: submitted: 33.7; billed: 33.7 paid in full
+Patient 40354, visit 337552: submitted: 33.7; billed: 33.7 paid in full
+Payment revised for patient 67437, Visit 337533 20-Jun-2018 14:10 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 43254, Visit 337532 20-Jun-2018 14:10 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 54248, Visit 337529 20-Jun-2018 14:05 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 62633, Visit 337521 20-Jun-2018 12:18 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 70530  visit 337517 20-Jun-2018 11:30 by accounting_no or HC/visit date 
+Payment revised for patient 41175, Visit 337515 20-Jun-2018 11:24 : submitted: 25.59;  billed: 25.59, pd: 27.76
+No paid claim found for pat 70410  visit 337511 20-Jun-2018 10:51 by accounting_no or HC/visit date 
+Patient 40265, visit 337448: submitted: 44.95; billed: 44.95 paid in full
+Payment revised for patient 8790, Visit 337407 19-Jun-2018 10:27 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 63233, Visit 337376 18-Jun-2018 16:28 : submitted: 28.45;  billed: 28.45, pd: 25.59
+Payment revised for patient 26057, Visit 337375 18-Jun-2018 16:28 : submitted: 28.45;  billed: 28.45, pd: 25.59
+Payment revised for patient 22606, Visit 337374 18-Jun-2018 16:27 : submitted: 28.45;  billed: 28.45, pd: 25.59
+No paid claim found for pat 67868  visit 337373 18-Jun-2018 15:54 by accounting_no or HC/visit date 
+No paid claim found for pat 70864  visit 337491 18-Jun-2018 15:25 by accounting_no or HC/visit date 
+No paid claim found for pat 69905  visit 337315 18-Jun-2018 15:02 by accounting_no or HC/visit date 
+No paid claim found for pat 69906  visit 337314 18-Jun-2018 15:02 by accounting_no or HC/visit date 
+Patient 40458, visit 337184: submitted: 33.7; billed: 33.7 paid in full
+Patient 50362, visit 337122: submitted: 33.7; billed: 33.7 paid in full
+Payment revised for patient 69525, Visit 337037 15-Jun-2018 15:56 : submitted: 33.7;  billed: 33.7, pd: 0.0
+Patient 21989, visit 336825: submitted: 35.77; billed: 35.77 paid in full
+Patient 70834, visit 337367: submitted: 33.7; billed: 33.7 paid in full
+Patient 26900, visit 336742: submitted: 33.7; billed: 33.7 paid in full
+No paid claim found for pat 34368 4157682339 visit 337168 09-Jun-2018 12:17 by accounting_no or HC/visit date 
+1011 claims were paid in full; 15 claims were revised; 162 claims were not paid 
+Total amount submitted in this batch: 35823.71
+Total amount paid in this batch: 35817.3
