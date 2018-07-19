@@ -9,6 +9,11 @@
 	<td><%= patient.last_visit_date %> </td> 
 	<td><%= patient.visits.count rescue 0 %> </td>
 	<td><%= num_to_phone(patient.phone) %> </td> 
+	<td>
+	<% if patient.chart_file.present? %>
+	  <%= link_to 'Chart', chart_patient_path(patient), target: 'Label' %>
+	<% end %>
+	</td>
 	<td><%= link_to 'Label', addrlabel_patient_path(patient), target: 'Label' %> </td>
 	<!--	<td><%= "#{patient.addr} #{patient.city}, #{patient.prov} #{patient.postal}" %> </td>  -->
 

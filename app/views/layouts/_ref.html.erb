@@ -1,0 +1,13 @@
+<% menu_items = %w(procedures diagnoses providers drugs vaccines) %>
+<li class="dropdown nav-item <%= 'active' if menu_items.include?(controller_name) %>">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+  Ref <b class="caret"></b>
+  </a>
+    <ul class="dropdown-menu">
+      <li> <%= link_to "Procedures", procedures_path, method: :get %> </li>
+      <li> <%= link_to "Diagnoses", diagnoses_path, method: :get %> </li>
+      <li> <%= link_to "Ins. Providers", providers_path, method: :get %> </li>
+      <li> <%= link_to "Medications", drugs_path, method: :get %> </li>
+      <li> <%= link_to "Vaccines", vaccines_path, method: :get %> </li>
+    </ul>
+</li>

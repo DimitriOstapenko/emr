@@ -1,16 +1,16 @@
-#en-US:
-#  date:
-#    datepicker:
-#      default: "yyyy/mm/dd"
-#      long: "dd, MM yyyy"
-#    formats:
-#      default: "dd/mm/yyyy"
-#      long: ! '%B %d, %Y'
-
-en:
+en-US:
   date:
+    datepicker:
+      default: "dd-mm-yyyy"
+      long: "dd, MM yyyy"
     formats:
-      default: "%d-%b-%Y"
-  time:
-    formats:
-      default: "%d-%b-%Y %H:%M"
+      default: "dd-mm-yyyy"
+      long: ! '%B %d, %Y'
+
+#en:
+# date:
+#    formats:
+#      default: "%d-%b-%Y"
+#  time:
+#    formats:
+#      default: "%d-%b-%Y %H:%M"

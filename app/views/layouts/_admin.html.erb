@@ -1,0 +1,12 @@
+<li class="dropdown nav-item">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown"> Admin <b class="caret"></b> </a>
+<ul class="dropdown-menu">
+ <li><%= link_to "Profile", edit_user_path(current_user) %></li>
+ <li><%= link_to "Add User", signup_path %></li>
+ <li><%= link_to "Users", users_path %></li>
+ <li class="divider"></li>
+ <li> <%= link_to "Doctors", doctors_path, method: :get %> </li>
+ <li> <%= link_to "Export Files", export_files_path, method: :get %> </li>
+<%# <li> <%= link_to "Claims", claims_path, method: :get %> </li> %>
+</ul>
+</li>

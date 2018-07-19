@@ -8,34 +8,19 @@ class BillingsController < ApplicationController
 
   def index
       date = params[:date] 
-      @totalfee = 0
-      
-        store_location
-
-# This day doctors/visits key: doc_id; value: number of visits      
       if date.blank? 
-	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
-	 flashmsg = "#{@visits.count} ready to bill/claim with error #{'visit'.pluralize(@visits.count)} found." 
-      else # Date given - check doctor filter
-         @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
-         @docs = Doctor.find(@docs_visits.keys) rescue []
-         if params[:doc_id]
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=?) ", date, READY, BILLED, PAID).where(doc_id: params[:doc_id])
-	   d = Doctor.find(params[:doc_id])
-	   doctor = "Dr. #{d.lname}" if d.present?
-	 else
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=? ) ", date, READY, BILLED, PAID)
-	 end
-	 flashmsg = "Billings for #{doctor}  #{date} : #{@visits.count} visits. " 
+         @visits = Visit.where("status=? ", READY)
+         flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)} found"
+      else 
+         @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date, BILLED, READY)
+         flashmsg = "Billings for #{date} (#{@visits.count})"
       end
-
-      @visits.map{|v| @totalfee += v.total_fee}
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "#{flashmsg} Total fee: #{sprintf('$%.2f',@totalfee)}"
+	 flash.now[:info] = flashmsg
 	 render 'index'
       else
-	 flash.now[:info] = "No billed or ready to bill services found for date #{date}" if date.present?
+         flash.now[:info] = "No billings were found for date #{date}" if date
 	 render  inline: '', layout: true
       end
   end
@@ -186,22 +171,24 @@ class BillingsController < ApplicationController
     require 'net/http'
     require 'uri'
 
-    date = params[:date] 
-    if date.blank?
+#    date = params[:date] 
+#    date = Date.today if date.blank?
+#    if date.blank?
        @visits = Visit.where("status=? ", READY)
-       date = Date.today
-       flashmsg = "claims out of #{@visits.count} ready to bill claims sent to Cab.md"
-    else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
-       flashmsg = "claims out of #{@visits.count} sent to cab.md for date #{date}. This includes previously billed and ready for billing visits"
-    end
+       flashmsg = "claims out of #{@visits.count} sent to Cab.md." 
+#    else
+#      @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
+#      flashmsg = "claims out of #{@visits.count} sent to cab.md for date #{date}. This includes previously billed and ready for billing visits"
+#    end
     
     claims_sent = 0
     @visits.all.each do |v| 
        @visit = v
-# Skip visits without insured services
+# Skip visits without insured services (type 1)
        next unless v.hcp_services?    
        @patient = Patient.find(v.patient_id)
+# Don't send claims without HC# 
+       next unless @patient.present? && @patient.ohip_num.present?
        @doctor = Doctor.find(v.doc_id)
        @xml = render_to_string "/visits/show.xml"
 
@@ -215,15 +202,14 @@ class BillingsController < ApplicationController
        res = http.request(req)
        @xmlhash = JSON.parse(res.body)
        if @xmlhash['success']
-	  fname = @xmlhash['accounting_number']
+	  acc_no = @xmlhash['accounting_number']
           v.update_attribute(:status, BILLED)
-          v.update_attribute(:export_file, fname)
+          v.update_attribute(:export_file, acc_no)
 	  claims_sent += 1
        else
-	  errors = @xmlhash['errors'] || []
+	  errors = @xmlhash['errors']
 	  messages = @xmlhash['messages']
-	  refid = @xmlhash['reference_id']
-	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
+	  flash[:danger] = "Error sending claim : #{@xmlhash}"
           @visit.update_attribute(:status, ERROR)
 	  @visit.update_attribute(:export_file, errors.join(','))
        end
@@ -292,7 +278,7 @@ private
   end
 
   def sort_direction
-          %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end
