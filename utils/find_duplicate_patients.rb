@@ -8,7 +8,7 @@
 #
 require_relative '../config/environment'
 
-puts "About to merge patients with 2 different health card numbers: all visits will be moved to master"
+puts "Looking for patients with 2 cards by lname,fname, dob"
 problem_patients_count = 0
 merged_visits_count = 0
 
