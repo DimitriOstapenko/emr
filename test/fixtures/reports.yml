@@ -1,11 +1,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  name: Name1
   doc_id: 1
-  type: 1
-  filespec: MyString
+  rtype: 1
+  filespec: filespec1
+  sdate: 2018-01-01
+  edate: 208-02-01
 
 two:
-  doc_id: 1
-  type: 1
-  filespec: MyString
+  name: Name2
+  doc_id: 2
+  rtype: 2
+  filespec: filespec2
+  sdate: 2018-01-01
+  edate: 208-02-01

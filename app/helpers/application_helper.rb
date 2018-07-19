@@ -3,7 +3,7 @@ module ApplicationHelper
 # Guess device type 	
 # /mobile|android|iphone|blackberry|iemobile|kindle/
     def device_type
-      ua  = request.user_agent.downcase
+      ua  = request.user_agent.downcase rescue 'unknown'
       if ua.match(/macintosh|windows/)
 #	 WillPaginate.per_page = 34  # doesnt work in multi-thread 
 	 return 'desktop'

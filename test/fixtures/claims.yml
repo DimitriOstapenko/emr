@@ -1,31 +1,31 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  claim_no: MyString
-  provider_no: MyString
-  accounting_no: MyString
-  pat_lname: MyString
-  pat_fname: MyString
-  province: MyString
-  ohip_num: MyString
-  ohip_ver: MyString
-  pmt_pgm: MyString
-  moh_group_id: MyString
-  cabmd_ref: MyString
+  claim_no: ABCDDE1 
+  provider_no: 015335 
+  accounting_no: ABCDEF
+  pat_lname: Lname
+  pat_fname: Fname
+  province: ON
+  ohip_num: 1234567890
+  ohip_ver: AA
+  pmt_pgm: HCP
+  moh_group_id: 0078
   visit_id: 1
-  ra_file: MyString
+  ra_file: RAFILE
+  date_paid: 2018-01-01
 
 two:
-  claim_no: MyString
-  provider_no: MyString
-  accounting_no: MyString
-  pat_lname: MyString
-  pat_fname: MyString
-  province: MyString
-  ohip_num: MyString
-  ohip_ver: MyString
-  pmt_pgm: MyString
-  moh_group_id: MyString
-  cabmd_ref: MyString
-  visit_id: 1
-  ra_file: MyString
+  claim_no: ABCDE2
+  provider_no: 015336 
+  accounting_no: ABCDE2
+  pat_lname: Lname2 
+  pat_fname: Fname2
+  province: ON
+  ohip_num: 1234567891
+  ohip_ver: BB
+  pmt_pgm: HCP
+  moh_group_id: 0078
+  visit_id: 2
+  ra_file: RAFILE
+  date_paid: 2018-01-01

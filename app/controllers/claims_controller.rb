@@ -25,19 +25,38 @@ class ClaimsController < ApplicationController
   def show 
     if Claim.exists?(params[:id]) 
        @claim = Claim.find(params[:id]) 
-       if @claim.chart_file.blank?
-	  lname_with_underscore = @claim.lname.gsub(' ','_')
-	  chart = Dir.glob("#{Rails.root}/charts/#{@claim.lname[0]}/#{lname_with_underscore}\,#{@claim.fname}*\.pdf")
-	  @claim.update_attribute(:chart_file, chart[0]) if chart[0]
-       end
-       @visits = @claim.visits.paginate(page: params[:page], per_page: 14) 
-       if !@claim.valid?
-	  flash.now[:danger] = @claim.errors.full_messages.to_sentence
-       end
+       @services = @claim.services.paginate(page: params[:page], per_page: 14) 
     else
        redirect_to claims_path
     end
   end
       
+private
+  def claim_params
+          params.require(:claim).permit(:claim_no, :provider_no, :accounting_no, :pat_lname, :pat_fname, :province, :ohip_num, :ohip_ver, 
+					:pmt_pgm, :moh_group_id, :visit_id, :ra_file, :date_paid )
+  end
+
+# Find claim by claim_no/ohip_num/accounting_no
+  def myfind (str)
+        if str.match(/^G[[:digit:]]{,10}$/)
+          Claim.where("claim_no like ?", "%#{str}%")
+        elsif str.match(/^[[:digit:]]{,10}$/)
+          Claim.where("ohip_num like ?", "%#{str}%")
+        elsif str.match(/^[[:graph:]]{,8}$/)
+          Claim.where("accounting_no like ?", "%#{str}%" )
+        else
+          []
+        end
+  end
+
+  def sort_column
+      Claim.column_names.include?(params[:sort]) ? params[:sort] : "date"
+  end
+
+  def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
 
 end
