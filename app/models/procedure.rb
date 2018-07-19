@@ -43,6 +43,14 @@ def non_ana_fee_real
   sprintf '%.2f', non_ana_fee/100.0
 end
 
+def insured?
+  ptype == 1 
+end
+
+def cash?
+  ptype == 2
+end
+
 end
 
 

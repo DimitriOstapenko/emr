@@ -1,8 +1,7 @@
 <% pat = Patient.find(visit.patient_id) rescue nil %>
 <% return unless pat.present? %>
-
 <tr>
-	<% if visit.was_today? %>
+	<% if visit.date == @date %>
             <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
          <% else %>
             <td><%= link_to visit.entry_ts, patient_visit_path(pat,visit) %></td>

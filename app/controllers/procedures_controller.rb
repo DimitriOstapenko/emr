@@ -80,10 +80,10 @@ private
 
 # Find procedure by code/description
   def myfind (str)
-	if str.match(/^\S?[[:digit:]]{,3}\S?$/)
+	if str.match(/^\w[[:digit:]]{,3}\w$/)
           Procedure.where("code like ?", "%#{str}%")  
         elsif str.match(/^[[:graph:]]+$/)
-          Procedure.where("upper(descr) like ?", "%#{str}%")
+		Procedure.where("upper(descr) like ? OR upper(code) like ?", "%#{str.upcase}%", "%#{str.upcase}%" )
         else
           []
         end

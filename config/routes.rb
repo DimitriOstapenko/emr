@@ -76,6 +76,9 @@ Rails.application.routes.draw do
   resources :daily_charts
   resources :export_files
   resources :edt_files
+  resources :claims do
+    resources :services
+  end
   resources :paystubs
 
 # resources :billings     # historical billing table - not used

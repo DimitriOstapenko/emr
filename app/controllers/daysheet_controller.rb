@@ -6,17 +6,17 @@ class DaysheetController < ApplicationController
 #        before_action :admin_user, only: :destroy
 	
   def index
-      date = Date.parse(params[:date]) rescue Date.today
+      @date = Date.parse(params[:date]) rescue Date.today
       store_location
       
-      @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
+      @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
       if params[:doc_id]
-         @daysheet = Visit.where("date(entry_ts) = ?", date).where(doc_id: params[:doc_id])
+         @daysheet = Visit.where("date(entry_ts) = ?", @date).where(doc_id: params[:doc_id])
          d = Doctor.find(params[:doc_id])
          doctor = "Dr. #{d.lname}" if !d.nil?
       else
-         @daysheet = Visit.where("date(entry_ts) = ?", date)
+         @daysheet = Visit.where("date(entry_ts) = ?", @date)
 	 @previously_unbilled = Visit.where("date(entry_ts) <? AND status=?", Date.today, ARRIVED)
       end
 
@@ -26,15 +26,15 @@ class DaysheetController < ApplicationController
       @daysheet.map{|v| @totalinsured += v.total_insured_fees}
       if @daysheet.any?
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "Daysheet for #{date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}."
+	 flash.now[:info] = "Daysheet for #{@date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}."
          render 'index'
       else
-	 if @previously_unbilled.present? && date == Date.today
+	 if @previously_unbilled.present? && @date == Date.today
 	    flash.now[:info] = "No visits were found for today, but there are #{@previously_unbilled.count} previously unbilled visits:"
 	    @daysheet = @previously_unbilled.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	    render 'index'
 	 else  
-	    flash.now[:info] = 'No visits were found for date ' + date.inspect 
+	    flash.now[:info] = 'No visits were found for date ' + @date.inspect 
 	    render  inline: '', layout: true
 	 end
       end

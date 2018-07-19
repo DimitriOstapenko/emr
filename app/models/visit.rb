@@ -22,6 +22,10 @@ class Visit < ApplicationRecord
     Doctor.find(doc_id) rescue Doctor.new 
   end
 
+  def date 
+	  entry_ts.to_date rescue '1900-01-01'
+  end
+	
 # all procedure codes for this visit
   def proc_codes(sep=',')
     [proc_code, proc_code2, proc_code3, proc_code4].reject(&:blank?).join(sep)
