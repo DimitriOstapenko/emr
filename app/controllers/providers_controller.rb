@@ -1,5 +1,5 @@
 class ProvidersController < ApplicationController
-	      before_action :logged_in_user #, only: [:index, :edit, :update]
+	before_action :logged_in_user #, only: [:index, :edit, :update]
         before_action :admin_user, only: :destroy
 
   def index
@@ -29,7 +29,7 @@ class ProvidersController < ApplicationController
     @provider = Provider.new(provider_params)
     if @provider.save
        flash[:success] = "Provider created"
-       redirect_to @provider
+       redirect_to providers_path
     else
        render 'new'
     end
