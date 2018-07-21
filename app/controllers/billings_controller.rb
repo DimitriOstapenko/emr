@@ -7,24 +7,24 @@ class BillingsController < ApplicationController
     
 
   def index
-      date = params[:date] 
+      @date = Date.parse(params[:date]) rescue nil
       @totalfee = @totalinsured = @totalcash = @total_insured_services = 0
       
         store_location
 
 # This day doctors/visits key: doc_id; value: number of visits      
-      if date.blank? 
+      if @date.blank? 
 	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
 	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)}," 
       else # Date given - check doctor filter
-         @docs_visits = Visit.where("date(entry_ts) = ?",date).group('doc_id').reorder('').size
+         @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
          @docs = Doctor.find(@docs_visits.keys) rescue []
          if params[:doc_id]
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=?) ", date, READY, BILLED, PAID).where(doc_id: params[:doc_id])
+           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=?) ", @date, READY, BILLED, PAID).where(doc_id: params[:doc_id])
 	   d = Doctor.find(params[:doc_id])
 	   doctor = "Dr. #{d.lname}" if d.present?
 	 else
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=? ) ", date, READY, BILLED, PAID)
+           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=? ) ", @date, READY, BILLED, PAID)
 	 end
 	 flashmsg = "Billings for #{doctor} : #{@visits.count} visits, " 
       end
@@ -39,8 +39,8 @@ class BillingsController < ApplicationController
 	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} services. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
 	 render 'index'
       else
-	 if date.present?
-	    flash.now[:info] = "No billed or ready to bill services found for date #{date}"
+	 if @date.present?
+	    flash.now[:info] = "No billed or ready to bill services found for date #{@date}"
 	 else 
 	    flash.now[:info] = "No ready to bill services found for today"
 	 end
