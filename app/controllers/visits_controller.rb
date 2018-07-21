@@ -36,7 +36,7 @@ class VisitsController < ApplicationController
 
     if current_doctor.blank? || @visit.doc_id != current_doctor.id
 	 set_doc_session ( @visit.doc_id )
-	 flash[:info] = "Current Doctor set to Dr. #{@visit.doctor.lname}"
+	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
     end
 
     set_visit_fees ( @visit )

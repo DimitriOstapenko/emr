@@ -183,7 +183,7 @@ module My
          :min_font_size => 9,
          :inline_format => true
 
-    descr = visit.reason.blank? ? visit.proc_descr(visit.invoice_pcode) : visit.reason
+    descr = visit.reason.blank? ? visit.proc_descr(visit.invoice_pcode) : visit.reason[0,90]
     pdf.draw_text descr, at: [5.mm, 162.mm]
     pdf.draw_text "Notes: #{visit.notes[0,68]}", :at => [5.mm,130.mm]
 

@@ -1,4 +1,5 @@
-# Go through all claims in claims table and set visit_id field, if not set, from visits table
+# Temp script - delete after use; This functionality is now in process_paid_claims script
+# Go through all claims in claims table and set visit_id field, if not set, from visits table 
 # Lookup by HC#, visit date
 # Update attributes:
 #   - claim.visit_id to matched visit id

@@ -4,7 +4,9 @@
   <% doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) %>
   <% @procedures = get_active_procedures %>
 
-  <% if @visit.hcp_proc_codes.present?
+  <% if current_user.admin? 
+        disabled = []
+  elsif @visit.hcp_proc_codes.present? 
         disabled = [BILLED,PAID] 
   elsif @visit.proc_codes.empty?
         disabled = [READY,BILLED,PAID] 
@@ -43,23 +45,23 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None' %> <!--#, selected: @visit.proc_code || 'A007A'  -->
   <%= f.hidden_field(:fee, id: :fee) %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code2, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code3, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code4, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 </div

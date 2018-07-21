@@ -53,14 +53,15 @@ class Visit < ApplicationRecord
       !hcp_proc_codes.empty?
   end
 
-# Is there invoiced service
+# Invoiced service? (first service is invoice)
   def invoiced?
-    bil_types('').index(BILLING_TYPES[:Invoice].to_s) && 1
+    bil_types('').index(INVOICE_BILLING.to_s) == 0
   end
 
-# Is there cash service?
+# Cash only service? (first service is cash) 
   def cash?
-    bil_types('').index(BILLING_TYPES[:Cash].to_s) && 1
+#    bil_types('').index(BILLING_TYPES[:Cash].to_s) && 1
+    bil_types('').index(CASH_BILLING.to_s) == 0
   end
 
 # Is visit ready to bill?
