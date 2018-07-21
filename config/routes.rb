@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+  get '/claims/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
+  get '/claims/index' 
   get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
   get '/daily_charts/index'
   get '/drugs/index' => 'drugs#find', constraints: { query_string: /findstr/ }
@@ -80,6 +82,7 @@ Rails.application.routes.draw do
     resources :services
   end
   resources :paystubs
+
 
 # resources :billings     # historical billing table - not used
   

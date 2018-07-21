@@ -1,2 +1,47 @@
-<h1>Claims#show</h1>
-<p>Find me in app/views/claims/show.html.erb</p>
+<% provide(:title, @claim.claim_no) %>
+
+	<h1>Claim <%= @claim.claim_no %> </h1>
+
+<div class="row">
+  <aside class="col-md-6">
+    <section class="user_info">
+	   <pre class="pre-scrollable" >
+	   <b> Service date </b>: <%= @claim.date %>
+	   <b> Accounting Number</b>: <%= @claim.accounting_no %>
+	   <b> OHIP Number </b>: <%= @claim.ohip_num %> <%= @claim.ohip_ver %> (<%= @claim.province %>)
+	   <b> Payment Program </b>: <%= @claim.pmt_pgm %> 
+	   <b> Amount Submitted </b>: <%= sprintf("$%.2f",@claim.damt_subm) %>
+	   <b> Amount Paid </b>: <%= sprintf("$%.2f",@claim.damt_paid) %>
+	   <b> Date Paid </b>: <%= @claim.date_paid %>
+	   <b> RA File </b>: <%= @claim.ra_file %>
+	   </pre>
+    </section>
+
+
+  </aside>
+
+  <div class="col-md-6">
+    <h3>Services: (<%= @claim.services.count %>)</h3>
+    <% if @claim.services.any? %>
+        <table class="tbl">
+  	  <thead>
+	  <tr>
+	    <th class="tbl_lg">Date</th>
+	    <th class="tbl_xlg">Service</th>
+	    <th>Units</th>
+	    <th>Subm</th>
+	    <th>Paid</th>
+	    <th>ErrrCode</th>
+	  </tr>
+	  <tbody>
+
+		  <%= render partial: "service", collection: @services %>
+
+          </tbody>
+	</table>
+	<%= will_paginate @services %> 
+    <% end %>
+  </div>
+</div>
+
+

@@ -1,5 +1,6 @@
 class Claim < ApplicationRecord
 	has_many :services, dependent: :destroy, inverse_of: :claim
+	default_scope -> { order(claim_no: :desc) }
 
 # Total claim amount submitted (integer)
  def amt_subm
