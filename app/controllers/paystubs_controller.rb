@@ -29,10 +29,18 @@ class PaystubsController < ApplicationController
     @paystub = Paystub.new
   end
 	
+#  t.integer "year" t.integer "month" t.integer "claims" t.integer "services" 
+#  t.float "gross_amt" t.float "net_amt" t.float "ohip_amt" t.float "cash_amt" 
+#  t.float "ifh_amt" t.float "monthly_premium_amt" t.float "hc_dep_amt",   t.float "wcb_amt"
+#
   def create
     @paystub = Paystub.new(paystub_params)
+    @doc = Doctor.find(@paystub.doc_id)
     @paystub.year = params[:date][:year]
-    @paystub.month  = params[:date][:month]
+    @paystub.month = params[:date][:month]
+    sdate = "#{@paystub.year}-#{@paystub.month}-01"
+    @claims = Service.where("provider_no=? AND svc_date>?", @doc.provider_no, sdate).group("claim_id") 
+    @paystub.claims = @claims.count
     if @paystub.save
        flash.now[:success] = "Paystub created : #{@paystub.id}"
        redirect_to @paystub
