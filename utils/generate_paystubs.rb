@@ -2,7 +2,7 @@
 # Generate pay stub for each doctor with stats for each day they worked 
 #
 # CSV file naming syntax : <provider_no>_<name>.csv
-# Files are stored in separate directory for given month
+# Files are downloaded from cab.md reports section and stored in separate directory for given month
 # CSV Header row:
 # ref,X,ohip_num,vc,XX,prov,name,dob,group,XX,XXX,sdate,proc_code,units,XXXX,sub_fee,pd_fee,XXXXX,XXXXXX,XXXXXXX
 
@@ -46,7 +46,7 @@ csv.each do |row|
 	date = row['sdate']
 	next unless date
 
-	if fee[date].present?
+	if fee[date].present?   # several services on the same visit
 	  fee[date][:billed] += row['sub_fee'].tr('$','').to_f
 	  fee[date][:paid] += row['pd_fee'].tr('$','').to_f
 	  fee[date][:svcs] += 1
