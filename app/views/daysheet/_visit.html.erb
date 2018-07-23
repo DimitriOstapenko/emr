@@ -13,7 +13,13 @@
 	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.all_btypes_str.join',' %></td>
-	<td><%= visit.status_str %></td>
+	<td>
+	<% if visit.status == PAID && visit.claim_id.present? %>
+	  <%= link_to visit.status_str, claim_path(visit.claim_id) %> 		
+	<% else %>
+	  <%= visit.status_str %>
+	<% end %>
+	</td>
 	<% if visit.was_today? || current_user.admin? %>
 	  <td> <%= link_to "Label", label_patient_path(pat), method: 'get', target: "Label" %> </td>
 	  <td> <%= link_to "Form", visitform_patient_visit_path(pat,visit), method: 'get', target: "Form" %> </td>
