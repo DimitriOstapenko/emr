@@ -411,6 +411,16 @@ table.pretty {
     overflow-y: scroll;
 }
 
+.pre-scrollable-md {
+    max-height: 180px;
+    overflow-y: scroll;
+}
+
+.pre-scrollable-lg {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
 .notes {
   background-color: transparent; 
   overflow:auto; 
