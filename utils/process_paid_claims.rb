@@ -34,7 +34,7 @@ puts "Will go through *billed* visits in given range, look for match in claims t
 ttl_amt_subm = ttl_amt_paid = 0
 paid_count = not_paid_count = revised_count = 0
 Visit.where("date(entry_ts) >= ? AND date(entry_ts) <= ?", start_date, end_date).each do |v| 
-   next unless v.status == BILLED
+   next unless v.status == PAID
    next unless v.total_insured_services > 0
 
    cl = Claim.find_by(accounting_no: v.export_file)
