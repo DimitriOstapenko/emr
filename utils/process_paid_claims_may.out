@@ -1,0 +1,66 @@
+ails@tiny:~/walkin/utils$ ruby process_paid_claims.rb 2018-04-26 2018-05-30
+using 26-Apr-2018 as start date
+using 30-May-2018 as end date
+Will go through *billed* visits in given range, look for match in claims table and assign paid status,amount paid,claim id and visit id if match found
+Payment revised for patient 3278, Visit 335997 30-May-2018 12:33 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 68301 (R) HC#: 9127830361 visit 335639 25-May-2018 15:51 (HCP) by accounting_no or HC/visit date 
+Payment revised for patient 69243, Visit 335632 25-May-2018 14:44 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 17362 (O) HC#: 3438865549 visit 335620 25-May-2018 12:05 (RMB) by accounting_no or HC/visit date 
+Payment revised for patient 24467, Visit 335596 25-May-2018 09:06 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70480, Visit 335440 23-May-2018 10:33 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 70494 (R) HC#: 298930561 visit 335381 22-May-2018 13:44 (RMB) by accounting_no or HC/visit date 
+Payment revised for patient 16976, Visit 335371 22-May-2018 12:18 : submitted: 21.7;  billed: 21.7, pd: 0.0
+Payment revised for patient 3431, Visit 335365 22-May-2018 11:40 : submitted: 37.59;  billed: 37.59, pd: 40.96
+Payment revised for patient 22879, Visit 335357 22-May-2018 11:06 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70466, Visit 335225 18-May-2018 16:16 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 69243, Visit 335202 18-May-2018 13:19 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 48150, Visit 335181 18-May-2018 10:48 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70451, Visit 335165 18-May-2018 09:32 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70440, Visit 335084 16-May-2018 13:24 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 4352, Visit 335067 16-May-2018 10:42 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 47530, Visit 335055 16-May-2018 09:07 : submitted: 49.1;  billed: 49.1, pd: 33.7
+Payment revised for patient 828, Visit 335052 16-May-2018 09:05 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 14840, Visit 335001 15-May-2018 13:35 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 7249, Visit 334994 15-May-2018 12:45 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 34749, Visit 334993 15-May-2018 12:44 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 43254, Visit 334991 15-May-2018 12:34 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 59703, Visit 334781 11-May-2018 16:50 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 50110, Visit 334776 11-May-2018 16:06 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 53935 (W) HC#:  visit 334742 11-May-2018 11:00 (HCP) by accounting_no or HC/visit date 
+No paid claim found for pat 50110 (O) HC#: 6703824901 visit 334688 10-May-2018 14:48 (HCP) by accounting_no or HC/visit date 
+No paid claim found for pat 50110 (O) HC#: 6703824901 visit 334581 09-May-2018 09:48 (HCP) by accounting_no or HC/visit date 
+Payment revised for patient 31346, Visit 334566 09-May-2018 09:00 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 61511, Visit 334520 08-May-2018 14:54 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70344, Visit 334422 07-May-2018 13:01 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 23714, Visit 334414 07-May-2018 12:12 : submitted: 38.2;  billed: 38.2, pd: 42.02
+Payment revised for patient 4352, Visit 334399 07-May-2018 10:16 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 3844, Visit 334398 07-May-2018 10:15 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 52374, Visit 334387 07-May-2018 09:00 : submitted: 49.1;  billed: 49.1, pd: 33.7
+Payment revised for patient 63233, Visit 334299 04-May-2018 19:12 : submitted: 21.7;  billed: 21.7, pd: 23.87
+Payment revised for patient 48679, Visit 334298 04-May-2018 19:11 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 828, Visit 334297 04-May-2018 19:11 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 22606, Visit 334296 04-May-2018 19:11 : submitted: 21.7;  billed: 21.7, pd: 23.87
+Payment revised for patient 26057, Visit 334295 04-May-2018 19:11 : submitted: 21.7;  billed: 21.7, pd: 23.87
+Payment revised for patient 65993, Visit 334286 04-May-2018 17:57 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 58967, Visit 334247 04-May-2018 10:31 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 10960, Visit 334170 03-May-2018 09:53 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70205, Visit 334164 03-May-2018 09:17 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 48679, Visit 334128 02-May-2018 15:45 : submitted: 40.45;  billed: 40.45, pd: 37.59
+Payment revised for patient 26057, Visit 334127 02-May-2018 15:45 : submitted: 40.45;  billed: 40.45, pd: 37.59
+Payment revised for patient 68210, Visit 334099 02-May-2018 11:02 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 63233, Visit 334097 02-May-2018 10:58 : submitted: 40.45;  billed: 40.45, pd: 40.96
+Payment revised for patient 22606, Visit 334096 02-May-2018 10:52 : submitted: 40.45;  billed: 40.45, pd: 40.96
+Payment revised for patient 70293, Visit 334094 02-May-2018 10:44 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 828, Visit 334093 02-May-2018 10:15 : submitted: 40.45;  billed: 40.45, pd: 40.96
+Payment revised for patient 3278, Visit 334062 01-May-2018 17:53 : submitted: 21.7;  billed: 21.7, pd: 23.87
+Payment revised for patient 70272, Visit 333995 30-Apr-2018 19:13 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 24850 (O) HC#: 7095206194 visit 333940 30-Apr-2018 11:11 (HCP) by accounting_no or HC/visit date 
+No paid claim found for pat 37555 (W) HC#:  visit 333939 30-Apr-2018 11:10 (HCP) by accounting_no or HC/visit date 
+Payment revised for patient 70261, Visit 333932 30-Apr-2018 09:57 : submitted: 33.7;  billed: 33.7, pd: 37.07
+No paid claim found for pat 57695 (O) HC#: 1721709176 visit 333877 28-Apr-2018 13:15 (HCP) by accounting_no or HC/visit date 
+Payment revised for patient 10598, Visit 333828 27-Apr-2018 18:47 : submitted: 35.77;  billed: 35.77, pd: 39.14
+Payment revised for patient 44365, Visit 333796 27-Apr-2018 12:41 : submitted: 33.7;  billed: 33.7, pd: 37.07
+Payment revised for patient 70221, Visit 333712 26-Apr-2018 12:14 : submitted: 42.7;  billed: 42.7, pd: 38.2
+2059 claims were paid in full; 50 claims were revised; 9 claims were not paid 
+Total amount submitted in this batch: 72125.64
+Total amount paid in this batch: 72198.27
