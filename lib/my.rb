@@ -513,7 +513,7 @@ module My
     pdf.font_size 8
 #    @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
 #    @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
-    @totals = @servcounts = []
+    @totals = @servcounts = {}
     (1..7).map{|key| @totals[key] = 0}
     (1..7).map{|key| @servcounts[key] = 0}
 
