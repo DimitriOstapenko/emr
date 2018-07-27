@@ -8,7 +8,102 @@ class PaystubsController < ApplicationController
 
  def index
     @paystubs = Paystub.paginate(page: params[:page])
-    flash.now[:info] = "Showing all paystubs (#{@paystubs.count})"
+    (@latest_ra_file,@latest_pay_date) = Claim.order(date_paid: :desc).limit(1).pluck('ra_file,date_paid').first
+    paystub_year_month = Paystub.order(:year, :month).limit(1).pluck('year,month').first.join
+    @can_generate_new_paystubs = @latest_pay_date.strftime('%Y%m') > paystub_year_month
+    suff = @can_generate_new_paystubs ? 'Can generate new paystubs': 'Cannot generate new paystubs - already up to date'
+
+    flash.now[:info] = "Latest processed RA file: #{@latest_ra_file}; Payment issued #{@latest_pay_date} " + suff
+  end
+
+  def new
+    @paystub = Paystub.new
+  end
+	
+  def create
+    @paystub = Paystub.new(paystub_params)
+
+    @paystub.year = Time.now.year
+    @paystub.month = Time.now.month
+    @sdate = Date.new(@paystub.year, @paystub.month)
+    @edate = 1.month.since(@sdate)
+    prov_no = @paystub.doctor.provider_no
+    
+    if Claim.find_by("date_paid > ?", @sdate)
+       flash.now[:success] = "Claims were imported for this month. Can create paystub"
+#       @paystub.claims = Claim.where(provider_no: prov_no).where(date_paid: (@sdate..@edate)).pluck('count(*)').join
+#       @paystub.ohip_amt = Claim.joins(:services).where(provider_no: prov_no).where(date_paid: (@sdate..@edate)).reorder('').pluck("sum(services.amt_paid)/100.0").join
+       ((@paystub.claims,@paystub.services,@paystub.ohip_amt,@paystub.ra_file)) = Claim.joins(:services)
+	       .where(provider_no: prov_no)
+	       .where(date_paid: (@sdate..@edate))
+               .reorder('')
+	       .pluck('count(distinct claims.id), count(*), sum(services.amt_paid)/100.0, claims.ra_file')
+   
+       if @paystub.save
+         flash.now[:success] = "Paystub created : #{@paystub.id}"
+         redirect_to export_paystub_path(@paystub)
+       else
+         render 'new'
+       end
+    else 
+       flash[:warning] = "MOH RA file was not processed yet. Can't create paystub"
+       redirect_to paystubs_path
+    end
+ 
+  end
+  
+  def show
+    @paystub = Paystub.find(params[:id]) rescue nil
+    
+    if @paystub
+       @sdate = Date.new(@paystub.year, @paystub.month)
+       @edate = 1.month.since(@sdate)
+       @claims = Claim.where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate))
+       @claims = @claims.paginate(page: params[:page], per_page: 25)
+#       flash[:success] = "Doctor #{@paystub.doctor.lname} Pay Stub for #{Date::MONTHNAMES[@paystub.month]}  #{@paystub.year}, #{@paystub.claims} claims, #{@paystub.services} services Gross: $#{@paystub.gross_amt} OHIP: $#{@paystub.ohip_amt} Net: $#{@paystub.net_amt}"
+    else
+      redirect_to paystubs_path 
+    end
+  end
+
+# Display pdf pay stub if already exported
+  def show_pdf
+   @paystub = Paystub.find( params[:id] )
+
+   send_file @paystub.filespec,
+	     filename: @paystub.filename,
+             type: "application/pdf",
+             disposition: :attachment
+  end
+
+# Generate PDF version of the report, save in reports directory
+  def export
+      @paystub = Paystub.find(params[:id])
+      name = "#{@paystub.doctor.lname}_#{Date::MONTHNAMES[@paystub.month]}_#{@paystub.year}"
+      @sdate = Date.new(@paystub.year, @paystub.month)
+      @edate = 1.month.since(@sdate)
+      svcs = Claim.joins(:services).where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate)).reorder('').group('services.svc_date,pmt_pgm')
+      @claims = svcs.pluck('svc_date, count(distinct claims.id), count(*), pmt_pgm, SUM(amt_subm)/100.0, SUM(amt_paid)/100.0, date_paid')
+      @paystub.update_attribute(:filename, name+'.pdf')
+
+      pdf = build_paystub( @paystub,@claims )
+
+      pdf.render_file @paystub.filespec
+      send_data pdf.render,
+	  filename: "paystub_#{name}",
+          type: 'application/pdf',
+          disposition: :attachment
+  end
+
+  def destroy
+    @paystub = Paystub.find(params[:id])
+    if @paystub.present?
+      File.delete( @paystub.filespec ) rescue nil
+      @paystub.destroy
+      flash[:success] = "Paystub deleted"
+    end
+
+    redirect_to paystubs_url, page: params[:page]
   end
 
   def find
@@ -18,65 +113,20 @@ class PaystubsController < ApplicationController
          @paystubs = @paystubs.paginate(page: params[:page])
          flash.now[:info] = "Found: #{@paystubs.count} #{'report'.pluralize(@paystubs.count)}"
       else
-         @paystubs = Report.new
-         @paystubs = Report.paginate(page: params[:page])
-         flash.now[:info] = "Report #{str.inspect} was not found"
+         @paystubs = Paystub.new
+         @paystubs = Paystub.paginate(page: params[:page])
+         flash.now[:info] = "Paystub #{str.inspect} was not found"
       end
       render 'index'
   end
 
-  def new
-    @paystub = Paystub.new
-  end
-	
-#  t.integer "year" t.integer "month" t.integer "claims" t.integer "services" 
-#  t.float "gross_amt" t.float "net_amt" t.float "ohip_amt" t.float "cash_amt" 
-#  t.float "ifh_amt" t.float "monthly_premium_amt" t.float "hc_dep_amt",   t.float "wcb_amt"
-#
-  def create
-    @paystub = Paystub.new(paystub_params)
-    @doc = Doctor.find(@paystub.doc_id)
-    @paystub.year = params[:date][:year]
-    @paystub.month = params[:date][:month]
-    sdate = "#{@paystub.year}-#{@paystub.month}-01"
-    @claims = Service.where("provider_no=? AND svc_date>?", @doc.provider_no, sdate).group("claim_id") 
-    @paystub.claims = @claims.count
-    if @paystub.save
-       flash.now[:success] = "Paystub created : #{@paystub.id}"
-       redirect_to @paystub
-    else
-       render 'new'
-    end
- 
-  end
-  
-  def show
-    @paystub = Paystub.find(params[:id])
-    redirect_to paystubs_path unless @paystub
-    @visits, @total, @insured, @uninsured = get_visits( @paystub )
-#    @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 25)
-    @visits = @visits.paginate(page: params[:page], per_page: 25) if @visits
-  end
-
-  def update
-  end
-
-  def edit
-  end
-
-  def destroy
-    Paystub.find(params[:id]).destroy
-    flash[:success] = "Paystub deleted"
-    redirect_to paystubs_url, page: params[:page]
-  end
-
 private
   def paystub_params
-     params.require(:paystub).permit(:doc_id, :year, :month, :cash_amt, :ifh_amt, :wcb_amt, :monthly_premium_amt, :hc_dep_amt )
+     params.require(:paystub).permit(:doc_id, :year, :month, :claims, :services, :gross_amt, :net_amt, :ohip_amt, :cash_amt, :ifh_amt, :wcb_amt, :monthly_premium_amt, :hc_dep_amt, :filename, :ra_file )
   end
 
   def get_visits( pstub )
-	  @visits, @total, @insured, @uninsured = []
+          @visits, @total, @insured, @uninsured = []
   end
 
   def sort_column

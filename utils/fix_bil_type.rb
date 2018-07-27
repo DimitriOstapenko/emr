@@ -1,5 +1,5 @@
 # Go through all visits and check if bil types correspond to proc type
-# 
+# If not, set attribute bil_type to cash/HCP
 
 require_relative '../config/environment'
 require 'date'
@@ -13,10 +13,10 @@ Visit.all.each do |v|
     if p.cash? 
        if v.bil_type == CASH_BILLING
          correct_count += 1 
-	 v.update_attribute(:bil_type, CASH_BILLING)
        else
          incorrect_count +=1
          puts "#{v.proc_code} : #{v.bil_type_str}"
+	 v.update_attribute(:bil_type, CASH_BILLING)
        end
     else
        if v.bil_type != CASH_BILLING

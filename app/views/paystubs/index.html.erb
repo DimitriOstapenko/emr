@@ -3,11 +3,20 @@
 <table class="tbl table-hover">  <!--table table-hover table-condensed" >  -->
   <thead>
       <tr>
-          <th>Paystub</th>
+          <th class="tbl_sm">PS#</th>
           <th>Doctor</th>
-          <th>Year</th>
-          <th>Month</th>
-          <th>Total Amt</th>
+          <th>Mon/Yr</th>
+	  <th class="tbl_lsm">#Claims</th>
+	  <th class="tbl_lsm">#Services</th>
+          <th>Total Gross</th>
+          <th>Total Net</th>
+          <th>Ohip Amt</th>
+          <th>Cash Amt</th>
+          <th>Mon Prm</th>
+          <th>IFH Amt</th>
+          <th>WCB Amt</th>
+          <th>HC Dep</th>
+          <th>RA File</th>
 	   <% if current_user.admin?  %>
           <th></th>
 	  <% end %>
@@ -22,5 +31,7 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @paystubs, class: "btn" %> 
+<% if @can_generate_new_paystubs %>
 <%= button_to "Create New Paystub", new_paystub_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+<% end %>
 </div>

@@ -58,9 +58,10 @@ class ReportsController < ApplicationController
 	end
     
     @report.name = "#{prefix}_#{Time.now.to_i}_#{@report.rtype}"
+    @report.filename = @report.name+'.pdf'
     if @report.save
        flash.now[:success] = "Report created : #{@report.name.inspect}"
-       redirect_to @report
+       redirect_to export_report_path(@report)
     else
        render 'new'
     end
@@ -76,10 +77,10 @@ class ReportsController < ApplicationController
   def show_pdf
    @report = Report.find( params[:id] )
 
-   send_file(Rails.root.join('reports', @report.filespec),
+   send_file @report.filespec,
 	     filename: @report.name,
              type: "application/pdf",
-             disposition: :inline)
+             disposition: :attachment
   end
 
 # Generate PDF version of the report, save in reports directory
@@ -87,25 +88,29 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
     @visits, @total,@insured,@uninsured = get_visits( @report )
     pdf = build_report( @report,@visits )
-    @report.filespec = @report.name+'.pdf'
-    @report.save
+    @report.update_attribute(:filename, @report.name+'.pdf')
 
-    pdf.render_file Rails.root.join('reports',@report.filespec)
+    pdf.render_file @report.filespec
     send_data pdf.render,
           filename: "report_#{@report.name}",
           type: 'application/pdf',
-          disposition: 'inline'
+          disposition: :attachment
   end
 
   def destroy
-    Report.find(params[:id]).destroy
-    flash[:success] = "Report deleted"
+    @report = Report.find(params[:id]).destroy
+    if @report.present?
+      File.delete( @report.filespec ) rescue nil
+      @report.destroy
+      flash[:success] = "Report deleted"
+    end
+
     redirect_to reports_url, page: params[:page]
   end
 
 private
   def report_params
-     params.require(:report).permit(:doc_id, :name, :rtype, :filespec, :sdate, :edate )
+     params.require(:report).permit(:doc_id, :name, :rtype, :filespec, :sdate, :edate, :filename )
   end
 
   # Find report(s) by name or type, depending on input format

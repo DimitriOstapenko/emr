@@ -9,6 +9,9 @@
       <li><small><%= link_to "Help", help_path %></small></li>
       <li><small><%= link_to "Contact", contact_path %></small></li>
       <li><small><%= link_to "News", news_path %></small></li>
+      <% if logged_in? %>
+      <li><small><%= link_to "Logout", logout_path, method: :delete %></small></li>
+      <% end %>
     </ul>
   </nav>
 </footer>

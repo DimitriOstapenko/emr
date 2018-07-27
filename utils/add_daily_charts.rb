@@ -1,14 +1,13 @@
 #
-# Seed daily_charts table 
 # Traverse charts/Daily tree and find all [date].pdf files. Import names into db table
 # Ignore already imported files
 #
 # Next lines allow to run it stand-alone
-require_relative '../../config/environment'
+require_relative '../config/environment'
 require 'find'
 
 dir  = CHARTS_PATH.to_s + '/Daily'
-puts "About to seed daily_charts table with files from #{dir}"
+puts "About to update daily_charts table with files from #{dir}"
 
 #DailyChart.destroy_all
 #
@@ -19,9 +18,9 @@ Find.find( dir ) do |path|
 	reader = PDF::Reader.new( path )
 	chart = DailyChart.new filename: basename, date: date, pages: reader.page_count
 	if chart.save
-          puts "#{basename} saved"
+          puts "Added chart : #{basename}"
   	else
-          puts "Already in: #{basename} - ignored"
+#          puts "Already in: #{basename} - ignored"
 #          puts chart.errors.full_messages
   	end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180721182402) do
+ActiveRecord::Schema.define(version: 20180726221418) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 20180721182402) do
     t.string "moh_group_id"
     t.integer "visit_id"
     t.string "ra_file"
-    t.date "date_paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.date "date_paid"
     t.index ["accounting_no"], name: "index_claims_on_accounting_no"
     t.index ["claim_no"], name: "index_claims_on_claim_no", unique: true
   end
@@ -236,6 +236,8 @@ ActiveRecord::Schema.define(version: 20180721182402) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "wcb_amt"
+    t.string "filename"
+    t.string "ra_file"
   end
 
   create_table "procedures", force: :cascade do |t|
@@ -283,7 +285,7 @@ ActiveRecord::Schema.define(version: 20180721182402) do
     t.string "name"
     t.integer "doc_id"
     t.integer "rtype"
-    t.string "filespec"
+    t.string "filename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "sdate"
