@@ -1,5 +1,5 @@
 #
-# Generate pay stub for each doctor with stats for each day they worked 
+# Generate pay stub for each doctor with stats for each day they worked using CSV file created from Cab.md report
 #
 # CSV file naming syntax : <provider_no>_<name>.csv
 # Files are downloaded from cab.md reports section and stored in separate directory for given month

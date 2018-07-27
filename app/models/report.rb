@@ -1,7 +1,7 @@
 class Report < ApplicationRecord
 
 	default_scope -> { order(id: :desc) }
-	attr_accessor :doctor
+	attr_accessor :doctor, :filespec
 
 	validates :name, presence: true, length: { maximum: 30 }
 	validates :rtype, presence: true, numericality: { only_integer: true }
@@ -11,6 +11,10 @@ class Report < ApplicationRecord
 
   def doctor
 	  Doctor.find(doc_id) if doc_id > 0
+  end
+
+  def filespec
+    REPORTS_PATH.join(filename) rescue nil
   end
   
 end

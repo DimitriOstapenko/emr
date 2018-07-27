@@ -47,13 +47,9 @@
 <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>
 <li class="<%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
 <li class="<%= 'active' if controller_name == 'billings' %>"><%= link_to "Billing", billings_path %></li>
-
 <%= render 'layouts/docs' %>
-
 <%= render 'layouts/ref' %>
-  
-  <li><%= link_to "Log out", logout_path, method: :delete %> </li>
-  <%= render 'layouts/admin' if current_user.admin?  %>
+<%= render 'layouts/admin' if current_user.admin?  %>
 <% else %>
           <li><%= link_to "Log in", login_path %></li>
 <% end %>

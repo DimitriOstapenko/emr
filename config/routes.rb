@@ -67,10 +67,6 @@ Rails.application.routes.draw do
   resources :doctors
   resources :diagnoses
   resources :procedures
-  resources :reports do
-     get 'export', on: :member
-     get 'show_pdf', on: :member
-  end
   resources :providers
   resources :drugs
   resources :invoices
@@ -81,8 +77,14 @@ Rails.application.routes.draw do
   resources :claims do
     resources :services
   end
-  resources :paystubs
-
+  resources :reports do
+     get 'export', on: :member
+     get 'show_pdf', on: :member
+  end
+  resources :paystubs do
+     get 'export', on: :member
+     get 'show_pdf', on: :member
+  end
 
 # resources :billings     # historical billing table - not used
   

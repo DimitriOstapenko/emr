@@ -3,27 +3,42 @@
 #
 # Files like: PG0078.398 (jun) in EDT/<MON>
 #
+# Ignore already processed files
+#
 require_relative '../config/environment'
 require 'date'
-require 'find'
+#require 'find'
 
-month = ARGV[0]
-unless month && month.match('^\w{3}$')
-  puts "Usage: ruby proggy <MON>"
-  exit
-end
+abort "EDT directory does not exist." unless File.directory?(EDT_PATH)
 
-dir  = EDT_PATH.join(month)
-unless File.directory?(dir)
-  puts "Directory does not exist. Try something else"
-  exit
-end
+this_month = Date.today.month
+last_month = 1.month.ago.month
+this_letter = ('A'..'Z').to_a[this_month-1] 
+last_letter = ('A'..'Z').to_a[last_month-1]
+this_month_file = Dir.glob( EDT_PATH.join("P#{this_letter}#{GROUP_NO}.*")).first rescue nil
+last_month_file = Dir.glob( EDT_PATH.join("P#{last_letter}#{GROUP_NO}.*")).first rescue nil
 
-Find.find( dir ) do |path|
-	next unless path.match('P[A-L]\d{4}\.\d{3}')
-	RA_FILE = path
-	RA_BASENAME = File.basename(path)
-end
+if this_month_file.present?
+   puts "this month's file exists #{this_month_file}"	
+   base = File.basename(this_month_file)
+   if Claim.exists?(ra_file: base)
+     abort ".. and is already imported"	
+   else 
+     puts ".. and needs importing"
+     RA_FILE = last_month_file
+     RA_BASENAME = base
+   end
+elsif last_month_file.present?
+   puts "last month's file exists: #{last_month_file}"
+   base = File.basename(last_month_file)
+   if Claim.exists?(ra_file: base)
+     abort ".. and already imported"	
+   else 
+     puts "..and needs importing"
+     RA_FILE = last_month_file
+     RA_BASENAME = base
+   end
+end   
 
 # Total, payee, deposit date
 def HR1(s) 
@@ -92,8 +107,6 @@ def HR5(s)
 
 end
 
-already_done = true if Claim.exists?(ra_file: RA_BASENAME)
-
 content = File.readlines RA_FILE 
 claim = nil
 claims = services =0
@@ -102,10 +115,6 @@ content.each do |str|
   case hdr 
   when 'HR1'
 	  HR1(str)
-	  if already_done
-            puts "#{RA_BASENAME} was imported already - terminating"
-	    exit
-	  end
   when 'HR2'
 	  HR2(str)
   when 'HR3'

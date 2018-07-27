@@ -1,50 +1,55 @@
 <% provide(:title, @paystub.id) %>
 
 <p>
-    <div class="col-md-11 col-md-offset-1">
+    <div class="col-md-10 col-md-offset-1">
 	   <pre>
-	      Paystub id: <b><%= @paystub.id %> </b>
-
-	      Doctor:     <%= @paystub.doctor.lname rescue ''%>
-	      Year:	  <%= @paystub.year %>
-	      Month:	  <%= @paystub.month %>
-
-	      Total Claims:     <%= @paystub.claims %>
-	      Total Services:   <%= @paystub.services %> 
-
-	      Total Amount: <b>$<%= @paystub.net_amt %></b> OHIP: <b>$<%= @paystub.ohip_amt %></b> Other: <b>$<%= @paystub.non_ohip_amt %></b>
+	      Paystub id: <b><%= @paystub.id %> </b>  <%= Date::MONTHNAMES[@paystub.month] %>  <%= @paystub.year %>
+	      Doctor:     <%= @paystub.doctor.lname rescue ''%>  
+	      Total Claims:     <%= @paystub.claims %>  Total Services:   <%= @paystub.services %> 
+	      OHIP Paid: <b>$<%= @paystub.ohip_amt %></b> 
 	      Monthly Premium Payment: <b>$<%= @paystub.monthly_premium_amt %></b>
 	      IFH Payment: <b>$<%= @paystub.ifh_amt %></b>
+	      Cash: <b>$<%= @paystub.cash_amt %></b>
+	      WCB: <b>$<%= @paystub.wcb_amt %></b>
+	      HC Deposit: <b>$<%= @paystub.hc_dep_amt %></b>
+	      
+	      Total Gross: <b>$<%= @paystub.gross_amt %></b>  Total Net: <b>$<%= @paystub.net_amt %></b>
            </pre>
 
-<% if @visits.present?  %>
-<table class="tbl table-hover" > <!--class="table table-hover table-condensed" > -->
+<%
+=begin %>
+<% if @claims.any?  %>
+<table class="tbl table-hover" > 
   <thead>
       <tr>
 	  <th>Date</th>
-          <th>Patients</th>
 	  <th>Services</th>
-          <th>HCP</th>
-	  <th>RMB</th>
-	  <th>WCB</th>
-          <th>MOH Subtotal</th>
-	  <th>Total Billed</th>
-          <th>Total Paid</th>
+          <th>Billed</th>
+	  <th>Paid</th>
+	  <th>Acc#</th>
+          <th>HC#</th>
+	  <th>Prov</th>
+          <th>Pmt Pgm</th>
+          <th>RA File</th>
+	  <th>Date paid</th>
       </tr>
   </thead>
   <tbody>
-        <%= render partial: "visit", collection: @visits %>
+        <%= render partial: 'claim', collection: @claims %>
   </tbody>
 </table>
 <% end %>
 
+<%	   
+=end %>
+
 <div class="bottom_buttons ">
-<%# <%= will_paginate @visits, class: "btn" %>
-<%#    <% if @paystub.filespec.blank? %> 
-<%#       <%= button_to "Generate PDF", export_paystub_path, class: "btn btn-primary", :method => "get" %>
-<%#    <% else %>
-<%#       <%= button_to "Show PDF", show_pdf_paystub_path, class: "btn btn-primary", :method => "get" %>
-<%#    <% end %>
+<%= will_paginate @claims, class: "btn" %>
+    <% if @paystub.filename.blank? %> 
+       <%= button_to "Generate PDF", export_paystub_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
+    <% else %>
+       <%= button_to "Show PDF", show_pdf_paystub_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
+    <% end %>
 </div>
 
 </div>

@@ -1,49 +1,59 @@
 <%= form_for @paystub do |f| %>
 		
-<% doc_id = current_doctor.id if current_doctor %>
 <%= render 'shared/error_messages', object: f.object %>
 
+<!-- Row 1 --->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label "Select Doctor" %>
-  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, selected: @paystub.doc_id || doc_id %>
+  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, selected: @paystub.doc_id %>
 </div >
-</div>
-    
-<div class="row">
-<div class="col-sm-2 col-sm-offset-4">
-  <%= f.label "Year" %>
-  <%= select_year Time.now, start_year: Time.now.year-10, end_year: Time.now.year  %>
-</div>
-</div>
-
-<div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label "Month" %>
-  <%= select_month Time.now %>
-</div>
-</div>
-
-<div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
+<div class="col-sm-2" >
   <%= f.label "Monthly Premium Payment" %>
-  <%= f.number_field :monthly_premium_amt%>
+  <%= f.number_field :monthly_premium_amt, value:0 %>
 </div>
 </div>
 
-
+<!-- Row 2 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label :IFH_payment %>
-  <%= f.number_field :ifh_amt%>
+  <%= f.number_field :ifh_amt, value: 0%>
+</div>
+
+<div class="col-sm-2" >
+  <%= f.label :CASH_payment %>
+  <%= f.number_field :cash_amt, value: 0%>
 </div>
 </div>
 
+<!-- Row 3 -->
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4" >
+  <%= f.label :WCB_payment %>
+  <%= f.number_field :wcb_amt, value: 0%>
+</div>
+
+<div class="col-sm-2" >
+  <%= f.label :HC_Deposit %>
+  <%= f.number_field :hc_dep_amt, value: 0 %>
+</div>
+</div>
+
+<!-- Row 4 -->
 <div class="row">
 <div class="col-sm-4 col-sm-offset-4">
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %> <!--,  :method => "patch", data: { confirm: "Are you sure you want to replace paystub for this doctor/month?" } -->
 </div>
 </div>
 
 <% end %>
+
+<div class='spacer-10'></div>
+<!-- Row 5 -->
+<div class="row">
+<div class="col-sm-4 col-sm-offset-4">
+  <%= button_to 'Back', paystubs_path, class: "btn btn-primary",  method: 'get' %>
+</div>
+</div>
 

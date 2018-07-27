@@ -12,7 +12,8 @@
 <td><%= claim.date %></td>
 <td><%= doctor.lname %></td>
 <td><%= claim.services.size %></td>
-<td><%= sprintf("$%.2f",claim.damt_paid) %></td>
+<td><%= sprintf("$%.2f",claim.damt_subm) %></td>
+<td <%= claim.amt_subm == claim.amt_paid ? '':'class="hlight"'.html_safe %>> <%= sprintf("$%.2f",claim.damt_paid) %></td>
 <td><%= claim.accounting_no %></td>
 <td><%= "#{claim.ohip_num} #{claim.ohip_ver}" %></td>
 <td><%= claim.province %></td>

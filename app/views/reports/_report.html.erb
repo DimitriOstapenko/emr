@@ -1,8 +1,8 @@
     <tr>
 	<% if report.filespec.blank? %>
-          <td><%= link_to "#{report.name}", report  %> </td>
+          <td><%= link_to report.id, report  %> </td>
  	<% else %>
-          <td><%= link_to "#{report.name}", show_pdf_report_path(report), target: 'Form' %> </td>
+          <td><%= link_to report.id, show_pdf_report_path(report), target: 'Form' %> </td>
   	<% end %>
 	<td><%= report.doctor.lname rescue 'All' %> </td> 
 	<td><%= REPORT_TYPES.invert[report.rtype] %></td> 
@@ -12,6 +12,7 @@
 	<%= report.edate %>
 	<% end %>
 	</td>
+	<td><%= report.filename %></td>
 
   	<% if current_user.admin?  %>
 		<td> <%= link_to "delete", report, method: :delete, data: { confirm: "Are you sure you want to delete #{report.name}?" } %> </td>

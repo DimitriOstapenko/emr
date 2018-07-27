@@ -1,6 +1,7 @@
 class Claim < ApplicationRecord
 	has_many :services, dependent: :destroy, inverse_of: :claim
 	default_scope -> { order(claim_no: :desc) }
+	attr_accessor :amt_subm, :amt_paid, :damt_subm, :damt_paid, :date, :svcs
 
 # Total claim amount submitted (integer)
  def amt_subm
@@ -25,5 +26,9 @@ class Claim < ApplicationRecord
 # Visit date, from the first service 
  def date
      services.first.svc_date rescue nil
+ end
+
+ def svcs
+	 services.size
  end
 end

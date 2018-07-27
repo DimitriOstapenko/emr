@@ -513,7 +513,8 @@ module My
     pdf.font_size 8
 #    @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
 #    @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
-    @totals = @servcounts = {}
+    @totals = {}
+    @servcounts = {}
     (1..7).map{|key| @totals[key] = 0}
     (1..7).map{|key| @servcounts[key] = 0}
 
@@ -561,6 +562,69 @@ module My
           t.header = true
           t.row(0).font_style = :bold
         end
+      end
+    return pdf
+  end
+
+# Generate doctor's monthly Pay Stub based on claims paid by MOH
+  def build_paystub( paystub, claims_by_day )
+    @doc = paystub.doctor
+    @month  = Date::MONTHNAMES[paystub.month]
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,20.mm,10.mm])
+
+    pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
+    pdf.move_down 10.mm
+    pdf.text "Monthly Payment Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
+    pdf.text "Covering MHO payments disbursed in #{@month} #{paystub.year}", align: :center, size: 12, style: :bold
+    pdf.text "(Grouped by service date)", align: :center, size: 10
+    pdf.move_down 10.mm
+
+    pdf.font "Courier"
+    pdf.font_size 9
+
+    @ttl_claims = @ttl_hcp_svcs = @ttl_rmb_svcs = @ttl_subm_amt = @ttl_paid_amt = 0
+    rows =  [[ "Svc Date", "Claims", "Services",  "Pmt Pgm",  "Subm.", "Paid", "Balance", "Date paid" ]]
+    claims_by_day.each do |cl|
+       rows += [[ cl[0].to_date.strftime("%d/%m/%Y"), cl[1], cl[2], cl[3], cl[4], cl[5], sprintf("%.2f",cl[5]-cl[4]), cl[6] ]]
+       @ttl_claims += cl[1]
+       @ttl_hcp_svcs += cl[2] if cl[3] == 'HCP'
+       @ttl_rmb_svcs += cl[2] if cl[3] == 'RMB'
+       @ttl_subm_amt += cl[4]
+       @ttl_paid_amt += cl[5]
+    end
+
+      pdf.table rows do |t|
+        t.cells.border_width = 0 
+	t.column_widths = [28.mm, 20.mm, 20.mm, 20.mm, 20.mm, 20.mm, 20.mm  ]
+        t.header = true 
+        t.row(0).font_style = :bold
+        t.position = 15.mm
+	t.cells.padding = 3
+	t.cells.style do |c|
+		c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+         end
+      end
+ 
+      pdf.font_size 10
+      pdf.move_down 15.mm
+      pdf.span(165.mm, :position => :center) do
+	      pdf.text "Total days worked: #{claims_by_day.count}"
+        pdf.text "Total claims: #{@ttl_claims}"
+        pdf.text "Total services: #{@ttl_hcp_svcs+@ttl_rmb_svcs}"
+        pdf.text "Total HCP services: #{@ttl_hcp_svcs}"
+        pdf.text "Total RMB services: #{@ttl_rmb_svcs}"
+        pdf.move_down 6.mm
+	pdf.text "Total submitted amount : #{sprintf("$%.2f",@ttl_subm_amt)}"
+	pdf.text "Total amount paid by OHIP:  #{sprintf("$%.2f",@ttl_paid_amt)}" 
+        pdf.move_down 6.mm
+	pdf.text "Monthly Premium payment:  #{sprintf("$%.2f",paystub.monthly_premium_amt)}" 
+	pdf.text "IFH Payments:  #{sprintf("$%.2f",paystub.ifh_amt)}" 
+	pdf.text "Cash payments:  #{sprintf("$%.2f",paystub.cash_amt)}" 
+	pdf.text "WCB Payments:  #{sprintf("$%.2f",paystub.wcb_amt)}" 
+	pdf.text "Cash deposits:  #{sprintf("$%.2f",paystub.hc_dep_amt)}" 
+        pdf.move_down 6.mm
+	pdf.text "Total Gross Amount:  #{sprintf("$%.2f",paystub.gross_amt)}" 
+	pdf.text "Total Net Amount based on #{@doc.percent_deduction}% deduction:  #{sprintf("$%.2f",paystub.net_amt)}" 
       end
     return pdf
   end
