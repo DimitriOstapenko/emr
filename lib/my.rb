@@ -585,7 +585,7 @@ module My
     @ttl_claims = @ttl_hcp_svcs = @ttl_rmb_svcs = @ttl_subm_amt = @ttl_paid_amt = 0
     rows =  [[ "Svc Date", "Claims", "Services",  "Pmt Pgm",  "Subm.", "Paid", "Balance", "Date paid" ]]
     claims_by_day.each do |cl|
-       rows += [[ cl[0].to_date.strftime("%d/%m/%Y"), cl[1], cl[2], cl[3], cl[4], cl[5], sprintf("%.2f",cl[5]-cl[4]), cl[6] ]]
+	    rows += [[ cl[0].to_date.strftime("%d/%m/%Y"), cl[1], cl[2], cl[3], cl[4], cl[5], sprintf("%.2f",cl[5]-cl[4]), paystub.date_paid ]]
        @ttl_claims += cl[1]
        @ttl_hcp_svcs += cl[2] if cl[3] == 'HCP'
        @ttl_rmb_svcs += cl[2] if cl[3] == 'RMB'
