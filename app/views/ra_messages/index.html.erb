@@ -1,0 +1,24 @@
+<% provide(:title, 'All RA Files') %>
+
+<table class="tbl table-hover"> 
+  <thead>
+      <tr>
+          <th>File #</th>
+	  <th>Date Paid</th>
+          <th>Group</th>
+ 	  <th class='tbl_lg'>Payee</th>
+ 	  <th>Amount</th>
+ 	  <th>Pay Method</th>
+          <th>Bil Agent</th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @ra_messages %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @ra_messages, class: "btn" %> 
+</div>

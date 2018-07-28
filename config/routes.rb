@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+  get '/ra_messages/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
+  get 'ra_messages/index'
+
   get '/claims/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
   get '/claims/index' 
   get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
@@ -64,16 +67,9 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :doctors
-  resources :diagnoses
-  resources :procedures
-  resources :providers
-  resources :drugs
-  resources :invoices
-  resources :vaccines
-  resources :daily_charts
-  resources :export_files
-  resources :edt_files
+  resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
+	    :drugs, :invoices, :vaccines, :daily_charts, :export_files, :edt_files
+
   resources :claims do
     resources :services
   end

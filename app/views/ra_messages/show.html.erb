@@ -1,0 +1,27 @@
+<% provide(:title, @ra_msg.ra_file) %>
+
+<div class="row">
+<aside class="col-md-6 col-md-offset-3">
+<h1>Messages from MOH RA File <%= @ra_msg.ra_file %> for payment of $<%= @ra_msg.damount %> issued <%= @ra_msg.date_paid %></h1>
+
+<pre class="pre-scrollable-xlg">
+<b> Group Number </b>: <%= @ra_msg.group_no %>
+<b> Care Provider Number </b>: 000000
+<b> Payee Name </b>: <%= @ra_msg.payee_name %>
+<b> Payee Addr </b>: <%= @ra_msg.payee_addr %>
+<b> Paid by </b>: <%= @ra_msg.pay_method %>
+<b> Billing Agent </b>: <%= @ra_msg.bil_agent %>
+
+    Date          Amount        Code                   Message
+________________________________________________________________________________
+<% @ra_acc_msgs.each do |msg| %>
+<%= " #{msg.tr_date} | #{msg.dtr_amt.to_s.rjust(10,' ')} | #{msg.tr_code.rjust(10,' ')} | #{msg.tr_msg} "  %>
+<% end %>
+<br>
+<%= "#{@ra_msg.msg_text}" %>
+</pre>
+</aside>
+
+</div>
+
+

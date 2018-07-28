@@ -1,4 +1,5 @@
 <% provide(:title, @claim.claim_no) %>
+<% codehash = RaErrcode.pluck(:code, :message).to_h %>
 
 	<h1>Claim <%= @claim.claim_no %> </h1>
 
@@ -38,7 +39,7 @@
 	  </tr>
 	  <tbody>
 
-		  <%= render partial: "service", collection: @services %>
+	     <%= render partial: "service", collection: @services, locals: {codehash: codehash} %>
 
           </tbody>
 	</table>

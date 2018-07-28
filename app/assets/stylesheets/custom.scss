@@ -426,6 +426,12 @@ table.pretty {
     overflow-y: scroll;
 }
 
+.pre-scrollable-xlg {
+    max-height: 700px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
 .notes {
   background-color: transparent; 
   overflow:auto; 
