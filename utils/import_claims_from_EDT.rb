@@ -1,46 +1,42 @@
+# Import paid claims from MOH monthly remittance advice (RA) file, load records into following tables:
+#  - claims
+#  - services
+#  - ra_accounting
+#  - ra_messages
 #
-# Import paid claims from monthly remittance advice (RA) file from MOH, load records into 'claims' and 'services' tables
+#  ARGV: target month's letter, optional. If none given, current month will be used
 #
-# Files like: PG0078.398 (jun) in EDT/<MON>
+# Files like: PG0078.398 (jun) in EDT
 #
 # Ignore already processed files
 #
 require_relative '../config/environment'
 require 'date'
-#require 'find'
 
 abort "EDT directory does not exist." unless File.directory?(EDT_PATH)
 
+$hr8_messages = ''
+$deposit_date = nil
 this_month = Date.today.month
-last_month = 1.month.ago.month
-this_letter = ('A'..'Z').to_a[this_month-1] 
-last_letter = ('A'..'Z').to_a[last_month-1]
-this_month_file = Dir.glob( EDT_PATH.join("P#{this_letter}#{GROUP_NO}.*")).first rescue nil
-last_month_file = Dir.glob( EDT_PATH.join("P#{last_letter}#{GROUP_NO}.*")).first rescue nil
+this_letter = ARGV[0] || ('A'..'Z').to_a[this_month-1]
+path = EDT_PATH.join("P#{this_letter.upcase}#{GROUP_NO}.*")
+this_month_file = Dir.glob(path).first rescue nil
+
+abort "File not found: #{path}" unless this_month_file.present?
 
 if this_month_file.present?
-   puts "this month's file exists #{this_month_file}"	
+   puts "File exists #{this_month_file}"	
    base = File.basename(this_month_file)
    if Claim.exists?(ra_file: base)
-     abort ".. and is already imported"	
+     abort ".. and is already imported. Use --force option to override"	
    else 
      puts ".. and needs importing"
-     RA_FILE = last_month_file
+     RA_FILE = this_month_file
      RA_BASENAME = base
    end
-elsif last_month_file.present?
-   puts "last month's file exists: #{last_month_file}"
-   base = File.basename(last_month_file)
-   if Claim.exists?(ra_file: base)
-     abort ".. and already imported"	
-   else 
-     puts "..and needs importing"
-     RA_FILE = last_month_file
-     RA_BASENAME = base
-   end
-end   
+end 
 
-# Total, payee, deposit date
+# Total, payee, deposit date : once per file
 def HR1(s) 
    group_no = s[7,4]
    $deposit_date = s[21,8].to_date rescue '1900-01-01'
@@ -53,7 +49,7 @@ def HR1(s)
    puts "file: #{RA_BASENAME} : Group : #{group_no} Deposit date: #{$deposit_date} Payee: #{payee_name} Total amount: $#{total_amount} Payment method: #{deposited_as}"
 end
 
-# Addr 1
+# Addr 1 : once per file
 def HR2(s)
    billing_agent = s[3,30].strip
    billing_agent = 'None' if billing_agent.blank?
@@ -61,14 +57,14 @@ def HR2(s)
    puts "Biling agent: #{billing_agent} Payee address: #{payee_address}"
 end
 
-# Addr 2
+# Addr 2 : once per file
 def HR3(s)
    city_prov_postal = s[3,25].strip
    rest = s[28,25].strip
    puts "Payee address 2: #{city_prov_postal}  #{rest}"
 end
 
-# Claim header
+# Claim header: once per claim
 # claim_no:string provider_no:string accounting_no:string pat_lname:string pat_fname:string province:string 
 # ohip_num:string ohip_ver:string pmt_pgm:string moh_group_id:string cabmd_ref:string visit_id:integer ra_file:string date_paid:date
 def HR4(s)
@@ -90,7 +86,7 @@ def HR4(s)
 	     province: province, ohip_num: ohip_num, ohip_ver: ohip_ver, pmt_pgm: pmt_pgm, moh_group_id: moh_group_id, ra_file: RA_BASENAME, date_paid: $deposit_date )
 end
 
-# Claim body
+# Claim body; once per each item in a claim
 # claim_no:string tr_type:integer svc_date:date units:integer svc_code:string amt_subm:integer amt_paid:integer errcode:string
 def HR5(s)
    claim_no = s[3,11]
@@ -107,6 +103,38 @@ def HR5(s)
 
 end
 
+# Balance Forward Record – Health Reconciliation; once per file (not used in any files jan-jun 2018)
+def HR6(s)
+   bal_fwd = s[3,9]
+   bal_fwd = -bal_fwd if s[12] == '-'
+   adv_amt = s[13,9]
+   adv_amt = -adv_amt if s[22] == '-'
+   red_amt = s[23,9] 
+   red_amt = -red_amt if s[32] == '-'
+   other_deduct = s[33,9]
+   other_deduct = -other_deduct if s[42] == '-'
+   puts 'HR6 is not saved currently! Modify if you see this message'
+end
+
+# Accounting Transaction Record – Health Reconciliation; once per file
+def HR7(s)
+  tr_codes = { '10' => 'Recovery of Advance', '20' => 'Reduction', '30' => 'Unused', '40' => 'Payment', '50' => 'Estimated Payment For Unprocessed Claims', '70' => 'Unused'  }
+  tr_code_num = s[3,2]
+  tr_code = tr_codes[tr_code_num]
+  tr_date = s[6,8].to_date rescue '1900-01-01'
+  tr_amt = s[14,8].to_i
+  tr_amt = -tr_amt if s[22] == '-'
+  tr_msg = s[23,50]
+
+  acc_rec = RaAccount.new(tr_code: tr_code, tr_date: tr_date, tr_amt: tr_amt, tr_msg: tr_msg, ra_file: RA_BASENAME, date_paid: $deposit_date)  
+  acc_rec.save
+end
+
+# Message Facility Record – Health Reconciliation 
+def HR8(s)
+  $hr8_messages << s[3,70] + "\n"
+end
+  
 content = File.readlines RA_FILE 
 claim = nil
 claims = services =0
@@ -127,9 +155,21 @@ content.each do |str|
 	  service = HR5(str)
 	  claim.services.build(service.attributes)
 	  services += 1
+  when 'HR6'
+	  HR6(str)
+  when 'HR7'
+          HR7(str)
+  when 'HR8'
+          HR8(str)
   else
   end	  
+end
 
+msg = RaMessage.new(msg_text: $hr8_messages, ra_file: RA_BASENAME, date_paid: $deposit_date)  
+if msg.save
+   puts "messages saved to ra_messages table"
+else
+   puts "error saving messages to ra_messages table"
 end
 
 puts "Imported #{claims} claims, #{services} services"

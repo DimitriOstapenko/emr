@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180726221418) do
+ActiveRecord::Schema.define(version: 20180727225746) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -57,7 +57,7 @@ ActiveRecord::Schema.define(version: 20180726221418) do
     t.datetime "updated_at", null: false
     t.date "date_paid"
     t.index ["accounting_no"], name: "index_claims_on_accounting_no"
-    t.index ["claim_no"], name: "index_claims_on_claim_no", unique: true
+    t.index ["claim_no"], name: "index_claims_on_claim_no"
   end
 
   create_table "daily_charts", force: :cascade do |t|
@@ -238,6 +238,7 @@ ActiveRecord::Schema.define(version: 20180726221418) do
     t.float "wcb_amt"
     t.string "filename"
     t.string "ra_file"
+    t.date "date_paid"
   end
 
   create_table "procedures", force: :cascade do |t|
@@ -279,6 +280,27 @@ ActiveRecord::Schema.define(version: 20180726221418) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "ra_accounts", force: :cascade do |t|
+    t.string "tr_code"
+    t.date "tr_date"
+    t.integer "tr_amt"
+    t.string "tr_msg"
+    t.string "ra_file"
+    t.date "date_paid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date_paid"], name: "index_ra_accounts_on_date_paid"
+  end
+
+  create_table "ra_messages", force: :cascade do |t|
+    t.text "msg_text"
+    t.string "ra_file"
+    t.date "date_paid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date_paid"], name: "index_ra_messages_on_date_paid"
   end
 
   create_table "reports", force: :cascade do |t|

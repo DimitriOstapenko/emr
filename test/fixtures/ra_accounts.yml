@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tr_code: 
+  tr_date: 
+  tr_amt: 
+  tr_msg: 
+  ra_file: 
+  date_paid: 2018-07-27
+
+two:
+  tr_code: 
+  tr_date: 
+  tr_amt: 
+  tr_msg: 
+  ra_file: 
+  date_paid: 2018-07-27
