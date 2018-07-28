@@ -1,0 +1,10 @@
+<tr>
+<td><%= link_to ra_message.ra_file, ra_message_path(ra_message) %></td>
+<td><%= ra_message.date_paid %></td>
+<td><%= ra_message.group_no %></td>
+<td><%= ra_message.payee_name %></td>
+<td><%= sprintf("$%.2f", ra_message.damount) %></td>
+<td><%= ra_message.pay_method %></td>
+<td><%= ra_message.bil_agent %></td>
+</tr>
+

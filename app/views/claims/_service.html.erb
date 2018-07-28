@@ -4,6 +4,6 @@
   <td><%= service.units %></td>
   <td><%= sprintf("$%.2f",service.damt_subm) %></td>
   <td><%= sprintf("$%.2f",service.damt_paid) %></td>
-  <td><%= service.errcode %></td>
+  <td><%= link_to service.errcode, '#', {title: codehash[service.errcode]} %></td>
 </tr>
 
