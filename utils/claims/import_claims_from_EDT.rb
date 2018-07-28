@@ -29,7 +29,7 @@ if this_month_file.present?
    puts "File exists #{this_month_file}"	
    base = File.basename(this_month_file)
    if Claim.exists?(ra_file: base)
-     abort ".. and is already imported. Use --force option to override"	
+	   abort ".. and is already imported. Use delete_ra_file_claims.rb <letter> script first"	
    else 
      puts ".. and needs importing"
      RA_FILE = this_month_file
