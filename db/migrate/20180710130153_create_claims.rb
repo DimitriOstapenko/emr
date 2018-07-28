@@ -15,7 +15,7 @@ class CreateClaims < ActiveRecord::Migration[5.1]
       t.string :ra_file
       t.date   :date_paid
 
-      t.index ["claim_no"], name: "index_claims_on_claim_no", unique: true
+      t.index ["claim_no"], name: "index_claims_on_claim_no"
       t.index ["accounting_no"], name: "index_claims_on_accounting_no"
       t.index ["cabmd_ref"], name: "index_claims_on_cabmd_ref"
       t.timestamps

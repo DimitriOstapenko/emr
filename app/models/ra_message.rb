@@ -1,0 +1,2 @@
+class RaMessage < ApplicationRecord
+end
