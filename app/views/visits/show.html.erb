@@ -19,7 +19,7 @@
 <b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
 <b>Procedure(s)</b> : <%=  @visit.proc_codes %>
 <b>Billing Type(s) </b>: <%= @visit.bil_type_str %>, <%= @visit.bil_type2_str %>, <%= @visit.bil_type3_str %>, <%= @visit.bil_type4_str %>
-<b>Units </b>: <%= @visit.services.collect{|s| s[:units]}.join',' %>0
+<b>Units </b>: <%= @visit.all_units.join',' %>
 <b>Billed amount: <%= sprintf '$%.2f',@visit.total_fee %> Insured services: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 <b>Duration </b>: <%= @visit.duration %> minutes
