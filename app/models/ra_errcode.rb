@@ -1,0 +1,2 @@
+class RaErrcode < ApplicationRecord
+end

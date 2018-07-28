@@ -2,7 +2,7 @@
 #
 # Letter, which identifies the file is passed as an arg
 #
-require_relative '../config/environment'
+require_relative '../../config/environment'
 
 abort "Letter is required" unless letter = ARGV[0] 
 path = EDT_PATH.join("P#{letter.upcase}#{GROUP_NO}.*")

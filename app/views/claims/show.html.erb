@@ -5,16 +5,21 @@
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">
-	   <pre class="pre-scrollable-lg" >
-	   <b> Service date </b>: <%= @claim.date %>
-	   <b> Accounting Number</b>: <%= @claim.accounting_no %>
-	   <b> OHIP Number </b>: <%= @claim.ohip_num %> <%= @claim.ohip_ver %> (<%= @claim.province %>)
-	   <b> Payment Program </b>: <%= @claim.pmt_pgm %> 
-	   <b> Amount Submitted </b>: <%= sprintf("$%.2f",@claim.damt_subm) %>
-	   <b> Amount Paid </b>: <%= sprintf("$%.2f",@claim.damt_paid) %>
-	   <b> Date Paid </b>: <%= @claim.date_paid %>
-	   <b> RA File </b>: <%= @claim.ra_file %>
-	   </pre>
+      <pre class="pre-scrollable-xlg" >
+	<b> Provider#</b>: <%= @claim.provider_no %> <b> Group# </b>: <%= @claim.moh_group_id %>
+	<b> Service date </b>: <%= @claim.date %>
+	<b> Accounting Ref#</b>: <%= @claim.accounting_no %>
+	<b> OHIP Number </b>: <%= @claim.ohip_num %> <%= @claim.ohip_ver %> (<%= @claim.province %>)
+	<b> Payment Program </b>: <%= @claim.pmt_pgm %> 
+	<b> Amount Submitted </b>: <%= sprintf("$%.2f",@claim.damt_subm) %>
+	<b> Amount Paid </b>: <%= sprintf("$%.2f",@claim.damt_paid) %>
+	<b> Date Paid </b>: <%= @claim.date_paid %>
+	<b> RA File </b>: <%= @claim.ra_file %>
+	<b> Visit id </b>: <%= @claim.visit_id %>
+        <% if @claim.pmt_pgm == 'RMB' %>
+        <b> RMB Patient </b>: <%= "#{@claim.pat_lname}, #{@claim.pat_fname}" %>
+        <% end %>
+      </pre>
     </section>
   </aside>
 

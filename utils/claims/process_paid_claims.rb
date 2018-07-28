@@ -1,5 +1,5 @@
 # Reconcile claims with visits
-# Requires range of dates eg: 2018-06-01 2018-07-01
+# Requires range of dates eg: 2018-06-01 2018-07-01 (dates are visit dates, or svc_date in services)
 # 
 # Updates attributes : 
 #   - visit.status to PAID 
@@ -15,9 +15,9 @@
 # set visit claim id to id of matching claim
 #
 #
-require_relative '../config/environment'
-require 'date'
-require 'csv'
+require_relative '../../config/environment'
+#require 'date'
+#require 'csv'
 
 (sdate,edate) = ARGV
 unless sdate
@@ -34,7 +34,7 @@ puts "Will go through *billed* visits in given range, look for match in claims t
 ttl_amt_subm = ttl_amt_paid = 0
 paid_count = not_paid_count = revised_count = 0
 Visit.where("date(entry_ts) >= ? AND date(entry_ts) <= ?", start_date, end_date).each do |v| 
-   next unless v.status == BILLED
+#   next unless v.status == BILLED
    next unless v.total_insured_services > 0
 
    cl = Claim.find_by(accounting_no: v.export_file)
@@ -49,7 +49,7 @@ Visit.where("date(entry_ts) >= ? AND date(entry_ts) <= ?", start_date, end_date)
 	   paid_count += 1
       else 
 	   revised_count += 1
-	   puts "Payment revised for patient #{v.patient_id}, Visit #{v.id} #{v.entry_ts} : submitted: #{v.total_insured_fees};  billed: #{cl.damt_subm}, pd: #{cl.damt_paid}"
+#	   puts "Payment revised for patient #{v.patient_id}, Visit #{v.id} #{v.entry_ts} : submitted: #{v.total_insured_fees};  billed: #{cl.damt_subm}, pd: #{cl.damt_paid}"
       end
    else
      pat = Patient.find(v.patient_id)
@@ -60,7 +60,7 @@ Visit.where("date(entry_ts) >= ? AND date(entry_ts) <= ?", start_date, end_date)
          v.update_attributes(:status => PAID, :amount => c.damt_paid, :claim_id => c.id, :export_file => c.accounting_no) 
          c.update_attribute(:visit_id, v.id)
 	 found = true
-	 puts "Patient #{v.patient_id}, visit #{v.id}: submitted: #{v.total_insured_fees.round(2)}; billed: #{c.damt_subm} paid in full"
+#	 puts "Patient #{v.patient_id}, visit #{v.id}: submitted: #{v.total_insured_fees.round(2)}; billed: #{c.damt_subm} paid in full"
 	 break
        end
      end

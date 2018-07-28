@@ -4,11 +4,7 @@
 %>
 
 <tr>
-<% if patient.present? && visit.present? %>
-  <td><%= link_to claim.claim_no, claim_path(claim) %></td>
-<% else %>
-  <td><%= claim.claim_no %></td>
-<% end %>
+<td><%= link_to claim.claim_no, claim_path(claim) %></td>
 <td><%= claim.date %></td>
 <td><%= doctor.lname %></td>
 <td><%= claim.services.size %></td>
