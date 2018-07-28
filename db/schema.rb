@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180727225746) do
+ActiveRecord::Schema.define(version: 20180728141800) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -294,12 +294,25 @@ ActiveRecord::Schema.define(version: 20180727225746) do
     t.index ["date_paid"], name: "index_ra_accounts_on_date_paid"
   end
 
+  create_table "ra_errcodes", force: :cascade do |t|
+    t.string "code"
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "ra_messages", force: :cascade do |t|
     t.text "msg_text"
     t.string "ra_file"
     t.date "date_paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group_no"
+    t.string "payee_name"
+    t.string "payee_addr"
+    t.integer "amount"
+    t.string "pay_method"
+    t.string "bil_agent"
     t.index ["date_paid"], name: "index_ra_messages_on_date_paid"
   end
 

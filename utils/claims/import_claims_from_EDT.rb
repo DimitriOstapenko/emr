@@ -10,11 +10,12 @@
 #
 # Ignore already processed files
 #
-require_relative '../config/environment'
+require_relative '../../config/environment'
 require 'date'
 
 abort "EDT directory does not exist." unless File.directory?(EDT_PATH)
 
+$ra_msg = nil
 $hr8_messages = ''
 $deposit_date = nil
 this_month = Date.today.month
@@ -45,8 +46,9 @@ def HR1(s)
    negative = s[68] == '-'
    total_amount = -total_amount if negative
    deposited_as = s[69,8].match('99999999') ? 'Direct Deposit' : "Cheque # #{s[69,8]}"
-
    puts "file: #{RA_BASENAME} : Group : #{group_no} Deposit date: #{$deposit_date} Payee: #{payee_name} Total amount: $#{total_amount} Payment method: #{deposited_as}"
+
+   $ra_msg = RaMessage.new(ra_file: RA_BASENAME, date_paid: $deposit_date, group_no: group_no, payee_name: payee_name, amount: total_amount, pay_method: deposited_as)
 end
 
 # Addr 1 : once per file
@@ -54,14 +56,16 @@ def HR2(s)
    billing_agent = s[3,30].strip
    billing_agent = 'None' if billing_agent.blank?
    payee_address = s[33,25]	
-   puts "Biling agent: #{billing_agent} Payee address: #{payee_address}"
+#   puts "Biling agent: #{billing_agent} Payee address: #{payee_address}"
+
+   puts("HR2: msg: error updating address, billing agent") unless $ra_msg.update_attributes(:payee_addr => payee_address, :bil_agent => billing_agent)
 end
 
 # Addr 2 : once per file
 def HR3(s)
    city_prov_postal = s[3,25].strip
    rest = s[28,25].strip
-   puts "Payee address 2: #{city_prov_postal}  #{rest}"
+#   puts "Payee address 2: #{city_prov_postal}  #{rest}"
 end
 
 # Claim header: once per claim
@@ -165,8 +169,7 @@ content.each do |str|
   end	  
 end
 
-msg = RaMessage.new(msg_text: $hr8_messages, ra_file: RA_BASENAME, date_paid: $deposit_date)  
-if msg.save
+if $ra_msg.update_attribute(:msg_text, $hr8_messages)  
    puts "messages saved to ra_messages table"
 else
    puts "error saving messages to ra_messages table"

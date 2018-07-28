@@ -1,5 +1,4 @@
-#
-# Parse CSV payment file from CAB.md and get totals for each day for all doctors 
+# Parse CSV payment file from CAB.md (created by CSV export of xls report) and get totals for each day for all doctors 
 #
 # CSV Header line:
 # ref,X,ohip_num,vc,XX,prov,name,dob,group,XX,XXX,sdate,proc_code,units,XXXX,sub_fee,pd_fee,XXXXX,XXXXXX,XXXXXXX

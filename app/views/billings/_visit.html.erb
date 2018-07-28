@@ -15,7 +15,13 @@
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.total_insured_services %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
-	<td><%= VISIT_STATUSES.invert[visit.status] %></td>
+	<td>
+	<% if visit.status == PAID && visit.claim_id.present? %>
+	  <%= link_to visit.status_str, claim_path(visit.claim_id) %> 		
+	<% else %>
+	  <%= visit.status_str %>
+  	<% end %>	
+	</td>
 	<td><%= visit.export_file %></td>
 
 </tr>
