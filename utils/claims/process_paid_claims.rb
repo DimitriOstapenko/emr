@@ -29,7 +29,7 @@ end_date = Date.parse(edate) rescue Date.today
 
 puts "using #{start_date} as start date"
 puts "using #{end_date} as end date"
-puts "Will go through *billed* visits in given range, look for match in claims table and assign paid status,amount paid,claim id and visit id if match found"
+puts "Will go through visits in given range, look for match in claims table and assign paid status,amount paid,claim id and visit id if match found"
 
 ttl_amt_subm = ttl_amt_paid = 0
 paid_count = not_paid_count = revised_count = 0
