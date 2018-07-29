@@ -42,11 +42,11 @@ def HR1(s)
    group_no = s[7,4]
    $deposit_date = s[21,8].to_date rescue '1900-01-01'
    payee_name = s[29,30]
-   total_amount = s[59,9].to_f/100 rescue 0
+   total_amount = s[59,9].to_i rescue 0
    negative = s[68] == '-'
    total_amount = -total_amount if negative
    deposited_as = s[69,8].match('99999999') ? 'Direct Deposit' : "Cheque # #{s[69,8]}"
-   puts "file: #{RA_BASENAME} : Group : #{group_no} Deposit date: #{$deposit_date} Payee: #{payee_name} Total amount: $#{total_amount} Payment method: #{deposited_as}"
+   puts "file: #{RA_BASENAME} : Group : #{group_no} Deposit date: #{$deposit_date} Payee: #{payee_name} Total amount: $#{total_amount/100.0} Payment method: #{deposited_as}"
 
    $ra_msg = RaMessage.new(ra_file: RA_BASENAME, date_paid: $deposit_date, group_no: group_no, payee_name: payee_name, amount: total_amount, pay_method: deposited_as)
 end
@@ -141,7 +141,7 @@ end
   
 content = File.readlines RA_FILE 
 claim = nil
-claims = services =0
+claims = services = -1
 content.each do |str| 
   hdr = str[0,3]
   case hdr 
