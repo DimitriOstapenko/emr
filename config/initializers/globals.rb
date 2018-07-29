@@ -15,6 +15,13 @@ YES_NO = [['Yes', true], ['No', false]].freeze
 
 # Patients
 PATIENT_TYPES = {OHIP: 'O', RMB: 'R', 'Self Pay': 'S', IFH: 'I', Transient: 'T', 'Waiting For HC': 'W', Deceased: 'D'}.freeze
+OHIP_PATIENT = PATIENT_TYPES[:OHIP].freeze
+RMB_PATIENT = PATIENT_TYPES[:RMB].freeze
+SELFPAY_PATIENT = PATIENT_TYPES[:'Self Pay'].freeze
+IFH_PATIENT = PATIENT_TYPES[:IFH].freeze
+TRANSIENT_PATIENT = PATIENT_TYPES[:Transient].freeze
+DECEASED_PATIENT = PATIENT_TYPES[:Deceased].freeze
+
 SEXES  = {Male: 'M',Female: 'F',Unknown: 'X'}.freeze
 DIGSEXES = {'M' => 1, 'F' => 2}.freeze
 PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS', NT: 'NT', NU: 'NU', PE: 'PE', QC: 'QC', SK: 'SK', YT: 'YT'}
@@ -22,13 +29,13 @@ PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS
 # Visits
 
 VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, Error: 7}.freeze
-ARRIVED = VISIT_STATUSES[:Arrived]
-ASSESSED = VISIT_STATUSES[:Assessed]
-READY = VISIT_STATUSES[:'Ready To Bill']
-BILLED = VISIT_STATUSES[:Billed]
-PAID = VISIT_STATUSES[:Paid]
-CANCELLED = VISIT_STATUSES[:Cancelled]
-ERROR = VISIT_STATUSES[:Error]
+ARRIVED = VISIT_STATUSES[:Arrived].freeze
+ASSESSED = VISIT_STATUSES[:Assessed].freeze
+READY = VISIT_STATUSES[:'Ready To Bill'].freeze
+BILLED = VISIT_STATUSES[:Billed].freeze
+PAID = VISIT_STATUSES[:Paid].freeze
+CANCELLED = VISIT_STATUSES[:Cancelled].freeze
+ERROR = VISIT_STATUSES[:Error].freeze
 
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
 	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
