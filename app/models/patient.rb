@@ -11,6 +11,7 @@ class Patient < ApplicationRecord
 	before_validation { mobile.gsub!(/\D/,'') rescue '' }
 	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
 	before_validation { postal.tr!(' -','') rescue '' }
+	before_validation { ohip_ver.strip! rescue '' }
 
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
