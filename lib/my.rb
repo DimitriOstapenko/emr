@@ -522,7 +522,7 @@ module My
     visits.all.each do |v|
       pat = Patient.find(v.patient_id)
       next unless v.fee > 0
-      status = v.export_file.defined? ? v.export_file : v.status_str
+      status = v.export_file.present? ? v.export_file : v.status_str
       rows += [[ v.entry_ts.strftime("%d/%m/%Y"), pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, status, v.id ]]
       @totals[v.bil_type] += v.fee if v.bil_type
       @servcounts[v.bil_type] += 1 if v.bil_type

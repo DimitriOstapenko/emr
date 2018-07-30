@@ -5,8 +5,9 @@
  <li><%= link_to "Add User", signup_path %></li>
  <li><%= link_to "Users", users_path %></li>
  <li class="divider"></li>
- <li> <%= link_to "Doctors", doctors_path, method: :get %> </li>
- <li> <%= link_to "Export Files", export_files_path, method: :get %> </li>
- <li> <%= link_to "Claims", claims_path, method: :get %> </li> 
+ <li><%= link_to "Doctors", doctors_path %> </li>
+ <li><%= link_to "Export Files", export_files_path %> </li>
+ <li><%= link_to "Claims", claims_path  %> </li> 
+ <li><%= link_to "Logout", logout_path, method: :delete %></li>
 </ul>
 </li>
