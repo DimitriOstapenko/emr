@@ -1,6 +1,6 @@
 class Report < ApplicationRecord
 
-	default_scope -> { order(id: :desc) }
+	default_scope -> { order(sdate: :desc) }
 	attr_accessor :doctor, :filespec
 
 	validates :name, presence: true, length: { maximum: 30 }
