@@ -174,7 +174,7 @@ class Visit < ApplicationRecord
   end
 
   def status_str
-    VISIT_STATUSES.invert[status]
+	  VISIT_STATUSES.invert[status].to_s rescue ''
   end
 
   def bil_type_str
