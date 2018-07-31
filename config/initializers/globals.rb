@@ -14,20 +14,20 @@ CLINIC_FAX = '(905) 561-4391'.freeze
 YES_NO = [['Yes', true], ['No', false]].freeze
 
 # Patients
-PATIENT_TYPES = {OHIP: 'O', RMB: 'R', 'Self Pay': 'S', IFH: 'I', Transient: 'T', 'Waiting For HC': 'W', Deceased: 'D'}.freeze
-OHIP_PATIENT = PATIENT_TYPES[:OHIP].freeze
+# PATIENT_TYPES = {OHIP: 'O', RMB: 'R', 'Self Pay': 'S', IFH: 'I', Transient: 'T', 'Waiting For HC': 'W', Deceased: 'D'}.freeze
+PATIENT_TYPES = {HCP: 'O', RMB: 'R', WCB: 'W', 'CSH': 'S', IFH: 'I', DEC: 'D'}.freeze
+HCP_PATIENT = PATIENT_TYPES[:HCP].freeze
 RMB_PATIENT = PATIENT_TYPES[:RMB].freeze
-SELFPAY_PATIENT = PATIENT_TYPES[:'Self Pay'].freeze
+WCB_PATIENT = PATIENT_TYPES[:WCB].freeze
+CASH_PATIENT = PATIENT_TYPES[:CSH].freeze
 IFH_PATIENT = PATIENT_TYPES[:IFH].freeze
-TRANSIENT_PATIENT = PATIENT_TYPES[:Transient].freeze
-DECEASED_PATIENT = PATIENT_TYPES[:Deceased].freeze
+DECEASED_PATIENT = PATIENT_TYPES[:DEC].freeze
 
 SEXES  = {Male: 'M',Female: 'F',Unknown: 'X'}.freeze
 DIGSEXES = {'M' => 1, 'F' => 2}.freeze
 PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS', NT: 'NT', NU: 'NU', PE: 'PE', QC: 'QC', SK: 'SK', YT: 'YT'}
 
 # Visits
-
 VISIT_STATUSES = { Arrived: 1, Assessed: 2,  'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, Error: 7}.freeze
 ARRIVED = VISIT_STATUSES[:Arrived].freeze
 ASSESSED = VISIT_STATUSES[:Assessed].freeze
@@ -37,8 +37,7 @@ PAID = VISIT_STATUSES[:Paid].freeze
 CANCELLED = VISIT_STATUSES[:Cancelled].freeze
 ERROR = VISIT_STATUSES[:Error].freeze
 
-VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', 
-	      Hospital: 'HP', Message: 'MG', Telephone: 'PH', 'Pre-Operative': 'PO', Secondary: 'SD', WSIB: 'WB'}.freeze
+VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', WCB: 'WB'}.freeze
 u = {}
 (1..10).each {|k| u[k]=k}
 UNITS  = u.freeze

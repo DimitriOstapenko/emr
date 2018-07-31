@@ -288,6 +288,7 @@ GEM
     will_paginate (3.1.6)
     xpath (3.1.0)
       nokogiri (~> 1.8)
+    yomu (0.1.5)
 
 PLATFORMS
   ruby
@@ -331,6 +332,7 @@ DEPENDENCIES
   uglifier (= 3.2.0)
   web-console (= 3.5.1)
   will_paginate (= 3.1.6)
+  yomu (~> 0.1.5)
 
 BUNDLED WITH
    1.16.1
