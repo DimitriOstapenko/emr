@@ -16,17 +16,17 @@ class DaysheetController < ApplicationController
          d = Doctor.find(params[:doc_id])
          doctor = "Dr. #{d.lname}" if !d.nil?
       else
-         @daysheet = Visit.where("date(entry_ts) = ?", @date)
-	 @previously_unbilled = Visit.where("date(entry_ts) <? AND status=?", Date.today, ARRIVED)
+	 @daysheet = Visit.where("date(entry_ts) = ?", @date).where(status: (ARRIVED..PAID))
+	 @previously_unbilled = Visit.where("entry_ts <? AND status=?", Date.today, ARRIVED)
       end
 
-      @totalfee = @totalinsured = @totalcash = 0
-      @daysheet.map{|v| @totalfee += v.total_fee}
-      @daysheet.map{|v| @totalcash += v.total_cash}
-      @daysheet.map{|v| @totalinsured += v.total_insured_fees}
+      @insured_svcs = @cash_svcs = @ifh_svcs = 0
+      @daysheet.map{|v| @insured_svcs += v.total_insured_services}
+      @daysheet.map{|v| @cash_svcs += v.total_cash_services}
+      @daysheet.map{|v| @ifh_svcs += v.total_ifh_services}
       if @daysheet.any?
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "Daysheet for #{@date} : #{@daysheet.count} visits. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)}; Cash: #{sprintf("$%.2f",@totalcash)}."
+	 flash.now[:info] = "Daysheet for #{@date} : #{@daysheet.count} visits. Insured services: #{@insured_svcs}; Cash services: #{@cash_svcs}; IFH services: #{@ifh_svcs}"
          render 'index'
       else
 	 if @previously_unbilled.present? && @date == Date.today

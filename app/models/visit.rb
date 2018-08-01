@@ -114,17 +114,37 @@ class Visit < ApplicationRecord
 
 # Total fee of insured services (HCP, RMB) 
   def total_insured_fees
-    services.select{|i| i[:btype] && i[:btype] < 3}.sum{|s| s[:fee]} rescue 0
+    services.select{|i| i[:btype] && i[:btype] < CASH_BILLING}.sum{|s| s[:fee]} rescue 0
   end
 
 # Total number of insured services (HCP, RMB) 
   def total_insured_services
-    services.select{|i| i[:btype] && i[:btype] < 3}.count rescue 0
+    services.select{|i| i[:btype] && i[:btype] < CASH_BILLING}.count rescue 0
+  end
+
+# Total number of cash services
+  def total_cash_services
+    services.select{|i| i[:btype] && i[:btype] == CASH_BILLING}.count rescue 0
   end
 
 # Total amount of cash 
   def total_cash
-    services.select{|i| i[:btype] && i[:btype] == 4}.sum{|s| s[:fee]} rescue 0
+    services.select{|i| i[:btype] && i[:btype] == CASH_BILLING}.sum{|s| s[:fee]} rescue 0
+  end
+
+# Total number of IFH services 
+  def total_ifh_services
+    services.select{|i| i[:btype] && i[:btype] == IFH_BILLING}.count rescue 0
+  end
+
+# Total number of WCB services 
+  def total_wcb_services
+    services.select{|i| i[:btype] && i[:btype] == WCB_BILLING}.count rescue 0
+  end
+
+# Total number of RMB services 
+  def total_rmb_services
+    services.select{|i| i[:btype] && i[:btype] == RMB_BILLING}.count rescue 0
   end
 
 # Total of other than insured services   
