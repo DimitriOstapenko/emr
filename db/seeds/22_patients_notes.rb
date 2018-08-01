@@ -8,7 +8,7 @@ require 'csv'
 
 puts "About to add old notes to notes field in patients table."
 
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'patdata_notes_short.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'patdata_notes.csv')).force_encoding('BINARY').encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   # .first(200)
 
 added = 0
@@ -17,8 +17,9 @@ csv.each do |row|
   ohip_num = row['ohip'].gsub(/\D/,'') rescue ''
   oldnotes_rtf = row['notes']	
   next unless oldnotes_rtf.present? && ohip_num.present?
-  pat = Patient.find(pat_id)
-  next unless pat.ohip_num == ohip_num
+  puts ohip_num
+  pat = Patient.find_by(ohip_num: ohip_num ) rescue nil
+  next unless pat.present?
 
   added += 1
   notes = pat.notes
