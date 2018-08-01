@@ -8,7 +8,7 @@ require_relative '../config/environment'
 
 patients = Patient.where(pat_type: 'W')
 
-puts "will go through all 'W' patients and check if their visits have HCP proc. If yes, assign 'I', otherwise 'S' as pat_type"
+puts "will go through all 'W' patients and check if their visits have HCP proc. If yes, assign IFH, otherwise CASH as pat_type"
 
 pat_with_visits = pat_with_no_visits = ifh_pat = cash_pat = 0
 patients.all.each do |pat|
@@ -20,14 +20,17 @@ patients.all.each do |pat|
 	  if latest_visit.hcp_services?
              ifh_pat += 1
 	     puts "Patient #{pat.id} has visits (#{visits.count}) and is IFH"
+	     pat.update_attribute(:pat_type, IFH_PATIENT)
 	  else
 	     cash_pat += 1
 	     puts "Patient #{pat.id} has visits (#{visits.count}) and is CASH"
+	     pat.update_attribute(:pat_type,CASH_PATIENT)
 	  end
   else
 	  pat_with_no_visits += 1
 	  cash_pat += 1
 	  puts "Patient #{pat.id} has no visits - CASH"
+	  pat.update_attribute(:pat_type, CASH_PATIENT)
   end
 end
 
