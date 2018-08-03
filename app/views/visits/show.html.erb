@@ -30,7 +30,7 @@
 <b>Billing Ref# </b>: <%= @visit.billing_ref %>
 <% end %>
 <% if @visit.export_file.present? %>
-<b>Export file</b>: <% @visit.export_file %>
+<b>Export file</b>: <%= @visit.export_file %>
 <% end %>
 <% if @visit.amount.present? %>
 <b>Amount Paid </b>: <%= sprintf '$%.2f', @visit.amount %>
