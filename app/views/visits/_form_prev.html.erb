@@ -1,19 +1,21 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
   
-  <% doc_id = @visit.doctor.id || current_doctor.id %>
+  <% doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) %>
   <% @procedures = get_active_procedures %>
 
-  <% if @visit.hcp_proc_codes.present?
-#        disabled = [BILLED,PAID] unless @visit._3rd_index.present?
-	 disabled = []
+  <% if current_user.admin? 
+        disabled = []
+  elsif @visit.hcp_proc_codes.present? 
+        disabled = [BILLED,PAID] 
   elsif @visit.proc_codes.empty?
-#        disabled = [READY,BILLED,PAID] unless @visit.proc_codes.present? 
-	 disabled = []
+        disabled = [READY,BILLED,PAID] 
+  else 
+	disabled = []
   end %>
 
   <% if @visit.status == ERROR && !current_user.admin? 
-	  disabled = [ARRIVED, ASSESSED, READY, BILLED, PAID, CANCELLED]
+	  disabled = [ READY, BILLED, PAID, CANCELLED]
   end %>
 
   <!-- Row 0 if admin --> 
@@ -27,7 +29,7 @@
   	</div>
      <% elsif action_name == 'edit' %>
    	<div class="col-sm-6">
-  	  <%= f.label "Error message" %>
+  	  <%= f.label "Export File Reference" %>
  	  <%= f.text_field :export_file %>
   	</div>
     <% end %>
@@ -43,23 +45,23 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None' %> <!--#, selected: @visit.proc_code || 'A007A'  -->
   <%= f.hidden_field(:fee, id: :fee) %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code2, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code3, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Procedure" %>
+  <%= f.label "Service" %>
   <%= f.collection_select :proc_code4, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
   </div>
 </div
@@ -107,7 +109,7 @@
   
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select', include_blank: 'None', selected: @visit.bil_type || 1 %>
+  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
   </div>
 
   <div class="col-sm-2">
@@ -161,19 +163,6 @@
   </div>
 </div>
 
-  <!-- Row 6: Insurance provider for invoiced visits -->
-
-<div class="row" id="ins_provider">
-  <div class="col-sm-8"> 
-  <%= f.label "Insurance Provider" %>
-  <%=  f.collection_select(:provider_id, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %> 
-  </div>
-
-  <div class="col-sm-4">
-  <%= f.label "Amount" %>
-  <%= f.number_field :amount, in: 1...250 %>
-  </div>
-</div>
 
 <!-- Row 7: Notes, submit button -->
 <div class="row">
@@ -189,11 +178,6 @@
 
 <script>
 $(document).ready(function() {
-    if ($("#visit_provider_id").val() > 0) {
-       $("#ins_provider").show();
-    } else{
-       $("#ins_provider").hide();
-    }
     $('#visit_diag_code').select2();
     $('#visit_proc_code').select2();
     $('#visit_proc_code2').select2();
@@ -208,25 +192,6 @@ $(document).ready(function() {
     });
 
 });
-
-// Show insurance Drop-Down if :Invoice is selected in bill type 1..4
-  var el = document.getElementById("visit_bil_type");
-  $(el).change(function () {
-        if ( $(el).val() == "3" ) {    //Invoice
-           $('#ins_provider').show();
-	} else {
-           $('#ins_provider').hide();
-	}
-  });
-
-  var el2 = document.getElementById("visit_bil_type2");
-  $(el2).change(function () {
-        if ( $(el2).val() == "3" ) {    //Invoice
-           $('#ins_provider').show();
-	} else {
-           $('#ins_provider').hide();
-	}
-  });
 
 // Select proper bill type for the procedure
 var pc = document.getElementById("visit_proc_code");
@@ -269,6 +234,34 @@ $(pc4).change(function () {
   }
 });
 
+var bt = document.getElementById('visit_bil_type');
+var st = document.getElementById('visit_statuses').getElementsByTagName("option");
+$(bt).change(function() {
+   if ($(this).val() > 3) {	
+	   st[2].disabled = true;
+	   st[3].disabled = false;
+	   st[4].disabled = false;
+   } else {
+	   st[2].disabled = false;
+	   st[3].disabled = true;
+	   st[4].disabled = true;
+   }
+});
+
+var bt2 = document.getElementById('visit_bil_type2');
+var st = document.getElementById('visit_statuses').getElementsByTagName("option");
+$(bt2).change(function() {
+   if ($(this).val() > 3) {	
+	   st[2].disabled = true;
+	   st[3].disabled = false;
+	   st[4].disabled = false;
+   } else {
+	   st[2].disabled = false;
+	   st[3].disabled = true;
+	   st[4].disabled = true;
+   }
+});
+
 function get_bil_type ( code, suff ) {
 	var request = "/procedures/get_by_code?code=" + code;
 	var aj = $.ajax({
@@ -276,6 +269,7 @@ function get_bil_type ( code, suff ) {
         type: 'get',
         data: $(this).serialize()
     }).done(function (data) {
+	select_statuses(data);
         select_btype(data, suff);
     }).fail(function (data) {
         console.log('AJAX request has FAILED');
@@ -286,11 +280,31 @@ function select_btype( proc, suff ) {
   var v = document.getElementById('visit_bil_type'+suff);
   if ( proc.ptype == '1') {
         $(v).val('1');
-       $('#ins_provider').hide();
      } else {
-	$(v).val('3');
-       $('#ins_provider').show();
+	$(v).val('4');
   }
 }
+
+function select_statuses( proc ) {
+  var bt = document.getElementById('visit_bil_type');
+  var bt2 = document.getElementById('visit_bil_type2');
+  var v = document.getElementById('visit_statuses').getElementsByTagName("option");
+  if (bt2.value === '') {
+     if (proc.ptype == '1') {
+        v[2].disabled = false;
+        v[3].disabled = true;
+        v[4].disabled = true;
+     }else{
+        v[2].disabled = false;
+        v[3].disabled = true;
+        v[4].disabled = false;
+     }
+  } else {
+        v[2].disabled = false;
+	v[3].disabled = true;
+	v[4].disabled= true;
+  }
+}
+
 
 </script>

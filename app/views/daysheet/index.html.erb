@@ -33,7 +33,7 @@
           <th class="tbl_md">Services</th>
           <th class="tbl_sm">B.Types</th>
           <th class="tbl_lsm">Status</th>
-	  <% if (date == Date.today && !@previously_unbilled.present?) || current_user.admin? %>
+	  <% if date == Date.today  || current_user.admin? %>
 	    <th class="tbl_sm"></th>
             <th class="tbl_sm"></th>
             <th class="tbl_sm"></th>

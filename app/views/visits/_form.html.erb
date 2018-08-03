@@ -15,7 +15,7 @@
   end %>
 
   <% if @visit.status == ERROR && !current_user.admin? 
-	  disabled = [ARRIVED, ASSESSED, READY, BILLED, PAID, CANCELLED]
+	  disabled = [ READY, BILLED, PAID, CANCELLED]
   end %>
 
   <!-- Row 0 if admin --> 
@@ -29,8 +29,8 @@
   	</div>
      <% elsif action_name == 'edit' %>
    	<div class="col-sm-6">
-  	  <%= f.label "Export File Reference" %>
- 	  <%= f.text_field :export_file %>
+  	  <%= f.label "Billing Reference" %>
+ 	  <%= f.text_field :billing_ref %>
   	</div>
     <% end %>
     </div>
@@ -109,22 +109,26 @@
   
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type, BILLING_TYPES, prompt: 'Select', include_blank: 'None', selected: @visit.bil_type || 1 %>
+  <div id="my_bil_type"> <%= @visit.bil_type_str %></div>
+  <%= f.hidden_field :bil_type %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type2, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
+  <div id="my_bil_type2"> <%= @visit.bil_type2_str %></div>
+  <%= f.hidden_field :bil_type2  %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type3, BILLING_TYPES,  prompt: 'Select', include_blank: 'None' %>
+  <div id="my_bil_type3"> <%= @visit.bil_type3_str %></div>
+  <%= f.hidden_field :bil_type3  %>
   </div>
 
   <div class="col-sm-2">
   <%= f.label "Bill Type" %>
-  <%= f.select :bil_type4, BILLING_TYPES, prompt: 'Select', include_blank: 'None' %>
+  <div id="my_bil_type4"> <%= @visit.bil_type4_str %></div>
+  <%= f.hidden_field :bil_type4  %>
   </div>
 </div>
 
@@ -278,10 +282,15 @@ function get_bil_type ( code, suff ) {
 
 function select_btype( proc, suff ) {
   var v = document.getElementById('visit_bil_type'+suff);
+  var v2 = document.getElementById('my_bil_type'+suff);
   if ( proc.ptype == '1') {
-        $(v).val('1');
-     } else {
+	var btype = <%= BILLING_TYPES[@visit.pat_btype] %>; 	
+        $(v).val(btype);
+	var btype_str = <%= @visit.pat_btype.to_s.inspect.html_safe %> || 'HCP'
+	v2.innerHTML = btype_str;
+  } else {
 	$(v).val('4');
+	v2.innerHTML = 'CSH';
   }
 }
 

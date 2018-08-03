@@ -5,8 +5,9 @@
 
     <tr>
 	<td><%= link_to "#{invoice.id}", invoice, target: "Form" %> </td>
-	<td><%= link_to provider.name, provider %> </td> 
 	<td><%= link_to patient.lname, patient %></td>
+	<td><%= invoice.doctor.lname rescue 'Clinic' %> </td> 
+	<td><%= link_to provider.name, provider %> </td> 
 	<td><%= invoice.date %></td> 
 	<td>$<%= invoice.amount %></td> 
 	<td><%= invoice.notes %></td> 

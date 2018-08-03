@@ -14,7 +14,7 @@ class BillingsController < ApplicationController
 
 # This day doctors/visits key: doc_id; value: number of visits      
       if @date.blank? 
-	 @visits = Visit.where("status=? OR status=?", READY, ERROR)
+	 @visits = Visit.where("status=? OR status=? OR (status=? AND date(entry_ts)=?)", READY, ERROR, PAID, Date.today)
 	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)}," 
       else # Date given - check doctor filter
          @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
@@ -211,6 +211,7 @@ class BillingsController < ApplicationController
 # Skip visits without insured services
        next unless v.hcp_services?    
        @patient = Patient.find(v.patient_id)
+       next unless @patient.ohip_num.present?
        @doctor = Doctor.find(v.doc_id)
        @xml = render_to_string "/visits/show.xml"
 
@@ -224,9 +225,9 @@ class BillingsController < ApplicationController
        res = http.request(req)
        @xmlhash = JSON.parse(res.body)
        if @xmlhash['success']
-	  fname = @xmlhash['accounting_number']
+	  acc_no = @xmlhash['accounting_number']
           v.update_attribute(:status, BILLED)
-          v.update_attribute(:export_file, fname)
+          v.update_attribute(:billing_ref, acc_no)
 	  claims_sent += 1
        else
 	  errors = @xmlhash['errors'] || []
@@ -234,7 +235,7 @@ class BillingsController < ApplicationController
 	  refid = @xmlhash['reference_id']
 	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
           @visit.update_attribute(:status, ERROR)
-	  @visit.update_attribute(:export_file, errors.join(','))
+	  @visit.update_attribute(:billing_ref, errors.join(','))
        end
 
     end

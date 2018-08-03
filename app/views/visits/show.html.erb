@@ -26,7 +26,12 @@
 <b>Status </b>: <%= @visit.status_str %> 
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
-<b>Billing Ref# </b>: <%= @visit.export_file %>
+<% if @visit.billing_ref.present? %>
+<b>Billing Ref# </b>: <%= @visit.billing_ref %>
+<% end %>
+<% if @visit.export_file.present? %>
+<b>Export file</b>: <% @visit.export_file %>
+<% end %>
 <% if @visit.amount.present? %>
 <b>Amount Paid </b>: <%= sprintf '$%.2f', @visit.amount %>
 <% end %>

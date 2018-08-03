@@ -22,6 +22,15 @@ class Visit < ApplicationRecord
     Doctor.find(doc_id) rescue Doctor.new 
   end
 
+  def pat
+    Patient.find(patient_id) rescue Patient.new 
+  end
+
+# Symbol for patient's type (:HCP,:WCB...)  
+  def pat_btype
+    PATIENT_TYPES.invert[pat.pat_type]
+  end
+
   def date 
 	  entry_ts.to_date rescue '1900-01-01'
   end
