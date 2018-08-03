@@ -84,16 +84,16 @@ class VisitsController < ApplicationController
 # {"success"=>true, "errors"=>[], "messages"=>[], "reference_id"=>"332933", "accounting_number"=>"0004MZ4Z"}
        
        if @xmlhash['success'] 
-	  fname = @xmlhash['accounting_number']
-          flash[:success] = "Claim #{fname} sent to cab.md " 
+	  acc_num = @xmlhash['accounting_number']
+          flash[:success] = "Claim #{acc_num} sent to cab.md " 
           @visit.update_attribute(:status, BILLED)
-          @visit.update_attribute(:export_file, fname)
+          @visit.update_attribute(:billing_ref, acc_num)
        else
 	  errors = @xmlhash['errors']
 	  messages = @xmlhash['messages']
 	  flash[:danger] = "Error sending claim : #{@xmlhash}"
           @visit.update_attribute(:status, READY)
-	  @visit.update_attribute(:export_file, errors.join(','))
+	  @visit.update_attribute(:billing_ref, errors.join(','))
        end
 
        respond_to(:html)
@@ -182,7 +182,7 @@ class VisitsController < ApplicationController
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
-				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file )
+				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref )
     end      
 
     def set_visit_fees ( visit )

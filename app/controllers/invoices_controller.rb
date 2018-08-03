@@ -74,7 +74,7 @@ class InvoicesController < ApplicationController
 
 private
   def invoice_params
-          params.require(:invoice).permit(:patient_id, :billto, :visit_id, :amount, :date, :notes, :amount, :paid, :filespec )
+          params.require(:invoice).permit(:patient_id, :billto, :visit_id, :amount, :date, :notes, :amount, :paid, :filespec, :doctor_id )
   end
 
   def sort_column

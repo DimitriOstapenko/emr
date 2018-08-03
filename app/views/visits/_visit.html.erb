@@ -4,7 +4,7 @@
   <td><%= visit.doctor.lname %></td>
   <td><%= visit.diag_scode %></td>
   <td><%= visit.proc_codes %></td>
-  <td><%= VISIT_STATUSES.invert[visit.status] %></td>
-  <td><%= visit.export_file %></td>
+  <td><%= visit.status_str %></td>
+  <td><%= visit.billing_ref %></td>
 </tr>
 

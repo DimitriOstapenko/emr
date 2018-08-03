@@ -9,8 +9,10 @@ class PaystubsController < ApplicationController
  def index
     @paystubs = Paystub.paginate(page: params[:page])
     (@latest_ra_file,@latest_pay_date) = Claim.order(date_paid: :desc).limit(1).pluck('ra_file,date_paid').first
-    paystub_year_month = Paystub.order(:year, :month).limit(1).pluck('year,month').first.join rescue 0
-    @can_generate_new_paystubs = @latest_pay_date.strftime('%Y%m').to_i > paystub_year_month.to_i
+    (year,month) = Paystub.order(:year, :month).limit(1).pluck('year,month').first rescue nil
+    paystub_date = Date.new(year,month) rescue  Date.today - 1.month
+    paystub_year_month = paystub_date.strftime('%Y%m').to_i rescue 0
+    @can_generate_new_paystubs = @latest_pay_date.strftime('%Y%m').to_i > paystub_year_month
     suff = @can_generate_new_paystubs ? 'Can generate new paystubs': 'Cannot generate new paystubs - already up to date'
 
     flash.now[:info] = "Latest processed RA file: #{@latest_ra_file}; Payment issued #{@latest_pay_date} " + suff
@@ -91,7 +93,7 @@ class PaystubsController < ApplicationController
 
       pdf.render_file @paystub.filespec
       send_data pdf.render,
-	  filename: "paystub_#{name}",
+	  filename: @paystub.filename,
           type: 'application/pdf',
           disposition: :attachment
   end

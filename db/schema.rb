@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180728141800) do
+ActiveRecord::Schema.define(version: 20180802205817) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 20180728141800) do
     t.date "date"
     t.boolean "paid"
     t.string "filespec"
+    t.integer "doctor_id"
   end
 
   create_table "patients", force: :cascade do |t|
@@ -211,6 +212,7 @@ ActiveRecord::Schema.define(version: 20180728141800) do
     t.string "allergies"
     t.string "medications"
     t.string "maid_name"
+    t.string "ifh_number"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"
@@ -403,6 +405,7 @@ ActiveRecord::Schema.define(version: 20180728141800) do
     t.string "export_file"
     t.decimal "amount", precision: 8, scale: 2
     t.integer "claim_id"
+    t.string "billing_ref"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end

@@ -17,6 +17,8 @@ class Patient < ApplicationRecord
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, presence:true, 
 		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || (a.hin_prov != 'ON' &&  a.pat_type == 'R')}
+	validates :ifh_number,  length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, presence:true, 
+		  if: Proc.new { |a| (a.pat_type == 'I')}
 	validates :ohip_ver, length: { maximum: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
 #        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }

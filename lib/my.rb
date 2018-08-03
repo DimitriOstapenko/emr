@@ -345,10 +345,17 @@ module My
     pdf.text 'Invoice for Professional Services', size: 14, :align => :center
     
     pdf.text CLINIC_NAME, align: :center
+    if inv.doctor.present?
+       pdf.text "Dr. #{inv.doctor.full_name}",  size: 12, :align => :center
+    end   
     pdf.text CLINIC_ADDR, align: :center
 
-    pdf.draw_text "Invoice: #{inv_no}", at: [170.mm,243.mm], style: :bold
-    pdf.draw_text "NOTES: Please make payable to #{CLINIC_NAME}", at: [5.mm,132.mm]
+    pdf.draw_text "Invoice: #{inv_no}", at: [172.mm,243.mm], style: :bold
+    if inv.doctor.present?
+      pdf.draw_text "NOTES: Please make payable to Dr. #{inv.doctor.full_name}", at: [5.mm,132.mm], style: :italic
+    else
+      pdf.draw_text "NOTES: Please make payable to #{CLINIC_NAME}", at: [5.mm,132.mm], style: :italic
+    end
 
     pdf.stroke do
 	    pdf.line_width=0.2.mm
@@ -408,7 +415,7 @@ module My
     pdf.draw_text "Amount Paid: $", at: [140.mm, 11.mm]
     pdf.stroke { pdf.horizontal_line 170.mm,195.mm, :at => 11.mm }
 
-    pdf.draw_text "Please make cheque payable to: #{CLINIC_NAME}", at: [25.mm, 1.mm], style: :italic
+#    pdf.draw_text "Please make cheque payable to: #{CLINIC_NAME}", at: [25.mm, 1.mm], style: :italic
 
     return pdf
 
@@ -522,14 +529,14 @@ module My
     visits.all.each do |v|
       pat = Patient.find(v.patient_id)
       next unless v.fee > 0
-      status = v.export_file.present? ? v.export_file : v.status_str
+      status = v.billing_ref.present? ? v.billing_ref : v.status_str
       rows += [[ v.entry_ts.strftime("%d/%m/%Y"), pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, status, v.id ]]
       @totals[v.bil_type] += v.fee if v.bil_type
       @servcounts[v.bil_type] += 1 if v.bil_type
       serv = v.services
       serv.shift
       serv.each do |s|
-	rows += [[ '','','', '', s[:pcode], BILLING_TYPES.invert[s[:btype]].to_s, s[:fee], v.diag_scode, v.export_file, pat.id ]]
+	rows += [[ '','','', '', s[:pcode], BILLING_TYPES.invert[s[:btype]].to_s, s[:fee], v.diag_scode, v.billing_ref, pat.id ]]
 	@totals[s[:btype]] += s[:fee] if s[:btype]
         @servcounts[s[:btype]] += 1 if s[:btype]
       end

@@ -3,11 +3,11 @@
 	<td><%= patient.sex %></td> 
 	<td><%= patient.age_str %></td>
 	<td><%= patient.pat_type %> </td>
+	<td><%= patient.last_visit_date %> </td> 
+	<td><%= patient.visits.count rescue 0 %> </td>
 	<td><%= "#{patient.ohip_num} #{patient.ohip_ver}" %> </td>
 	<td><%= patient.hin_expiry %> </td>
 	<td><%= patient.dob %> </td>
-	<td><%= patient.last_visit_date %> </td> 
-	<td><%= patient.visits.count rescue 0 %> </td>
 	<td><%= num_to_phone(patient.phone) %> </td> 
 	<td>
 	<% if patient.chart_file.present? %>

@@ -31,9 +31,14 @@
 </div>
 
 <div class='row'>
-  <div class="col-sm-4" id="maiden_name">
+  <div class="col-sm-4" id="maiden_name", style="display:none;">
   <%= f.label :'Maiden Name' %>
   <%= f.text_field :maid_name %>
+  </div>
+  
+  <div class="col-sm-2" id="ifh_number", style="display:none;">
+  <%= f.label :'IFH Number' %>
+  <%= f.text_field :ifh_number %>
   </div>
 </div>
 
@@ -162,15 +167,22 @@
 
 <script>
 $(document).ready(function () {
-   var sex = $('#edit_patient_<%= @patient.id %> select[name="patient[sex]"]');
-   if (sex.val() == null) {
-      sex = $('#new_patient select[name="patient[sex]"]');
-   }
-
+// Show maiden name text field for female patients 
+   var sex = $('select[name="patient[sex]"]');
+	
    (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
    sex.change(function () {
      (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
    });
+
+// Show IFH number text field for IFH patients
+   var pat_type = $('select[name="patient[pat_type]"]');	
+	
+   (pat_type.val() == 'I') ? $('#ifh_number').show() : $('#ifh_number').hide();
+   pat_type.change(function () {
+     (pat_type.val() == 'I') ? $('#ifh_number').show() : $('#ifh_number').hide();
+   });
+   	
 });
 </script>
 
