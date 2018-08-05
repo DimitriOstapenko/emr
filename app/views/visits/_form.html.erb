@@ -1,8 +1,10 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
-  
-  <% doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) %>
-  <% @procedures = get_active_procedures %>
+  <% 
+   doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) 
+   @procedures = get_active_procedures 
+   @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
+  %> 
 
   <% if current_user.admin? 
         disabled = []
@@ -238,34 +240,6 @@ $(pc4).change(function () {
   }
 });
 
-var bt = document.getElementById('visit_bil_type');
-var st = document.getElementById('visit_statuses').getElementsByTagName("option");
-$(bt).change(function() {
-   if ($(this).val() > 3) {	
-	   st[2].disabled = true;
-	   st[3].disabled = false;
-	   st[4].disabled = false;
-   } else {
-	   st[2].disabled = false;
-	   st[3].disabled = true;
-	   st[4].disabled = true;
-   }
-});
-
-var bt2 = document.getElementById('visit_bil_type2');
-var st = document.getElementById('visit_statuses').getElementsByTagName("option");
-$(bt2).change(function() {
-   if ($(this).val() > 3) {	
-	   st[2].disabled = true;
-	   st[3].disabled = false;
-	   st[4].disabled = false;
-   } else {
-	   st[2].disabled = false;
-	   st[3].disabled = true;
-	   st[4].disabled = true;
-   }
-});
-
 function get_bil_type ( code, suff ) {
 	var request = "/procedures/get_by_code?code=" + code;
 	var aj = $.ajax({
@@ -273,14 +247,14 @@ function get_bil_type ( code, suff ) {
         type: 'get',
         data: $(this).serialize()
     }).done(function (data) {
-	select_statuses(data);
-        select_btype(data, suff);
+	select_statuses(data, suff);
+        set_btype(data, suff);
     }).fail(function (data) {
         console.log('AJAX request has FAILED');
     });
 }
 
-function select_btype( proc, suff ) {
+function set_btype( proc, suff ) {
   var v = document.getElementById('visit_bil_type'+suff);
   var v2 = document.getElementById('my_bil_type'+suff);
   if ( proc.ptype == '1') {
@@ -294,26 +268,18 @@ function select_btype( proc, suff ) {
   }
 }
 
-function select_statuses( proc ) {
-  var bt = document.getElementById('visit_bil_type');
-  var bt2 = document.getElementById('visit_bil_type2');
+function select_statuses( proc, suff ) {
   var v = document.getElementById('visit_statuses').getElementsByTagName("option");
-  if (bt2.value === '') {
-     if (proc.ptype == '1') {
-        v[2].disabled = false;
-        v[3].disabled = true;
-        v[4].disabled = true;
+  var insured = <%= @insured %>;
+  if (proc.ptype == '2' && suff.length === 0  && insured) {
+        v[2].disabled = true;  // READY
+        v[3].disabled = false;
+        v[4].disabled = false;
      }else{
         v[2].disabled = false;
         v[3].disabled = true;
-        v[4].disabled = false;
+        v[4].disabled = true;
      }
-  } else {
-        v[2].disabled = false;
-	v[3].disabled = true;
-	v[4].disabled= true;
-  }
 }
-
 
 </script>

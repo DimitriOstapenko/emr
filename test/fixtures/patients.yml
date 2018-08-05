@@ -8,7 +8,7 @@ one:
   ohip_num: 1234567890 
   dob: 2001-01-07
   phone: 9052228888 
-  ohip_ver: PNA
+  ohip_ver: PA
 
 two:
   id: 52187
@@ -18,4 +18,4 @@ two:
   ohip_num: 0987654321 
   dob: 1959-05-21
   phone: 9052223242
-  ohip_ver: PNB
+  ohip_ver: PN
