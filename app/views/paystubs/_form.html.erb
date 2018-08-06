@@ -10,7 +10,7 @@
 </div >
 <div class="col-sm-2" >
   <%= f.label "Monthly Premium Payment" %>
-  <%= f.number_field :monthly_premium_amt, value:0 %>
+  <%= f.number_field :monthly_premium_amt, value:0, step: :any %>
 </div>
 </div>
 
@@ -18,12 +18,12 @@
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label :IFH_payment %>
-  <%= f.number_field :ifh_amt, value: 0%>
+  <%= f.number_field :ifh_amt, value:0,  step: :any %>
 </div>
 
 <div class="col-sm-2" >
   <%= f.label :CASH_payment %>
-  <%= f.number_field :cash_amt, value: 0%>
+  <%= f.number_field :cash_amt, value: 0, step: :any %>
 </div>
 </div>
 
@@ -31,12 +31,12 @@
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label :WCB_payment %>
-  <%= f.number_field :wcb_amt, value: 0%>
+  <%= f.number_field :wcb_amt, value: 0, step: :any %>
 </div>
 
 <div class="col-sm-2" >
   <%= f.label :HC_Deposit %>
-  <%= f.number_field :hc_dep_amt, value: 0 %>
+  <%= f.number_field :hc_dep_amt, value: 0, step: :any  %>
 </div>
 </div>
 
