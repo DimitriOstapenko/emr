@@ -78,7 +78,7 @@ class ReportsController < ApplicationController
    @report = Report.find( params[:id] )
 
    send_file @report.filespec,
-	     filename: @report.filespec,
+	     filename: @report.filename,
              type: "application/pdf",
              disposition: :attachment
   end

@@ -1,7 +1,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 57445
+  id: 1
   lname: Murphy
   fname: Anibal
   sex: M
@@ -9,13 +9,53 @@ one:
   dob: 2001-01-07
   phone: 9052228888 
   ohip_ver: PA
+  pat_type: 'O'
 
 two:
-  id: 52187
+  id: 2
+  lname: Aniston 
+  fname: Jen
+  sex: F
+  ohip_num: 0987654121
+  dob: 1959-05-21
+  phone: 9052223242
+  ohip_ver: PR
+  pat_type: 'R'
+
+
+three:
+  id: 3 
+  lname: McGregor 
+  fname: Evan
+  sex: M
+  ohip_num: 3987654321 
+  dob: 1959-05-21
+  phone: 9052223242
+  ohip_ver: PQ
+  pat_type: 'W'
+
+four:
+  id: 4 
   lname: Koch 
   fname: Else
   sex: F
-  ohip_num: 0987654321 
+  ohip_num: 1987654321 
   dob: 1959-05-21
   phone: 9052223242
-  ohip_ver: PN
+  ohip_ver: PS
+  pat_type: 'S'
+
+five:
+  id: 5 
+  lname: Bach 
+  fname: Ellis
+  sex: F
+  ifs_number: 9987654321  
+  dob: 1959-05-21
+  phone: 9052223242
+  ohip_ver: PX
+  pat_type: 'I'
+
+
+
+

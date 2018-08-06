@@ -9,7 +9,13 @@
 	<td><%= visit.doctor.lname %></td>
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= pat.pat_type %></td>
-	<td><%= pat.ohip_num_full %></td>
+	<td>
+	<% if pat.pat_type == IFH_PATIENT %>
+		<b><%= pat.ifh_number %></b>
+        <% else %>
+	   <%= pat.ohip_num_full %>
+        <% end %>
+	</td>
 	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.all_btypes_str.join',' %></td>

@@ -518,10 +518,9 @@ module My
 
     pdf.font "Courier"
     pdf.font_size 8
-#    @servcounts =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
-#    @totals =  {1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0 }
     @totals = {}
     @servcounts = {}
+    @total_hcp_claims = 0
     (1..7).map{|key| @totals[key] = 0}
     (1..7).map{|key| @servcounts[key] = 0}
 
@@ -529,6 +528,7 @@ module My
     visits.all.each do |v|
       pat = Patient.find(v.patient_id)
       next unless v.fee > 0
+      @total_hcp_claims += 1 if v.hcp_services?
       status = v.billing_ref.present? ? v.billing_ref : v.status_str
       rows += [[ v.entry_ts.strftime("%d/%m/%Y"), pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, status, v.id ]]
       @totals[v.bil_type] += v.fee if v.bil_type
@@ -556,7 +556,7 @@ module My
       
       pdf.move_down 10.mm
       pdf.span(190.mm, :position => :center) do
-        pdf.text "Total Claims: #{visits.count}", size: 9
+        pdf.text "Total Claims: #{@total_hcp_claims}", size: 9
         totals = [[ '', "HCP", "RMB", "INVOICE", "CASH", "WCB", "PRV", 'IFH', "Total" ]]
         @fees = @totals.values
         @fees.push(@fees.sum)

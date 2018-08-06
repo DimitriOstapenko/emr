@@ -12,22 +12,25 @@ class BillingsController < ApplicationController
       
         store_location
 
-# This day doctors/visits key: doc_id; value: number of visits      
-      if @date.blank? 
-	 @visits = Visit.where("status=? OR status=? OR (status=? AND date(entry_ts)=?)", READY, ERROR, PAID, Date.today)
-	 flashmsg = "#{@visits.count}  #{'visit'.pluralize(@visits.count)}," 
-      else # Date given - check doctor filter
-         @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
-         @docs = Doctor.find(@docs_visits.keys) rescue []
-         if params[:doc_id]
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=?) ", @date, READY, BILLED, PAID).where(doc_id: params[:doc_id])
-	   d = Doctor.find(params[:doc_id])
-	   doctor = "Dr. #{d.lname}" if d.present?
-	 else
-           @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=? OR status=? ) ", @date, READY, BILLED, PAID)
-	 end
-	 flashmsg = "Billings for #{doctor} : #{@visits.count} visits, " 
+      if @date.present?
+        @visits = Visit.where("date(entry_ts) = ?", @date).where(status: [READY,BILLED,PAID])
+      else
+        @visits = Visit.where(status: READY )
+        @date = Date.today
       end
+
+      @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
+      @docs = Doctor.find(@docs_visits.keys) rescue []
+
+      if params[:doc_id]
+         @visits = @visits.where(doc_id: params[:doc_id])
+         d = Doctor.find(params[:doc_id])
+         doctor = "Dr. #{d.lname}" if d.present?
+	 flashmsg = "Billings for #{doctor} : #{@visits.count} visits, " 
+      else
+	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)}," 
+      end
+
 
       @visits.map{|v| @totalfee += v.total_fee}
       @visits.map{|v| @totalcash += v.total_cash}
@@ -36,7 +39,7 @@ class BillingsController < ApplicationController
 
       if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} services. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
+	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} #{'service'.pluralize(@total_insured_services)}. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
 	 render 'index'
       else
 	 if @date.present?
@@ -44,7 +47,6 @@ class BillingsController < ApplicationController
 	 else 
 	    flash.now[:info] = "No ready to bill or cash services found for today"
 	 end
-
 	 render  inline: '', layout: true
       end
   end

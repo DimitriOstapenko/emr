@@ -13,6 +13,7 @@ class Patient < ApplicationRecord
 	before_validation { postal.tr!(' -','') rescue '' }
 	before_validation { ohip_ver.strip! rescue '' }
 
+	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, presence:true, 

@@ -11,7 +11,7 @@
       <tr>
 	  <th class="tbl_lsm"><%= sortable 'entry_ts', 'Date/Time' %></th>
 	  <th class="tbl_md">
-	  <% if @docs.size > 1 %>
+	  <% if @docs.present? && @docs.size > 1 %>
           <span class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white"> Doctor <b class="caret"></b></font> </a>
             <ul class="dropdown-menu">
@@ -28,7 +28,7 @@
 
           <th class="tbl_lmd">Patient</th>
           <th class="tbl_sm">Type</th>
-          <th class="tbl_md">Health #</th>
+          <th class="tbl_md">HC/IFH #</th>
           <th class="tbl_lsm">Diagnosis</th>
           <th class="tbl_md">Services</th>
           <th class="tbl_sm">B.Types</th>

@@ -6,7 +6,7 @@ class ClaimsController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
   def index
-      @claims = Claim.paginate(page: params[:page])
+      @claims = Claim.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
       flash.now[:info] = "Showing All Claims (#{@claims.count}) "
   end
 
@@ -53,7 +53,7 @@ private
   end
 
   def sort_column
-      Claim.column_names.include?(params[:sort]) ? params[:sort] : "date"
+      Claim.column_names.include?(params[:sort]) ? params[:sort] : "claim_no"
   end
 
   def sort_direction
