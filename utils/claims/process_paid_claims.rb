@@ -15,7 +15,8 @@
 require_relative '../../config/environment'
 
 @sdate = ARGV[0].to_date rescue Date.today - 2.months
-@edate = Service.order(svc_date: :desc).limit(1).pluck(:svc_date).first
+@edate = Service.order(svc_date: :desc).limit(1).pluck(:svc_date).first rescue Date.today
+@edate = @edate.next_day
 
 puts "Scanning claims in #{@sdate}..#{@edate} date range"
 puts "..Looking for missing acc_refs and no match in claims table. Will issue alert in both cases " 
