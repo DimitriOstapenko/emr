@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180802205817) do
+ActiveRecord::Schema.define(version: 20180807005823) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -321,12 +321,13 @@ ActiveRecord::Schema.define(version: 20180802205817) do
   create_table "reports", force: :cascade do |t|
     t.string "name"
     t.integer "doc_id"
-    t.integer "rtype"
+    t.string "rtype"
     t.string "filename"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "sdate"
     t.date "edate"
+    t.integer "timeframe"
   end
 
   create_table "services", force: :cascade do |t|

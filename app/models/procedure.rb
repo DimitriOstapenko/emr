@@ -16,6 +16,9 @@ class Procedure < ApplicationRecord
 	validates :percent, numericality: true, allow_blank: true 
 #	validates :eff_date, allow_nil: true
 #	validates :term_date, allow_nil: true
+
+	before_validation { code.upcase! rescue nil }
+	before_validation { code.strip! rescue nil }
 	
 	before_save { self.prov_fee = (cost*100).to_i  }
 #	before_save { self.ass_fee = (ass_fee*100).to_i  }

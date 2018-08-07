@@ -4,11 +4,12 @@
  	<% else %>
           <td><%= link_to report.id, show_pdf_report_path(report), target: 'Form' %> </td>
   	<% end %>
+	<td><%= REPORT_TYPES.invert[report.rtype] %></td>
 	<td><%= report.doctor.lname rescue 'All' %> </td> 
-	<td><%= REPORT_TYPES.invert[report.rtype] %></td> 
+	<td><%= REPORT_TFRAMES.invert[report.timeframe] %></td> 
 	<td><%= report.sdate %></td>
 	<td>
-	<% if report.rtype > 1 %>
+	<% if report.timeframe.present? && report.timeframe > DAILY_REPORT %>
 	<%= report.edate %>
 	<% end %>
 	</td>

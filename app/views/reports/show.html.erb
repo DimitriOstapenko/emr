@@ -5,10 +5,10 @@
 	   <pre>
 	      Report: <b><%= @report.name %> </b>
 
-	      Type:       <%= REPORT_TYPES.invert[@report.rtype] %>
+	      Type:       <%= REPORT_TFRAMES.invert[@report.timeframe] %>
 	      Doctor:     <%= @report.doctor.lname rescue 'All Active'%>
 	      Date:	  <%= @report.sdate %>
-              <% if @report.rtype > 1 %>
+              <% if @report.timeframe > DAILY_REPORT %>
 	      End Date:   <%= @report.edate %>
 	      <% end %>
 	      Total claims:     <%= @visits.count %>
