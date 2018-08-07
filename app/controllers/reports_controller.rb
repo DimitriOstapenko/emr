@@ -35,9 +35,10 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
     year = params[:date][:year]
     month  = params[:date][:month]
-    prefix = @report.doc_id || 'all'
+    prefix = @report.rtype + '_'
+    prefix += @report.doc_id.to_s || 'all'
 
-    case @report.rtype
+    case @report.timeframe
        	when 1   # date
 		 @report.sdate = @report.sdate.to_date rescue Date.today 
 		 @report.edate = @report.sdate.to_date + 24.hours 
@@ -53,20 +54,25 @@ class ReportsController < ApplicationController
 	when 5   # all time
 	  	 @report.sdate = Date.new(1950,01,01)
 	  	 @report.edate = @report.sdate + 100.years
+	when 6   # Billing cycle - payment report
+		 @report.sdate = Date.new(year.to_i,month.to_i) rescue Date.new(Time.now.year,Time.now.month)
+		 @report.edate = 1.month.since(@report.sdate)
 	else     # invalid
-   	 	 flash.now[:danger] = "Invalid report type: #[@report.rtype]"
+   	 	 flash.now[:danger] = "Invalid report timeframe: #[@report.timeframe]"
 	end
     
-    @report.name = "#{prefix}_#{Time.now.to_i}_#{@report.rtype}"
+    @report.name = "#{prefix}_#{Time.now.to_i}_#{@report.timeframe}"
     @report.filename = @report.name+'.pdf'
     if @report.save
        flash.now[:success] = "Report created : #{@report.name.inspect}"
        redirect_to export_report_path(@report)
+#       redirect_to reports_path
     else
+       flash[:danger] = "Error saving report file" + expfile.errors.full_messages.join(',')
        render 'new'
     end
   end
-  
+
   def show
     @report = Report.find(params[:id]) 
     redirect_to reports_path unless @report
@@ -86,13 +92,20 @@ class ReportsController < ApplicationController
 # Generate PDF version of the report, save in reports directory
   def export
     @report = Report.find(params[:id])
-    @visits, @total,@insured,@uninsured = get_visits( @report )
-    pdf = build_report( @report,@visits )
-    @report.update_attribute(:filename, @report.name+'.pdf')
+    if @report.rtype == SC_REPORT      # Submitted Claims Report
+       @visits, @total, @insured, @uninsured = get_visits( @report )
+       pdf = build_sc_report( @report, @visits )
+    elsif @report.rtype == PC_REPORT   # Paid Claims Report
+       prov_no = @report.doctor.provider_no rescue 0
+       @claims = Claim.joins(:services).where(provider_no: prov_no).where(date_paid: (@report.sdate..@report.edate)).reorder('').group('claims.claim_no').order('services.svc_date')  
+#       @claims = Claim.where(provider_no: prov_no).where(date_paid: (@report.sdate..@report.edate)) 
+       pdf = build_pc_report( @report, @claims )
+    end
 
+#      @report.update_attribute(:filename, @report.name+'.pdf')
     pdf.render_file @report.filespec
     send_data pdf.render,
-          filename: @report.filespec,
+          filename: @report.filename,
           type: 'application/pdf',
           disposition: :attachment
   end
@@ -110,7 +123,7 @@ class ReportsController < ApplicationController
 
 private
   def report_params
-     params.require(:report).permit(:doc_id, :name, :rtype, :filespec, :sdate, :edate, :filename )
+     params.require(:report).permit(:doc_id, :name, :rtype, :filespec, :sdate, :edate, :filename, :timeframe )
   end
 
   # Find report(s) by name or type, depending on input format
@@ -139,7 +152,10 @@ private
     end
     uninsured = total - insured
     return [visits, total, insured, uninsured]
+     
   end
+
+
 
   def sort_column
           Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"

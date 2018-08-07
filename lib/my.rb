@@ -502,16 +502,16 @@ module My
   end
 
 # Generate doctor's billing report
-  def build_report( report, visits )
+  def build_sc_report( report, visits )
     @doc = Doctor.find(report.doc_id)
     sdate = report.sdate.strftime("%d %b %Y")
     edate = report.edate.strftime("%d %b %Y")
-    date_range = report.rtype == 1 ? sdate : "#{sdate} - #{edate}" 
+    date_range = report.timeframe == DAILY_REPORT ? sdate : "#{sdate} - #{edate}" 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,20.mm,10.mm])
 
     pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
     pdf.move_down 5.mm
-    pdf.text "#{REPORT_TYPES.invert[report.rtype]} Billing Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
+    pdf.text "#{REPORT_TFRAMES.invert[report.timeframe]} Billing Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
     pdf.text "For services performed:  #{date_range}", align: :center, size: 12, style: :bold
     pdf.text "(Sorted by visit time, last to first)", align: :center, size: 10
     pdf.move_down 5.mm
@@ -572,6 +572,77 @@ module My
         end
       end
     return pdf
+  end
+
+# Generate paid claims report  
+  def build_pc_report ( report, claims)
+    @doc = report.doctor
+    sdate = report.sdate.strftime("%d %b %Y")
+    edate = report.edate.strftime("%d %b %Y")
+    date_range = "#{sdate} - #{edate}"	  
+    date_range = sdate if report.timeframe == DAILY_REPORT 
+    date_range = report.sdate.strftime("%B %Y") if report.timeframe == BCYCLE_REPORT 
+
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [8.mm,8.mm,15.mm,18.mm]) # Top, Right, bottom, Left
+    pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
+
+    pdf.move_down 5.mm
+    pdf.text "#{REPORT_TFRAMES.invert[report.timeframe]} Paid Claims Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
+    pdf.text "For services paid for by MHO in  #{date_range}", align: :center, size: 12, style: :bold
+    pdf.text "(Sorted by service date, ascending)", align: :center, size: 10
+    pdf.move_down 5.mm
+
+    pdf.font "Courier"
+    pdf.font_size 8
+    @total_hcp_claims = 0
+    @total_subm = {'HCP' => 0, 'RMB' => 0, 'WCB' => 0 }
+    @total_paid = {'HCP' => 0, 'RMB' => 0, 'WCB' => 0 }
+    @servcounts = {'HCP' => 0, 'RMB' => 0, 'WCB' => 0 }
+
+    rows =  [[ "Svc Date", "OHIP#", "Type", "Svcs", "Subm", "Paid", "Claim#", "Acct#", "Visit"]]
+    claims.all.each do |cl|
+	    rows += [[ cl.date, "#{cl.ohip_num} #{cl.ohip_ver}", cl.pmt_pgm, cl.svcs, sprintf("$%.2f",cl.damt_subm), sprintf("$%.2f",cl.damt_paid), cl.claim_no, cl.accounting_no, cl.visit_id ]]
+      @total_hcp_claims += 1 
+      @total_subm[cl.pmt_pgm] += cl.damt_subm
+      @total_paid[cl.pmt_pgm] += cl.damt_paid
+      @servcounts[cl.pmt_pgm] += cl.svcs
+    end
+
+    pdf.table rows do |t|
+        t.cells.border_width = 0 
+	t.column_widths = [25.mm, 28.mm, 10.mm, 10.mm, 20.mm, 20.mm, 22.mm, 22.mm, 22.mm ]
+        t.header = true 
+        t.row(0).font_style = :bold
+        t.position = 5.mm
+	t.cells.padding = 3
+	t.cells.style do |c|
+ 	  c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+        end
+    end
+      
+    pdf.move_down 10.mm
+    pdf.span(190.mm, :position => :center) do
+      pdf.text "Total Claims: #{@total_hcp_claims}", size: 9
+      totals = [[ '', "HCP", "RMB", "WCB", "Total" ]]
+      @submitted = @total_subm.values
+      @submitted.push(@submitted.sum)
+      totals += [ @submitted.map{|s| sprintf("$%-8.2f",s)}.unshift('Submitted') ]
+      @paid = @total_paid.values
+      @paid.push(@paid.sum)
+      totals += [ @paid.map{|p| sprintf("$%-8.2f",p)}.unshift('Paid') ]
+      @services = @servcounts.values
+      @services.push(@services.sum)
+      totals += [ @services.unshift('Services') ]
+      pdf.table totals do |t|
+        t.cells.border_width = 1
+        t.column_widths = 20.mm 
+        t.header = true
+        t.row(0).font_style = :bold
+      end
+    end
+
+    return pdf
+
   end
 
 # Generate doctor's monthly Pay Stub based on claims paid by MOH

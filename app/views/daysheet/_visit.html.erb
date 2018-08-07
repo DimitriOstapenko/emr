@@ -26,7 +26,7 @@
 	  <%= visit.status_str %>
 	<% end %>
 	</td>
-	<% if visit.was_today? || current_user.admin? %>
+	<% if @date == Date.today || @date.blank? || current_user.admin? %>
 	  <td> <%= link_to "Label", label_patient_path(pat), method: 'get', target: "Label" %> </td>
 	  <td> <%= link_to "Form", visitform_patient_visit_path(pat,visit), method: 'get', target: "Form" %> </td>
 	  <td> <%= link_to "Edit",  edit_patient_visit_path(pat,visit) %> </td>

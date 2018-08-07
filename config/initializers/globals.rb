@@ -52,19 +52,25 @@ PROC_TYPES = {HCP: 1, '3RD': 2}.freeze
 CABMDURL = 'https://api.cab.md/claims?apiKey=e679b103-f74d-4b2d-bb60-5f05ad4f9de1'
 BILLING_FORMAT='CABMD'.freeze  # CSV/EDT/CABMD
 BILLING_TYPES = {HCP: 1, RMB: 2, WCB: 3, CSH: 4, PRV: 6, IFH: 7, DEC: 0}.freeze
-HCP_BILLING = BILLING_TYPES[:HCP]
-RMB_BILLING = BILLING_TYPES[:RMB]
-CASH_BILLING = BILLING_TYPES[:CSH]
-WCB_BILLING = BILLING_TYPES[:WCB]
-PRV_BILLING = BILLING_TYPES[:PRV]
-IFH_BILLING = BILLING_TYPES[:IFH]
+HCP_BILLING = BILLING_TYPES[:HCP].freeze
+RMB_BILLING = BILLING_TYPES[:RMB].freeze
+CASH_BILLING = BILLING_TYPES[:CSH].freeze
+WCB_BILLING = BILLING_TYPES[:WCB].freeze
+PRV_BILLING = BILLING_TYPES[:PRV].freeze
+IFH_BILLING = BILLING_TYPES[:IFH].freeze
 
 # Reports
 REPORTS_PATH = Rails.root.join('reports').freeze
-REPORT_TYPES = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'All Time': 5}.freeze
-DAILY = REPORT_TYPES[:Daily]
-MONTHLY = REPORT_TYPES[:Monthly]
-YEARLY = REPORT_TYPES[:Yearly]
+REPORT_TYPES = { 'Submitted Claims': 'SC', 'Paid Claims': 'PC' }.freeze
+SC_REPORT = REPORT_TYPES[:'Submitted Claims'].freeze
+PC_REPORT = REPORT_TYPES[:'Paid Claims'].freeze
+
+REPORT_TFRAMES = {Daily: 1, Monthly: 2, Yearly: 3, 'Date Range': 4, 'Billing Cycle': 6}.freeze
+DAILY_REPORT = REPORT_TFRAMES[:Daily].freeze
+MONTHLY_REPORT = REPORT_TFRAMES[:Monthly].freeze
+YEARLY_REPORT = REPORT_TFRAMES[:Yearly].freeze
+DRANGE_REPORT = REPORT_TFRAMES[:'Date Range'].freeze
+BCYCLE_REPORT = REPORT_TFRAMES[:'Billing Cycle'].freeze
 
 # Charts
 CHARTS_PATH = Rails.root.join('charts').freeze

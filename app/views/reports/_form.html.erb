@@ -1,8 +1,15 @@
 <%= form_for @report do |f| %>
 		
 <% doc_id = current_doctor.id if current_doctor %>
-  <%= render 'shared/error_messages', object: f.object %>
+<%= render 'shared/error_messages', object: f.object %>
 
+<% 
+        disabled = []
+        disabled = [DAILY_REPORT..DRANGE_REPORT] if @report.rtype = PC_REPORT   # Paid Claims
+%>
+
+  
+<!-- Row 1 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
   <%= f.label "Select Doctor" %>
@@ -10,47 +17,65 @@
 </div >
     
 <div class="col-sm-2" >
-  <%= f.label "Report type" %>
-  <%= f.select :rtype, REPORT_TYPES, prompt: 'Select Type', selected: @report.rtype || DAILY %>
+  <%= f.label "Report Type" %>
+  <%= f.select :rtype, REPORT_TYPES, prompt: 'Select Type', selected: SC_REPORT %>
+</div>
 </div>
 
-  <div class="col-sm-10"></div>
+<!-- Row 2 -->
+<div class="row">
+<div class="col-sm-2 col-sm-offset-4" >
+  <%= f.label "Timeframe" %>
+  <%= f.select :timeframe, REPORT_TFRAMES, prompt: 'Select Timeframe', selected: @report.timeframe || DAILY_REPORT, disabled: disabled %>
+</div>
+</div>
 
+<!-- Row 3 -->
+<div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="sdate" >
   <%= f.label "Select Date" %>
   <%= f.date_field :sdate, class: 'datepicker', value: Time.now.strftime('%Y-%m-%d') %>
 </div>
+</div>
 
-  <div class="col-sm-10"></div>
+<!-- Row 3 -->
+<div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="edate" style="display:none;">
   <%= f.label "To" %>
   <%= f.date_field :edate, class: 'datepicker' %>
 </div>
+</div>
 
-  <div class="col-sm-10"></div>
+<!-- Row 2 -->
+<div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="year" style="display:none;">
   <%= f.label "Year" %>
   <%= select_year Time.now, start_year: Time.now.year-10, end_year: Time.now.year %>
 </div>
+</div>
 
-  <div class="col-sm-10"></div>
+<!-- Row 3 -->
+<div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="month" style="display:none;">
   <%= f.label "Month" %>
   <%= select_month Time.now  %>
 </div>
+</div>
 
-  <div class="col-sm-10"></div>
+<!-- Row 4 -->
+<div class="row">
+  <div class='spacer-20'></div>
   <div class="col-sm-4 col-sm-offset-4">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
-
 </div>
+
 <% end %>
 
-<div class='spacer-10'></div>
 <!-- Row 5 -->
 <div class="row">
 <div class="col-sm-4 col-sm-offset-4">
+  <div class='spacer-10'></div>
   <%= button_to 'Back', reports_path, class: "btn btn-primary",  method: 'get' %>
 </div>
 </div>
@@ -58,8 +83,8 @@
 <script>
 $(document).ready(function () {
 
-    $('#new_report select[name="report[rtype]"]').change(function () {
-	switch ( $('#new_report select[name="report[rtype]"]').val() ) {
+    $('#new_report select[name="report[timeframe]"]').change(function () {
+	switch ( $('#new_report select[name="report[timeframe]"]').val() ) {
 		case "1":              	// Daily
 			$('#edate').hide();
 			$('#sdate').show();
@@ -73,26 +98,50 @@ $(document).ready(function () {
 			$('#month').show();
 			break;
 		case "3":		// Yearly
-    			$('#edate').hide();
 			$('#sdate').hide();
+    			$('#edate').hide();
 			$('#year').show();
 			$('#month').hide();
 			break;
 		case "4":		// Date Range
-		  	$('#edate').show();
 			$('#sdate').show();
+		  	$('#edate').show();
 			$('#year').hide();
 			$('#month').hide();
 			break;
-		case "5":		// All Time
-    			$('#edate').hide();
+		case "5":		// All Time (defunct)
     			$('#sdate').hide();
+    			$('#edate').hide();
 			$('#year').hide();
 			$('#month').hide();
 			break;
+		case "6":		// Billing Cycle
+    			$('#sdate').hide();
+    			$('#edate').hide();
+			$('#year').hide();
+			$('#month').show();
+			break;
+
 		}
 			
     });
+});
+	
+var rtype = document.getElementById("report_rtype");
+//  alert(rtype.value);
+$(rtype).change(function () {
+  var tframe = document.getElementById('report_timeframe').getElementsByTagName("option");
+  if (rtype.value == 'PC') {
+        tframe[0].disabled = true;
+        tframe[1].disabled = true;
+        tframe[2].disabled = true;
+        tframe[3].disabled = true;
+  } else {
+        tframe[0].disabled = false;
+        tframe[1].disabled = false;
+        tframe[2].disabled = false;
+        tframe[3].disabled = false;
+  }  
 });
 
 </script>
