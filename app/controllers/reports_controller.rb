@@ -83,10 +83,15 @@ class ReportsController < ApplicationController
   def show_pdf
    @report = Report.find( params[:id] )
 
-   send_file @report.filespec,
+   if File.exists?(@report.filespec)
+     send_file @report.filespec,
 	     filename: @report.filename,
              type: "application/pdf",
              disposition: :attachment
+   else
+     redirect_to reports_path
+#     flash.now[:danger] = "Error: File #{@report.filename} not found" 
+   end
   end
 
 # Generate PDF version of the report, save in reports directory
@@ -97,8 +102,8 @@ class ReportsController < ApplicationController
        pdf = build_sc_report( @report, @visits )
     elsif @report.rtype == PC_REPORT   # Paid Claims Report
        prov_no = @report.doctor.provider_no rescue 0
-       @claims = Claim.joins(:services).where(provider_no: prov_no).where(date_paid: (@report.sdate..@report.edate)).reorder('').group('claims.claim_no').order('services.svc_date')  
 #       @claims = Claim.where(provider_no: prov_no).where(date_paid: (@report.sdate..@report.edate)) 
+       @claims = Claim.joins(:services).where(provider_no: prov_no).where(date_paid: (@report.sdate..@report.edate)).reorder('').group('claims.id,services.svc_date').order('services.svc_date')
        pdf = build_pc_report( @report, @claims )
     end
 
