@@ -1,24 +1,29 @@
 <%= form_for [@patient, @visit]  do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
-  <% 
+
+<% 
    doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) 
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
-  %> 
 
-  <% if current_user.admin? 
-        disabled = []
+  if current_user.admin? 
+     disabled = []
+  elsif @visit.status == ERROR 
+     disabled = ( READY..CANCELLED ).to_a
+  elsif @visit.billing_ref.present?
+     disabled = [ARRIVED,ASSESSED,READY,CANCELLED]
   elsif @visit.hcp_proc_codes.present? 
-        disabled = [BILLED,PAID] 
+    if @insured
+       disabled = [BILLED,PAID]
+    else
+       disabled = [READY]
+    end
   elsif @visit.proc_codes.empty?
-        disabled = [READY,BILLED,PAID] 
-  else 
-	disabled = []
-  end %>
-
-  <% if @visit.status == ERROR && !current_user.admin? 
-	  disabled = [ READY, BILLED, PAID, CANCELLED]
-  end %>
+     disabled = [READY,BILLED,PAID] 
+  else
+     disabled = []
+  end 
+%>
 
   <!-- Row 0 if admin --> 
 
