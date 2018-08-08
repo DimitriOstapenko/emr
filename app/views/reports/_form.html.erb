@@ -132,12 +132,20 @@ $(rtype).change(function () {
   var rt = document.getElementById('report_timeframe');
   var tframe = document.getElementById('report_timeframe').getElementsByTagName("option");
   if (rtype.value == 'PC') {
+    	$('#sdate').hide();
+    	$('#edate').hide();
+	$('#year').hide();
+	$('#month').show();
 	$(rt).prop('selectedIndex',4);  
         tframe[0].disabled = true;
         tframe[1].disabled = true;
         tframe[2].disabled = true;
         tframe[3].disabled = true;
   } else {
+	$('#edate').hide();
+	$('#sdate').show();
+	$('#year').hide();
+	$('#month').hide();
 	$(rt).prop('selectedIndex',0);  
         tframe[0].disabled = false;
         tframe[1].disabled = false;
