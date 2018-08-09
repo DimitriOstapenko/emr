@@ -2,12 +2,10 @@
   <%= render 'shared/error_messages', object: f.object %>
 
   <pre>
-
                 Patient :   <%= @patient.full_name %>
                 Doctor :    <%= @visit.doctor.lname %>
                 Duration : <%= @visit.duration %>
                 Status: <%= @billing.status_str %>
-
   </pre>
 
   <%= f.label :Diagnosis, class: "col-md-4 control-label" %>

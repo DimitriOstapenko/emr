@@ -9,8 +9,12 @@
          <%end %>
 	<td><%= doctor.lname %> </td>
 	<td><%= link_to patient.full_name, patient %> </td>
-	<td><%= patient.ohip_num %></td>
-	<td><%= patient.ohip_ver %></td>
+	<td><%= patient.pat_type %></td>
+	<% if patient.pat_type == IFH_PATIENT %>
+	<td><b><%= patient.ifh_number %></b></td>
+	<% else %>
+	<td><%= patient.ohip_num_full %></td>
+	<% end %>	
 	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
 	<td><%= visit.total_insured_services %></td>
