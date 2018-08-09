@@ -8,7 +8,11 @@
 	   <pre class="pre-scrollable" >
 	<b>Name:</b> <%= @patient.full_name %> <b>Type:</b> <%= PATIENT_TYPES.invert[@patient.pat_type] %>
 	<b>DOB:</b> <%= @patient.dob %> : <%= @patient.age_str %>  <%= @patient.sex %>
+	<% if @patient.pat_type == IFH_PATIENT %>
+	<b>IFH #:</b> <%= @patient.ifh_number %> 
+	<% else %>
 	<b>Health Card:</b> <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) <b>Expires:</b> <%= @patient.hin_expiry %>
+	<% end %>
 	<b>Phone:</b> <%= num_to_phone(@patient.phone) %>  <b>Mobile:</b> <%= num_to_phone(@patient.mobile) %> <b>Email:</b> <%= mail_to @patient.email %>
 	<b>Address:</b> <%= @patient.addr %>
 		    <%= @patient.city %> <%= @patient.prov %> 
