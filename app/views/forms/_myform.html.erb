@@ -1,0 +1,58 @@
+<%= form_for @form do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+<!-- Row 1 -->
+<div class="row">
+  <div class="col-sm-2">
+	  <%= f.label :Name %>
+          <%= f.text_field :name %>
+  </div>
+  
+  <div class="col-sm-2">
+	  <%= f.label :'Form Type' %>
+          <%= f.select :ftype, FORM_TYPES %>
+  </div>
+  
+  <div class="col-sm-2">
+	  <%= f.label :Format %>
+          <%= f.select :format, FORM_FORMATS %>
+  </div>
+  
+  <div class="col-sm-2">
+	  <%= f.label :'Fillable?' %>
+          <%= f.check_box :fillable %>
+  </div>
+
+
+</div>
+
+
+<!-- Row 2 -->
+<div class="row">
+  <div class="col-sm-8">
+	  <%= f.label :Description %>
+          <%= f.text_field :descr %>
+  </div>
+</div>
+  
+<!-- Row 3 -->
+<div class="row">
+  <div class="col-sm-2">
+	  <%= f.label :'Effective Date' %>
+          <%= f.date_field :eff_date %>
+  </div>
+
+</div>
+
+ <!-- Row 5 -->
+
+<div class="row">
+    <div class="spacer-20"></div>
+    <div class="col-sm-8">
+    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+    </div>
+</div>
+
+<% end %>
+
+

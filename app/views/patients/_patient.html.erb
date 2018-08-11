@@ -5,7 +5,7 @@
 	<td><%= patient.pat_type %> </td>
 	<td><%= patient.last_visit_date %> </td> 
 	<td><%= patient.visits.count rescue 0 %> </td>
-	<td><%= "#{patient.ohip_num} #{patient.ohip_ver}" %> </td>
+	<td><%= patient.ohip_or_ifh_num_full %> </td>
 	<td><%= patient.hin_expiry %> </td>
 	<td><%= patient.dob %> </td>
 	<td><%= num_to_phone(patient.phone) %> </td> 

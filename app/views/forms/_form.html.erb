@@ -1,0 +1,16 @@
+     <tr>
+	<td><%= link_to form.id, form_path(form) %></td> 
+	<td><%= form.name %></td> 
+	<td><%= form.descr %></td> 
+	<td><%= form.ftype_str %></td> 
+	<td><%= form.filename %></td> 
+	<td><%= form.format_str %></td>
+	<td> <%= link_to "Edit",  edit_form_path(form) %> </td>
+	<td>
+	<% if current_user.admin?  %>
+		<%= link_to "delete", form, method: :delete, data: { confirm: "Are you sure you want to delete form ?" } %>
+        <% end %>
+	</td>
+     </tr>
+
+

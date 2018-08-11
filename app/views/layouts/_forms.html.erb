@@ -1,0 +1,11 @@
+<% menu_items = [LAB_FORM.to_s,WCB_FORM.to_s] %>
+<li class="dropdown nav-item <%= 'active' if menu_items.include?(params[:ftype]) %>">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+  Forms <b class="caret"></b>
+  </a>
+    <ul class="dropdown-menu">
+      <li> <%= link_to "All Forms", forms_path, method: :get %> </li>
+      <li> <%= link_to "WCB Forms", forms_path(ftype: WCB_FORM), method: :get %> </li>
+      <li> <%= link_to "Lab Forms", forms_path(ftype: LAB_FORM), method: :get %> </li>
+    </ul>
+</li>

@@ -8,7 +8,7 @@ xml.Claim do
   xml.diagnosticCode @visit.diag_scode
 
   xml.patient do
-	  xml.firstName @patient.fname
+	  xml.firstName @patient.fname 
 	  xml.lastName @patient.lname
 	  xml.gender @patient.full_sex
 	  xml.dateOfBirth @patient.dob.strftime("%Y-%m-%dT%H:%M:%S")

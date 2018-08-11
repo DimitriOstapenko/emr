@@ -3,13 +3,14 @@
 <table class="tbl table-hover" >
   <thead>
       <tr>
-	  <th><%= sortable 'code' %></th>
+	  <th><%= sortable 'code', 'Svc Code' %></th>
 	  <th><%= sortable 'ptype', :Type %></th>
 	  <th class="tbl_lg"> <%= sortable 'descr', :Description %> </th>
-	  <th>Prov. Fee</th>
+	  <th>Provider Fee</th>
 	  <th>Units</th>
-	  <th>Diag req?</th>
-	  <th>Eff Date</th>
+	  <th>Diag required?</th>
+	  <th>Ref. required?</th>
+	  <th>Eff. Date</th>
 	  <th><%= sortable 'active' %></th>
 	  <th></th>
       </tr>

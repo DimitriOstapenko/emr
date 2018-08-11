@@ -4,6 +4,9 @@ Rails.application.routes.draw do
 
   get '/ra_messages/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
   get 'ra_messages/index'
+  
+  get '/forms/index(/:id)' => 'forms#find', constraints: { query_string: /findstr/ }
+  get '/forms/index'
 
   get '/claims/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
   get '/claims/index' 
@@ -50,7 +53,8 @@ Rails.application.routes.draw do
   post '/billings/export_edt', to: 'billings#export_edt'
   post '/billings/export_cabmd', to: 'billings#export_cabmd'
   get "/procedures/get_by_code", to: "procedures#get_by_code" 
-
+  
+  
   resources :users
   resources :patients do
     get 'label', on: :member
@@ -68,7 +72,7 @@ Rails.application.routes.draw do
   end
   
   resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
-	    :drugs, :invoices, :vaccines, :daily_charts, :export_files, :edt_files
+	    :drugs, :invoices, :vaccines, :daily_charts, :export_files, :edt_files, :forms
 
   resources :claims do
     resources :services

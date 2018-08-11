@@ -1,0 +1,28 @@
+<% provide(:title, 'All Forms') %>
+
+<table class="tbl table-hover" >
+  <thead>
+      <tr>
+	  <th>Id</th>
+	  <th>Name</th>
+	  <th>Description</th>
+	  <th>Type</th>
+	  <th>File Name</th>
+	  <th>Format</th>
+	  <th></th>
+	<% if current_user.admin?  %>
+	  <th></th>
+        <% end %>  
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @forms %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @forms, class: "btn" %>
+<%= button_to "Add Form", new_form_path, class: "btn btn-primary col-md-12", :method => "get" %>
+</div>

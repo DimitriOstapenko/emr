@@ -37,6 +37,15 @@ class Patient < ApplicationRecord
   def ohip_num_full
     return ohip_ver.blank? ? ohip_num : [ohip_num, ohip_ver].join(' ')
   end
+  
+  def ohip_or_ifh_num_full
+    if pat_type == IFH_PATIENT	  
+      ifh_number	    
+    else	    
+      ohip_ver.blank? ? ohip_num : [ohip_num, ohip_ver].join(' ')
+    end
+  end
+
 
 # Formatted phone number
   def phonestr
