@@ -214,6 +214,7 @@ class BillingsController < ApplicationController
        next unless v.hcp_services?    
        @patient = Patient.find(v.patient_id)
        next unless @patient.ohip_num.present?
+       @patient.fname = @patient.full_sex unless @patient.fname.present?
        @doctor = Doctor.find(v.doc_id)
        @xml = render_to_string "/visits/show.xml"
 
@@ -237,7 +238,7 @@ class BillingsController < ApplicationController
 	  refid = @xmlhash['reference_id']
 	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
           @visit.update_attribute(:status, ERROR)
-	  @visit.update_attribute(:billing_ref, errors.join(','))
+	  @visit.update_attribute(:billing_ref, errors.join(',')) if errors.present?
        end
 
     end

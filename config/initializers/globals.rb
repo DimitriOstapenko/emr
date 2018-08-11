@@ -85,4 +85,12 @@ EDT_FILE_TYPES = {Claim: 1, Batch: 2, Remit: 3, Error: 4}.freeze
 # Pay Stubs:
 PAYSTUBS_PATH = Rails.root.join('paystubs').freeze
 
+# Forms
+FORMS_PATH = Rails.root.join('forms').freeze
+FORM_TYPES = { LAB: 1, WCB: 2 }.freeze
+LAB_FORM = FORM_TYPES[:LAB].freeze
+WCB_FORM = FORM_TYPES[:WCB].freeze
+FORM_FORMATS = { PDF: 1, HTML: 2 }.freeze
+PDF_FORM = FORM_FORMATS[:PDF].freeze
+
 

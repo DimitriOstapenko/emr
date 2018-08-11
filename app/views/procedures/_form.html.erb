@@ -15,12 +15,12 @@
 
   <div class="col-sm-2">
 	  <%= f.label :units %>
-	  <%= f.text_field :unit %>
+	  <%= f.text_field :unit, value: @procedure.unit || 1 %>
   </div>
 
   <div class="col-sm-2">
 	  <%= f.label :percent %>
-	  <%= f.text_field :percent %>
+	  <%= f.text_field :percent, value: @procedure.percent || 0 %>
   </div>
 </div>
 
@@ -40,17 +40,17 @@
           <%= f.text_field :cost %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-2" style="display:none;">
           <%= f.label 'Specialist Fee' %>
           <%= f.text_field :spec_fee %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-2" style="display:none;">
           <%= f.label 'Assistant Fee' %>
           <%= f.text_field :ass_fee %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-2" style="display:none;">
           <%= f.label 'Anesth Fee' %>
           <%= f.text_field :ana_fee %>
   </div>
@@ -68,7 +68,11 @@
           <%= f.label :'Term Date' %>
           <%= f.date_field :term_date %>
     </div>
+   
     <div class="col-sm-1">
+    </div>
+
+    <div class="col-sm-1" style="display:none;">
           <%= f.label :adm? %>
           <%= f.check_box :adm_req %>
     </div>

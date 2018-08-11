@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  descr: MyString
+  ftype: 1
+  filename: MyString
+  format: 1
+  eff_date: 2018-08-09
+  fillable: false
+
+two:
+  name: MyString
+  descr: MyString
+  ftype: 1
+  filename: MyString
+  format: 1
+  eff_date: 2018-08-09
+  fillable: false

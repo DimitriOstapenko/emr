@@ -69,6 +69,7 @@ class VisitsController < ApplicationController
 
        @visit = Visit.find(params[:id])
        @patient = Patient.find(@visit.patient_id)
+       @patient.fname = @patient.full_sex unless @patient.fname.present?
        @doctor = Doctor.find(@visit.doc_id)
        @xml = render_to_string "show.xml"
 
@@ -93,7 +94,7 @@ class VisitsController < ApplicationController
 	  messages = @xmlhash['messages']
 	  flash[:danger] = "Error sending claim : #{@xmlhash}"
           @visit.update_attribute(:status, READY)
-	  @visit.update_attribute(:billing_ref, errors.join(','))
+	  @visit.update_attribute(:billing_ref, errors.join(',')) if errors.present?
        end
 
        respond_to(:html)
