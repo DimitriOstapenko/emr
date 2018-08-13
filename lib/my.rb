@@ -582,13 +582,14 @@ module My
     date_range = "#{sdate} - #{edate}"	  
     date_range = sdate if report.timeframe == DAILY_REPORT 
     date_range = report.sdate.strftime("%B %Y") if report.timeframe == BCYCLE_REPORT 
+    ra_file = claims.first.ra_file rescue ''
 
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [8.mm,8.mm,15.mm,18.mm]) # Top, Right, bottom, Left
     pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
 
     pdf.move_down 5.mm
     pdf.text "#{REPORT_TFRAMES.invert[report.timeframe]} Paid Claims Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
-    pdf.text "For services paid for by MHO in  #{date_range}", align: :center, size: 12, style: :bold
+    pdf.text "For services paid for by MHO in  #{date_range}, RA file #{ra_file}", align: :center, size: 12, style: :bold
     pdf.text "(Sorted by service date, ascending)", align: :center, size: 10
     pdf.move_down 5.mm
 
@@ -664,7 +665,7 @@ module My
     @ttl_claims = @ttl_hcp_svcs = @ttl_rmb_svcs = @ttl_subm_amt = @ttl_paid_amt = 0
     rows =  [[ "Svc Date", "Claims", "Services",  "Pmt Pgm",  "Subm.", "Paid", "Balance", "Date paid" ]]
     claims_by_day.each do |cl|
-	    rows += [[ cl[0].to_date.strftime("%d/%m/%Y"), cl[1], cl[2], cl[3], cl[4], cl[5], sprintf("%.2f",cl[5]-cl[4]), paystub.date_paid ]]
+       rows += [[ cl[0].to_date.strftime("%d/%m/%Y"), cl[1], cl[2], cl[3], cl[4], cl[5], sprintf("%.2f",cl[5]-cl[4]), paystub.date_paid ]]
        @ttl_claims += cl[1]
        @ttl_hcp_svcs += cl[2] if cl[3] == 'HCP'
        @ttl_rmb_svcs += cl[2] if cl[3] == 'RMB'
@@ -680,31 +681,50 @@ module My
         t.position = 15.mm
 	t.cells.padding = 3
 	t.cells.style do |c|
-		c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+  	  c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
          end
       end
  
       pdf.font_size 10
-      pdf.move_down 15.mm
+      pdf.move_down 5.mm
       pdf.span(165.mm, :position => :center) do
-	      pdf.text "Total days worked: #{claims_by_day.count}"
         pdf.text "Total claims: #{@ttl_claims}"
         pdf.text "Total services: #{@ttl_hcp_svcs+@ttl_rmb_svcs}"
         pdf.text "Total HCP services: #{@ttl_hcp_svcs}"
         pdf.text "Total RMB services: #{@ttl_rmb_svcs}"
         pdf.move_down 6.mm
 	pdf.text "Total submitted amount : #{sprintf("$%.2f",@ttl_subm_amt)}"
-	pdf.text "Total amount paid by OHIP:  #{sprintf("$%.2f",@ttl_paid_amt)}" 
+	pdf.text "Total OHIP amount before MHO deduction:  #{sprintf("$%.2f",@ttl_paid_amt)}" 
+	pdf.text "MHO deduction:  #{sprintf("$%.2f",paystub.mho_deduction)}" 
         pdf.move_down 6.mm
 	pdf.text "Monthly Premium payment:  #{sprintf("$%.2f",paystub.monthly_premium_amt)}" 
 	pdf.text "IFH Payments:  #{sprintf("$%.2f",paystub.ifh_amt)}" 
 	pdf.text "Cash payments:  #{sprintf("$%.2f",paystub.cash_amt)}" 
 	pdf.text "WCB Payments:  #{sprintf("$%.2f",paystub.wcb_amt)}" 
 	pdf.text "Cash deposits:  #{sprintf("$%.2f",paystub.hc_dep_amt)}" 
+	pdf.text "Total other income: #{sprintf("$%.2f",paystub.cash_amt + paystub.wcb_amt + paystub.ifh_amt + paystub.hc_dep_amt + paystub.monthly_premium_amt)}" 
         pdf.move_down 6.mm
 	pdf.text "Total Gross Amount:  #{sprintf("$%.2f",paystub.gross_amt)}" 
 	pdf.text "Total Net Amount based on #{@doc.percent_deduction}% deduction:  #{sprintf("$%.2f",paystub.net_amt)}" 
       end
+      
+    pdf.move_down 10.mm
+    msg = RaMessage.find_by(ra_file: paystub.ra_file)
+    if msg.present?
+       msg_arr = msg.msg_text.split("\n")
+       (index,section) = get_provider_premiums(msg_arr, @doc.provider_no)
+       msg_arr.slice!(0,index)
+
+       pdf.span(165.mm, :position => :center) do
+	 pdf.text "MHO Provider Payment Information from RA file #{paystub.ra_file}", size: 12, style: :bold
+         pdf.move_down 5.mm
+         section2 = get_provider_totals(msg_arr, @doc.provider_no)
+         section.concat(section2).each do |str|
+           pdf.text str
+         end
+       end
+    end
+
     return pdf
   end
 
@@ -725,6 +745,35 @@ private
      "<b>#{pat.lname}, #{pat.fname} </b> 
 
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal}"
+  end
+
+  # Find PREMIUM PAYMENTS section for given provider, return as string array
+  def get_provider_premiums(arr, prov_no)
+    arr.each_with_index do |str,i|
+            next unless str.match(/PREMIUM PAYMENTS/)
+            return [i+22,arr[i-1,23]] if arr[i+1,21].join('').match(/#{prov_no}/)
+    end
+  end
+
+  # Find PAYMENT DISCOUNT SUMMARY section for given provider, return as string array
+  def get_provider_totals(arr, prov_no)
+    ind  = 0
+    outarr = []
+    arr.each_with_index do |str,i|
+      next unless str.match(/PHYSICIAN PAYMENT DISCOUNT SUMMARY REPORT/)
+      ind = i
+      break
+    end
+    arr.slice!(0,ind)
+
+    arr.each_with_index do |s,i|
+       next if s.match(/^0078/) && !s.match(/#{prov_no}/)
+       next if s.match(/TOTALS TO DATE/)
+       next if s.match(/GRAND TOTAL/)
+       next if s.match(/HCP-IN/)
+       outarr.push(s)
+       return outarr if s.match(/\-{70}/)
+    end
   end
 
   end # Forms

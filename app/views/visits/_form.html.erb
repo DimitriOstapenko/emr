@@ -211,7 +211,9 @@ $(pc).change(function () {
     get_bil_type( $(this).val() , '');
   } else {
     var bt = document.getElementById('visit_bil_type');
-    $(bt).prop('selectedIndex',0);
+    $(bt).val(null);
+    var v = document.getElementById('my_bil_type');
+    v.innerHTML = '';
   }
 });
 
@@ -221,7 +223,9 @@ $(pc2).change(function () {
      get_bil_type( $(this).val() , '2' );
   } else {
     var bt2 = document.getElementById('visit_bil_type2');
-    $(bt2).prop('selectedIndex',0);
+    $(bt2).val(null);
+    var v2 = document.getElementById('my_bil_type2');	  
+    v2.innerHTML = '';
   }
 });
 
@@ -231,7 +235,9 @@ $(pc3).change(function () {
      get_bil_type( $(this).val() , '3' );
   } else {
     var bt3 = document.getElementById('visit_bil_type3');
-    $(bt3).prop('selectedIndex',0);
+    $(bt3).val(null);
+    var v3 = document.getElementById('my_bil_type3');	  
+    v3.innerHTML = '';
   }
 });
 
@@ -241,7 +247,9 @@ $(pc4).change(function () {
     get_bil_type( $(this).val() , '4' );
   } else {
     var bt4 = document.getElementById('visit_bil_type4');
-    $(bt4).prop('selectedIndex',0);
+    $(bt4).val(null);
+    var v4 = document.getElementById('my_bil_type4');	  
+    v4.innerHTML = '';
   }
 });
 
@@ -265,11 +273,14 @@ function set_btype( proc, suff ) {
   if ( proc.ptype == '1') {
 	var btype = <%= BILLING_TYPES[@visit.pat_btype] %>; 	
         $(v).val(btype);
-	var btype_str = <%= @visit.pat_btype.to_s.inspect.html_safe %> || 'HCP'
+	var btype_str = <%= @visit.pat_btype.to_s.inspect.html_safe %> || 'HCP';
 	v2.innerHTML = btype_str;
-  } else {
+  } else if ( proc.ptype == '2') {
 	$(v).val('4');
 	v2.innerHTML = 'CSH';
+  } else {
+        $(v).val(null);
+	v2.innerHTML = '';
   }
 }
 

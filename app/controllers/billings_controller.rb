@@ -17,6 +17,7 @@ class BillingsController < ApplicationController
       else
         @visits = Visit.where(status: READY )
         @date = Date.today
+	flash_add = 'ready to bill'
       end
 
       @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
@@ -28,7 +29,7 @@ class BillingsController < ApplicationController
          doctor = "Dr. #{d.lname}" if d.present?
 	 flashmsg = "Billings for #{doctor} : #{@visits.count} visits, " 
       else
-	 flashmsg = "#{@visits.count} ready to bill #{'visit'.pluralize(@visits.count)}," 
+	 flashmsg = "#{@visits.count} #{flash_add} #{'visit'.pluralize(@visits.count)}," 
       end
 
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180809214230) do
+ActiveRecord::Schema.define(version: 20180812182322) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -253,6 +253,7 @@ ActiveRecord::Schema.define(version: 20180809214230) do
     t.string "filename"
     t.string "ra_file"
     t.date "date_paid"
+    t.float "mho_deduction"
   end
 
   create_table "procedures", force: :cascade do |t|
