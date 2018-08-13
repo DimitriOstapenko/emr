@@ -26,7 +26,7 @@ class PaystubsController < ApplicationController
     @paystub = Paystub.new(paystub_params)
 
     @paystub.year = Time.now.year
-    @paystub.month = Time.now.month
+    @paystub.month = params[:date][:month].to_i rescue Time.now.month
     @sdate = Date.new(@paystub.year, @paystub.month)
     @edate = 1.month.since(@sdate)
     prov_no = @paystub.doctor.provider_no
@@ -126,7 +126,7 @@ class PaystubsController < ApplicationController
 private
   def paystub_params
      params.require(:paystub).permit(:doc_id, :year, :month, :claims, :services, :gross_amt, 
-				     :net_amt, :ohip_amt, :cash_amt, :ifh_amt, :wcb_amt, 
+				     :net_amt, :ohip_amt, :cash_amt, :ifh_amt, :wcb_amt, :mho_deduction,
 				     :monthly_premium_amt, :hc_dep_amt, :filename, :ra_file, :date_paid )
   end
 
