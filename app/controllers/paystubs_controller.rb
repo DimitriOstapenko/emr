@@ -98,6 +98,11 @@ class PaystubsController < ApplicationController
           disposition: :attachment
   end
 
+# Calculate clinic budget for this month: sum of all deductions to the clinic  
+  def budget
+     budget = Paystub.where(year: Time.now.year, month: Time.now.month).reorder('').pluck('SUM(clinic_deduction)')
+  end
+
   def destroy
     @paystub = Paystub.find(params[:id])
     if @paystub.present?
@@ -125,7 +130,7 @@ class PaystubsController < ApplicationController
 
 private
   def paystub_params
-     params.require(:paystub).permit(:doc_id, :year, :month, :claims, :services, :gross_amt, 
+     params.require(:paystub).permit(:doc_id, :year, :month, :claims, :services, :gross_amt, :clinic_deduction,
 				     :net_amt, :ohip_amt, :cash_amt, :ifh_amt, :wcb_amt, :mho_deduction,
 				     :monthly_premium_amt, :hc_dep_amt, :filename, :ra_file, :date_paid )
   end

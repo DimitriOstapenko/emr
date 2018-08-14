@@ -6,7 +6,7 @@ class Paystub < ApplicationRecord
         validates :doc_id, numericality: { only_integer: true }, presence: true
         validates :year, presence: true, numericality: { only_integer: true }
         validates :month, presence: true, numericality: { only_integer: true }
-	before_save  :set_gross_and_net
+	before_save  :set_amounts
 	before_create  :delete_dup_stub
 
   def doctor
@@ -20,15 +20,20 @@ class Paystub < ApplicationRecord
   def filespec
 	  PAYSTUBS_PATH.join(filename) rescue nil
   end
+  
+  def clinic_deduction
+      (self.gross_amt / 100.0) * doctor.percent_deduction	  
+  end
 
   private
 
-  def set_gross_and_net
+  def set_amounts
     self.ohip_amt ||= 0
     errors.add('Paystub error:', "% Deduction not defined for this doctor") unless doctor.percent_deduction.present?
     errors.add('Paystub error:', "MHO deduction not defined for this doctor") unless self.mho_deduction.present?
-    self.gross_amt = self.ohip_amt + self.cash_amt + self.ifh_amt + self.monthly_premium_amt + self.hc_dep_amt + self.wcb_amt - self.mho_deduction || 0.0
-    self.net_amt = self.gross_amt - self.cash_amt - self.ifh_amt - self.hc_dep_amt - self.wcb_amt - (self.gross_amt / 100.0) * doctor.percent_deduction 
+    self.gross_amt = self.ohip_amt + self.cash_amt + self.ifh_amt + self.monthly_premium_amt + self.hc_dep_amt + self.wcb_amt 
+    self.clinic_deduction = (self.gross_amt / 100.0) * doctor.percent_deduction	  
+    self.net_amt = self.gross_amt - self.cash_amt - self.ifh_amt - self.hc_dep_amt - self.wcb_amt - self.clinic_deduction - self.mho_deduction
   end
 
   def delete_dup_stub
