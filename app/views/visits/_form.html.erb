@@ -11,7 +11,7 @@
   elsif @visit.status == ERROR 
      disabled = ( READY..CANCELLED ).to_a
   elsif @visit.billing_ref.present?
-     disabled = [ARRIVED,ASSESSED,READY,CANCELLED]
+     disabled = [ARRIVED,READY,CANCELLED]
   elsif @visit.hcp_proc_codes.present? 
     if @insured
        disabled = [BILLED,PAID]
