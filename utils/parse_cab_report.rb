@@ -45,7 +45,7 @@ visits = Visit.where("date(entry_ts) IN (?)", (sdate..edate))
 
 vtotal = 0
 visits.each do |v|
- vtotal += v.total_fee
+ vtotal += v.total_insured_fees
 end
 
 puts "Total fee submitted by us for the same timeframe: #{sprintf("$%.2f",vtotal)}"
