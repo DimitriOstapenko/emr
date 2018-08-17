@@ -288,13 +288,13 @@ function select_statuses( proc, suff ) {
   var v = document.getElementById('visit_statuses').getElementsByTagName("option");
   var insured = <%= @insured %>;
   if (proc.ptype == '2' && suff.length === 0  && insured) {
-        v[2].disabled = true;  // READY
-        v[3].disabled = false;
-        v[4].disabled = false;
-     }else{
+        v[1].disabled = true;  // READY
         v[2].disabled = false;
+        v[3].disabled = false;
+     }else{
+        v[1].disabled = false;
+        v[2].disabled = true;
         v[3].disabled = true;
-        v[4].disabled = true;
      }
 }
 
