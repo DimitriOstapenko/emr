@@ -1,4 +1,6 @@
-# Parse CSV payment file from CAB.md (created by CSV export of xls report) and get totals for each day for all doctors 
+# Parse CSV Provided Servces Report from Cab.md for any period (monthly is recommended) and compare with what was submitted by us 
+# Provided services includes all claims successfully submitted to OHIP
+# We ignore days with less than 10 services - those are from previous pay cicles
 #
 # CSV Header line:
 # ref,hc,vc,prov,name,dob,sdate,pcode,units,sub_fee,errcode
@@ -7,7 +9,6 @@ require_relative '../config/environment'
 require 'csv'
 require 'date'
 
-#filename = 'entered.csv'
 filename = 'provided.csv'
 
 csv_text = File.read(Rails.root.join('export', 'entered.csv')).encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
@@ -18,10 +19,8 @@ puts "Scanning CAB.md exported csv report #{filename.inspect}"
 fee = {}
 total_fee_submitted = 0
 csv.each do |row|
-#        puts row.to_hash
 	date = row['sdate']
 	next unless date
-
 	if fee[date].present?
 	  fee[date][:billed] += row['sub_fee'].tr('$','').to_f
 	  fee[date][:svcs] += 1
@@ -30,24 +29,22 @@ csv.each do |row|
 	end
 end
 
-total_submitted_services = total_submitted_fees = total_billed =  total_billed_svcs = 0
+cab_ttl_billed = cab_ttl_svcs = our_ttl_billed = our_ttl_svcs = 0
 fee.each do |day, amt|
-	total_billed += amt[:billed]
-	total_billed_svcs += amt[:svcs]
-	puts "#{day} :  submited: #{sprintf("$%.2f",amt[:billed])}, #{amt[:svcs]} services"
+	next if amt[:svcs] < 10  # services from previous pay cicles - ignore
+	visit_date = Date.strptime(day, '%m/%d/%Y') #- 1.day  #Cab uses record date, not submit date
+	day_visits_svcs = day_visits_amt = 0
+	visits = Visit.where("date(entry_ts)=?", visit_date)
+	visits.map{|v| day_visits_svcs += v.total_insured_services}
+	visits.map{|v| day_visits_amt += v.total_insured_fees}
+	cab_ttl_billed += amt[:billed]
+	cab_ttl_svcs += amt[:svcs]
+	our_ttl_billed += day_visits_amt
+	our_ttl_svcs += day_visits_svcs
+	diff = (day_visits_amt - amt[:billed]).abs > 1 ? '*' : ''
+	puts "#{day} : submited by us: #{sprintf("$%.2f", day_visits_amt)}, #{day_visits_svcs} svcs; billed by cab: #{sprintf("$%.2f",amt[:billed])}, #{amt[:svcs]} services #{diff}"
 end
 
-puts "Total billed: #{sprintf("$%.2f",total_billed)},  #{total_billed_svcs} services"
-
-sdate = Date.strptime(fee.keys.first, '%m/%d/%Y')
-edate = Date.strptime(fee.keys.last, '%m/%d/%Y')
-visits = Visit.where("date(entry_ts) IN (?)", (sdate..edate))
-
-vtotal = 0
-visits.each do |v|
- vtotal += v.total_insured_fees
-end
-
-puts "Total fee submitted by us for the same timeframe: #{sprintf("$%.2f",vtotal)}"
+puts "Total billed: by us: #{sprintf("$%.2f",our_ttl_billed)}, #{our_ttl_svcs} services;  by cab: #{sprintf("$%.2f",cab_ttl_billed)},  #{cab_ttl_svcs} services"
 
 

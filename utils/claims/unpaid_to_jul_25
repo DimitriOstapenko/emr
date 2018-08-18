@@ -1,0 +1,19 @@
+Scanning claims in 03-Jun-2018..25-Jul-2018 date range
+..Looking for missing acc_refs and no match in claims table. Will issue alert in both cases 
+Unpaid: No paid claim present for pat 56593 visit 339765 of 24-Jul-2018 12:41 (HCP); 
+Unpaid: No paid claim present for pat 41754 visit 339759 of 24-Jul-2018 12:04 (HCP); 
+Unpaid: No paid claim present for pat 3286 visit 339681 of 23-Jul-2018 13:15 (HCP); 
+Unpaid: No paid claim present for pat 44553 visit 339646 of 23-Jul-2018 09:02 (HCP); 
+Unpaid: No paid claim present for pat 68018 visit 339606 of 21-Jul-2018 12:23 (HCP); 
+Unpaid: No paid claim present for pat 71150 visit 339533 of 20-Jul-2018 13:24 (HCP); 
+Unsubmitted?: No valid Accounting ref present for pat 69193 visit 339522 20-Jul-2018 11:22 (HCP); Possibly unsubmitted.    : Resubmitted Jul 20
+Unpaid: No paid claim present for pat 71135 visit 339453 of 19-Jul-2018 11:09 (HCP); 
+Unpaid: No paid claim present for pat 10284 visit 339395 of 18-Jul-2018 12:51 (HCP); 
+Unpaid: No paid claim present for pat 71105 visit 339266 of 16-Jul-2018 16:57 (RMB); 
+Unsubmitted?: No valid Accounting ref present for pat 61432 visit 338696 08-Jul-2018 12:06 (HCP); Possibly unsubmitted.    : Resubmitted by DO Aug 3
+Unsubmitted?: No valid Accounting ref present for pat 61417 visit 338045 27-Jun-2018 17:39 (RMB); Possibly unsubmitted.    : Resubmitted by DO Aug 3
+Found by HC/Date : updated: pat: 618 visit: 337866 date: 25-Jun-2018
+Unpaid: No paid claim present for pat 70882 visit 337604 of 21-Jun-2018 11:48 (HCP);                                       : code 35
+Unpaid: No paid claim present for pat 68301 visit 337354 of 12-Jun-2018 13:05 (HCP); ? 
+Unpaid: No paid claim present for pat 5604 visit 336301 of 04-Jun-2018 11:58 (RMB);                                        : Now HCP pat; resubmitted by DO Aug 3
+Good claims: 3196; Unsubmitted claims: 3; Submitted but unpaid claims: 12
