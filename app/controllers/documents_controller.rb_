@@ -1,0 +1,29 @@
+class DocumentsController < ApplicationController
+
+  def new
+   @document = Document.new(:visit_id => params[:visit_id])
+  end 
+	
+  def create
+   @document = Document.new(document_params)
+   @visit = Visit.find(params[:visit_id])
+   @document = @visit.documents.build(document_params)
+
+   if @document.save
+#     params[:document][:document_data].each do |file|
+#         @visit.documents.create!(:document => file)
+#         #create a document associated with the item that has just been created
+#     end
+     render :show, status: :created, location: @document
+   else
+     render json: @document.errors, status: :unprocessable_entity
+   end
+ end
+
+private
+
+ def document_params
+   params.require(:item).permit(:name, :description, :document, :document_data => []) #add document_data as a permitted parameter
+ end
+
+end

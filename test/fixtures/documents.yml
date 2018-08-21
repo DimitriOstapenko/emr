@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  visit: one
+  document: MyString
+
+two:
+  visit: two
+  document: MyString
