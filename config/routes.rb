@@ -68,6 +68,7 @@ Rails.application.routes.draw do
       get 'receipt', on: :member
       get 'referralform', on: :member
       get 'sendclaim', on: :member
+      resources :documents
     end
   end
   
@@ -85,6 +86,7 @@ Rails.application.routes.draw do
      get 'export', on: :member
      get 'show_pdf', on: :member
   end
+  get 'budget', to: 'paystubs#budget'
 
 # resources :billings     # historical billing table - not used
   
