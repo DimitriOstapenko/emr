@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180813235957) do
+ActiveRecord::Schema.define(version: 20180820134702) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -107,6 +107,17 @@ ActiveRecord::Schema.define(version: 20180813235957) do
     t.string "doc_code"
     t.integer "percent_deduction"
     t.index ["provider_no"], name: "index_doctors_on_provider_no"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.integer "visit_id"
+    t.string "document"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "description"
+    t.integer "dtype"
+    t.index ["visit_id"], name: "index_documents_on_visit_id"
   end
 
   create_table "drugs", force: :cascade do |t|
@@ -358,6 +369,15 @@ ActiveRecord::Schema.define(version: 20180813235957) do
     t.datetime "updated_at", null: false
     t.index ["claim_id"], name: "index_services_on_claim_id"
     t.index ["claim_no"], name: "index_services_on_claim_no"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   create_table "users", force: :cascade do |t|

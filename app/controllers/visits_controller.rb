@@ -44,10 +44,35 @@ class VisitsController < ApplicationController
     if @visit.save
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
       @visit.update_attribute(:status, READY) if @visit.status == PAID && @visit.hcp_services?  # Force to READY if there are ohip services
-      flash[:success] = "Visit saved! #{params[:entry_ts]} "
-      redirect_to @patient
+      doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
+      if doc.blank? || doc.errors.blank?
+        flash[:success] = "Visit saved! #{params[:entry_ts]} "
+        redirect_to @patient
+      else
+        flash.now[:danger] =  doc.errors.full_messages.first
+        render 'new'
+      end
+    else 
+        render 'new'
+    end
+  end
+
+  def edit
+     @visit = Visit.find(params[:id])
+  end
+
+  def update
+    @visit = Visit.find(params[:id])
+    @patient = Patient.find(@visit.patient_id)
+    set_visit_fees( @visit )
+    doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
+    if @visit.update_attributes(visit_params)
+      @patient.update_attribute(:last_visit_date, @visit.created_at)
+      flash[:success] = "Visit updated"
+      redirect_back_or( @patient )
     else
-      render 'new'
+      flash.now[:danger] =  doc.errors.full_messages.first
+      render 'edit'
     end
   end
 
@@ -99,27 +124,6 @@ class VisitsController < ApplicationController
 
        respond_to(:html)
        redirect_to patient_visit_path
-  end
-
-  def edit
-     @visit = Visit.find(params[:id])
-  end
-
-  def update
-    @visit = Visit.find(params[:id])
-    @patient = Patient.find(@visit.patient_id)
-    if @visit.update_attributes(visit_params)
-      @patient.last_visit_date = @visit.created_at
-      @patient.save
-      set_visit_fees( @visit )
-      @visit.save
-      flash[:success] = "Visit updated"
-#     redirect_back(fallback_location: @patient)
-#     redirect_to @patient
-       redirect_back_or( @patient )
-    else
-      render 'edit'
-    end
   end
 
   def daysheet (defdate = Date.today)
@@ -183,25 +187,29 @@ class VisitsController < ApplicationController
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
-				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref )
+				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref) #, :document, :document_cache )
     end      
 
     def set_visit_fees ( visit )
       if !visit.proc_code.blank? 
 	      p = Procedure.find_by(code: visit.proc_code) 
 	      visit.fee = p.cost*visit.units rescue 0
+#	      visit.update_attribute(:fee, p.cost * visit.units) rescue 0
       end
       if !visit.proc_code2.blank? 
 	      p2 = Procedure.find_by(code: visit.proc_code2) 
 	      visit.fee2 = p2.cost*visit.units2 rescue 0
+#	      visit.update_attribute(:fee2, p2.cost * visit.units2) rescue 0
       end  
       if !visit.proc_code3.blank? 
 	      p3 = Procedure.find_by(code: visit.proc_code3) 
 	      visit.fee3 = p3.cost*visit.units3 rescue 0
+#	      visit.update_attribute(:fee3, p3.cost * visit.units3) rescue 0
       end  
       if !visit.proc_code4.blank? 
 	      p4 = Procedure.find_by(code: visit.proc_code4) 
 	      visit.fee4 = p4.cost*visit.units4 rescue 0
+#	      visit.update_attribute(:fee4, p4.cost * visit.units4) rescue 0
       end  
     end
 

@@ -43,10 +43,10 @@ class BillingsController < ApplicationController
 	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} #{'service'.pluralize(@total_insured_services)}. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
 	 render 'index'
       else
-	 if @date.present?
+	 if params[:date].present?
 	    flash.now[:info] = "No billed or ready to bill services found for date #{@date}"
 	 else 
-	    flash.now[:info] = "No ready to bill or cash services found for today"
+	    flash.now[:info] = "No previously unbilled services found"
 	 end
 	 render  inline: '', layout: true
       end

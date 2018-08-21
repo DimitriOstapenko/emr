@@ -100,7 +100,9 @@ class PaystubsController < ApplicationController
 
 # Calculate clinic budget for this month: sum of all deductions to the clinic  
   def budget
-     budget = Paystub.where(year: Time.now.year, month: Time.now.month).reorder('').pluck('SUM(clinic_deduction)')
+	  budget = Paystub.where(year: Time.now.year, month: Time.now.month).reorder('').pluck('SUM(clinic_deduction)').first rescue 0
+	  flash.now[:success] = "This month's budget (sum of deductions of all active doctors): #{sprintf("$%.2f",budget)} "
+	  render  inline: '', layout: true
   end
 
   def destroy
