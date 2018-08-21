@@ -29,6 +29,7 @@
 
 # Ignore public assets
 /public/assets/**
+/public/uploads/**
 
 # Ignore vendor bundle
 /vendor/*

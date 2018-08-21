@@ -13,7 +13,7 @@
 <div class="row">
 	
 <section>
-<pre class="pre-scrollable">
+<pre class="pre-scrollable-large">
 <b>Doctor</b> :    <%= @visit.doctor.lname %>
 <b>Reason for Visit </b>: <%= @visit.reason %>
 <b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
@@ -35,6 +35,14 @@
 <% if @visit.amount.present? %>
 <b>Amount Paid </b>: <%= sprintf '$%.2f', @visit.amount %>
 <% end %>
+<% if @visit.documents.present? %>
+<b>Attachments</b>: 
+<% @visit.documents.each do |d| %>
+   <% next unless d.document.file.present? %>
+   <%= link_to d.document.file.filename, d.document.url.to_s %>
+<% end %>
+<% end %>
+
 </pre>
 
 <% if @visit.notes.present? %>
