@@ -11,7 +11,7 @@ require 'date'
 
 filename = 'provided.csv'
 
-csv_text = File.read(Rails.root.join('export', 'entered.csv')).encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
+csv_text = File.read(Rails.root.join('export', filename)).encode('UTF-8', :invalid => :replace, :undef => :replace, :replace => '?')
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1' )   # .first(200)
 
 puts "Scanning CAB.md exported csv report #{filename.inspect}" 
