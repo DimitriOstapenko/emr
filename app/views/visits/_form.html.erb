@@ -177,7 +177,7 @@
 <!-- Row 6: upload docs -->
 <div class="row">
   <div class="col-sm-12"> 
-    <%= f.label :documents %>
+    <%= f.label :'PDF documents' %>
       <% @visit.documents.each do |d| %>
       <% next unless d.document.file.present? %>
       <%= link_to d.document.file.filename, d.document.url.to_s %>
