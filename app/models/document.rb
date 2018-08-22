@@ -1,5 +1,6 @@
 class Document < ApplicationRecord
-  belongs_to :visit
+  belongs_to :visit, inverse_of: :documents
+  validates_presence_of :visit 
 
   attr_accessor :visit_id, :name, :description, :dtype, :document
 
