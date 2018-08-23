@@ -205,7 +205,7 @@ class BillingsController < ApplicationController
        flashmsg = "claims out of #{@visits.count} ready to bill claims sent to Cab.md"
     else
        @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
-       flashmsg = "claims out of #{@visits.count} sent to cab.md for date #{date}. This includes previously billed and ready for billing visits"
+       flashmsg = "claims out of #{@visits.count} sent to Cab.md for date #{date}."
     end
     
     claims_sent = 0
