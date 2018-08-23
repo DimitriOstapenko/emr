@@ -6,7 +6,7 @@ class Visit < ApplicationRecord
   mount_uploader :document, DocumentUploader
 
   default_scope -> { order(entry_ts: :desc) }
-  attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode  #, :diag_descr, :proc_descr, :_3rd_index, :services, :invoiced?, :cash?
+  attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode 
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true, numericality: { only_integer: true }
