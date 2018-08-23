@@ -43,7 +43,7 @@ class VisitsController < ApplicationController
       doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
       if doc.blank? || doc.errors.blank?
         flash[:success] = "Visit saved #{params[:entry_ts]} "
-        redirect_to daysheet_path
+        redirect_to @patient
       else
         flash.now[:danger] =  doc.errors.full_messages.first
         render 'new'
@@ -67,7 +67,7 @@ class VisitsController < ApplicationController
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-      redirect_back_or( daysheet_path )
+      redirect_back_or( @patient )
     else
       flash.now[:danger] =  doc.errors.full_messages.first
       render 'edit'
