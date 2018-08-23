@@ -61,12 +61,13 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
 
-    set_visit_fees( @visit )
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.created_at)
+      set_visit_fees( @visit )
+      @visit.save
       flash[:success] = "Visit updated"
-      redirect_back_or( @patient )
+      redirect_back_or( daysheet_path )
     else
       flash.now[:danger] =  doc.errors.full_messages.first
       render 'edit'
@@ -187,25 +188,22 @@ class VisitsController < ApplicationController
     end      
 
     def set_visit_fees ( visit )
+      visit.fee = visit.fee2 = visit.fee3 = visit.fee4 = 0.0
       if !visit.proc_code.blank? 
 	      p = Procedure.find_by(code: visit.proc_code) 
-	      fee = p.cost*visit.units rescue 0
-	      visit.update_attribute(:fee, fee)
+	      visit.fee = p.cost*visit.units rescue 0
       end
       if !visit.proc_code2.blank? 
 	      p2 = Procedure.find_by(code: visit.proc_code2) 
-	      fee = p2.cost*visit.units2 rescue 0
-	      visit.update_attribute(:fee2, fee)
+	      visit.fee2 = p2.cost*visit.units2 rescue 0
       end  
       if !visit.proc_code3.blank? 
 	      p3 = Procedure.find_by(code: visit.proc_code3) 
-	      fee = p3.cost*visit.units3 rescue 0
-	      visit.update_attribute(:fee3, fee)
+	      visit.fee3 = p3.cost*visit.units3 rescue 0
       end  
       if !visit.proc_code4.blank? 
 	      p4 = Procedure.find_by(code: visit.proc_code4) 
-	      fee = p4.cost*visit.units4 rescue 0
-	      visit.update_attribute(:fee4, fee)
+	      visit.fee4 = p4.cost*visit.units4 rescue 0
       end  
     end
 
