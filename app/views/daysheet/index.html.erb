@@ -33,12 +33,17 @@
           <th class="tbl_md">Services</th>
           <th class="tbl_sm">B.Types</th>
           <th class="tbl_lsm">Status</th>
-	  <% if date == Date.today || date.blank? || current_user.admin? %>
+	  <% if date == Date.today || date.blank? %>
 	    <th class="tbl_sm"></th>
             <th class="tbl_sm"></th>
             <th class="tbl_sm"></th>
-          <% end %>
-          <th class="tbl_sm"></th>
+   	  <% else %>
+	    <th class="tbl_sm"></th>    <!-- Label -->
+	  <% end %>
+	  <% if current_user.admin? %>
+	    <th class="tbl_sm"></th>  <!-- Delete -->
+  	  <% end %>
+
       </tr>
   </thead>
   <tbody>
