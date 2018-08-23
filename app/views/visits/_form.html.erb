@@ -25,23 +25,21 @@
   end 
 %>
 
-  <!-- Row 0 if admin --> 
+  <!-- Row 0 if new visit or admin --> 
 
-  <% if current_user.admin? %> 
      <div class="row">
      <% if action_name == 'new' %>
 	<div class="col-sm-4">
 	   <%= f.label "Visit Date/time" %>
 	   <%= f.datetime_field :entry_ts, datetime_separator: ' at ' %>
   	</div>
-     <% elsif action_name == 'edit' %>
+     <% elsif current_user.admin? && action_name == 'edit' %>
    	<div class="col-sm-6">
   	  <%= f.label "Billing Reference" %>
  	  <%= f.text_field :billing_ref %>
   	</div>
     <% end %>
     </div>
-  <% end %>
 
   <!-- Row 1 --> 
 
@@ -54,7 +52,7 @@
   <div class="col-sm-2">
   <%= f.label "Service" %>
   <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None' %> <!--#, selected: @visit.proc_code || 'A007A'  -->
-  <%= f.hidden_field(:fee, id: :fee) %>
+  <%# f.hidden_field(:fee, id: :fee) %>
   </div>
 
   <div class="col-sm-2">
@@ -200,7 +198,8 @@
 
 <script>
 $(document).ready(function() {
-    $('#visit_diag_code').select2();
+//    $.fn.select2.defaults.set( "theme", "classic" );
+    $( "#visit_diag_code" ).select2();
     $('#visit_proc_code').select2();
     $('#visit_proc_code2').select2();
     $('#visit_proc_code3').select2();
