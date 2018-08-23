@@ -28,11 +28,7 @@ class VisitsController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
     @visit.entry_by = current_user.name
-    if @visit.entry_ts.present?
-       @visit.entry_ts = Time.now if @visit.entry_ts > Date.tomorrow
-    else
-       @visit.entry_ts = Time.now
-    end
+    @visit.entry_ts = Time.now unless (@visit.entry_ts.present? && @visit.entry_ts < Date.tomorrow)
 
     if current_doctor.blank? || @visit.doc_id != current_doctor.id
 	 set_doc_session ( @visit.doc_id )
@@ -43,11 +39,11 @@ class VisitsController < ApplicationController
 
     if @visit.save
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
-      @visit.update_attribute(:status, READY) if @visit.status == PAID && @visit.hcp_services?  # Force to READY if there are ohip services
+
       doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
       if doc.blank? || doc.errors.blank?
-        flash[:success] = "Visit saved! #{params[:entry_ts]} "
-        redirect_to @patient
+        flash[:success] = "Visit saved #{params[:entry_ts]} "
+        redirect_to daysheet_path
       else
         flash.now[:danger] =  doc.errors.full_messages.first
         render 'new'
@@ -64,6 +60,7 @@ class VisitsController < ApplicationController
   def update
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
+
     set_visit_fees( @visit )
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
@@ -80,7 +77,6 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @visit.destroy
     flash[:success] = "Visit deleted"
-#    redirect_to daysheet_path
     redirect_back(fallback_location: daysheet_path)
   end
 
@@ -187,29 +183,29 @@ class VisitsController < ApplicationController
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
-				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref) #, :document, :document_cache )
+				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref, :document )
     end      
 
     def set_visit_fees ( visit )
       if !visit.proc_code.blank? 
 	      p = Procedure.find_by(code: visit.proc_code) 
-	      visit.fee = p.cost*visit.units rescue 0
-#	      visit.update_attribute(:fee, p.cost * visit.units) rescue 0
+	      fee = p.cost*visit.units rescue 0
+	      visit.update_attribute(:fee, fee)
       end
       if !visit.proc_code2.blank? 
 	      p2 = Procedure.find_by(code: visit.proc_code2) 
-	      visit.fee2 = p2.cost*visit.units2 rescue 0
-#	      visit.update_attribute(:fee2, p2.cost * visit.units2) rescue 0
+	      fee = p2.cost*visit.units2 rescue 0
+	      visit.update_attribute(:fee2, fee)
       end  
       if !visit.proc_code3.blank? 
 	      p3 = Procedure.find_by(code: visit.proc_code3) 
-	      visit.fee3 = p3.cost*visit.units3 rescue 0
-#	      visit.update_attribute(:fee3, p3.cost * visit.units3) rescue 0
+	      fee = p3.cost*visit.units3 rescue 0
+	      visit.update_attribute(:fee3, fee)
       end  
       if !visit.proc_code4.blank? 
 	      p4 = Procedure.find_by(code: visit.proc_code4) 
-	      visit.fee4 = p4.cost*visit.units4 rescue 0
-#	      visit.update_attribute(:fee4, p4.cost * visit.units4) rescue 0
+	      fee = p4.cost*visit.units4 rescue 0
+	      visit.update_attribute(:fee4, fee)
       end  
     end
 
