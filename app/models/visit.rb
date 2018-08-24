@@ -23,7 +23,7 @@ class Visit < ApplicationRecord
   validates :duration, numericality: { only_integer: true, only_positive: true }
   validates :entry_ts, presence: true
 
-  validate :diag_required if Proc.new { |v| v.diag_code.blank? }
+  validate :diag_required
 
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 
@@ -238,7 +238,7 @@ class Visit < ApplicationRecord
     hcp_codes.each do |code|
       proc = Procedure.find_by(code: code)      
       if proc.diag_req
-         errors.add('Error:', "Diagnosis is required for this visit") if proc.diag_req
+	      errors.add('Error:', "Diagnosis is required for this visit") if diag_code.blank?
          return
       end
     end
