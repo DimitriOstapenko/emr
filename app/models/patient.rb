@@ -34,6 +34,11 @@ class Patient < ApplicationRecord
     return fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
   end
 
+# mm/yy
+  def hin_expiry_short
+      hin_expiry.strftime("%m/%y") rescue '01/00'
+  end
+
   def ohip_num_full
     return ohip_ver.blank? ? ohip_num : [ohip_num, ohip_ver].join(' ')
   end
@@ -45,7 +50,6 @@ class Patient < ApplicationRecord
       ohip_ver.blank? ? ohip_num : [ohip_num, ohip_ver].join(' ')
     end
   end
-
 
 # Formatted phone number
   def phonestr
