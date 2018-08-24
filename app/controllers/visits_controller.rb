@@ -20,8 +20,14 @@ class VisitsController < ApplicationController
 
   def new
         @patient = Patient.find(params[:patient_id])
-        @visit = @patient.visits.new
-        @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
+	@visit = @patient.visits.where('date(entry_ts)=?', Date.today)
+	if @visit.present?
+	  flash[:warning] = "Only 1 visit is allowed per patient per day"
+          redirect_to @patient
+	else
+           @visit = @patient.visits.new
+           @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
+	end
   end
 
   def create
@@ -45,7 +51,7 @@ class VisitsController < ApplicationController
         flash[:success] = "Visit saved #{params[:entry_ts]} "
         redirect_to @patient
       else
-        flash.now[:danger] =  doc.errors.full_messages.first
+        flash.now[:danger] =  doc.errors.full_messages.first rescue ''
         render 'new'
       end
     else 
@@ -69,7 +75,7 @@ class VisitsController < ApplicationController
       flash[:success] = "Visit updated"
       redirect_back_or( @patient )
     else
-      flash.now[:danger] =  doc.errors.full_messages.first
+	    flash.now[:danger] =  doc.errors.full_messages.first rescue ''
       render 'edit'
     end
   end
