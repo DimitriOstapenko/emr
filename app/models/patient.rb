@@ -6,12 +6,12 @@ class Patient < ApplicationRecord
 
 	before_validation { email.downcase! rescue '' }
 	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') rescue nil }
-	before_validation :upcase_some_fields 
 	before_validation { phone.gsub!(/\D/,'') rescue '' }
 	before_validation { mobile.gsub!(/\D/,'') rescue '' }
 	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
 	before_validation { postal.tr!(' -','') rescue '' }
 	before_validation { ohip_ver.strip! rescue '' }
+	before_validation :upcase_some_fields 
 
 	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
