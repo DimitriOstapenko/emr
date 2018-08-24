@@ -206,7 +206,7 @@ private
     pat.lastmod_by = current_user.name
     names = str[18,26].split('/')
     pat.ohip_num = str[7,10] rescue ''
-    pat.ohip_ver = str[61,2] rescue ''
+    pat.ohip_ver = str[61,2].upcase rescue ''
     pat.lname = names[0].strip rescue ''
     pat.fname = names[1].strip rescue ''
     sdob = str[53,8]

@@ -23,6 +23,8 @@ class Visit < ApplicationRecord
   validates :duration, numericality: { only_integer: true, only_positive: true }
   validates :entry_ts, presence: true
 
+  validate :diag_required if Proc.new { |v| v.diag_code.blank? }
+
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 
   end
@@ -37,7 +39,7 @@ class Visit < ApplicationRecord
   end
 
   def date 
-	  entry_ts.to_date rescue '1900-01-01'
+    entry_ts.to_date rescue '1900-01-01'
   end
 	
 # all procedure codes for this visit
@@ -229,6 +231,17 @@ class Visit < ApplicationRecord
 
   def was_today?
      entry_ts.to_date == Date.today
+  end
+
+  def diag_required
+    hcp_codes = hcp_proc_codes.split(',') rescue nil
+    hcp_codes.each do |code|
+      proc = Procedure.find_by(code: code)      
+      if proc.diag_req
+         errors.add('Error:', "Diagnosis is required for this visit") if proc.diag_req
+         return
+      end
+    end
   end
 
 end
