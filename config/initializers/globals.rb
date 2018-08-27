@@ -37,6 +37,8 @@ CANCELLED = VISIT_STATUSES[:Cancelled].freeze
 ERROR = VISIT_STATUSES[:Error].freeze
 
 VISIT_TYPES= {'Walk In': 'WI', 'Primary Care': 'PC', Consultation: 'CT', 'Emergency Room': 'EM', Form: 'FM', WCB: 'WB'}.freeze
+WALKIN_VISIT = VISIT_TYPES[:'Walk In'].freeze
+
 u = {}
 (1..10).each {|k| u[k]=k}
 UNITS  = u.freeze

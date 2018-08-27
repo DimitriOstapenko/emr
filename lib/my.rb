@@ -41,24 +41,23 @@ module My
 	      Dr. #{visit.doctor.lname}
               Family Doctor: #{pat.family_dr} 
 
-              Date: #{visit.entry_ts.strftime("%d-%m-%Y")}
+              Date: <b>#{visit.entry_ts.strftime("%d-%b-%Y")}</b>
               Time: #{visit.entry_ts.strftime("%H:%M")}
 
               Visit Type: Walk In
               Visit Ref#: #{visit.id}"
 
-    medinfo = "<b>Medications</b>: #{pat.medications}"
 
     pdf.stroke do
                 pdf.line_width=1
-                pdf.horizontal_line 0,200.mm, :at => 215.mm
-                pdf.horizontal_line 0,200.mm, :at => 193.mm
-                pdf.horizontal_line 0,200.mm, :at => 183.mm
-                pdf.horizontal_line 0,200.mm, :at => 173.mm
-                pdf.horizontal_line 0,200.mm, :at => 163.mm
-                pdf.vertical_line 215.mm,260.mm, :at => 100.mm
-                pdf.horizontal_line 32.mm,195.mm, :at => 25.mm
-                pdf.horizontal_line 32.mm,195.mm, :at => 15.mm
+                pdf.horizontal_line 0,200.mm, :at => 215.mm     # Provider
+                pdf.horizontal_line 0,200.mm, :at => 193.mm     # Meds
+                pdf.horizontal_line 0,200.mm, :at => 183.mm     # Allergies
+                pdf.horizontal_line 0,200.mm, :at => 163.mm     # Reason
+                pdf.horizontal_line 0,200.mm, :at => 153.mm     # Vitals 
+                pdf.vertical_line 215.mm,260.mm, :at => 100.mm  
+                pdf.horizontal_line 32.mm,195.mm, :at => 25.mm  # Diag
+                pdf.horizontal_line 32.mm,195.mm, :at => 15.mm  # Signature
               end
 
 # Provider Info box    
@@ -78,28 +77,36 @@ module My
          :inline_format => true
 
 # Medications box
+    medinfo = "<b>Medications</b>: #{pat.medications}"
     pdf.text_box medinfo, :at => [5.mm,212.mm],
          :width => 195.mm,
-         :height => 30.mm,
+         :height => 23.mm,
          :overflow => :shrink_to_fit,
          :min_font_size => 9,
          :inline_format => true
 
     allergies = pat.allergies[0,65] rescue ''
-    reason = visit.reason[0,68] rescue ''
     pdf.draw_text "Allergies: ", :at => [5.mm,185.mm], style: :bold
     pdf.draw_text allergies, :at => [35.mm,185.mm]
+    
+    reason = visit.reason[0,1000] rescue ''
     pdf.draw_text "Reason:", at: [5.mm,175.mm], style: :bold
-    pdf.draw_text reason, at: [26.mm,175.mm]
-    pdf.draw_text 'Vitals:', at: [5.mm,165.mm], style: :bold
-    pdf.draw_text "T: #{visit.temp}", at: [35.mm,165.mm]
-    pdf.draw_text "BP: #{visit.bp}", at: [69.mm,165.mm]
-    pdf.draw_text "WT: #{visit.weight}", at: [118.mm,165.mm]
-    pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,165.mm]
+    pdf.text_box reason, at: [26.mm,178.mm],
+	 :width => 170.mm,
+         :height => 15.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 9,
+         :inline_format => true
 
-    pdf.draw_text "Notes:", at: [5.mm,158.mm], style: :bold
+    pdf.draw_text 'Vitals:', at: [5.mm,155.mm], style: :bold
+    pdf.draw_text "T: #{visit.temp}", at: [35.mm,155.mm]
+    pdf.draw_text "BP: #{visit.bp}", at: [69.mm,155.mm]
+    pdf.draw_text "WT: #{visit.weight}", at: [118.mm,155.mm]
+    pdf.draw_text "HR: #{visit.pulse}", at: [160.mm,155.mm]
+
+    pdf.draw_text "Notes:", at: [5.mm,148.mm], style: :bold
     if !visit.notes.nil?
-      pdf.text_box visit.notes, :at => [5.mm,152.mm],
+      pdf.text_box visit.notes, :at => [5.mm,145.mm],
          :width => 195.mm,
          :height => 110.mm,
          :overflow => :shrink_to_fit,

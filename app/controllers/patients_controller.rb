@@ -81,17 +81,22 @@ class PatientsController < ApplicationController
 
   def label
     @patient = Patient.find(params[:id])
-    pdf  = build_label(@patient)
-    send_data pdf.render,
+    @pdf  = build_label(@patient)
+    respond_to do |format|
+	format.html do
+          send_data @pdf.render,
 	  filename: "label_#{@patient.full_name}",
           type: 'application/pdf',
           disposition: 'inline' 
+	end
+	format.js { @pdf.render_file File.join(Rails.root, 'public', "label.pdf") }
+    end
   end
 
   def addrlabel
     @patient = Patient.find(params[:id])
-    pdf  = build_address_label(@patient)
-    send_data pdf.render,
+    @pdf  = build_address_label(@patient)
+    send_data @pdf.render,
 	  filename: "label_#{@patient.full_name}",
           type: 'application/pdf',
           disposition: 'inline' 

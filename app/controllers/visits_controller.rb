@@ -26,7 +26,14 @@ class VisitsController < ApplicationController
           redirect_to @patient
 	else
            @visit = @patient.visits.new
-           @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
+           @visit.entry_ts = Time.now #.strftime("%Y-%m-%d at %H:%M")
+	   @visit.doc_id = current_doctor.id rescue nil
+	   if @visit.save
+	      redirect_to @patient
+           else 
+     	      flash.now[:danger] = 'Error saving new visit'		   
+	      render 'new'
+	   end
 	end
   end
 
@@ -147,12 +154,17 @@ class VisitsController < ApplicationController
   def visitform
         @visit = Visit.find(params[:id])
 	@patient = Patient.find(@visit.patient_id)
-        pdf = build_visit_form( @patient, @visit )
+        @pdf = build_visit_form( @patient, @visit )
 
-        send_data pdf.render,
-          filename: "form_#{@patient.full_name}",
-          type: 'application/pdf',
-          disposition: 'inline'
+        respond_to do |format|
+          format.html do
+            send_data @pdf.render,
+            filename: "form_#{@patient.full_name}",
+            type: 'application/pdf',
+            disposition: 'inline'
+          end
+	  format.js { @pdf.render_file File.join(Rails.root, 'public', "visitform.pdf") }
+	end
   end  
 
 # Generate PDF receipt for 3RD party services  
