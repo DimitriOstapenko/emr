@@ -1,0 +1,17 @@
+
+<%
+   provide(:title, 'Edit Visit')
+   provide(:button_text, 'Save changes')
+   @patient = Patient.find(@visit.patient_id)
+   @doctor = Doctor.find(@visit.doc_id)
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %> Visit <%= @visit.entry_ts %></b>
+</div>
+<div class="modal-body">
+       <%= render 'form' %>
+</div>
+
+

@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "bootstrap/modals";
 
 /* mixins, variables, etc. */
 
@@ -440,11 +441,11 @@ table.pretty {
   padding: 10px;
 }
 
-#my-modal {
+#modal-window {
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 6%;
+  left: 15%;
+//  transform: translate(-50%, -50%);
 }
 
 .turbolinks-progress-bar {
@@ -465,4 +466,8 @@ table.pretty {
     height: 22px !important;
 }
 
+// Safari modals - doesnt really work
+.clickable {
+cursor: pointer;
+}
     

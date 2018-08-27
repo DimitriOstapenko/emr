@@ -16,14 +16,23 @@ class Visit < ApplicationRecord
   validates :proc_code2, length: { maximum: 10 }
   validates :proc_code3, length: { maximum: 10 }
   validates :proc_code4, length: { maximum: 10 }
-  validates :units, numericality: { only_integer: true, only_positive: true }
-  validates :units2, numericality: { only_integer: true, only_positive: true }
-  validates :units3, numericality: { only_integer: true, only_positive: true }
-  validates :units4, numericality: { only_integer: true, only_positive: true }
-  validates :duration, numericality: { only_integer: true, only_positive: true }
+#  validates :units, numericality: { only_integer: true, only_positive: true }
+#  validates :units2, numericality: { only_integer: true, only_positive: true }
+#  validates :units3, numericality: { only_integer: true, only_positive: true }
+#  validates :units4, numericality: { only_integer: true, only_positive: true }
+#  validates :duration, numericality: { only_integer: true, only_positive: true }
   validates :entry_ts, presence: true
 
   validate :diag_required
+  after_initialize :default_values
+
+  def default_values
+	  self.entry_ts ||= Time.now
+	  self.status ||= ARRIVED
+	  self.units ||= 1
+	  self.vis_type ||= WALKIN_VISIT
+	  self.duration ||= 10
+  end
 
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 
