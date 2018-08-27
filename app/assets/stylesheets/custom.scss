@@ -318,6 +318,10 @@ input {
   background: lightblue;
 }
 
+.table-hover tbody tr:hover td {
+    background: #5bc0de;
+}
+
 /* Pagination */
 
 .pagination {

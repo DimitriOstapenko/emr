@@ -63,14 +63,27 @@ class Patient < ApplicationRecord
 
   def age
     return unless dob
-    now = Date.today
-    years = now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
-    years > 0 ? years : (dob.year * 12 + dob.month) - (now.year * 12 + now.month) 
+#    now = Date.today
+#    years = now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+#    years > 0 ? years : (dob.year * 12 + dob.month) - (now.year * 12 + now.month) 
+
+    days = (Date.today - dob).to_i
+    years = (days / 365).to_i
+    months = ((days % 365) / 30).to_i
+
+    return [years, months, days]
   end
 
   def age_str
     return '' unless age
-    age > 0 ? "#{age} yr" : "#{-age} mo" 	  
+    case 
+    when age[0] > 2		       
+	    return "#{age[0]} y"
+    when (age[1] > 2 && age[0] < 2)   # 2 mo to 2 yrs old
+	    return "#{age[1]} m"  
+    when (age[0] < 1 && age[1] <= 2)  # up to 2 mo old
+            return "#{age[2]} d" 
+    end
   end
 
   def hc_expiry

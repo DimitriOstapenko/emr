@@ -11,8 +11,8 @@ class DaysheetController < ApplicationController
       if @date.present?
         @daysheet = Visit.where("date(entry_ts) = ?", @date) 
       else 
-#        @daysheet = Visit.where(status: [ARRIVED,READY,ERROR] )
-	@daysheet = Visit.where('status IN (?) or (status=? AND date(entry_ts)=?)', [ARRIVED,READY,ERROR].to_a, PAID, Date.today)
+	@daysheet = Visit.where(status: [ARRIVED,READY,ERROR] ).or(Visit.where('date(entry_ts) = ?', Date.today))
+#	@daysheet = Visit.where('status IN (?) or date(entry_ts)=?', [ARRIVED,READY,ERROR].to_a, Date.today)
 	@date = Date.today
       end
       
