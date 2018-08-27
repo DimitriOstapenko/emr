@@ -36,18 +36,28 @@
     </section>
 
 <div class="row">
-  <div id="ins_provider" class="col-sm-3">
+  <div id="new_visit" class="col-sm-3">
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
   </div>
-  <div id="ins_provider" class="col-sm-3">
+  <div id="edit_pat" class="col-sm-3">
     <%= button_to "Edit Patient", edit_patient_path(@patient), class:"btn btn-primary", method: 'get' %>
   </div>
-  <div id="ins_provider" class="col-sm-3">
-    <%= button_to "Print Label", label_patient_path(@patient), class: "btn btn-primary", method: 'get', formtarget: 'Label' %> <!-- , data: {toggle: "modal", target: "#exampleModal"}   %> -->
+
+  <% remote = device_type == 'desktop' %>
+  <div id="modLabel" class="col-sm-3">
+  <%= button_to "Label", label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-primary clickable", method: 'get'  %>
+  <div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="dialog">
+      <div class="modal-content"></div>
+    </div>
   </div>
-  <div id="ins_provider" class="col-sm-3">
-    <%= button_to "Create Invoice", new_patient_invoice_path(@patient), class: "btn btn-primary", method: 'get' %> 
   </div>
+  
+  <div id="invoice" class="col-sm-3">
+    <%= button_to "Invoice", new_patient_invoice_path(@patient), class: "btn btn-primary", method: 'get' %> 
+  </div>
+
+
 </div>
 
   </aside>
