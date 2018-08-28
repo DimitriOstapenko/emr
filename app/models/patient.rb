@@ -29,6 +29,7 @@ class Patient < ApplicationRecord
 #        validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
 	validate :hc_expiry 
+	validate :validate_age
 
   def full_name
     return fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
@@ -80,7 +81,7 @@ class Patient < ApplicationRecord
     when age[0] > 2		       
 	    return "#{age[0]} y"
     when (age[1] > 2 && age[0] < 2)   # 2 mo to 2 yrs old
-	    return "#{age[1]} m"  
+	    return "#{age[0]*12 + age[1]} m"  
     when (age[0] < 1 && age[1] <= 2)  # up to 2 mo old
             return "#{age[2]} d" 
     end
@@ -128,6 +129,13 @@ protected
 	  fname.upcase! if fname.present?
 	  mname.upcase! if mname.present?
 	  maid_name.upcase! if maid_name.present?
+  end
+
+  def validate_age
+      return unless dob.present?
+      if dob < 99.years.ago || dob > Date.yesterday
+          errors.add('Error:', 'Date of birth is out of range')
+      end
   end
 
 end
