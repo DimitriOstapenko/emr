@@ -53,9 +53,9 @@ ActiveRecord::Schema.define(version: 20180822141507) do
     t.string "moh_group_id"
     t.integer "visit_id"
     t.string "ra_file"
+    t.date "date_paid"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "date_paid"
     t.index ["accounting_no"], name: "index_claims_on_accounting_no"
     t.index ["claim_no"], name: "index_claims_on_claim_no"
   end
