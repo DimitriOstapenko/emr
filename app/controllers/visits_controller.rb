@@ -27,7 +27,7 @@ class VisitsController < ApplicationController
 	else
            @visit = @patient.visits.new
            @visit.entry_ts = Time.now #.strftime("%Y-%m-%d at %H:%M")
-	   @visit.doc_id = current_doctor.id rescue nil
+	   @visit.doc_id ||= current_doctor.id rescue nil
 	   if @visit.save
 	      redirect_to @patient
            else 
@@ -77,6 +77,12 @@ class VisitsController < ApplicationController
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.created_at)
+      
+      if current_doctor.blank? || @visit.doc_id != current_doctor.id
+	 set_doc_session ( @visit.doc_id )
+	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
+      end
+
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
