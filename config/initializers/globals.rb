@@ -28,7 +28,7 @@ DIGSEXES = {'M' => 1, 'F' => 2}.freeze
 PROVINCES = {ON: 'ON', AB: 'AB', BC: 'BC', MB: 'MB', NB: 'NB', NL: 'NL', NS: 'NS', NT: 'NT', NU: 'NU', PE: 'PE', QC: 'QC', SK: 'SK', YT: 'YT'}
 
 # Visits
-VISIT_STATUSES = { Arrived: 1, 'Ready To Bill': 3, Billed: 4, Paid: 5, Cancelled: 6, Error: 7}.freeze
+VISIT_STATUSES = { Arrived: 1, 'Ready To Bill': 3, Billed: 4, Paid: 5, Error: 6, Cancelled: 7}.freeze
 ARRIVED = VISIT_STATUSES[:Arrived].freeze
 READY = VISIT_STATUSES[:'Ready To Bill'].freeze
 BILLED = VISIT_STATUSES[:Billed].freeze
