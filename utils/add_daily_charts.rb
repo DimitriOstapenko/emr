@@ -3,7 +3,8 @@
 # Ignore already imported files
 #
 # Next lines allow to run it stand-alone
-require_relative '../config/environment'
+#require_relative '../config/environment'
+require '/home/rails/walkin/config/environment'
 require 'find'
 
 dir  = CHARTS_PATH.to_s + '/Daily'
