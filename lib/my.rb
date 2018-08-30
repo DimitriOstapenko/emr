@@ -535,11 +535,12 @@ module My
     visits.all.each do |v|
       pat = Patient.find(v.patient_id)
       next unless v.fee > 0
+      next if v.bil_type < 1
       @total_hcp_claims += 1 if v.hcp_services?
       status = v.billing_ref.present? ? v.billing_ref : v.status_str
       rows += [[ v.entry_ts.strftime("%d/%m/%Y"), pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, status, v.id ]]
-      @totals[v.bil_type] += v.fee if v.bil_type
-      @servcounts[v.bil_type] += 1 if v.bil_type
+      @totals[v.bil_type] += v.fee if v.bil_type.present?
+      @servcounts[v.bil_type] += 1 if v.bil_type.present?
       serv = v.services
       serv.shift
       serv.each do |s|
