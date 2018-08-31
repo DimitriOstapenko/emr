@@ -7,41 +7,66 @@
     <% end %>
     <nav>
       <ul class="nav navbar-nav navbar-right">
-	      
+
 <% if logged_in? %> 
+<% if device_type == 'desktop' %>
+<li>
+<%= form_with url: daysheet_index_path do |f| %>
+  <div class="form-group">
+    <div class="col-sm-12 col-md-12 padding-0">
+    <% doc_id = current_doctor.id rescue nil %>
+    <%= f.collection_select(:doc_id, 
+			    get_active_doctors,
+			    :id, 
+			    :lname, 
+			    options = {prompt: 'Set Doctor', selected: doc_id},
+			    html_options = {onchange: 'this.form.submit();'}
+			   ) %>
+    </div>
+  </div>
+  <% end %>
+</li>
+<li style="width:40px">&nbsp;</li>
+<% end %>
+
 <% if controller_name == 'daysheet' || controller_name == 'billings' %>
 	<% date = Date.parse(params[:date]) rescue Time.now %>
 	<% prevday = date.prev_day.strftime('%d-%m-%Y') %>
 	<% nextday = date.next_day.strftime('%d-%m-%Y') %>
-       <li style="width: 40px; align:left; top: 2px;"><%= link_to '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: prevday )  %></li>
-       <li> 
+       <li style="width: 35px; align:left; top: 2px;"><%= link_to '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: prevday )  %></li>
+       <li style="width:120px"> 
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
-	     <div class="form-group">
-                <div class="col-sm-12 padding-0">	     
-		  <%= f.date_field :date, id: '_datepicker',  onChange: 'this.form.submit()', value: date.strftime('%Y-%m-%d') %>
+	       <div class="form-group">
+                <div class="col-sm-12 col-md-12 padding-0">	     
+			<%= f.date_field :date,
+			    id: '_datepicker',  
+			    onChange: 'this.form.submit()', 
+			    value: date.strftime('%Y-%m-%d'), 
+			    style:"width:130px;" %>
 		</div>
 	     </div>
        <% end %>
        </li>
        
-       <li style="width: 35px; align:left; top: 2px;">
+       <li style="width: 30px; top: 2px;">
        <% if date < Date.today %>
-	       <%= link_to '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: nextday )  %>
-       <% else %>
-	       &nbsp;
+	 <%= link_to '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: nextday )  %> </li>
+       <% else %>       
+	   &nbsp;</li>
        <% end %>
-       </li>
 
 <% elsif controller_name != 'visits' && controller_name != 'users' && controller_name != 'static_pages' %>
+        <li style="width: 30px;">&nbsp;</li>
 	<li class="nav-item active">
  	<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>  
-	     <div class="form-group form-group-sm">
-                <div class="col-sm-10">
+	     <div class="form-group">
+                <div class="col-sm-12 col-md-10 padding-0">
 			<%= f.search_field :findstr, placeholder: "Find #{controller_name.singularize}", id: "findstr", :onChange => 'javascript: this.form.submit()' %>
 		</div>
 	     </div>
         <% end %>
 	</li>
+        <li style="width: 5px;">&nbsp;</li>
 <% end %>
 
 <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>

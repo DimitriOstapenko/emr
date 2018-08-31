@@ -3,7 +3,7 @@ class VisitsController < ApplicationController
   include My::Forms
 
 	before_action :logged_in_user #, only: [:create, :destroy, :index]
-##        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
+        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 #	before_action :admin_user, only: :destroy
 
   def index (defdate = Date.today )
@@ -43,10 +43,10 @@ class VisitsController < ApplicationController
     @visit.entry_by = current_user.name
     @visit.entry_ts = Time.now unless (@visit.entry_ts.present? && @visit.entry_ts < Date.tomorrow)
 
-    if current_doctor.blank? || @visit.doc_id != current_doctor.id
-	 set_doc_session ( @visit.doc_id )
-	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
-    end
+#    if current_doctor.blank? || @visit.doc_id != current_doctor.id
+#	 set_doc_session ( @visit.doc_id )
+#	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
+#    end
 
     set_visit_fees ( @visit )
 
@@ -78,10 +78,10 @@ class VisitsController < ApplicationController
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.created_at)
       
-      if current_doctor.blank? || @visit.doc_id != current_doctor.id
-	 set_doc_session ( @visit.doc_id )
-	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
-      end
+#      if current_doctor.blank? || @visit.doc_id != current_doctor.id
+#	 set_doc_session ( @visit.doc_id )
+#	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
+#      end
 
       set_visit_fees( @visit )
       @visit.save
