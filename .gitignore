@@ -38,7 +38,7 @@
 /export
 /charts
 /reports
-#/paystubs
+/paystubs
 /GO
 /invoices
 /.DS_Store
