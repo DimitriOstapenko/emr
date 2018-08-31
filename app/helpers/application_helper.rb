@@ -1,9 +1,15 @@
 module ApplicationHelper
        
+# Returns the current doctor (if any).
+  def current_doctor
+    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
+  end
+
 # Guess device type 	
 # /mobile|android|iphone|blackberry|iemobile|kindle/
     def device_type
       ua  = request.user_agent.downcase rescue 'unknown'
+      WillPaginate.per_page = 25
       if ua.match(/macintosh|windows/)
 #	 WillPaginate.per_page = 34  # doesnt work in multi-thread 
 	 return 'desktop'

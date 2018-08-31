@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   get '/doctors/index' => 'doctors#find', constraints: { query_string: /findstr/ }
   get '/doctors/index' 
   post '/daysheet/index', to: 'daysheet#set_doctor' 
-  #get '/set_doctor', to: 'daysheet#set_doctor' 
+  get '/set_doctor', to: 'daysheet#set_doctor' 
   get '/daysheet/index', to: 'daysheet#index', as: :daysheet
   get '/vaccines/index', to:  "vaccines#find", constraints: { query_string: /findstr/ }
   get '/vaccines/index' 
@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
+  #get '/daysheet/card', to: 'patients#card'
+  #post  '/daysheet/card', to: 'patients#card'
 
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
