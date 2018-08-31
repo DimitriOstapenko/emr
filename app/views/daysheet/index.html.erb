@@ -2,10 +2,6 @@
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 <% provide(:button_text, 'Save changes') %>
 
-<% if current_doctor && date == Date.today%>
-      <div class="navbar-text"><small>Doctor in: Dr. <b><%= current_doctor.lname rescue '' %></b>  Est. Wait: <b><%= current_wait_time %></b> min.</small></div>
-<% end %>
-
 <table class="tbl table-hover" >
   <thead>
       <tr>

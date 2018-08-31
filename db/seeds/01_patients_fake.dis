@@ -1,6 +1,8 @@
 #
 # Seed patient table
 #
+require_relative '../../config/environment'
+#require "faker"
 
 i=0
 50.times do |n|
@@ -30,7 +32,7 @@ i=0
 		  ohip_ver: 'XX',
 		  hin_prov: 'ON',
 		  hin_expiry: exp,
-		  pat_type: 'OHIP',
+		  pat_type: 'O',
 		  pharmacy: 'Centennial Pkwy 5',
 		  pharm_phone: phone,
 		  notes: 'notes',

@@ -24,8 +24,9 @@ class ApplicationController < ActionController::Base
    def current_doctor_set
 	 unless current_doctor
 	   store_location
-	   flash[:danger] = "Current doctor is not set"
-	   redirect_to set_doctor_url
+	   flash.now[:danger] = "Current doctor is not set"
+#	   redirect_to set_doctor_url
+	   redirect_to daysheet_url
 	 end
    end
 
@@ -40,3 +41,9 @@ end
   def hcp_procedure?(proc_code)
     Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
   end
+
+# Returns the current doctor (if any).
+  def current_doctor
+    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
+  end
+  
