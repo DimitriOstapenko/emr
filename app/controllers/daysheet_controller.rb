@@ -45,6 +45,23 @@ class DaysheetController < ApplicationController
       
   end
 
+  def set_doctor
+      doc_id = params[:doc_id]
+      id = params[:id]
+      if doc_id
+	 set_doc_session( doc_id )
+	 doc = Doctor.find( doc_id ) || Doctor.new()
+	 flash[:info] = "Current Doctor set to Dr. #{doc.lname}"
+#	 redirect_back(fallback_location: daysheet_index_path)
+	 redirect_back_or( daysheet_index_path )
+      else
+	 render '_set_doctor'
+	 #flash[:info] = "#{render_to_string :partial => '/daysheet/set_doctor'}"
+      end
+  end
+
+  private
+
   def sort_column
           Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
   end
