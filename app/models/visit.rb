@@ -244,6 +244,7 @@ class Visit < ApplicationRecord
 
   def diag_required
     hcp_codes = hcp_proc_codes.split(',') rescue nil
+    return unless hcp_codes.any?
     hcp_codes.each do |code|
       proc = Procedure.find_by(code: code)      
       if proc.diag_req
@@ -251,6 +252,12 @@ class Visit < ApplicationRecord
          return
       end
     end
+  end
+
+  def has_proc?(code)
+    hcp_codes = hcp_proc_codes.split(',') rescue nil
+    return unless hcp_codes.any?
+    hcp_codes.index(code)
   end
 
 end

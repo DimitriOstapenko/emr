@@ -96,10 +96,15 @@ class PatientsController < ApplicationController
   def addrlabel
     @patient = Patient.find(params[:id])
     @pdf  = build_address_label(@patient)
-    send_data @pdf.render,
-	  filename: "label_#{@patient.full_name}",
-          type: 'application/pdf',
-          disposition: 'inline' 
+    respond_to do |format|
+        format.html do
+    	  send_data @pdf.render,
+	    filename: "addrlabel_#{@patient.full_name}",
+            type: 'application/pdf',
+            disposition: 'inline' 
+	end
+	format.js { @pdf.render_file File.join(Rails.root, 'public', "addrlabel.pdf") }
+    end
   end
 
 # Get card string from listener, find patient or show form to create one
@@ -110,7 +115,7 @@ class PatientsController < ApplicationController
        @patient = Patient.find_by(ohip_num: @cardstr[7,10])
        if @patient
 	  msg = nil
-	  msg = "Last name mismatch: card says '#{cardpat.lname}'" if cardpat.lname.casecmp(@patient.lname) !=0
+	  msg = "Last name mismatch: name on the card: '#{cardpat.lname}'" if cardpat.lname.casecmp(@patient.lname) !=0
 #	  msg = "First name mismatch: card says '#{cardpat.fname}'" if cardpat.fname.casecmp(@patient.fname) != 0
 	  msg = "Gender mismatch: #{cardpat.sex} on the card" if cardpat.sex.casecmp(@patient.sex) != 0
 
@@ -132,18 +137,19 @@ class PatientsController < ApplicationController
              redirect_to @patient
 	  end
        else 
-	  msg = "Patient '#{cardpat.lname}' born #{cardpat.dob} already exists in database with different health card number" if Patient.exists?(lname: cardpat.lname, dob: cardpat.dob)
+	  p = Patient.find_by(lname: cardpat.lname, dob: cardpat.dob)
 	  @patient = cardpat 
-	  if msg.present?
-	     flash[:danger] = msg 
+	  if p.present?
+             flash[:danger] = "Patient '#{cardpat.lname}' born #{cardpat.dob} already exists in database with card number #{p.ohip_num}"
+	     redirect_to @patient
 	  else
 	     flash[:info] = 'New Patient'
+	     render 'new'
 	  end
-          respond_to do |format|
-            format.html 
-	    format.js 
-	  end
-	  render 'new'
+      #    respond_to do |format|
+      #      format.html 
+      #	    format.js 
+#	  end
        end
     else     
        flash.now[:success] = "Card number not read yet  #{params.inspect}"

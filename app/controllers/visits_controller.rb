@@ -86,7 +86,7 @@ class VisitsController < ApplicationController
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-      redirect_back_or( @patient )
+      redirect_to( @patient )
     else
 	    flash.now[:danger] =  doc.errors.full_messages.first rescue ''
       render 'edit'
@@ -177,26 +177,34 @@ class VisitsController < ApplicationController
   def receipt
         @visit = Visit.find(params[:id])
 	@patient = Patient.find(@visit.patient_id)
-        pdf = build_visit_receipt( @patient, @visit )
+        @pdf = build_visit_receipt( @patient, @visit )
 
-        send_data pdf.render,
-          filename: "receipt_#{@patient.full_name}",
-          type: 'application/pdf',
-          disposition: 'inline'
-
-#    render inline: '', layout: true
+        respond_to do |format|
+          format.html do
+          send_data @pdf.render,
+            filename: "receipt_#{@patient.full_name}",
+            type: 'application/pdf',
+            disposition: 'inline'
+	  end
+	  format.js { @pdf.render_file File.join(Rails.root, 'public', "receipt.pdf") }
+	end
   end
 
 # Generate referral form for this visit
   def referralform
 	@visit = Visit.find(params[:id])
         @patient = Patient.find(@visit.patient_id)
-	pdf = build_referral_form( @patient, @visit )
+	@pdf = build_referral_form( @patient, @visit )
         
-	send_data pdf.render,
-             filename: "referral_#{@patient.full_name}",
-             type: 'application/pdf',
-             disposition: 'inline'
+        respond_to do |format|
+          format.html do
+	    send_data @pdf.render,
+              filename: "referral_#{@patient.full_name}",
+              type: 'application/pdf',
+              disposition: 'inline'
+	  end
+	  format.js { @pdf.render_file File.join(Rails.root, 'public', "referralform.pdf") }
+	end
   end
 
   private
