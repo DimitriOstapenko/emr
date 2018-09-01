@@ -57,30 +57,32 @@
 </div>
 
 <p>
-<div class="row">
- <% if @visit.status < BILLED || current_user.admin? %>
- <div class="col-sm-3 col-md-2">
-  <%= button_to "Edit Visit", edit_patient_visit_path(@patient), class: "btn btn-primary", :method => "get" %>
- </div>
- <% end %>
-
 <% remote = device_type == 'desktop' %>
-<div class="col-sm-3 col-md-2">
-<%= button_to "Visit Form", visitform_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-primary clickable", method: 'get'  %>
-<div id="modal-window" class="modal fade modal-lg printable autoprint" role="document" aria-labelledby="myModalLabel" aria-hidden="true">
+
+<div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="dialog">
     <div class="modal-content"></div>
   </div>
 </div>
+
+<div class="row">
+ <% if @visit.status < BILLED || current_user.admin? %>
+ <div class="col-sm-3 col-md-2">
+  <%= button_to "Edit Visit", edit_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", method: "get" %>
+ </div>
+ <% end %>
+
+<div class="col-sm-3 col-md-2">
+<%= button_to "Visit Form", visitform_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-primary clickable", method: 'get'  %>
 </div>
 
- <div class="col-sm-3 col-md-2">
- <%= button_to "Referral Form", referralform_patient_visit_path(@patient), class: "btn btn-primary", method: 'get', formtarget: "Form"  %>
- </div>
+<div class="col-sm-3 col-md-2">
+<%= button_to "Referral Form", referralform_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',class: "btn btn-primary clickable", method: 'get' %>
+</div>
 
  <% if @visit.cash? %> 
  <div class="col-sm-3 col-md-2">
- <%= button_to "Receipt", receipt_patient_visit_path(@patient), class: "btn btn-primary", method: 'get', formtarget: "Receipt"  %>
+ <%= button_to "Receipt", receipt_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", method: 'get' %>
  </div>
  <% end %>
  

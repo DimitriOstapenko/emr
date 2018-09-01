@@ -1,7 +1,11 @@
+
+<div id='result'></div>
+
 <% date = params[:date].to_date rescue Date.today %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 <% provide(:button_text, 'Save changes') %>
 
+<div id='page'>
 <table class="tbl table-hover" >
   <thead>
       <tr>
@@ -55,3 +59,4 @@
 <%= will_paginate @daysheet, class: "btn" %> 
 </div>
 
+</div>
