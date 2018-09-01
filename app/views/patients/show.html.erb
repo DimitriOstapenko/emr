@@ -36,9 +36,11 @@
     </section>
 
 <div class="row">
+   <% unless @patient.pat_type == DECEASED_PATIENT %>
   <div id="new_visit" class="col-sm-3">
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
   </div>
+  <% end %>
   <div id="edit_pat" class="col-sm-3">
     <%= button_to "Edit Patient", edit_patient_path(@patient), class:"btn btn-primary", method: 'get' %>
   </div>
