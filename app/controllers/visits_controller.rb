@@ -3,7 +3,7 @@ class VisitsController < ApplicationController
   include My::Forms
 
 	before_action :logged_in_user #, only: [:create, :destroy, :index]
-        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
+#        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 #	before_action :admin_user, only: :destroy
 
   def index (defdate = Date.today )

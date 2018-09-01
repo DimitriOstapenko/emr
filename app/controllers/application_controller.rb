@@ -20,14 +20,9 @@ class ApplicationController < ActionController::Base
       end
     end
 
-# confirms current_doctor set
+# alert if current_doctor is not set
    def current_doctor_set
-	 unless current_doctor
-	   store_location
-	   flash.now[:danger] = "Current doctor is not set"
-#	   redirect_to set_doctor_url
-	   redirect_to daysheet_url
-	 end
+     flash.now[:danger] = "Please set doctor for this shift" unless current_doctor
    end
 
 # Confirms an admin user.
