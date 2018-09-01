@@ -3,9 +3,10 @@ class DaysheetController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
 	before_action :logged_in_user
-#        before_action :admin_user, only: :destroy
+        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 	
   def index
+      @daysheet = []
       @date = Date.parse(params[:date]) rescue nil
       store_location
       if @date.present?
@@ -37,7 +38,6 @@ class DaysheetController < ApplicationController
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "#{flashmsg} #{@insured_svcs} insured #{'service'.pluralize(@insured_svcs)}; #{@cash_svcs} cash #{'service'.pluralize(@cash_svcs)} (#{sprintf('$%.2f',@total_cash)}); #{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}"
 
-#         render 'index'
       else  
 	    flash.now[:info] = 'No visits were found for date ' + @date.inspect 
 	    render  inline: '', layout: true
