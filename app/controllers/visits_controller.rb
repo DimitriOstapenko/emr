@@ -43,11 +43,6 @@ class VisitsController < ApplicationController
     @visit.entry_by = current_user.name
     @visit.entry_ts = Time.now unless (@visit.entry_ts.present? && @visit.entry_ts < Date.tomorrow)
 
-#    if current_doctor.blank? || @visit.doc_id != current_doctor.id
-#	 set_doc_session ( @visit.doc_id )
-#	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
-#    end
-
     set_visit_fees ( @visit )
 
     if @visit.save

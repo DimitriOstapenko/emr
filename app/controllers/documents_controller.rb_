@@ -10,10 +10,6 @@ class DocumentsController < ApplicationController
    @document = @visit.documents.build(document_params)
 
    if @document.save
-#     params[:document][:document_data].each do |file|
-#         @visit.documents.create!(:document => file)
-#         #create a document associated with the item that has just been created
-#     end
      render :show, status: :created, location: @document
    else
      render json: @document.errors, status: :unprocessable_entity

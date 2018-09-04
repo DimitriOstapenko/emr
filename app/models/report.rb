@@ -17,5 +17,17 @@ class Report < ApplicationRecord
   def filespec
     REPORTS_PATH.join(filename) rescue nil
   end
+
+  def filesize 
+    sprintf("%.2f", File.size(self.filespec).to_f/2**20) rescue 0
+  end
+
+  def timeframe_str
+    REPORT_TFRAMES.invert[self.timeframe] rescue ''
+  end
+
+  def type_str 
+    REPORT_TYPES.invert[self.rtype]
+  end
   
 end
