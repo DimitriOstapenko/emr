@@ -10,7 +10,7 @@
   def index
     store_location
 
-    @reports = Report.paginate(page: params[:page])
+    @reports = Report.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
     flash.now[:info] = "Showing all reports (#{@reports.count})"
   end
 
@@ -26,7 +26,7 @@
     prefix += @report.doc_id.to_s || 'all'
     sdate = @report.sdate.to_date rescue Date.today
     @doc  = Doctor.find(@report.doc_id)
-    @report.name = "#{prefix}_#{Time.now.strftime("%Y%m%d")}_#{@report.timeframe}"
+    @report.name = "#{prefix}_#{sdate.strftime("%Y%m%d")}_#{@report.timeframe}"
     @report.filename = @report.name+'.pdf'
     @visits_that_day = []
 
@@ -192,7 +192,7 @@ private
 
 
   def sort_column
-          Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
+          Report.column_names.include?(params[:sort]) ? params[:sort] : "id"
   end
 
   def sort_direction
