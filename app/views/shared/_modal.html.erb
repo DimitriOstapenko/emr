@@ -1,0 +1,10 @@
+<!-- Modal size is set here:  modal-dialog modal-lg -->
+
+<% modifier = (defined?(size)).nil? ? '': 'modal-'+size %>
+
+<div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog <%= modifier %>" role="dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+

@@ -38,7 +38,7 @@ class DailyChartsController < ApplicationController
     send_file(Rails.root.join(CHARTS_PATH,"Daily/#{year}",@chart.filename),
              filename: "Chart_#{@chart.filename}",
              type: "application/pdf",
-             disposition: :inline)
+             disposition: :attachment)
 
   end
 

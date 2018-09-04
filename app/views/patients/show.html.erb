@@ -1,4 +1,5 @@
 <% provide(:title, @patient.full_name) %>
+<%= render "shared/modal", size:'lg' %>
 
 	<h1><%= @patient.full_name %> :  Patient profile </h1>
 
@@ -36,23 +37,20 @@
     </section>
 
 <div class="row">
+  <% remote = device_is_desktop? %>
+
    <% unless @patient.pat_type == DECEASED_PATIENT %>
   <div id="new_visit" class="col-sm-3">
     <%= button_to "New Visit", new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
   </div>
   <% end %>
+
   <div id="edit_pat" class="col-sm-3">
-    <%= button_to "Edit Patient", edit_patient_path(@patient), class:"btn btn-primary", method: 'get' %>
+    <%= button_to "Edit Patient", edit_patient_path(@patient), remote: remote, 'data-toggle': "modal", 'data-target': '#modal-window', class:"btn btn-primary", method: 'get' %>
   </div>
 
-  <% remote = device_type == 'desktop' %>
   <div id="modLabel" class="col-sm-3">
   <%= button_to "Label", label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-primary clickable", method: 'get'  %>
-  <div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
   </div>
   
   <div id="invoice" class="col-sm-3">

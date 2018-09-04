@@ -3,6 +3,7 @@
   @doctor = Doctor.find(@visit.doc_id)
   provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") 
 %>
+<%= render "shared/modal", size: 'lg' %>
 
 <h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) %>  </h1>
 
@@ -57,13 +58,7 @@
 </div>
 
 <p>
-<% remote = device_type == 'desktop' %>
-
-<div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="dialog">
-    <div class="modal-content"></div>
-  </div>
-</div>
+<% remote = device_is_desktop? %>
 
 <div class="row">
  <% if @visit.status < BILLED || current_user.admin? %>

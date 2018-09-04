@@ -79,7 +79,7 @@ class PaystubsController < ApplicationController
              disposition: :attachment
   end
 
-# Generate PDF version of the report, save in reports directory
+# Generate PDF version of the paystub, save in paystubs directory
   def export
       @paystub = Paystub.find(params[:id])
       name = "#{@paystub.doctor.lname}_#{Date::MONTHNAMES[@paystub.month]}_#{@paystub.year}"

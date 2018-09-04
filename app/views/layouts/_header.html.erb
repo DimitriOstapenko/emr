@@ -11,7 +11,7 @@
 <% if logged_in? %> 
 <% if device_type == 'desktop' %>
 <li>
-<%= form_with url: daysheet_index_path do |f| %>
+<%= form_with url: set_doctor_path do |f| %>
   <div class="form-group">
     <div class="col-sm-12 col-md-12 padding-0">
     <% doc_id = current_doctor.id rescue nil %>

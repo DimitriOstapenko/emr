@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  include ApplicationHelper
   include SessionsHelper
   include DaysheetHelper
   helper_method :hcp_procedure?
@@ -22,15 +23,17 @@ class ApplicationController < ActionController::Base
 
 # alert if current_doctor is not set
    def current_doctor_set
-     flash.now[:danger] = "Please set doctor for this shift" unless current_doctor
+     unless current_doctor
+       store_location
+       flash[:danger] = "Please set doctor for this shift"
+       redirect_to set_doctor_url if device_type == 'mobile'
+     end
    end
 
 # Confirms an admin user.
     def admin_user
       redirect_to(root_url) unless current_user && current_user.admin?
     end
-
-end
 
 # Is procedure OHIP covered?
   def hcp_procedure?(proc_code)
@@ -41,4 +44,6 @@ end
   def current_doctor
     @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
   end
+
+end
   
