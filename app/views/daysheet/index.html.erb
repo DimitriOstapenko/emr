@@ -48,6 +48,21 @@
   </thead>
   <tbody>
 
+<!-- use modal-dialog modal-lg for larger modal -->
+  <div id="modal-window" class="modal fade printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+  
+<!--  
+  <div id="modal-window-lg" class="modal fade printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+-->
+
   <% @daysheet.each do |v| %>
      <%= render 'visit', visit: v %>
   <% end %>

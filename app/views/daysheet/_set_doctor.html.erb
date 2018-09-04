@@ -1,6 +1,0 @@
-<%= form_with url: daysheet_index_path do |f| %>
-	<% doc_id = current_doctor.id rescue nil %>
-	<div class="form-group col-sm-4 col-md-2 col-sm-offset-2 col-md-offset-1">
-		<%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, {prompt: 'Doctor'},  {onchange: "this.form.submit()"} ) %>
-	</div>
-<% end %>

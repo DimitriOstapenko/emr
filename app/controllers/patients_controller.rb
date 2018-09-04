@@ -7,6 +7,7 @@ class PatientsController < ApplicationController
   def index
       @patients = Patient.paginate(page: params[:page])
       flash.now[:info] = "Showing All Patients (#{@patients.count}) "
+
   end
 
   def find

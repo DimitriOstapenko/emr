@@ -26,18 +26,13 @@
 	  <%= visit.status_str %>
 	<% end %>
 	</td>
+
+	<% remote = device_is_desktop? %>
 	
-	<% remote = device_type == 'desktop' %>
-	
+	<!-- #modal-window is defined in index -->	
 	<% if @date == Date.today || @date.blank? %>
 	<td><%= link_to "Label", label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
 
-  <div id="modal-window" class="modal fade printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
-	  
 	  <td><%= link_to "Form", visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get'  %></td>
 
 	  <td> <%= link_to "Edit",  edit_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get' %> </td>

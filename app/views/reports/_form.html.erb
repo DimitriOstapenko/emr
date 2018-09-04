@@ -1,6 +1,7 @@
 <%= form_for @report do |f| %>
 		
 <%= render 'shared/error_messages', object: f.object %>
+<%= render 'shared/modal', size: 'lg' %>
 
 <%
         doc_id = current_doctor.id if current_doctor
@@ -62,22 +63,18 @@
 </div>
 
 <!-- Row 4 -->
+
+
+<% remote = device_is_desktop? %>
+
 <div class="row">
   <div class='spacer-20'></div>
   <div class="col-sm-4 col-sm-offset-4">
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <%= f.submit yield(:button_text),  remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", method: 'get' %>
   </div>
 </div>
 
 <% end %>
-
-<!-- Row 5 -->
-<div class="row">
-<div class="col-sm-4 col-sm-offset-4">
-  <div class='spacer-10'></div>
-  <%= button_to 'Back', reports_path, class: "btn btn-primary",  method: 'get' %>
-</div>
-</div>
 
 <script>
 $(document).ready(function () {
