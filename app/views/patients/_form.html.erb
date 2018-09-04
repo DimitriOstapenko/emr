@@ -100,13 +100,13 @@
 
 <!-- Row 4 -->
 
-  <div class="col-sm-3 col-md-3">
+<div class="row">
+  <div class="col-sm-3 col-md-3 col-sm-offset-1">
   <%= f.label :family_doctor %>
   <%= f.text_field :family_dr %>
   </div>
   
-<div class="row">
-  <div class="col-sm-2 col-md-2 col-sm-offset-1">
+  <div class="col-sm-2 col-md-2">
   <%= f.label :'Home Phone'  %>
   <%= f.phone_field :phone, value: num_to_phone(@patient.phone)  %>
   </div>
