@@ -14,16 +14,8 @@
 	  <%= link_to 'Chart', chart_patient_path(patient), target: 'Label' %>
 	<% end %>
 	</td>
-	
-<% remote = device_type == 'desktop' %>
-  <td>
-  <%= link_to "Label", addrlabel_patient_path(patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %>
-  <div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
-  </td>
+
+<td><%= link_to "Label", addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
 
   	<% if current_user.admin?  %>
 		<td>  <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> 

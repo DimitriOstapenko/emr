@@ -9,15 +9,17 @@ module ApplicationHelper
 # /mobile|android|iphone|blackberry|iemobile|kindle/
     def device_type
       ua  = request.user_agent.downcase rescue 'unknown'
-      WillPaginate.per_page = 25
       if ua.match(/macintosh|windows/)
-#	 WillPaginate.per_page = 34  # doesnt work in multi-thread 
-	 return 'desktop'
+	 'desktop'
       else 
-#	 WillPaginate.per_page = 20
-	 return 'mobile'
+	 'mobile'
       end
     end
+
+def device_is_desktop?
+  device_type == 'desktop'
+end
+
 
 # used in diagnosis,daysheet,reports 
     def sortable(column, title = nil)
