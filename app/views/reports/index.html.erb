@@ -5,13 +5,14 @@
 <table class="tbl table-hover">  <!--table table-hover table-condensed" >  -->
   <thead>
       <tr>
-          <th>Doctor</th>
+	  <th><%= sortable 'id', '#' %></th>
+	  <th><%= sortable 'doc_id', 'Doctor' %></th>
           <th>Report</th>
           <th>Link</th>
-	  <th>Size </th>
-          <th>Type</th>
+	  <th>Size(M) </th>
+	  <th><%= sortable 'rtype', 'Type' %></th>
           <th>Timeframe</th>
-          <th>Date</th>
+	  <th><%= sortable 'sdate', 'Date' %></th>
 	   <% if current_user.admin?  %>
           <th></th>
 	  <% end %>
