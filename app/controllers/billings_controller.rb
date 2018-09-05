@@ -31,22 +31,27 @@ class BillingsController < ApplicationController
       else
 	 flashmsg = "#{@visits.count} #{flash_add} #{'visit'.pluralize(@visits.count)}," 
       end
+      
+      @not_ready = Visit.where('date(entry_ts) = ? AND status=?', @date, ARRIVED)
 
+      if @visits.any? && @not_ready.blank?
+         @visits.map{|v| @totalfee += v.total_fee}
+         @visits.map{|v| @totalcash += v.total_cash}
+         @visits.map{|v| @totalinsured += v.total_insured_fees}
+         @visits.map{|v| @total_insured_services += v.total_insured_services}
 
-      @visits.map{|v| @totalfee += v.total_fee}
-      @visits.map{|v| @totalcash += v.total_cash}
-      @visits.map{|v| @totalinsured += v.total_insured_fees}
-      @visits.map{|v| @total_insured_services += v.total_insured_services}
-
-      if @visits.any?
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} #{'service'.pluralize(@total_insured_services)}. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
+	 render 'index'
+      elsif @visits.any?    # there are not ready visits
+	 flash.now[:info] = "Not ready to submit billing, #{@not_ready.count} #{'visit'.pluralize(@not_ready.count)} in day sheet still require attention"    
+	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 render 'index'
       else
 	 if params[:date].present?
 	    flash.now[:info] = "No billed or ready to bill services found for date #{@date}"
 	 else 
-	    flash.now[:info] = "No previously unbilled services found"
+	    flash.now[:info] = "No ready to bill services found"
 	 end
 	 render  inline: '', layout: true
       end

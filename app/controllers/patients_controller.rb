@@ -90,7 +90,7 @@ class PatientsController < ApplicationController
           type: 'application/pdf',
           disposition: 'inline' 
 	end
-	format.js { @pdf.render_file File.join(Rails.root, 'public', "label.pdf") }
+	format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "label.pdf") }
     end
   end
 
@@ -104,7 +104,7 @@ class PatientsController < ApplicationController
             type: 'application/pdf',
             disposition: 'inline' 
 	end
-	format.js { @pdf.render_file File.join(Rails.root, 'public', "addrlabel.pdf") }
+	format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "addrlabel.pdf") }
     end
   end
 
