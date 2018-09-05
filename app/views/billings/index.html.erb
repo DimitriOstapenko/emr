@@ -46,12 +46,14 @@
   <%= will_paginate @visits, class: "btn" %>
 
   <% if date == Date.today || date.blank? || current_user.admin? %>
-    <% if BILLING_FORMAT == 'EDT' %>
+    <% if @not_ready.blank? %>
+      <% if BILLING_FORMAT == 'EDT' %>
          <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
-    <% elsif BILLING_FORMAT == 'CSV' %>
+      <% elsif BILLING_FORMAT == 'CSV' %>
 	 <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>
-    <% elsif BILLING_FORMAT == 'CABMD' %>
+      <% elsif BILLING_FORMAT == 'CABMD' %>
 	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}   %>
+      <% end %>
     <% end %>
   <% end %>
 </div>
