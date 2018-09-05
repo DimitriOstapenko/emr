@@ -9,7 +9,7 @@
   <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, selected: @paystub.doc_id %>
 </div >
 <div class="col-sm-2" >
-  <%= f.label "Monthly Premium Payment" %>
+  <%= f.label "Monthly Premium" %>
   <%= f.number_field :monthly_premium_amt, value:0, step: :any %>
 </div>
 </div>
@@ -46,17 +46,15 @@
   <%= f.label :MHO_deduction %>
   <%= f.number_field :mho_deduction, value: 0, step: :any %>
 </div>
-</div>
 
 <!-- Row 4 opt -->
 <% if current_user.admin?  %>
-<div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
+<div class="col-sm-2" >
   <%= f.label :month %>
   <%= select_month Time.now, value: Time.now.month  %>
 </div>
-</div>
 <% end %>
+</div>
 
 
 <div class="spacer-20"></div>
