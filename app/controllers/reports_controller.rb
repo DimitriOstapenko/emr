@@ -89,7 +89,7 @@
 
   def show_pdf
    @report = Report.find( params[:id] )
-   @public_link = File.join(Rails.root, 'public', "doc_report.pdf")
+   @public_link = File.join(Rails.root, 'public', 'uploads', "doc_report.pdf")
 #   FileUtils.rm @public_link, :force => true
 #   FileUtils.cp @report.filespec, @public_link
 

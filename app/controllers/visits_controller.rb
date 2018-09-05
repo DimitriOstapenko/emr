@@ -164,7 +164,7 @@ class VisitsController < ApplicationController
             type: 'application/pdf',
             disposition: 'inline'
           end
-	  format.js { @pdf.render_file File.join(Rails.root, 'public', "visitform.pdf") }
+	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "visitform.pdf") }
 	end
   end  
 
@@ -181,7 +181,7 @@ class VisitsController < ApplicationController
             type: 'application/pdf',
             disposition: 'inline'
 	  end
-	  format.js { @pdf.render_file File.join(Rails.root, 'public', "receipt.pdf") }
+	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "receipt.pdf") }
 	end
   end
 
@@ -198,7 +198,7 @@ class VisitsController < ApplicationController
               type: 'application/pdf',
               disposition: 'inline'
 	  end
-	  format.js { @pdf.render_file File.join(Rails.root, 'public', "referralform.pdf") }
+	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "referralform.pdf") }
 	end
   end
 
