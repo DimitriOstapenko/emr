@@ -43,4 +43,4 @@
 /EDT
 /invoices
 /.DS_Store
-/lib/seeds
+#/lib/seeds
