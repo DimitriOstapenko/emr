@@ -13,7 +13,7 @@ class PaystubsController < ApplicationController
     current_year_month = Time.now.strftime('%Y%m').to_i
     cur_month = Date::MONTHNAMES[Time.now.month]
     @can_generate_new_paystubs = @latest_pay_date.strftime('%Y%m').to_i == current_year_month rescue false
-    suff = @can_generate_new_paystubs ? "Can generate new paystubs for #{cur_month}": "Cannot generate #{cur_month} paystubs - file is not available yet"
+    suff = @can_generate_new_paystubs ? "Can generate paystubs for #{cur_month}": "Cannot generate #{cur_month} paystubs - file is not available yet"
 
     flash.now[:info] = "Latest processed RA file: #{@latest_ra_file}; Latest payment date: #{@latest_pay_date}. " + suff
   end
@@ -90,12 +90,8 @@ class PaystubsController < ApplicationController
       @paystub.update_attribute(:filename, name+'.pdf')
 
       pdf = build_paystub( @paystub,@claims )
-
       pdf.render_file @paystub.filespec
-      send_data pdf.render,
-	  filename: @paystub.filename,
-          type: 'application/pdf',
-          disposition: :attachment
+      redirect_to paystubs_path, alert: "New paystub created for Dr. #{@paystub.doctor.lname}"
   end
 
 # Calculate clinic budget for this month: sum of all deductions to the clinic  
