@@ -41,7 +41,7 @@ class BillingsController < ApplicationController
          @visits.map{|v| @total_insured_services += v.total_insured_services}
 
 	 @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} #{'service'.pluralize(@total_insured_services)}. Total fee: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
+	 flash.now[:info] = "#{flashmsg}  #{@total_insured_services} #{'service'.pluralize(@total_insured_services)}. Total fees: #{sprintf("$%.2f",@totalfee)} Insured: #{sprintf("$%.2f",@totalinsured)} Cash: #{sprintf("$%.2f",@totalcash)}."
 	 render 'index'
       elsif @visits.any?    # there are not ready visits
 	 flash.now[:info] = "Not ready to submit billing, #{@not_ready.count} #{'visit'.pluralize(@not_ready.count)} in day sheet still require attention"    

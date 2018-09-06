@@ -25,6 +25,7 @@ class Doctor < ApplicationRecord
         validates :note, length: {maximum: 255}, allow_blank: true
         validates :office, length: {maximum: 255}, allow_blank: true
         validates :email, length: { maximum: 255 }, allow_blank: true   #format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }, allow_blank: true
+	validates :percent_deduction, presence: true, :numericality => { :greater_than_or_equal_to => 0 }
 
 	validate :provider_no_required_if_bills
 
