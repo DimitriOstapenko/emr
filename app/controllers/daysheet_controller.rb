@@ -34,9 +34,13 @@ class DaysheetController < ApplicationController
       @daysheet.map{|v| @cash_svcs += v.total_cash_services}
       @daysheet.map{|v| @total_cash += v.total_cash}
       @daysheet.map{|v| @ifh_svcs += v.total_ifh_services}
+      ins_str = @insured_svcs>0 ? "#{@insured_svcs} insured #{'service'.pluralize(@insured_svcs)};" : ''
+      csh_str = @cash_svcs>0 ? "#{@cash_svcs} cash #{'service'.pluralize(@cash_svcs)} (#{sprintf('$%.2f',@total_cash)});" : ''
+      ifh_str = @ifh_svcs>0 ? "#{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}" : ''
+
       if @daysheet.any?
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "#{flashmsg} #{@insured_svcs} insured #{'service'.pluralize(@insured_svcs)}; #{@cash_svcs} cash #{'service'.pluralize(@cash_svcs)} (#{sprintf('$%.2f',@total_cash)}); #{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}"
+	 flash.now[:info] = "#{flashmsg} #{ins_str} #{csh_str} #{ifh_str}"
 
       else  
 	    flash.now[:info] = 'No visits were found for date ' + @date.inspect 

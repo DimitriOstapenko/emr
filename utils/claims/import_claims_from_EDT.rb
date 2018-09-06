@@ -19,6 +19,7 @@ $ra_msg = nil
 $hr8_messages = ''
 $deposit_date = nil
 this_month = Date.today.month
+this_month_name = Date.today.strftime("%B")
 this_letter = ARGV[0] || ('A'..'Z').to_a[this_month-1]
 path = EDT_PATH.join("P#{this_letter.upcase}#{GROUP_NO}.*")
 this_month_file = Dir.glob(path).first rescue nil
@@ -26,10 +27,10 @@ this_month_file = Dir.glob(path).first rescue nil
 abort "File not found: #{path}" unless this_month_file.present?
 
 if this_month_file.present?
-   puts "File exists #{this_month_file}"	
+   puts "#{this_month_name} file exists (#{this_month_file})"	
    base = File.basename(this_month_file)
    if Claim.exists?(ra_file: base)
-	   abort ".. and is already imported. Use delete_ra_file_claims.rb <letter> script first"	
+     abort ".. and is already imported. Use delete_ra_file_claims.rb <letter> script to delete"	
    else 
      puts ".. and needs importing"
      RA_FILE = this_month_file
