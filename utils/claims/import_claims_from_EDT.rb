@@ -177,3 +177,4 @@ else
 end
 
 puts "Imported #{claims} claims, #{services} services"
+puts "Please run process_paid_claims.rb now to fix attributes and find missing claims"

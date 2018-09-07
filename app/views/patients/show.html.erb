@@ -69,15 +69,15 @@
   	  <thead>
 	  <tr>
 	    <th class="tbl_xlg">Date</th>
+	    <th> </th>
 	    <th class="tbl_lg">Doctor</th>
 	    <th>Diagnosis</th>
-	    <th class="tbl_xlg">Procedure(s)</th>
+	    <th class="tbl_xlg">Svcs</th>
 	    <th>Status</th>
-	    <th>Bill Ref#</th>
 	  </tr>
 	  <tbody>
 
-        <%= render @visits %>
+        <%= render @visits, remote: device_is_desktop? %>
 
           </tbody>
 	</table>
