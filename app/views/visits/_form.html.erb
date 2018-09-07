@@ -20,7 +20,9 @@
     end
   elsif @visit.proc_codes.empty?
      disabled = [READY,BILLED,PAID] 
-  else
+  elsif @visit.cash?
+     disabled = [READY,BILLED]
+  else 
      disabled = []
   end 
 %>
@@ -297,7 +299,7 @@ function set_btype( proc, suff ) {
 function select_statuses( proc, suff ) {
   var v = document.getElementById('visit_statuses').getElementsByTagName("option");
   var insured = <%= @insured %>;
-  if (proc.ptype == '2' && suff.length === 0  && insured) {
+  if (proc.ptype == '2' && suff.length === 0  || !insured) {
         v[1].disabled = true;  // READY
         v[2].disabled = false;
         v[3].disabled = false;

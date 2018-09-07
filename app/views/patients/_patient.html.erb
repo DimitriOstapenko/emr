@@ -11,11 +11,11 @@
 	<td><%= num_to_phone(patient.phone) %> </td> 
 	<td>
 	<% if patient.chart_file.present? %>
-	  <%= link_to 'Chart', chart_patient_path(patient), target: 'Label' %>
+	  <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(patient), target: 'Label' %>
 	<% end %>
 	</td>
 
-<td><%= link_to "Label", addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+<td><%= link_to '<i class="glyphicon glyphicon-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
 
   	<% if current_user.admin?  %>
 		<td>  <%= link_to "delete", patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> 
