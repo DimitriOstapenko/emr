@@ -15,14 +15,14 @@ puts "About to update daily_charts table with files from #{dir}"
 Find.find( dir ) do |path| 
 	basename = File.basename(path)
 	next unless basename.match(/^\d{4}-\d{2}-\d{2}\.pdf$/)
+	next if DailyChart.exists?(filename: basename)
 	(date, ext) = basename.split('.') 
 	reader = PDF::Reader.new( path )
 	chart = DailyChart.new filename: basename, date: date, pages: reader.page_count
 	if chart.save
           puts "Added chart : #{basename}"
   	else
-#          puts "Already in: #{basename} - ignored"
-#          puts chart.errors.full_messages
+          puts chart.errors.full_messages
   	end
 end
 
