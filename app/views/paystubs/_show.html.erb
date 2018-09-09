@@ -1,0 +1,17 @@
+<%
+   provide(:title, "Doctor's Paystub")
+   @doctor = Doctor.find(@paystub.doc_id)
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel"><%= @doctor.lname %>: Paystub for <%= @paystub.mon_year_str %></b>
+</div>
+<div class="modal-body">
+	<iframe id="myModal" src="/paystubs/<%= @paystub.filename %>" frameborder="0" width="100%" height="600px"></iframe>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" class="close" data-dismiss="modal">Dismiss</button>
+</div>
+
+

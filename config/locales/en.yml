@@ -37,6 +37,14 @@ en:
     formats:
       default: "%d-%b-%Y %H:%M"
 en:      
+  activerecord:
+    attributes:
+      patient:
+        lname: "Last Name"
+        fname: "First Name"
+        ohip_num: "OHIP Card Number"
+        dob: "Date Of Birth"
+                  
   errors:
     messages:
       carrierwave_processing_error: "Cannot resize image."
@@ -50,5 +58,6 @@ en:
     mini_magick_processing_error: "Failed to manipulate with MiniMagick, maybe it is not an image? Original Error: %{e}"
     min_size_error: "File size should be greater than %{min_size}"
     max_size_error: "File size should be less than %{max_size}"
+
 
 
