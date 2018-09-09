@@ -24,9 +24,9 @@ class DaysheetController < ApplicationController
          @daysheet = @daysheet.where(doc_id: params[:doc_id])
          d = Doctor.find(params[:doc_id])
          doctor = "Dr. #{d.lname}" if d.present?
-         flashmsg = "Daysheet for #{doctor} : #{@daysheet.count} visits, "
+         flashmsg = "Daysheet for #{doctor} : #{@daysheet.count} visits "
       else
-         flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)},"
+         flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)}"
       end
 
       @insured_svcs = @cash_svcs = @ifh_svcs = @total_cash = 0
@@ -34,19 +34,17 @@ class DaysheetController < ApplicationController
       @daysheet.map{|v| @cash_svcs += v.total_cash_services}
       @daysheet.map{|v| @total_cash += v.total_cash}
       @daysheet.map{|v| @ifh_svcs += v.total_ifh_services}
-      ins_str = @insured_svcs>0 ? "#{@insured_svcs} insured #{'service'.pluralize(@insured_svcs)};" : ''
-      csh_str = @cash_svcs>0 ? "#{@cash_svcs} cash #{'service'.pluralize(@cash_svcs)} (#{sprintf('$%.2f',@total_cash)});" : ''
-      ifh_str = @ifh_svcs>0 ? "#{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}" : ''
+      ins_str = @insured_svcs>0 ? ", #{@insured_svcs} insured #{'service'.pluralize(@insured_svcs)}" : ''
+      csh_str = @cash_svcs>0 ? ", #{@cash_svcs} cash #{'service'.pluralize(@cash_svcs)} (#{sprintf('$%.2f',@total_cash)})" : ''
+      ifh_str = @ifh_svcs>0 ? ", #{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}" : ''
 
       if @daysheet.any?
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "#{flashmsg} #{ins_str} #{csh_str} #{ifh_str}"
-
       else  
-	    flash.now[:info] = 'No visits were found for date ' + @date.inspect 
-	    render  inline: '', layout: true
+	 flash.now[:info] = 'No visits were found for date ' + @date.inspect 
+	 render  inline: '', layout: true
       end
-      
   end
 
   def set_doctor
@@ -57,8 +55,6 @@ class DaysheetController < ApplicationController
 	 doc = Doctor.find( doc_id ) || Doctor.new()
 	 flash[:info] = "Current Doctor set to Dr. #{doc.lname}"
 	 redirect_to  patients_path 
-#      else
-#	 render '_set_doctor'
       end
   end
 
