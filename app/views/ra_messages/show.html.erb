@@ -1,7 +1,7 @@
 <% provide(:title, @ra_msg.ra_file) %>
 
 <div class="row">
-<aside class="col-md-6 col-md-offset-3">
+<div class="col-md-8 col-md-offset-2">
 <h1>Messages from MOH RA File <%= @ra_msg.ra_file %> for payment of $<%= @ra_msg.damount %> issued <%= @ra_msg.date_paid %></h1>
 
 <pre class="pre-scrollable-xlg">
@@ -20,7 +20,7 @@ ________________________________________________________________________________
 <br>
 <%= "#{@ra_msg.msg_text}" %>
 </pre>
-</aside>
+</div>
 
 </div>
 

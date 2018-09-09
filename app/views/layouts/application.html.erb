@@ -7,19 +7,19 @@
   </head>
 
   <body>
-   <div  class="container">
     <div id="header"> 
     <%= render 'layouts/header' %>
     </div>
 
+   <div  class="container">
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %></div>
       <% end %>
       <%= yield %>
-
    </div>
+
    <div id="footer">
-      <%= render 'layouts/footer' if device_type == 'desktop'  %>
+      <%= render 'layouts/footer'  %>
       <%= debug(params) if DEBUG_FLAG > 0 %>
    </div>
 
