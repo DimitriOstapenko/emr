@@ -25,6 +25,11 @@ class Paystub < ApplicationRecord
       (self.gross_amt / 100.0) * doctor.percent_deduction	  
   end
 
+# Paystub month, year string
+  def mon_year_str
+     Date.new(self.year, self.month).strftime("%B %Y") rescue ''
+  end
+
   private
 
   def set_amounts
