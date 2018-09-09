@@ -42,5 +42,7 @@
 /GO
 /EDT
 /invoices
-/.DS_Store
+.DS_Store
 /lib/seeds
+/public/reports
+/public/paystubs
