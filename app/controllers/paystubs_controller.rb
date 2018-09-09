@@ -57,26 +57,40 @@ class PaystubsController < ApplicationController
   
   def show
     @paystub = Paystub.find(params[:id]) rescue nil
-    
-    if @paystub
-       @sdate = Date.new(@paystub.year, @paystub.month)
-       @edate = 1.month.since(@sdate)
-       @claims = Claim.where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate))
-       @claims = @claims.paginate(page: params[:page], per_page: 25)
-#       flash[:success] = "Doctor #{@paystub.doctor.lname} Pay Stub for #{Date::MONTHNAMES[@paystub.month]}  #{@paystub.year}, #{@paystub.claims} claims, #{@paystub.services} services Gross: $#{@paystub.gross_amt} OHIP: $#{@paystub.ohip_amt} Net: $#{@paystub.net_amt}"
-    else
-      redirect_to paystubs_path 
+    redirect_to reports_path unless @paystub
+
+    respond_to do |format|
+      format.html {
+        send_file(@paystub.filespec,
+             type: "application/pdf",
+             disposition: :inline) rescue 'Paystub file is missing'
+      }
+      format.js
     end
+
+#    if @paystub
+#       @sdate = Date.new(@paystub.year, @paystub.month)
+#       @edate = 1.month.since(@sdate)
+#       @claims = Claim.where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate))
+#       @claims = @claims.paginate(page: params[:page], per_page: 25)
+#    else
+#      redirect_to paystubs_path 
+#    end
   end
 
 # Display pdf pay stub if already exported
-  def show_pdf
+  def download
    @paystub = Paystub.find( params[:id] )
 
+   if File.exists?(@paystub.filespec)
    send_file @paystub.filespec,
 	     filename: @paystub.filename,
              type: "application/pdf",
              disposition: :attachment
+   else
+     flash.now[:danger] = "File #{@paystub.filename} was not found - regenerating" 
+     redirect_to export_report_path(@paystub)
+   end
   end
 
 # Generate PDF version of the paystub, save in paystubs directory

@@ -45,7 +45,7 @@
     		 @visits_that_day = Visit.where("date(entry_ts)=? and doc_id=?", @report.sdate, @report.doc_id)
     		 if @visits_that_day.any?
                    unbilled = @visits_that_day.where("status=?", ARRIVED)
-		   flash[:danger] = "Cannot create report before billing is finished. There are still #{unbilled.count} visits marked as ARRIVED in daysheet for doctor #{@doc.lname}" if unbilled.any?
+		   flash[:danger] = "Cannot create report before billing is finished. There are still #{unbilled.count} visits marked as ARRIVED in Day Sheet for doctor #{@doc.lname}" if unbilled.any?
 		 else
 	            flash[:danger] = "Dr. #{@doc.lname} didn't see any patients on #{@report.sdate}"
 		 end
@@ -83,29 +83,31 @@
   def show
     @report = Report.find(params[:id]) 
     redirect_to reports_path unless @report
-    @visits, @total, @insured, @uninsured = get_visits( @report )
-    @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 25)
+
+    respond_to do |format|
+      format.html { 
+        send_file(@report.filespec,
+             type: "application/pdf",
+             disposition: :inline) rescue 'Report file is missing'
+      }
+      format.js 
+    end
+
+#   @visits, @total, @insured, @uninsured = get_visits( @report )
+#   @visits = @visits.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: 25)
   end
 
-  def show_pdf
+  def download
    @report = Report.find( params[:id] )
-   @public_link = File.join(Rails.root, 'public', 'uploads', "doc_report.pdf")
-#   FileUtils.rm @public_link, :force => true
-#   FileUtils.cp @report.filespec, @public_link
 
    if File.exists?(@report.filespec)
-     respond_to do |format|
-        format.html do   
           send_file @report.filespec,
 	     filename: @report.filename,
              type: "application/pdf",
              disposition: :attachment
-	end
-	format.js {FileUtils.ln_s @report.filespec, @public_link, :force => true}
-      end
    else
-     flash.now[:danger] = "Error: File #{@report.filename} was not found" 
-     redirect_to reports_path
+     flash.now[:danger] = "File #{@report.filename} was not found - regenerating" 
+     redirect_to export_report_path(@report)
    end
   end
 
@@ -121,13 +123,7 @@
        @pdf = build_pc_report( @report, @claims )
     end
 
-    respond_to do |format|
-       format.html { @pdf.render_file @report.filespec }
-       format.js do									# Due to caching, symlinks don't really work.. Not used
-#	 @pdf.render_file File.join(Rails.root, 'public', "doc_report.pdf") 
-	 FileUtils.ln_s @report.filespec, File.join(Rails.root, 'public', "doc_report.pdf"), :force => true
-       end
-    end
+    @pdf.render_file @report.filespec
     redirect_to reports_path, alert: "New report created for Dr. #{@doc.lname}"
   end
 

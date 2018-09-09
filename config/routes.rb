@@ -83,11 +83,11 @@ Rails.application.routes.draw do
   end
   resources :reports do
      get 'export', on: :member
-     get 'show_pdf', on: :member
+     get 'download', on: :member
   end
   resources :paystubs do
      get 'export', on: :member
-     get 'show_pdf', on: :member
+     get 'download', on: :member
   end
   get 'budget', to: 'paystubs#budget'
 

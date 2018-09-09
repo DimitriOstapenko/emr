@@ -79,16 +79,16 @@ class Patient < ApplicationRecord
     return '' unless age
     case 
     when age[0] > 2		       
-	    return "#{age[0]} y"
+	    return "#{age[0]}y"
     when (age[1] > 2 && age[0] < 2)   # 2 mo to 2 yrs old
-	    return "#{age[0]*12 + age[1]} m"  
+	    return "#{age[0]*12 + age[1]}m"  
     when (age[0] < 1 && age[1] <= 2)  # up to 2 mo old
-            return "#{age[2]} d" 
+            return "#{age[2]}d" 
     end
   end
 
   def hc_expiry
-
+   return unless self.ohip_num.present?
 # Don't validate out of province or non-ohip numbers   
     if (hin_prov == 'ON' &&  pat_type == 'O')
       expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
