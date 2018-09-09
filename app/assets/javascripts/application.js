@@ -19,6 +19,7 @@
 //= require jquery.cardswipe.min.js 
 //= require select2
 //= require popper
+//= require bootstrap-sprockets
 
 //$(document).on("focus", "[data-behaviour~='datepicker']", function(e){
 //    $(this).datepicker({"format": "dd-mm-yyyy", "weekStart": 1, "autoclose": false, "todayBtn": true, "todayHighlight": true});
