@@ -3,7 +3,7 @@
 <p>
     <div class="col-md-11 col-md-offset-1">
 	   <pre>
-	      Report: <b><%= @report.name %> </b>
+	      Report: <b><%= @report.name %> </b> 
 
 	      Type:       <%= REPORT_TFRAMES.invert[@report.timeframe] %>
 	      Doctor:     <%= @report.doctor.lname rescue 'All Active'%>
@@ -46,7 +46,7 @@
     <% if @report.filespec.blank? %> 
        <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
     <% else %>
-       <%= button_to "Show PDF", show_pdf_report_path(@report), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", :method => "get" %>
+       <%# button_to "Show PDF", show_pdf_report_path(@report), remote: false, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", :method => "get", formtarget: 'form' %>
     <% end %>
 </div>
 

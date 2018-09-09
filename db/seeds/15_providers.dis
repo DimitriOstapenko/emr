@@ -25,7 +25,7 @@ csv.each do |row|
 		          fax: row['fax'],
      			email: row['email']
 
-  if provider.save		         
+  if provider.save(validate: false)
 	  puts "#{provider.id} #{provider.name} saved"
   else
 	  puts 'Problem provider: ', provider.inspect

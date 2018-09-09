@@ -4,7 +4,7 @@
 	<% if visit.date == @date %>
             <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
          <% else %>
-            <td><%= link_to visit.entry_ts, patient_visit_path(pat,visit) %></td>
+            <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
          <%end %>
 
 	<td><%= visit.doctor.lname %></td>
@@ -43,6 +43,6 @@
 	  </td>
 	<% end %>
 	<% if current_user.admin? %>
-	    <td><%= link_to "Delete", patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
+	    <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
         <% end %>
 </tr>
