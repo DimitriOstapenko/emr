@@ -13,5 +13,16 @@ def doctor
     Doctor.find(doctor_id) rescue nil
 end
 
+def patient
+    Patient.find(patient_id) rescue nil
+end
+
+def provider
+    Provider.find(billto) rescue nil
+end
+
+def filename 
+    File.basename(filespec) rescue nil
+end
 
 end

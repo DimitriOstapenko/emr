@@ -81,7 +81,7 @@ class VisitsController < ApplicationController
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-      redirect_to( @patient )
+      redirect_to daysheet_path
     else
 	    flash.now[:danger] =  doc.errors.full_messages.first rescue ''
       render 'edit'

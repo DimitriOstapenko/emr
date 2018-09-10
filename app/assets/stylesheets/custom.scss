@@ -276,6 +276,10 @@ input {
   white-space: nowrap;
 }
 
+.text-center {
+   text-align: center;   
+}
+
 /* Table with adjustable column widths */
 /* Column widths are based on these cells */
 .tbl_xs {       /* ver, sex, age */
@@ -320,6 +324,7 @@ input {
   text-align: left;
   padding: 0px 5px;
 }
+
 .tbl tr:nth-child(even) {
   background: lightblue;
 }
