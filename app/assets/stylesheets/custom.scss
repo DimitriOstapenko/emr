@@ -18,6 +18,15 @@ html,body {
   height: 100%;
   padding-top: 0; 
   overflow-y: scroll;
+//  font: 13px Arial, Helvetica, sans-serif;
+}
+
+// not verified !!
+p {
+    padding: .8em 1.0;
+//    line-height: 1.5em;
+    text-align: justify;
+  font: 10px Arial, Helvetica, sans-serif;
 }
 
 .container {
@@ -28,6 +37,7 @@ html,body {
    margin: 0 auto -30px;  /* footer height */
    padding-left: 5px;
    padding-right: 5px;
+   padding-bottom: 15px;
  /*  vertical-align: bottom; */
 }
 
@@ -139,6 +149,20 @@ td.hlight {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
+  color: grey;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.hdr-text {
+  margin-right: 10px;
+  font-size: 1.8em;
   color: grey;
   text-transform: uppercase;
   letter-spacing: -2px;
@@ -454,22 +478,26 @@ table.pretty {
 .pre-scrollable {
     max-height: 140px;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .pre-scrollable-md {
     max-height: 180px;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .pre-scrollable-lg {
     max-height: 200px;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .pre-scrollable-xlg {
     max-height: 700px;
     overflow-y: scroll;
     overflow-x: scroll;
+    margin-bottom: 35px;
 }
 
 .notes {

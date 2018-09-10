@@ -1,8 +1,8 @@
 <% provide(:title, @ra_msg.ra_file) %>
 
+<h1>Messages from MOH RA File <%= @ra_msg.ra_file %> for payment of $<%= @ra_msg.damount %> issued <%= @ra_msg.date_paid %></h1>
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
-<h1>Messages from MOH RA File <%= @ra_msg.ra_file %> for payment of $<%= @ra_msg.damount %> issued <%= @ra_msg.date_paid %></h1>
 
 <pre class="pre-scrollable-xlg">
 <b> Group Number </b>: <%= @ra_msg.group_no %>
