@@ -6,8 +6,10 @@
 	   <i class="glyphicon glyphicon-ok-sign text-primary"></i>
 	<% elsif visit.billed_or_paid? %>
 	   <i class="glyphicon glyphicon-ok-sign text-success"></i>
+	<% elsif visit.has_error? %>
+	   <i class="glyphicon glyphicon-exclamation-sign text-danger"></i>
 	<% else %>
-	   <i class="glyphicon glyphicon-question-sign text-danger"></i>
+	   <i class="glyphicon glyphicon-question-sign text-warning"></i>
 	<% end %>
 	</td>
 	<% if visit.date == @date %>
