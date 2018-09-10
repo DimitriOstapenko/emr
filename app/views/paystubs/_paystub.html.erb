@@ -8,7 +8,7 @@
 <td><%= "#{paystub.month}/#{paystub.year}" %></td>
 
 <% if paystub.filespec.present? && File.exists?(paystub.filespec) %>
-  <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_paystub_path(paystub)  %></td>
+  <td>&nbsp;&nbsp;<%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_paystub_path(paystub)  %></td>
 <% else %> <!-- regenerate paystub -->
   <td><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_paystub_path(paystub)  %></td>
 <% end %>

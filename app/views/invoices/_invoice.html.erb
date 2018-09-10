@@ -4,17 +4,17 @@
 %>
 
     <tr>
-	<td><%= link_to "#{invoice.id}", invoice, target: "Form" %> </td>
+	<td><%= link_to "#{invoice.id}", invoice, remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
 	<td><%= link_to patient.lname, patient %></td>
 	<td><%= invoice.doctor.lname rescue 'Clinic' %> </td> 
 	<td><%= link_to provider.name, provider %> </td> 
 	<td><%= invoice.date %></td> 
 	<td>$<%= invoice.amount %></td> 
 	<td><%= invoice.notes %></td> 
-	<td><%= invoice.paid %></td>
-	<td><%= link_to "Edit", edit_invoice_path(invoice) %></td>
+	<td><%= invoice.paid ? 'Yes' : 'No' %></td>
+	<td><%=  link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_invoice_path(invoice), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
   	<% if current_user.admin?  %>
-		<td> <%= link_to "Delete", invoice, method: :delete, data: { confirm: "Are you sure you want to delete invoice # #{invoice.id} billed to #{provider.name} ?" } %> </td>
+	<td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, invoice, method: :delete, data: { confirm: "Are you sure you want to delete invoice # #{invoice.id} billed to #{provider.name} ?" } %> </td>
 	<% end %>
      </tr>
 

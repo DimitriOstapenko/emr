@@ -1,16 +1,17 @@
 
 <%
-   provide(:title, 'Edit Visit')
+   provide(:title, 'Edit Invoice')
    provide(:button_text, 'Save changes')
-   @patient = Patient.find(@visit.patient_id)
 %>
  
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>: Visit of <%= @visit.entry_ts %></b>
+	<b class="modal-title" id="myModalLabel">Patient <%= @invoice.patient.lname %>, Invoice To: <%= @invoice.provider.name %></b>
 </div>
 <div class="modal-body">
        <%= render 'form' %>
 </div>
 
+<div class="modal-footer">
+</div>
 

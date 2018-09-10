@@ -204,14 +204,13 @@ class BillingsController < ApplicationController
     require 'uri'
 
     date = params[:date] 
-    if date.blank?
+#    if date.blank?
        @visits = Visit.where("status=? ", READY)
-       date = Date.today
-       flashmsg = "claims out of #{@visits.count} ready to bill claims sent to Cab.md"
-    else
-       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
-       flashmsg = "claims out of #{@visits.count} sent to Cab.md for date #{date}."
-    end
+#       date = Date.today
+#    else
+#       @visits = Visit.where("date(entry_ts) = ? AND (status=? OR status=?) ", date.to_date, BILLED, READY)
+#       flashmsg = "claims out of #{@visits.count} sent to Cab.md for date #{date}."
+#    end
     
     claims_sent = 0
     @visits.all.each do |v| 
@@ -219,9 +218,9 @@ class BillingsController < ApplicationController
 # Skip visits without insured services
        next unless v.hcp_services?    
        @patient = Patient.find(v.patient_id)
+       @doctor = @visit.doctor
        next unless @patient.ohip_num.present?
        @patient.fname = @patient.full_sex unless @patient.fname.present?
-       @doctor = Doctor.find(v.doc_id)
        @xml = render_to_string "/visits/show.xml"
 
        uri = URI.parse(CABMDURL)
@@ -246,11 +245,10 @@ class BillingsController < ApplicationController
           @visit.update_attribute(:status, ERROR)
 	  @visit.update_attribute(:billing_ref, errors.join(',')) if errors.present?
        end
-
     end
  
     respond_to(:html)
-    flash[:success] = "#{claims_sent} #{flashmsg}"
+    flash[:success] = "#{claims_sent} ready to bill claims sent to Cab.md"
     redirect_back(fallback_location: billings_path )
   end
 

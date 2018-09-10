@@ -46,7 +46,7 @@
     <% if @report.filespec.blank? %> 
        <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
     <% else %>
-       <%# button_to "Show PDF", show_pdf_report_path(@report), remote: false, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", :method => "get", formtarget: 'form' %>
+       <%# button_to "Show PDF", show_pdf_report_path(@report), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", :method => "get", formtarget: 'form' %>
     <% end %>
 </div>
 
