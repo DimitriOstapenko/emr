@@ -94,6 +94,12 @@ class Visit < ApplicationRecord
     status == READY
   end  
 
+# Is visit paid for?
+  def paid?
+    status == PAID
+  end  
+
+
 # Service array to help deal with procedures/billings
   def services   
     serv = []
