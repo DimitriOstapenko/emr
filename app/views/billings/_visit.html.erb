@@ -2,6 +2,16 @@
 <% doctor = Doctor.find(visit.doc_id) %>
 <% diagnosis = Diagnosis.find_by(code: visit.diag_code) %>
 <tr>
+	<td>
+        <% if visit.ready_to_bill? %>
+           <i class="glyphicon glyphicon-ok-sign text-primary"></i>
+        <% elsif visit.billed_or_paid? %>
+           <i class="glyphicon glyphicon-ok-sign text-success"></i>
+        <% else %>
+           <i class="glyphicon glyphicon-question-sign text-danger"></i>
+        <% end %>
+        </td>
+
 	<% if date.present? %>
             <td><%= link_to visit.entry_ts.strftime("%H:%M"), edit_patient_visit_path(patient,visit) %></td>
          <% else %>
