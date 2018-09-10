@@ -94,6 +94,9 @@ WCB_FORM = FORM_TYPES[:WCB].freeze
 FORM_FORMATS = { PDF: 1, HTML: 2 }.freeze
 PDF_FORM = FORM_FORMATS[:PDF].freeze
 
+# Invoices
+INVOICES_PATH = Rails.root.join('invoices').freeze
+
 # will_paginate
 WillPaginate.per_page = 25
 

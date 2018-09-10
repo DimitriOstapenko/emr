@@ -3,6 +3,8 @@ provide(:title, 'New Invoice')
 provide(:button_text, 'Create Invoice')
 %>
 
-<h2>Create Invoice</h2>
+<h2>New Invoice for patient <%= @patient.full_name %> </h2>
 
+<div class="col-md-8 col-sm-10 col-md-offset-2 col-sm-offset-1">
 <%= render 'form' %>
+</div>
