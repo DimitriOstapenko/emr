@@ -99,6 +99,11 @@ class Visit < ApplicationRecord
     status == PAID
   end  
 
+# Is visit billed or paid for?  
+  def billed_or_paid?
+    status == PAID || status == BILLED
+  end  
+
 
 # Service array to help deal with procedures/billings
   def services   
