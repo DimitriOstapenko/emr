@@ -1,4 +1,5 @@
 <% provide(:title, 'All invoices') %>
+<%= render 'shared/modal' %>
 
 <table class="tbl table-hover" >
   <thead>
@@ -9,15 +10,15 @@
 	  <th class="tbl_lg"><%= sortable 'billto', 'Bill To' %></th>
 	  <th> <%= sortable 'date' %></th>
 	  <th> <%= sortable 'amount' %></th>
-	  <th class="tbl_lg">Description</th>
-	  <th>Paid?</th>
+	  <th class="tbl_md">Description</th>
+	  <th class="tbl_lsm">Paid?</th>
 	  <th></th>
 	  <th></th>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @invoices %>
+  <%= render @invoices, remote: device_is_desktop? %>
 
   </tbody>
 </table>
