@@ -104,6 +104,11 @@ class Visit < ApplicationRecord
     status == PAID || status == BILLED
   end  
 
+# Does visit have error?
+  def has_error?
+    status == ERROR 
+  end  
+
 
 # Service array to help deal with procedures/billings
   def services   
