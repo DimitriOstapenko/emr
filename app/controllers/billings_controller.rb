@@ -49,9 +49,9 @@ class BillingsController < ApplicationController
 	 render 'index'
       else
 	 if params[:date].present?
-	    flash.now[:info] = "No billed or ready to bill services found for date #{@date}"
+	    flash.now[:info] = "No billed or ready to bill visits found for  #{@date.strftime("%B %d, %Y")}"
 	 else 
-	    flash.now[:info] = "No ready to bill services found"
+	    flash.now[:info] = "No ready to bill visits found"
 	 end
 	 render  inline: '', layout: true
       end
