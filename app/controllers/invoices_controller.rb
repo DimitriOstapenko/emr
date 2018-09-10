@@ -11,6 +11,7 @@ class InvoicesController < ApplicationController
       flash.now[:info] = "Showing All Invoices (#{@invoices.count})"
   end
 
+# We call this always from patient
   def new
     @invoice = Invoice.new
     @patient = Patient.find(params[:patient_id])
@@ -18,16 +19,18 @@ class InvoicesController < ApplicationController
 
   def create
     @invoice = Invoice.new(invoice_params)
-    @patient = Patient.find( @invoice.patient_id ) rescue Patient.new()
+    @invoice.date = Date.today
+    @invoice.patient_id = @patient.id
+    @invoice.filespec = Rails.root.join(INVOICES_PATH,"inv_#{@invoice.id}.pdf")
     if @invoice.save
-       @invoice.update_attribute(:filespec, Rails.root.join('invoices',"inv_#{@invoice.id}.pdf")) 
        pdf = build_invoice( @invoice )
        pdf.render_file @invoice.filespec
 
-       send_data pdf.render,
-	     filename: File.basename(@invoice.filespec), 
-             type: 'application/pdf',
-             disposition: 'inline'
+#       send_data pdf.render,
+#	     filename: File.basename(@invoice.filespec), 
+#             type: 'application/pdf',
+#             disposition: 'inline'
+       redirect_to invoices_path
     else
        render 'new'
     end
@@ -35,10 +38,16 @@ class InvoicesController < ApplicationController
 
   def show
    @invoice = Invoice.find( params[:id] )
+   redirect_to invoices_path unless @invoice
 
-   send_file(@invoice.filespec,
-	     type: "application/pdf", 
-	     disposition: :inline) rescue 'Invoice file is missing'
+   respond_to do |format|
+      format.html {
+        send_file(@invoice.filespec,
+             type: "application/pdf",
+             disposition: :inline) rescue 'Invoice file is missing'
+      }
+      format.js
+    end
   end
 
   def edit
