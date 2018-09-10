@@ -2,16 +2,13 @@
   <%= render 'shared/error_messages', object: f.object %>
   
   <% doc_id = @invoice.doctor_id || (current_doctor.id if current_doctor) %>
-  <h2>Invoice for patient <%= @patient.full_name %> </h2>
 
-<%= f.hidden_field :date, value: Date.today %>
-<%= f.hidden_field :patient_id, value: @patient.id %>
+  <!-- < % = f.hidden_field :patient_id, value: @patient.id % >-->
 
-<div class="col-md-11 col-sm-12 col-md-offset-4 col-sm-offset-1">
 	
 <!-- Row 1 -->
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-4 col-md-6 col-md-offset-2">
   <%= f.label "Doctor/Clinic" %>
   <%= f.collection_select(:doctor_id, get_active_doctors, :id, :lname, selected: doc_id, include_blank: 'Clinic') %>
   </div>
@@ -23,7 +20,7 @@
 
 <!-- Row 2 -->
 <div class="row">
-  <div id="ins_provider" class="col-sm-5">
+  <div id="ins_provider" class="col-sm-8 col-md-offset-2 col-sm-offset-2">
   <%= f.label "Insurance Provider" %>
   <%=  f.collection_select(:billto, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %>
   </div>
@@ -31,7 +28,7 @@
 
 <!-- Row 3 -->
 <div class="row">
-  <div class="col-sm-5">
+  <div class="col-sm-8 col-sm-offset-2">
   <%= f.label 'Description' %>
   <%= f.text_field :notes %>
   </div>
@@ -40,7 +37,7 @@
 <!-- Row 4 -->
 <% if action_name == 'edit' %>
 <div class="row">
-  <div class="col-sm-1">	
+  <div class="col-sm-1 col-sm-offset-2">	
   <%= f.label :paid? %>
   </div>
   <div class="col-sm-1">
@@ -49,28 +46,21 @@
 </div>
 <% end %>
 
+  <div class="spacer-20"></div>
+
 <!-- Row 5 -->
 <div class="row">
-  <div class="spacer-20"></div>
-  <div class="col-sm-10 col-md-5">
+  <div class="col-sm-10 col-md-8 col-sm-offset-2">
 <% if action_name == 'edit' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   <% else %>  
-  <%= f.submit yield(:button_text), class: "btn btn-primary", formtarget: 'Form' %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 <% end %>
-  </div>
-  </div>
-
-<% end %>
-
-<!-- Row 6 -->
-<div class="row">
-  <div class="spacer-10"></div>
-  <div class="col-sm-10 col-md-5">
-    <%= button_to 'Back', invoices_path, class: "btn btn-primary", method: :get %>
   </div>
 </div>
 
-</div>
+<% end %>
+
+
 
 
