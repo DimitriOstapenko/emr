@@ -4,7 +4,7 @@
 	<td>
 	<% if visit.ready_to_bill? %>
 	   <i class="glyphicon glyphicon-ok-sign text-primary"></i>
-	<% elsif visit.paid? %>
+	<% elsif visit.billed_or_paid? %>
 	   <i class="glyphicon glyphicon-ok-sign text-success"></i>
 	<% else %>
 	   <i class="glyphicon glyphicon-question-sign text-danger"></i>
