@@ -282,6 +282,9 @@ input {
 
 /* Table with adjustable column widths */
 /* Column widths are based on these cells */
+.tbl_xxs {
+  width: 1%;	
+}
 .tbl_xs {       /* ver, sex, age */
   width: 2%;
 }

@@ -13,7 +13,9 @@
 	  <th class="tbl_md">Description</th>
 	  <th class="tbl_lsm">Paid?</th>
 	  <th></th>
+	  <% if current_user.admin? %>
 	  <th></th>
+	  <% end %>
       </tr>
   </thead>
   <tbody>
