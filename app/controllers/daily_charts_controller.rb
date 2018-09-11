@@ -29,16 +29,22 @@ class DailyChartsController < ApplicationController
   end
 
   def create
+    @chart = DailyChart.find( params[:id] )
   end
 
   def show
     @chart = DailyChart.find( params[:id] )
-    (year,mon,rest) = @chart.filename.split('-') 
-
-    send_file(Rails.root.join(CHARTS_PATH,"Daily/#{year}",@chart.filename),
+    if File.exists?(@chart.filespec)
+      respond_to do |format|
+      format.html {
+        send_file(@chart.filespec,
              filename: "Chart_#{@chart.filename}",
              type: "application/pdf",
-             disposition: :attachment)
+             disposition: :attachment) rescue 'Chart file is missing'
+             }
+      format.js
+      end
+    end
 
   end
 

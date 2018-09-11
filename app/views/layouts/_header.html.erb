@@ -1,6 +1,7 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
     <% if logged_in? %> 
+      <% logo = '<img src="/images/small_logo.png" width=30></img>' %>
       <%= link_to "Walk-In EMR", root_path, id: "logo" %>
     <% else %>
       <%= link_to "Stoney Creek Medical Walk-In Clinic", root_path, id: "logo" %>
