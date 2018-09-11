@@ -87,6 +87,7 @@
     respond_to do |format|
       format.html { 
         send_file(@report.filespec,
+             filename: @report.filename,
              type: "application/pdf",
              disposition: :inline) rescue 'Report file is missing'
       }

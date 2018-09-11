@@ -39,11 +39,12 @@
 /charts
 /reports
 /paystubs
+/invoices
 /GO
 /EDT
-/invoices
 .DS_Store
 /lib/seeds
 /public/reports
 /public/paystubs
 /public/invoices
+/public/charts
