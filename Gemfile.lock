@@ -288,6 +288,7 @@ DEPENDENCIES
   carrierwave (= 1.2.1)
   coffee-rails (= 4.2.2)
   faker (= 1.7.3)
+  ffi (~> 1.9.24)
   fog-aws (= 2.0.0)
   guard (= 2.14.1)
   guard-minitest (= 2.4.6)
@@ -322,5 +323,4 @@ DEPENDENCIES
   will_paginate (= 3.1.6)
 
 BUNDLED WITH
-   1.16.3
-
+   1.16.4
