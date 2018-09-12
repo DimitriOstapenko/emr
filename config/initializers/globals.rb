@@ -100,3 +100,9 @@ INVOICES_PATH = Rails.root.join('invoices').freeze
 # will_paginate
 WillPaginate.per_page = 25
 
+# AWS S3 credentials
+S3_KEY_ID = 'AKIAJRHFFA6VVJRIWSAQ'.freeze 
+S3_KEY = '/dLRFTzTj28IE+aZxUEN4iS/xIGceuaFl+mMOmHN'.freeze
+S3_REGION = 'us-east-1'.freeze
+S3_BUCKET = 'scwalkin'.freeze
+
