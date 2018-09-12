@@ -43,7 +43,7 @@
 /GO
 /EDT
 .DS_Store
-#/lib/seeds
+/lib/seeds
 /public/reports
 /public/paystubs
 /public/invoices
