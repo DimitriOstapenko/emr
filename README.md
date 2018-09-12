@@ -1,4 +1,4 @@
-# Walk-In project
+# Walk-In EMR project
 
 This is the Walk-In EMR project by Dmitri Ostapenko
 
