@@ -6,6 +6,7 @@
 require_relative '../config/environment'
 #require '/home/rails/walkin/config/environment'
 require 'find'
+require 'fileutils'
 
 dir  = CHARTS_PATH.to_s + '/Daily'
 puts "About to update daily_charts table with files from #{dir}"
@@ -25,6 +26,9 @@ Find.find( dir ) do |path|
           puts chart.errors.full_messages
   	end
 end
+
+# Need read permission to view files
+FileUtils.chmod "go+r", Dir.glob(File.join(CHARTS_PATH,'*','*','*.pdf')) 
 
 puts "Now #{DailyChart.count} rows in daily_charts table"
 
