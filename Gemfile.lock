@@ -89,7 +89,7 @@ GEM
     execjs (2.7.0)
     faker (1.7.3)
       i18n (~> 0.5)
-    ffi (1.9.23)
+    ffi (1.9.25)
     fog-aws (2.0.0)
       fog-core (~> 1.38)
       fog-json (~> 1.0)
@@ -221,7 +221,7 @@ GEM
       railties (>= 4.2.0, < 5.3)
     ruby-progressbar (1.9.0)
     ruby-rc4 (0.1.5)
-    rubyzip (1.2.1)
+    rubyzip (1.2.2)
     sass (3.5.6)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -307,6 +307,7 @@ DEPENDENCIES
   rails (= 5.1.4)
   rails-controller-testing (= 1.0.2)
   responders
+  rubyzip (~> 1.2.2)
   sass-rails (= 5.0.6)
   select2-rails (= 4.0.3)
   selenium-webdriver
