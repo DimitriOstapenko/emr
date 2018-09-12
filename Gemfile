@@ -59,7 +59,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'activerecord-session_store'
 gem 'popper_js', '~> 1.14.3'
 #gem "rmagick"
-#gem 'bootstrap', '~> 4.1.3'
-#gem 'sprockets-rails'
 gem 'sprockets',  '~> 3.7.2'
+gem 'rubyzip',    '~> 1.2.2'
+gem 'ffi',        '~> 1.9.24'
 
