@@ -1,5 +1,3 @@
-require_relative 'globals'
-
 CarrierWave.configure do |config|
   if Rails.env.production?
     config.fog_provider = 'fog/aws'
