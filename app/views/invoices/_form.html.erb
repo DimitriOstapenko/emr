@@ -2,10 +2,9 @@
   <%= render 'shared/error_messages', object: f.object %>
   
   <% doc_id = @invoice.doctor_id || (current_doctor.id if current_doctor) %>
-
-  <!-- < % = f.hidden_field :patient_id, value: @patient.id % >-->
-
-	
+  
+  
+<%= f.hidden_field :patient_id, value: @patient.id %>
 <!-- Row 1 -->
 <div class="row">
   <div class="col-sm-4 col-md-6 col-md-offset-2">

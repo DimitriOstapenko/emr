@@ -51,6 +51,11 @@ class Visit < ApplicationRecord
   def date 
     entry_ts.to_date rescue '1900-01-01'
   end
+
+# Visit date string yyyymmdd (EDT)
+  def date_str
+     date.strftime("%Y%m%d")
+  end
 	
 # all procedure codes for this visit
   def proc_codes(sep=',')

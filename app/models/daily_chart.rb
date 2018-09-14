@@ -17,4 +17,8 @@ def rel_path
   "Daily/#{year}/#{filename}"
 end
 
+def filesize 
+  sprintf("%.2f", File.size(self.filespec).to_f/2**20) rescue 0
+end
+
 end
