@@ -1,5 +1,7 @@
 class Invoice < ApplicationRecord
 	
+  	belongs_to :patient, inverse_of: :invoices #, counter_cache: true, autosave: true
+
 	default_scope -> { order(date: :desc) }
 
 	validates :date, presence: true
