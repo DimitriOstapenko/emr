@@ -1,6 +1,6 @@
     <tr>
-	<% if report.filespec.present? && File.exists?(report.filespec) %>
-	  <td><%= link_to report.id, report_path(report), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+	<% if report.filespec.present? && File.exists?(report.filespec) && device_is_desktop? %>
+	  <td><%= link_to report.id, report_path(report), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
 	<% else %>
 	  <td><%= report.id %></td>
 	<% end %>  
