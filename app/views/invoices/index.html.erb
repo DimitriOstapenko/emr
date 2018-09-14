@@ -4,17 +4,18 @@
 <table class="tbl table-hover" >
   <thead>
       <tr>
-	  <th><%= sortable 'id', 'Invoice' %> </th>
+	  <th><%= sortable 'id', '#' %> </th>
 	  <th class="tbl_md"><%= sortable 'patient_id', 'Patient' %></th>
 	  <th class="tbl_md"><%= sortable 'doctor_id', 'Doctor' %></th>
+	  <th class="tbl_md">Description</th>
 	  <th class="tbl_lg"><%= sortable 'billto', 'Bill To' %></th>
 	  <th> <%= sortable 'date' %></th>
 	  <th> <%= sortable 'amount' %></th>
-	  <th class="tbl_md">Description</th>
 	  <th class="tbl_lsm">Paid?</th>
-	  <th></th>
+	  <th class="tbl_sm"></th>
+	  <th class="tbl_sm"></th>
 	  <% if current_user.admin? %>
-	  <th></th>
+	  <th class="tbl_sm"></th>
 	  <% end %>
       </tr>
   </thead>

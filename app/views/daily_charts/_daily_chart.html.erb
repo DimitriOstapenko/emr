@@ -1,7 +1,9 @@
      <tr>
 	<td><%= link_to daily_chart.filename, daily_chart, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
-	<td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, daily_chart  %></td>
 	<td><%= daily_chart.date %></td> 
 	<td><%= daily_chart.pages %> </td> 
+	<td><%= daily_chart.filesize %> </td> 
+	<td><%= daily_chart.created_at.to_date %> </td> 
+	<td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, daily_chart  %></td>
      </tr>
 

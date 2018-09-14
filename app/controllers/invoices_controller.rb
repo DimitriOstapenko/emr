@@ -20,16 +20,10 @@ class InvoicesController < ApplicationController
   def create
     @invoice = Invoice.new(invoice_params)
     @invoice.date = Date.today
-    @invoice.patient_id = @patient.id
     @invoice.filespec = Rails.root.join(INVOICES_PATH,"inv_#{@invoice.id}.pdf")
     if @invoice.save
        pdf = build_invoice( @invoice )
        pdf.render_file @invoice.filespec
-
-#       send_data pdf.render,
-#	     filename: File.basename(@invoice.filespec), 
-#             type: 'application/pdf',
-#             disposition: 'inline'
        redirect_to invoices_path
     else
        render 'new'
