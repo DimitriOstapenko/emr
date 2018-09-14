@@ -13,12 +13,13 @@ class InvoicesController < ApplicationController
 
 # We call this always from patient
   def new
-    @invoice = Invoice.new
     @patient = Patient.find(params[:patient_id])
+    @invoice = @patient.invoices.new
   end
 
   def create
-    @invoice = Invoice.new(invoice_params)
+    @patient = Patient.find(params[:invoice][:patient_id])
+    @invoice = @patient.invoices.build(invoice_params)
     @invoice.date = Date.today
     @invoice.filespec = Rails.root.join(INVOICES_PATH,"inv_#{@invoice.id}.pdf")
     if @invoice.save
