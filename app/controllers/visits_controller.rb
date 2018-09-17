@@ -69,21 +69,19 @@ class VisitsController < ApplicationController
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
 
+    store_location
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.created_at)
       
-#      if current_doctor.blank? || @visit.doc_id != current_doctor.id
-#	 set_doc_session ( @visit.doc_id )
-#	 flash.now[:info] = "Current Doctor set to: Dr. #{@visit.doctor.lname}" if @visit.doctor.lname
-#      end
-
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-      redirect_to daysheet_path
+#      redirect_to daysheet_path
+      redirect_back_or(daysheet_url)
+
     else
-	    flash.now[:danger] =  doc.errors.full_messages.first rescue ''
+      flash.now[:danger] =  doc.errors.full_messages.first rescue ''
       render 'edit'
     end
   end

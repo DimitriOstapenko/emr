@@ -212,7 +212,7 @@ class BillingsController < ApplicationController
 #       flashmsg = "claims out of #{@visits.count} sent to Cab.md for date #{date}."
 #    end
     
-    claims_sent = 0
+    claims_sent = 0; errors =[]
     @visits.all.each do |v| 
        @visit = v
 # Skip visits without insured services
@@ -239,16 +239,20 @@ class BillingsController < ApplicationController
 	  claims_sent += 1
        else
 	  errors = @xmlhash['errors'] || []
-	  messages = @xmlhash['messages']
+#	  messages = @xmlhash['messages']
 	  refid = @xmlhash['reference_id']
-	  flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
+#          flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
           @visit.update_attribute(:status, ERROR)
 	  @visit.update_attribute(:billing_ref, errors.join(',')) if errors.present?
        end
     end
  
-    respond_to(:html)
-    flash[:success] = "#{claims_sent} ready to bill claims sent to Cab.md"
+#    respond_to(:html)
+    if errors.any?
+      flash[:danger] = "#{errors.count} #{'error'.pluralize(errors.count)} encountered while sending claims"
+    else
+      flash[:success] = "#{claims_sent} #{'claim'.pluralize(claims_sent)} sent to Cab.md"
+    end
     redirect_back(fallback_location: billings_path )
   end
 
