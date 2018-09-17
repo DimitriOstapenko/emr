@@ -7,12 +7,8 @@
 
 require_relative '../../config/environment'
 
-#datestr = ARGV[0] 
-#date = Date.parse(datestr) rescue Date.today
-
 month_letter = 'ABCDEFGHIJKL'[Time.now.month-1]
-date = Date.new(2018,9,15)  	# we look for visits on this date
-puts "Will look for visits on #{date}"
+puts "Will look for all ready to bill visits" 
 
 # Is procedure insured?
 def hcp_procedure?(proc_code)
@@ -23,7 +19,7 @@ end
 def heb_record( edt_id, v )
   cre_date = Date.today.strftime("%Y%m%d")
   batch_id = edt_id.to_s.rjust(4,'0')
-  "HEBV03 #{cre_date}#{batch_id}#{' '*6}#{v.doctor.group_no}#{v.doctor.provider_no}00".ljust(79,' ') + "\r\n"
+  "HEBV03 #{cre_date}#{batch_id}#{' '*6}#{GROUP_NO}#{v.doctor.provider_no}00".ljust(79,' ') + "\r\n"
 end
 
 def heh_record(v, pat)
@@ -74,7 +70,7 @@ def generate_claim_for_doc( edt_id, filename, visits )
 end
 
 # Which doctors worked on that day?
-docs = Visit.where("date(entry_ts)=?", date).group(:doc_id).pluck(:doc_id)
+docs = Visit.where("status=?", READY).reorder('').group(:doc_id).pluck(:doc_id)
 docs.each do |doc_id|
   doc = Doctor.find(doc_id)
   last_seq_no = 0; last_ttl_amt = 0.0; last_body = ''
@@ -93,12 +89,11 @@ docs.each do |doc_id|
 
 # Create empty edt_file object to get the id of new record  
   edt_file = EdtFile.new
-  puts "could not create new record in edt_files table" unless edt_file.save(validate: false)
+  abort "could not create new record in edt_files table" unless edt_file.save(validate: false)
   puts "Will create EDT claim #{filename} for Dr. #{doc.lname} (if not there already)"
 
 # This should be without date when testing is done  
-#  visits = Visit.where("status=? AND doc_id=?", READY, doc_id) 
-  visits = Visit.where("date(entry_ts)=? AND doc_id=?", date, doc_id) 
+  visits = Visit.where("status=? AND doc_id=?", READY, doc_id) 
   puts "Got #{visits.count} visits to export"
   if !visits.any?
       edt_file.destroy
@@ -124,7 +119,6 @@ docs.each do |doc_id|
 			      claims: claims,
 			      total_amount: ttl_amt,
 			      seq_no: seq_no ) 
-
     puts edt_file.body
     edt_file.write
   else
