@@ -2,6 +2,7 @@ class Patient < ApplicationRecord
         has_many :visits, dependent: :destroy, inverse_of: :patient
         has_many :invoices, dependent: :destroy, inverse_of: :patient
 
+  	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age, :cardstr, :phonestr
 	default_scope -> { order(lname: :asc, fname: :asc) }
@@ -15,12 +16,16 @@ class Patient < ApplicationRecord
 	before_validation { ohip_ver.strip! rescue '' }
 	before_validation :upcase_some_fields 
 
+	# Force Patient to RMB if province is not ON, to HCP if province is ON when HC number present	
+	before_save { self.pat_type = 'O' if self.ohip_num.present? && self.hin_prov == 'ON' && self.pat_type == 'R';
+		      self.pat_type = 'R' if self.ohip_num.present? && self.hin_prov != 'ON' && self.pat_type == 'O'; }
+
 	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || (a.hin_prov != 'ON' &&  a.pat_type == 'R')}
-	validates :ifh_number,  length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, presence:true, 
+	validates :ifh_number,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.pat_type == 'I')}
 	validates :ohip_ver, length: { maximum: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
@@ -90,7 +95,7 @@ class Patient < ApplicationRecord
   end
 
   def hc_expiry
-   return unless self.ohip_num.present?
+   return unless self.ohip_num.present? && self.ohip_ver.present?
 # Don't validate out of province or non-ohip numbers   
     if (hin_prov == 'ON' &&  pat_type == 'O')
       expiry = hin_expiry.to_date rescue '1900-01-01'.to_date

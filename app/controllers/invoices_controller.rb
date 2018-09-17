@@ -18,7 +18,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @patient = Patient.find(params[:invoice][:patient_id])
+    @patient = Patient.find(params[:patient_id])
     @invoice = @patient.invoices.build(invoice_params)
     @invoice.date = Date.today
     @invoice.filespec = Rails.root.join(INVOICES_PATH,"inv_#{@invoice.id}.pdf")
