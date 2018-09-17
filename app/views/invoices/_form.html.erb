@@ -1,10 +1,8 @@
-<%= form_for (@invoice) do |f| %>
+<%= form_for [@patient,@invoice] do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   
   <% doc_id = @invoice.doctor_id || (current_doctor.id if current_doctor) %>
   
-  
-<%= f.hidden_field :patient_id, value: @patient.id %>
 <!-- Row 1 -->
 <div class="row">
   <div class="col-sm-4 col-md-6 col-md-offset-2">
@@ -49,13 +47,7 @@
 
 <!-- Row 5 -->
 <div class="row">
-  <div class="col-sm-10 col-md-8 col-sm-offset-2">
-<% if action_name == 'edit' %>
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-  <% else %>  
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-<% end %>
-  </div>
+  <div class="col-sm-10 col-md-8 col-sm-offset-2"> <%= f.submit yield(:button_text), class: "btn btn-primary" %> </div>
 </div>
 
 <% end %>
