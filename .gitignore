@@ -49,4 +49,5 @@
 /public/paystubs
 /public/invoices
 /public/charts
+/public/EDT
 /config/initializers/01_globals.rb
