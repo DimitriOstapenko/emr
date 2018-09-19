@@ -76,20 +76,27 @@ Rails.application.routes.draw do
   end
   
   resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
-	    :drugs, :invoices, :vaccines, :daily_charts, :export_files, :edt_files, :forms
+	    :drugs, :invoices, :vaccines, :daily_charts, :export_files, :forms
 
   resources :claims do
     resources :services
   end
+
   resources :reports do
      get 'export', on: :member
      get 'download', on: :member
   end
+
   resources :paystubs do
      get 'export', on: :member
      get 'download', on: :member
   end
   get 'budget', to: 'paystubs#budget'
+
+  resources :edt_files do
+     get 'download', on: :member
+  end
+
 
 # resources :billings     # historical billing table - not used
   

@@ -1,2 +1,31 @@
-<h1>EdtFiles#index</h1>
-<p>Find me in app/views/edt_files/index.html.erb</p>
+<% provide(:title, 'EDT Files') %>
+
+<%= render 'shared/modal' %>
+
+<table class="tbl table-hover"> 
+  <thead>
+      <tr>
+	  <th class='tbl_sm'><%= sortable 'id', '#' %></th>
+	  <th class='tbl_md'><%= sortable 'ftype', 'Type' %></th>
+          <th class='tbl_md'><%= sortable 'provider_no', 'Provider' %></th>
+          <th class='tbl_md'>File</th>
+	  <th>Download</th>
+	  <th><%= sortable 'upload_date', 'Uploaded' %></th>
+          <th class='tbl_md'>Lines</th>
+	  <th cless='tbl_md'>Claims</th>
+	  <th cless='tbl_md'>TTL</th>
+	   <% if current_user.admin?  %>
+          <th class='tbl_sm'></th>
+	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @edt_files if @edt_files.present? %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @edt_files, class: "btn" if @edt_files %> 
+</div>
