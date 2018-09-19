@@ -8,10 +8,12 @@ class EdtFile < ApplicationRecord
 	validates :lines, numericality: { only_integer: true, only_positive: true }
         validates :seq_no, presence: true, inclusion: { in: 0..31 }
 
+# Construct full filespec	
 def filespec
     EDT_PATH.join(filename) rescue nil
 end
 
+# Write EDT claim to file
 def write
       begin
       file = File.open(self.filespec, 'w')
@@ -23,5 +25,8 @@ def write
       end
 end
 
+def ftype_str
+    EDT_FILE_TYPES.invert[ftype].to_s
+end
 
 end
