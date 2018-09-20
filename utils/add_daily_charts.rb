@@ -4,7 +4,6 @@
 #
 # Next lines allow to run it stand-alone
 require_relative '../config/environment'
-#require '/home/rails/walkin/config/environment'
 require 'find'
 require 'fileutils'
 
