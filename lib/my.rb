@@ -43,31 +43,34 @@ def hee_record( heh_count, her_count, het_count )
   "HEE#{heh_count.to_s.rjust(4,'0')}#{her_count.to_s.rjust(4,'0')}#{het_count.to_s.rjust(5,'0')}".ljust(79,' ') + "\r\n"
 end
 
+# h-records: 1/claim
+# t-records: 1/any svs
+# r-records: 1/rmb
 # Generate claim file content
   def generate_claim_for_doc( edt_id, filename, visits )
-      claims_count = rmb_count = hcp_count = ttl_fee = 0; body = ''
+      h_count = t_count = r_count = ttl_fee = 0; body = ''
       body << heb_record(edt_id, visits.first) 
       visits.all.each do |v| 
         pat = Patient.find(v.patient_id)
 	ttl_fee += v.total_insured_fees
 	if v.hcp_services? 
           body << heh_record(v,pat) 
-	  claims_count += 1
+	  h_count += 1
 #!!	  v.update_attribute(:status, BILLED) 
 	  v.update_attribute(:export_file, filename) 
 	  if v.bil_type == RMB_BILLING  		# only 1 RMB claim supported per visit right now	
 	    body << her_record(pat)
-	    rmb_count += 1
+	    r_count += 1
 	  end
 	end
         v.services.each do |svc|
           next unless hcp_procedure?(svc[:pcode])
           body << het_record(v, svc)
-          hcp_count += 1
+          t_count += 1
         end
       end
-      body << hee_record(claims_count, rmb_count, hcp_count)
-      return [body, claims_count, ttl_fee]
+      body << hee_record(h_count, r_count, t_count)
+      return [body, h_count, t_count, ttl_fee]
   end
 end # EDT module
 
