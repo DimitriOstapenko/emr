@@ -14,5 +14,9 @@ def filespec
 	FORMS_PATH.join(filename) rescue nil
 end
 
+def fillable_str
+	fillable? ? 'Yes' : 'No'
+end
+
 
 end

@@ -37,9 +37,14 @@
   
 <!-- Row 3 -->
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-4">
 	  <%= f.label :'Effective Date' %>
           <%= f.date_field :eff_date %>
+  </div>
+  
+  <div class="col-sm-4">
+	  <%= f.label :'File Name' %>
+          <%= f.text_field :filename %>
   </div>
 
 </div>

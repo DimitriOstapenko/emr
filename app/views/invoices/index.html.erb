@@ -4,11 +4,11 @@
 <table class="tbl table-hover" >
   <thead>
       <tr>
-	  <th><%= sortable 'id', '#' %> </th>
+	  <th class="tbl_sm"><%= sortable 'id', '#' %> </th>
 	  <th class="tbl_md"><%= sortable 'patient_id', 'Patient' %></th>
 	  <th class="tbl_md"><%= sortable 'doctor_id', 'Doctor' %></th>
-	  <th class="tbl_md">Description</th>
 	  <th class="tbl_lg"><%= sortable 'billto', 'Bill To' %></th>
+	  <th class="tbl_lmd">Description</th>
 	  <th> <%= sortable 'date' %></th>
 	  <th> <%= sortable 'amount' %></th>
 	  <th class="tbl_lsm">Paid?</th>

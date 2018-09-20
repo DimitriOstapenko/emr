@@ -68,14 +68,6 @@ class PaystubsController < ApplicationController
       format.js
     end
 
-#    if @paystub
-#       @sdate = Date.new(@paystub.year, @paystub.month)
-#       @edate = 1.month.since(@sdate)
-#       @claims = Claim.where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate))
-#       @claims = @claims.paginate(page: params[:page], per_page: 25)
-#    else
-#      redirect_to paystubs_path 
-#    end
   end
 
 # Display pdf pay stub if already exported
