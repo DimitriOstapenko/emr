@@ -41,8 +41,7 @@ docs.each do |doc_id|
   abort "could not create new record in edt_files table" unless edt_file.save(validate: false)
   puts "Will create EDT claim #{filename} for Dr. #{doc.lname}"
 
-  
-  (body, claims, ttl_amt) = generate_claim_for_doc(edt_file.id,filename,visits)
+  (body, claims, svcs, ttl_amt) = generate_claim_for_doc(edt_file.id,filename,visits)
 
   if edt_file.update_attributes(ftype: EDT_CLAIM, 
 			      filename: filename, 
@@ -52,6 +51,7 @@ docs.each do |doc_id|
 			      body: body,
 			      lines: body.lines.count,
 			      claims: claims,
+			      services: svcs,
 			      total_amount: ttl_amt,
 			      seq_no: seq_no ) 
     puts edt_file.body
