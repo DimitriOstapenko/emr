@@ -12,6 +12,7 @@ class EdtFilesController < ApplicationController
   end
 
   def new
+	@edt_file = EdtFile.new
   end
 
   def create
@@ -31,9 +32,6 @@ class EdtFilesController < ApplicationController
     end
   end
 
-  def destroy
-  end
-
   def download
     @edt_file = EdtFile.find( params[:id] )
 
@@ -45,8 +43,11 @@ class EdtFilesController < ApplicationController
     else
       flash.now[:danger] = "File #{@edt_file.filename} was not found - regenerating"
       @edt_file.write
-      redirect_to edt_files_path(@edt_file)
+      redirect_to edt_files_path
     end
+  end
+  
+  def destroy
   end
 
   private 

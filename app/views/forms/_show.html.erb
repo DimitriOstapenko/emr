@@ -1,0 +1,16 @@
+<%
+   provide(:title, "Form")
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel"><%= @form.name %> - <%= @form.descr %></b>
+</div>
+<div class="modal-body">
+	<iframe id="myModal" src="/forms/<%= @form.id %>" frameborder="0" width="100%" height="600px"></iframe>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" class="close" data-dismiss="modal">Dismiss</button>
+</div>
+
+

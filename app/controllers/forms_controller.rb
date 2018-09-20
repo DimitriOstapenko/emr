@@ -31,15 +31,33 @@ class FormsController < ApplicationController
 
   def show
     @form = Form.find(params[:id])
-    if File.exists?(@form.filespec)
-     send_file @form.filespec,
+    redirect_to forms_path unless @form
+
+    respond_to do |format|
+      format.html { 
+        send_file(@form.filespec,
+             filename: @form.filename,
+             type: "application/pdf",
+             disposition: :inline) 
+      }
+      format.js 
+   end
+  end
+
+  def download
+   @form = Form.find( params[:id] )
+
+   if File.exists?(@form.filespec)
+          send_file @form.filespec,
              filename: @form.filename,
              type: "application/pdf",
              disposition: :attachment
    else
+     flash.now[:danger] = "File #{@form.filename} was not found "
      redirect_to forms_path
    end
   end
+
 
   def new
     @form = Form.new

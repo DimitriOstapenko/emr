@@ -39,9 +39,22 @@ class InvoicesController < ApplicationController
       format.html {
         send_file(@invoice.filespec,
              type: "application/pdf",
-             disposition: :inline) rescue 'Invoice file is missing'
+             disposition: :inline)        
       }
       format.js
+    end
+  end
+
+  def download
+    @invoice = Invoice.find( params[:id] )
+    if File.exists?(@invoice.filespec)
+      send_file @invoice.filespec,
+             filename: @invoice.filename,
+             type: "text/plain",
+             disposition: :attachment
+    else
+      flash.now[:danger] = "File #{@invoice.filename} was not found"
+      redirect_to invoices_path
     end
   end
 

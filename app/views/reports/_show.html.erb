@@ -8,7 +8,7 @@
 	<b class="modal-title" id="myModalLabel"><%= @doctor.lname %>: Claims Report for <%= @report.sdate %></b>
 </div>
 <div class="modal-body">
-	<iframe id="myModal" src="/reports/<%= @report.filename %>" frameborder="0" width="100%" height="600px"></iframe>
+	<iframe id="myModal" src="/reports/<%= @report.id %>" frameborder="0" width="100%" height="600px"></iframe>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" class="close" data-dismiss="modal">Dismiss</button>
