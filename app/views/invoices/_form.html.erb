@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<!-- Row 4 -->
+<!-- Row 4? -->
 <% if action_name == 'edit' %>
 <div class="row">
   <div class="col-sm-1 col-sm-offset-2">	
@@ -39,6 +39,16 @@
   </div>
   <div class="col-sm-1">
   <%= f.check_box :paid, value: 'false'  %> 
+  </div>
+</div>
+<% end %>
+
+<!-- Row 4? -->
+<% if current_user.admin? %>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+  <%= f.label :Date %>
+  <%= f.date_field :date  %> 
   </div>
 </div>
 <% end %>
