@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180920061940) do
+ActiveRecord::Schema.define(version: 20180921062923) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -198,7 +198,7 @@ ActiveRecord::Schema.define(version: 20180920061940) do
     t.datetime "updated_at", null: false
     t.date "date"
     t.boolean "paid"
-    t.string "filespec"
+    t.string "filename"
     t.integer "doctor_id"
   end
 

@@ -21,12 +21,15 @@ class InvoicesController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @invoice = @patient.invoices.build(invoice_params)
     @invoice.date = Date.today
-    @invoice.filespec = Rails.root.join(INVOICES_PATH,"inv_#{@invoice.id}.pdf")
+    @invoice.paid = false
     if @invoice.save
+       @invoice.update_attribute(:filename, "inv_#{@invoice.id}.pdf")
        pdf = build_invoice( @invoice )
        pdf.render_file @invoice.filespec
+       flash[:success] =  "Invoice ##{@invoice.id} created"
        redirect_to invoices_path
     else
+       flash[:danger] =  "Error creating invoice"
        render 'new'
     end
   end
@@ -60,12 +63,10 @@ class InvoicesController < ApplicationController
 
   def edit
     @invoice = Invoice.find( params[:id] )
-    @patient = Patient.find( @invoice.patient_id ) rescue Patient.new()
   end
 
   def update
     @invoice = Invoice.find( params[:id] )
-    @patient = Patient.find( @invoice.patient_id ) 
 
     if @invoice.update_attributes(invoice_params)
       pdf = build_invoice( @invoice )
@@ -91,7 +92,7 @@ class InvoicesController < ApplicationController
 
 private
   def invoice_params
-          params.require(:invoice).permit(:patient_id, :billto, :visit_id, :amount, :date, :notes, :amount, :paid, :filespec, :doctor_id )
+          params.require(:invoice).permit(:patient_id, :billto, :visit_id, :amount, :date, :notes, :amount, :paid, :filename, :doctor_id )
   end
 
   def sort_column
