@@ -9,21 +9,6 @@ class DailyChartsController < ApplicationController
       flash.now[:info] = "Showing All day charts (#{@daily_charts.count}) "
   end
 
-  def find
-      str = params[:findstr].strip
-      @daily_charts = myfind(str)
-      if @daily_charts.any?
-         @daily_charts = @daily_charts.paginate(page: params[:page])
-         flash.now[:info] = "Found #{@daily_charts.count} #{'charts'.pluralize(@daily_charts.count)} matching string #{str.inspect}"
-         render 'index'
-      else
-#         @charts = DailyChart.paginate(page: params[:page])
-         @daily_charts = DailyChart.new
-         flash.now[:warning] = "DailyChart  #{str.inspect} was not found"
-         render  inline: '', layout: true
-      end
-  end
-
   def new
     @chart = DailyChart.find( params[:id] )
   end
@@ -40,12 +25,25 @@ class DailyChartsController < ApplicationController
         send_file(@chart.filespec,
              filename: "Chart_#{@chart.filename}",
              type: "application/pdf",
-             disposition: :attachment) rescue 'Chart file is missing'
+             disposition: :inline) 
              }
       format.js
       end
     end
+  end
 
+  def download
+   @chart = Chart.find( params[:id] )
+
+   if File.exists?(@chart.filespec)
+          send_file @chart.filespec,
+	     filename: @chart.filename,
+             type: "application/pdf",
+             disposition: :attachment
+   else
+     flash.now[:danger] = "File #{@chart.filename} was not found" 
+     redirect_to charts_path
+   end
   end
 
   def edit
@@ -56,6 +54,21 @@ class DailyChartsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def find
+      str = params[:findstr].strip
+      @daily_charts = myfind(str)
+      if @daily_charts.any?
+         @daily_charts = @daily_charts.paginate(page: params[:page])
+         flash.now[:info] = "Found #{@daily_charts.count} #{'charts'.pluralize(@daily_charts.count)} matching string #{str.inspect}"
+         render 'index'
+      else
+#         @charts = DailyChart.paginate(page: params[:page])
+         @daily_charts = DailyChart.new
+         flash.now[:warning] = "DailyChart  #{str.inspect} was not found"
+         render  inline: '', layout: true
+      end
   end
 
 private

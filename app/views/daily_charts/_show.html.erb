@@ -7,7 +7,7 @@
 	<b class="modal-title" id="myModalLabel">Day Charts for <%= @chart.date %>: <%= @chart.pages %> pages</b>
 </div>
 <div class="modal-body">
-	<iframe id="myModal" src="/charts/<%= @chart.rel_path %>" frameborder="0" width="100%" height="600px"></iframe>
+	<iframe id="myModal" src="/daily_charts/<%= @chart.id %>" frameborder="0" width="100%" height="600px"></iframe>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" class="close" data-dismiss="modal">Dismiss</button>

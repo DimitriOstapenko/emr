@@ -76,7 +76,7 @@ Rails.application.routes.draw do
   end
   
   resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
-	    :drugs, :vaccines, :daily_charts, :export_files
+	    :drugs, :vaccines, :export_files
 
   resources :claims do
     resources :services
@@ -105,6 +105,9 @@ Rails.application.routes.draw do
      get 'download', on: :member
   end
 
+  resources :daily_charts do
+     get 'download', on: :member
+  end
 
 
 # resources :billings     # historical billing table - not used

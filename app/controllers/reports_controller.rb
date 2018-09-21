@@ -89,7 +89,7 @@
         send_file(@report.filespec,
              filename: @report.filename,
              type: "application/pdf",
-             disposition: :inline) rescue 'Report file is missing'
+             disposition: :inline) 
       }
       format.js 
     end
