@@ -23,8 +23,8 @@ def provider
     Provider.find(billto) rescue nil
 end
 
-def filename 
-    File.basename(filespec) rescue nil
+def filespec
+    INVOICES_PATH.join(filename) rescue nil
 end
 
 end
