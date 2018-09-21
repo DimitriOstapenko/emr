@@ -20,7 +20,7 @@ class InvoicesController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @invoice = @patient.invoices.build(invoice_params)
-    @invoice.date = Date.today
+    @invoice.date = params[:date] || Date.today
     @invoice.paid = false
     if @invoice.save
        @invoice.update_attribute(:filename, "inv_#{@invoice.id}.pdf")
