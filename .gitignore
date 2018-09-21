@@ -45,9 +45,5 @@
 .DS_Store
 /.idea/*
 /lib/seeds
-/public/reports
-/public/paystubs
-/public/invoices
 /public/charts
-/public/EDT
 /config/initializers/01_globals.rb

@@ -3,7 +3,7 @@ class EdtFilesController < ApplicationController
     helper_method :sort_column, :sort_direction
 
     before_action :logged_in_user 
-    before_action :admin_user, only: [:index, :show, :edit, :update, :destroy]
+    before_action :admin_user, only: [ :edit, :update, :destroy]
     
   def index
 	@edt_files = EdtFile.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
@@ -12,7 +12,6 @@ class EdtFilesController < ApplicationController
   end
 
   def new
-	@edt_file = EdtFile.new
   end
 
   def create
