@@ -9,11 +9,11 @@
 	  <th class='tbl_md'><%= sortable 'ftype', 'Type' %></th>
           <th class='tbl_md'><%= sortable 'provider_no', 'Provider' %></th>
           <th class='tbl_md'>File</th>
-	  <th>Download</th>
 	  <th><%= sortable 'upload_date', 'Uploaded' %></th>
 	  <th cless='tbl_md'>Claims</th>
           <th class='tbl_md'>Services</th>
 	  <th cless='tbl_md'>TTL</th>
+	  <th>Download</th>
 	   <% if current_user.admin?  %>
           <th class='tbl_sm'></th>
 	  <% end %>

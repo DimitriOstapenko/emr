@@ -8,12 +8,11 @@
 	  <th class='tbl_sm'><%= sortable 'id', '#' %></th>
 	  <th><%= sortable 'doc_id', 'Doctor' %></th>
           <th class='tbl_lmd'>Report</th>
-          <th class='tbl_md'>Download</th>
-	  <th class='tbl_md'>Size(M) </th>
 	  <th><%= sortable 'rtype', 'Type' %></th>
           <th>Timeframe</th>
 	  <th cless='tbl_llg'><%= sortable 'sdate', 'Date Range' %></th>
 	  <th><%= sortable 'created_at', 'Created' %></th>
+          <th class='tbl_md'>Download</th>
 	   <% if current_user.admin?  %>
           <th class='tbl_sm'></th>
 	  <% end %>

@@ -31,6 +31,8 @@ group :development, :test do
   gem 'byebug',  '9.0.6', platform: :mri
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
+  gem 'better_errors' #, '~> 2.50'
+  gem 'binding_of_caller', '~> 0.8.0'
 #  gem 'savon', '~> 2.0'
 end
 
