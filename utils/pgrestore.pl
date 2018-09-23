@@ -15,5 +15,5 @@ print "Dropping db 'walkin' \n";
 `/usr/bin/dropdb --if-exists walkin -e`;
 print "Creating db 'walkin'\n";
 `/usr/bin/createdb walkin`;
-print "Restoring DB walkin - full restore from latest backup\n";
+print "Restoring DB walkin - full restore from latest backup $target \n";
 `/bin/cat  $target | /bin/gunzip | /usr/bin/psql walkin`;
