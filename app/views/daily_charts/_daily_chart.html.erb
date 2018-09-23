@@ -4,6 +4,6 @@
 	<td><%= daily_chart.pages %> </td> 
 	<td><%= daily_chart.filesize %> </td> 
 	<td><%= daily_chart.created_at.to_date %> </td> 
-	<td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, daily_chart  %></td>
+	<td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_daily_chart_path(daily_chart)  %></td>
      </tr>
 

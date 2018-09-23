@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include DaysheetHelper
   helper_method :hcp_procedure?
 
+#  layout :choose_layout
+
 #  def initialize
 #    WillPaginate.per_page = 10 if device_type == 'desktop'
 #  end
@@ -45,5 +47,12 @@ class ApplicationController < ActionController::Base
     @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
   end
 
+  def choose_layout
+    if current_user.admin?
+       "admin"
+    else
+       "application"
+    end
+  end
 end
   

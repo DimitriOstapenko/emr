@@ -6,13 +6,6 @@
 	<% end %>  
 	<td><%= report.doctor.lname rescue 'All' %> </td> 
 	<td><%= report.name %> </td>
-	<% if report.filespec.present? && File.exists?(report.filespec) %>
-	  <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_report_path(report)  %></td>
-	  <td><%= report.filesize %> </td>
-        <% else %> <!-- regenerate report -->
-	  <td><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_report_path(report)  %></td>
-	  <td></td>
-  	<% end %>
 
 	<td><%= report.type_str %></td>
 	<td><%= report.timeframe_str %></td> 
@@ -26,6 +19,12 @@
 	</td>
 
 	<td><%= report.created_at %></td>
+	
+	<% if report.filespec.present? && File.exists?(report.filespec) %>
+	  <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_report_path(report)  %></td>
+        <% else %> <!-- regenerate report -->
+	  <td><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_report_path(report)  %></td>
+  	<% end %>
 
   	<% if current_user.admin?  %>
 	   <td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, report, method: :delete, data: { confirm: "Are you sure you want to delete #{report.name}?" } %> </td>

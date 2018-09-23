@@ -33,7 +33,7 @@ class DailyChartsController < ApplicationController
   end
 
   def download
-   @chart = Chart.find( params[:id] )
+   @chart = DailyChart.find( params[:id] )
 
    if File.exists?(@chart.filespec)
           send_file @chart.filespec,
