@@ -22,6 +22,8 @@ Rails.application.configure do
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
   # `config/secrets.yml.key`.
   config.read_encrypted_secrets = true
+  # starting with rails 5.2 secret key is stored in file config/master.key   It must be in .gitignore!
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
