@@ -2,56 +2,56 @@
   <%= render 'shared/error_messages', object: f.object %>
 <!-- Row 1 -->
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-md-3">
      <%= f.input :lname, hint: 'Required'%>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-md-3">
   <%= f.input :fname %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-2 col-md-2">
   <%= f.input :mname, label: 'Middle Name' %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-2 col-md-2">
   <%= f.input :sex, collection: SEXES, selected: 'Male', hint: 'Required', label: 'Gender' %>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-md-2 col-sm-2">
   <%= f.input :pat_type, collection: PATIENT_TYPES, selected: 'HCP', hint: 'Required', label: 'Type' %>
   </div>
 </div>
 
 <!-- Row 2 -->
 <div class="row">
-  <div class="col-sm-3" id="maiden_name", style="display:none;">
+  <div class="col-sm-3 col-md-3 id="maiden_name", style="display:none;">
   <%= f.input :maid_name %>
   </div>
   
-  <div class="col-sm-3" id="ifh_number", style="display:none;">
+  <div class="col-sm-3 col-md-3" id="ifh_number", style="display:none;">
   <%= f.input :ifh_number, label:'IFH Number', hint: 'Required' %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-md-3">
   <%= f.input :ohip_num, label: 'OHIP Number', hint: 'Required *' %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-2 col-md-2">
 	  <%= f.input :ohip_ver, label: 'Version Code' %>
   </div>
   
-  <div class="col-sm-1">
+  <div class="col-sm-1 col-md-1">
   <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov.', selected: 'ON' %>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-md-3">
   <%= f.input :hin_expiry, as: :date, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required *' %>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-3 col-md-3">
   <%= f.input :dob, as: :date, start_year: 1900, end_year: Date.today.year, hint: 'Required', html5: true %>
   </div>
 </div>
@@ -59,7 +59,7 @@
 <!-- Row 3 -->
 <div class="row">
 
-  <div class="col-sm-4">
+  <div class="col-sm-4 col-md-4">
   <%= f.input :addr, label: 'Srteet Address' %>
   </div>
   
@@ -141,7 +141,7 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-10">
   <%= f.button :submit, "Save Patient's record", class: "btn btn-primary" %>
   </div>
 </div>
