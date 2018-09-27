@@ -1,95 +1,62 @@
-<%= form_for @procedure do |f| %>
+<%= simple_form_for @procedure do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <!-- Row 1 -->
 <div class="row">
   <div class="col-sm-2">
-	  <%= f.label :Code %>
-          <%= f.text_field :code %>
+          <%= f.input :code, label: 'Service Code' %>
   </div>
   
   <div class="col-sm-2">
-	  <%= f.label :type %>
-          <%= f.select :ptype, PROC_TYPES %>
+	  <%= f.input :ptype, collection: PROC_TYPES, label: 'Service Type', include_blank: false,
+ 	      label_html: { "data-toggle": 'tooltip', class: "has-tip",
+              title: "Use '3RD' for all 3rd party procedures, 'HCP' otherwise"}  %>
   </div>
 
   <div class="col-sm-2">
-	  <%= f.label :units %>
-	  <%= f.text_field :unit, value: @procedure.unit || 1 %>
+	  <%= f.input :unit, value: @procedure.unit || 1, label: 'Number of Units' %>
   </div>
 
   <div class="col-sm-2">
-	  <%= f.label :percent %>
-	  <%= f.text_field :percent, value: @procedure.percent || 0 %>
+	  <%= f.input :percent, value: @procedure.percent || 0 %>
   </div>
 </div>
 
   <!-- Row 2 -->
 <div class="row">
   <div class="col-sm-8">
-	  <%= f.label :description %>
-	  <%= f.text_field :descr %>
+	  <%= f.input :descr, label: 'Description' %>
   </div>
 </div>
 
   <!-- Row 3 -->
 
 <div class="row">
-  <div class="col-sm-2">
-          <%= f.label :provider_fee %>
-          <%= f.text_field :cost %>
+  <div class="col-sm-4">
+          <%= f.input :cost, label: 'Service Fee' %>
   </div>
-
-  <div class="col-sm-2" style="display:none;">
-          <%= f.label 'Specialist Fee' %>
-          <%= f.text_field :spec_fee %>
-  </div>
-
-  <div class="col-sm-2" style="display:none;">
-          <%= f.label 'Assistant Fee' %>
-          <%= f.text_field :ass_fee %>
-  </div>
-
-  <div class="col-sm-2" style="display:none;">
-          <%= f.label 'Anesth Fee' %>
-          <%= f.text_field :ana_fee %>
+  <div class="col-sm-4">
+          <%= f.input :eff_date, as: :date, start_year: 1900, end_year: Date.today.year+1, label: 'Effective Date', html5: true %>
   </div>
 </div>
 
   <!-- Row 4 -->
 
 <div class="row">
-    <div class="col-sm-2">
-          <%= f.label :'Effective Date' %>
-          <%= f.date_field :eff_date %>
+    <div class="col-sm-3">
+	    <%= f.input :diag_req, label: 'Requires Diagnosis?',
+		label_html: { "data-toggle": 'tooltip', class: "has-tip",
+		title: "Procedure with this parameter set will require selection of diagnosis during visit creation"}  %>
     </div>
 
-    <div class="col-sm-2">
-          <%= f.label :'Term Date' %>
-          <%= f.date_field :term_date %>
-    </div>
-   
-    <div class="col-sm-1">
+    <div class="col-sm-3">
+          <%= f.input :ref_req, label: 'Requires Referral?' %>
     </div>
 
-    <div class="col-sm-1" style="display:none;">
-          <%= f.label :adm? %>
-          <%= f.check_box :adm_req %>
-    </div>
-
-    <div class="col-sm-1">
-          <%= f.label :'Requires Diagnosis?' %>
-          <%= f.check_box :diag_req %>
-    </div>
-
-    <div class="col-sm-1">
-          <%= f.label :'Requires Referral?' %>
-          <%= f.check_box :ref_req %>
-    </div>
-
-    <div class="col-sm-1">
-          <%= f.label :'Active procedure?' %>
-          <%= f.check_box :active  %>
+    <div class="col-sm-3">
+	    <%= f.input :active, label: 'Active procedure?',
+		label_html: { "data-toggle": 'tooltip', class: "has-tip", 
+		title: "Procedure with this parameter set will appear in the drop-down menu of available procedures on visit page"}  %>
     </div>
 
 </div>
@@ -105,4 +72,8 @@
 
 <% end %>
 
+
+<script>
+	$('body').tooltip({ selector: "[data-toggle~='tooltip']"});
+</script>
 

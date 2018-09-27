@@ -5,12 +5,15 @@
  
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %> - Update Patient's Profile</b>
+	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %> - Edit Patient's Record</b>
 </div>
 <div class="modal-body">
+ <div class="well">
        <%= render 'form' %>
+ </div>
 </div>
 
 <div class="modal-footer">
+	<small> * Required for HCP/WCB/RMB patients </small>
 </div>
 

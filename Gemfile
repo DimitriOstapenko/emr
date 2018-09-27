@@ -67,5 +67,6 @@ gem 'popper_js', '~> 1.14.3'
 gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip',    '~> 1.2.2'
 gem 'ffi',        '~> 1.9.24'
+gem 'simple_form'
 
 

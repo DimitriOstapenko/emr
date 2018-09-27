@@ -23,6 +23,7 @@ class SessionsController < ApplicationController
       doc_id = params[:doc_id]
       id = params[:id]
       if doc_id
+         store_location
 	 set_doc_session( doc_id )
 	 doc = Doctor.find( doc_id ) || Doctor.new()
 	 flash[:info] = "Current Doctor set to Dr. #{doc.lname}"

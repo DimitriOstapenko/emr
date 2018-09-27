@@ -1,8 +1,11 @@
 class User < ApplicationRecord
+  enum role: USER_ROLES 
+  after_initialize :set_default_role, :if => :new_record?
+
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
 
-  validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: VALID_EMAIL_REGEX },
@@ -15,6 +18,18 @@ class User < ApplicationRecord
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                                                   BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+
+  def set_default_role
+    self.role ||= :user
+  end
+
+  def admin?
+    self.role == 'admin'
+  end
+  
+  def doctor?
+    self.role == 'doctor'
   end
 
 end

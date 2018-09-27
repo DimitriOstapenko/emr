@@ -1,4 +1,4 @@
-<%= form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
+<%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
 
 <% 
@@ -27,18 +27,17 @@
   end 
 %>
 
+<div class="well">
   <!-- Row 0 if new visit or admin --> 
 
      <div class="row">
      <% if action_name == 'new' %>
 	<div class="col-sm-4">
-	   <%= f.label "Visit Date/time" %>
-	   <%= f.datetime_field :entry_ts, datetime_separator: ' at ' %>
+	   <%= f.input :entry_ts, as: :date,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
   	</div>
      <% elsif current_user.admin? && action_name == 'edit' %>
    	<div class="col-sm-6">
-  	  <%= f.label "Billing Reference" %>
- 	  <%= f.text_field :billing_ref %>
+	  <%= f.input :billing_ref %>
   	</div>
     <% end %>
     </div>
@@ -47,29 +46,23 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.label "Doctor" %>
-  <%= f.collection_select(:doc_id, get_active_doctors, :id, :lname, prompt: 'Select', selected: doc_id) %>
+  <%= f.input :doc_id, collection: get_active_doctors, group_method: :id, label_method: :lname, prompt: 'Select', selected: doc_id %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Service" %>
-  <%= f.collection_select :proc_code, @procedures, :code, :code, prompt: 'Select', include_blank: 'None' %> <!--#, selected: @visit.proc_code || 'A007A'  -->
-  <!--  f.hidden_field(:fee, id: :fee) -->
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, group_method: :id, prompt: 'Select', label: "Service" %> 
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Service" %>
-  <%= f.collection_select :proc_code2, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
+  <%= f.input :proc_code2, collection: @procedures, label_method: :code, group_method: :id, prompt: 'Select', label: "Service"  %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Service" %>
-  <%= f.collection_select :proc_code3, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
+  <%= f.input :proc_code3, collection: @procedures, label_method: :code, group_method: :code, prompt: 'Select', label: "Service" %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Service" %>
-  <%= f.collection_select :proc_code4, @procedures, :code, :code, prompt: 'Select', include_blank: 'None'  %>
+  <%= f.input :proc_code4, collection: @procedures, label_method: :code, group_method: :code, prompt: 'Select', label: "Service"  %>
   </div>
 </div
 
@@ -77,28 +70,23 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.label "Diagnosis" %>
-  <%=  f.collection_select :diag_code, get_active_diagnoses, :code, :descr_with_code, prompt: 'Select' %> <!--  #, selected: @visit.diag_code || '460.000' -->
+  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :code, group_method: :descr_with_code, prompt: 'Select', label: 'Diagnosis' %> 
   </div>
 
   <div class="col-sm-2">
-  <%= f.label :units %>
-  <%= f.select :units, UNITS, prompt:  'Select' %>
+  <%= f.input :units, collection: UNITS, prompt:  'Select', label: 'Units' %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label :units %>
-  <%= f.select :units2, UNITS, prompt: 'Select' %>
+  <%= f.input :units2, collection: UNITS, prompt: 'Select', label: 'Units' %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label :units %>
-  <%= f.select :units3, UNITS, prompt: 'Select' %>
+  <%= f.input :units3, collection: UNITS, prompt: 'Select', label: 'Units' %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label :units %>
-  <%= f.select :units4, UNITS, prompt: 'Select' %>
+  <%= f.input :units4, collection: UNITS, prompt: 'Select', label: 'Units' %>
   </div>
 </div>
 
@@ -106,12 +94,10 @@
 
 <div class="row">
   <div class="col-sm-2">
-  <%= f.label "Duration" %>
-  <%= f.select :duration, DURATIONS, default: 10  %>
+  <%= f.input :duration, collection: DURATIONS, default: 10  %>
   </div>
   <div class="col-sm-2 ">
-  <%= f.label "Visit Type" %>
-  <%= f.select :vis_type, VISIT_TYPES, placeholder: 'Visit type', default: 'WS' %>
+  <%= f.input :vis_type, collection: VISIT_TYPES, placeholder: 'Visit type', default: 'WS', label: 'Vis Type' %>
   </div>
   
   <div class="col-sm-2">
@@ -143,25 +129,20 @@
 
 <div class="row">
   <div class="col-sm-4" id="visit_statuses">
-  <%= f.label "Visit Status" %>
-  <%= f.select :status, VISIT_STATUSES, placeholder: 'Status', disabled: disabled %>
+  <%= f.input :status, collection: VISIT_STATUSES, placeholder: 'Status', disabled: disabled %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.label :Temperature %>
-  <%= f.text_field :temp %>
+  <%= f.input :temp %>
   </div>
   <div class="col-sm-2">
-  <%= f.label 'Heart Rate' %>
-  <%= f.text_field :pulse %>
+  <%= f.input :pulse, label: 'H/R' %>
   </div>
   <div class="col-sm-2">
-  <%= f.label "BP (H/L)" %>
-  <%= f.text_field :bp %>
+  <%= f.input :bp, label:'BP (H/L)' %>
   </div>
   <div class="col-sm-2">
-  <%= f.label "Weight" %>
-  <%= f.text_field :weight %>
+  <%= f.input :weight %>
   </div>
 </div>
 
@@ -169,37 +150,50 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.label "Reason for visit" %>
-  <%= f.text_area :reason, rows: 2, placeholder: 'Reason for visit' %>
+  <%= f.input :reason, as: :text, rows: 2, placeholder: 'Reason for visit', label: false %>
   </div>
 </div>
 
 <!-- Row 6: upload docs -->
+<!--
 <div class="row">
   <div class="col-sm-12"> 
-    <%= f.label :'PDF documents' %>
-      <% @visit.documents.each do |d| %>
-      <% next unless d.document.file.present? %>
+      <% @visit.documents.each do |d| 
+         next unless d.document.file.present? %>
       <%= link_to d.document.file.filename, d.document.url.to_s %>
       <% end %>
-    <%= f.file_field :document %>
   </div>
 </div>
+-->
 
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
-  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
-  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-  <p>
+  <%= f.input :notes, rows:4, placeholder: 'Notes', label: false %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+    <%= f.input :document, label: 'Upload Attachment'  %>
+  </div>
+</div>
+
+<div class="spacer-10"></div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+    <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
   </div>
 </div>
 
 </div>
+
 <% end %>
 
 <script>
 $(document).ready(function() {
+
 //    $.fn.select2.defaults.set( "theme", "classic" );
     $( "#visit_diag_code" ).select2();
     $('#visit_proc_code').select2();
@@ -265,8 +259,8 @@ $(pc4).change(function () {
   }
 });
 
-function get_bil_type ( code, suff ) {
-	var request = "/procedures/get_by_code?code=" + code;
+function get_bil_type ( id, suff ) {
+	var request = "/procedures/get?id=" + id;
 	var aj = $.ajax({
         url: request,
         type: 'get',

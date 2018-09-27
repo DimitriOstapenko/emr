@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
   include DaysheetHelper
   helper_method :hcp_procedure?
 
+  add_flash_types :info, :warning
+
 #  layout :choose_layout
 
 #  def initialize
@@ -18,8 +20,7 @@ class ApplicationController < ActionController::Base
     def logged_in_user
       unless logged_in?
         store_location
-        flash[:danger] = "Please log in."
-        redirect_to login_url
+        redirect_to login_url, flash: {warning: "Please log in."} 
       end
     end
 
@@ -27,7 +28,7 @@ class ApplicationController < ActionController::Base
    def current_doctor_set
      unless current_doctor
        store_location
-       flash[:danger] = "Please set doctor for this shift"
+       flash.keep[:warning] = "Please set doctor for this shift"
        redirect_to set_doctor_url if device_type == 'mobile'
      end
    end

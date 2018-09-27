@@ -47,7 +47,7 @@ class DaysheetController < ApplicationController
       end
   end
 
-  def set_doctor
+  def set_doctor_
       doc_id = params[:doc_id]
       id = params[:id]
       if doc_id

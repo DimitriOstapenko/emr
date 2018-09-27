@@ -1,0 +1,18 @@
+<%# add navigation links to this file %>
+<% if logged_in? %> 
+  <%= render 'layouts/select_doctor' if device_type == 'desktop' %>
+  <% if controller_name == 'daysheet' || controller_name == 'billings' %>
+    <%= render 'layouts/date_select' %>
+  <% elsif controller_name != 'visits' && controller_name != 'users' && controller_name != 'static_pages' %>
+    <%= render 'layouts/find' %>
+  <% end %>
+  <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>
+  <li class="<%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
+  <li class="<%= 'active' if controller_name == 'billings' %>"><%= link_to "Billing", billings_path %></li>
+  <%= render 'layouts/docs' %>
+  <%= render 'layouts/ref' %>
+  <%= render 'layouts/forms' %>
+  <%= render 'layouts/admin' if current_user.admin?  %>
+<% else %>
+  <li><%= link_to "Log in", login_path %></li>
+<% end %>

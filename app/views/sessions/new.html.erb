@@ -1,19 +1,16 @@
 <% provide(:title, "Log in") %>
 
-<div class='spacer-30'></div>
+<div class="col-sm-4 col-sm-offset-4">
+<h3 class='display-1'>Sign In</h3>
+ <div class="well">
 
-  <div class="col-sm-2 col-sm-offset-5">
-    <%= form_for(:session, url: login_path) do |f| %>
-
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+    <%= simple_form_for :session, url: login_path do |f| %>
+      <%= f.input :email %>
+      <%= f.input :password %>
+      <%= f.button :submit, "Log in", class: "btn btn-primary" %>
     <% end %>
 
-  </div>
+ </div>
+</div>
 
 

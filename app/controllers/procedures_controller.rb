@@ -34,6 +34,17 @@ class ProceduresController < ApplicationController
     end
   end
 
+# Called by JS in visit _form  
+  def get
+    id = params[:id]
+    proc = Procedure.find(id).as_json
+    respond_to do |format|
+        format.json {
+            render json: proc
+        }
+    end
+  end
+
   def show
     @procedure = Procedure.find(params[:id])
   end

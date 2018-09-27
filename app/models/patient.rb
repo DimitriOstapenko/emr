@@ -98,6 +98,10 @@ class Patient < ApplicationRecord
    return unless self.ohip_num.present? && self.ohip_ver.present?
 # Don't validate out of province or non-ohip numbers   
     if (hin_prov == 'ON' &&  pat_type == 'O')
+      if hin_expiry.blank?
+         errors.add('Health Card:', "Expiry date is required")
+	 return
+      end
       expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
       errors.add('Health Card:', "Card is expired") if expiry < Date.today
       errors.add('Health Card:', "Card number for ON must be 10 digits long") if ohip_num.present? && ohip_num.length != 10

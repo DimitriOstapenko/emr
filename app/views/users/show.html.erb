@@ -5,9 +5,9 @@
 <div class="row justify-content-sm-center">
   <div class="col-sm-6 col-sm-offset-3">
 	   <pre>
-	      Username: <%= @user.name %>
+	      Name: <%= @user.name %>
 	      Email: <%= @user.email %>
-	      Admin?: <%= @user.admin %>
+	      Role: <%= @user.role %>
            </pre>
 	    
 	    <%= button_to "Edit", edit_user_path(@user), class: "btn btn-primary", :method => "get" %>

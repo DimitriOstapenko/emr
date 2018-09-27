@@ -1,0 +1,14 @@
+<li style="width: 30px;">&nbsp;</li>
+<li class="nav-item active">
+<%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>
+  <div class="form-group">
+    <div class="col-sm-12 col-md-10 padding-0">
+	  <%= f.search_field :findstr, 
+              placeholder: "Find #{controller_name.singularize}", 
+	      id: "findstr", :onChange => 'javascript: this.form.submit()', 
+	      style: "height:25px !important;" %>
+     </div>
+   </div>
+<% end %>
+</li>
+<li style="width: 5px;">&nbsp;</li>

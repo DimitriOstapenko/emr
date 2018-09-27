@@ -34,7 +34,7 @@ p {
    min-height: 100%; //92%;
    height: auto !important; /* Stick footer to bottom in IE6 */
    height: 100%;
-   margin: 0 auto -30px;  /* footer height */
+   margin: 0 auto -20px;  /* footer height */
    padding-left: 5px;
    padding-right: 5px;
    padding-bottom: 15px;
@@ -111,7 +111,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-size: 1.4em;
+  font-size: 1.6em;
   letter-spacing: -1px;
   margin-bottom: 10px;
   padding: 10px;
@@ -119,16 +119,16 @@ h1 {
 }
 
 h2 {
-  font-size: 1.3em;
-//  letter-spacing: -1px;
+  font-size: 1.5em;
+  letter-spacing: -1px;
   margin-bottom: 20px;
   text-align: center;
-  font-weight: bold;
+//  font-weight: bold;
 /*  color: $gray-light; */
 }
 
 h3 {
-  font-size: 1.3em;
+  font-size: 1.4em;
   margin-bottom: 10px;
   margin-top: 10px;
 }
@@ -253,12 +253,39 @@ aside {
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
   width: 100%;
-  margin-bottom: 10px;
+//  margin-bottom: 10px;
   @include box_sizing;
 }
 
 input {
   height: auto !important;
+}
+
+input[type="date"] {
+	height: 34px !important;
+}
+
+input[type="file"] {
+	height: 34px !important;
+//	line-height: 34px;
+    padding: 6px 12px;
+}
+
+.file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+select {
+    vertical-align:top;
+    height:25px;
+}
+input, select{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 #error_explanation {
@@ -397,25 +424,13 @@ input {
   top: 100px;
   left: 40px;
   z-index:300;
-
 } 
 
 .alert {
   margin-bottom: 1px;
   height: 30px;
   line-height:30px;
-  padding:0px 15px;
-}
-
-.alert-success{
-    color: green;
-}
-.alert-danger{
-  color: red;
-  font-size: 1em;
-  height: 30px;
-  line-height:30px;
-  padding:0px 15px;
+  padding:2px 35px 5px 5px;
 }
 
 .alert .glyphicon{
@@ -425,7 +440,9 @@ input {
 .alert div,
 .alert span{
     padding-left: 5px;
+    padding-right: 15px;
     display:table-cell;
+    line-height:30px;
 }
 
 .hdr-link {
@@ -514,6 +531,9 @@ table.pretty {
   left: 5%;
 //  transform: translate(-50%, -50%);
 }
+.modal-title {
+   font-size: 18px;
+}
 
 .turbolinks-progress-bar {
    height: 3px;
@@ -522,16 +542,17 @@ table.pretty {
 
 /* Make Select2 boxes match Bootstrap3 heights: */
 .select2-selection__rendered {
-  line-height: 24px !important;
+  line-height: 34px !important;
 }
 
 .select2-selection {
-  height: 24px !important;
+  height: 34px !important;
 }
 
 .select2-selection__arrow {
-    height: 22px !important;
+    height: 32px !important;
 }
+
 
 // Safari modals - doesnt really work, but maybe one day..
 .clickable {
@@ -576,4 +597,14 @@ card > hr {
   margin-right: 0;
   margin-left: 0;
 }
+
+// Simple form tool tips
+
+.has-tip:after{
+  font-family: "Glyphicons Halflings";
+  content: " \e085";
+  color: #aaa;
+}
+
+
 
