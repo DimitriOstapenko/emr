@@ -7,7 +7,10 @@
     <%= simple_form_for :session, url: login_path do |f| %>
       <%= f.input :email %>
       <%= f.input :password %>
+      <%= f.input :remember_me, as: :boolean  %>
       <%= f.button :submit, "Log in", class: "btn btn-primary" %>
+      <div class='spacer-20'></div>
+      <center>New user? <%= link_to "Sign up now!",  signup_path %></center>
     <% end %>
 
  </div>

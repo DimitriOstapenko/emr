@@ -20,6 +20,28 @@ class User < ApplicationRecord
     BCrypt::Password.create(string, cost: cost)
   end
 
+# Get URL safe secure token  
+  def User.new_token
+    SecureRandom.urlsafe_base64
+  end
+
+# Save token to DB for persistent sessions  
+  def remember
+    self.remember_token = User.new_token
+    update_attribute(:remember_digest, User.digest(remember_token))
+  end
+
+# Forget a user - clear persistent session
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+
+# Returns true if the given token matches the digest.
+  def authenticated?(remember_token)
+    return if remember_digest.nil?
+    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+  end
+
   def set_default_role
     self.role ||= :user
   end

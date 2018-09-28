@@ -1,32 +1,16 @@
+<div class="well">
+
 <%= simple_form_for @user,  :html => { :role => 'form'}  do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-
-<div class="form-group">
   <%= f.input :name %>
-</div>
-
-<div class="form-group">
-  <%= f.input :email, :autofocus => true %>
-</div>
-
-<div class="form-group">
+  <%= f.input :email %>
   <%= f.input :password %>
-</div>
-
-<div class="form-group">
   <%= f.input :password_confirmation  %>
-</div>
-
 <% if current_user.admin?  %>
-<div class="form-group">
   <%= f.input :role, collection: USER_ROLES  %>
-</div>
 <% end %>
 
-<div class="row">
-<div class="col-md-6 col-md-offset-6">
 <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
-</div>
-</div>
-
 <% end %>
+
+</div>

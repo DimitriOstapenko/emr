@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_192431) do
+ActiveRecord::Schema.define(version: 2018_09_27_185340) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -388,6 +388,7 @@ ActiveRecord::Schema.define(version: 2018_09_25_192431) do
     t.datetime "updated_at", null: false
     t.string "password_digest"
     t.integer "role"
+    t.string "remember_digest"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
