@@ -26,9 +26,10 @@ class VisitsController < ApplicationController
           redirect_to @patient
 	else
            @visit = @patient.visits.new
-           @visit.entry_ts = Time.now #.strftime("%Y-%m-%d at %H:%M")
+           @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
 	   @visit.doc_id ||= current_doctor.id rescue nil
 	   if @visit.save
+              @visit.update_attribute(:entry_by, current_user.name)
 	      redirect_to @patient
            else 
      	      flash.now[:danger] = 'Error saving new visit'		   

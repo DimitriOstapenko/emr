@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_27_185340) do
+ActiveRecord::Schema.define(version: 2018_09_28_164127) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -237,6 +237,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_185340) do
     t.string "medications"
     t.string "maid_name"
     t.string "ifh_number"
+    t.boolean "clinic_pat"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"

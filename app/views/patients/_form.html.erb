@@ -15,11 +15,11 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :sex, collection: SEXES, selected: 'Male', hint: 'Required', label: 'Gender' %>
+  <%= f.input :sex, collection: SEXES, hint: 'Required', label: 'Gender', include_blank: false %>
   </div>
   
   <div class="col-sm-2">
-  <%= f.input :pat_type, collection: PATIENT_TYPES, selected: 'HCP', hint: 'Required', label: 'Payment Type' %>
+  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required', label: 'Payment Type', include_blank: false %>
   </div>
 </div>
 
@@ -39,16 +39,20 @@
   <%= f.input :ohip_num, label: 'OHIP Number', hint: 'Required *' %>
   </div>
 
-  <div class="col-sm-2">
-	  <%= f.input :ohip_ver, label: 'Version Code' %>
+  <div class="col-sm-1 padding-0">
+     <%= f.input :ohip_ver, label: 'VC' %>
   </div>
-  
+
   <div class="col-sm-1">
-  <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov.', selected: 'ON' %>
+	  <%= f.input :clinic_pat, label: 'Clinic Patient' %>
+  </div>
+
+  <div class="col-sm-1">
+  <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov.', include_blank: false %>
   </div>
   
   <div class="col-sm-3">
-  <%= f.input :hin_expiry, as: :date, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required *' %>
+     <%= f.input :hin_expiry, as: :date, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required *' %>
   </div>
   
   <div class="col-sm-3">
@@ -68,7 +72,7 @@
   </div>
   
   <div class="col-sm-2">
-  <%= f.input :prov, collection: PROVINCES, selected: 'ON' %>
+  <%= f.input :prov, collection: PROVINCES, include_blank: false %>
   </div>
   
   <div class="col-sm-2">
@@ -84,7 +88,8 @@
 
 <div class="row">
   <div class="col-sm-3">
-  <%= f.input :family_dr, label: 'Family Doctor' %>
+  <%# f.input :family_dr, label: 'Family Doctor' #%>
+  <%= f.input :family_dr, collection: Doctor.all, label_method: :lname, value_method: :lname, prompt: 'Select' %>
   </div>
   
   <div class="col-sm-3">

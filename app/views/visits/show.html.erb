@@ -15,14 +15,22 @@
 	
 <section>
 <pre class="pre-scrollable-large">
-<b>Doctor</b> :    <%= @visit.doctor.lname %>
+<b>Doctor</b> : <%= @visit.doctor.lname %>
+<% if @visit.reason %>
 <b>Reason for Visit </b>: <%= @visit.reason %>
+<% end %>
+<% if @visit.diag_code %>
 <b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
+<% end %>
+<% if @visit.services.any? %>
 <b>Procedure(s)</b> : <%=  @visit.proc_codes %>
 <b>Billing Type(s) </b>: <%= @visit.bil_type_str %>, <%= @visit.bil_type2_str %>, <%= @visit.bil_type3_str %>, <%= @visit.bil_type4_str %>
 <b>Units </b>: <%= @visit.all_units.join',' %>
 <b>Billed amount: <%= sprintf '$%.2f',@visit.total_fee %> Insured services: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
+<% end %>
+<% if @visit.temp %>
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
+<% end %>
 <b>Duration </b>: <%= @visit.duration %> minutes
 <b>Status </b>: <%= @visit.status_str %> 
 <b>Entry by </b>: <%= @visit.entry_by %>
@@ -43,7 +51,6 @@
    <%= link_to d.document.file.filename, d.document.url.to_s %>
 <% end %>
 <% end %>
-
 </pre>
 
 <% if @visit.notes.present? %>
