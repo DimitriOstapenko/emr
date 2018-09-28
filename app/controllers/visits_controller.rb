@@ -40,13 +40,13 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    @visit.entry_by = current_user.name
     @visit.entry_ts = Time.now unless (@visit.entry_ts.present? && @visit.entry_ts < Date.tomorrow)
 
     set_visit_fees ( @visit )
 
     if @visit.save
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
+      @visit.update_attribute(:entry_by, current_user.name)
 
       doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
       if doc.blank? || doc.errors.blank?

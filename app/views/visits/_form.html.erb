@@ -46,23 +46,23 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, group_method: :id, label_method: :lname, prompt: 'Select', selected: doc_id %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :proc_code, collection: @procedures, label_method: :code, group_method: :id, prompt: 'Select', label: "Service" %> 
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service" %> 
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :proc_code2, collection: @procedures, label_method: :code, group_method: :id, prompt: 'Select', label: "Service"  %>
+  <%= f.input :proc_code2, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service"  %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :proc_code3, collection: @procedures, label_method: :code, group_method: :code, prompt: 'Select', label: "Service" %>
+  <%= f.input :proc_code3, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service" %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :proc_code4, collection: @procedures, label_method: :code, group_method: :code, prompt: 'Select', label: "Service"  %>
+  <%= f.input :proc_code4, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service"  %>
   </div>
 </div
 
@@ -70,7 +70,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :code, group_method: :descr_with_code, prompt: 'Select', label: 'Diagnosis' %> 
+  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: 'Diagnosis' %> 
   </div>
 
   <div class="col-sm-2">
@@ -259,8 +259,8 @@ $(pc4).change(function () {
   }
 });
 
-function get_bil_type ( id, suff ) {
-	var request = "/procedures/get?id=" + id;
+function get_bil_type ( code, suff ) {
+	var request = "/procedures/get_by_code?code=" + code;
 	var aj = $.ajax({
         url: request,
         type: 'get',
