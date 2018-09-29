@@ -4,6 +4,9 @@ class Visit < ApplicationRecord
   has_many :documents, dependent: :destroy, inverse_of: :visit
   accepts_nested_attributes_for :documents, :allow_destroy => true, reject_if: proc { |attributes| attributes['document'].blank? }
   
+  include SessionsHelper 
+  include DoctorsHelper 
+ 
   mount_uploader :document, DocumentUploader
 
   default_scope -> { order(entry_ts: :desc) }
@@ -11,24 +14,17 @@ class Visit < ApplicationRecord
   
   validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true
-#  validates :doc_code, presence: true
-#  validates :diag_code, presence: true, numericality: true, length: { maximum: 10 }
   validates :proc_code, length: { maximum: 10 }
   validates :proc_code2, length: { maximum: 10 }
   validates :proc_code3, length: { maximum: 10 }
   validates :proc_code4, length: { maximum: 10 }
-#  validates :units, numericality: { only_integer: true, only_positive: true }
-#  validates :units2, numericality: { only_integer: true, only_positive: true }
-#  validates :units3, numericality: { only_integer: true, only_positive: true }
-#  validates :units4, numericality: { only_integer: true, only_positive: true }
-#  validates :duration, numericality: { only_integer: true, only_positive: true }
   validates :entry_ts, presence: true
 
   validate :diag_required
   after_initialize :default_values
 
   def default_values
-	  self.entry_ts ||= Time.now
+	  self.entry_ts ||= Time.zone.now #.strftime("%Y-%m-%d at %H:%M")  # html5 date on ipad 
 	  self.status ||= ARRIVED
 	  self.units ||= 1
 	  self.vis_type ||= WALKIN_VISIT

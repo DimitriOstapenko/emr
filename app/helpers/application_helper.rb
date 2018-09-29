@@ -1,9 +1,9 @@
 module ApplicationHelper
        
 # Returns the current doctor (if any).
-  def current_doctor
-    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
-  end
+#  def current_doctor
+#    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
+#  end
 
 # Guess device type 	
 # /mobile|android|iphone|blackberry|iemobile|kindle/

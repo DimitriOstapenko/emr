@@ -15,24 +15,21 @@
 	
 <section>
 <pre class="pre-scrollable-large">
+<b>Status </b>: <%= @visit.status_str %> 
 <b>Doctor</b> : <%= @visit.doctor.lname %>
-<% if @visit.reason %>
-<b>Reason for Visit </b>: <%= @visit.reason %>
-<% end %>
-<% if @visit.diag_code %>
-<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
-<% end %>
-<% if @visit.services.any? %>
-<b>Procedure(s)</b> : <%=  @visit.proc_codes %>
-<b>Billing Type(s) </b>: <%= @visit.bil_type_str %>, <%= @visit.bil_type2_str %>, <%= @visit.bil_type3_str %>, <%= @visit.bil_type4_str %>
-<b>Units </b>: <%= @visit.all_units.join',' %>
-<b>Billed amount: <%= sprintf '$%.2f',@visit.total_fee %> Insured services: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
-<% end %>
-<% if @visit.temp %>
+<% if @visit.temp.present? %>
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 <% end %>
 <b>Duration </b>: <%= @visit.duration %> minutes
-<b>Status </b>: <%= @visit.status_str %> 
+<% if @visit.diag_code.present? %>
+<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
+<% end %>
+<% if @visit.services.any? %>
+<b>Services</b> : <%=  @visit.proc_codes %>
+<%#
+<b>Service types </b>: <%= [@visit.all_btypes_str, @visit.all_units].transpose.map{ |el| "#{el[0]}:#{el[1]}"}.join', ' %>
+<b>Billed total: <%= sprintf '$%.2f',@visit.total_fee %> Insured: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
+<% end %>
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
 <% if @visit.billing_ref.present? %>
@@ -52,6 +49,14 @@
 <% end %>
 <% end %>
 </pre>
+
+<% if @visit.reason.present? %>
+<div class="panel panel-info">
+   <div class="visit-notes-panel-body">
+<b>Reason for Visit </b>: <%= @visit.reason %>
+   </div>
+</div>
+<% end %>
 
 <% if @visit.notes.present? %>
 <div class="panel panel-info">

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   include ApplicationHelper
   include SessionsHelper
-  include DaysheetHelper
+  include DoctorsHelper
   helper_method :hcp_procedure?
 
   add_flash_types :info, :warning
@@ -44,9 +44,9 @@ class ApplicationController < ActionController::Base
   end
 
 # Returns the current doctor (if any).
-  def current_doctor
-    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
-  end
+#  def current_doctor
+#    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
+#  end
 
   def choose_layout
     if current_user.admin?

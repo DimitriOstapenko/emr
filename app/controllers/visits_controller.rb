@@ -26,7 +26,6 @@ class VisitsController < ApplicationController
           redirect_to @patient
 	else
            @visit = @patient.visits.new
-           @visit.entry_ts = Time.now.strftime("%Y-%m-%d at %H:%M")
 	   @visit.doc_id ||= current_doctor.id rescue nil
 	   if @visit.save
               @visit.update_attribute(:entry_by, current_user.name)
@@ -41,13 +40,11 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    @visit.entry_ts = Time.now unless (@visit.entry_ts.present? && @visit.entry_ts < Date.tomorrow)
 
     set_visit_fees ( @visit )
 
     if @visit.save
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
-      @visit.update_attribute(:entry_by, current_user.name)
 
       doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
       if doc.blank? || doc.errors.blank?
@@ -78,7 +75,6 @@ class VisitsController < ApplicationController
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-#      redirect_to daysheet_path
       redirect_back_or(daysheet_url)
 
     else

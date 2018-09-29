@@ -1,6 +1,5 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
   <%= render 'shared/error_messages', object: f.object %>
-
 <% 
    doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) 
    @procedures = get_active_procedures 
@@ -133,16 +132,16 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :temp %>
+  <%= f.input :temp, label: "Temperature" %>
   </div>
   <div class="col-sm-2">
-  <%= f.input :pulse, label: 'H/R' %>
+  <%= f.input :pulse, label: 'Heart Rate' %>
   </div>
   <div class="col-sm-2">
-  <%= f.input :bp, label:'BP (H/L)' %>
+  <%= f.input :bp, as: :string, label:'BP (H/L)' %>
   </div>
   <div class="col-sm-2">
-  <%= f.input :weight %>
+  <%= f.input :weight, label: 'Weight (Kg)' %>
   </div>
 </div>
 
