@@ -58,7 +58,6 @@ Rails.application.routes.draw do
   get "/procedures/get_by_code", to: "procedures#get_by_code" 
   get "/procedures/get", to: "procedures#get" 
   
-  
   resources :users
   resources :patients do
     get 'label', on: :member
@@ -78,6 +77,8 @@ Rails.application.routes.draw do
   
   resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
 	    :drugs, :vaccines, :export_files
+
+  resources :account_activations, only: [:edit]
 
   resources :claims do
     resources :services
