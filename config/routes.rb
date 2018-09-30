@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'password_resets/new'
+  get 'password_resets/edit'
   root 'static_pages#home'
 
   get '/ra_messages/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
@@ -79,6 +81,7 @@ Rails.application.routes.draw do
 	    :drugs, :vaccines, :export_files
 
   resources :account_activations, only: [:edit]
+  resources :password_resets,     only: [:new, :create, :edit, :update]
 
   resources :claims do
     resources :services

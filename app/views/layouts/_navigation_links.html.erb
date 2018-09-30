@@ -3,7 +3,7 @@
   <%= render 'layouts/select_doctor' if device_type == 'desktop' %>
   <% if controller_name == 'daysheet' || controller_name == 'billings' %>
     <%= render 'layouts/date_select' %>
-  <% elsif controller_name != 'visits' && controller_name != 'users' && controller_name != 'static_pages' %>
+  <% elsif !%w(visits users static_pages password_resets).include?(controller_name) %>
     <%= render 'layouts/find' %>
   <% end %>
   <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>

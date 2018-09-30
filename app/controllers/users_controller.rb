@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
  
-      	before_action :logged_in_user #, except: :resend_activation_link
-  	before_action :correct_user,   only: [:edit, :update]
-  	before_action :admin_user,     only: [:new, :create, :destroy]
+#      	before_action :logged_in_user #, except: :resend_activation_link
+#  	before_action :correct_user,   only: [:edit, :update]
+  	before_action :admin_user #,     only: [:index, :new, :create, :destroy]
 
 
   def index
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.account_activation(@user).deliver_now
+      @user.send_activation_email
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
     else

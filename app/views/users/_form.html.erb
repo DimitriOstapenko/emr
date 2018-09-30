@@ -8,6 +8,9 @@
   <%= f.input :password_confirmation  %>
 <% if current_user.admin?  %>
   <%= f.input :role, collection: USER_ROLES  %>
+  <% if !current_user?(@user) %>
+  <%= f.input :activated, label: 'Active account ?' %>
+  <% end %>
 <% end %>
 
 <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
