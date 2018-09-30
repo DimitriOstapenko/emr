@@ -48,7 +48,6 @@ private
 
   # Confirms a valid user.
   def valid_user
-    return if current_user.admin?
     unless (@user && @user.activated? && @user.authenticated?(:reset, params[:id]))
         redirect_to root_url
     end
@@ -56,7 +55,6 @@ private
 
   # Checks expiration of reset token.
   def check_expiration
-    return if current_user.admin?
     if  @user.password_reset_expired?
         flash[:danger] = "Password reset has expired."
         redirect_to new_password_reset_url
