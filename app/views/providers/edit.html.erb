@@ -1,12 +1,9 @@
 <% provide(:title, 'Edit provider') %>
 <% provide(:button_text, 'Save changes') %>
-<h1><%= @provider.name %> : Provider Profile</h1>
 
-<div class="row justify-content-sm-center">
-  <div class="col-sm-10 col-sm-offset-3">
+<div class="col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-3">
+<h3 class='display-1'><%= @provider.name %> : Edit Provider</h3>
 
 <%= render 'form' %>
 
-  </div>
 </div>
-

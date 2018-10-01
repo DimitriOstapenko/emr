@@ -1,41 +1,20 @@
-<%= form_for @provider do |f| %>
+<div class="well">
+<%= simple_form_for @provider do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <div class="col-sm-5 col-sm-offset-1">
-
-  <%= f.label 'Name' %>
-  <%= f.text_field :name %>
-
-  <%= f.label :'Address1' %>
-  <%= f.text_field :addr1 %>
-  
-  <%= f.label :Address2 %>
-  <%= f.text_field :addr2 %>
-  
-  <%= f.label :city %>
-  <%= f.text_field :city %>
-
-  <%= f.label :'Province' %>
-  <%= f.select(:prov, PROVINCES ) %>
-
-  <%= f.label :'Postal Code' %>
-  <%= f.text_field :postal %>
-  
-  <%= f.label :'Phone Number' %>
-  <%= f.telephone_field :phone1, placeholder: 'xxx-xxx-xxxx' %>
-
-  <%= f.label :'Alt Phone Number' %>
-  <%= f.telephone_field :phone2, placeholder: 'xxx-xxx-xxxx' %>
-  
-  <%= f.label :'Fax' %>
-  <%= f.telephone_field :fax, placeholder: 'xxx-xxx-xxxx' %>
-
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-
-     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-  </div>
+  <%= f.input :name %>
+  <%= f.input :addr1 %>
+  <%= f.input :addr2 %>
+  <%= f.input :city %>
+  <%= f.input :prov, collection: PROVINCES  %>
+  <%= f.input :postal %>
+  <%= f.input :phone1, placeholder: 'xxx-xxx-xxxx', label: 'Phone Number 1' %>
+  <%= f.input :phone2, placeholder: 'xxx-xxx-xxxx', label: 'Phone Number 2' %>
+  <%= f.input :fax, placeholder: 'xxx-xxx-xxxx' %>
+  <%= f.input :email %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 </div>
 
 <% end %>
+</div>

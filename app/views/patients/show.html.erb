@@ -22,8 +22,12 @@
         <% if !@patient.chart_file.blank? %>
 	<b>Chart File:</b> <%= link_to 'Chart', chart_patient_path(@patient) %>
         <% end %>
+	<% if @patient.allergies.present? %>
 	<b>Allergies</b>: <%= @patient.allergies %>
+	<% end %>
+	<% if @patient.medications.present? %>
 	<b>Medications</b>: <%= @patient.medications  %>
+	<% end %>
          </pre>
 	 
 	 <% if @patient.notes.present? %> 

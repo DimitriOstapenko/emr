@@ -78,7 +78,7 @@ Rails.application.routes.draw do
   end
   
   resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
-	    :drugs, :vaccines, :export_files
+	    :drugs, :vaccines, :export_files, :claim_errors
 
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]

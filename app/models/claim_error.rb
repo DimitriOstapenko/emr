@@ -1,0 +1,2 @@
+class ClaimError < ApplicationRecord
+end

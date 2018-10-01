@@ -1,48 +1,12 @@
-<%= form_for(@diagnosis) do |f| %>
+<div class="well">
+<%= simple_form_for(@diagnosis) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-<div class="row">
-  <div class="col-sm-3">
-  <%= f.label :'Diagnostic Code' %>
-  </div>  
-  <div class="col-sm-4">
-  <%= f.text_field :code, class: 'form-control' %>
-  </div>  
-</div>  
-
-<div class="row">
-  <div class="col-sm-3">
-  <%= f.label :'Description' %>
-  </div>  
-  <div class="col-sm-4">
-  <%= f.text_field :descr, class: 'form-control' %>
-  </div>  
-</div>  
-
-<div class="row">
-  <div class="col-sm-3">
-  <%= f.label :'Problem Type' %>
-  </div>  
-  <div class="col-sm-4">
-  <%= f.text_field :prob_type, class: 'form-control' %>
-  </div>  
-</div>
-
-<div class="row">
-  <div class="col-sm-3">
-          <%= f.label :active %>
-  </div>
-  <div class="col-sm-3">
-          <%= f.check_box :active  %>
-  </div>
-</div>
-
-<p>
-<div class="row">
-    <div class="col-sm-3"> </div>
-    <div class="col-sm-4">
-    <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-    </div>
-</div>
+  <%= f.input :code, label: 'Diagnostic Code' %>
+  <%= f.input :descr, label: 'Description' %>
+  <%= f.input :prob_type, label: 'Problem Type' %>
+  <%= f.input :active, remote: true  %>
+  <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 
 <% end %>
+</div>

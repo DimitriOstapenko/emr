@@ -1,10 +1,9 @@
      <tr>
         <% if form.filespec.present? && File.exists?(form.filespec) && device_is_desktop? %>
-          <td><%= link_to form.id, form, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+          <td><%= link_to form.name, form, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
         <% else %>
-          <td><%= form.id %></td>
+          <td><%= form.name %></td>
   	<% end %>
-	<td><%= form.name %></td> 
 	<td><%= form.descr %></td> 
 	<td><%= form.ftype_str %></td> 
 	<td><%= form.filename %></td> 

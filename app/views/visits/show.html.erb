@@ -5,7 +5,7 @@
 %>
 <%= render "shared/modal", size: 'lg' %>
 
-<h1> <%= @patient.full_name %> : Visit of <%= time_tag(@visit.entry_ts) %>  </h1>
+<h1> <%= @patient.full_name %> : Visit of <%= @visit.entry_ts %>  </h1>
 
 <% diag = Diagnosis.find_by(code: @visit.diag_code) %>
 <% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>
@@ -20,7 +20,6 @@
 <% if @visit.temp.present? %>
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 <% end %>
-<b>Duration </b>: <%= @visit.duration %> minutes
 <% if @visit.diag_code.present? %>
 <b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
 <% end %>

@@ -6,7 +6,7 @@
  
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	<b class="modal-title" id="myModalLabel">Patient <%= @invoice.patient.lname %>, Invoice To: <%= @invoice.provider.name %></b>
+	<b class="modal-title" id="myModalLabel">Patient <%= @invoice.patient.lname %> Invoice To: <%= @invoice.provider.name %></b>
 </div>
 <div class="modal-body">
        <%= render 'form' %>
