@@ -3,7 +3,7 @@ module SessionsHelper
 # Logs in the given user.
   def log_in(user)
     session[:user_id] = user.id
-#    session[:expires_at] = Time.now.midnight + 1.day
+    session[:expires_at] = 1.hour.from_now 
   end
 
 # Returns the current logged-in user (if any).
@@ -21,11 +21,15 @@ module SessionsHelper
     end
   end
 
-# Returns true if the user is logged in, false otherwise.
+# Returns true if the user is logged in, false otherwise. Expires regular users
   def logged_in?
-#    if !session[:expires_at].blank? 
-#       log_out if session[:expires_at] < Time.now
-#    end
+    if !session[:expires_at].blank? && current_user.present?
+       if current_user.user? && (session[:expires_at] < Time.zone.now)
+          log_out 
+       else
+          session[:expires_at] = 30.minutes.from_now 
+       end
+    end
     !current_user.nil?
   end  
 
@@ -34,7 +38,7 @@ module SessionsHelper
     forget(current_user)
     session.delete(:user_id)
     session.delete(:doc_id)
-#    session.delete(:expires_at)
+    session.delete(:expires_at)
     @current_doctor = nil
     @current_user = nil
   end

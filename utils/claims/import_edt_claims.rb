@@ -20,8 +20,8 @@ $hr8_messages = ''
 $deposit_date = nil
 this_month = Date.today.month
 this_month_name = Date.today.strftime("%B")
-this_letter = ARGV[0] || ('A'..'Z').to_a[this_month-1]
-path = EDT_PATH.join("P#{this_letter.upcase}#{GROUP_NO}.*")
+this_letter = ARGV[0] || THIS_MONTH_LETTER
+path = EDT_PATH.join("P#{this_letter}#{GROUP_NO}.*")
 this_month_file = Dir.glob(path).first rescue nil
 
 abort "File not found: #{path}" unless this_month_file.present?

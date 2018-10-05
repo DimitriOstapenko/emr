@@ -1,14 +1,14 @@
-# Create EdtFile object and save into DB
-# ARG: [date],  All ready claims by default
+# Create EdtFile object and save into DB - script was used in development
+# ARG: none; All ready claims by default
 #
-# - One file for doctor is generated
-# - Whole batch is ignored if total for it is close to last file's total and number of lines is the same
+# This functionality was ported to billings:edt controller
+#
+# - One file per doctor is generated
 #
 
 require_relative '../../config/environment'
 include My::EDT
 
-month_letter = 'ABCDEFGHIJKL'[Time.now.month-1]
 puts "Will look for all ready to bill visits" 
 
 # Is procedure insured? (present in application_controller)
@@ -23,7 +23,7 @@ docs.each do |doc_id|
   last_seq_no = 0; last_ttl_amt = 0.0; 
 
 # Construct output file name  
-  basename = "H#{month_letter}#{doc.provider_no}"
+  basename = "H#{THIS_MONTH_LETTER}#{doc.provider_no}"
 
 # But first find latest file's seq_no for this doctor 
   last_seq_no = EdtFile.where('filename like ?', "#{basename}.%").order(seq_no: :desc).limit(1).pluck(:seq_no).first || 0

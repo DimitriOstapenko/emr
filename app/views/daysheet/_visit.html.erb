@@ -30,7 +30,6 @@
 	</td>
 	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= visit.all_btypes_str.join',' %></td>
 	<td>
 	<% if visit.status == PAID && visit.claim_id.present? %>
 	  <%= link_to visit.status_str, claim_path(visit.claim_id) %> 		

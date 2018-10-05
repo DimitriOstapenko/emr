@@ -9,11 +9,11 @@
   </div>
   
   <div class="col-sm-3">
-          <%= f.input :ftype, collection: FORM_TYPES, label: 'Form Type' %>
+          <%= f.input :ftype, collection: FORM_TYPES, label: 'Form Type', include_blank: false %>
   </div>
   
   <div class="col-sm-3">
-          <%= f.input :format, collection: FORM_FORMATS %>
+          <%= f.input :format, collection: FORM_FORMATS, include_blank: false  %>
   </div>
   
   <div class="col-sm-3">

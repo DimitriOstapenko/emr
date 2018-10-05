@@ -51,7 +51,7 @@ Visit.where(entry_ts: (@sdate..@edate)).where(status: (BILLED..PAID)).each do |v
          good_claims_count += 1
       else
 	 no_claim_count += 1
-         puts "Unpaid: No paid claim present for pat #{v.patient_id} visit #{v.id} of #{v.entry_ts} (#{v.bil_type_str}); "
+	 puts "Unpaid: No paid claim present for pat #{v.patient_id} HC# #{pat.ohip_num} visit #{v.id} of #{v.entry_ts} (#{v.bil_type_str}); "
       end
    elsif found_by_hc_and_date?(pat,v)
        good_claims_count += 1

@@ -2,6 +2,7 @@
   @patient = Patient.find(@visit.patient_id) 
   @doctor = Doctor.find(@visit.doc_id)
   provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") 
+  codehash = ClaimError.pluck(:code, :descr).to_h 
 %>
 <%= render "shared/modal", size: 'lg' %>
 
@@ -32,7 +33,11 @@
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entered at </b>: <%= @visit.entry_ts %>
 <% if @visit.billing_ref.present? %>
+<% if @visit.status == ERROR %>       
+<b>Error code: </b>: <%= link_to @visit.billing_ref, '#', {title: codehash[@visit.billing_ref]}  %>
+<% else %>
 <b>Billing Ref# </b>: <%= @visit.billing_ref %>
+<% end %>
 <% end %>
 <% if @visit.export_file.present? %>
 <b>Export file</b>: <%= @visit.export_file %>
@@ -72,7 +77,7 @@
 <% remote = device_is_desktop? %>
 
 <div class="row">
- <% if @visit.status < BILLED || current_user.admin? %>
+ <% if [ARRIVED,READY,ERROR].include?(@visit.status) || current_user.admin? %>
  <div class="col-sm-3 col-md-2">
   <%= button_to "Edit Visit", edit_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", method: "get" %>
  </div>

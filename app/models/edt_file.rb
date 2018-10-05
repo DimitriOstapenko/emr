@@ -6,7 +6,7 @@ class EdtFile < ApplicationRecord
         validates :ftype, presence: true, inclusion: { in: 0..5 }
         validates :filename, length: { maximum: 100 }, presence: true, uniqueness: true
 	validates :lines, numericality: { only_integer: true, only_positive: true }
-        validates :seq_no, presence: true, inclusion: { in: 0..31 }
+        validates :seq_no, presence: true, inclusion: { in: 0..999 }
 
 # Construct full filespec	
 def filespec

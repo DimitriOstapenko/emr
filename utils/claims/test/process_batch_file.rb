@@ -13,7 +13,7 @@ abort "EDT directory does not exist." unless File.directory?(EDT_PATH)
 
 this_month = Date.today.month
 this_month_name = Date.today.strftime("%B")
-this_month_letter = ARGV[0] || ('A'..'Z').to_a[this_month-1]
+this_month_letter = ARGV[0] || THIS_MONTH_LETTER
 puts this_month_letter 
 path = EDT_PATH.join("B#{this_month_letter.upcase}*.*")
 new_files = Dir.glob(path)
@@ -41,7 +41,7 @@ def HB1(s)
 
    puts "batch_no: #{batch_no}", 
 	"oper_no: #{oper_no}", 
-	"cre_date: #{cre_date}", 
+	"cre_date: #{cre_date.to_date}", 
 	"seq_no: #{seq_no}", 
 	"micro_start: #{micro_start}",
 	"micro_end: #{micro_end}", 
@@ -50,7 +50,7 @@ def HB1(s)
 	"provider_no: #{provider_no}", 
 	"no_of_claims: #{no_of_claims}", 
 	"no_of_records: #{no_of_records}", 
-	"proc_date: #{proc_date}", 
+	"proc_date: #{proc_date.to_date}", 
 	"edit_msg: #{edit_msg}", 
 	"moh_use_msg: #{moh_use_msg}"
 end
@@ -58,8 +58,6 @@ end
 BATCH_FILE = new_files.first
 
 content = File.readlines BATCH_FILE
-claim = nil
-claims = services = -1
 content.each do |str| 
   hdr = str[0,3]
   case hdr 

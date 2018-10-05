@@ -159,7 +159,7 @@ class BillingsController < ApplicationController
       end
 
 # Call method from EDT module to genarate claims      
-      (body, claims, svcs, ttl_amt) = generate_claim_for_doc(edt_file.id,filename,visits)
+      (body, claims, svcs, ttl_amt) = generate_claim_for_doc(edt_file.id,filename,visits)  # My::EDT
       ttl_claims += claims
       if edt_file.update_attributes(ftype: EDT_CLAIM, filename: filename, upload_date: Time.now, provider_no: doc.provider_no,
                group_no: GROUP_NO, body: body, lines: body.lines.count, claims: claims, services: svcs, total_amount: ttl_amt, seq_no: seq_no )

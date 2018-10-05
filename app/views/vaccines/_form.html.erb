@@ -1,23 +1,15 @@
-<%= form_for @vaccine do |f| %>
+<div class='well'>
+<%= simple_form_for @vaccine do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.label 'Name' %>
-  <%= f.text_field :name %>
-
-  <%= f.label 'Target' %>
-  <%= f.text_field :target %>
-
-  <%= f.label 'Route' %>
-  <%= f.text_field :route %>
-  
-  <%= f.label 'Dose' %>
-  <%= f.text_field :dose %>
-  
-  <%= f.label 'DIN' %>
-  <%= f.text_field :din %>
-  
-  <%= f.text_area :notes, rows:4, placeholder: 'Notes' %>
+  <%= f.input :name %>
+  <%= f.input :target %>
+  <%= f.input :route %>
+  <%= f.input :dose %>
+  <%= f.input :din %>
+  <%= f.input :notes, placeholder: 'Notes', label: false %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
 
 <% end %>
+</div>
 

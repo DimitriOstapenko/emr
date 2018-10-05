@@ -1,4 +1,3 @@
-#
 # Traverse charts/Daily tree and find all [date].pdf files. Import names into db table
 # Ignore already imported files
 #
@@ -10,8 +9,6 @@ require 'fileutils'
 dir  = CHARTS_PATH.to_s + '/Daily'
 puts "About to update daily_charts table with files from #{dir}"
 
-#DailyChart.destroy_all
-#
 Find.find( dir ) do |path| 
 	basename = File.basename(path)
 	next unless basename.match(/^\d{4}-\d{2}-\d{2}\.pdf$/)
