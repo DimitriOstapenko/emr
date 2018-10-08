@@ -4,8 +4,8 @@ module SessionsHelper
   def log_in(user)
     session[:user_id] = user.id
     session[:expires_at] = 1.hour.from_now 
-    doc = Doctor.find_by(email: user.email) 
-    session[:doc_id] = doc.id if doc
+    doc = Doctor.find_by(email: user.email) || Doctor.find_by(lname: 'nobody')
+    session[:doc_id] = doc.id
   end
 
 # Returns the current logged-in user (if any).
