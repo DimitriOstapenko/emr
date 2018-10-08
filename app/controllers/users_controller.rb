@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
  
 #      	before_action :logged_in_user #, except: :resend_activation_link
-#  	before_action :correct_user,   only: [:edit, :update]
-  	before_action :admin_user #,     only: [:index, :new, :create, :destroy]
+  	before_action :correct_user,   only: [:edit, :update]
+  	before_action :admin_user, except: :show   #,     only: [:index, :new, :create, :destroy]
 
 
   def index
@@ -52,7 +52,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :activated)
     end
 
 # Confirms the correct user.

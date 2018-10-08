@@ -1,0 +1,10 @@
+<% menu_items = %w(billings claims pay_stubs ra_messages) %>
+<li class="dropdown nav-item <%= 'active' if menu_items.include?(controller_name) %>"> 
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">Billing<b class="caret"></b> </a>
+<ul class="dropdown-menu">
+<li><%= link_to "Daily Billing", billings_path %></li>
+<li><%= link_to "MHO Claims", claims_path  %> </li>
+<li> <%= link_to "Pay Stubs", paystubs_path, method: :get %> </li>
+<li> <%= link_to "MHO RA Messages", ra_messages_path, method: :get %> </li>
+</ul>
+</li>

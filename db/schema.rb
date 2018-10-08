@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_04_164828) do
+ActiveRecord::Schema.define(version: 2018_10_07_085951) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 2018_10_04_164828) do
     t.datetime "updated_at", null: false
     t.integer "seq_no"
     t.integer "services"
-    t.integer "doctors"
+    t.integer "doctors", default: 1
     t.integer "hcp_svcs"
     t.integer "rmb_svcs"
     t.boolean "processed", default: false

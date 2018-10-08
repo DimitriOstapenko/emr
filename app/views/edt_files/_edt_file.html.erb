@@ -3,21 +3,26 @@
         <% if edt_file.filespec.present? && File.exists?(edt_file.filespec) && device_is_desktop? %>
           <td><%= link_to edt_file.filename, edt_file, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
         <% else %>
-	  <td class='tbl_md'><%= edt_file.filename %></td>
+	  <td><%= edt_file.filename %></td>
         <% end %>
 
         <td><%= edt_file.ftype_str %></td>
-        <td class='tbl_md'><%= doc.lname %></td>
+	<td>
+	<% if doc %>
+          <%= doc.lname %>
+	<% end %>
+	</td>
         <td><%= edt_file.upload_date %></td>
-	<td cless='tbl_sm'><%= edt_file.claims %></td>
+	<td><%= edt_file.doctors %></td>
+	<td><%= edt_file.claims %></td>
 	<td><%= edt_file.services %></td>
-	<td cless='tbl_sm'><%= sprintf("$%.2f",edt_file.total_amount) %></td>
+	<td><%= sprintf("$%.2f",edt_file.total_amount) %></td>
 	<% if edt_file.filespec.present? && File.exists?(edt_file.filespec) %>
-           <td class='tbl_sm'><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_edt_file_path(edt_file)  %></td>
+           <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_edt_file_path(edt_file)  %></td>
         <% else %>
-	   <td class='tbl_sm'><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_edt_file_path(edt_file)  %></td>
+	   <td><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_edt_file_path(edt_file)  %></td>
 	<% end %>
   	<% if current_user.admin?  %>
-	   <td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, edt_file, metdod: :delete, data: { confirm: "Are you sure you want to delete #{edt_file.filename}?" } %> </td>
+	   <td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, edt_file, method: :delete, data: { confirm: "Are you sure you want to delete #{edt_file.filename}?" } %> </td>
 	<% end %>
      </tr>

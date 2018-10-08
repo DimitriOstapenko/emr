@@ -43,11 +43,6 @@ class ApplicationController < ActionController::Base
     Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
   end
 
-# Returns the current doctor (if any).
-#  def current_doctor
-#    @current_doctor ||= Doctor.find_by(id: session[:doc_id] )
-#  end
-
   def choose_layout
     if current_user.admin?
        "admin"

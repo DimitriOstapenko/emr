@@ -1,4 +1,5 @@
-  <%= render 'layouts/select_doctor' if device_type == 'desktop' %>
+  <li><%= link_to "Dr. #{current_doctor.lname}", current_doctor  if current_doctor %> </li>
+  <li style="width:40px">&nbsp;</li>
   <% if controller_name == 'daysheet' || controller_name == 'billings' %>
     <%= render 'layouts/date_select' %>
   <% elsif !%w(visits users static_pages password_resets).include?(controller_name) %>
@@ -6,8 +7,7 @@
   <% end %>
   <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>
   <li class="<%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
-  <%= render 'layouts/billing' %>
-  <%= render 'layouts/docs' %>
+  <%= render 'layouts/doc_billing' %>
+  <%= render 'layouts/doc_docs' %>
   <%= render 'layouts/ref' %>
   <%= render 'layouts/forms' %>
-  <%= render 'layouts/admin' if current_user.admin?  %>

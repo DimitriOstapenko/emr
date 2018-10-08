@@ -1,20 +1,37 @@
-<% provide(:title, 'All claims') %>
+<% provide(:title, 'All claims') 
+%>
+
+<% unless current_user.doctor? %>
+<%= form_with url: claims_index_path do |f| %>
+  <div class="row form-control"> 
+    <div class="col-sm-2">
+    <%= f.label 'Show claims for doctor:' %>
+    </div>
+    <div class="col-sm-2">
+    <%= f.collection_select :filter_doc_id, get_active_doctors, :id, :lname, 
+	    options= {prompt: 'All Doctors', selected: @doc_id}, 
+	    html_options = {onchange: 'this.form.submit();'} 
+    %>
+    </div>
+  </div>
+<% end %>
+<% end %>
 
 <table class="tbl table-hover"> 
   <thead>
       <tr>
-          <th><%= sortable 'claim_no', 'Claim #' %></th>
+          <th>Claim #</th>
 	  <th>Svc Date </th>
-          <th><%= sortable 'provider_no', 'Provider' %></th>
+          <th>Provider</th>
  	  <th class='tbl_sm'>Svcs</th>
  	  <th>Submitted</th>
  	  <th>Paid</th>
-          <th><%= sortable 'accounting_no', 'Acc #' %></th>
+          <th>Acc #</th>
 	  <th>HC#</th> 
           <th class='tbl_sm'>Prov</th>
-	  <th class='tbl_sm'><%= sortable 'pmt_pgm', 'Type' %></th> 
+	  <th class='tbl_sm'>Pmt Type</th> 
 	  <th>RA file</th>
-          <th><%= sortable 'date_paid', 'Date Paid' %></th>
+          <th>Date Paid</th>
 	  <th>Visit</th> 
       </tr>
   </thead>
@@ -26,5 +43,5 @@
 </table>
 
 <div class="bottom_buttons ">
-<%= will_paginate @claims, class: "btn" %> 
+<%= will_paginate @claims, params: {filter_doc_id: @doc_id}, class: "btn" %> 
 </div>

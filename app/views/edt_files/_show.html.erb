@@ -5,7 +5,10 @@
  
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	<b class="modal-title" id="myModalLabel">Dr. <%= @doctor.lname %>: File  <%= @edt_file.filename %> Uploaded <%= @edt_file.upload_date %>; <%= @edt_file.claims %> claims, total: <%= sprintf("$%.2f",@edt_file.total_amount) %></b>
+	<b class="modal-title" id="myModalLabel">
+	<%= @edt_file.ftype_str %> file:
+	<%= "Dr. #{@doctor.lname}:" if @doctor  %>
+	<%= @edt_file.claims %> claims, <%= @edt_file.services %> services; total: <%= sprintf("$%.2f",@edt_file.total_amount) %></b>
 </div>
 <div class="modal-body">
 	<iframe id="myModal" src="/edt_files/<%= @edt_file.id %>" frameborder="0" width="100%" height="600px"></iframe>

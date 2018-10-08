@@ -680,17 +680,20 @@ end # EDT module
     @total_subm = {'HCP' => 0, 'RMB' => 0, 'WCB' => 0 }
     @total_paid = {'HCP' => 0, 'RMB' => 0, 'WCB' => 0 }
     @servcounts = {'HCP' => 0, 'RMB' => 0, 'WCB' => 0 }
+    amt_mismatched = {}
 
-    rows =  [[ "Svc Date", "OHIP#", "Type", "Svcs", "Subm", "Paid", "Claim#", "Acct#", "Visit"]]
+    rows =  [[ "Svc Date", "OHIP#", "Type", "Svcs", "Subm", "Paid", "Claim#", "Acct#", "Visit/Error"]]
     claims.all.each do |cl|
-	    rows += [[ cl.date, "#{cl.ohip_num} #{cl.ohip_ver}", cl.pmt_pgm, cl.svcs, sprintf("$%.2f",cl.damt_subm), sprintf("$%.2f",cl.damt_paid), cl.claim_no, cl.accounting_no, cl.visit_id ]]
+      visit_id_or_error = cl.errcode.empty? ? cl.visit_id : cl.errcode
+      rows += [[ cl.date, "#{cl.ohip_num} #{cl.ohip_ver}", cl.pmt_pgm, cl.svcs, sprintf("$%.2f",cl.damt_subm), sprintf("$%.2f",cl.damt_paid), cl.claim_no, cl.accounting_no, visit_id_or_error ]]
+      amt_mismatched[rows.size-1] = cl.amt_mismatched?
       @total_hcp_claims += 1 
       @total_subm[cl.pmt_pgm] += cl.damt_subm
       @total_paid[cl.pmt_pgm] += cl.damt_paid
       @servcounts[cl.pmt_pgm] += cl.svcs
     end
 
-    pdf.table rows do |t|
+    pdf.table rows, cell_style: {inline_format: true} do |t|
         t.cells.border_width = 0 
 	t.column_widths = [25.mm, 28.mm, 10.mm, 10.mm, 20.mm, 20.mm, 22.mm, 22.mm, 22.mm ]
         t.header = true 
@@ -698,10 +701,14 @@ end # EDT module
         t.position = 5.mm
 	t.cells.padding = 3
 	t.cells.style do |c|
- 	  c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+          if amt_mismatched[c.row] 
+	    c.background_color = 'CCCCCC' 
+	  else
+ 	    c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+	  end
         end
     end
-      
+ 
     pdf.move_down 10.mm
     pdf.span(190.mm, :position => :center) do
       pdf.text "Total Claims: #{@total_hcp_claims}", size: 9

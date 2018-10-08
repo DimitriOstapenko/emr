@@ -10,7 +10,11 @@
   def index
     store_location
 
-    @reports = Report.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    if current_user.doctor?
+      @reports = Report.where(doc_id: current_doctor.id).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    else 
+      @reports = Report.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    end
     flash.now[:info] = "Showing all reports (#{@reports.count})"
   end
 
@@ -26,17 +30,7 @@
     prefix += @report.doc_id.to_s || 'all'
     sdate = @report.sdate.to_date rescue Date.today
     @doc  = Doctor.find(@report.doc_id)
-    @report.name = "#{prefix}_#{sdate.strftime("%Y%m%d")}_#{@report.timeframe}"
-    @report.filename = @report.name+'.pdf'
     @visits_that_day = []
-
-# We will replace existing reports
-
-    old_report = Report.find_by(filename: @report.filename)
-    if old_report.present?
-      File.delete( old_report.filespec ) rescue nil
-      old_report.destroy
-    end
 
     case @report.timeframe
        	when 1   # date
@@ -51,10 +45,10 @@
 		 end
 	when 2   # mon
     	 	 @report.sdate = Date.new(year.to_i,month.to_i) 
-    	  	 @report.edate = sdate + 1.month - 1.day
+		 @report.edate = @report.sdate + 1.month - 1.day
 	when 3   # year
     	  	 @report.sdate = Date.new(year.to_i) 
-    	  	 @report.edate = sdate + 1.year - 1.day 
+		 @report.edate = @report.sdate + 1.year - 1.day 
 	when 4   # range
 		 @report.sdate = @report.sdate.to_date
 		 @report.edate = @report.edate.to_date + 24.hours
@@ -67,6 +61,17 @@
 	else     # invalid
    	 	 flash.now[:danger] = "Invalid report timeframe: #{@report.timeframe}"
 	end
+
+    @report.name = "#{prefix}_#{@report.sdate.strftime("%Y%m%d")}_#{@report.timeframe}"
+    @report.filename = @report.name+'.pdf'
+
+# We will replace existing reports
+
+    old_report = Report.find_by(filename: @report.filename)
+    if old_report.present?
+      File.delete( old_report.filespec ) rescue nil
+      old_report.destroy
+    end
     
        if flash[:danger]
 	  redirect_to reports_path

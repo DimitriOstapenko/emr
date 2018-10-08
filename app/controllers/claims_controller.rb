@@ -6,8 +6,21 @@ class ClaimsController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
   def index
-      @claims = Claim.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-      flash.now[:info] = "Showing All Claims (#{@claims.count}) "
+    @doc_id = nil
+    if current_user.doctor?
+       prov_no = current_doctor.provider_no
+       @doc_id = current_doctor.id
+    elsif !params[:filter_doc_id].blank?
+       doc = Doctor.find(params[:filter_doc_id])
+       prov_no = doc.provider_no
+       @doc_id = doc.id
+    end
+
+    if prov_no.present?
+      @claims = Claim.where(provider_no: prov_no).paginate(page: params[:page])
+    else
+      @claims = Claim.paginate(page: params[:page])
+    end
   end
 
   def find
@@ -35,8 +48,8 @@ class ClaimsController < ApplicationController
       
 private
   def claim_params
-          params.require(:claim).permit(:claim_no, :provider_no, :accounting_no, :pat_lname, :pat_fname, :province, :ohip_num, :ohip_ver, 
-					:pmt_pgm, :moh_group_id, :visit_id, :ra_file, :date_paid )
+          params.require(:claim).permit(:claim_no, :provider_no, :accounting_no, :pat_lname, :pat_fname, 
+	      :province, :ohip_num, :ohip_ver, :pmt_pgm, :moh_group_id, :visit_id, :ra_file, :date_paid, :filter_doc_id )
   end
 
 # Find claim by claim_no/ohip_num/accounting_no

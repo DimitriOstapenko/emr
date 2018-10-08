@@ -1,12 +1,12 @@
 # Create EdtFile object and save into DB - script was used in development
-# ARG: none; All ready claims by default
+# ARG: none; All ready claims will be exported irregardless of date
 #
 # This functionality was ported to billings:edt controller
 #
 # - One file per doctor is generated
 #
 
-require_relative '../../config/environment'
+require_relative '../../../config/environment'
 include My::EDT
 
 puts "Will look for all ready to bill visits" 

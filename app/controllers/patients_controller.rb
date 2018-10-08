@@ -5,9 +5,11 @@ class PatientsController < ApplicationController
 	before_action :admin_user,   only: :destroy
 
   def index
-      @patients = Patient.paginate(page: params[:page])
-      flash.now[:info] = "Showing All Patients (#{@patients.count}) "
-
+      if current_user.doctor?
+        @patients = Patient.where(family_dr: current_doctor.lname).paginate(page: params[:page])
+      else
+        @patients = Patient.paginate(page: params[:page])
+      end
   end
 
   def find

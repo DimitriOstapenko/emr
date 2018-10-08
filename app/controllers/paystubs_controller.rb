@@ -7,15 +7,17 @@ class PaystubsController < ApplicationController
  before_action :admin_user, only: :destroy
 
  def index
-    @paystubs = Paystub.paginate(page: params[:page])
-    (@latest_ra_file,@latest_pay_date) = Claim.order(date_paid: :desc).limit(1).pluck('ra_file,date_paid').first
-#    (year,month) = Paystub.order(:year, :month).limit(1).pluck('year,month').first rescue nil
-    current_year_month = Time.now.strftime('%Y%m').to_i
-    cur_month = Date::MONTHNAMES[Time.now.month]
-    @can_generate_new_paystubs = @latest_pay_date.strftime('%Y%m').to_i == current_year_month rescue false
-    suff = @can_generate_new_paystubs ? "Can generate paystubs for #{cur_month}": "Cannot generate #{cur_month} paystubs - file is not available yet"
-
-    flash.now[:info] = "Latest processed RA file: #{@latest_ra_file}; Latest payment date: #{@latest_pay_date}. " + suff
+    if current_user.doctor?	 
+      @paystubs = Paystub.where(doc_id: current_doctor.id).paginate(page: params[:page])
+    else 
+      @paystubs = Paystub.paginate(page: params[:page])
+      (@latest_ra_file,@latest_pay_date) = Claim.order(date_paid: :desc).limit(1).pluck('ra_file,date_paid').first
+      current_year_month = Time.now.strftime('%Y%m').to_i
+      cur_month = Time.now.strftime("%B") 
+      @can_generate_new_paystubs = @latest_pay_date.strftime('%Y%m').to_i == current_year_month rescue false
+      suff = @can_generate_new_paystubs ? "Can generate paystubs for #{cur_month}": "Cannot generate #{cur_month} paystubs - file is not available yet" 
+      flash.now[:info] = "Latest processed RA file: #{@latest_ra_file}; Latest payment date: #{@latest_pay_date}. " + suff
+    end
   end
 
   def new

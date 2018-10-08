@@ -1,57 +1,50 @@
-<%= form_for @paystub do |f| %>
+<%= simple_form_for @paystub do |f| %>
 		
 <%= render 'shared/error_messages', object: f.object %>
 
 <!-- Row 1 --->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label "Select Doctor" %>
-  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname, selected: @paystub.doc_id %>
+  <%= f.input :doc_id, collection: get_active_doctors, value_method: :id, label_method: :lname, selected: @paystub.doc_id, label: "Select Doctor" %>
 </div >
 <div class="col-sm-2" >
-  <%= f.label "Monthly Premium" %>
-  <%= f.number_field :monthly_premium_amt, value:0, step: :any %>
+  <%= f.input :monthly_premium_amt, value:0, step: :any, label: "Monthly Premium" %>
 </div>
 </div>
 
 <!-- Row 2 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label :IFH_payment %>
-  <%= f.number_field :ifh_amt, value:0,  step: :any %>
+  <%= f.input :ifh_amt, value:0,  step: :any, label: "IFH payment" %>
 </div>
 
 <div class="col-sm-2" >
-  <%= f.label :CASH_payment %>
-  <%= f.number_field :cash_amt, value: 0, step: :any %>
+  <%= f.input :cash_amt, value: 0, step: :any, label: "CASH payment" %>
 </div>
 </div>
 
 <!-- Row 3 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label :WCB_payment %>
-  <%= f.number_field :wcb_amt, value: 0, step: :any %>
+  <%= f.input :wcb_amt, value: 0, step: :any, label: "WCB payment" %>
 </div>
 
 <div class="col-sm-2" >
-  <%= f.label :HC_Deposit %>
-  <%= f.number_field :hc_dep_amt, value: 0, step: :any  %>
+  <%= f.input :hc_dep_amt, value: 0, step: :any, label: "HC Deposit"  %>
 </div>
 </div>
 
 <!-- Row 4 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label :MHO_deduction %>
-  <%= f.number_field :mho_deduction, value: 0, step: :any %>
+  <%= f.input :mho_deduction, value: 0, step: :any, label: "MHO deduction" %>
 </div>
 
 <!-- Row 4 opt -->
 <% if current_user.admin?  %>
 <div class="col-sm-2" >
   <%= f.label :month %>
-  <%= select_month Time.now, value: Time.now.month  %>
+	<%= select_month Time.now.month-1,{}, class: "form-control" %>
 </div>
 <% end %>
 </div>

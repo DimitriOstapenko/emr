@@ -17,6 +17,7 @@ class DaysheetController < ApplicationController
 	@date = Date.today
       end
       
+      @daysheet = @daysheet.where(doc_id: current_doctor.id) if current_user.doctor?
       @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
 	 
@@ -26,7 +27,7 @@ class DaysheetController < ApplicationController
          doctor = "Dr. #{d.lname}" if d.present?
          flashmsg = "Daysheet for #{doctor} : #{@daysheet.count} visits "
       else
-         flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)}"
+	 flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)}"
       end
 
       @insured_svcs = @cash_svcs = @ifh_svcs = @total_cash = 0

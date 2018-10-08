@@ -21,9 +21,13 @@ class BillingsController < ApplicationController
         @date = Date.today
 	flash_add = 'ready to bill'
       end
-
-      @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
-      @docs = Doctor.find(@docs_visits.keys) rescue []
+      
+      if current_user.doctor?
+        @visits = @visits.where(doc_id: current_doctor.id) if current_user.doctor?
+      else
+        @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
+        @docs = Doctor.find(@docs_visits.keys) rescue []
+      end
 
       if params[:doc_id]
          @visits = @visits.where(doc_id: params[:doc_id])

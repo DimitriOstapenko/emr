@@ -4,6 +4,8 @@ module SessionsHelper
   def log_in(user)
     session[:user_id] = user.id
     session[:expires_at] = 1.hour.from_now 
+    doc = Doctor.find_by(email: user.email) 
+    session[:doc_id] = doc.id if doc
   end
 
 # Returns the current logged-in user (if any).
@@ -13,10 +15,14 @@ module SessionsHelper
     if (user_id = session[:user_id])
       @current_user ||= User.find(user_id)
     elsif (user_id = cookies.signed[:user_id])
-      user = User.find_by(id: user_id)
+      user = User.find(user_id)
       if user && user.authenticated?(:remember, cookies[:remember_token])
         log_in user
         @current_user = user
+	if user.doctor?
+	   doc = Doctor.find_by(email: user.email) 
+	   set_doc_session( doc.id ) if doc
+	end
       end
     end
   end

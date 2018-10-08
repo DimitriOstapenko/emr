@@ -24,5 +24,7 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @procedures, class: "btn" %>
+<% unless current_user.doctor? %>
 <%= button_to "Add Procedure", new_procedure_path, class: "btn btn-primary col-md-12", :method => "get" %>
+<% end %>
 </div>

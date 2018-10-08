@@ -1,4 +1,5 @@
-<%= form_for @report do |f| %>
+
+<%= simple_form_for @report do |f| %>
 		
 <%= render 'shared/error_messages', object: f.object %>
 <%= render 'shared/modal', size: 'lg' %>
@@ -12,29 +13,29 @@
 <!-- Row 1 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label "Select Doctor" %>
-  <%= f.collection_select :doc_id, get_active_doctors, :id, :lname,  selected: @report.doc_id || doc_id %>
+<% if current_user.doctor? %>
+  <%= f.input :doc_id, collection: [current_doctor], value_method: :id, label_method: :lname,  selected: @report.doc_id || doc_id, label: "Select Doctor" %>
+  <% else %>
+  <%= f.input :doc_id, collection: get_active_doctors, value_method: :id, label_method: :lname,  selected: @report.doc_id || doc_id, label: "Select Doctor" %>
+<% end %>
 </div >
     
 <div class="col-sm-2" >
-  <%= f.label "Report Type" %>
-  <%= f.select :rtype, REPORT_TYPES, prompt: 'Select Type', selected: SC_REPORT %>
+  <%= f.input :rtype, collection: REPORT_TYPES, selected: SC_REPORT, label: "Report Type" %>
 </div>
 </div>
 
 <!-- Row 2 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" >
-  <%= f.label "Timeframe" %>
-  <%= f.select :timeframe, REPORT_TFRAMES, prompt: 'Select Timeframe', selected: @report.timeframe || DAILY_REPORT, disabled: disabled %>
+  <%= f.input :timeframe, collection: REPORT_TFRAMES,  selected: @report.timeframe || DAILY_REPORT, disabled: disabled %>
 </div>
 </div>
 
 <!-- Row 3 -->
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="sdate" >
-  <%= f.label "Select Date" %>
-  <%= f.date_field :sdate, class: 'datepicker', value: Time.now.strftime('%Y-%m-%d') %>
+  <%= f.date_field :sdate, value: Time.now.strftime('%Y-%m-%d'), label: 'Select Date' %>
 </div>
 </div>
 
@@ -42,7 +43,7 @@
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="edate" style="display:none;">
   <%= f.label "To" %>
-  <%= f.date_field :edate, class: 'datepicker' %>
+  <%= f.date_field :edate, value: Time.now.strftime('%Y-%m-%d'), class: 'datepicker' %>
 </div>
 </div>
 
@@ -50,7 +51,7 @@
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="year" style="display:none;">
   <%= f.label "Year" %>
-  <%= select_year Time.now, start_year: Time.now.year-10, end_year: Time.now.year %>
+  <%= select_year Time.now, {start_year: Time.now.year-10, end_year: Time.now.year}, class: "form-control" %>
 </div>
 </div>
 
@@ -58,7 +59,7 @@
 <div class="row">
 <div class="col-sm-2 col-sm-offset-4" id="month" style="display:none;">
   <%= f.label "Month" %>
-  <%= select_month Time.now  %>
+  <%= select_month Time.now, {}, class: "form-control" %>
 </div>
 </div>
 

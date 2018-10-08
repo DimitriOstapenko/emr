@@ -47,6 +47,14 @@ class EdtFilesController < ApplicationController
   end
   
   def destroy
+    @edt_file = EdtFile.find(params[:id])
+    
+    if @edt_file.present?
+      File.delete( @edt_file.filespec ) rescue nil
+      @edt_file.destroy
+      flash[:success] = "File deleted"
+    end
+    redirect_to edt_files_path
   end
 
   private 

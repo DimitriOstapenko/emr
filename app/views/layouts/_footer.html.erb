@@ -6,6 +6,8 @@
   </small>
   <nav>
     <ul>
+      <li><small><%= link_to "Logged in: #{current_user.name}", user_path(current_user.id) if current_user.present? %></small></li>
+      <li>&nbsp;&nbsp;</li>
       <li><small><%= link_to "About",   about_path %></small></li>
       <li><small><%= link_to "Help", help_path %></small></li>
       <li><small><%= link_to "Contact", contact_path %></small></li>

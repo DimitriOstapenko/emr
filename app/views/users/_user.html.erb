@@ -1,14 +1,14 @@
  <tr>
-  <td><%= link_to user.name, user %></td>
+  <td><%= link_to user.name, edit_user_path(user) %></td>
   <td><%= user.email %></td>
   <td><%= user.role %></td>
   <td><%= user.activated? %></td>
-  <td><%= user.created_at.to_s %></td>
+  <td><%= user.created_at %></td>
+  <td><%= user.updated_at %></td>
 
   <% if current_user.admin? %>
-	  <td> <%= link_to "Edit", edit_user_path(user)  %> </td>
      <% if !current_user?(user) %>
-	  <td><%= link_to "Delete", user, method: :delete, data: { confirm: "You sure?" } %></td>
+	     <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, user, method: :delete, data: { confirm: "Delete user #{user.name}?" } %></td>
      <%end %>
   <% end %>
  </tr>

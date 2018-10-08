@@ -31,6 +31,8 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @patients, class: "btn" %> 
+<% unless current_user.doctor? %>
 <%= button_to "New Patient", new_patient_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+<% end %>
 </div>
 </div>
