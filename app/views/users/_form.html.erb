@@ -7,7 +7,7 @@
   <%= f.input :password %>
   <%= f.input :password_confirmation  %>
 <% if current_user.admin?  %>
-  <%= f.input :role, collection: USER_ROLES  %>
+  <%= f.input :role, collection: USER_ROLES, include_blank: false  %>
   <% if !current_user?(@user) %>
   <%= f.input :activated, label: 'Active account ?' %>
   <% end %>

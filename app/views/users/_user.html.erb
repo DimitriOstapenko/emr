@@ -7,8 +7,10 @@
   <td><%= user.updated_at %></td>
 
   <% if current_user.admin? %>
+     <td>
      <% if !current_user?(user) %>
-	     <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, user, method: :delete, data: { confirm: "Delete user #{user.name}?" } %></td>
-     <%end %>
+	<%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, user, method: :delete, data: { confirm: "Delete user #{user.name}?" } %>
+     <% end %>
+     </td>
   <% end %>
  </tr>

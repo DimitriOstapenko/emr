@@ -1,9 +1,9 @@
 <% provide(:title, 'All claims') 
 %>
 
-<% unless current_user.doctor? %>
 <%= form_with url: claims_index_path do |f| %>
   <div class="row form-control"> 
+<% unless current_user.doctor? %>
     <div class="col-sm-2">
     <%= f.label 'Show claims for doctor:' %>
     </div>
@@ -13,20 +13,28 @@
 	    html_options = {onchange: 'this.form.submit();'} 
     %>
     </div>
-  </div>
 <% end %>
+    
+    <div class="col-sm-2">
+    <%= f.label 'Adjusted claims only:' %>
+    </div>
+    <div class="col-sm-1">
+	    <%= f.select :adjusted, [['Yes',1],['No',0]], options={selected: @adjusted},
+		         html_options = {onchange: 'this.form.submit();'} %>
+    </div>
+  </div>
 <% end %>
 
 <table class="tbl table-hover"> 
   <thead>
       <tr>
           <th>Claim #</th>
+          <th>Acc #</th>
 	  <th>Svc Date </th>
           <th>Provider</th>
  	  <th class='tbl_sm'>Svcs</th>
  	  <th>Subm.</th>
  	  <th>Paid</th>
-          <th>Acc #</th>
 	  <th>HC#</th> 
           <th class='tbl_sm'>Prov</th>
 	  <th class='tbl_sm'>Pgm</th> 

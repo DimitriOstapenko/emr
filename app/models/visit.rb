@@ -282,7 +282,7 @@ class Visit < ApplicationRecord
 
 # Was visit billed yet?  
   def not_billed?
-    ![BILLED,PAID].include?(self.status)
+    ![BILLED,PAID,CANCELLED].include?(self.status)
   end
 
 end

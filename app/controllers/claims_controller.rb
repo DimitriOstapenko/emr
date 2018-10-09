@@ -1,12 +1,13 @@
 class ClaimsController < ApplicationController
 
-	before_action :logged_in_user #, only: [:index, :edit, :update]
-	before_action :admin_user,   only: :destroy
+	before_action :logged_in_user 
+	before_action :admin_user, only: :destroy
 	
 	helper_method :sort_column, :sort_direction
 
   def index
     @doc_id = nil
+    @adjusted = params[:adjusted].to_i rescue 0 
     if current_user.doctor?
        prov_no = current_doctor.provider_no
        @doc_id = current_doctor.id
@@ -15,12 +16,10 @@ class ClaimsController < ApplicationController
        prov_no = doc.provider_no
        @doc_id = doc.id
     end
-
-    if prov_no.present?
-      @claims = Claim.where(provider_no: prov_no).paginate(page: params[:page])
-    else
-      @claims = Claim.paginate(page: params[:page])
-    end
+    @claims = Claim
+    @claims = @claims.where(provider_no: prov_no) if prov_no.present?
+    @claims = @claims.joins(:services).where('amt_subm <> amt_paid').reorder('').group(:claim_no) if @adjusted > 0
+    @claims = @claims.paginate(page: params[:page])
   end
 
   def find
@@ -55,7 +54,7 @@ private
 # Find claim by claim_no/ohip_num/accounting_no
   def myfind (str)
         if str.match(/^G[[:digit:]]{,10}$/)
-		Claim.where("claim_no like ?", "#{str.upcase}%")
+	  Claim.where("claim_no like ?", "#{str.upcase}%")
         elsif str.match(/^[[:digit:]]{,10}$/)
           Claim.where("ohip_num like ?", "%#{str}%")
         elsif str.match(/^[[:graph:]]{,8}$/)

@@ -46,8 +46,6 @@ Rails.application.routes.draw do
   get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
-  #get '/daysheet/card', to: 'patients#card'
-  #post  '/daysheet/card', to: 'patients#card'
 
   get  '/patsignup', to: 'patients#new'
   post '/patsignup', to: 'patients#create'
