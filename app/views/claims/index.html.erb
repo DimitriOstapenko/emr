@@ -5,9 +5,9 @@
   <div class="row form-control"> 
 <% unless current_user.doctor? %>
     <div class="col-sm-2">
-    <%= f.label 'Show claims for doctor:' %>
+    <%= f.label 'Show claims for:' %>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-3 col-md-2">
     <%= f.collection_select :filter_doc_id, get_active_doctors, :id, :lname, 
 	    options= {prompt: 'All Doctors', selected: @doc_id}, 
 	    html_options = {onchange: 'this.form.submit();'} 
@@ -15,10 +15,10 @@
     </div>
 <% end %>
     
-    <div class="col-sm-2">
+    <div class="col-sm-3 col-md-2">
     <%= f.label 'Adjusted claims only:' %>
     </div>
-    <div class="col-sm-1">
+    <div class="col-sm-2 col-md-1">
 	    <%= f.select :adjusted, [['Yes',1],['No',0]], options={selected: @adjusted},
 		         html_options = {onchange: 'this.form.submit();'} %>
     </div>
@@ -30,15 +30,13 @@
       <tr>
           <th>Claim #</th>
           <th>Acc #</th>
+	  <th>HC#</th> 
 	  <th>Svc Date </th>
           <th>Provider</th>
  	  <th class='tbl_sm'>Svcs</th>
  	  <th>Subm.</th>
  	  <th>Paid</th>
-	  <th>HC#</th> 
           <th class='tbl_sm'>Prov</th>
-	  <th class='tbl_sm'>Pgm</th> 
-	  <th>RA file</th>
           <th>Date Paid</th>
 	  <th>Visit</th> 
       </tr>

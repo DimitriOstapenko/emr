@@ -1,125 +1,100 @@
-<%= form_for(@doctor) do |f| %>
+<%= simple_form_for(@doctor) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <div class="col-sm-6 col-sm-offset-1">
-
-  <div class="col-sm-4">
-  <%= f.label 'Last Name' %>
-  <%= f.text_field :lname %>
+  <div class="col-sm-2">
+  <%= f.input :lname, label: 'Last Name' %>
   </div>
 
-  <div class="col-sm-4">
-  <%= f.label :'First Name' %>
-  <%= f.text_field :fname %>
+  <div class="col-sm-2">
+  <%= f.input :fname, label: 'First Name' %>
   </div>
   
-  <div class="col-sm-4">
-  <%= f.label :service %>
-  <%= f.text_field :service %>
-  </div>
-  
-  <div class="col-sm-4">
-  <%= f.label :'Type' %>
-  <%= f.text_field :ph_type %>
+  <div class="col-sm-2">
+  <%= f.input :ph_type, label: 'Type' %>
   </div>
 
-  <div class="col-sm-4">
-  <%= f.label :district %>
-  <%= f.text_field :district %>
+  <div class="col-sm-2">
+  <%= f.input :district %>
   </div>
 
-  <div class="col-sm-4">
-  <%= f.label :bills %>
-  <%= f.select :bills, [['Yes', true], ['No', false]] %>
-  </div>
-
-  <div class="col-sm-10"></div>
-
-  <div class="col-sm-4">
-  <%= f.label :'CPSO Number' %>
-  <%= f.text_field :cpso_num %>
-  </div>
-
-  <div class="col-sm-4">
-  <%= f.label :'Provider No' %>
-  <%= f.text_field :provider_no %>
-  </div>
-  
-  <div class="col-sm-4">
-  <%= f.label :'Group No' %>
-  <%= f.text_field :group_no %>
-  </div>
-
-  <div class="col-sm-3">
-  <%= f.label :'Billing No' %>
-  <%= f.text_field :billing_num %>
-  </div>
-
-  <div class="col-sm-3">
-  <%= f.label :'License No' %>
-  <%= f.text_field :licence_no %>
-  </div>
-
-  <div class="col-sm-3">
-  <%= f.label :specialty %>
-  <%= f.text_field :specialty %>
-  </div>
-  
-  <div class="col-sm-3">
-  <%= f.label 'Percent Deduction' %>
-  <%= f.text_field :percent_deduction %>
-  </div>
-
-  </div>
-  <div class="col-sm-4 ">
-
-  <%= f.label :address %>
-  <%= f.text_field :address %>
-  
-  <div class="col-sm-4">
-  <%= f.label :city %>
-  <%= f.text_field :city %>
-  </div>
-
-  <div class="col-sm-4">
-  <%= f.label :'Province' %>
-  <%= f.select(:prov, PROVINCES ) %>
-  </div>
-
-  <div class="col-sm-4">
-  <%= f.label :'Postal Code' %>
-  <%= f.text_field :postal %>
-  </div>
-  
-  <%= f.label :office %>
-  <%= f.text_field :office %>
-
-  <div class="col-sm-4">
-  <%= f.label :'Phone Number' %>
-  <%= f.telephone_field :phone, placeholder: 'xxx-xxx-xxxx' %>
-  </div>
-
-  <div class="col-sm-4">
-  <%= f.label :'Mobile Number' %>
-  <%= f.telephone_field :mobile %>
-  </div>
-
-  <div class="col-sm-4">
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-  </div>
-
+  <div class="col-sm-2">
+  <%= f.input :bills, collection: [['Yes', true], ['No', false]] %>
   </div>
 </div>
 
-  <div class="row">
-    <div class="col-sm-10 col-sm-offset-1">
-     <%= f.text_area :note, rows:5, placeholder: 'Notes' %>
-     <p>
-     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-    </div>
+<div class="row">
+  <div class="col-sm-2">
+  <%= f.input :cpso_num, label: 'CPSO Number' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :provider_no %>
   </div>
   
+  <div class="col-sm-2">
+  <%= f.input :group_no %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :billing_num %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :licence_no %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2">
+  <%= f.input :specialty %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :percent_deduction %>
+  </div>
+
+  <div class="col-sm-4">
+  <%= f.input :address %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :city %>
+  </div>
+</div>
+  
+<div class="row">
+  <div class="col-sm-2">
+  <%= f.input :prov, collection: PROVINCES %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :postal %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :phone, label: 'Office Number' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :mobile, label: 'Mobile Number' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :email %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-10">
+     <%= f.input :note, placeholder: 'Notes' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-10">
+     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  </div>
+</div>
 
 <% end %>

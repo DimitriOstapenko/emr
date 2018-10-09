@@ -281,8 +281,8 @@ class Visit < ApplicationRecord
   end
 
 # Was visit billed yet?  
-  def not_billed?
-    ![BILLED,PAID,CANCELLED].include?(self.status)
+  def editable?
+    self.entry_ts.to_date == Date.today || ![BILLED,PAID].include?(self.status)
   end
 
 end
