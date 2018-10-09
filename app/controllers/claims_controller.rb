@@ -18,7 +18,7 @@ class ClaimsController < ApplicationController
     end
     @claims = Claim
     @claims = @claims.where(provider_no: prov_no) if prov_no.present?
-    @claims = @claims.joins(:services).where('amt_subm <> amt_paid').reorder('').group('claims.id') if @adjusted > 0
+    @claims = @claims.joins(:services).where('amt_subm <> amt_paid').reorder('svc_date desc').group('claims.id,services.svc_date') if @adjusted > 0
     @claims = @claims.paginate(page: params[:page])
   end
 
