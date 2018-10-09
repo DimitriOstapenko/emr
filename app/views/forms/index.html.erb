@@ -11,10 +11,12 @@
 	  <th>Format</th>
 	  <th>Fillable?</th>
 	  <th></th>
-	  <th></th>
-	<% if current_user.admin?  %>
-	  <th></th>
-        <% end %>  
+	  <% unless current_user.doctor? %>
+	    <th></th>
+	  <% end %>
+	  <% if current_user.admin?  %>
+	    <th></th>
+          <% end %>  
       </tr>
   </thead>
   <tbody>
@@ -26,5 +28,7 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @forms, class: "btn" %>
+<% unless current_user.doctor? %>
 <%= button_to "Add Form", new_form_path, class: "btn btn-primary col-md-12", :method => "get" %>
+<% end %>
 </div>

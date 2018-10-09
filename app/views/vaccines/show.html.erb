@@ -3,17 +3,21 @@
 	<h1>Vaccine:  <%= @vaccine.name %> - details  </h1>
 
 <div class="row justify-content-sm-center">
-  <div class="col-sm-6 col-sm-offset-3">
-	   <pre>
-	        Name:       <%= @vaccine.name %>
-	        Target:   <%= @vaccine.target %>
-	        Route:       <%= @vaccine.route %>
-	        Dose:       <%= @vaccine.dose %>
-	        DIN:       <%= @vaccine.din %>
-	        Notes:        <%= @vaccine.notes %>
-           </pre>
+  <div class="col-sm-10 col-sm-offset-1">
+<pre>
+Name:       <%= @vaccine.name %>
+Target:   <%= @vaccine.target %>
+Route:       <%= @vaccine.route %>
+Dose:       <%= @vaccine.dose %>
+DIN:       <%= @vaccine.din %>
+Notes:        <%= @vaccine.notes %>
+</pre>
 
+    <% unless current_user.doctor? %>
     <%= button_to "Edit", edit_vaccine_path(@vaccine), class: "btn btn-primary", :method => "get" %>
+    <% end %>
+    <p>
+    <%= button_to "Back", vaccines_path, class: "btn btn-primary", :method => "get" %>
 
   </div>
 </div>

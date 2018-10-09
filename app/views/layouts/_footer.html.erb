@@ -6,7 +6,9 @@
   </small>
   <nav>
     <ul>
-      <li><small><%= link_to "Logged in: #{current_user.name}", user_path(current_user.id) if current_user.present? %></small></li>
+      <% if logged_in? %>
+      <li><small>Logged in: <%= link_to "#{current_user.name}", edit_user_path(current_user.id) %></small></li>
+      <% end %>
       <li>&nbsp;&nbsp;</li>
       <li><small><%= link_to "About",   about_path %></small></li>
       <li><small><%= link_to "Help", help_path %></small></li>

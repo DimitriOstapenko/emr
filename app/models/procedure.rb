@@ -49,6 +49,11 @@ def cash?
   ptype == 2
 end
 
+# Return symbol for procedure type (:HCP,:3RD)  
+  def ptype_str
+    PROC_TYPES.invert[self.ptype].to_s
+  end
+
 end
 
 

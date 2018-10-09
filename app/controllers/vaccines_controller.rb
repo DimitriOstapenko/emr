@@ -1,25 +1,9 @@
 class VaccinesController < ApplicationController
-	before_action :logged_in_user #, only: [:index, :edit, :update]
-        before_action :admin_user,   only: :destroy
+	before_action :logged_in_user 
+        before_action :admin_user, only: :destroy
 
   def index
       @vaccines = Vaccine.paginate(page: params[:page], per_page: $per_page)
-      flash.now[:info] = "Showing All Vaccines"
-  end
-
-  def find
-      str = params[:findstr].strip
-      @vaccines = myfind(str)
-      if @vaccines.any?
-         @vaccines = @vaccines.paginate(page: params[:page])
-         flash.now[:info] = "Found #{@vaccines.count} #{'vaccine'.pluralize(@vaccines.count)} matching string #{str.inspect}"
-         render 'index'
-      else
-         @vaccines = Vaccine.paginate(page: params[:page])
-         @vaccines = Vaccine.new
-         flash.now[:warning] = "Vaccine  #{str.inspect} was not found"
-         render  inline: '', layout: true
-      end
   end
 
   def show
@@ -62,6 +46,21 @@ class VaccinesController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def find
+      str = params[:findstr].strip
+      @vaccines = myfind(str)
+      if @vaccines.any?
+         @vaccines = @vaccines.paginate(page: params[:page])
+         flash.now[:info] = "Found #{@vaccines.count} #{'vaccine'.pluralize(@vaccines.count)} matching string #{str.inspect}"
+         render 'index'
+      else
+         @vaccines = Vaccine.paginate(page: params[:page])
+         @vaccines = Vaccine.new
+         flash.now[:warning] = "Vaccine  #{str.inspect} was not found"
+         render  inline: '', layout: true
+      end
   end
 
 private

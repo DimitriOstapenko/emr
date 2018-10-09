@@ -1,7 +1,7 @@
 <tr>
   <td><%= link_to visit.entry_ts, patient_visit_path(@patient,visit) %> </td>
   <td>
-  <% if visit.date == Date.today || current_user.admin? %>
+  <% if visit.not_billed? || current_user.admin? %>
   <% if remote %>
      <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_patient_visit_path(@patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
   <% else %>

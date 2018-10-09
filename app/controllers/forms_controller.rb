@@ -2,7 +2,7 @@ class FormsController < ApplicationController
 
         helper_method :sort_column, :sort_direction
 
-        before_action :logged_in_user #, only: [:index, :edit, :update]
+        before_action :logged_in_user
         before_action :admin_user, only: :destroy
 
   def index
@@ -12,21 +12,6 @@ class FormsController < ApplicationController
 	@forms = Form
      end	
      @forms = @forms.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
-     flash.now[:info] = "Showing All Forms"
-  end
-
-  def find
-     str = params[:findstr].strip
-     @forms = myfind(str.upcase)
-     if @forms.any?
-       @forms = @forms.paginate(page: params[:page])
-       flash.now[:info] = "Found: #{@forms.count} forms"
-       render 'index'
-     else
-#       flash.now[:warning] = "Form not found #{str.inspect} - #{view_context.link_to('Add New?', new_form_path)} ".html_safe
-       flash.now[:warning] = "Form not found #{str.inspect}" 
-       render  inline: '', layout: true
-      end
   end
 
   def show
@@ -57,7 +42,6 @@ class FormsController < ApplicationController
      redirect_to forms_path
    end
   end
-
 
   def new
     @form = Form.new
@@ -93,6 +77,18 @@ class FormsController < ApplicationController
     end
   end
  
+  def find
+     str = params[:findstr].strip
+     @forms = myfind(str.upcase)
+     if @forms.any?
+       @forms = @forms.paginate(page: params[:page])
+       flash.now[:info] = "Found: #{@forms.count} forms"
+       render 'index'
+     else
+       flash.now[:warning] = "Form not found #{str.inspect}" 
+       render  inline: '', layout: true
+      end
+  end
 
 private 
   def form_params

@@ -1,5 +1,9 @@
      <tr>
-	<td><%= link_to drug.name, edit_drug_path(drug) %> </td>
+        <% if current_user.doctor? %>
+	  <td><%= link_to drug.name, drug %> </td>
+  	<% else %>
+	  <td><%= link_to drug.name, edit_drug_path(drug) %> </td>
+	<% end %>
 	<td><%= drug.dnum %> </td> 
 	<td><%= drug.strength %></td> 
 	<td><%= drug.dose %></td> 

@@ -1,5 +1,9 @@
      <tr>
+	<% if current_user.doctor? %>
+	<td><%= link_to "#{diagnosis.code}", diagnosis %> </td>
+	<% else %>
 	<td><%= link_to "#{diagnosis.code}", edit_diagnosis_path(diagnosis) %> </td>
+	<% end %>	
 	<td><%= diagnosis.descr %></td> 
 	<td><%= diagnosis.active %> </td> 
         <td>

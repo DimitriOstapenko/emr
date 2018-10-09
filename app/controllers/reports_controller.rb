@@ -15,7 +15,6 @@
     else 
       @reports = Report.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
     end
-    flash.now[:info] = "Showing all reports (#{@reports.count})"
   end
 
   def new

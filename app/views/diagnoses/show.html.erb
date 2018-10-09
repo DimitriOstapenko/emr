@@ -11,7 +11,11 @@
 	      Problem type: <%= @diagnosis.prob_type %>
 
            </pre>
-  <%= button_to "Edit", edit_diagnosis_path(@diagnosis), class: "btn btn-primary", :method => "get" %>
+    <% unless current_user.doctor? %>
+      <%= button_to "Edit", edit_diagnosis_path(@diagnosis), class: "btn btn-primary", :method => "get" %>
+    <% end %>
+    <p>
+    <%= button_to "Back", diagnoses_path, class: "btn btn-primary", :method => "get" %>
     </div>
 </div>
 

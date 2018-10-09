@@ -1,10 +1,9 @@
 class ProvidersController < ApplicationController
-	before_action :logged_in_user #, only: [:index, :edit, :update]
+	before_action :logged_in_user 
         before_action :admin_user, only: :destroy
 
   def index
-     @providers = Provider.paginate(page: params[:page]) #, per_page: 40)
-     flash.now[:info] = "Showing All Providers"
+     @providers = Provider.paginate(page: params[:page])
   end
 
   def find

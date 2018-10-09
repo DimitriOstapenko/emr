@@ -5,8 +5,7 @@ class ProceduresController < ApplicationController
         before_action :admin_user, only: :destroy
 
   def index
-     @procedures = Procedure.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) #, per_page: 40)
-     flash.now[:info] = "Showing All Procedures"
+     @procedures = Procedure.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
   end
 
   def find

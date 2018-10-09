@@ -5,22 +5,6 @@ class DrugsController < ApplicationController
 
   def index
       @drugs = Drug.paginate(page: params[:page], per_page: $per_page)
-      flash.now[:info] = "Showing All Medications"
-  end
-
-  def find
-      str = params[:findstr].strip
-      @drugs = myfind(str)
-      if @drugs.any?
-         @drugs = @drugs.paginate(page: params[:page])
-         flash.now[:info] = "Found #{@drugs.count} #{'medication'.pluralize(@drugs.count)} matching string #{str.inspect}"
-         render 'index'
-      else
-         @drugs = Drug.paginate(page: params[:page])
-         @drugs = Drug.new
-         flash.now[:warning] = "Medication  #{str.inspect} was not found"
-         render  inline: '', layout: true
-      end
   end
 
   def new
@@ -48,6 +32,21 @@ class DrugsController < ApplicationController
 
   def edit
        @drug = Drug.find(params[:id]) 
+  end
+
+  def find
+      str = params[:findstr].strip
+      @drugs = myfind(str)
+      if @drugs.any?
+         @drugs = @drugs.paginate(page: params[:page])
+         flash.now[:info] = "Found #{@drugs.count} #{'medication'.pluralize(@drugs.count)} matching string #{str.inspect}"
+         render 'index'
+      else
+         @drugs = Drug.paginate(page: params[:page])
+         @drugs = Drug.new
+         flash.now[:warning] = "Medication  #{str.inspect} was not found"
+         render  inline: '', layout: true
+      end
   end
 
 private

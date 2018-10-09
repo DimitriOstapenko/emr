@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
  
 #      	before_action :logged_in_user #, except: :resend_activation_link
-  	before_action :correct_user,   only: [:edit, :update]
-  	before_action :admin_user, except: :show   #,     only: [:index, :new, :create, :destroy]
+  	before_action :correct_user, only: [:show, :edit, :update]
+  	before_action :admin_user, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
 
 
   def index
@@ -43,7 +43,8 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      redirect_to users_url
+      log_out
+      redirect_to login_path
     else
       render 'edit'
     end
@@ -57,7 +58,7 @@ class UsersController < ApplicationController
 
 # Confirms the correct user.
     def correct_user
-      @user = User.find(params[:id])
+      @user = User.find(params[:id]) rescue nil
       redirect_to(root_url) unless (current_user?(@user) || current_user.admin?)
     end
 

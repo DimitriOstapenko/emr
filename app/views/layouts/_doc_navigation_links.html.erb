@@ -5,7 +5,6 @@
   <% elsif !%w(visits users static_pages password_resets).include?(controller_name) %>
     <%= render 'layouts/find' %>
   <% end %>
-  <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>
   <li class="<%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
   <%= render 'layouts/doc_billing' %>
   <%= render 'layouts/doc_docs' %>

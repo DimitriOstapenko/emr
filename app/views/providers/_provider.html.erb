@@ -1,5 +1,9 @@
      <tr>
+	<% if current_user.doctor? %>
+	<td><%= link_to "#{provider.name}", provider %> </td>
+	<% else %>
 	<td><%= link_to "#{provider.name}", edit_provider_path(provider) %> </td>
+	<% end %>
 	<td><%= "#{provider.addr1}  #{provider.addr2}" %> </td> 
 	<td><%= provider.city %></td> 
 	<td><%= provider.prov %></td> 

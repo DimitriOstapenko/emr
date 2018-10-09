@@ -1,5 +1,9 @@
      <tr>
-	<td><%= link_to vaccine.name, edit_vaccine_path(vaccine) %> </td>
+	<% if current_user.doctor? %>
+	  <td><%= link_to vaccine.name, vaccine %> </td>
+	<% else %>
+	  <td><%= link_to vaccine.name, edit_vaccine_path(vaccine) %> </td>
+	<% end %>
 	<td><%= vaccine.target %> </td> 
 	<td><%= vaccine.route %></td> 
 	<td><%= vaccine.dose %></td> 

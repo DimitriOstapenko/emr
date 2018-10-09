@@ -260,6 +260,7 @@ class Visit < ApplicationRecord
      entry_ts.to_date == Date.today
   end
 
+# Generate error if one of the procedures requires diagnosis  
   def diag_required
     hcp_codes = hcp_proc_codes.split(',') rescue nil
     return unless hcp_codes.any?
@@ -272,10 +273,16 @@ class Visit < ApplicationRecord
     end
   end
 
+# Contains procedure with <code> ?  
   def has_proc?(code)
     hcp_codes = hcp_proc_codes.split(',') rescue nil
     return unless hcp_codes.any?
     hcp_codes.index(code)
+  end
+
+# Was visit billed yet?  
+  def not_billed?
+    ![BILLED,PAID].include?(self.status)
   end
 
 end
