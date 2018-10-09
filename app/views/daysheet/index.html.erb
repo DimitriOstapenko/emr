@@ -33,11 +33,9 @@
           <th class="tbl_lsm">Diag.</th>
           <th class="tbl_md">Services</th>
           <th class="tbl_lsm">Status</th>
-	  <th class="tbl_sm">Lbl</th> 
-	  <% if date == Date.today || date.blank? %>
-            <th class="tbl_sm">Frm</th>
-            <th class="tbl_sm"></th>
-	  <% end %>
+	  <th class="tbl_sm"></th> 
+          <th class="tbl_sm"></th>
+          <th class="tbl_sm"></th>
 	  <% if current_user.admin? %>
 	    <th class="tbl_sm"></th>  <!-- Delete -->
   	  <% end %>

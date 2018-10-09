@@ -51,7 +51,11 @@
 	    <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_patient_visit_path(pat,visit) %>
           <% end %>
 	  </td>
+  	<% else %>
+	  <td></td>
+	  <td></td>
 	<% end %>
+
 	<% if current_user.admin? %>
 	    <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
         <% end %>

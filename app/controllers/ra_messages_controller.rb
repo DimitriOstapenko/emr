@@ -3,7 +3,6 @@ class RaMessagesController < ApplicationController
 
   def index
       @ra_messages = RaMessage.paginate(page: params[:page])
-      flash.now[:info] = "Showing All MOH RA Files "
   end
 
   def show
