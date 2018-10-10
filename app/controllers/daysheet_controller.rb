@@ -3,7 +3,7 @@ class DaysheetController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
 	before_action :logged_in_user
-        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
+        before_action :current_doctor_set
 	
   def index
       @daysheet = []
@@ -43,7 +43,7 @@ class DaysheetController < ApplicationController
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "#{flashmsg} #{ins_str} #{csh_str} #{ifh_str}"
       else  
-	 flash.now[:info] = 'No visits were found for ' + @date.strftime("%B %d, %Y")
+	 flash.now[:info] = 'No visits were found for ' + @date.strftime("%B %d, %Y") 
 	 render  inline: '', layout: true
       end
   end

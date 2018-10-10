@@ -66,8 +66,10 @@
   </tbody>
 </table>
 
+<% if @daysheet.any? %>
 <div class="bottom_buttons ">
 <%= will_paginate @daysheet, class: "btn" %> 
 </div>
+<% end %>
 
 </div>

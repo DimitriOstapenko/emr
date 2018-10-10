@@ -30,11 +30,12 @@
   <!-- Row 0 if new visit or admin --> 
 
      <div class="row">
-     <% if action_name == 'new' %>
-	<div class="col-sm-4">
-	   <%= f.input :entry_ts, as: :date,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
+     <% if action_name == 'edit' && @visit.entry_ts.to_date == Date.today %>
+	<div class="col-sm-5">
+	   <%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
   	</div>
-     <% elsif current_user.admin? && action_name == 'edit' %>
+     <% end %>
+     <% if current_user.admin? && action_name == 'edit' %>
    	<div class="col-sm-6">
 	  <%= f.input :billing_ref %>
   	</div>
@@ -45,7 +46,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor' %>
   </div>
 
   <div class="col-sm-2">

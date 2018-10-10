@@ -1,0 +1,18 @@
+<li>
+<%= simple_form_for :doctor, url: set_doctor_path do |f| %>
+  <div class="form-group">
+    <div class="col-sm-12 col-md-12 padding-0">
+    <% doc_id = current_doctor.id rescue nil %>
+    <%= f.input :doc_id,
+                            collection: get_active_doctors,
+			    label_method: :lname,
+			    value_method: :id,
+			    options: {prompt: 'Set Doctor', selected: doc_id},
+			    html_options: {onchange: 'this.form.submit();'},
+			    label: false
+    %>
+    </div>
+  </div>
+  <% end %>
+</li>
+<li style="width:40px">&nbsp;</li>

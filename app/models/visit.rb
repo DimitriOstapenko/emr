@@ -22,14 +22,7 @@ class Visit < ApplicationRecord
 
   validate :diag_required
   after_initialize :default_values
-
-  def default_values
-	  self.entry_ts ||= Time.zone.now #.strftime("%Y-%m-%d at %H:%M")  # html5 date on ipad 
-	  self.status ||= ARRIVED
-	  self.units ||= 1
-	  self.vis_type ||= WALKIN_VISIT
-	  self.duration ||= 10
-  end
+  validate :check_uniqueness
 
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 
@@ -267,7 +260,7 @@ class Visit < ApplicationRecord
     hcp_codes.each do |code|
       proc = Procedure.find_by(code: code)      
       if proc.diag_req
-	      errors.add('Error:', "Diagnosis is required for this visit") if diag_code.blank?
+	 errors.add('Error:', "Diagnosis is required for this visit") if diag_code.blank?
          return
       end
     end
@@ -283,6 +276,21 @@ class Visit < ApplicationRecord
 # Was visit billed yet?  
   def editable?
     self.entry_ts.to_date == Date.today || ![BILLED,PAID].include?(self.status)
+  end
+
+private 
+# Can only save 1 visit per patient per day  
+  def check_uniqueness 
+      visits = pat.visits.where('date(entry_ts)=?', self.entry_ts.to_date)
+      errors.add('Error:', "Only 1 visit is allowed per patient per day") if visits.any?
+  end
+
+  def default_values
+	  self.entry_ts ||= Time.zone.now #.strftime("%Y-%m-%d at %H:%M")  # html5 date on mobile
+	  self.status ||= ARRIVED
+	  self.units ||= 1
+	  self.vis_type ||= WALKIN_VISIT
+	  self.duration ||= 10
   end
 
 end

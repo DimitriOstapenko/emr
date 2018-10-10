@@ -70,7 +70,7 @@ class VisitsController < ApplicationController
     store_location
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
-      @patient.update_attribute(:last_visit_date, @visit.created_at)
+      @patient.update_attribute(:last_visit_date, @visit.entry_ts)
       
       set_visit_fees( @visit )
       @visit.save
