@@ -13,7 +13,6 @@ require_relative '../../config/environment'
 
 abort "EDT directory does not exist." unless File.directory?(EDT_PATH)
 
-this_month_name = Date.today.strftime("%B")
 this_month_letter = ARGV[0] || THIS_MONTH_LETTER
 puts "will look for #{this_month_letter} files"
 path = EDT_PATH.join("E#{this_month_letter.upcase}*.*")

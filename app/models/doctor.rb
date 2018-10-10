@@ -38,4 +38,9 @@ class Doctor < ApplicationRecord
       bills? and provider_no.blank?
   end
 
+# Is doctor set to default doctor?
+  def fake?
+    lname == 'nobody'
+  end
+
 end
