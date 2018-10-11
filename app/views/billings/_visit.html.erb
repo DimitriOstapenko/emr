@@ -15,9 +15,9 @@
         </td>
 
 	<% if date.present? %>
-            <td><%= link_to visit.entry_ts.strftime("%H:%M"), edit_patient_visit_path(patient,visit) %></td>
+            <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(patient,visit) %></td>
          <% else %>
-            <td><%= link_to visit.entry_ts, edit_patient_visit_path(patient,visit) %></td>
+            <td><%= link_to visit.entry_ts, patient_visit_path(patient,visit) %></td>
          <%end %>
 	<td><%= doctor.lname %> </td>
 	<td><%= link_to patient.full_name, patient %> </td>

@@ -22,7 +22,6 @@ class Visit < ApplicationRecord
 
   validate :diag_required
   after_initialize :default_values
-  validate :check_uniqueness
 
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 

@@ -72,6 +72,7 @@ Rails.application.routes.draw do
       get 'receipt', on: :member
       get 'referralform', on: :member
       get 'sendclaim', on: :member
+      get 'addcash', on: :member
       resources :documents
     end
   end

@@ -56,6 +56,11 @@ end
     def get_active_procedures
 	    Procedure.where("active = 't'")
     end    
+
+# List of cash procedures
+    def get_cash_procedures
+	    Procedure.where("active = 't' AND ptype=?", CASH_PROC)
+    end    
     
 # List of active diagnoses
     def get_active_diagnoses

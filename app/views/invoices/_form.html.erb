@@ -1,65 +1,53 @@
-<%= form_for [@patient,@invoice] do |f| %>
+<div class="well">
+<%= simple_form_for [@patient,@invoice] do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   
   <% doc_id = @invoice.doctor_id || (current_doctor.id if current_doctor) %>
   
 <!-- Row 1 -->
 <div class="row">
-  <div class="col-sm-4 col-md-6 col-md-offset-2">
-  <%= f.label "Doctor/Clinic" %>
-  <%= f.collection_select(:doctor_id, get_active_doctors, :id, :lname, selected: doc_id, include_blank: 'Clinic') %>
+  <div class="col-sm-8">
+  <%= f.input :doctor_id, collection: get_active_doctors, value_method: :id, label_method: :lname, selected: doc_id, include_blank: 'Clinic', label: "Doctor/Clinic" %>
   </div>
-  <div class="col-sm-2">
-  <%= f.label :'Amount' %>
-  <%= f.number_field :amount %>
+  <div class="col-sm-4">
+  <%= f.input :amount %>
   </div>
 </div>
 
 <!-- Row 2 -->
 <div class="row">
-  <div id="ins_provider" class="col-sm-8 col-md-offset-2 col-sm-offset-2">
-  <%= f.label "Insurance Provider" %>
-  <%=  f.collection_select(:billto, Provider.all, :id, :name, prompt: 'Select Insurance Provider')  %>
+  <div id="ins_provider" class="col-sm-12">
+  <%=  f.input :billto, collection: Provider.all, value_method: :id, label_method: :name, label: 'Insurance Provider' %>
   </div>
 </div>
 
 <!-- Row 3 -->
-<div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
-  <%= f.label 'Description' %>
-  <%= f.text_field :notes %>
-  </div>
-</div>
 
-<!-- Row 4? -->
+<div class="row">
 <% if action_name == 'edit' %>
-<div class="row">
-  <div class="col-sm-1 col-sm-offset-2">	
-  <%= f.label :paid? %>
+  <div class="col-sm-4">
+  <%= f.input :paid, collection: [['Yes', 'true'], ['No', 'false']], value: 'false', include_blank: false  %> 
   </div>
-  <div class="col-sm-1">
-  <%= f.check_box :paid, value: 'false'  %> 
-  </div>
-</div>
 <% end %>
 
-<!-- Row 4? -->
-<div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
-  <%= f.label :Date %>
-  <%= f.date_field :date  %> 
+  <div class="col-sm-8">
+  <%= f.input :date, html5: true  %> 
   </div>
 </div>
 
-  <div class="spacer-20"></div>
-
-<!-- Row 5 -->
 <div class="row">
-  <div class="col-sm-10 col-md-8 col-sm-offset-2"> <%= f.submit yield(:button_text), class: "btn btn-primary" %> </div>
+  <div class="col-sm-12">
+  <%= f.input :notes, label: 'Description' %>
+  </div>
+</div>
+
+ 
+<div class="row">
+  <div class="col-sm-12"> <%= f.submit yield(:button_text), class: "btn btn-primary" %> </div>
 </div>
 
 <% end %>
-
+</div>
 
 
 

@@ -2,7 +2,7 @@ class VisitsController < ApplicationController
 
   include My::Forms
 
-	before_action :logged_in_user #, only: [:create, :destroy, :index]
+	before_action :logged_in_user 
 #        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 #	before_action :admin_user, only: :destroy
 
@@ -20,44 +20,34 @@ class VisitsController < ApplicationController
 
   def new
         @patient = Patient.find(params[:patient_id])
-	@visit = @patient.visits.where('date(entry_ts)=?', Date.today)
-	if @visit.present?
-	  flash[:warning] = "Only 1 visit is allowed per patient per day"
-          redirect_to @patient
-	else
-           @visit = @patient.visits.new
-	   @visit.doc_id ||= current_doctor.id rescue nil
-	   if @visit.save
-              @visit.update_attribute(:entry_by, current_user.name)
-	      redirect_to @patient
-           else 
-     	      flash.now[:danger] = 'Error saving new visit'		   
-	      render 'new'
-	   end
-	end
+        @visit = @patient.visits.new
   end
 
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-
-    set_visit_fees ( @visit )
-
-    if @visit.save
-      @patient.update_attribute(:last_visit_date, @visit.entry_ts)
-
-      doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
-      if doc.blank? || doc.errors.blank?
-        flash[:success] = "Visit saved #{params[:entry_ts]} "
-        redirect_to @patient
-      else
-        flash.now[:danger] =  doc.errors.full_messages.first rescue ''
+    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date)
+    if visits_that_day.any?
+       flash[:warning] = "Only 1 visit is allowed per patient per day"
+       redirect_to @patient
+    else
+      set_visit_fees ( @visit )
+      if @visit.save
+        @visit.update_attribute(:entry_by, current_user.name)
+        @patient.update_attribute(:last_visit_date, @visit.entry_ts)
+        doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
+        if doc.blank? || doc.errors.blank?
+          flash[:success] = "Visit saved #{params[:entry_ts]} "
+          redirect_to @patient
+        else
+          flash.now[:danger] =  doc.errors.full_messages.first rescue ''
+          render 'new'
+        end
+      else 
         render 'new'
       end
-    else 
-        render 'new'
     end
-  end
+end
 
   def edit
      @visit = Visit.find(params[:id])
@@ -66,8 +56,8 @@ class VisitsController < ApplicationController
   def update
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
-
     store_location
+
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
@@ -81,6 +71,11 @@ class VisitsController < ApplicationController
       flash.now[:danger] =  doc.errors.full_messages.first rescue ''
       render 'edit'
     end
+  end
+
+# Add cash service to the visit  
+  def addcash
+    @visit = Visit.find(params[:id])
   end
 
   def destroy

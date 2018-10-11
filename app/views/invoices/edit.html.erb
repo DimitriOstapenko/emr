@@ -3,10 +3,9 @@ provide(:title, 'Edit Invoice')
 provide(:button_text, 'Save Changes')
 %>
 
-<h2>Edit Invoice for patient <%= @patient.full_name %> </h2>
-
-<div class="col-md-8 col-sm-10 col-md-offset-2 col-sm-offset-1">
-<%= render 'form' %>
+<div class="col-sm-6 col-sm-offset-3">
+   <h3 class='display-1'>Patient <%= @patient.full_name %> : Edit Invoice </h3>
+   <%= render 'form' %>
 </div>
 
 

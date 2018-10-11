@@ -149,10 +149,6 @@ class PatientsController < ApplicationController
 	     flash[:info] = 'New Patient'
 	     render 'new'
 	  end
-      #    respond_to do |format|
-      #      format.html 
-      #	    format.js 
-#	  end
        end
     else     
        flash.now[:success] = "Card number not read yet  #{params.inspect}"

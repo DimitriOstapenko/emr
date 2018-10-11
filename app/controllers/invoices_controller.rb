@@ -62,6 +62,7 @@ class InvoicesController < ApplicationController
 
   def edit
     @invoice = Invoice.find( params[:id] )
+    @patient = Patient.find( @invoice.patient_id )
   end
 
   def update

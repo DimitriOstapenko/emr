@@ -1,0 +1,52 @@
+<%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
+  <%= render 'shared/error_messages', object: f.object %>
+  
+  <% hsh = {0=>'',1=>'2',2=>'3',3=>'4'} 
+     cash_proc = get_cash_procedures %>
+
+<div class="well">
+<div class="row">
+  <div class="col-sm-4">
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', label:'Doctor', disabled: true %>
+  </div>
+
+  <% for proc_no in hsh.keys do %>
+  <div class="col-sm-2">
+    <% if @visit.services[proc_no].present? %>
+       <%= f.input "proc_code#{hsh[proc_no]}".to_sym, disabled: true, label: 'Service' %>
+    <% else %>
+       <%= f.input "proc_code#{hsh[proc_no]}".to_sym, collection: cash_proc, label_method: :code, value_method: :code, prompt: 'Select', label: "Service", include_blank: 'None' %> 
+    <% end %>
+  </div>
+  <% end %>
+</div
+
+<!-- Row 2 -->
+<div class="row">
+  <div class="col-sm-4">
+     <%=  f.input :diag_code, disabled: true %>
+  </div>
+
+  <% for proc_no in hsh.keys do %>
+  <div class="col-sm-2">
+    <% if @visit.services[proc_no].present? %>
+      <%= f.input "units#{hsh[proc_no]}".to_sym, disabled: true, label: 'Units' %>
+    <% else %>
+      <%= f.input "units#{hsh[proc_no]}".to_sym, collection: UNITS, prompt: 'Select' %>
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+<div class="spacer-20"></div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+    <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
+  </div>
+</div>
+
+</div>
+
+<% end %>
+
