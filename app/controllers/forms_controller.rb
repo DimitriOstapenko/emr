@@ -16,7 +16,7 @@ class FormsController < ApplicationController
 
   def show
     @form = Form.find(params[:id])
-    redirect_to forms_path unless @form
+    redirect_to forms_path unless @form && File.exists?(@form.filespec)
 
     respond_to do |format|
       format.html { 
@@ -51,7 +51,7 @@ class FormsController < ApplicationController
     @form = Form.new(form_params)
     if @form.save
        flash[:success] = "Form created"
-       redirect_to form_path
+       redirect_to @form
     else
        render 'new'
     end
@@ -92,7 +92,7 @@ class FormsController < ApplicationController
 
 private 
   def form_params
-          params.require(:form).permit(:name, :descr, :ftype, :filename, :format, :eff_date, :fillable)
+      params.require(:form).permit(:name, :descr, :ftype, :filename, :format, :eff_date, :fillable)
                                             
   end
 

@@ -14,7 +14,7 @@
 	  <td><%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_form_path(form) %></td>
 	<% end %>
 	<% if current_user.admin?  %>
-	   <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, form, method: :delete, data: { confirm: "Are you sure you want to delete #{form.name}?" } %>
+  	  <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, form, method: :delete, data: { confirm: "Are you sure you want to delete #{form.name}?" } %></td>
         <% end %>
 	</td>
      </tr>

@@ -1,48 +1,49 @@
+<div class="well">
 <%= simple_form_for @paystub do |f| %>
 		
 <%= render 'shared/error_messages', object: f.object %>
 
 <!-- Row 1 --->
 <div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
-  <%= f.input :doc_id, collection: get_active_doctors, value_method: :id, label_method: :lname, selected: @paystub.doc_id, label: "Select Doctor" %>
+<div class="col-sm-6" >
+  <%= f.input :doc_id, collection: get_active_doctors, value_method: :id, label_method: :lname, selected: @paystub.doc_id, label: "Doctor" %>
 </div >
-<div class="col-sm-2" >
+<div class="col-sm-6" >
   <%= f.input :monthly_premium_amt, value:0, step: :any, label: "Monthly Premium" %>
 </div>
 </div>
 
 <!-- Row 2 -->
 <div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
+<div class="col-sm-6" >
   <%= f.input :ifh_amt, value:0,  step: :any, label: "IFH payment" %>
 </div>
 
-<div class="col-sm-2" >
+<div class="col-sm-6" >
   <%= f.input :cash_amt, value: 0, step: :any, label: "CASH payment" %>
 </div>
 </div>
 
 <!-- Row 3 -->
 <div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
+<div class="col-sm-6" >
   <%= f.input :wcb_amt, value: 0, step: :any, label: "WCB payment" %>
 </div>
 
-<div class="col-sm-2" >
+<div class="col-sm-6" >
   <%= f.input :hc_dep_amt, value: 0, step: :any, label: "HC Deposit"  %>
 </div>
 </div>
 
 <!-- Row 4 -->
 <div class="row">
-<div class="col-sm-2 col-sm-offset-4" >
+<div class="col-sm-6" >
   <%= f.input :mho_deduction, value: 0, step: :any, label: "MHO deduction" %>
 </div>
 
 <!-- Row 4 opt -->
 <% if current_user.admin?  %>
-<div class="col-sm-2" >
+<div class="col-sm-6" >
   <%= f.label :month %>
 	<%= select_month Time.now.month-1,{}, class: "form-control" %>
 </div>
@@ -54,11 +55,12 @@
 
 <!-- Row 5 -->
 <div class="row">
-<div class="col-sm-4 col-sm-offset-4">
+<div class="col-sm-12">
   <%= f.submit yield(:button_text), class: "btn btn-primary" %> <!--,  :method => "patch", data: { confirm: "Are you sure you want to replace paystub for this doctor/month?" } -->
 </div>
 </div>
 
 <% end %>
 
+</div>
 

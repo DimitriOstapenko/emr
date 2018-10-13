@@ -1,5 +1,7 @@
 <% provide(:title, 'New Paystub') %>
 <% provide(:button_text, "Generate Paystub") %>
-<h1>Create Paystub for <%= Time.now.prev_month.strftime("%B %Y") %> </h1>
 
+<div class="col-sm-8 col-sm-offset-2">
+   <h3 class='display-1'>Create Paystub for <%= Time.now.prev_month.strftime("%B %Y") %></h3>
     <%= render 'form' %>
+</div>

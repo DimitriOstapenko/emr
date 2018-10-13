@@ -782,7 +782,7 @@ end # EDT module
         pdf.text "Total RMB services: #{@ttl_rmb_svcs}"
         pdf.move_down 6.mm
 	pdf.text "Total submitted amount : #{sprintf("$%.2f",@ttl_subm_amt)}"
-	pdf.text "Total OHIP amount before MHO deduction:  #{sprintf("$%.2f",@ttl_paid_amt)}" 
+	pdf.text "Total OHIP paid amount before MHO deduction:  #{sprintf("$%.2f",@ttl_paid_amt)}" 
 	pdf.text "MHO deduction:  #{sprintf("$%.2f",paystub.mho_deduction)}" 
         pdf.move_down 6.mm
 	pdf.text "Monthly Premium payment:  #{sprintf("$%.2f",paystub.monthly_premium_amt)}" 
@@ -790,10 +790,11 @@ end # EDT module
 	pdf.text "Cash payments:  #{sprintf("$%.2f",paystub.cash_amt)}" 
 	pdf.text "WCB Payments:  #{sprintf("$%.2f",paystub.wcb_amt)}" 
 	pdf.text "Cash deposits:  #{sprintf("$%.2f",paystub.hc_dep_amt)}" 
-	pdf.text "Total other income: #{sprintf("$%.2f",paystub.cash_amt + paystub.wcb_amt + paystub.ifh_amt + paystub.hc_dep_amt + paystub.monthly_premium_amt)}" 
+	other_income = paystub.cash_amt + paystub.wcb_amt + paystub.ifh_amt + paystub.hc_dep_amt + paystub.monthly_premium_amt
+	pdf.text "Total other income: #{sprintf("$%.2f", other_income)}" 
         pdf.move_down 6.mm
-	pdf.text "Total Gross Amount:  #{sprintf("$%.2f",paystub.gross_amt)}" 
-	pdf.text "Total Net Amount based on #{@doc.percent_deduction}% deduction:  #{sprintf("$%.2f",paystub.net_amt)}" 
+	pdf.text "Total Gross amount:  #{sprintf("$%.2f",paystub.gross_amt)}" 
+	pdf.text "Total Paycheck amount based on #{@doc.percent_deduction}% deduction: #{sprintf("$%.2f",paystub.net_amt)}" 
       end
       
     pdf.move_down 10.mm

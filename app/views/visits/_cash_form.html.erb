@@ -32,7 +32,7 @@
     <% if @visit.services[proc_no].present? %>
       <%= f.input "units#{hsh[proc_no]}".to_sym, disabled: true, label: 'Units' %>
     <% else %>
-      <%= f.input "units#{hsh[proc_no]}".to_sym, collection: UNITS, prompt: 'Select' %>
+      <%= f.input "units#{hsh[proc_no]}".to_sym, collection: UNITS, prompt: 'Select', label: 'Units' %>
     <% end %>
   </div>
   <% end %>

@@ -134,7 +134,7 @@ new_files.each do |f|
 	       seq_no: file.seq_no,
 	       processed: true )
   files += 1
-  puts "updated #{file.updated} visits for this file"
+  puts "updated #{file.updated} claims for this file"
 end
 
 puts "Processed #{files} files"

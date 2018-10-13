@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_07_085951) do
+ActiveRecord::Schema.define(version: 2018_10_12_141611) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -264,21 +264,21 @@ ActiveRecord::Schema.define(version: 2018_10_07_085951) do
     t.integer "month"
     t.integer "claims"
     t.integer "services"
-    t.float "gross_amt"
-    t.float "net_amt"
-    t.float "ohip_amt"
-    t.float "cash_amt"
-    t.float "ifh_amt"
-    t.float "monthly_premium_amt"
-    t.float "hc_dep_amt"
+    t.float "gross_amt", default: 0.0
+    t.float "net_amt", default: 0.0
+    t.float "ohip_amt", default: 0.0
+    t.float "cash_amt", default: 0.0
+    t.float "ifh_amt", default: 0.0
+    t.float "monthly_premium_amt", default: 0.0
+    t.float "hc_dep_amt", default: 0.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.float "wcb_amt"
+    t.float "wcb_amt", default: 0.0
     t.string "filename"
     t.string "ra_file"
     t.date "date_paid"
-    t.float "mho_deduction"
-    t.float "clinic_deduction"
+    t.float "mho_deduction", default: 0.0
+    t.float "clinic_deduction", default: 0.0
   end
 
   create_table "procedures", force: :cascade do |t|
