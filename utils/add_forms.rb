@@ -16,7 +16,7 @@ puts "About to add new forms from #{dir} to forms table"
 Form.destroy_all
 Find.find( dir ) do |path| 
 	basename = File.basename(path)
-	next unless match = basename.match(/^(WCB|LAB)\_?(\S+)\.(\w+)$/i)
+	next unless match = basename.match(/^(WCB|LAB|MTO)\_?(\S+)\.(\w+)$/i)
 	next if Form.exists?(filename: basename)
 
 	added += 1
