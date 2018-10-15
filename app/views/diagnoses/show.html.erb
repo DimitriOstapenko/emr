@@ -1,21 +1,20 @@
 <% provide(:title, @diagnosis.code) %>
 
-	<h1>Diagnosis <%= @diagnosis.code %> - details  </h1>
 
-<div class="row justify-content-md-center">
-    <div class="col-md-6 col-md-offset-3">
-	   <pre>
+<div class="col-md-6 col-md-offset-3">
+<h3 class="display-1">Diagnosis <%= @diagnosis.code %> - details  </h3>
+<pre>
 
-	      Code:         <%= @diagnosis.code %>
-	      Description:  <%= @diagnosis.descr %>
-	      Problem type: <%= @diagnosis.prob_type %>
+	Code:         <%= @diagnosis.code %>
+	Description:  <%= @diagnosis.descr %>
+        Problem type: <%= @diagnosis.prob_type %>
+	Active?:      <%= @diagnosis.active_str %>
 
-           </pre>
+</pre>
     <% unless current_user.doctor? %>
       <%= button_to "Edit", edit_diagnosis_path(@diagnosis), class: "btn btn-primary", :method => "get" %>
     <% end %>
     <p>
     <%= button_to "Back", diagnoses_path, class: "btn btn-primary", :method => "get" %>
-    </div>
 </div>
 

@@ -33,7 +33,7 @@ module SessionsHelper
        if current_user.user? && (session[:expires_at] < Time.zone.now)
           log_out 
        else
-          session[:expires_at] = 30.minutes.from_now 
+          session[:expires_at] = 60.minutes.from_now 
        end
     end
     !current_user.nil?

@@ -1,15 +1,23 @@
      <tr>
-	<% if current_user.doctor? %>
-	<td><%= link_to "#{diagnosis.code}", diagnosis %> </td>
-	<% else %>
-	<td><%= link_to "#{diagnosis.code}", edit_diagnosis_path(diagnosis) %> </td>
-	<% end %>	
+        <% if remote %>
+          <td><%= link_to "#{diagnosis.code}", diagnosis, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+        <% else %>
+	  <td><%= link_to "#{diagnosis.code}", diagnosis %> </td>
+	<% end %>
 	<td><%= diagnosis.descr %></td> 
-	<td><%= diagnosis.active %> </td> 
-        <td>
-        <% if current_user.admin?  %>
-		<%= link_to "delete", diagnosis, method: :delete, data: { confirm: "You sure?" } %> 
+	<td><%= diagnosis.prob_type %></td> 
+	<td><%= diagnosis.active_str %> </td> 
+	<% unless current_user.doctor? %>
+	<td>
+        <% if remote %>
+          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_diagnosis_path(diagnosis), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+        <% else %>
+          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_diagnosis_path(diagnosis) %>
         <% end %>
-        </td>   
+	</td>
+        <% end %>
+        <% if current_user.admin?  %>
+	  <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, diagnosis, method: :delete, data: { confirm: "You sure?" } %> </td>
+        <% end %>
      </tr>
 

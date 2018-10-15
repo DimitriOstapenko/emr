@@ -1,6 +1,7 @@
-<% provide(:title, 'All drugs') %>
+<% provide(:title, 'All Medications') %>
+<%= render "shared/modal", size: 'lg' %>
 
-<table class="tbl table-hover" >
+<table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
           <th class="tbl_md">Name</th>
@@ -18,14 +19,17 @@
 	  <th>Dur.Unit</th>
 	  <th>Refills</th>
 	  <th>Type</th>
+	  <% unless current_user.doctor? %>
+	    <th class='tbl_sm'></th>
+	  <% end %>
 	  <% if  current_user.admin? %>
-	     <th></th>
+	     <th class='tbl_sm'></th>
      	  <% end %>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @drugs %>
+  <%= render @drugs, remote: device_is_desktop? %>
 
   </tbody>
 </table>

@@ -26,11 +26,21 @@ class DrugsController < ApplicationController
        @drug = Drug.find(params[:id]) 
   end
 
-  def destroy
-       @drug = Drug.find(params[:id]) 
+  def edit
+    @drug = Drug.find(params[:id])
   end
 
-  def edit
+  def update
+    @drug = Drug.find(params[:id])
+    if @drug.update_attributes(drug_params)
+      flash[:success] = "Medication updated"
+      redirect_to drugs_url
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
        @drug = Drug.find(params[:id]) 
   end
 
@@ -52,7 +62,7 @@ class DrugsController < ApplicationController
 private
 
   def drug_params
-          params.require(:provider).permit(:name,:dnum, :strength, :dose, :freq, :amount, :status, :generic, :igcodes, 
+          params.require(:drug).permit(:name,:dnum, :strength, :dose, :freq, :amount, :status, :generic, :igcodes, 
 					   :format, :route, :dur_cnt, :dur_unit, :refills, :cost, :lu_code, :pharmacy,
 					   :aliases, :dtype, :odb, :filename, :notes, :instructions)
   end

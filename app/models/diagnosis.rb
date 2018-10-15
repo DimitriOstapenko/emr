@@ -14,4 +14,8 @@ def descr_with_code
   "#{descr}  (#{code})"
 end
 
+def active_str
+  self.active? ? 'Yes':'No' 
+end
+
 end

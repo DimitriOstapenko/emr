@@ -1,9 +1,9 @@
      <tr>
-	<% if current_user.doctor? %>
+	<% if remote %>
+        <td><%= link_to "#{provider.name}", provider, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+        <% else %>
 	<td><%= link_to "#{provider.name}", provider %> </td>
-	<% else %>
-	<td><%= link_to "#{provider.name}", edit_provider_path(provider) %> </td>
-	<% end %>
+        <% end %>
 	<td><%= "#{provider.addr1}  #{provider.addr2}" %> </td> 
 	<td><%= provider.city %></td> 
 	<td><%= provider.prov %></td> 
@@ -11,8 +11,18 @@
 	<td><%= provider.phone1 %></td> 
 	<td><%= provider.phone2 %></td> 
 	<td><%= provider.fax %></td> 
+	<% unless current_user.doctor? %>
+	<td>
+        <% if remote %>
+          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_provider_path(provider), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+        <% else %>
+          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_provider_path(provider) %>
+        <% end %>
+	</td>
+	<% end %>
+
   	<% if current_user.admin?  %>
-		<td> <%= link_to "delete", provider, method: :delete, data: { confirm: "Are you sure you want to delete #{provider.name}?" } %> </td>
+	<td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, provider, method: :delete, data: { confirm: "Are you sure you want to delete #{provider.name}?" } %> </td>
 	<% end %>
      </tr>
 

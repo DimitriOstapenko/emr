@@ -54,3 +54,4 @@
 /public/charts
 /config/initializers/01_globals.rb
 /public/*.pdf
+/config/schedule.rb

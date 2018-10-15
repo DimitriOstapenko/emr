@@ -1,3 +1,4 @@
+<% noedit ||= false %>
 <div class="well">
 <%= simple_form_for @drug do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
@@ -28,7 +29,9 @@
   <div class="col-sm-12">
   <%= f.input :instructions, placeholder: 'Instructions', label: false %>
   <%= f.input :notes, placeholder: 'Notes', label: false %>
+  <% unless noedit %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <% end %>
   </div>
   </div>
 

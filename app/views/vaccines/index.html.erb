@@ -1,6 +1,7 @@
 <% provide(:title, 'All Vaccines') %>
+<%= render "shared/modal", size: 'lg' %>
 
-<table class="tbl table-hover" >
+<table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
           <th class="tbl_md">Name</th>
@@ -9,14 +10,17 @@
 	  <th>Dose</th>
 	  <th>DIN</th>
 	  <th>Notes</th>
+	  <% unless current_user.doctor? %>
+  	    <th class="tbl_sm"></th>
+	  <% end %>
 	  <% if  current_user.admin? %>
-	     <th></th>
+	    <th class="tbl_sm"></th>
      	  <% end %>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @vaccines %>
+  <%= render @vaccines, remote: device_is_desktop? %>
 
   </tbody>
 </table>

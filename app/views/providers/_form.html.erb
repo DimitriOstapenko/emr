@@ -1,3 +1,4 @@
+<% noedit ||= false %>
 <div class="well">
 <%= simple_form_for @provider do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
@@ -9,11 +10,13 @@
   <%= f.input :city %>
   <%= f.input :prov, collection: PROVINCES  %>
   <%= f.input :postal %>
-  <%= f.input :phone1, placeholder: 'xxx-xxx-xxxx', label: 'Phone Number 1' %>
-  <%= f.input :phone2, placeholder: 'xxx-xxx-xxxx', label: 'Phone Number 2' %>
-  <%= f.input :fax, placeholder: 'xxx-xxx-xxxx' %>
+  <%= f.input :phone1, label: 'Phone Number 1' %>
+  <%= f.input :phone2, label: 'Phone Number 2' %>
+  <%= f.input :fax %>
   <%= f.input :email %>
+  <% unless noedit %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <% end %>
 </div>
 
 <% end %>

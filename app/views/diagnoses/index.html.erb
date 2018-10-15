@@ -1,17 +1,24 @@
 <% provide(:title, 'All diagnoses') %>
+<%= render "shared/modal", size: 'lg' %>
 
-<table class="tbl table-hover"> <!-- pretty -->
+<table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
 	  <th><%= sortable 'code'  %></th>
 	  <th><%= sortable 'descr', :Description %></th>
-	  <th><%= sortable 'Active' %></th>
-              <th> </th>
+	  <th>Problem Type</th>
+	  <th class="tbl_md"><%= sortable 'Active' %></th>
+	  <% unless current_user.doctor? %>
+          <th class="tbl_sm"></th>
+	  <% end %>
+	  <% if current_user.admin? %>
+	  <th class="tbl_sm"></th>
+	  <% end %>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @diagnoses %>
+  <%= render @diagnoses, remote: device_is_desktop? %>
 
   </tbody>
 </table>
@@ -19,7 +26,7 @@
 <div class="bottom_buttons ">
 <%= will_paginate @diagnoses, class: "btn" %>
 <% if current_user.admin?  %>
-<%= button_to "Add Diagnostic Code", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
+<%= button_to "Add Diagnosis", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
 <% end %>
 </div>
 

@@ -377,7 +377,17 @@ input, select{
 .tbl th {
   background: grey;
   color: white;
+  height: 25px;
 }
+
+// Temp!!!!
+.tbl2 th {
+  background: #5bc0de;
+  color: white;
+  height: 28px;
+  padding: 2px;
+}
+
 .tbl td,
 .tbl th {
   text-align: left;

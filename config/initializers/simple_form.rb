@@ -179,4 +179,9 @@ SimpleForm.setup do |config|
   # Defines validation classes to the input_field. By default it's nil.
   # config.input_field_valid_class = 'is-valid'
   # config.input_field_error_class = 'is-invalid'
+
+  config.wrappers :disabled_form do |b|
+    b.use :input, disabled: true, readonly: true
+  end
+
 end

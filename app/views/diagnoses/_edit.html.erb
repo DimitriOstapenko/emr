@@ -1,0 +1,17 @@
+<%
+   provide(:title, 'Edit Diagnosis')
+   provide(:button_text, 'Save changes')
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel"><%= @diagnosis.code %> : <%= @diagnosis.descr %> - Edit</b>
+</div>
+<div class="modal-body">
+       <%= render 'form' %>
+</div>
+
+<div class="modal-footer">
+</div>
+
+

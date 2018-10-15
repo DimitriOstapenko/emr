@@ -42,7 +42,7 @@ class VaccinesController < ApplicationController
     @vaccine = Vaccine.find(params[:id])
     if @vaccine.update_attributes(vaccine_params)
       flash[:success] = "Vaccine updated"
-      redirect_to @vaccine
+      redirect_to vaccines_url
     else
       render 'edit'
     end

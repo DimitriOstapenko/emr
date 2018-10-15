@@ -1,7 +1,7 @@
 class ProceduresController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
-        before_action :logged_in_user #, only: [:index, :edit, :update]
+        before_action :logged_in_user 
         before_action :admin_user, only: :destroy
 
   def index

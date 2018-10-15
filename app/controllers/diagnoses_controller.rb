@@ -55,7 +55,7 @@ class DiagnosesController < ApplicationController
     @diagnosis = Diagnosis.find(params[:id])
     if @diagnosis.update_attributes(diagnosis_params)
       flash[:success] = "Diagnosis updated"
-      redirect_to @diagnosis
+      redirect_to diagnoses_url
     else
       render 'edit'
     end

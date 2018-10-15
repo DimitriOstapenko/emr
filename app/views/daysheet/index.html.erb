@@ -1,9 +1,9 @@
-
 <div id='result'></div>
 
 <% date = params[:date].to_date rescue Date.today %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 <% provide(:button_text, 'Save changes') %>
+<%= render "shared/modal", size: 'md' %>
 
 <div id='page'>
 <table class="tbl table-hover" >
@@ -43,21 +43,6 @@
       </tr>
   </thead>
   <tbody>
-
-<!-- use modal-dialog modal-lg for larger modal -->
-  <div id="modal-window" class="modal fade printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog " role="dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
-  
-<!--  
-  <div id="modal-window-lg" class="modal fade printable autoprint" role="document" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="dialog">
-      <div class="modal-content"></div>
-    </div>
-  </div>
--->
 
   <% @daysheet.each do |v| %>
      <%= render 'visit', visit: v %>

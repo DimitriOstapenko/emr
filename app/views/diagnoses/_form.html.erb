@@ -1,3 +1,4 @@
+<% noedit ||= false %>
 <div class="well">
 <%= simple_form_for(@diagnosis) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
@@ -6,7 +7,9 @@
   <%= f.input :descr, label: 'Description' %>
   <%= f.input :prob_type, label: 'Problem Type' %>
   <%= f.input :active, remote: true  %>
+  <% unless noedit %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
+  <% end %>
 
 <% end %>
 </div>

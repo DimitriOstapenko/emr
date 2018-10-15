@@ -1,36 +1,32 @@
 <% provide(:title, @procedure.code) %>
+<%= render "shared/modal", size: 'lg' %>
 
-	<h1>Procedure <%= @procedure.code %> - details  </h1>
-
-<div class="row justify-content-md-center">
-  <div class="col-md-6 col-md-offset-3">
-	   <pre>
-
-	      Code:         <%= @procedure.code %>
-	      Type:         <%= @procedure.ptype %>
-	      Description:  <%= @procedure.descr %>
-	      Provider fee: $<%= @procedure.prov_fee_real rescue 0.00 %>
-	      Specialist fee: $<%= @procedure.spec_fee_real rescue 0.00 %>
-	      Assistant fee: $<%= @procedure.ass_fee_real  rescue 0.00 %>
-	      Anesthesiologist fee: $<%= @procedure.ana_fee_real rescue 0.00 %>
-	      Non-Anesthesiologist fee: $<%= @procedure.non_ana_fee_real rescue 0.00 %>
-	      Unit: <%= @procedure.unit %>
-	      Fac req?: <%= @procedure.fac_req %>
-	      Adm req?: <%= @procedure.adm_req %>
-	      Diag req?: <%= @procedure.diag_req %>
-	      Ref req?: <%= @procedure.ref_req %>
-	      Percent: <%= @procedure.percent %>
-	      Effective date: <%= @procedure.eff_date %>
-	      Termination date: <%= @procedure.term_date %>
-	      Active?: <%= @procedure.active %>
-
-           </pre>
-    <% unless current_user.doctor? %>
-    <%= button_to "Edit", edit_procedure_path(@procedure), class: "btn btn-primary", :method => "get" %>
-    <% end %>
-    <p>
-    <%= button_to "Back", procedures_path, class: "btn btn-primary", :method => "get" %>
-  </div>
+<div class="col-sm-8 col-sm-offset-2">
+<h3 class='display-1'>Procedure <%= @procedure.code %> - details  </h3>
+<pre>
+  Service Code: <%= @procedure.code %>
+  Type:         <%= @procedure.ptype_str %>
+  Description:  <%= @procedure.descr %>
+  Provider fee: $<%= @procedure.prov_fee_real rescue 0.00 %>
+  Specialist fee: $<%= @procedure.spec_fee_real rescue 0.00 %>
+  Assistant fee: $<%= @procedure.ass_fee_real  rescue 0.00 %>
+  Anesthesiologist fee: $<%= @procedure.ana_fee_real rescue 0.00 %>
+  Non-Anesthesiologist fee: $<%= @procedure.non_ana_fee_real rescue 0.00 %>
+  Unit: <%= @procedure.unit %>
+  Fac req?: <%= @procedure.fac_req %>
+  Adm req?: <%= @procedure.adm_req %>
+  Diag req?: <%= @procedure.diag_req %>
+  Ref req?: <%= @procedure.ref_req %>
+  Percent: <%= @procedure.percent %>
+  Effective date: <%= @procedure.eff_date %>
+  Termination date: <%= @procedure.term_date %>
+  Active?: <%= @procedure.active_str %>
+</pre>
+<% unless current_user.doctor? %>
+  <%= button_to "Edit", edit_procedure_path(@procedure), class: "btn btn-primary", :method => "get" %>
+<% end %>
+<p>
+<%= button_to "Back", procedures_path, class: "btn btn-primary", :method => "get" %>
 </div>
 
 

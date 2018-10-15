@@ -1,23 +1,29 @@
 <% provide(:title, 'All procedures') %>
+<%= render "shared/modal", size: 'lg' %>
 
-<table class="tbl table-hover" >
+<table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
 	  <th><%= sortable 'code', 'Svc Code' %></th>
 	  <th><%= sortable 'ptype', :Type %></th>
 	  <th class="tbl_lg"> <%= sortable 'descr', :Description %> </th>
-	  <th>Provider Fee</th>
+	  <th>Fee</th>
 	  <th>Units</th>
-	  <th>Diag required?</th>
-	  <th>Ref. required?</th>
+	  <th class='tbl_md'>Diag req?</th>
+	  <th class='tbl_md'>Ref. req?</th>
 	  <th>Eff. Date</th>
-	  <th><%= sortable 'active' %></th>
-	  <th></th>
+	  <th class='tbl_sm'><%= sortable 'active' %></th>
+	  <% unless current_user.doctor? %>
+	  <th class='tbl_sm'></th>
+	  <% end %>
+	  <% if current_user.admin? %>
+	  <th class='tbl_sm'></th>
+	  <% end %>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @procedures %>
+  <%= render @procedures, remote: device_is_desktop? %>
 
   </tbody>
 </table>

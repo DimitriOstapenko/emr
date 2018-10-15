@@ -42,12 +42,23 @@ class ProvidersController < ApplicationController
   def destroy
     Provider.find(params[:id]).destroy
     flash[:success] = "Provider deleted"
-    redirect_back(fallback_location: provider_path )
+    redirect_back(fallback_location: providers_path )
   end
 
   def edit
     @provider = Provider.find(params[:id])
   end
+
+  def update
+    @provider = Provider.find(params[:id])
+    if @provider.update_attributes(provider_params)
+      flash[:success] = "Provider updated"
+      redirect_to providers_url
+    else
+      render 'edit'
+    end
+  end
+
 
 private
   def provider_params

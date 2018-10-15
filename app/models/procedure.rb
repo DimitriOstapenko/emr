@@ -54,6 +54,18 @@ end
     PROC_TYPES.invert[self.ptype].to_s
   end
 
+  def active_str
+    active? ? 'Yes':'No'
+  end
+
+  def diag_req_str
+    diag_req? ? 'Yes':'No'
+  end
+
+  def ref_req_str
+    ref_req? ? 'Yes':'No'
+  end
+
 end
 
 

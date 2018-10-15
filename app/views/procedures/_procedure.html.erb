@@ -1,22 +1,29 @@
      <tr>
-	<% if current_user.doctor? %>
-	<td><%= link_to "#{procedure.code}", procedure %> </td>
+        <% if remote %>
+	<td><%= link_to "#{procedure.code}", procedure, remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
 	<% else %>
-	<td><%= link_to "#{procedure.code}", edit_procedure_path(procedure) %> </td>
+	<td><%= link_to "#{procedure.code}", procedure %> </td>
 	<% end %>
 	<td><%= procedure.ptype_str %> </td> 
 	<td><%= procedure.descr %></td> 
-	<td><%= procedure.cost %></td> 
+	<td><%= sprintf("$%.2f", procedure.cost) %></td> 
 	<td><%= procedure.unit %></td> 
-	<td><%= procedure.diag_req %></td> 
-	<td><%= procedure.ref_req %></td> 
+	<td><%= procedure.diag_req_str %></td> 
+	<td><%= procedure.ref_req_str %></td> 
 	<td><%= procedure.eff_date %></td> 
-	<td><%= procedure.active %></td> 
+	<td><%= procedure.active_str %></td> 
+	<% unless current_user.doctor? %>
 	<td>
-	<% if current_user.admin?  %>
-		<%= link_to "delete", procedure, method: :delete, data: { confirm: "Are you sure you want to delete procedure #{procedure.code}?" } %>
+	<% if remote %>
+	  <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_procedure_path(procedure), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+  	<% else %>
+	  <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_procedure_path(procedure) %>
         <% end %>
 	</td>
+	<% end %>
+	<% if current_user.admin?  %>
+	   <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, procedure, method: :delete, data: { confirm: "Are you sure you want to delete procedure #{procedure.code}?" } %>
+	<% end %>
      </tr>
 
 

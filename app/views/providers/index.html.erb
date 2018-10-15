@@ -1,6 +1,7 @@
 <% provide(:title, 'All providers') %>
+<%= render "shared/modal", size: 'lg' %>
 
-<table class="tbl table-hover" >
+<table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
           <th class="tbl_lg">Name</th>
@@ -11,14 +12,17 @@
 	  <th>Phone</th>
 	  <th>Phone2</th>
 	  <th>Fax</th>
+	  <% unless current_user.doctor? %>
+	     <th class="tbl_sm"></th>
+	  <% end %>
 	  <% if  current_user.admin? %>
-	     <th></th>
+	     <th class="tbl_sm"></th>
      	  <% end %>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @providers %>
+  <%= render @providers, remote: device_is_desktop? %>
 
   </tbody>
 </table>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_12_141611) do
+ActiveRecord::Schema.define(version: 2018_10_14_081619) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -286,23 +286,23 @@ ActiveRecord::Schema.define(version: 2018_10_12_141611) do
     t.string "qcode"
     t.integer "ptype"
     t.string "descr"
-    t.float "cost"
-    t.integer "unit"
-    t.boolean "fac_req"
-    t.boolean "adm_req"
-    t.boolean "diag_req"
-    t.boolean "ref_req"
-    t.integer "percent"
+    t.float "cost", default: 0.0
+    t.integer "unit", default: 1
+    t.boolean "fac_req", default: false
+    t.boolean "adm_req", default: false
+    t.boolean "diag_req", default: false
+    t.boolean "ref_req", default: false
+    t.integer "percent", default: 0
     t.date "eff_date"
     t.date "term_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: false
-    t.integer "prov_fee"
-    t.integer "ass_fee"
-    t.integer "spec_fee"
-    t.integer "ana_fee"
-    t.integer "non_ana_fee"
+    t.float "prov_fee", default: 0.0
+    t.float "ass_fee", default: 0.0
+    t.float "spec_fee", default: 0.0
+    t.float "ana_fee", default: 0.0
+    t.float "non_ana_fee", default: 0.0
     t.index ["code"], name: "index_procedures_on_code", unique: true
   end
 

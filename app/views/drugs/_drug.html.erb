@@ -1,9 +1,10 @@
      <tr>
-        <% if current_user.doctor? %>
+        <% if remote %>
+          <td><%= link_to "#{drug.name}", drug, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+        <% else %>
 	  <td><%= link_to drug.name, drug %> </td>
-  	<% else %>
-	  <td><%= link_to drug.name, edit_drug_path(drug) %> </td>
-	<% end %>
+        <% end %>
+
 	<td><%= drug.dnum %> </td> 
 	<td><%= drug.strength %></td> 
 	<td><%= drug.dose %></td> 
@@ -18,10 +19,21 @@
 	<td><%= drug.dur_unit %></td> 
 	<td><%= drug.refills %></td> 
 	<td><%= drug.dtype %></td> 
+	<% unless current_user.doctor? %>
+        <td>
+        <% if remote %>
+          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_drug_path(drug), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+        <% else %>
+          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_drug_path(drug) %>
+        <% end %>
+        </td>
+        <% end %>
+
   	<% if current_user.admin?  %>
-		<td> <%= link_to "delete", drug, method: :delete, data: { confirm: "Are you sure you want to delete #{drug.name}?" } %> </td>
+		<td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, drug, method: :delete, data: { confirm: "Are you sure you want to delete #{drug.name}?" } %> </td>
 	<% end %>
      </tr>
+
 
 
 

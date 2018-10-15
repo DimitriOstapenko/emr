@@ -1,6 +1,7 @@
+<% noedit ||= false %>
 <div class="well">
 
-<%= simple_form_for @procedure do |f| %>
+<%= simple_form_for @procedure  do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <!-- Row 1 -->
@@ -65,12 +66,14 @@
 
   <!-- Row 5 -->
 
-  <div style="height: 20px;"></div>
+<% unless noedit %>
+<div style="height: 20px;"></div>
 <div class="row">
     <div class="col-sm-12">
     <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     </div>
 </div>
+<% end %>
 
 <% end %>
 
