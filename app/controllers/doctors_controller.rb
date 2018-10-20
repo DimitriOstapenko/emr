@@ -9,7 +9,6 @@ class DoctorsController < ApplicationController
 
   def index
     @doctors = Doctor.paginate(page: params[:page]) #, per_page: 40)
-    flash.now[:info] = "Showing all doctors"
   end
 
   def find

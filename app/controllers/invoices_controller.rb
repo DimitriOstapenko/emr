@@ -7,8 +7,11 @@ class InvoicesController < ApplicationController
         before_action :admin_user, only: :destroy
 
   def index
-      @invoices = Invoice.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page], per_page: $per_page)
-      flash.now[:info] = "Showing All Invoices (#{@invoices.count})"
+    if current_user.doctor?
+      @invoices = Invoice.where(doctor_id: current_doctor.id).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    else
+      @invoices = Invoice.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+    end
   end
 
 # We call this always from patient

@@ -13,7 +13,7 @@
 	<td><%= doctor.city %> </td> 
 	<td><%= doctor.phone %> </td> 
 
-	<% unless current_user.doctor? %>
+	<% if current_user.admin? %>
 	  <td>
           <% if remote %>
             <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_doctor_path(doctor), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
@@ -21,10 +21,8 @@
             <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_doctor_path(doctor) %>
           <% end %>
           </td>
-  	<% end %>
 
-  <% if current_user.admin?  %>
 	  <td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, doctor, method: :delete, data: { confirm: "Are you sure you want to delete doctor #{doctor.full_name} ?" } %> </td>
-  <% end %>
+  	<% end %>
 
      </tr>
