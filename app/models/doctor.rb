@@ -43,4 +43,8 @@ class Doctor < ApplicationRecord
     lname == 'nobody'
   end
 
+  def bills_str
+    self.bills? ? 'Yes' : 'No' 
+  end
+
 end

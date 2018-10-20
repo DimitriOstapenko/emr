@@ -1,12 +1,14 @@
+<div class="well">
+<% noedit ||= false %>
 <%= simple_form_for(@doctor) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :lname, label: 'Last Name' %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :fname, label: 'First Name' %>
   </div>
   
@@ -24,11 +26,11 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :cpso_num, label: 'CPSO Number' %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :provider_no %>
   </div>
   
@@ -46,25 +48,25 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :specialty %>
   </div>
   
   <div class="col-sm-2">
-  <%= f.input :percent_deduction %>
+  <%= f.input :percent_deduction, label: '% Deduction' %>
   </div>
 
   <div class="col-sm-4">
   <%= f.input :address %>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :city %>
   </div>
 </div>
   
 <div class="row">
-  <div class="col-sm-2">
+  <div class="col-sm-1">
   <%= f.input :prov, collection: PROVINCES %>
   </div>
 
@@ -72,29 +74,32 @@
   <%= f.input :postal %>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :phone, label: 'Office Number' %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :mobile, label: 'Mobile Number' %>
   </div>
 
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :email %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-10">
+  <div class="col-sm-12">
      <%= f.input :note, placeholder: 'Notes' %>
   </div>
 </div>
 
+<% unless noedit %>
 <div class="row">
-  <div class="col-sm-10">
+  <div class="col-sm-12">
      <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   </div>
 </div>
+<% end %>
 
 <% end %>
+</div>

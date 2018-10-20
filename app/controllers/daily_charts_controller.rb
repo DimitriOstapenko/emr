@@ -5,8 +5,24 @@ class DailyChartsController < ApplicationController
         before_action :admin_user,   only: :destroy
 
   def index
-      @daily_charts = DailyChart.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) #, per_page: 40)
-      flash.now[:info] = "Showing All day charts (#{@daily_charts.count}) "
+      @year =  params[:year] rescue nil
+      @month = params[:month] rescue nil
+      @charts = DailyChart
+      @sdate = @edate = nil
+
+      if @year.present?
+        @sdate = Date.new(@year.to_i,1) 
+        @edate = @sdate + 1.year - 1.day
+	@charts = @charts.where(date: (@sdate..@edate))
+        if @month.present?
+	  @sdate = Date.parse("#{@month} #{@year.to_i}") 
+          @edate = @sdate + 1.month - 1.day
+	  @charts = @charts.where(date: (@sdate..@edate))
+	end
+      end
+
+      @charts = @charts.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
+#      flash[:info] = "#{sdate} -  #{edate}" if sdate
   end
 
   def new
@@ -73,7 +89,7 @@ class DailyChartsController < ApplicationController
 
 private
 def patient_params
-          params.require(:patient).permit(:filename, :date, :pages )
+          params.require(:patient).permit(:filename, :date, :pages, :year, :month )
   end
 
 # Find patient by last name or health card number, depending on input format  

@@ -1,8 +1,7 @@
 <% provide(:title, @doctor.full_name) %>
 
-	<h1><%= @doctor.full_name %> -  Doctor's profile </h1>
+  <h1><%= @doctor.full_name %> -  Doctor's profile </h1>
 
-<div class="row justify-content-sm-center">
   <div class="col-sm-6 col-sm-offset-3">
 	   <pre>
 	      Name: <%= @doctor.full_name %>
@@ -13,7 +12,7 @@
 	      Group Number: <%= @doctor.group_no %>
 	      Service : <%= @doctor.service %>
 	      Type: <%= @doctor.ph_type %> 
-	      Bills?: <%= @doctor.bills %>
+	      Bills?: <%= @doctor.bills_str %>
 	      Phone: <%= @doctor.phone %>
 	      Mobile: <%= @doctor.mobile %>
 	      Email: <%= @doctor.email %>
@@ -23,9 +22,9 @@
 	      Percent Deduction: <%= @doctor.percent_deduction %>
            </pre>
 
-	    
+	    <% if current_user.admin? %> 
 	    <%= button_to "Edit", edit_doctor_path(@doctor), class: "btn btn-primary", :method => "get" %>
+	    <% end %>
         
-  </div>
 </div>
 

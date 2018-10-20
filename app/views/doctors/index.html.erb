@@ -1,4 +1,5 @@
 <% provide(:title, 'All doctors') %>
+<%= render "shared/modal", size: 'lg' %>
 
 <table class="tbl table-hover"> 
   <thead>
@@ -12,14 +13,17 @@
 	  <th class='tbl_lg'> Address</th>
           <th class='tbl_md'>City</th>
           <th>Phone </th>
+	  <% unless current_user.doctor? %>
+	      <th class='tbl_sm'> </th>
+	  <% end %>
 	  <% if  current_user.admin?  %>
-	      <th> </th>
+	      <th class='tbl_sm'> </th>
 	  <% end %>
       </tr>
   </thead>
   <tbody>
 
-  <%= render @doctors %>
+  <%= render @doctors, remote: device_is_desktop? %>
 
   </tbody>
 </table>

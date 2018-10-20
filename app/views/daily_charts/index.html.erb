@@ -1,6 +1,23 @@
 <% provide(:title, 'All Daily Charts') %>
 <%= render "shared/modal", size: 'lg' %>
 
+<%= form_with url: daily_charts_index_path do |f| %>
+  <div class="row form-control">
+    <div class="col-sm-3 col-md-2">
+	    <%= f.select :year, (Time.now.year-15..Time.now.year),
+		options={prompt:'All years', selected: @year},
+                html_options={onchange: 'this.form.submit();'}
+	    %>
+    </div>
+    <div class="col-sm-4 col-md-2">
+    <%= f.select :month, Date::MONTHNAMES[1..12], 
+	options={prompt:'All months', selected: @month}, 
+	html_options={onchange: 'this.form.submit();'} 
+    %>
+    </div>
+  </div>
+<% end %>
+
 <table class="tbl table-hover"> <!-- pretty -->
   <thead>
       <tr>
@@ -14,13 +31,13 @@
   </thead>
   <tbody>
 
-  <%= render @daily_charts %>
+  <%= render @charts %>
 
   </tbody>
 </table>
 
 <div class="bottom_buttons ">
-<%= will_paginate @daily_charts, class: "btn" %>
+<%= will_paginate @charts, params: {year: @year, month: @month}, class: "btn" %>
 <!--<# %= button_to "Add Daily Chart", new_daily_chart_path, class: "btn btn-primary col-md-12", :method => "get" %> -->
 </div>
 

@@ -23,6 +23,6 @@ env 'MAILTO', 'dosta@me.com'
 set :output, "#{path}/log/cron.log"
 
 #every :day, :at => '14:45' do
-every 2.minutes do
-	command "ruby #{path}/utils/import_new_charts.rb "
-end
+#every 2.minutes do
+#	command "ruby #{path}/utils/import_new_charts.rb "
+#end

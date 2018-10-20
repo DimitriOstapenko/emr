@@ -41,7 +41,7 @@ class DaysheetController < ApplicationController
 
       if @daysheet.any?
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "#{flashmsg} #{ins_str} #{csh_str} #{ifh_str}"
+	 flash.now[:info] = "#{flashmsg}#{ins_str}#{csh_str}#{ifh_str}"
       else  
 	 flash.now[:info] = 'No visits were found for ' + @date.strftime("%B %d, %Y") 
 	 render  inline: '', layout: true
