@@ -20,6 +20,16 @@ class SessionsController < ApplicationController
     end
   end
 
+  def switch_to
+    if current_user.admin?
+      user = User.find(params[:id])
+      log_in user
+    else 
+      flash.now[:danger] = 'Invalid email/password combination'
+    end
+    redirect_to root_url
+  end
+
   def destroy
     log_out if logged_in?
     redirect_to root_url

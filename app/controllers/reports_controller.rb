@@ -105,7 +105,7 @@
   def download
    @report = Report.find( params[:id] )
 
-   if File.exists?(@report.filespec)
+   if @report.present? && File.exists?(@report.filespec)
           send_file @report.filespec,
 	     filename: @report.filename,
              type: "application/pdf",

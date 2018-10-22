@@ -19,7 +19,7 @@
 <% end %>
 
 <% if current_user.admin?  %>
-	<td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, paystub_path(paystub), method: :delete, data: { confirm: "Are you sure you want to delete paystub #{paystub.id} for doctor #{paystub.doctor.lname}" } %></td>
+	<td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, paystub_path(paystub), method: :delete, data: { confirm: "Are you sure you want to delete paystub #{paystub.id} for doctor #{paystub.doctor.lname}" } %></td>
 <% end %>
 </tr>
 

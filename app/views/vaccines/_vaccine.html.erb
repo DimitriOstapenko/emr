@@ -13,15 +13,15 @@
  	<% unless current_user.doctor? %>
         <td>
         <% if remote %>
-          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_vaccine_path(vaccine), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+          <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_vaccine_path(vaccine), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
         <% else %>
-          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_vaccine_path(vaccine) %>
+          <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_vaccine_path(vaccine) %>
         <% end %>
         </td>
         <% end %>
 
         <% if current_user.admin?  %>
-        <td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, vaccine, method: :delete, data: { confirm: "Are you sure you want to delete #{vaccine.name}?" } %> </td>
+        <td> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, vaccine, method: :delete, data: { confirm: "Are you sure you want to delete #{vaccine.name}?" } %> </td>
         <% end %>
 
      </tr>

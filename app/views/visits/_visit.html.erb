@@ -4,9 +4,9 @@
   <td>
   <% if visit.editable? || current_user.admin? %>
   <% if remote %>
-     <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_patient_visit_path(@patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+     <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(@patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
   <% else %>
-     <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_patient_visit_path(@patient,visit) %>
+     <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(@patient,visit) %>
   <% end %>
   <% end %>
   </td>

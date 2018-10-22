@@ -7,7 +7,7 @@
 	<td><%= export_file.rmb_claims %></td> 
 	<td><%= export_file.wcb_claims %></td> 
 	<% if current_user.admin?  %>
-                <td> <%= link_to "delete", export_file, method: :delete, data: { confirm: "Are you sure you want to delete #{export_file.name}?" } %> </td>
+           <td> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, export_file, method: :delete, data: { confirm: "Are you sure you want to delete #{export_file.name}?" } %> </td>
         <% end %>
      </tr>
 

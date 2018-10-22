@@ -40,6 +40,9 @@ Rails.application.routes.draw do
   get  '/news', to: 'static_pages#news'
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
+
+  get  '/switch_to/:id', to: 'sessions#switch_to', as: :switch_user
+
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'

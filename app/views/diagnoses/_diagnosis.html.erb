@@ -8,16 +8,16 @@
 	<td><%= diagnosis.prob_type %></td> 
 	<td><%= diagnosis.active_str %> </td> 
 	<% unless current_user.doctor? %>
-	<td>
+	<td class="td-center">
         <% if remote %>
-          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_diagnosis_path(diagnosis), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+          <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_diagnosis_path(diagnosis), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
         <% else %>
-          <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_diagnosis_path(diagnosis) %>
+          <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_diagnosis_path(diagnosis) %>
         <% end %>
 	</td>
         <% end %>
         <% if current_user.admin?  %>
-	  <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, diagnosis, method: :delete, data: { confirm: "You sure?" } %> </td>
+	  <td class="td-center"><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, diagnosis, method: :delete, data: { confirm: "You sure?" } %> </td>
         <% end %>
      </tr>
 

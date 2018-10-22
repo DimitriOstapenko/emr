@@ -13,16 +13,17 @@
 	<td><%= procedure.eff_date %></td> 
 	<td><%= procedure.active_str %></td> 
 	<% unless current_user.doctor? %>
-	<td>
+	<td class="td-center">
 	<% if remote %>
-	  <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_procedure_path(procedure), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+	  <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_procedure_path(procedure), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
   	<% else %>
-	  <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_procedure_path(procedure) %>
+	  <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_procedure_path(procedure) %>
         <% end %>
 	</td>
 	<% end %>
 	<% if current_user.admin?  %>
-	   <td><%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, procedure, method: :delete, data: { confirm: "Are you sure you want to delete procedure #{procedure.code}?" } %>
+	<td class="td-center">
+	<%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, procedure, method: :delete, data: { confirm: "Are you sure you want to delete procedure #{procedure.code}?" } %>
 	<% end %>
      </tr>
 

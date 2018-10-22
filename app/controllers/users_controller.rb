@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def index
     @users = User.paginate(page: params[:page]) 
-    flash.now[:info] = 'Showing all users'
   end
 
   def show
@@ -59,6 +58,7 @@ class UsersController < ApplicationController
 # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id]) rescue nil
+      redirect_to(root_url) unless (@user && current_user)
       redirect_to(root_url) unless (current_user?(@user) || current_user.admin?)
     end
 

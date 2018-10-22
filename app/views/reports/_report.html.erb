@@ -27,7 +27,7 @@
   	<% end %>
 
   	<% if current_user.admin?  %>
-	   <td> <%= link_to '<i class="glyphicon glyphicon-trash"></i>'.html_safe, report, method: :delete, data: { confirm: "Are you sure you want to delete #{report.name}?" } %> </td>
+	   <td> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, report, method: :delete, data: { confirm: "Are you sure you want to delete #{report.name}?" } %> </td>
 	<% end %>
 
      </tr>
