@@ -24,7 +24,7 @@ files = 0
 
 class ErrorFile
   attr_reader :name, :ftype, :claims, :hcp_svcs, :rmb_svcs, :services, :total_amount,
-	      :body, :doctors, :group_no, :upload_date, :seq_no, :visit, :updated
+	      :body, :doctors, :provider_no, :group_no, :upload_date, :seq_no, :visit, :updated
   def initialize(filename)
     @name = File.basename(filename)
     @body = File.readlines(filename, chomp: true) rescue []
@@ -36,11 +36,12 @@ class ErrorFile
     @ftype = EDT_ERROR
     @visit = nil            # last visit processed
     @updated = 0            # updated visits number
+    @provider_no = 0        
   end
 
 # Group/Provider Header Record 
 def HX1(s)
-   provider_no = s[27,6]
+   @provider_no = s[27,6]
    @group_no = s[23,4]
    claim_proc_date = s[38,8].to_date
    @upload_date = claim_proc_date 	# we will just use the date of the last error in a batch
@@ -54,6 +55,16 @@ def HXH(s)
   pat_dob = s[15,8].to_date
   accounting_no = s[23,8].strip
   @visit = Visit.find_by(billing_ref: accounting_no)
+  err = []
+  err[0] = s[64,3]
+  err[1] = s[67,3]
+  err[2] = s[70,3]
+  err[3] = s[73,3]
+  
+  if @visit.present? && !err[0].blank?
+     @visit.update_attributes(status: ERROR, billing_ref: err.reject(&:blank?).join(','))
+     @updated += 1
+  end
 end
 
 # Claims Header 2 Record (RMB claims only)
@@ -75,7 +86,7 @@ def HXT(s)
   err[2] = s[70,3]
   err[3] = s[73,3]
 
-  if @visit.present?
+  if @visit.present? && !err[0].blank?
      @visit.update_attributes(status: ERROR, billing_ref: err.reject(&:blank?).join(','))
      @updated += 1
   end
@@ -84,9 +95,9 @@ end
 
 # Group/Provider Trailer Record
 def HX9(s)
-  hxh_count = s[3,7].to_i
-  hxr_count = s[10,7].to_i
-  hxt_count = s[17,7].to_i
+  hxh_count = s[3,7].to_i rescue 0
+  hxr_count = s[10,7].to_i rescue 0
+  hxt_count = s[17,7].to_i rescue 0
   @claims += hxh_count
   @hcp_svcs += hxt_count
   @rmb_svcs += hxr_count
@@ -121,7 +132,7 @@ new_files.each do |f|
   EdtFile.create!(ftype: file.ftype,
 	       filename: file.name, 
 	       upload_date: file.upload_date, 
-	       provider_no: 0, 
+	       provider_no: file.provider_no,   # last doctor's in the file
 	       group_no: file.group_no, 
 	       doctors: file.doctors.keys.size,
 	       body: file.body.join("\n"),
