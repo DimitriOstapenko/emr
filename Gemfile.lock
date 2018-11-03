@@ -148,7 +148,7 @@ GEM
     listen (3.0.8)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
-    loofah (2.2.2)
+    loofah (2.2.3)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.0.13)
@@ -173,7 +173,7 @@ GEM
     multi_json (1.13.1)
     nenv (0.3.0)
     nio4r (2.3.1)
-    nokogiri (1.8.4)
+    nokogiri (1.8.5)
       mini_portile2 (~> 2.3.0)
     notiffany (0.1.1)
       nenv (~> 0.1)
@@ -323,6 +323,7 @@ DEPENDENCIES
   jquery-rails (= 4.3.1)
   json (= 2.1.0)
   listen (= 3.0.8)
+  loofah (>= 2.2.3)
   mini_magick (= 4.7.0)
   minitest-reporters (= 1.1.14)
   nokogiri (~> 1.8.2)
@@ -353,4 +354,4 @@ DEPENDENCIES
   will_paginate (= 3.1.6)
 
 BUNDLED WITH
-   1.16.5
+   1.16.6

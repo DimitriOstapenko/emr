@@ -48,7 +48,7 @@ class ClaimsController < ApplicationController
 private
   def claim_params
           params.require(:claim).permit(:claim_no, :provider_no, :accounting_no, :pat_lname, :pat_fname, 
-	      :province, :ohip_num, :ohip_ver, :pmt_pgm, :moh_group_id, :visit_id, :ra_file, :date_paid, :filter_doc_id )
+	      :province, :ohip_num, :ohip_ver, :pmt_pgm, :moh_group_id, :visit_id, :ra_file, :date_paid, :filter_doc_id, :adjusted )
   end
 
 # Find claim by claim_no/ohip_num/accounting_no
