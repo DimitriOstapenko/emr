@@ -45,7 +45,7 @@
 <% if current_user.admin?  %>
 <div class="col-sm-6" >
   <%= f.label :month %>
-	<%= select_month Time.now.month-1,{}, class: "form-control" %>
+	<%= select_month Time.now.month,{}, class: "form-control" %>
 </div>
 <% end %>
 </div>
