@@ -13,7 +13,7 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
+# Ignore all development databases
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
