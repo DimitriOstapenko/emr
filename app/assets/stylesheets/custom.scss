@@ -176,6 +176,20 @@ td.hlight {
   }
 }
 
+.caption-text {
+  margin-right: 10px;
+  font-size: 1.2em;
+  color: grey;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+  &:hover {
+    color: red;
+    text-decoration: none;
+  }
+}
+
 /* footer */
 
 footer {
@@ -500,9 +514,21 @@ table.pretty {
     overflow-y: scroll;
 }
 
+.patient-letters-panel-body {
+    background: $brand-success;
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
+.patient-invoices-panel-body {
+    background: $brand-info;
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
 .visit-notes-panel-body {
     background: #FAFAD2;
-    max-height: 230px;
+    max-height: 200px;
     overflow-y: scroll;
 }
 

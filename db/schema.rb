@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_14_081619) do
+ActiveRecord::Schema.define(version: 2018_11_10_162829) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -211,6 +211,22 @@ ActiveRecord::Schema.define(version: 2018_10_14_081619) do
     t.boolean "paid"
     t.string "filename"
     t.integer "doctor_id"
+  end
+
+  create_table "letters", force: :cascade do |t|
+    t.string "title"
+    t.integer "patient_id"
+    t.integer "visit_id"
+    t.integer "doctor_id"
+    t.date "date"
+    t.string "filename"
+    t.string "to"
+    t.string "address_to"
+    t.text "body"
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "from"
   end
 
   create_table "patients", force: :cascade do |t|

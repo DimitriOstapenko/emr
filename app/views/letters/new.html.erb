@@ -1,0 +1,9 @@
+<% 
+provide(:title, 'New Letter') 
+provide(:button_text, 'Create Letter')
+%>
+
+<div class="col-sm-6 col-sm-offset-3">
+   <h3 class='display-1'>Patient <%= @patient.full_name %> : New Letter </h3>
+   <%= render 'form' %>
+</div>

@@ -1,0 +1,28 @@
+<% provide(:title, 'All invoices') %>
+<%= render 'shared/modal' %>
+
+<table class="tbl table-hover" >
+  <thead>
+      <tr>
+	  <th class="tbl_sm"><%= sortable 'id', '#' %> </th>
+	  <th class="tbl_md"><%= sortable 'patient_id', 'Re: Patient' %></th>
+	  <th class="tbl_lmd">From</th>
+	  <th class="tbl_lmd">To</th>
+	  <th class="tbl_lmd">Address</th>
+	  <th class="tbl_lg">Title</th>
+	  <th> <%= sortable 'date' %></th>
+	  <th class="tbl_sm"></th>
+	  <th class="tbl_sm"></th>
+	  <% if current_user.admin? %>
+	  <th class="tbl_sm"></th>
+	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+  <%= render @letters, remote: device_is_desktop? %>
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @letters, class: "btn" %>
+</div>

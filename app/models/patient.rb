@@ -1,6 +1,9 @@
 class Patient < ApplicationRecord
-        has_many :visits, dependent: :destroy, inverse_of: :patient
+        has_many :visits, dependent: :destroy #, inverse_of: :patient
+	has_many :doctors, through: :visits
+
         has_many :invoices, dependent: :destroy, inverse_of: :patient
+        has_many :letters, dependent: :destroy, inverse_of: :patient
 
   	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
@@ -92,6 +95,10 @@ class Patient < ApplicationRecord
     when (age[0] < 1 && age[1] <= 2)  # up to 2 mo old
             return "#{age[2]}d" 
     end
+  end
+
+  def invoices
+	  Invoice.where(patient_id: self.id)
   end
 
   def hc_expiry

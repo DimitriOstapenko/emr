@@ -1,4 +1,7 @@
 class Doctor < ApplicationRecord
+        has_many :visits
+	has_many :patients, through: :visits
+
         attr_accessor :full_name, :age
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

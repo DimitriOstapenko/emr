@@ -93,7 +93,7 @@ end # EDT module
 
 # Generate visit form in PDF, return pdf object
   def build_visit_form ( pat, visit )
-
+#          							top   right bottom left									
     pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,10.mm])
 
     pdf.font "Courier"
@@ -500,6 +500,38 @@ end # EDT module
     return pdf
 
   end # build_invoice
+
+  def build_letter (letter)
+#          							top   right bottom left									
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm, 20.mm])
+    pdf.font "Helvetica"
+    pdf.font_size 10
+    
+    pdf.text CLINIC_NAME, align: :center, size: 14  #, style: :bold, size: 14
+    pdf.text CLINIC_ADDR, align: :center
+    pdf.text 'Tel: '+CLINIC_PHONE + ' Fax: ' + CLINIC_FAX, align: :center
+    pdf.move_down 20.mm
+
+    datestr = letter.date.strftime("%B %d, %Y") rescue ''
+
+    pdf.text_box "#{datestr} \n#{letter.to} \n#{letter.address_to}", :at => [0,230.mm],
+         :width => 60.mm,
+         :height => 50.mm,
+         :overflow => :shrink_to_fit,
+         :min_font_size => 10,
+         :inline_format => true
+    
+    pdf.move_down 30.mm
+    pdf.text "RE: #{letter.patient.full_name} #{letter.patient.age_str}.o #{letter.patient.full_sex}"
+
+    pdf.move_down 15.mm
+    pdf.text letter.body, align: :left
+
+    pdf.move_down 20.mm
+    pdf.text "Sincerely,    #{letter.from}"
+
+    return pdf
+  end
 
 # Generate specialist referral form
   def build_referral_form ( pat, visit )

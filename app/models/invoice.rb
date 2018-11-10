@@ -27,4 +27,12 @@ def filespec
     INVOICES_PATH.join(filename) rescue nil
 end
 
+def paid_str 
+    self.paid? ? 'Yes':'No'
+end
+
+def billto_str
+    Provider.find(self.billto).name rescue ''
+end
+
 end

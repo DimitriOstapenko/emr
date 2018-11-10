@@ -1,0 +1,48 @@
+<div class="well">
+<%= simple_form_for [@patient,@letter] do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+<div class="row">
+  <div class="col-sm-12">   
+    <%= f.input :title,  hint: 'Required' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">  
+  <%= f.input :date, hint: 'Required', html5: true %>
+  </div>
+  <div class="col-sm-4">   
+    <%= f.input :to, placeholder: 'To Whom It May Concern' %>
+  </div>
+  <div class="col-sm-4">   
+    <%= f.input :from, placeholder: 'Clinic Management' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">   
+    <%= f.input :address_to, hint: 'Required' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">   
+	  <%= f.input :body, input_html: {rows: 8}, label: "Content", hint: 'Required' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">   
+    <%= f.input :note %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= f.submit yield(:button_text), class: "btn btn-primary" %> 
+  </div>
+</div>
+
+<% end %>
+</div>

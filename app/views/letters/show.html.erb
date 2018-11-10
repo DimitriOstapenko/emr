@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @letter.title %>
+</p>
+
+<p>
+  <strong>Patient:</strong>
+  <%= @letter.patient_id %>
+</p>
+
+<p>
+  <strong>Visit:</strong>
+  <%= @letter.visit_id %>
+</p>
+
+<p>
+  <strong>Doctor:</strong>
+  <%= @letter.doctor_id %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @letter.date %>
+</p>
+
+<p>
+  <strong>Filename:</strong>
+  <%= @letter.filename %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @letter.to %>
+</p>
+
+<p>
+  <strong>Address to:</strong>
+  <%= @letter.address_to %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @letter.body %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @letter.note %>
+</p>
+
+<%= link_to 'Edit', edit_letter_path(@letter) %> |
+<%= link_to 'Back', letters_path %>
