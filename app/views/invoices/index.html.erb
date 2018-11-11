@@ -14,9 +14,7 @@
 	  <th class="tbl_lsm">Paid?</th>
 	  <th class="tbl_sm"></th>
 	  <th class="tbl_sm"></th>
-	  <% if current_user.admin? %>
 	  <th class="tbl_sm"></th>
-	  <% end %>
       </tr>
   </thead>
   <tbody>
@@ -28,6 +26,4 @@
 
 <div class="bottom_buttons ">
 <%= will_paginate @invoices, class: "btn" %>
-<!-- < % = button_to "New Invoice", new_invoice_path, class: "btn btn-primary col-md-12 ", method: 'get'  % > -->
-
 </div>

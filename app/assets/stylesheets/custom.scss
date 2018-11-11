@@ -402,9 +402,9 @@ input, select{
 
 // Temp!!!!
 .tbl2 th {
-  background: #5bc0de;
+  background:  $brand-info; //#5bc0de;
   color: white;
-  height: 28px;
+  height: 26px;
   padding: 2px;
 }
 
@@ -509,13 +509,13 @@ table.pretty {
 }
 
 .patient-notes-panel-body {
-    background: #FFCCFF;
+    background: lightblue;
     max-height: 230px;
     overflow-y: scroll;
 }
 
 .patient-letters-panel-body {
-    background: $brand-success;
+    background: $brand-info;
     max-height: 100px;
     overflow-y: scroll;
 }

@@ -1,7 +1,7 @@
 class LettersController < ApplicationController
   before_action :set_letter, only: [:show, :edit, :update, :download, :destroy]
   before_action :logged_in_user 
-  before_action :admin_user, only: :destroy
+#  before_action :admin_user, only: :destroy
   helper_method :sort_column, :sort_direction
 
   include My::Forms
@@ -78,8 +78,8 @@ class LettersController < ApplicationController
     if @letter.present?
       File.delete( @letter.filespec ) rescue nil
       @letter.destroy
-      flash[:success] = "Invoice deleted"
-      redirect_to letters_url, notice: 'Letter was successfully destroyed.'
+      flash[:success] = "Letter deleted"
+      redirect_to letters_url
     end
   end
 

@@ -19,7 +19,10 @@
   </div>
   
   <div class="col-sm-2">
-  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required', label: 'Payment Type', include_blank: false %>
+	  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required', label: 'Pmt Type', include_blank: false,
+	      label_html: { "data-toggle": 'tooltip', class: "has-tip", 
+              title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}
+  %>
   </div>
 </div>
 
@@ -173,6 +176,20 @@ $(document).ready(function () {
      (pat_type.val() == 'I') ? $('#ifh_number').show() : $('#ifh_number').hide();
    });
 	
+   var pmt_opt = document.getElementById('patient_pat_type').getElementsByTagName("option");
+   var hin_prov = $('select[name="patient[hin_prov]"]');	     
+   hin_prov.change(function () {
+     if (hin_prov.val() == 'ON') {
+        $(pat_type).val('O');
+	pmt_opt[0].disabled = false;
+	pmt_opt[1].disabled = true;
+     } else {
+        $(pat_type).val('R');
+	pmt_opt[0].disabled = true;
+	pmt_opt[1].disabled = false;
+     }
+
+   });
    	
 });
 </script>

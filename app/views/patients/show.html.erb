@@ -34,7 +34,7 @@
         <% if @patient.invoices.any? %>
 	<b>Invoices </b>
 	 <div class="panel panel-info">
-	   <div class="patient-invoices-panel-body">
+	   <div class="tbl patient-invoices-panel-body">
 	     <table class="tbl2 table-hover table-bordered">
 		<th>  </th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th>
 		<% @patient.invoices.each do |i| %>
@@ -54,8 +54,8 @@
         <% if @patient.letters.any? %>
 	<b>Letters </b>
 	 <div class="panel panel-info">
-	   <div class="patient-letters-panel-body">
-	     <table class="table-hover table-bordered">
+	   <div class="tbl patient-letters-panel-body">
+	     <table class="tbl2 table-hover table-bordered">
 		     <th>  </th><th>From</th><th>To</th><th>Date</th><th>Title</th>
 		<% @patient.letters.each do |letter| %>
 		<tr>

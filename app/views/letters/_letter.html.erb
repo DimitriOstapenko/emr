@@ -10,9 +10,7 @@
 	<td><%= letter.date %></td> 
 	<td><%=  link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_letter_path(letter)  %></td>
 	<td><%=  link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
-  	<% if current_user.admin?  %>
 	<td> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, letter, method: :delete, data: { confirm: "Are you sure you want to delete letter # #{letter.id} ?" } %> </td>
-	<% end %>
      </tr>
 
 
