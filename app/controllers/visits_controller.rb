@@ -175,23 +175,6 @@ end
 	end
   end
 
-# Generate referral form for this visit
-  def referralform
-	@visit = Visit.find(params[:id])
-        @patient = Patient.find(@visit.patient_id)
-	@pdf = build_referral_form( @patient, @visit )
-        
-        respond_to do |format|
-          format.html do
-	    send_data @pdf.render,
-              filename: "referral_#{@patient.full_name}",
-              type: 'application/pdf',
-              disposition: 'inline'
-	  end
-	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "referralform.pdf") }
-	end
-  end
-
   private
 
     def visit_params

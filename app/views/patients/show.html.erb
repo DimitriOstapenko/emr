@@ -30,10 +30,20 @@
 	<b>Medications</b>: <%= @patient.medications  %>
 	<% end %>
          </pre>
-
-        <% if @patient.invoices.any? %>
-	<b>Invoices </b>
+	 
+	 <% if @patient.notes.present? %> 
+	 <b>Notes</b>
 	 <div class="panel panel-info">
+	   <div class="patient-notes-panel-body">
+		   <% html_str = "<pre class='notes'> #{@patient.notes} </pre>" %>
+                   <%= html_str.html_safe %>
+	   </div>
+	</div>
+	<% end %>
+  
+        <% if @patient.invoices.any? %>
+	 <b><%= link_to 'Invoices<span class="caret"></span>'.html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#invoices" %> </b>
+	 <div class="collapse panel panel-info" id="invoices">
 	   <div class="tbl patient-invoices-panel-body">
 	     <table class="tbl2 table-hover table-bordered">
 		<th>  </th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th>
@@ -52,8 +62,8 @@
 	<% end %>
 	
         <% if @patient.letters.any? %>
-	<b>Letters </b>
-	 <div class="panel panel-info">
+	&nbsp;<b><%= link_to 'Letters<span class="caret"></span>'.html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#letters" %> </b>
+	 <div class="collapse panel panel-info" id="letters">
 	   <div class="tbl patient-letters-panel-body">
 	     <table class="tbl2 table-hover table-bordered">
 		     <th>  </th><th>From</th><th>To</th><th>Date</th><th>Title</th>
@@ -70,17 +80,28 @@
 	   </div>
 	 </div>
 	<% end %>
-	 
-	 <% if @patient.notes.present? %> 
-	 <b>Notes</b>
-	 <div class="panel panel-info">
-	   <div class="patient-notes-panel-body">
-		   <% html_str = "<pre class='notes'> #{@patient.notes} </pre>" %>
-                   <%= html_str.html_safe %>
+
+        <% if @patient.referrals.any? %>
+	 &nbsp;<b><%= link_to 'Referrals<span class="caret"></span>'.html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#referrals" %> </b>
+	 <div class="collapse panel panel-info" id="referrals">
+	   <div class="tbl patient-letters-panel-body">
+	     <table class="tbl2 table-hover table-bordered">
+		     <th>  </th><th>Date</th><th>From</th><th>To</th><th>Address</th>
+		<% @patient.referrals.each do |ref| %>
+		<tr>
+		  <td><%= link_to "Referral #{ref.id}", referral_path(ref), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+		  <td> <%= ref.date %> </td> 
+		  <td> <%= ref.doctor.lname %> </td> 
+		  <td> <%= ref.to_doctor.lname %> </td> 
+		  <td> <%= ref.address_to %> </td> 
+		</tr>
+		<% end %>
+	     </table>
 	   </div>
-	</div>
+	 </div>
 	<% end %>
-    </section>
+
+  </section>
 
 <div class="row">
 
@@ -108,6 +129,10 @@
   
   <div id="invoice" class="col-sm-2">
     <%= button_to "Letter", new_patient_letter_path(@patient), class: "btn btn-primary", method: 'get' %> 
+  </div>
+  
+  <div id="invoice" class="col-sm-2">
+    <%= button_to "Referral", new_patient_referral_path(@patient), class: "btn btn-primary", method: 'get' %> 
   </div>
 
 </div>

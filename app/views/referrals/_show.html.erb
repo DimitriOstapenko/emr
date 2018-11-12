@@ -1,0 +1,16 @@
+<%
+   provide(:title, "Patient Referral Form")
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel">Referral for patient <%= @referral.patient.lname %>  To:  <%= @referral.to_doctor.lname %></b>
+</div>
+<div class="modal-body">
+	<iframe id="myModal" src="/referrals/<%= @referral.id %>" frameborder="0" width="100%" height="700px"></iframe>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" class="close" data-dismiss="modal">Dismiss</button>
+</div>
+
+

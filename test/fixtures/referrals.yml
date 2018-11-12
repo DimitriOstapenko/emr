@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_id: 1
+  doctor_id: 1
+  visit_id: 1
+  date: 2018-11-11
+  app_date: 2018-11-11
+  filename: MyString
+  to: MyString
+  address_to: MyString
+  from: MyString
+  reason: MyText
+
+two:
+  patient_id: 1
+  doctor_id: 1
+  visit_id: 1
+  date: 2018-11-11
+  app_date: 2018-11-11
+  filename: MyString
+  to: MyString
+  address_to: MyString
+  from: MyString
+  reason: MyText

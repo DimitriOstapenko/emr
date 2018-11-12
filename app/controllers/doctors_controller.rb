@@ -26,6 +26,12 @@ class DoctorsController < ApplicationController
 
   def show
     @doctor = Doctor.find(params[:id])
+    respond_to do |format|
+        format.json {
+            render json: @doctor
+        }
+	format.html
+    end
   end
   
   def edit
@@ -66,7 +72,7 @@ class DoctorsController < ApplicationController
 private
   def doctor_params
 	  params.require(:doctor).permit(:lname, :fname, :full_name, :cpso_num, :billing_num, :service, :ph_type,
-					 :district, :bills, :address, :city, :prov, :postal, :phone, :mobile, :licence_no,
+					 :district, :bills, :address, :city, :prov, :postal, :phone, :fax, :mobile, :licence_no,
 					 :note, :office, :provider_no, :group_no, :specialty, :email, :doc_code, :percent_deduction )
   end
 

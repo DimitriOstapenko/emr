@@ -1,0 +1,92 @@
+<div class="well">
+<%= simple_form_for [@patient,@referral] do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <% doc_id = @referral.doctor_id || (current_doctor.id if current_doctor) %>
+
+<div class="row">
+  <div class="col-sm-4">  
+  <%= f.input :date, hint: 'Required', html5: true %>
+  </div>
+  <div class="col-sm-4">   
+    <%= f.input :to_doctor_id, collection: Doctor.all, alue_method: :id, label_method: :lname, label: "To Doctor", include_blank: 'To Whom It May Concern' %>
+  </div>
+  <div class="col-sm-4">   
+    <%= f.input :doctor_id, collection: get_active_doctors, value_method: :id, label_method: :lname, selected: doc_id, label: "Referring Doctor" %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">   
+    <%= f.input :address_to, hint: 'Required' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">   
+    <%= f.input :to_phone, label: :Phone, hint: 'Required' %> 
+  </div>
+  <div class="col-sm-4">   
+    <%= f.input :to_fax, label: :Fax %> 
+  </div>
+  <div class="col-sm-4">   
+    <%= f.input :to_email, label: :Email %> 
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">   
+	  <%= f.input :reason, input_html: {rows: 8}, label: "Reason for referral", hint: 'Required' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">   
+    <%= f.input :note %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= f.submit yield(:button_text), class: "btn btn-primary" %> 
+  </div>
+</div>
+
+<% end %>
+</div>
+
+
+<script>
+$(document).ready(function () {
+   var to_doc = $('select[name="referral[to_doctor_id]"]');
+   var addr_to = document.getElementById("address_to");
+
+   to_doc.change(function () {
+     get_doctor(to_doc.val());	   
+   });
+
+function get_doctor ( doc_id ) {
+        var request = "/doctors/" + doc_id;
+        var aj = $.ajax({
+        url: request,
+        type: 'get',
+        data: $(this).serialize()
+    }).done(function (data) {
+        set_contact_info(data);
+    }).fail(function (data) {
+        console.log('AJAX request has FAILED');
+    });
+}
+
+function set_contact_info( doc ) {
+     $("#referral_address_to").val(doc.address+' '+doc.city+' '+doc.postal);
+     $("#referral_to_phone").val(doc.phone);
+     $("#referral_to_fax").val(doc.fax);
+     $("#referral_to_email").val(doc.email);
+}
+
+
+
+
+});
+
+</script>

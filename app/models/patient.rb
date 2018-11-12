@@ -4,8 +4,11 @@ class Patient < ApplicationRecord
 
         has_many :invoices, dependent: :destroy, inverse_of: :patient
         has_many :letters, dependent: :destroy, inverse_of: :patient
+        has_many :referrals, dependent: :destroy, inverse_of: :patient
 
   	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
+  	accepts_nested_attributes_for :letters, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
+  	accepts_nested_attributes_for :referrals, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age, :cardstr, :phonestr
 	default_scope -> { order(lname: :asc, fname: :asc) }

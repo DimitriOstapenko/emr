@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_10_162829) do
+ActiveRecord::Schema.define(version: 2018_11_11_222707) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 2018_11_10_162829) do
     t.string "email"
     t.string "doc_code"
     t.integer "percent_deduction"
+    t.string "fax"
     t.index ["provider_no"], name: "index_doctors_on_provider_no"
   end
 
@@ -370,6 +371,24 @@ ActiveRecord::Schema.define(version: 2018_11_10_162829) do
     t.string "pay_method"
     t.string "bil_agent"
     t.index ["date_paid"], name: "index_ra_messages_on_date_paid"
+  end
+
+  create_table "referrals", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "doctor_id"
+    t.integer "visit_id"
+    t.date "date"
+    t.date "app_date"
+    t.string "filename"
+    t.integer "to_doctor_id"
+    t.string "address_to"
+    t.text "reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "note"
+    t.string "to_phone"
+    t.string "to_fax"
+    t.string "to_email"
   end
 
   create_table "reports", force: :cascade do |t|

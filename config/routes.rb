@@ -71,13 +71,12 @@ Rails.application.routes.draw do
     resources :invoices do
       get 'invoice', on: :member
     end
-    resources :letters do
-      get 'letter', on: :member
-    end
+    resources :letters 
+    resources :referrals 
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member
-      get 'referralform', on: :member
+#      get 'referralform', on: :member
       get 'sendclaim', on: :member
       get 'addcash', on: :member
       resources :documents
@@ -118,6 +117,10 @@ Rails.application.routes.draw do
   end
   
   resources :letters do
+     get 'download', on: :member
+  end
+  
+  resources :referrals do
      get 'download', on: :member
   end
 
