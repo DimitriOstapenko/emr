@@ -461,8 +461,8 @@ end # EDT module
     pat = ref.patient	  
     doc = ref.doctor
     to_doc = ref.to_doctor
-    meds = pat.medications[0,77] rescue ''
-    algies = pat.allergies[0,77] rescue ''
+    meds = pat.medications
+    algies = pat.allergies
     datestr = ref.date.strftime("%B %d, %Y") rescue ''
     to_contact_info = "#{ref.address_to} \n P: #{ref.to_phone} F: #{ref.to_fax} "
 
@@ -487,9 +487,6 @@ end # EDT module
                 pdf.horizontal_line 0,195.mm, :at => 200.mm
                 pdf.horizontal_line 0,195.mm, :at => 150.mm
                 pdf.vertical_line 150.mm,200.mm, :at => 100.mm
-		pdf.horizontal_line 30.mm,195.mm, :at => 50.mm
-		pdf.horizontal_line 30.mm,195.mm, :at => 40.mm
-		pdf.horizontal_line 50.mm,195.mm, :at => 3.mm
               end
 
     pdf.draw_text "Re: Patient:", at: [2.mm, 194.mm], style: :bold
@@ -518,16 +515,21 @@ end # EDT module
 
     pdf.move_down 110.mm
     pdf.draw_text "Reason for Referral:", at: [0, 133.mm], style: :bold
+    pdf.move_down 3.mm
+    pdf.text ref.reason, align: :justify
     pdf.move_down 5.mm
-    pdf.text ref.reason, align: :left
-
-    pdf.draw_text "Medications:", at: [0, 50.mm], style: :bold
-    pdf.draw_text "#{meds}", at: [32.mm, 51.mm]
-    pdf.draw_text "Allergies:", at: [0, 40.mm], style: :bold
-    pdf.draw_text "#{algies}", at: [32.mm, 41.mm]
+    pdf.text "Medications:", style: :bold 
+    pdf.move_down 3.mm
+    pdf.text meds, align: :justify
+    pdf.move_down 3.mm
+    pdf.text "Allergies:", style: :bold
+    pdf.move_down 3.mm
+    pdf.text algies,  align: :justify
     
-    pdf.draw_text "Thank you for seeing this patient!", at: [0, 15.mm], size: 12, style: :bold
-    pdf.draw_text "Appointment Date:", at: [0, 3.mm], style: :bold
+    pdf.move_down 10.mm
+    pdf.text "Thank you for seeing this patient!", size: 12, style: :bold
+    pdf.move_down 10.mm
+    pdf.text "<b>Confirmed Appointment Date:</b> #{ref.app_date}", inline_format: true
 
     return pdf
  

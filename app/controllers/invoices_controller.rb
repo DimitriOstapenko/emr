@@ -7,11 +7,15 @@ class InvoicesController < ApplicationController
 #        before_action :admin_user, only: :destroy
 
   def index
+    @patient = Patient.find(params[:patient_id]) rescue nil
     if current_user.doctor?
-      @invoices = Invoice.where(doctor_id: current_doctor.id).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      @invoices = Invoice.where(doctor_id: current_doctor.id)
+    elsif @patient.present?
+      @invoices = @patient.invoices
     else
-      @invoices = Invoice.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+	    @invoices = Invoice.all
     end
+    @invoices = @invoices.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
   end
 
 # We call this always from patient

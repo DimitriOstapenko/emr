@@ -7,11 +7,15 @@ class ReferralsController < ApplicationController
 # before_action :admin_user, only: :destroy
 
   def index
+    @patient = Patient.find(params[:patient_id]) rescue nil
     if current_user.doctor?
-      @referrals = Referral.where(doctor_id: current_doctor.id).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      @referrals = Referral.where(doctor_id: current_doctor.id)
+    elsif @patient.present?
+      @referrals = @patient.referrals
     else
-      @referrals = Referral.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      @referrals = Referral.all
     end
+    @referrals = @referrals.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
   end
 
 # We call this always from patient

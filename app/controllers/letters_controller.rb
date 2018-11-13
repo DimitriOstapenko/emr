@@ -7,11 +7,15 @@ class LettersController < ApplicationController
   include My::Forms
 
   def index
+    @patient = Patient.find(params[:patient_id]) rescue nil
     if current_user.doctor?
-      @letters = Letter.where(doctor_id: current_doctor.id).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      @letters = Letter.where(doctor_id: current_doctor.id)
+    elsif @patient.present?
+	    @letters = @patient.letters
     else
-      @letters = Letter.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+	    @letters = Letter.all
     end
+    @letters = @letters.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
   end
 
 # We call this always from patient

@@ -4,18 +4,17 @@
 	<td><%= patient.age_str %></td>
 	<td><%= patient.pat_type %> </td>
 	<td><%= patient.last_visit_date %> </td> 
-	<td><%= patient.visits.count rescue 0 %> </td>
 	<td><%= patient.ohip_or_ifh_num_full %> </td>
 	<td><%= patient.hin_expiry_short %> </td>
 	<td><%= patient.dob %> </td>
 	<td><%= num_to_phone(patient.phone) %> </td> 
         <td><%= link_to '<i class="glyphicon glyphicon-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+	
 	<td>
 	<% if patient.chart_file.present? %>
-	  <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(patient), target: 'Label' %>
+	  <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(patient) %>
 	<% end %>
 	</td>
-
 
   	<% if current_user.admin?  %>
           <td>  <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> 
