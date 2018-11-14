@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  code: MyString
+  place: MyString
+  type: 
+  m_or_t: MyString
+  county: MyString
+  lhin: MyString
+
+two:
+  code: MyString
+  place: MyString
+  type: 
+  m_or_t: MyString
+  county: MyString
+  lhin: MyString

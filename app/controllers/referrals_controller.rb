@@ -1,10 +1,10 @@
 class ReferralsController < ApplicationController
   before_action :set_referral, only: [:show, :edit, :update, :download, :destroy]
+  before_action :logged_in_user
+# before_action :admin_user, only: :destroy
 
   include My::Forms
   helper_method :sort_column, :sort_direction
-  before_action :logged_in_user
-# before_action :admin_user, only: :destroy
 
   def index
     @patient = Patient.find(params[:patient_id]) rescue nil

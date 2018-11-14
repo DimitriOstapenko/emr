@@ -1,25 +1,26 @@
 <% provide(:title, @doctor.full_name) %>
+<%= render "shared/modal", size: 'lg' %>
 
   <h1><%= @doctor.full_name %> -  Doctor's profile </h1>
 
   <div class="col-sm-6 col-sm-offset-3">
 	   <pre>
 	      Name: <%= @doctor.full_name %>
-	      Billing Number: <%= @doctor.billing_num %> 
-	      CPSO Number: <%= @doctor.cpso_num %>
-	      License Number: <%= @doctor.licence_no %>
 	      Provider Number: <%= @doctor.provider_no %>
 	      Group Number: <%= @doctor.group_no %>
-	      Service : <%= @doctor.service %>
-	      Type: <%= @doctor.ph_type %> 
-	      Bills?: <%= @doctor.bills_str %>
+	      CPSO Number: <%= @doctor.cpso_num %>
+	      WSIB Number: <%= @doctor.wsib_num %>
+	      Specialty : <%= @doctor.specialty %>
+	      District: <%= @doctor.district %> 
 	      Phone: <%= @doctor.phone %>
 	      Mobile: <%= @doctor.mobile %>
 	      Email: <%= @doctor.email %>
 	      Addr: <%= @doctor.address %>
 		    <%= @doctor.city %> <%= @doctor.prov %> <%= @doctor.postal %>
 	      Office: <%= @doctor.office %>
+	      Bills?: <%= @doctor.bills_str %>
 	      Percent Deduction: <%= @doctor.percent_deduction %>
+	      Accepts New patients? <% @doctor.accepts_str %>
            </pre>
 
 	    <% if current_user.admin? %> 

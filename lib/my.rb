@@ -738,8 +738,8 @@ end # EDT module
 	pdf.text "Total submitted amount : #{sprintf("$%.2f",@ttl_subm_amt)}"
 	pdf.text "Total OHIP paid amount before MHO deduction:  #{sprintf("$%.2f",@ttl_paid_amt)}" 
 	pdf.text "MHO deduction:  #{sprintf("$%.2f",paystub.mho_deduction)}" 
-        pdf.move_down 6.mm
 	pdf.text "Monthly Premium payment:  #{sprintf("$%.2f",paystub.monthly_premium_amt)}" 
+        pdf.move_down 6.mm
 	pdf.text "IFH Payments:  #{sprintf("$%.2f",paystub.ifh_amt)}" 
 	pdf.text "Cash payments:  #{sprintf("$%.2f",paystub.cash_amt)}" 
 	pdf.text "WCB Payments:  #{sprintf("$%.2f",paystub.wcb_amt)}" 
@@ -749,6 +749,7 @@ end # EDT module
         pdf.move_down 6.mm
 	pdf.text "Total Gross amount:  #{sprintf("$%.2f",paystub.gross_amt)}" 
 	pdf.text "Total Paycheck amount based on #{@doc.percent_deduction}% deduction: #{sprintf("$%.2f",paystub.net_amt)}" 
+	pdf.text "(Gross Amount - Clinic deduction - Other Income  - MHO Deduction)"
       end
       
     pdf.move_down 10.mm

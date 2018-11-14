@@ -1,5 +1,6 @@
 class DoctorsController < ApplicationController
        
+	before_action :set_doctor, only: [:show, :edit, :update, :destroy]
 	before_action :logged_in_user #, only: [:index, :edit, :update]
 	before_action :admin_user, only: :destroy
 
@@ -25,17 +26,9 @@ class DoctorsController < ApplicationController
   end
 
   def show
-    @doctor = Doctor.find(params[:id])
-    respond_to do |format|
-        format.json {
-            render json: @doctor
-        }
-	format.html
-    end
   end
   
   def edit
-    @doctor = Doctor.find(params[:id])
   end
 
   def create
@@ -49,17 +42,12 @@ class DoctorsController < ApplicationController
   end  
 
   def destroy
-    Doctor.find(params[:id]).destroy
+    @doctor.destroy
     flash[:success] = "Doctor deleted"
     redirect_to doctors_url, page: params[:page]
   end
 
-  def edit
-    @doctor = Doctor.find(params[:id])
-  end
-
   def update
-    @doctor = Doctor.find(params[:id])
     if @doctor.update_attributes(doctor_params)
       flash[:success] = "Profile updated"
       redirect_to doctors_path
@@ -71,9 +59,9 @@ class DoctorsController < ApplicationController
 
 private
   def doctor_params
-	  params.require(:doctor).permit(:lname, :fname, :full_name, :cpso_num, :billing_num, :service, :ph_type,
-					 :district, :bills, :address, :city, :prov, :postal, :phone, :fax, :mobile, :licence_no,
-					 :note, :office, :provider_no, :group_no, :specialty, :email, :doc_code, :percent_deduction )
+	  params.require(:doctor).permit(:lname, :fname, :provider_no, :group_no, :cpso_num, :wsib_num, :specialty, :district,
+					 :bills, :address, :city, :prov, :postal, :phone, :fax, :mobile, :email, :licence_no,
+					 :accepts_new_patients, :note, :office, :provider_no, :group_no,  :percent_deduction )
   end
 
   # Find doctor by last name or provider number, depending on input format
@@ -85,6 +73,10 @@ private
         else
           []
         end
+  end
+
+  def set_doctor
+      @doctor = Doctor.find(params[:id])
   end
  
 	

@@ -5,7 +5,7 @@
 
 <div class="row">
   <div class="col-sm-3">
-  <%= f.input :lname, label: 'Last Name' %>
+  <%= f.input :lname, label: 'Last Name', hint: 'Required' %>
   </div>
 
   <div class="col-sm-3">
@@ -13,7 +13,7 @@
   </div>
   
   <div class="col-sm-2">
-  <%= f.input :ph_type, label: 'Type' %>
+  <%= f.input :specialty, label: 'Specialty', hint: 'Required' %>
   </div>
 
   <div class="col-sm-2">
@@ -21,7 +21,7 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :bills, collection: [['Yes', true], ['No', false]] %>
+  <%= f.input :bills, collection: [['No', false], ['Yes', true]], include_blank: false %>
   </div>
 </div>
 
@@ -31,7 +31,7 @@
   </div>
 
   <div class="col-sm-3">
-  <%= f.input :provider_no %>
+  <%= f.input :provider_no, hint: 'Required' %>
   </div>
   
   <div class="col-sm-2">
@@ -39,7 +39,7 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :billing_num %>
+  <%= f.input :wsib_num, label: 'WSIB Number' %>
   </div>
 
   <div class="col-sm-2">
@@ -48,43 +48,49 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
-  <%= f.input :specialty %>
-  </div>
-  
-  <div class="col-sm-2">
-  <%= f.input :percent_deduction, label: '% Deduction' %>
+  <div class="col-sm-2" id="percent_deduction">
+  <%= f.input :percent_deduction, label: '% Deduction', hint: 'Required' %>
   </div>
 
-  <div class="col-sm-4">
+  <div class="col-sm-6">
   <%= f.input :address %>
   </div>
   
   <div class="col-sm-3">
   <%= f.input :city %>
   </div>
+  
+  <div class="col-sm-1">
+  <%= f.input :prov, collection: PROVINCES, include_blank: 'ON' %>
+  </div>
 </div>
   
 <div class="row">
-  <div class="col-sm-1">
-  <%= f.input :prov, collection: PROVINCES %>
-  </div>
 
   <div class="col-sm-2">
   <%= f.input :postal %>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-2">
   <%= f.input :phone, label: 'Office Number' %>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-2">
   <%= f.input :mobile, label: 'Mobile Number' %>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-2">
+  <%= f.input :fax %>
+  </div>
+
+ <div class="col-sm-2">
   <%= f.input :email %>
   </div>
+
+  <div class="col-sm-2">
+  <%= f.input :accepts_new_patients, collection: [['Yes', true], ['No', false]], label: 'New patients?', include_blank: false %>
+  </div>
+
 </div>
 
 <div class="row">
@@ -103,3 +109,17 @@
 
 <% end %>
 </div>
+
+<script>
+$(document).ready(function () {
+// Show % deduction text field for billing doctors
+   var bills = $('select[name="doctor[bills]"]');
+   (bills.val() == 'true' ) ? $('#percent_deduction').show() : $('#percent_deduction').hide();
+   bills.change(function () {
+     (bills.val() == 'true' ) ? $('#percent_deduction').show() : $('#percent_deduction').hide();
+   });
+});
+	
+</script>
+
+

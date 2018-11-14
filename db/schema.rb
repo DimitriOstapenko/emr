@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_11_222707) do
+ActiveRecord::Schema.define(version: 2018_11_14_013721) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -87,16 +87,23 @@ ActiveRecord::Schema.define(version: 2018_11_11_222707) do
     t.index ["code"], name: "index_diagnoses_on_code"
   end
 
+  create_table "district_codes", force: :cascade do |t|
+    t.string "code"
+    t.string "place"
+    t.string "type"
+    t.string "m_or_t"
+    t.string "county"
+    t.string "lhin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "doctors", force: :cascade do |t|
     t.string "lname"
     t.string "fname"
     t.integer "cpso_num"
-    t.integer "billing_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "service"
-    t.string "ph_type"
-    t.string "district"
     t.boolean "bills"
     t.string "address"
     t.string "city"
@@ -114,6 +121,9 @@ ActiveRecord::Schema.define(version: 2018_11_11_222707) do
     t.string "doc_code"
     t.integer "percent_deduction"
     t.string "fax"
+    t.integer "wsib_num", default: 0
+    t.boolean "accepts_new_patients", default: false
+    t.integer "district", default: 0
     t.index ["provider_no"], name: "index_doctors_on_provider_no"
   end
 
@@ -426,6 +436,13 @@ ActiveRecord::Schema.define(version: 2018_11_11_222707) do
     t.datetime "updated_at", null: false
     t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
+  create_table "specialty_codes", force: :cascade do |t|
+    t.string "code"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
