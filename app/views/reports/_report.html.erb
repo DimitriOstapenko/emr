@@ -4,7 +4,7 @@
 	<% else %>
 	  <td><%= report.id %></td>
 	<% end %>  
-	<td><%= report.doctor.lname rescue 'All' %> </td> 
+	<td><%= report.doctor.full_name rescue 'All' %> </td> 
 	<td><%= report.name %> </td>
 
 	<td><%= report.type_str %></td>

@@ -1,8 +1,9 @@
-<% menu_items = %w(reports invoices daily_charts paystubs ) %>
+<% menu_items = %w(reports invoices referrals ) %>
 <li class="dropdown nav-item <%= 'active' if menu_items.include?(controller_name) %>"> 
   <a href="#" class="dropdown-toggle" data-toggle="dropdown"> Docs <b class="caret"></b> </a>
   <ul class="dropdown-menu">
      <li><%= link_to "Reports", reports_path %></li>
      <li> <%= link_to "Invoices", invoices_path, method: :get %> </li>
+     <li> <%= link_to "Referrals", referrals_path, method: :get %> </li>
   </ul>
 </li>

@@ -20,6 +20,8 @@ class Patient < ApplicationRecord
 	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
 	before_validation { postal.tr!(' -','') rescue '' }
 	before_validation { ohip_ver.strip! rescue '' }
+	before_validation { fname.strip!.gsub!(/\s+/,' ') rescue '' }
+	before_validation { lname.strip!.gsub!(/\s+/,' ') rescue '' }
 	before_validation :upcase_some_fields 
 
 	# Force Patient to RMB if province is not ON, to HCP if province is ON when HC number present	
@@ -45,7 +47,14 @@ class Patient < ApplicationRecord
 	validate :validate_age
 
   def full_name
-    return fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
+    fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
+  end
+ 
+# Use single underscore instead of multiple blanks, no middle name
+  def full_name_norm
+    ln = lname.strip.gsub(/\s+/,'_') rescue ''
+    fn = fname.strip.gsub(/\s+/,'_') rescue ''
+    fname.blank? ? ln : "#{ln},#{fn}"
   end
 
 # mm/yy
@@ -136,10 +145,9 @@ class Patient < ApplicationRecord
     errors.add('Ontario Health Card:', "Number is invalid") 
   end
 
-#  def valid_attribute?( attribute_name )
-#   self.valid?
-#   self.errors[attribute_name].blank?
-#  end
+  def chart_filespec
+	 CHARTS_PATH.join(self.chart_file)
+  end
 
 protected
 

@@ -31,9 +31,8 @@ class PatientsController < ApplicationController
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
        if @patient.chart_file.blank?
-	  lname_with_underscore = @patient.lname.gsub(' ','_')
-	  chart = Dir.glob("#{Rails.root}/charts/#{@patient.lname[0]}/#{lname_with_underscore}\,#{@patient.fname}*\.pdf")
-	  @patient.update_attribute(:chart_file, chart[0]) if chart[0]
+	  chart = Dir.glob("#{CHARTS_PATH}/#{@patient.full_name_norm}*\.pdf")
+	  @patient.update_attribute(:chart_file, File.basename(chart[0])) if chart[0]
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
@@ -160,7 +159,7 @@ class PatientsController < ApplicationController
   def chart
     @patient = Patient.find(params[:id])
     begin
-    send_file( @patient.chart_file, type: "application/pdf", disposition: "attachment", filename: "#{@patient.lname}_#{@patient.fname}\.pdf") 
+    send_file( @patient.chart_filespec, type: "application/pdf", disposition: "attachment", filename: "#{@patient.lname}_#{@patient.fname}\.pdf") 
       rescue StandardError => e
 	flash[:danger] =  e.message  
         redirect_to @patient 
