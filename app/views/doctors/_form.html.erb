@@ -13,11 +13,11 @@
   </div>
   
   <div class="col-sm-2">
-  <%= f.input :specialty, label: 'Specialty', hint: 'Required' %>
+     <%= f.input :specialty, collection: SpecialtyCode.all, label_method: :specialty_with_code, value_method: :code, hint: 'Required', include_blank: 'Please Select' %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :district %>
+  <%= f.input :district, collection: DistrictCode.all, label_method: :district_with_code, value_method: :code, include_blank: 'Please Select' %>
   </div>
 
   <div class="col-sm-2">

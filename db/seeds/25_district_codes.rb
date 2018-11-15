@@ -3,22 +3,22 @@
 require_relative '../../config/environment'
 require 'csv'
 
-TABLE='specialty_codes'
+TABLE='district_codes'
 
-source_file = Rails.root.join('lib', 'seeds','specialty_codes.csv')
+source_file = Rails.root.join('lib', 'seeds','2014_district_codes.csv')
 abort "Source file does not exist." unless File.exists?(source_file)
 
 puts "About to seed #{TABLE} from file #{source_file}"
 
-SpecialtyCode.destroy_all
+DistrictCode.destroy_all
 
 code = descr = ''
 codes = 0
 lines = File.readlines source_file
 lines.each do |line|
-  (code,descr) =  line.split(',').collect(&:strip)
-  next unless code.present? && code.match(/^[[:digit:]]{2}$/)
-  code_obj = SpecialtyCode.new(code: code, description: descr)
+  (code,place,dtype,mort,county,lhin) = line.split(',').collect(&:strip)
+  next unless code.present? && code.match(/^[[:digit:]]{,4}$/)
+  code_obj = DistrictCode.new(code: code, place: place, dtype: dtype, m_or_t: mort, county: county, lhin: lhin)
   if code_obj.save		         
 	  puts "#{code} #{descr} saved"
 	  codes += 1
@@ -28,4 +28,4 @@ lines.each do |line|
   end
 end
 
-puts "Imported #{codes} codes. Now #{SpecialtyCode.count} codes in a #{TABLE} table"
+puts "Imported #{codes} codes. Now #{DistrictCode.count} codes in a #{TABLE} table"

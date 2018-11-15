@@ -46,7 +46,7 @@
 	 <div class="collapse panel panel-info" id="invoices">
 	   <div class="tbl patient-invoices-panel-body">
 	     <table class="tbl2 table-hover table-bordered">
-		<th>  </th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th>
+		<th></th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th><th></th>
 		<% @patient.invoices.each do |i| %>
 		<tr>
 		  <td><%= link_to "Invoice #{i.id}", invoice_path(i), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
@@ -54,6 +54,7 @@
 		  <td> <%= i.date %> </td> 
 		  <td> <%= sprintf("$%.2f",i.amount) %> </td> 
 		  <td> <%= i.paid_str %> </td> 
+		  <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_invoice_path(i), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
 		</tr>
 		<% end %>
 	     </table>
@@ -66,7 +67,7 @@
 	 <div class="collapse panel panel-info" id="letters">
 	   <div class="tbl patient-letters-panel-body">
 	     <table class="tbl2 table-hover table-bordered">
-		     <th>  </th><th>From</th><th>To</th><th>Date</th><th>Title</th>
+		<th></th><th>From</th><th>To</th><th>Date</th><th>Title</th><th></th>
 		<% @patient.letters.each do |letter| %>
 		<tr>
 		  <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
@@ -74,6 +75,7 @@
 		  <td> <%= letter.to %> </td> 
 		  <td> <%= letter.date %> </td> 
 		  <td> <%= letter.title %> </td> 
+		  <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
 		</tr>
 		<% end %>
 	     </table>
@@ -86,7 +88,7 @@
 	 <div class="collapse panel panel-info" id="referrals">
 	   <div class="tbl patient-letters-panel-body">
 	     <table class="tbl2 table-hover table-bordered">
-		     <th>  </th><th>Date</th><th>From</th><th>To</th><th>Address</th>
+		<th></th><th>Date</th><th>From</th><th>To</th><th>Address</th><th></th>
 		<% @patient.referrals.each do |ref| %>
 		<tr>
 		  <td><%= link_to "Referral #{ref.id}", referral_path(ref), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
@@ -94,6 +96,7 @@
 		  <td> <%= ref.doctor.lname %> </td> 
 		  <td> <%= ref.to_doctor.lname %> </td> 
 		  <td> <%= ref.address_to %> </td> 
+		  <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_referral_path(ref), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
 		</tr>
 		<% end %>
 	     </table>

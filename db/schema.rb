@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_013721) do
+ActiveRecord::Schema.define(version: 2018_11_14_154311) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -90,12 +90,12 @@ ActiveRecord::Schema.define(version: 2018_11_14_013721) do
   create_table "district_codes", force: :cascade do |t|
     t.string "code"
     t.string "place"
-    t.string "type"
     t.string "m_or_t"
     t.string "county"
     t.string "lhin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "dtype"
   end
 
   create_table "doctors", force: :cascade do |t|
