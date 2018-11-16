@@ -1,5 +1,6 @@
 class Form < ApplicationRecord
-
+	
+	before_validation { filename.strip! rescue '' }
 	attr_accessor :ftype_str, :format_str, :filespec
 
 def ftype_str

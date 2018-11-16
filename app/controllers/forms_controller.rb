@@ -51,7 +51,7 @@ class FormsController < ApplicationController
     @form = Form.new(form_params)
     if @form.save
        flash[:success] = "Form created"
-       redirect_to @form
+       redirect_to forms_url 
     else
        render 'new'
     end

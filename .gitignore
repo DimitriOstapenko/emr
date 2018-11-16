@@ -4,11 +4,12 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore site secrets (deprecated)
-/config/secrets.yml
-
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+# Ignore Site initialization file
+/config/initializers/01_globals.rb
+# Cron jobs
+/config/schedule.rb
 
 # Ignore bundler config.
 /.bundle
@@ -35,26 +36,11 @@
 
 # Ignore public assets
 /public/assets/**
-/public/uploads/**
 
 # Ignore vendor bundle
 /vendor/*
 
 /passenger.80.pid
-/export
-/charts
-/reports
-/paystubs
-/invoices
-/GO
-/EDT
 .DS_Store
 /.idea/*
-/lib/seeds
-/public/charts
-/config/initializers/01_globals.rb
-/public/*.pdf
-/config/schedule.rb
 *.swp
-/letters
-/referrals
