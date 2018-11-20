@@ -34,10 +34,6 @@ class PatientsController < ApplicationController
 	  charts = Dir.glob("#{CHARTS_PATH}/#{@patient.full_name_norm}*\.pdf")
 	  basename = charts.any? ?  File.basename(charts[0]) : nil
 	  @patient.update_attribute(:chart_file, basename) if basename.present?
-	  if !Chart.find_by(patient_id: @patient.id) 
-	     reader = PDF::Reader.new( charts[0] )
-	     Chart.create(filename: basename, pages: reader.page_count, patient_id: @patient.id)
-	  end
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
@@ -164,7 +160,7 @@ class PatientsController < ApplicationController
   def chart
     @patient = Patient.find(params[:id])
     begin
-    send_file( @patient.chart_filespec, type: "application/pdf", disposition: "attachment", filename: "#{@patient.lname}_#{@patient.fname}\.pdf") 
+      send_file( @patient.chart_filespec, type: "application/pdf", disposition: "attachment", filename: "#{@patient.full_name_norm}.pdf") 
       rescue StandardError => e
 	flash[:danger] =  e.message  
         redirect_to @patient 
