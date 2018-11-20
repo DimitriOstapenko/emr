@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_14_154311) do
+ActiveRecord::Schema.define(version: 2018_11_17_201806) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(version: 2018_11_14_154311) do
     t.datetime "updated_at", null: false
     t.integer "doc_id"
     t.index ["pat_id", "visit_date", "created_at"], name: "index_billings_on_pat_id_and_visit_date_and_created_at"
+  end
+
+  create_table "charts", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "doctor_id"
+    t.string "filename"
+    t.integer "pages"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "claim_errors", force: :cascade do |t|

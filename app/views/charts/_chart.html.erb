@@ -1,0 +1,12 @@
+     <tr>
+	<td><%= link_to chart.patient.full_name, patient_path(chart.patient) %> </td> 
+	<td><%= chart.doctor.lname if chart.doctor.present? %> </td> 
+	<td><%= chart.pages %> </td> 
+	<td><%= chart.filesize %> </td> 
+	<td><%= chart.created_at.to_date %> </td> 
+	<td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_chart_path(chart)  %></td>
+	<% if current_user.admin? %>
+        <td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, chart, method: :delete, data: { confirm: "Are you sure you want to delete #{chart.filename}?" } %>  </td> 
+	<% end %>
+     </tr>
+

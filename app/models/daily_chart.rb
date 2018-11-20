@@ -8,8 +8,8 @@ class DailyChart < ApplicationRecord
 
 
 def filespec
-  (year,mon,rest) = filename.split('-') 
-  Rails.root.join(CHARTS_PATH,"Daily/#{year}",filename) rescue nil
+  (year,mon,rest) = self.filename.split('-') 
+  CHARTS_PATH.join('Daily',year,self.filename) rescue nil
 end
 
 def rel_path

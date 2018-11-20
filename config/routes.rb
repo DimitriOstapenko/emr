@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
+  root 'static_pages#home'
+
   get 'password_resets/new'
   get 'password_resets/edit'
-  root 'static_pages#home'
 
   get '/ra_messages/index(/:id)' => 'ra_messages#find', constraints: { query_string: /findstr/ }
   get 'ra_messages/index'
@@ -13,6 +14,10 @@ Rails.application.routes.draw do
   get '/claims/index(/:id)' => 'claims#find', constraints: { query_string: /findstr/ }
   get '/claims/index' 
   post '/claims/index' 
+
+  get '/charts/index' => 'charts#find', constraints: { query_string: /findstr/ }
+  get '/charts/index'
+
   get '/daily_charts/index' => 'daily_charts#find', constraints: { query_string: /findstr/ }
   get '/daily_charts/index'
   post '/daily_charts/index'
@@ -73,6 +78,7 @@ Rails.application.routes.draw do
     end
     resources :letters 
     resources :referrals 
+    resources :charts
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member
@@ -128,6 +134,9 @@ Rails.application.routes.draw do
      get 'download', on: :member
   end
 
+  resources :charts do
+     get 'download', on: :member
+  end
 
 # resources :billings     # historical billing table - not used
   

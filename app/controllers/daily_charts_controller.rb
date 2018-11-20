@@ -22,7 +22,6 @@ class DailyChartsController < ApplicationController
       end
 
       @charts = @charts.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
-#      flash[:info] = "#{sdate} -  #{edate}" if sdate
   end
 
   def new

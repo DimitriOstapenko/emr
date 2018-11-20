@@ -1,0 +1,28 @@
+<% provide(:title, 'Patient Charts') %>
+<%= render "shared/modal", size: 'lg' %>
+
+<table class="tbl table-hover">
+  <thead>
+      <tr>
+	  <th><%= sortable 'filename', :Patient %></th> 
+	  <th>Doctor </th> 
+          <th>Pages</th>
+	  <th>Size(M)</th>
+	  <th>Created</th>
+	  <th>Download</th>
+	  <% if current_user.admin? %>
+	  <th>Delete</th>
+	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @charts %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons ">
+<%= will_paginate @charts,  class: "btn" %>
+</div>
+

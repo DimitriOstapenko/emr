@@ -22,5 +22,5 @@
 // require bootstrap-sprockets  // causes drop-downs to dissapear
 //
 //= require pagination-keys.js
-
+//= require tooltip.js
 

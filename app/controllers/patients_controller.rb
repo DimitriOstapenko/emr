@@ -31,8 +31,13 @@ class PatientsController < ApplicationController
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
        if @patient.chart_file.blank?
-	  chart = Dir.glob("#{CHARTS_PATH}/#{@patient.full_name_norm}*\.pdf")
-	  @patient.update_attribute(:chart_file, File.basename(chart[0])) if chart[0]
+	  charts = Dir.glob("#{CHARTS_PATH}/#{@patient.full_name_norm}*\.pdf")
+	  basename = charts.any? ?  File.basename(charts[0]) : nil
+	  @patient.update_attribute(:chart_file, basename) if basename.present?
+	  if !Chart.find_by(patient_id: @patient.id) 
+	     reader = PDF::Reader.new( charts[0] )
+	     Chart.create(filename: basename, pages: reader.page_count, patient_id: @patient.id)
+	  end
        end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
@@ -165,8 +170,9 @@ class PatientsController < ApplicationController
         redirect_to @patient 
     end
   end
+
   def invoices
-	  flash[:info] = params
+    flash[:info] = params
   end
 
 private
