@@ -1,4 +1,6 @@
-  <li><%= link_to "Dr. #{current_doctor.lname}", current_doctor  if current_doctor %> </li>
+  <% if current_doctor.present? %>
+    <li class="navbar-text active">Dr. <%= current_doctor.lname %></li>
+  <% end %>
   <li style="width:40px">&nbsp;</li>
   <% if controller_name == 'daysheet' || controller_name == 'billings' %>
     <%= render 'layouts/date_select' %>

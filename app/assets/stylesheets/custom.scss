@@ -45,9 +45,15 @@ table {
   width: 100%;
 }
 
+#findstr {
+	border-radius: 5px;
+	height: 26px !important;
+	padding: 5px 5px 5px 8px;
+}
+
 #header {
-   padding:5px;
-   height:50px;
+   padding: 5px;
+   height: 50px;
 }
 
 #body {
@@ -62,19 +68,17 @@ table {
 
 /* navbar */
 .navbar-inverse {
-//    background-color: #333;
-    border-color: #E7E7E7;
     padding-left: 5px;
     padding-right: 5px;
+//    font-size: 1.1em;
 //    background-color: #444;
 }
-
 
 .navbar-inverse .navbar-nav > .active > a,
 .navbar-inverse .navbar-nav > .active > a:hover,
 .navbar-inverse .navbar-nav > .active > a:focus {
     color: #FFF;
-//    background-color: #333;
+    background-color: #222;
 }
 
 .spacer-10 {

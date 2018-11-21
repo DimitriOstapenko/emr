@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
 # alert if current_doctor is not set
    def current_doctor_set
-     unless current_doctor && !current_doctor.fake?
+     unless current_doctor.present? 
        store_location
        flash.keep[:warning] = "Please set doctor for this shift"
        redirect_to set_doctor_url if device_type == 'mobile'
