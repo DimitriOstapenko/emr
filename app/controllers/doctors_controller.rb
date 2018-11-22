@@ -26,6 +26,10 @@ class DoctorsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+        format.json { render json: @doctor }
+	format.html
+    end
   end
   
   def edit
