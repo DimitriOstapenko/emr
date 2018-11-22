@@ -3,72 +3,76 @@
 <img src='/images/clinic.jpg' width="430px"></img>
 </div>
 
+
 <div class="hdr-text">We are open every day!  </div> 
 </p>
 <p style="font-size: 13px">
 <pre>
 No appointment is necessary, just come in with your health card
 We welcome new patients with acute and/or chronic medical conditions 
-We speak English, Polish, Ukrainian, Russian, Hindi, Urdu, Punjabi
+We speak many different languages.
 
-<b>   9 AM to 8 PM, Monday through Friday
-   9 AM to 1 PM, on Saturdays
-   9 AM to 2 PM, Sundays & Holidays</b>
+Need a flushot? Come and get it.
+
+<b> 9am to 8pm, Monday to Friday, 9am to 2pm on weekends & holidays</b>
 
 Please make sure to arrive half an hour before closing time.
-
-Schedules are subject to change without notice. Please, call to confirm
-<b>(905) 561-9255</b>
+Schedules are subject to change without notice. Please, call to confirm: <b>(905) 561-9255</b>
 </pre>
 </p>
 
-<div style="width:700px; float:left; margin-left: 20px;">
+<% people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
+<% closing_time = [0,6].include?(Date.today.wday) ? '1:30pm':'7:30pm' %> 
+<section id='marquee'>
+  <div class="container-fluid">
+    <marquee direction="left"><h3> Doctor on duty: Dr. <%= Visit.first.doctor.lname %>; Estimated wait: <%= people_waiting * 10 %> min; Last patient can sign in at: <%= closing_time %> </h3></marquee>
+  </div>
+</section>
+<div style="width:800px; float:left; margin-left: 20px;">
 <p>
-<b>Doctors’ Schedules:</b>
 
+<div class='spacer-20'></div>
+<h3>Schedules:</h3>
 <ul style="line-height: 1.6em">
-
 <li>
 <b>Dr. Ostapenko:</b>
-Mondays: 2 PM – 8 PM / 9 AM - 2 PM (every second week)
-Tuesdays: 2 PM – 8 PM
-Thursdays: 2 PM – 8 PM
-Sundays: 9 AM – 2 PM
-Wednesdays: 3 PM – 8 PM
+<b>Mon</b>: 2–8pm / 9am-2pm (every second week);
+<b>Tue, Thu</b>: 2-8pm; 
+<b>Sun</b>: 9am–2pm
 </li>
 
 <li>
 <b>Dr. Smith:</b>
-Thursdays: 9 AM – 2 PM
+<b>Thu</b>: 9am – 2pm
 </li>
 
 <li>
 <b>Dr. Sabira Ahmed:</b>
-Wednesdays: 9 AM – 3 PM
+<b>Wed</b>: 9am – 3pm
 </li>
 
 <li>
 <b>Dr. Samarasinghe:</b>
-Every second Monday 2 PM – 8 PM
-Tuesdays: 9AM - 2 PM
-Friday: 2 PM - 8 PM
+Every second Monday 2 – 8pm;
+<b>Tue</b>: 9am - 2pm;
+<b>Fri</b>: 2 - 8pm
 </li>
 
 <li>
 <b>Dr. Nainar:</b>
-Saturdays: 9AM - 2PM
+<b>Sat</b>: 9am - 2pm
 </li>
 
 <li>
 <b>Dr. Sadaf Ahmed:</b>
-Fridays: 9 AM - 2PM
-Every second monday 9AM - 2PM
+<b>Fri</b>: 9am - 2pm;
+Every second Monday 9am - 2pm
 </li>
 
 <li>
 <b>Dr. Ubhi: </b>
-Wednesdays: 2 PM - 8 PM
-Thursdays: 9 AM - 2PM
+<b>Wed</b>: 2 - 8pm;
+<b>Thu</b>: 9am - 2pm
 </li>
 </div>
 </p>
@@ -76,6 +80,6 @@ Thursdays: 9 AM - 2PM
 
 <div align="right" style="padding:0; margin:0">
 <img src='/images/map.png' width="230px"></img>
-<div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div>
+<!-- <div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> -->
 </div>
 
