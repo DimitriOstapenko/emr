@@ -3,7 +3,6 @@
 <img src='/images/clinic.jpg' width="430px"></img>
 </div>
 
-
 <div class="hdr-text">We are open every day!  </div> 
 </p>
 <p style="font-size: 13px">
@@ -25,7 +24,7 @@ Schedules are subject to change without notice. Please, call to confirm: <b>(905
 <% closing_time = [0,6].include?(Date.today.wday) ? '1:30pm':'7:30pm' %> 
 <section id='marquee'>
   <div class="container-fluid">
-    <marquee direction="left"><h3> Doctor on duty: Dr. <%= Visit.first.doctor.lname %>; Estimated wait: <%= people_waiting * 10 %> min; Last patient can sign in at: <%= closing_time %> </h3></marquee>
+    <marquee direction="left"><h3> Doctor on duty: Dr. <%= Visit.first.doctor.lname %>; Estimated wait: <%= people_waiting * 5 %> min; Last patient can sign in at: <%= closing_time %> </h3></marquee>
   </div>
 </section>
 <div style="width:800px; float:left; margin-left: 20px;">
