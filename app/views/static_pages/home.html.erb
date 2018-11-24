@@ -11,7 +11,7 @@ No appointment is necessary, just come in with your health card
 We welcome new patients with acute and/or chronic medical conditions 
 We speak many different languages.
 
-Need a flushot? Come and get it.
+Need a flushot? Come and get it. Flu shots and other injections are provided without wait 
 
 <b> 9am to 8pm, Monday to Friday, 9am to 2pm on weekends & holidays</b>
 
@@ -20,11 +20,11 @@ Schedules are subject to change without notice. Please, call to confirm: <b>(905
 </pre>
 </p>
 
-<% people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
+<%# people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
 <% closing_time = [0,6].include?(Date.today.wday) ? '1:30pm':'7:30pm' %> 
 <section id='marquee'>
   <div class="container-fluid">
-    <marquee direction="left"><h3> Doctor on duty: Dr. <%= Visit.first.doctor.lname %>; Estimated wait: <%= people_waiting * 5 %> min; Last patient can sign in at: <%= closing_time %> </h3></marquee>
+    <marquee direction="left"><h3> Doctor on duty: Dr. <%= Visit.first.doctor.lname %> ... Last patient can sign in at: <%= closing_time %> ... Flu shots and other injections are provided with no wait time </h3></marquee>
   </div>
 </section>
 <div style="width:800px; float:left; margin-left: 20px;">
@@ -79,6 +79,6 @@ Every second Monday 9am - 2pm
 
 <div align="right" style="padding:0; margin:0">
 <img src='/images/map.png' width="230px"></img>
-<!-- <div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> -->
+<div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> 
 </div>
 

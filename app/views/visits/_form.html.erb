@@ -10,7 +10,7 @@
   elsif @visit.status == ERROR 
      disabled = ( BILLED..CANCELLED ).to_a
   elsif @visit.billing_ref.present?
-     disabled = [ARRIVED,READY,CANCELLED]
+     disabled = [ARRIVED,READY,WITH_DOCTOR,ERROR,CANCELLED]
   elsif @visit.hcp_proc_codes.present? 
     if @insured
        disabled = [BILLED,PAID]
@@ -195,7 +195,7 @@
 $(document).ready(function() {
 
 //    $.fn.select2.defaults.set( "theme", "classic" );
-    $( "#visit_diag_code" ).select2();
+    $("#visit_diag_code").select2();
     $('#visit_proc_code').select2();
     $('#visit_proc_code2').select2();
     $('#visit_proc_code3').select2();
@@ -293,14 +293,14 @@ function set_btype( proc, suff ) {
 function select_statuses( proc, suff ) {
   var v = document.getElementById('visit_statuses').getElementsByTagName("option");
   var insured = <%= @insured %>;
-  if (proc.ptype == '2' && suff.length === 0  || !insured) {
-        v[1].disabled = true;  // READY
-        v[2].disabled = false;
-        v[3].disabled = false;
+  if (proc.ptype == '2' && suff.length === 0  || !insured) {  // CASH
+        v[2].disabled = true;  // READY
+        v[3].disabled = false; // BILLED
+        v[4].disabled = false; // PAID 
      }else{
-        v[1].disabled = false;
-        v[2].disabled = true;
+        v[2].disabled = false;
         v[3].disabled = true;
+        v[4].disabled = true;
      }
 }
 

@@ -6,14 +6,12 @@ class DaysheetController < ApplicationController
         before_action :current_doctor_set
 	
   def index
-      @daysheet = []
       @date = Date.parse(params[:date]) rescue nil
       store_location
       if @date.present?
         @daysheet = Visit.where("date(entry_ts) = ?", @date) 
       else 
-	@daysheet = Visit.where(status: [ARRIVED,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
-#	@daysheet = Visit.where('status IN (?) or date(entry_ts)=?', [ARRIVED,READY,ERROR].to_a, Date.today)
+	@daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
 	@date = Date.today
       end
       
@@ -21,11 +19,10 @@ class DaysheetController < ApplicationController
       @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue []
 	 
-      if params[:doc_id]
-         @daysheet = @daysheet.where(doc_id: params[:doc_id])
-         d = Doctor.find(params[:doc_id])
-         doctor = "Dr. #{d.lname}" if d.present?
-         flashmsg = "Daysheet for #{doctor} : #{@daysheet.count} visits "
+      doc = Doctor.find(params[:doc_id]) rescue nil
+      if doc.present?
+	 @daysheet = @daysheet.where(doc_id: doc.id)
+	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} visits "
       else
 	 flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)}"
       end
@@ -45,17 +42,6 @@ class DaysheetController < ApplicationController
       else  
 	 flash.now[:info] = 'No visits were found for ' + @date.strftime("%B %d, %Y") 
 	 render  inline: '', layout: true
-      end
-  end
-
-  def set_doctor_
-      doc_id = params[:doc_id]
-      id = params[:id]
-      if doc_id
-	 set_doc_session( doc_id )
-	 doc = Doctor.find( doc_id ) || Doctor.new()
-	 flash[:info] = "Current Doctor set to Dr. #{doc.lname}"
-	 redirect_to  patients_path 
       end
   end
 
