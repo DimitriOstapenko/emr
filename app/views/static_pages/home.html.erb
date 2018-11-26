@@ -1,40 +1,46 @@
 <div class="spacer-10"></div>
 <div id='logo' style="padding:20px">
-<img src='/images/clinic.jpg' width="450px"></img>
+<img src='/images/clinic.jpg' width="480px"></img>
 </div>
 
 <div class="hdr-text">We are open every day!  </div> 
 </p>
-<p style="font-size: 13px">
-<pre>
-No appointment is necessary, just come in with your health card
-We welcome new patients with acute and/or chronic medical conditions 
-We speak many different languages.
+<div style="font-size: 14px">
+<p>	
+No appointment is necessary, we service both Ontario and out of province patients.
+New patients are welcome. We provide specialist referrals and speak many different languages.
 
-Need a flushot? Come and get it. 
-Flu shots and other injections are provided without wait 
+Need a flushot? We provide flu shots and other injections without wait 
 
-<b> 9am to 8pm, Monday to Friday, 9am to 2pm on weekends & holidays</b>
+<p>
+<b> 9am to 8pm, Mon-Fri, 9am to 2pm on weekends & holidays</b>
 
-Please make sure to arrive half an hour before closing time.
-Schedules are subject to change without notice. 
-Please, call to confirm: <b>(905) 561-9255</b>
-</pre>
-</p>
+<p>
+We work together with the public Healthdd Department and many specialists to satisfy the needs of our patients.
+Please arrive half an hour before closing time.  Schedules are subject to change without notice. 
+<b>(905) 561-9255</b>
+</div>
+<div class='spacer-20'></div>
 
 <%# people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
+<p>
+
 <section id='marquee'>
   <div class="container-fluid">
-    <marquee direction="left"><h3> <%= Schedule::doc_on_duty %>  ... Flu shots and other injections are provided with no wait time </h3></marquee>
+    <marquee direction="left"><h4> <%= Schedule::doc_on_duty %>  ... Flu shots and other injections are provided with no wait time </h4></marquee>
   </div>
 </section>
 
-  <div style="width:450px; float:left; margin-left: 500px;">
-    <%= render "schedules/schedule" %>
-  </div>
+<div class='spacer-20'></div>
 
 <div align="right" style="padding:0; margin:0">
-  <img src='/images/map.png' width="300px"></img>
+  <span style="width:500px; float:left; margin-left: 20px;">
+  <%= render "schedules/schedule" %>
+  </span>
+  
+  <span style="width:250px">
+  <img src='/images/map.png' width="240px"></img>
   <div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> 
+  </span>
 </div>
 

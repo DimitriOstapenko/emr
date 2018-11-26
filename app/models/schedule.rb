@@ -26,7 +26,7 @@ def self.doc_on_duty
     if now > midnight || now < opening
       return "Clinic is now closed. Doctors working later today: Dr. #{docs}"
     elsif now < closing && now > opening
-      return "Doctor on duty: #{Visit.first.doctor.lname} ... Last patient sign in at: #{self.closing_time} "
+      return "Doctor on duty: Dr. #{Visit.first.doctor.lname} ... Last patient sign in at: #{self.closing_time} "
     else 
       return 'Clinic is now closed. Will open again tomorrow at 9:00am'
     end
