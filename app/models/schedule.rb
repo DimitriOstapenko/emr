@@ -20,13 +20,13 @@ def self.doc_on_duty
     opening = '9:00AM'.to_time.to_i
     closing = self.closing_time.to_time.to_i	
     midnight = ('0:01AM'.to_time + 1.day).to_i
-    schedule_today = Schedule.where(dow: Date.today.wday)
+    schedule_today = Schedule.where(dow: Date.today.wday).order(:start_time)
     docs = schedule_today.map{|s| "#{s.doctor.lname} : #{s.start_time.strftime('%l:%M%p')} - #{s.end_time.strftime('%l:%M%p')}"}.join', Dr. ' if schedule_today.any?
     
     if now > midnight || now < opening
       return "Clinic is now closed. Doctors working later today: Dr. #{docs}"
     elsif now < closing && now > opening
-      return "Doctor on duty: #{Visit.first.doctor.lname} ... Last patient sign in at: <%= self.closing_time %>"
+      return "Doctor on duty: #{Visit.first.doctor.lname} ... Last patient sign in at: #{self.closing_time} "
     else 
       return 'Clinic is now closed. Will open again tomorrow at 9:00am'
     end

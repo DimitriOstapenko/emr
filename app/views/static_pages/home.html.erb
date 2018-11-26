@@ -1,6 +1,6 @@
 <div class="spacer-10"></div>
 <div id='logo' style="padding:20px">
-<img src='/images/clinic.jpg' width="430px"></img>
+<img src='/images/clinic.jpg' width="450px"></img>
 </div>
 
 <div class="hdr-text">We are open every day!  </div> 
@@ -11,12 +11,14 @@ No appointment is necessary, just come in with your health card
 We welcome new patients with acute and/or chronic medical conditions 
 We speak many different languages.
 
-Need a flushot? Come and get it. Flu shots and other injections are provided without wait 
+Need a flushot? Come and get it. 
+Flu shots and other injections are provided without wait 
 
 <b> 9am to 8pm, Monday to Friday, 9am to 2pm on weekends & holidays</b>
 
 Please make sure to arrive half an hour before closing time.
-Schedules are subject to change without notice. Please, call to confirm: <b>(905) 561-9255</b>
+Schedules are subject to change without notice. 
+Please, call to confirm: <b>(905) 561-9255</b>
 </pre>
 </p>
 
@@ -26,58 +28,13 @@ Schedules are subject to change without notice. Please, call to confirm: <b>(905
     <marquee direction="left"><h3> <%= Schedule::doc_on_duty %> ... Last patient sign in at: <%= Schedule::closing_time %> ... Flu shots and other injections are provided with no wait time </h3></marquee>
   </div>
 </section>
-<div style="width:800px; float:left; margin-left: 20px;">
-<p>
 
-<div class='spacer-20'></div>
-<h3>Schedules:</h3>
-<ul style="line-height: 1.6em">
-<li>
-<b>Dr. Ostapenko:</b>
-<b>Mon</b>: 2–8pm / 9am-2pm (every second week);
-<b>Tue, Thu</b>: 2-8pm; 
-<b>Sun</b>: 9am–2pm
-</li>
-
-<li>
-<b>Dr. Smith:</b>
-<b>Thu</b>: 9am – 2pm
-</li>
-
-<li>
-<b>Dr. Sabira Ahmed:</b>
-<b>Wed</b>: 9am – 3pm
-</li>
-
-<li>
-<b>Dr. Samarasinghe:</b>
-Every second Monday 2 – 8pm;
-<b>Tue</b>: 9am - 2pm;
-<b>Fri</b>: 2 - 8pm
-</li>
-
-<li>
-<b>Dr. Nainar:</b>
-<b>Sat</b>: 9am - 2pm
-</li>
-
-<li>
-<b>Dr. Sadaf Ahmed:</b>
-<b>Fri</b>: 9am - 2pm;
-Every second Monday 9am - 2pm
-</li>
-
-<li>
-<b>Dr. Ubhi: </b>
-<b>Wed</b>: 2 - 8pm;
-<b>Thu</b>: 9am - 2pm
-</li>
-</div>
-</p>
-</ul>
+  <div style="width:450px; float:left; margin-left: 500px;">
+    <%= render "schedules/schedule" %>
+  </div>
 
 <div align="right" style="padding:0; margin:0">
-<img src='/images/map.png' width="230px"></img>
-<div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> 
+  <img src='/images/map.png' width="300px"></img>
+  <div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> 
 </div>
 
