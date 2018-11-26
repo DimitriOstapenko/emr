@@ -7,10 +7,13 @@ one:
   date: 2018-11-11
   app_date: 2018-11-11
   filename: MyString
-  to: MyString
+  to_doctor_id: MyString
   address_to: MyString
-  from: MyString
   reason: MyText
+  note: 'blah'
+  to_fax: 9993332211
+  to_phone: 9921112233
+  to_email: dd@d.com
 
 two:
   patient_id: 1
@@ -19,7 +22,10 @@ two:
   date: 2018-11-11
   app_date: 2018-11-11
   filename: MyString
-  to: MyString
+  to_doctor_id: MyString
   address_to: MyString
-  from: MyString
   reason: MyText
+  note: 'blah2'
+  to_fax: 9993332213
+  to_phone: 9921112232
+  to_email: ddd@d.com

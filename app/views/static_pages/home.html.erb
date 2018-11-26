@@ -21,10 +21,9 @@ Schedules are subject to change without notice. Please, call to confirm: <b>(905
 </p>
 
 <%# people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
-<% closing_time = [0,6].include?(Date.today.wday) ? '1:30pm':'7:30pm' %> 
 <section id='marquee'>
   <div class="container-fluid">
-    <marquee direction="left"><h3> Doctor on duty: Dr. <%= Visit.first.doctor.lname %> ... Last patient can sign in at: <%= closing_time %> ... Flu shots and other injections are provided with no wait time </h3></marquee>
+    <marquee direction="left"><h3> Doctor on duty: <%= Schedule::doc_on_duty %> ... Last patient sign in at: <%= Schedule::closing_time %> ... Flu shots and other injections are provided with no wait time </h3></marquee>
   </div>
 </section>
 <div style="width:800px; float:left; margin-left: 20px;">

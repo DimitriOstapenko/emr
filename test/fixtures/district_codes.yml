@@ -3,7 +3,7 @@
 one:
   code: MyString
   place: MyString
-  type: 
+  dtype: 'one'
   m_or_t: MyString
   county: MyString
   lhin: MyString
@@ -11,7 +11,7 @@ one:
 two:
   code: MyString
   place: MyString
-  type: 
+  dtype: 'two'
   m_or_t: MyString
   county: MyString
   lhin: MyString

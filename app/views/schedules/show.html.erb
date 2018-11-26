@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Doctor:</strong>
+  <%= @schedule.doctor_id %>
+</p>
+
+<p>
+  <strong>Dow:</strong>
+  <%= @schedule.dow %>
+</p>
+
+<p>
+  <strong>Weeks:</strong>
+  <%= @schedule.weeks %>
+</p>
+
+<p>
+  <strong>Start time:</strong>
+  <%= @schedule.start_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @schedule.end_time %>
+</p>
+
+<%= link_to 'Edit', edit_schedule_path(@schedule) %> |
+<%= link_to 'Back', schedules_path %>

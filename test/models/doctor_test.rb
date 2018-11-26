@@ -5,10 +5,6 @@ class DoctorTest < ActiveSupport::TestCase
     @doc = Doctor.new( lname: "Last",
                        fname: "First",
 		       cpso_num: 12345,
-		       billing_num: 234567,
-		       service: 'GENP',
-		       ph_type: 'GP',
-		       district: 'G',
 		       bills: true,
 		       address: "1 John st",
 		       city: 'Hamilton',
@@ -23,7 +19,11 @@ class DoctorTest < ActiveSupport::TestCase
 		       group_no: "1234",
 		       specialty: '00',
 		       email: 'doc@doc.com',
-		       doc_code: 'l&'
+		       fax: '999-888-9999',
+		       wsib_num: 12345,
+		       district: 101,
+		       percent_deduction: 30,
+		       accepts_new_patients: true
                       )
   end
 

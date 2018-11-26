@@ -1,0 +1,17 @@
+<%
+   provide(:title, 'Show Schedule')
+   provide(:button_text, 'Save changes')
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel">Schedule for Dr.<%= @schedule.doctor.lname %></b>
+</div>
+<div class="modal-body">
+       <%= render 'form', noedit: true %>
+</div>
+
+<div class="modal-footer">
+</div>
+
+

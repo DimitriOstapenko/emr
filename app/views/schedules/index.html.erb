@@ -1,0 +1,49 @@
+<% provide(:title, "Doctor's schedules") %>
+<%= render "shared/modal", size: 'md' %>
+<% remote =  device_is_desktop? %>
+
+<div class="col-sm-6 col-sm-offset-3">
+<h3 class="display-1">Doctor's Schedules</h3>
+<table class="tbl2 table-hover table-striped table-bordered" >
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Doctor</th>
+      <th>From</th>
+      <th>To</th>
+      <th>Weeks</th>
+      <% unless current_user.doctor? %>
+      <th colspan="2"></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= Date::DAYNAMES[schedule.dow] %></td>
+        <td><%= schedule.doctor.lname %></td>
+        <td><%= schedule.start_time.strftime("%l:%M%p") %></td>
+        <td><%= schedule.end_time.strftime("%l:%M%p") %></td>
+        <td><%= schedule.weeks %></td>
+	<% unless current_user.doctor? %>
+	<td>
+          <% if remote %>
+            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+          <% else %>
+            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule) %>
+          <% end %>
+         </td>
+	<td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, schedule,
+		method: :delete, data: { confirm: "Are you sure you want to delete schedule for Dr. #{schedule.doctor.full_name} ?" } %>
+	</td>
+      <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% unless current_user.doctor? %>
+<%= button_to "Add New Schedule", new_schedule_path, class: "btn btn-primary", method: :get %>
+<% end %>
+</div>
+

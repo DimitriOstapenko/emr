@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_17_201806) do
+ActiveRecord::Schema.define(version: 2018_11_25_194458) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -420,6 +420,16 @@ ActiveRecord::Schema.define(version: 2018_11_17_201806) do
     t.date "sdate"
     t.date "edate"
     t.integer "timeframe"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.integer "doctor_id"
+    t.integer "dow"
+    t.time "start_time"
+    t.time "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "weeks"
   end
 
   create_table "services", force: :cascade do |t|

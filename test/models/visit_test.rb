@@ -59,7 +59,7 @@ class VisitTest < ActiveSupport::TestCase
   end
 
   test "units should be positive integer" do
-	  @visit.units = 0.5
+    @visit.units = 0.5
     assert_not @visit.valid?
   end
   

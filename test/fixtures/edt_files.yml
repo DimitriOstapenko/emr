@@ -1,9 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  type: 1
-  name: MyString
-  pathname: MyString
+  ftype: 1
+  filename: MyString
   upload_date: 2018-07-05
   lines: 1
   provider_no: MyString
@@ -11,11 +10,16 @@ one:
   claims: 1
   total_amount: 1.5
   body: MyText
+  seq_no: 1
+  services: 100
+  doctors: 2
+  hcp_svcs: 100
+  rmb_svcs: 2
+  processed: true
 
 two:
-  type: 1
-  name: MyString
-  pathname: MyString
+  ftype: 1
+  filename: MyString
   upload_date: 2018-07-05
   lines: 1
   provider_no: MyString
@@ -23,3 +27,9 @@ two:
   claims: 1
   total_amount: 1.5
   body: MyText
+  seq_no: 1
+  services: 200
+  doctors: 3
+  hcp_svcs: 101
+  rmb_svcs: 3
+  processed: true

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
+
   get 'password_resets/new'
   get 'password_resets/edit'
 
@@ -137,6 +138,8 @@ Rails.application.routes.draw do
   resources :charts do
      get 'download', on: :member
   end
+  
+  resources :schedules
 
 # resources :billings     # historical billing table - not used
   
