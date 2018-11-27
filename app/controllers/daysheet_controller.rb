@@ -37,7 +37,7 @@ class DaysheetController < ApplicationController
       ifh_str = @ifh_svcs>0 ? ", #{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}" : ''
 
       if @daysheet.any?
-	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction, "entry_ts desc").paginate(page: params[:page])
 	 flash.now[:info] = "#{flashmsg}#{ins_str}#{csh_str}#{ifh_str}"
       else  
 	 flash.now[:info] = 'No visits were found for ' + @date.strftime("%B %d, %Y") 
