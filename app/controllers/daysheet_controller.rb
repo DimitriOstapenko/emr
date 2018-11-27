@@ -11,7 +11,7 @@ class DaysheetController < ApplicationController
       if @date.present?
         @daysheet = Visit.where("date(entry_ts) = ?", @date) 
       else 
-	@daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
+        @daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
 	@date = Date.today
       end
       
@@ -48,11 +48,11 @@ class DaysheetController < ApplicationController
   private
 
   def sort_column
-          Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
+          Visit.column_names.include?(params[:sort]) ? params[:sort] : "status"
   end
 
   def sort_direction
-          %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

@@ -19,7 +19,7 @@
   </div>
   
   <div class="col-sm-2">
-	  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required', label: 'Pmt Type', include_blank: false,
+	  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required', label: 'Type', include_blank: false,
 	      label_html: { "data-toggle": 'tooltip', class: "has-tip", 
               title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}
   %>
