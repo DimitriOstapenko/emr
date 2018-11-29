@@ -21,7 +21,7 @@ class FormsController < ApplicationController
     respond_to do |format|
       format.html { 
         send_file(@form.filespec,
-             filename: @form.filename,
+             filename: @form.form_identifier,
              type: "application/pdf",
              disposition: :inline) 
       }
@@ -34,17 +34,18 @@ class FormsController < ApplicationController
 
    if File.exists?(@form.filespec)
           send_file @form.filespec,
-             filename: @form.filename,
+             filename: @form.form_identifier,
              type: "application/pdf",
              disposition: :attachment
    else
-     flash.now[:danger] = "File #{@form.filename} was not found "
+     flash.now[:danger] = "File #{@form.form_identifier} was not found "
      redirect_to forms_path
    end
   end
 
   def new
     @form = Form.new
+    @form.eff_date = Date.today
   end
 
   def create
@@ -92,7 +93,7 @@ class FormsController < ApplicationController
 
 private 
   def form_params
-      params.require(:form).permit(:name, :descr, :ftype, :filename, :format, :eff_date, :fillable)
+      params.require(:form).permit(:name, :descr, :ftype, :filename, :format, :eff_date, :fillable, :form)
                                             
   end
 

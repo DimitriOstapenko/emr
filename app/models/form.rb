@@ -3,6 +3,12 @@ class Form < ApplicationRecord
 	before_validation { filename.strip! rescue '' }
 	attr_accessor :ftype_str, :format_str, :filespec
 
+	mount_uploader :form, FormUploader
+
+	validates :name, presence: true
+#	validates :filename, presence: true
+	validates :ftype, presence: true
+
 def ftype_str
 	FORM_TYPES.invert[ftype].to_s rescue nil
 end
@@ -12,7 +18,7 @@ def format_str
 end
 
 def filespec
-	FORMS_PATH.join(filename) rescue nil
+    self.form.current_path	
 end
 
 def fillable_str

@@ -1,4 +1,4 @@
-class DocumentUploader < CarrierWave::Uploader::Base
+class FormUploader < CarrierWave::Uploader::Base
 
 
   # Include RMagick or MiniMagick support:
@@ -45,7 +45,7 @@ class DocumentUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
    def extension_whitelist
-     %w(pdf jpg)
+     %w(pdf)
    end
 
   # Override the filename of the uploaded files:

@@ -1,6 +1,8 @@
 <div class="well">
 <%= simple_form_for @form do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+	<%= render 'shared/error_messages', object: f.object %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
 <!-- Row 1 -->
 <div class="row">
@@ -17,8 +19,7 @@
   </div>
   
   <div class="col-sm-2">
-	  <%= f.label :'Fillable?' %>
-          <%= f.check_box :fillable %>
+	  <%= f.input :fillable, collection: [['No', 'false'], ['Yes', 'true']], include_blank: false %> </td>
   </div>
 </div>
 
@@ -36,8 +37,8 @@
           <%= f.input :eff_date, label: 'Effective Date', html5: true %>
   </div>
   
-  <div class="col-sm-6">
-          <%= f.input :filename %>
+  <div class="col-sm-6"> 
+     <%= f.input :form, label: "Upload New Form", hint: "current: #{@form.form_identifier}" %> 
   </div>
 
 </div>

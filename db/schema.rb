@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_25_194458) do
+ActiveRecord::Schema.define(version: 2018_11_29_150615) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 2018_11_25_194458) do
     t.boolean "fillable"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "form"
   end
 
   create_table "invoices", force: :cascade do |t|

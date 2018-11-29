@@ -36,7 +36,7 @@
   	</div>
      <% end %>
      <% if current_user.admin? && action_name == 'edit' %>
-   	<div class="col-sm-6">
+   	<div class="col-sm-4">
 	  <%= f.input :billing_ref %>
   	</div>
     <% end %>
@@ -154,7 +154,7 @@
   </div>
 </div>
 
-<!-- Row 6: upload docs -->
+<!-- Row 6: uploaded docs -->
 <!--
 <div class="row">
   <div class="col-sm-12"> 
@@ -175,7 +175,7 @@
 
 <div class="row">
   <div class="col-sm-12"> 
-    <%= f.input :document, label: 'Upload Attachment'  %>
+    <%= f.input :document, label: 'Upload Attachment (pdf/jpg)'  %>
   </div>
 </div>
 

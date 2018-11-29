@@ -11,10 +11,8 @@
 	  <th>Format</th>
 	  <th>Fillable?</th>
 	  <th></th>
-	  <% unless current_user.doctor? %>
-	    <th></th>
-	  <% end %>
 	  <% if current_user.admin?  %>
+	    <th></th>
 	    <th></th>
           <% end %>  
       </tr>
