@@ -83,6 +83,11 @@ class Visit < ApplicationRecord
     bil_types('').index(CASH_BILLING.to_s) == 0
   end
 
+# Patient with the doctor?
+  def with_doctor?
+    status == WITH_DOCTOR
+  end  
+
 # Is visit ready to bill?
   def ready_to_bill?
     status == READY

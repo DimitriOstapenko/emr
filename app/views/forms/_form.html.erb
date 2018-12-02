@@ -1,5 +1,5 @@
      <tr>
-        <% if form.filespec.present? && File.exists?(form.filespec) && device_is_desktop? %>
+        <% if form.filespec.present? && device_is_desktop? %>
           <td><%= link_to form.name, form, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
         <% else %>
           <td><%= form.name %></td>
@@ -9,7 +9,11 @@
 	<td><%= form.filename %></td> 
 	<td><%= form.format_str %></td>
 	<td><%= form.fillable_str %></td>
-	<td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_form_path(form) %></td> 
+	<td>
+        <% if form.filespec.present?  %>
+	  <%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_form_path(form) %>
+	<% end %>
+	</td>
 	<% if current_user.admin?  %>
 	  <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_form_path(form) %></td>
   	  <td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, form, method: :delete, data: { confirm: "Are you sure you want to delete #{form.name}?" } %></td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_29_150615) do
+ActiveRecord::Schema.define(version: 2018_12_01_205542) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -533,6 +533,7 @@ ActiveRecord::Schema.define(version: 2018_11_29_150615) do
     t.integer "claim_id"
     t.string "billing_ref"
     t.string "document"
+    t.integer "room", default: 0
     t.index ["entry_ts"], name: "index_visits_on_entry_ts"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"

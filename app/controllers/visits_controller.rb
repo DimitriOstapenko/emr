@@ -61,6 +61,15 @@ end
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
+      if @visit.status < READY
+        room = params[:visit][:room].to_i
+        if room > 0 
+           @visit.status =  WITH_DOCTOR 
+        else 
+           @visit.status =  ARRIVED
+	   @visit.room = 0
+        end
+      end
       
       set_visit_fees( @visit )
       @visit.save
@@ -184,7 +193,7 @@ end
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
-				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref, :document )
+				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref, :document, :room )
     end      
 
     def set_visit_fees ( visit )

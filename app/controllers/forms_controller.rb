@@ -1,5 +1,5 @@
 class FormsController < ApplicationController
-
+        before_action :set_form, only: [:show, :edit, :update, :download, :destroy]
         helper_method :sort_column, :sort_direction
 
         before_action :logged_in_user
@@ -15,13 +15,10 @@ class FormsController < ApplicationController
   end
 
   def show
-    @form = Form.find(params[:id])
-    redirect_to forms_path unless @form && File.exists?(@form.filespec)
-
     respond_to do |format|
       format.html { 
         send_file(@form.filespec,
-             filename: @form.form_identifier,
+             filename: @form.filename,
              type: "application/pdf",
              disposition: :inline) 
       }
@@ -30,17 +27,10 @@ class FormsController < ApplicationController
   end
 
   def download
-   @form = Form.find( params[:id] )
-
-   if File.exists?(@form.filespec)
-          send_file @form.filespec,
-             filename: @form.form_identifier,
-             type: "application/pdf",
-             disposition: :attachment
-   else
-     flash.now[:danger] = "File #{@form.form_identifier} was not found "
-     redirect_to forms_path
-   end
+    send_file @form.filespec,
+      filename: @form.form_identifier,
+      type: "application/pdf",
+      disposition: :attachment
   end
 
   def new
@@ -59,17 +49,15 @@ class FormsController < ApplicationController
   end
 
   def destroy
-    Form.find(params[:id]).destroy
+    @form.destroy
     flash[:success] = "Form deleted"
     redirect_to forms_url
   end
 
-   def edit
-    @form = Form.find(params[:id])
+  def edit
   end
  
   def update
-    @form = Form.find(params[:id])
     if @form.update_attributes(form_params)
       flash[:success] = "Form updated"
       redirect_to forms_path
@@ -94,7 +82,11 @@ class FormsController < ApplicationController
 private 
   def form_params
       params.require(:form).permit(:name, :descr, :ftype, :filename, :format, :eff_date, :fillable, :form)
-                                            
+  end
+
+  def set_form
+    @form = Form.find(params[:id])
+    redirect_to forms_path unless @form && @form.filespec 
   end
 
 # Find form by name/description
@@ -109,7 +101,5 @@ private
   def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
-
-
 
 end

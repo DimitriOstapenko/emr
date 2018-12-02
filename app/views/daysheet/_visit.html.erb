@@ -1,8 +1,11 @@
 <% pat = Patient.find(visit.patient_id) rescue nil %>
 <% remote = device_is_desktop? %>
+<%= simple_form_for [pat,visit] do |f| %>
 <tr>
 	<td>
 	<% if visit.ready_to_bill? %>
+	   <i class="glyphicon glyphicon-ok-sign text-muted"></i>
+        <% elsif visit.with_doctor? %>
 	   <i class="glyphicon glyphicon-ok-sign text-primary"></i>
 	<% elsif visit.billed_or_paid? %>
 	   <i class="glyphicon glyphicon-ok-sign text-success"></i>
@@ -17,6 +20,12 @@
          <% else %>
             <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
          <% end %>
+
+	 <td>
+	 <% if visit.status < READY %>
+	 <%= f.select :room, {'W'=>0,1=>1,2=>2,3=>3,4=>4,5=>5}, options={}, html_options = {onchange: 'this.form.submit();', style: "height: 20px; width:40px;"} %>
+	 <% end %> 
+	 </td>
 
 	<td><%= visit.doctor.lname %></td>
 	<td><%= link_to pat.full_name, pat %></td>
@@ -60,3 +69,4 @@
 	    <td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
         <% end %>
 </tr>
+<% end %>
