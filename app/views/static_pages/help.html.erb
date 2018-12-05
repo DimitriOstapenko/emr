@@ -1,14 +1,89 @@
 <% provide(:title, 'Help') %>
 
-<h1>Help Section - Staff User Level</h1>
+<!-- Prevent refresh -->
+<body data-turbolinks="false">
+
+<div class="help-container">
+<div class='header'>Help Section</div>
+<div class="updated">Updated by: Dmitri Ostapenko, Dec 4, 2018</div>
+
+<div style="width: 100%; overflow: hidden;">
+<div style="width: 300px; float: left;"> 
+<a id="table_of_contents"></a>
+<h3>Table of contents</h3>
+<li> <%= link_to "Introduction", "#introduction" %> </li>
+<li> <%= link_to "User Categories", "#user_categories" %> </li>
+<li> <%= link_to "Navigation and Search", "#navigation" %> </li>
+<li> <%= link_to "Menu Descriptions", "#menu_descriptions" %> </li>
+<ol>
+<li><a href="#patients">Patients</a></li>
+<li><a href="#day_sheet">Day Sheet</li>
+<li><a href="#billing">Billing</a></li>
+<ol>
+<li><a href="#daily_billing">Daily Billing</li>
+<li><a href="#paid_claims">Paid Claims</li>
+<li><a href="#paystubs">Doctors Pay Stubs</li>
+<li><a href="#ra_messages">MHO RA Messages</li>
+</ol>
+<li><a href="#docs">Documents</a></li>
+<ol>
+<li><a href="#reports">Reports</li>
+<li><a href="#invoices">Invoices</li>
+<li><a href="#letters">Letters</li>
+<li><a href="#referrals">Referrals</li>
+<li><a href="#day_charts">Day Charts</li>
+<li><a href="#patient_charts">Patient Charts</li>
+</ol>
+<li><a href= "#ref" %>Reference</a></li>
+<ol>
+<li><a href="#procedures">Procedures</li>
+<li><a href="#diagnoses">Diagnoses</li>
+<li><a href="#ins_providers">Insurance Providers</li>
+<li><a href="#medications">Medications</li>
+<li><a href="#vaccines">Vaccines</li>
+<li><a href="#doctors">Doctors</li>
+<li><a href="#schedules">Schedules</li>
+</ol>
+<li><a href= "#forms" %>Forms</a></li>
+<ol>
+<li><a href="#all_forms">All Forms</li>
+<li><a href="#wcb_forms">WCB Forms</li>
+<li><a href="#lab_forms">Lab Forms</li>
+<li><a href="#mto_forms">MTO Forms</li>
+<li><a href="#clinic_forms">Clinic Forms</li>
+</ol>
+</div>
+<div style="float:right; margin-top:180px; margin-right: 150px;"> 
+	<center><img src="/images/help/daysheet.png" width=800></center>
+</div>
+</div>
+     
+
 
 <p>&nbsp;</p>
-<a name="user_categories">
-	<h3>User Categories</h3>
-</a>
+<a id="introduction"></a>
+<h3>Introduction</h3>	
+
+<p>&nbsp;</p>
+This Help File describes functionality of Walk-In EMR at the staff user level. Similar documents for administrative and doctor pages are available on request.
+Walk-In EMR (EMR from now on for short) is patient management system developed for busy walk-in clinic setting using Ruby On Rails with Postgres back end. 
+The system is easily customizable and can be changed to suit other environments, including hospital and family practice.
+Although the goal of the system is paperless office, it can handle any combination of paper/digital workflows. Most documents are generated in industry standard PDF format.
+Simplicity is the ultimate priority of the EMR. All menus and pages are laid out in consitent and predictable way and are functionally familiar to allow for intuitive use and minimal downtime associated with learning.
+In fact most pages are self-explanatory and require no additional learning. Staff that had previous expierience with any EMR should be able to start using the system productively from day 1. 
+
+<p>&nbsp;</p>
+<a id="navigation"></a>
+<h3>Navigation and Search</h3>
+All menus are located in navigation bar, most of them are Drop-Downs. Depending on the menu in use navigation bar will also have search box or date control. Day Sheet and Daily Billing pages use date control, the rest of the menus will have search box. There's also [Set Doctor] Drop-Down that lets you select the doctor for the shift.  Current doctor is sticky until changed. New visits will have this doctor preselected. Searches are page-sensitive.
+For example, Patients page allows to search patients by Last Name, Date of Birth or Health number. To navigate between pages, there's page control at the bottom of the screen.
+
+<p>&nbsp;</p>
+<a id="user_categories"></a>
+<h3>User Categories</h3>
 
 <p>
-EMR supports 3 user levels: 
+EMR supports 3 user categories: 
 <dt class="col-sm-1">Staff User </dt><dd class="col-sm-11">Reserved to clinic staff, this user class has most privileges as far as creating, viewing and editing data, but cannot perform destructive actions and administrative functions. </dd></dt>
 
 <p>&nbsp;</p>
@@ -26,28 +101,24 @@ EMR supports 3 user levels:
   <div class="panel-body">
 User class is assigned by administrator during user setup which works as follows: administrator creates user by registering name and email and assigning user class. After this information is saved into database, confirmation email is sent automatically to the newly registered user. This email contains activation link. By clicking this link the user is taken to their profile page, where they can assign new password only known to them. After this step new user can log into system remotely from any desktop or mobile device and have access to all pages of their user class. Forgotten password is emaild to user's registered email on request.  
 
-This Help File describes functionality of Walk-In EMR at the staff user level. There is similar description for administrative and doctor pages
 </div>
 </div>
 </div>
 </div>
 
 <p>&nbsp;</p>
-<a name="menu_descriptions">
-	<h3>Menu Descriptions</h3>
-</a>
+<a id="menu_descriptions"></a>
+<h3>Menu Descriptions</h3>
 
 <!-- Patients menu -->
-  <a name="patients">
-    <dt class="col-sm-1">Patients</dt>
-  </a>
+<a id="patients"></a>
+<dt class="col-sm-1">Patients</dt>
 
   <dd class="col-sm-11">This page shows the registry of all patients in the database. Name column is linked to patient profile. Patient's address label can be shown by clicking on envelope icon <i class="glyphicon glyphicon-envelope"></i>. Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you directly to  <%= link_to "edit patient form", "#patient_form" %>. Search box in context of Patients page supports searches by Last Name,[first Name], Date Of Birth and Health Card Number</dd>
   
   <p> &nbsp; </p>
-  <a name="day_sheet">
-    <dt class="col-sm-1">Day Sheet</dt>
-  </a>
+  <a id="day_sheet"></a>
+  <dt class="col-sm-1">Day Sheet</dt>
   <dd class="col-sm-11">This page contains visits for a given date, current date by default, along with some of the most important visit attributes. 
   First colum shows visit status icon. Time column is linked to <%= link_to 'visit summary page', "#visit_summary_page" %>. 
   Patient type can be 'O': OHIP, 'R': RMB, 'W':WCB, 'I': IFH, 'S': Self Paid or 'D': Deceased. 
@@ -59,23 +130,26 @@ This Help File describes functionality of Walk-In EMR at the staff user level. T
   
 <!-- Billing  menu -->
   <p> &nbsp; </p>
-  <a name="billing">
+  <a id="billing"></a>
     <dt class="col-sm-1">Billing</dt>
-  </a>
  <dd class="col-sm-11"> 
  Billing Drop-Down menu consists of 4 submenus:
  <p>&nbsp;</p>
  <dl class="row">
+	 <a id="daily_billing"></a>
 	 <dt class="col-sm-1">Daily Billing:</dt>
 	   <dd class="col-sm-11">List of visits which have "Ready to Bill", "Billed" or "Paid" status. By default, any previously unbilled visit, not just visits for this day, will appear in this list </dd>
  <p>&nbsp;</p>
+ 	 <a id="paid_claims"></a>
 	 <dt class="col-sm-1">Paid Claims</dt>
 	   <dd class="col-sm-11">Each month MHO produces payment (Remmittance Advice) file showing each claim for each doctor with relevant identification parameters, service codes and amounts submitted and paid. This submenu shows the list of claims for all doctors in chronological order. Each claim can be further described by clicking on Claim# link in the first column. Also, each claim is referenced to EMR visit id, so by clicking visit link (last column) you can go directly to the <%= link_to 'visit summary page', "#visit_summary_page" %>. Search box supports searches by Claim number, Accounting Number or Health Card Number.  Two filters at the top of the page allow to limit the list to specific doctor and to show the only claims that were adjusted by MHO up or down. </dd>
  <p>&nbsp;</p>
+ 	 <a id="paystubs"></a>
 	 <dt class="col-sm-1">Pay Stubs</dt>
 	 <dd class="col-sm-11"> This section is used to generate Pay Stubs for each doctor after RA file for previous month is imported into the EMR and reconciled vith the visits by utility scripts. If data for previous month was not yet imported, appropriate warning message will be issued and <Create New Paystub> button will not appear at the bottom of the page. Otherwise, user can create paystub by clicking this button and filling out the form. Fields to be filled are: Doctor, Monthly Premium (From RA File), IFH, Cash, WCB payments received by the doctor, as well as HC Deposit received, if any, and MHO deduction used by the ministry (RA file). Once all this information is entered, click on <Generate Paystub> button and pdf file for the selected doctor will be generated and saved in the system. This file contains visit details, amounts submitted and paid and totals for the paycheck.  
 	 </dd>
  <p>&nbsp;</p>
+ 	<a id="ra_messages"></a>
 	 <dt class="col-sm-1">MHO RA Messages</dt>
 	   <dd class="col-sm-11">This section contains claims summary headers from MHO RA files.  </dd>
  </dl>
@@ -83,18 +157,19 @@ This Help File describes functionality of Walk-In EMR at the staff user level. T
 
  <!-- Docs menu -->
   <p> &nbsp; </p>
-  <a name="Docs">
-    <dt class="col-sm-1">Docs (Documents)</dt>
-  </a>
+  <a id="docs"></a>
+    <dt class="col-sm-1">Documents (Docs)</dt>
  <dd class="col-sm-11">
  Docs Drop-Down menu contains 6 submenus:
  <p>&nbsp;</p>
  <dl class="row">
+	 <a id="reports"></a>
          <dt class="col-sm-1">Reports:</dt>
 	 <dd class="col-sm-11">This section allows to create various payment reports for the doctors working in the clinic. There are 2 types of reports: Submitted Claims Reports and Paid Claims Reports. User can chose timeframe for each category, but Paid Claims reports can only be generated for selected billing cycle, while Submitted Claims reports can use Day, Month, Range, Year or Billing Cycle as a timeframe. </dd>
 <p>&nbsp;</p>
           <center><img src="/images/help/create_report_form.png" width=500></center>
 
+	 <a id="invoices"></a>
     	<dt class="col-sm-1">Invoices</dt>
 	<dd>Invoices are created for patients/services not covered by OHIP. Invoices are attributes of patients and are accessible from <%= link_to "patient summary page", "#patient_summary_form" %> </dd>
  <p>&nbsp;</p>
@@ -103,6 +178,7 @@ This Help File describes functionality of Walk-In EMR at the staff user level. T
 	  Invoices menu lets you manage all invoices in one place. As usual, there are links to show, download and edit each invoice as well as search context-sensitive control in navigation bar to search for invoice by Patient name, insurer or description substring.
 
  <p>&nbsp;</p>
+	 <a id="letters"></a>
     	<dt class="col-sm-1">Letters</dt>
 	<dd>Letters are form-driven PDF documents generated on the fly. Just like invoices, Letters are associated with patient record and can be generated from <%= link_to "patient summary page", "#patient_summary_form" %> </dd>
  <p>&nbsp;</p>
@@ -111,14 +187,17 @@ This Help File describes functionality of Walk-In EMR at the staff user level. T
  Letters submenu gives you access to management page where you can view, download or edit letters.
 
  <p>&nbsp;</p>
+	 <a id="referrals"></a>
     	<dt class="col-sm-1">Referrals</dt>
 	<dd>This submenu functions similar to Invoces and letters and is used to manage all doctor referrals in one place. As usual, you have access to viewing, editing or downloading selected document.</dd>
  <p>&nbsp;</p>
           <center><img src="/images/help/referral_form.png" width=500></center>
  <p>&nbsp;</p>
+	 <a id="day_charts"></a>
     	<dt class="col-sm-1">Day Charts</dt>
 	<dd>Day chart is a collection of patient <%= link_to "visit forms", "#visit_form" %> for a given date.</dd>
  <p>&nbsp;</p>
+	 <a id="patient_charts"></a>
     	<dt class="col-sm-1">Patient Charts</dt>
 	<dd>Patients who have one of the doctors working in a clinic as family doctor are called "Clinic Patient" and have chart with history of all their visits to the clinic. Charts submenu gives access to management page for these charts  </dd>
  </dl>
@@ -126,31 +205,37 @@ This Help File describes functionality of Walk-In EMR at the staff user level. T
 
  <!-- Ref  menu -->
   <p> &nbsp; </p>
-  <a name="Docs">
-    <dt class="col-sm-1">Ref (Reference)</dt>
-  </a>
+  <a id="ref"></a>
+    <dt class="col-sm-1">Reference (Ref)</dt>
  <dd class="col-sm-11">
 There are 7 submenus in this Drop-Down: 
  <p>&nbsp;</p>
  <dl class="row">
+	 <a id="procedures"></a>
          <dt class="col-sm-1">Procedures (Services):</dt>
 	 <dd class="col-sm-11">Pages in this submenu allow clinic staff to manage services used by the system. There are 2 types of services: insured and non-insured. Insured services require valid service code. Non-insured services can have any unique code assigned to them. There's also description and fee associated with each service. "Active" attribute is used to control which services will show in drop down boxes during visit processing.  </dd>
  <p>&nbsp;</p>
+	 <a id="diagnoses"></a>
     	<dt class="col-sm-1">Diagnoses</dt>
 	<dd>This submenu is used to manage Diagnosis known to the system.</dd>
  <p>&nbsp;</p>
+	 <a id="ins_providers"></a>
     	<dt class="col-sm-1">Insurance Providers</dt>
 	<dd>Pages in this submenu are used to manage insurance providers and law offices known to the system. This information is used form invoice generation.</dd>
  <p>&nbsp;</p>
+	 <a id="medications"></a>
     	<dt class="col-sm-1">Medications</dt>
 	<dd>Extensive list of known medications with description, dosage, format and other attributes is managed by this section of the system</dd>
  <p>&nbsp;</p>
+	 <a id="vaccines"></a>
     	<dt class="col-sm-1">Vaccines</dt>
 	<dd>List of vaccines known to the system</dd>
  <p>&nbsp;</p>
+	 <a id="doctors"></a>
     	<dt class="col-sm-1">Doctors</dt>
 	<dd>List of local doctors with their addresses, phone numbers, locality, specialty and many other attributes. There's 2 categories of doctors: doctors working in the clinic and all the rest.  Billing information for all doctors working in the clinic must be entered into the system during initial setup. Contact information for all other doctors is used to generate refarrals, write letters etc. </dd>
  <p>&nbsp;</p>
+	 <a id="schedules"></a>
     	<dt class="col-sm-1">Schedules</dt>
 	<dd>This section of the system is used to generate doctor's schedule and save it into database. Information about each doctor's schedule is then used on public page to show doctor currently on duty and opening/closing times. </dd>
  </dl>
@@ -158,7 +243,7 @@ There are 7 submenus in this Drop-Down:
 
   <!-- Forms  menu -->
   <p> &nbsp; </p>
-  <a name="Docs">
+  <a id="forms"></a>
     <dt class="col-sm-1">Forms</dt>
   </a>
  <dd class="col-sm-11">
@@ -184,9 +269,8 @@ This last menu groups various forms and has 5 submenus:
 
  <!-- Forms reference -->
   <p> &nbsp; </p>
-  <a name="patient_form">
+  <a id="patient_form"></a>
     <dt class="col-sm-1">Patient Form</dt>
-  </a>
   <dd class="col-sm-11">This form is used to create new patient or edit existing patient's record. Most fields are self-explanatory, required fields are marked as such under input control. Mouse over question mark icon will give you additional information about the field. Some fields require additional information on how to use them and here it is:
   <dl class="row">
 
@@ -207,33 +291,31 @@ This last menu groups various forms and has 5 submenus:
   <center><img src="/images/help/patient_form.png" width=800></center>
 
   <p> &nbsp; </p>
-  <a name="visit_summary_page">
+  <a id="visit_summary_page"></a>
     <dt class="col-sm-1">Visit Summary Page</dt>
-  </a>
   <dd class="col-sm-11">Shows visit summary: Status, doctor, services performed, documents uploaded, timestamp of the visit .</dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/visit_summary.png" width=900></center>
  
   <p> &nbsp; </p>
-  <a name="edit_visit_form">
+  <a id="edit_visit_form"></a>
     <dt class="col-sm-1">Visit Form</dt>
-  </a>
   <dd class="col-sm-11">This form is used to create new visit or modify an existing one</dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/edit_visit_form.png" width=700></center>
 
   <p> &nbsp; </p>
-  <a name="patient_summary_form">
+  <a id="patient_summary_form"></a>
     <dt class="col-sm-1">Patient Summary Form</dt>
-  </a>
   <dd class="col-sm-11">Shows patient demographics info as well as history of visits in chronological order. Has 6 context-specific buttons</dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/patient_summary.png" width=900></center>
 
   <p> &nbsp; </p>
-  <a name="visit_form">
+  <a id="visit_form"></a>
     <dt class="col-sm-1">Visit Form</dt>
-  </a>
   <dd class="col-sm-11">This form is generated for each unique visit of the patient to the clinic </dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/visit_form.png" width=500></center>
+</div>
+

@@ -23,7 +23,7 @@
 
 	 <td>
 	 <% if visit.status < READY %>
-	 <%= f.select :room, {'W'=>0,1=>1,2=>2,3=>3,4=>4,5=>5}, options={}, html_options = {onchange: 'this.form.submit();', style: "height: 20px; width:40px;"} %>
+	<%= f.select :room, {'W'=>0,1=>1,2=>2,3=>3,4=>4,5=>5}, options={}, html_options = {onchange: 'this.form.submit();', style: "background-color: #eee; height: 20px; width:42px;"} %>
 	 <% end %> 
 	 </td>
 

@@ -22,14 +22,11 @@
 	<td><%= doctor.lname %> </td>
 	<td><%= link_to patient.full_name, patient %> </td>
 	<td><%= patient.pat_type %></td>
-	<% if patient.pat_type == IFH_PATIENT %>
-	<td><b><%= patient.ifh_number %></b></td>
-	<% else %>
-	<td><%= patient.ohip_num_full %></td>
-	<% end %>	
 	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= visit.total_insured_services %></td>
+	<td><%= sprintf("%.2f",visit.total_insured_fees) %></td>
+	<td><%= sprintf("%.2f",visit.total_ifh_fees) %></td>
+	<td><%= sprintf("%.2f",visit.total_cash) %></td>
 	<td><%= sprintf("%.2f",visit.total_fee) %></td>
 	<td>
 	<% if visit.status == PAID && visit.claim_id.present? %>

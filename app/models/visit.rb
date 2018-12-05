@@ -177,6 +177,11 @@ class Visit < ApplicationRecord
     services.select{|i| i[:btype] && i[:btype] == IFH_BILLING}.count rescue 0
   end
 
+# Total IFH fees
+  def total_ifh_fees
+    services.select{|i| i[:btype] && i[:btype] == IFH_BILLING}.sum{|s| s[:fee]} rescue 0
+  end
+
 # Total number of WCB services 
   def total_wcb_services
     services.select{|i| i[:btype] && i[:btype] == WCB_BILLING}.count rescue 0
