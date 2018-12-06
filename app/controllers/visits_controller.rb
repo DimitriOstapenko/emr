@@ -26,7 +26,7 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date)
+    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID)
     if visits_that_day.any?
        flash[:warning] = "Only 1 visit is allowed per patient per day"
        redirect_to @patient

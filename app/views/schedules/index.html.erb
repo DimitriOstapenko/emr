@@ -19,27 +19,7 @@
   </thead>
 
   <tbody>
-    <% @schedules.each do |schedule| %>
-      <tr>
-        <td><%= Date::DAYNAMES[schedule.dow] %></td>
-        <td><%= schedule.doctor.lname %></td>
-        <td><%= schedule.start_time.strftime("%l:%M%p") %></td>
-        <td><%= schedule.end_time.strftime("%l:%M%p") %></td>
-        <td><%= schedule.weeks %></td>
-	<% unless current_user.doctor? %>
-	<td>
-          <% if remote %>
-            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
-          <% else %>
-            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule) %>
-          <% end %>
-         </td>
-	<td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, schedule,
-		method: :delete, data: { confirm: "Are you sure you want to delete schedule for Dr. #{schedule.doctor.full_name} ?" } %>
-	</td>
-      <% end %>
-      </tr>
-    <% end %>
+    <%= render @schedules, remote: device_is_desktop? %>
   </tbody>
 </table>
 <% unless current_user.doctor? %>

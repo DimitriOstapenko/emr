@@ -1,15 +1,20 @@
-<% @schedules = Schedule.all %>
-<table class="tbl table-hover table-striped table-bordered" >
-	<caption><h4>Doctor's Schedules</h4></caption>
-  <tbody>
-    <% @schedules.each do |schedule| %>
       <tr>
         <td><%= Date::DAYNAMES[schedule.dow] %></td>
         <td>Dr. <%= schedule.doctor.lname %></td>
         <td><%= schedule.start_time.strftime("%l:%M%p") %></td>
         <td><%= schedule.end_time.strftime("%l:%M%p") %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <td><%= schedule.weeks.present? ? schedule.weeks : 'Every Week' %></td>
+	<% unless current_user.doctor? %>
+	<td>
+          <% if remote %>
+            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+          <% else %>
+            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule) %>
+          <% end %>
+        </td>
 
+	<td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, schedule,
+		method: :delete, data: { confirm: "Are you sure you want to delete schedule for Dr. #{schedule.doctor.full_name} ?" } %>
+	</td>
+        <% end %>
+      </tr>

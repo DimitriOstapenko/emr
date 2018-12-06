@@ -23,31 +23,32 @@ html,body {
 
 p.medium {
 //    padding: .8em 1.0;
-    line-height: 1.4;
+    line-height: 1.4em;
     text-align: justify;
     font: Arial, Helvetica, sans-serif;
 }
 
-.container {
+p {
+    padding: .8em 1.0;
+    line-height: 1.3em;
+    text-align: justify;
+    font: Arial, Helvetica, sans-serif;
+    font-size: 1.0em;
+}
+
+.container, .help-container {
    width:100%;
-   min-height: 100%; //92%;
+   min-height: 94%; //92%;
    height: auto !important; /* Stick footer to bottom in IE6 */
    height: 100%;
-   margin: 0 auto -20px;  /* footer height */
+   margin: 0 auto -30px;  /* footer height */
    padding-left: 5px;
    padding-right: 5px;
-   padding-bottom: 15px;
+   padding-bottom: 30px;
 }
 
 .help-container {
    width: 98%;
-   min-height: 100%; //92%;
-   height: auto !important; /* Stick footer to bottom in IE6 */
-   height: 100%;
-   margin: 0 auto -20px;  /* footer height */
-   padding-left: 5px;
-   padding-right: 5px;
-   padding-bottom: 30px;
 }
 
 table {
@@ -72,7 +73,7 @@ table {
 
 #footer, #pushup {
    height: 30px;
-   padding-left: 15px;
+   padding-left: 5px;
 }
 
 /* navbar */
@@ -146,11 +147,6 @@ h3 {
   font-size: 1.4em;
   margin-bottom: 10px;
   margin-top: 10px;
-}
-
-p {
-  font-size: 1.1em;
-  line-height: 1.7em;
 }
 
 td.hlight {
@@ -684,9 +680,9 @@ card > hr {
   display:block;
   border-bottom:1px solid #dadada;
   color:#000;
-  font-size:1.96em;
-  padding-bottom:.16em;
-  line-height:1.1;
+  font-size:1.75em;
+  padding-top:.5em;
+  line-height:1.5;
 //  font-family:arial,helvetica,sans-serif
 }
 
