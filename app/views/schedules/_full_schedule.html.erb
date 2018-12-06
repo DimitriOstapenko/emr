@@ -1,0 +1,14 @@
+<% @schedules = Schedule.all %>
+<table class="tbl table-hover table-striped table-bordered" >
+	<caption><h4>Doctor's Schedules</h4></caption>
+  <tbody>
+    <% @schedules.each do |schedule| %>
+      <tr>
+        <td><%= Date::DAYNAMES[schedule.dow] %></td>
+        <td>Dr. <%= schedule.doctor.lname %></td>
+        <td><%= schedule.start_time.strftime("%l:%M%p") %></td>
+        <td><%= schedule.end_time.strftime("%l:%M%p") %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

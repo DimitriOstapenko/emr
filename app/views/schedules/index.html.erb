@@ -1,6 +1,5 @@
 <% provide(:title, "Doctor's schedules") %>
 <%= render "shared/modal", size: 'md' %>
-<% remote =  device_is_desktop? %>
 
 <div class="col-sm-6 col-sm-offset-3">
 <h3 class="display-1">Doctor's Schedules</h3>
@@ -17,11 +16,11 @@
       <% end %>
     </tr>
   </thead>
-
   <tbody>
-    <%= render @schedules, remote: device_is_desktop? %>
+    <%= render @schedules, as: :schedule,  remote: device_is_desktop? %>
   </tbody>
 </table>
+
 <% unless current_user.doctor? %>
 <%= button_to "Add New Schedule", new_schedule_path, class: "btn btn-primary", method: :get %>
 <% end %>
