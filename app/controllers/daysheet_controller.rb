@@ -11,7 +11,7 @@ class DaysheetController < ApplicationController
       if @date.present?
         @daysheet = Visit.where("date(entry_ts) = ?", @date) 
       else 
-        @daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
+        @daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,ASSESSED,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
 	@date = Date.today
       end
       

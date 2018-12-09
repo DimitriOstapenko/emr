@@ -4,9 +4,11 @@
 <tr>
 	<td>
 	<% if visit.ready_to_bill? %>
-	   <i class="glyphicon glyphicon-ok-sign text-muted"></i>
-        <% elsif visit.with_doctor? %>
 	   <i class="glyphicon glyphicon-ok-sign text-primary"></i>
+  	<% elsif visit.assessed? %>
+	   <i class="glyphicon glyphicon-question-sign text-info"></i>
+        <% elsif visit.with_doctor? %>
+	   <i class="glyphicon glyphicon-question-sign text-text-muted"></i>
 	<% elsif visit.billed_or_paid? %>
 	   <i class="glyphicon glyphicon-ok-sign text-success"></i>
 	<% elsif visit.has_error? %>
@@ -16,16 +18,16 @@
 	<% end %>
 	</td>
 	<% if visit.date == @date %>
-            <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
-         <% else %>
-            <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
-         <% end %>
+           <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
+        <% else %>
+           <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
+        <% end %>
 
-	 <td>
-	 <% if visit.status < READY %>
-	<%= f.select :room, {'W'=>0,1=>1,2=>2,3=>3,4=>4,5=>5}, options={}, html_options = {onchange: 'this.form.submit();', style: "background-color: #eee; height: 20px; width:42px;"} %>
-	 <% end %> 
-	 </td>
+	<td>
+	<% if visit.status < ASSESSED %>
+	<%= f.select :room, EXAM_ROOMS, options={}, html_options = {onchange: 'this.form.submit();', style: "background-color: #eee; height: 20px; width:42px;"} %>
+	<% end %> 
+	</td>
 
 	<td><%= visit.doctor.lname %></td>
 	<td><%= link_to pat.full_name, pat %></td>

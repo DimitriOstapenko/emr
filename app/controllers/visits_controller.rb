@@ -26,7 +26,7 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID)
+    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID) # Allow double visits for cash services (HC Deposit)
     if visits_that_day.any?
        flash[:warning] = "Only 1 visit is allowed per patient per day"
        redirect_to @patient
@@ -61,13 +61,11 @@ end
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
-      if @visit.status < READY
+      if @visit.status == ARRIVED
         room = params[:visit][:room].to_i
         if room > 0 
            @visit.status =  WITH_DOCTOR 
-        else 
-           @visit.status =  ARRIVED
-	   @visit.room = 0
+	   Visit.where(status: WITH_DOCTOR).where(room: room).update_all("room=0, status=#{ASSESSED}")  
         end
       end
       

@@ -5,7 +5,7 @@
 
 <div class="help-container">
 <div class='header'>Help Section</div>
-<div class="updated">Updated by: Dmitri Ostapenko, Dec 4, 2018</div>
+<div class="updated">Updated by: Dmitri Ostapenko, Dec 8, 2018</div>
 
 <div style="width: 100%; overflow: hidden;">
 <div style="width: 300px; float: left;"> 
@@ -13,6 +13,7 @@
 <h3>Table of contents</h3>
 <li> <%= link_to "Introduction", "#introduction" %> </li>
 <li> <%= link_to "User Categories", "#user_categories" %> </li>
+<li> <%= link_to "Workflow", "#workflow" %> </li>
 <li> <%= link_to "Navigation and Search", "#navigation" %> </li>
 <li> <%= link_to "Menu Descriptions", "#menu_descriptions" %> </li>
 <ol>
@@ -52,13 +53,14 @@
 <li><a href="#mto_forms">MTO Forms</li>
 <li><a href="#clinic_forms">Clinic Forms</li>
 </ol>
+</ol>
+<li><a href="#document_list">List of Generated PDF Documents</li>
 </div>
 <div style="float:right; margin-top:180px; margin-right: 150px;"> 
 	<center><img src="/images/help/daysheet.png" width=800></center>
 </div>
 </div>
      
-
 
 <p>&nbsp;</p>
 <a id="introduction"></a>
@@ -71,12 +73,6 @@ The system is easily customizable and can be changed to suit other environments,
 Although the goal of the system is paperless office, it can handle any combination of paper/digital workflows. Most documents are generated in industry standard PDF format.
 Simplicity is the ultimate priority of the EMR. All menus and pages are laid out in consitent and predictable way and are functionally familiar to allow for intuitive use and minimal downtime associated with learning.
 In fact most pages are self-explanatory and require no additional learning. Staff that had previous expierience with any EMR should be able to start using the system productively from day 1. 
-
-<p>&nbsp;</p>
-<a id="navigation"></a>
-<h3>Navigation and Search</h3>
-All menus are located in navigation bar, most of them are Drop-Downs. Depending on the menu in use navigation bar will also have search box or date control. Day Sheet and Daily Billing pages use date control, the rest of the menus will have search box. There's also [Set Doctor] Drop-Down that lets you select the doctor for the shift.  Current doctor is sticky until changed. New visits will have this doctor preselected. Searches are page-sensitive.
-For example, Patients page allows to search patients by Last Name, Date of Birth or Health number. To navigate between pages, there's page control at the bottom of the screen.
 
 <p>&nbsp;</p>
 <a id="user_categories"></a>
@@ -105,6 +101,26 @@ User class is assigned by administrator during user setup which works as follows
 </div>
 </div>
 </div>
+
+<p>&nbsp;</p>
+<a id="workflow"></a>
+<h3>Workflow</h3>
+<p>
+At the start of the day, after logging in as a staff member, you first have to select the doctor for the shift. Use drop-down menu in the navigation bar for this. Selected doctor will be default in all the new visits until changed for another doctor. When patient comes in, after you slide the card in card reader (this is typically done in Patents or Daysheet page) you will get either <%= link_to "New Patient", "#patient_form" %> screen,  or existing <%= link_to "Patient Profile", "#patient_profile" %> page, depending on wether the patient is already in the system. In patient profile page you can see patient demographics, visit history, health history notes and all related documentaion including invoices, letters and doctor referrals. Visit history on the right shows concise view of which doctor has seen the patient last as well as diagnosis and service codes. Status in the last column will tell you wether associated claim was submitted ("Billed") or processed ("Paid"). All other statuses are used to describe different stages of the claim and are self-explanatory. You can see every visit's details by cliking on the link in the first column. 
+</p>
+<p>
+There's set of buttons under patient demographics panel. To create new visit you would use [New Visit] button, which will take you to <%= link_to "New Visit", "#edit_visit_form" %> page. To edit patient profile you would use [Edit Patient] button. And so on. 
+</p>
+<p> 
+Current day's visits, as well as unbilled visits from previous days will appear in Day Sheet in chronological order withing their status category. Visits marked as 'Arrived' will be listed first, from newest to oldest, then 'Assessed', 'Ready To Bill', 'Billed' and 'Paid'. All unbilled visits from previous days as well as current day's visits are editable, but once the claims are submitted and billing reference is assigned, they become read-only with the only exception: you can always add cash service to the visit, even if it was billed. Cash services are not submitted to OHIP, so this is perfectly fine for cases when patients come back the next day with the cash payment for example.
+</p>
+
+
+<p>&nbsp;</p>
+<a id="navigation"></a>
+<h3>Navigation and Search</h3>
+All menus are located in navigation bar, most of them are Drop-Downs. Depending on the menu in use navigation bar will also have search box or date control. Day Sheet and Daily Billing pages use date control, the rest of the menus will have search box. There's also [Set Doctor] Drop-Down that lets you select the doctor for the shift.  Current doctor is sticky until changed. New visits will have this doctor preselected. Searches are page-sensitive.
+For example, Patients page allows to search patients by Last Name, Date of Birth or Health number. To navigate between pages, there's page control at the bottom of the screen.
 
 <p>&nbsp;</p>
 <a id="menu_descriptions"></a>
@@ -171,7 +187,7 @@ User class is assigned by administrator during user setup which works as follows
 
 	 <a id="invoices"></a>
     	<dt class="col-sm-1">Invoices</dt>
-	<dd>Invoices are created for patients/services not covered by OHIP. Invoices are attributes of patients and are accessible from <%= link_to "patient summary page", "#patient_summary_form" %> </dd>
+	<dd>Invoices are created for patients/services not covered by OHIP. Invoices are attributes of patients and are accessible from <%= link_to "patient summary page", "#patient_profile" %> </dd>
  <p>&nbsp;</p>
           <center><img src="/images/help/invoice_form.png" width=500></center>
  <p>&nbsp;</p>
@@ -180,7 +196,7 @@ User class is assigned by administrator during user setup which works as follows
  <p>&nbsp;</p>
 	 <a id="letters"></a>
     	<dt class="col-sm-1">Letters</dt>
-	<dd>Letters are form-driven PDF documents generated on the fly. Just like invoices, Letters are associated with patient record and can be generated from <%= link_to "patient summary page", "#patient_summary_form" %> </dd>
+	<dd>Letters are form-driven PDF documents generated on the fly. Just like invoices, Letters are associated with patient record and can be generated from <%= link_to "patient summary page", "#patient_profile" %> </dd>
  <p>&nbsp;</p>
           <center><img src="/images/help/letter_form.png" width=500></center>
  <p>&nbsp;</p>
@@ -250,7 +266,7 @@ There are 7 submenus in this Drop-Down:
 This last menu groups various forms and has 5 submenus:
  <p>&nbsp;</p>
  <dl class="row">
-         <dt class="col-sm-1">All Forms:</dt>
+         <dt class="col-sm-1">All Forms</dt>
          <dd class="col-sm-11">Will show all form categories on one page</dd>
  <p>&nbsp;</p>
         <dt class="col-sm-1">WCB Forms</dt>
@@ -266,6 +282,38 @@ This last menu groups various forms and has 5 submenus:
         <dd>Forms specific to the clinic. Any custom PDF forms used in day to day operations of the clinic fall into this category.  </dd>
  </dl>
  </dd>
+
+ <p> &nbsp; </p>
+  <a id="document_list"></a>
+    <dt class="col-sm-1">List Of Generated Documents</dt>
+  </a>
+   <dd class="col-sm-11">
+   WEMR generates many PDF documents on-the fly. From doctor payment reports to prescriptions and referrals, all these documents are menu-driven, they are created in industry standard PDF format and can be printed or saved for future reference. Here's the list of documents generated by the system:
+ <p>&nbsp;</p>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Address Label", "#address_label" %></dt>
+	 <dd class="col-sm-11">Similar to patient label, this standard 29mm x 62mm label has full patient address. To be used on all correspondence related to the patient. 
+	 </dd>
+ </dl>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Letter", "#patient_letter" %></dt>
+	 <dd class="col-sm-11">Letters are generated using <%= link_to "Patient Letter Form", "#patient_letter_form" %> from <%= link_to "Patient Profile", "#patient_profile" %>
+	 </dd>
+ </dl>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Patient Label", "#patient_label" %></dt>
+	 <dd class="col-sm-11">Standard 29mm x 62mm label with patient information. This label is used on Referrals, Letters, Lab Requisitions and other documents requiring patient identification. File number on the label denotes unique patient number and allows to go directly to patient profile using URL like this: "https://walkin.drlena.com/patients/48422" where 48422 is file number from the label.
+	 </dd>
+ </dl>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Visit Form", "#visit_form" %></dt>
+	 <dd class="col-sm-11">This document contains most visit-related data. This form offers transition for clinics switching from traditional paper form setup to modern day all digital EMR. Although it can be generated based solely on data entered in <%= link_to  "edit visit form", "#edit_visit_form" %>, it's also possible to simply write notes on it. This practice is not recommended as it leads to extra work associated with document scanning and legibility problems as well as need for paper documents storage. Documents with hand-written notes are not easily searcheable and so they should be only used in cases when paper copy is required by 3rd party. </dd>
+ </dd>
+ </dl>
 
  <!-- Forms reference -->
   <p> &nbsp; </p>
@@ -305,11 +353,25 @@ This last menu groups various forms and has 5 submenus:
   <center><img src="/images/help/edit_visit_form.png" width=700></center>
 
   <p> &nbsp; </p>
-  <a id="patient_summary_form"></a>
-    <dt class="col-sm-1">Patient Summary Form</dt>
+  <a id="patient_profile"></a>
+    <dt class="col-sm-1">Patient Profile</dt>
   <dd class="col-sm-11">Shows patient demographics info as well as history of visits in chronological order. Has 6 context-specific buttons</dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/patient_summary.png" width=900></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_letter_form"></a>
+    <dt class="col-sm-1">Patient Letter Form</dt>
+    <dd class="col-sm-11">Use this form to generate letters regarding the patient </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_letter_form.png" width=600></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_letter"></a>
+    <dt class="col-sm-1">Patient Letter</dt>
+    <dd class="col-sm-11">Letter generated from the <%= link_to "Patient Letter Form", "#patient_letter_form" %> </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_letter.png" width=600 border=1></center>
 
   <p> &nbsp; </p>
   <a id="visit_form"></a>
@@ -319,3 +381,4 @@ This last menu groups various forms and has 5 submenus:
   <center><img src="/images/help/visit_form.png" width=500></center>
 </div>
 
+&nbsp;

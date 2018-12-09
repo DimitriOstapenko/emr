@@ -10,7 +10,7 @@
   elsif @visit.status == ERROR 
      disabled = ( BILLED..CANCELLED ).to_a
   elsif @visit.billing_ref.present?
-     disabled = [ARRIVED,READY,WITH_DOCTOR,ERROR,CANCELLED]
+     disabled = [ARRIVED,ASSESSED,READY,WITH_DOCTOR,ERROR,CANCELLED]
   elsif @visit.hcp_proc_codes.present? 
     if @insured
        disabled = [BILLED,PAID]
@@ -20,7 +20,7 @@
   elsif @visit.proc_codes.empty?
      disabled = [READY,BILLED,PAID] 
   elsif @visit.cash?
-     disabled = [READY,BILLED]
+     disabled = [ASSESSED,READY,BILLED]
   else 
      disabled = []
   end 
@@ -135,12 +135,15 @@
   <div class="col-sm-2">
   <%= f.input :temp, label: "Temperature" %>
   </div>
+
   <div class="col-sm-2">
   <%= f.input :pulse, label: 'Heart Rate' %>
   </div>
+
   <div class="col-sm-2">
   <%= f.input :bp, as: :string, label:'BP (H/L)' %>
   </div>
+
   <div class="col-sm-2">
   <%= f.input :weight, label: 'Weight (Kg)' %>
   </div>
@@ -294,13 +297,19 @@ function select_statuses( proc, suff ) {
   var v = document.getElementById('visit_statuses').getElementsByTagName("option");
   var insured = <%= @insured %>;
   if (proc.ptype == '2' && suff.length === 0  || !insured) {  // CASH
-        v[2].disabled = true;  // READY
-        v[3].disabled = false; // BILLED
-        v[4].disabled = false; // PAID 
+        v[0].disabled = true;  // ARRIVED
+        v[1].disabled = true;  // WITH_DOCTOR
+        v[2].disabled = true;  // ASSESSED 
+        v[3].disabled = true;  // READY
+        v[4].disabled = false; // BILLED
+        v[5].disabled = false; // PAID 
      }else{
-        v[2].disabled = false;
-        v[3].disabled = true;
+        v[0].disabled = false;  
+        v[1].disabled = false;  
+        v[2].disabled = false;  
+        v[3].disabled = false;
         v[4].disabled = true;
+        v[5].disabled = true;
      }
 }
 

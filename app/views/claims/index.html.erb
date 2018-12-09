@@ -1,5 +1,6 @@
 <% provide(:title, 'All claims') %>
 
+<div class='col-sm-12'>
 <%= form_with url: claims_index_path do |f| %>
   <div class="row form-control"> 
 <% unless current_user.doctor? %>
@@ -23,6 +24,7 @@
     </div>
   </div>
 <% end %>
+</div>
 
 <table class="tbl table-hover"> 
   <thead>

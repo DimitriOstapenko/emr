@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_01_205542) do
+ActiveRecord::Schema.define(version: 2018_12_07_172603) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -390,6 +390,10 @@ ActiveRecord::Schema.define(version: 2018_12_01_205542) do
     t.integer "amount"
     t.string "pay_method"
     t.string "bil_agent"
+    t.integer "claims"
+    t.integer "svcs"
+    t.integer "sum_claimed"
+    t.integer "sum_paid"
     t.index ["date_paid"], name: "index_ra_messages_on_date_paid"
   end
 

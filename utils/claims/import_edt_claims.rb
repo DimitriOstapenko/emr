@@ -170,11 +170,18 @@ content.each do |str|
   end	  
 end
 
-if $ra_msg.update_attribute(:msg_text, $hr8_messages)  
-   puts "messages saved to ra_messages table"
-else
-   puts "error saving messages to ra_messages table"
-end
+# Set the totals for this file:
+   claims = Claim.where("ra_file=?", RA_BASENAME).count
+   svcs = Claim.joins(:services).where("ra_file=?", RA_BASENAME) 
+   services = svcs.count
+   sum_claimed = svcs.pluck('amt_subm').sum
+   sum_paid = svcs.pluck('amt_paid').sum
 
-puts "Imported #{claims} claims, #{services} services"
-puts "Please run process_paid_claims.rb now to fix attributes and find missing claims"
+   if $ra_msg.update_attributes(msg_text: $hr8_messages, claims: claims, svcs: services, sum_claimed: sum_claimed, sum_paid: sum_paid)  
+     puts "ra_messages table updated with new totals"
+   else
+     puts "error saving messages to ra_messages table"
+   end
+
+   puts "Imported #{claims} claims, #{services} services"
+   puts "Please run process_paid_claims.rb now to fix attributes and find missing claims"

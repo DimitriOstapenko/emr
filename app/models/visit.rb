@@ -88,6 +88,12 @@ class Visit < ApplicationRecord
     status == WITH_DOCTOR
   end  
 
+# Patient assessed, but not billed yet?
+  def assessed?
+    status == ASSESSED
+  end  
+
+
 # Is visit ready to bill?
   def ready_to_bill?
     status == READY
@@ -284,7 +290,7 @@ class Visit < ApplicationRecord
 
 # Was visit billed yet?  
   def editable?
-    self.entry_ts.to_date == Date.today || ![BILLED,PAID].include?(self.status)
+	  (self.entry_ts.to_date == Date.today && self.billing_ref.blank?) || ![BILLED,PAID].include?(self.status)
   end
 
 private 
