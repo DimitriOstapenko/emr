@@ -112,6 +112,7 @@ Rails.application.routes.draw do
      get 'download', on: :member
   end
   get 'budget', to: 'paystubs#budget'
+  get 'billed_visits', to: 'billings#billed_visits_this_cycle'
 
   resources :edt_files do
      get 'download', on: :member

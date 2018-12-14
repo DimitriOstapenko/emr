@@ -1,6 +1,6 @@
 class Claim < ApplicationRecord
 	has_many :services, dependent: :destroy, inverse_of: :claim
-	default_scope -> { order(claim_no: :desc) }
+	default_scope -> { joins(:services).reorder('svc_date desc') }
 	attr_accessor :amt_subm, :amt_paid, :damt_subm, :damt_paid, :date, :svcs
 
 # Total claim amount submitted (integer)

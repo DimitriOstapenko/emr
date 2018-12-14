@@ -5,7 +5,7 @@
 
 <div class="help-container">
 <div class='header'>Help Section</div>
-<div class="updated">Updated by: Dmitri Ostapenko, Dec 8, 2018</div>
+<div class="updated">Updated by: Dmitri Ostapenko, Dec 13, 2018</div>
 
 <div style="width: 100%; overflow: hidden;">
 <div style="width: 300px; float: left;"> 
@@ -57,7 +57,7 @@
 <li><a href="#document_list">List of Generated PDF Documents</li>
 </div>
 <div style="float:right; margin-top:180px; margin-right: 150px;"> 
-	<center><img src="/images/help/daysheet.png" width=800></center>
+	<center><img src="/images/help/daysheet.png" width=900></center>
 </div>
 </div>
      
@@ -68,7 +68,7 @@
 
 <p>&nbsp;</p>
 This Help File describes functionality of Walk-In EMR at the staff user level. Similar documents for administrative and doctor pages are available on request.
-Walk-In EMR (EMR from now on for short) is patient management system developed for busy walk-in clinic setting using Ruby On Rails with Postgres back end. 
+Walk-In EMR (WEMR from now on for short) is patient management system developed for busy walk-in clinic setting using Ruby On Rails with Postgres back end. 
 The system is easily customizable and can be changed to suit other environments, including hospital and family practice.
 Although the goal of the system is paperless office, it can handle any combination of paper/digital workflows. Most documents are generated in industry standard PDF format.
 Simplicity is the ultimate priority of the EMR. All menus and pages are laid out in consitent and predictable way and are functionally familiar to allow for intuitive use and minimal downtime associated with learning.
@@ -106,22 +106,38 @@ User class is assigned by administrator during user setup which works as follows
 <a id="workflow"></a>
 <h3>Workflow</h3>
 <p>
-At the start of the day, after logging in as a staff member, you first have to select the doctor for the shift. Use drop-down menu in the navigation bar for this. Selected doctor will be default in all the new visits until changed for another doctor. When patient comes in, after you slide the card in card reader (this is typically done in Patents or Daysheet page) you will get either <%= link_to "New Patient", "#patient_form" %> screen,  or existing <%= link_to "Patient Profile", "#patient_profile" %> page, depending on wether the patient is already in the system. In patient profile page you can see patient demographics, visit history, health history notes and all related documentaion including invoices, letters and doctor referrals. Visit history on the right shows concise view of which doctor has seen the patient last as well as diagnosis and service codes. Status in the last column will tell you wether associated claim was submitted ("Billed") or processed ("Paid"). All other statuses are used to describe different stages of the claim and are self-explanatory. You can see every visit's details by cliking on the link in the first column. 
-</p>
-<p>
-There's set of buttons under patient demographics panel. To create new visit you would use [New Visit] button, which will take you to <%= link_to "New Visit", "#edit_visit_form" %> page. To edit patient profile you would use [Edit Patient] button. And so on. 
-</p>
-<p> 
-Current day's visits, as well as unbilled visits from previous days will appear in Day Sheet in chronological order withing their status category. Visits marked as 'Arrived' will be listed first, from newest to oldest, then 'Assessed', 'Ready To Bill', 'Billed' and 'Paid'. All unbilled visits from previous days as well as current day's visits are editable, but once the claims are submitted and billing reference is assigned, they become read-only with the only exception: you can always add cash service to the visit, even if it was billed. Cash services are not submitted to OHIP, so this is perfectly fine for cases when patients come back the next day with the cash payment for example.
+At the start of the day, after logging in as a staff member, you first have to select the doctor for the shift. Use [Set Doctor] drop-down menu in the navigation bar for this. Selected doctor will become default for all the new visits until changed for another doctor. When patient comes in, after you slide the card in card reader (this is typically done in Patients or Daysheet page) you will get either <%= link_to "New Patient", "#patient_form" %> screen,  or existing <%= link_to "Patient Profile", "#patient_profile" %> page, depending on wether the patient is already in the system or not. 
 </p>
 
+<p>
+In patient profile page you can see patient demographics, visit history, health history notes and all related documentaion including invoices, letters and doctor referrals. Visit history on the right shows concise view of which doctor has seen the patient last as well as diagnosis and service codes. Status in the last column will tell you wether associated claim was submitted ("Billed") or processed ("Paid"). All other statuses are used to describe different stages of the claim and are self-explanatory. You can see every visit's details by cliking on the link in the first column. 
+</p>
+
+<p>
+There's set of buttons under patient demographics panel in patient profile page. To create new visit you would use [New Visit] button, which will take you to <%= link_to "New Visit", "#edit_visit_form" %> page. To edit patient profile you would use [Edit Patient] button. And so on. To create new visit, just click [New Visit] button. You don't have to change anything on the new visit form initialy, although you can change timestamp from default to some point in the pass for occasionaly missed visits. This is an exception rather than the rule however. You can specify reason for the visit at this point, but the rest can be filled later, when more information is available.  
+</p>
+
+<p> 
+Current day's visits, as well as unbilled visits from previous days, will appear in Day Sheet in chronological order withing their status category. This means that visits marked as 'Arrived' will be listed first, from newest to oldest, then 'Assessed', 'Ready To Bill', 'Billed' and 'Paid'. So, newly arrived people will be listed first by default. All unbilled visits from previous days as well as current day's visits are editable, but once the claims are submitted and billing reference is assigned to each one of them, they become read-only with the only exception: you can always add cash service to the visit, even if it was previously billed. Cash services are not submitted to OHIP, so this is perfectly fine for cases when patients come back the next day with the cash payment for example.
+</p>
+
+<p>
+Although default sort order is by date/time descending within each billing category, visits shown in Day Sheet can also be sorted by Timestamp and Status by clicking on corresponding table headers. Sorting order will alternate between Ascending and Descending by repeatedly clicking the header link.
+</p>
+
+<p>
+Room drop-down (second column in daysheet table) is used to keep track of which patient is in which room. Initially it shows 'W', which stands for 'Waiting Room'. When the room is selected, visit status changes to "With Doctor" automatically. From now on visit will be shown below the list of visits marked as 'ARRIVED'. When doctor is finished with the patient and room becomes available you would assign same room number to the next available 'ARRIVED' visit. When you do this, status of the visit previously marked as 'WITH DOCTOR' and using the same room will change to 'ASSESSED' and will move down below all 'WITH DOCTOR' visits.
+<p>
+
+<p>
+As the day progresses and information about patients becomes available, you will fill required missing fields for the visit and once finished change the status to 'READY TO BILL' for OHIP insured visits (HCP,RMB,WCB), 'BILLED' to visits insured by the 3-rd party insurance (IFH) or invoiced, and 'PAID' for cash visits. These 3 categories by default will be shown at the bottom of Day Sheet. 'READY TO BILL' visits will appear in Billing -> Daily Billing page. Once all visits in Day Sheet are shown in billing page, [Send To OHIP] button will be show at the bottom of the billing page. I's advisable to submit claims using this button at the end of each work day.
+</p>
 
 <p>&nbsp;</p>
 <a id="navigation"></a>
 <h3>Navigation and Search</h3>
 All menus are located in navigation bar, most of them are Drop-Downs. Depending on the menu in use navigation bar will also have search box or date control. Day Sheet and Daily Billing pages use date control, the rest of the menus will have search box. There's also [Set Doctor] Drop-Down that lets you select the doctor for the shift.  Current doctor is sticky until changed. New visits will have this doctor preselected. Searches are page-sensitive.
-For example, Patients page allows to search patients by Last Name, Date of Birth or Health number. To navigate between pages, there's page control at the bottom of the screen.
-
+For example, Patients page allows to search patients by Last Name, Date of Birth or Health number. To navigate between pages, there's page control at the bottom of the screen. Also, you can use <left> and <right> arrow buttons on your keyboard to step through pages that have navigation controls at the bottom.
 <p>&nbsp;</p>
 <a id="menu_descriptions"></a>
 <h3>Menu Descriptions</h3>
@@ -283,6 +299,8 @@ This last menu groups various forms and has 5 submenus:
  </dl>
  </dd>
 
+ <!-- Generated Document List -->
+
  <p> &nbsp; </p>
   <a id="document_list"></a>
     <dt class="col-sm-1">List Of Generated Documents</dt>
@@ -298,6 +316,12 @@ This last menu groups various forms and has 5 submenus:
  </dl>
 
  <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Invoice", "#patient_invoice" %></dt>
+	 <dd class="col-sm-11">Invoices are generated using <%= link_to "Patient Invoice Form", "#patient_invoice_form" %> from <%= link_to "Patient Profile", "#patient_profile" %>
+	 </dd>
+ </dl>
+
+ <dl class="row">
          <dt class="col-sm-1"><%= link_to "Letter", "#patient_letter" %></dt>
 	 <dd class="col-sm-11">Letters are generated using <%= link_to "Patient Letter Form", "#patient_letter_form" %> from <%= link_to "Patient Profile", "#patient_profile" %>
 	 </dd>
@@ -306,6 +330,18 @@ This last menu groups various forms and has 5 submenus:
  <dl class="row">
          <dt class="col-sm-1"><%= link_to "Patient Label", "#patient_label" %></dt>
 	 <dd class="col-sm-11">Standard 29mm x 62mm label with patient information. This label is used on Referrals, Letters, Lab Requisitions and other documents requiring patient identification. File number on the label denotes unique patient number and allows to go directly to patient profile using URL like this: "https://walkin.drlena.com/patients/48422" where 48422 is file number from the label.
+	 </dd>
+ </dl>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Receipt", "#patient_receipt" %></dt>
+	 <dd class="col-sm-11">Receipts for cash services are generated from <%= link_to "Visit Summary Page", "#visit_summary_page" %>. Just click [Receipt] button and PDF file will be generated based on patient/visit information 
+	 </dd>
+ </dl>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Referral", "#patient_referral" %></dt>
+	 <dd class="col-sm-11">Doctor Referrals are menu driven and are accessible from <%= link_to "Patient Profile Form", "#patient_profile" %>. To generate a referral, click [Referral] button and you will be taken to <%= link_to "Patient Referral Form", "#patient_referral_form" %>   
 	 </dd>
  </dl>
 
@@ -372,6 +408,42 @@ This last menu groups various forms and has 5 submenus:
     <dd class="col-sm-11">Letter generated from the <%= link_to "Patient Letter Form", "#patient_letter_form" %> </dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/patient_letter.png" width=600 border=1></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_invoice_form"></a>
+    <dt class="col-sm-1">Patient Invoice Form</dt>
+    <dd class="col-sm-11">Use this form to generate invoices to insurers for services performed for the patient </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_invoice_form.png" width=600></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_invoice"></a>
+    <dt class="col-sm-1">Patient Invoice</dt>
+    <dd class="col-sm-11">Invoice generated from the <%= link_to "Patient Invoice Form", "#patient_invoice_form" %> </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_invoice.png" width=500></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_receipt"></a>
+    <dt class="col-sm-1">Patient Receipt</dt>
+    <dd class="col-sm-11">Receipt for cash services is generated based on current visit information by clicking [Receipt] button on Visit Summary Page
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_receipt.png" width=500></center>
+
+
+  <p> &nbsp; </p>
+  <a id="patient_referral_form"></a>
+    <dt class="col-sm-1">Patient Referral Form</dt>
+    <dd class="col-sm-11">Use this form to generate referrals regarding the patient </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_referral_form.png" width=600></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_referral"></a>
+    <dt class="col-sm-1">Patient Referral</dt>
+    <dd class="col-sm-11">PDF Referral generated from the <%= link_to "Patient Referral Form", "#patient_referral_form" %> </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_referral.png" width=600 border=1></center>
 
   <p> &nbsp; </p>
   <a id="visit_form"></a>

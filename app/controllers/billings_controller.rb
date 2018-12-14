@@ -217,9 +217,7 @@ class BillingsController < ApplicationController
 	  claims_sent += 1
        else
 	  errors = @xmlhash['errors'] || []
-#	  messages = @xmlhash['messages']
 	  refid = @xmlhash['reference_id']
-#          flash[:danger] = "Error sending claim #{refid} : #{errors.join','}"
           @visit.update_attribute(:status, ERROR)
 	  @visit.update_attribute(:billing_ref, errors.join(',')) if errors.present?
        end
@@ -233,17 +231,19 @@ class BillingsController < ApplicationController
     redirect_back(fallback_location: billings_path )
   end
 
+# Show number of claims billed for each doctor this billing cycle  
+  def billed_visits_this_cycle
+    @prev_cycle_end_date = Claim.joins(:services).reorder('svc_date desc').limit(1).pluck(:svc_date).join
+    @billed_visits = Visit.where('entry_ts>? AND status=?',@prev_cycle_end_date,BILLED).reorder('').group(:doc_id).count
+    render 'billed_visits'
+  end
+
 private
 
 #  def billing_params
 #      params.require(:billing).permit(:pat_id, :doc_code, :visit_id, :visit_date, :proc_code, :proc_units, :fee, :btype, :diag_code, :status,
 #				       :amt_paid, :paid_date, :write_off, :submit_file, :remit_file, :remit_year, :moh_ref,
 #				       :bill_prov, :submit_user, :submit_ts, :doc_id )
-#  end
-
-# moved to application controller
-#  def hcp_procedure?(proc_code)
-#    Procedure.find_by(code: proc_code).ptype == PROC_TYPES[:HCP] rescue false
 #  end
 
 # CabMD billing import CSV file

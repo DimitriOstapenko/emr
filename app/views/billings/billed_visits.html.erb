@@ -1,0 +1,25 @@
+
+<div class='spacer-30'></div>
+<div class='col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4'>
+<h3 class='display-1'>Billed Visits so far this billing cycle (since <%= @prev_cycle_end_date %>)</h3>
+<div class="well">
+<table class="tbl table-hover"> 
+  <thead>
+      <tr>
+          <th class="tbl_md">Doctor</th>
+          <th class="tbl_md">Visits</th>
+      </tr>
+  </thead>
+  <tbody>
+	  <% @billed_visits.each do |doc_id,visits| %>
+	  <% doc = Doctor.find(doc_id) %>
+	  <tr>
+	     <td><%= doc.lname %></td>
+	     <td><%= visits %></td>
+	  </tr>
+  	  <% end %>
+  </tbody>
+
+</table>
+</div>
+</div>
