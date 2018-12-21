@@ -1,0 +1,109 @@
+<% doc_id = current_doctor.id rescue nil %>
+<% readonly = (action_name == 'show') ? true:false %>
+
+<%= simple_form_for [@patient,@medication] do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
+
+<div class="well">
+<div class="row">
+<% if action_name == 'new' ||  action_name == 'create' %>
+  <div class="col-sm-4">
+    <%= f.input :name, collection: Drug.all, label_method: lambda{|med| "#{med.name} #{med.strength}"}, value_method: :id, prompt: 'Select', label: 'Medication Name Or'  %>
+  </div>
+  <div class="col-sm-4">
+    <%= f.input :generic_name, collection: Drug.all, label_method: lambda{|med| "#{med.generic} #{med.strength}"}, value_method: :id, prompt: 'Select', label: 'Generic Name' %>
+  </div>
+<% else %>
+  <div class="col-sm-6"> 
+     <%= f.input :name, value: @medication.name, readonly: true, label: 'Medication Name' %>
+  </div>
+  <div class="col-sm-3">
+    <%= f.input :date, as: :string, readonly: true %>
+  </div>
+<% end %>
+  <div class="col-sm-3">
+    <%= f.input :doctor_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', include_blank: 'Unknown', readonly: readonly %>
+  </div>
+</div>
+
+<!-- Row 2 -->
+<div class="row">
+  <div class="col-sm-2">
+          <%= f.input :strength, readonly: readonly %>
+  </div>
+  <div class="col-sm-2">
+          <%= f.input :dose, as: :string, readonly: readonly %>
+  </div>
+  <div class="col-sm-2">
+          <%= f.input :freq, label: 'Frequency', readonly: readonly %>
+  </div>
+  <div class="col-sm-3">
+          <%= f.input :route, readonly: true %>
+  </div>
+  <div class="col-sm-3">
+          <%= f.input :format, readonly: true %>
+  </div>
+</div>
+<% unless action_name == 'show' %>
+<%= f.submit yield(:button_text), class: "btn btn-primary btn-block" %>
+<% end %>
+</div>
+
+<% end %>
+<div class="spacer-15"></div>
+<% active_med_count = @patient.med_count  %>
+<h3>Current medications: <%= active_med_count>0 ? active_med_count : 'None' %></h3>
+
+<!-- Show list of medications only for new medication -->
+<% if (action_name == 'new' ||  action_name == 'create') && active_med_count >0 %>
+	<%= render 'medication_list' %>
+<% end %>
+
+<script>
+$(document).ready(function() {
+   $("#medication_name").select2();
+   $("#medication_generic_name").select2();
+   var med = $('select[name="medication[name]"]');
+   var gen = $('select[name="medication[generic_name]"]');
+//   var formats = JSON.parse('<%= raw(DRUG_FORMATS.to_json) %>');
+  
+   med.change(function () {
+     if ($("#medication_name")[0].selectedIndex == 0) {
+        $('#medication_generic_name').prop('disabled', false);
+     } else {
+        $('#medication_generic_name').prop('disabled', 'disabled');
+     }
+     get_drug(med.val());     
+   });
+
+   gen.change(function () {
+     if ($("#medication_generic_name")[0].selectedIndex == 0) {
+        $('#medication_name').prop('disabled', false);
+     } else {
+        $('#medication_name').prop('disabled', 'disabled');
+     }
+     get_drug(gen.val());     
+   });
+
+   function get_drug ( id ) {
+        var request = "/drugs/" + id;
+        var aj = $.ajax({
+        url: request,
+        type: 'get',
+        data: $(this).serialize()
+    }).done(function (data) {
+        set_fields(data);
+    }).fail(function (data) {
+        console.log('AJAX request has FAILED');
+    });
+  }
+	
+  function set_fields( drug ) {
+     $("#medication_strength").val(drug.strength);
+     $("#medication_dose").val(drug.dose);
+     $("#medication_freq").val(drug.freq);
+     $("#medication_route").val(drug.route);
+     $("#medication_format").val(drug.format);
+  }
+});
+</script>

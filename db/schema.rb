@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_07_172603) do
+ActiveRecord::Schema.define(version: 2018_12_20_201322) do
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -250,6 +250,21 @@ ActiveRecord::Schema.define(version: 2018_12_07_172603) do
     t.string "from"
   end
 
+  create_table "medications", force: :cascade do |t|
+    t.integer "patient_id"
+    t.integer "doctor_id"
+    t.string "name"
+    t.string "strength"
+    t.string "dose"
+    t.string "route"
+    t.string "freq"
+    t.string "format"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "active", default: true
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "lname"
     t.string "fname"
@@ -282,7 +297,7 @@ ActiveRecord::Schema.define(version: 2018_12_07_172603) do
     t.string "mname"
     t.date "entry_date"
     t.string "allergies"
-    t.string "medications"
+    t.string "meds"
     t.string "maid_name"
     t.string "ifh_number"
     t.boolean "clinic_pat"

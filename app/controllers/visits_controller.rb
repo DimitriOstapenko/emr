@@ -134,6 +134,11 @@ end
        redirect_to patient_visit_path
   end
 
+  def prescription
+       @visit = Visit.find(params[:id])
+       @patient = Patient.find(@visit.patient_id)
+  end
+
   def daysheet (defdate = Date.today)
       date = params[:date] || defdate
       flash.alert = 'Daysheet for ' + date

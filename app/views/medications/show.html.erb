@@ -1,0 +1,19 @@
+<% provide(:title, @medication) %>
+<%= render "shared/modal", size: 'lg' %>
+
+<div class="col-sm-6 col-sm-offset-3">
+<h3 class='display-1'>Medication <%= @medication.name %> - details  </h3>
+<pre>
+  Name: 	    <%= @medication.name %>
+  Date: 	    <%= @medication.date %>
+  Prescribed by Dr. <%= @medication.doctor.lname %> 
+  Format:  	    <%= @medication.format %> 
+  Route:   	    <%= @medication.route %> 
+  Strength:	    <%= @medication.strength %>
+  Dose:     	    <%= @medication.dose %>
+  Frequency:	    <%= @medication.freq %>
+  Active?: 	    <%= @medication.active_str %>
+</pre>
+</div>
+
+

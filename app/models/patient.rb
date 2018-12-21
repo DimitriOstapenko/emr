@@ -5,6 +5,7 @@ class Patient < ApplicationRecord
         has_many :invoices, dependent: :destroy, inverse_of: :patient
         has_many :letters, dependent: :destroy, inverse_of: :patient
         has_many :referrals, dependent: :destroy, inverse_of: :patient
+        has_many :medications, dependent: :destroy, inverse_of: :patient
         has_one :chart, inverse_of: :patient
 
   	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
@@ -85,25 +86,21 @@ class Patient < ApplicationRecord
     SEXES.invert[sex].to_s rescue 'Unknown'
   end
 
+# Calculate age in (years,months) and days  
   def age
     return unless dob
-#    now = Date.today
-#    years = now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
-#    years > 0 ? years : (dob.year * 12 + dob.month) - (now.year * 12 + now.month) 
-
     days = (Date.today - dob).to_i
     years = (days / 365).to_i
     months = ((days % 365) / 30).to_i
-
     return [years, months, days]
   end
 
   def age_str
-    return '' unless age
+    return '' unless (self.age.any? && self.age.size == 3)
     case 
     when age[0] > 2		       
 	    return "#{age[0]}y"
-    when (age[1] > 2 && age[0] < 2)   # 2 mo to 2 yrs old
+    when (age[2] > 60 && age[0] <= 2)   # 2 mo to 2 yrs old
 	    return "#{age[0]*12 + age[1]}m"  
     when (age[0] < 1 && age[1] <= 2)  # up to 2 mo old
             return "#{age[2]}d" 
@@ -150,6 +147,16 @@ class Patient < ApplicationRecord
 	 CHARTS_PATH.join(self.chart_file)
   end
 
+  # List of active medications (Array)
+  def med_list
+      list = self.medications.where(active: true)
+      list.map{|med| "#{med.name} #{med.strength} #{med.freq}"} if list.any?
+  end
+
+  def med_count
+	  self.med_list.count rescue 0
+  end
+
 protected
 
   def upcase_some_fields
@@ -167,5 +174,6 @@ protected
           errors.add('Error:', 'Date of birth is out of range')
       end
   end
+
 
 end

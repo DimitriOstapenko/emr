@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient_id: 1
+  doctor_id: 1
+  name: MyString
+  generic_name: MyString
+  strength: MyString
+  dose: MyString
+  route: MyString
+  freq: MyString
+  format: MyString
+  repeats: 1
+  date: 2018-12-15
+
+two:
+  patient_id: 1
+  doctor_id: 1
+  name: MyString
+  generic_name: MyString
+  strength: MyString
+  dose: MyString
+  route: MyString
+  freq: MyString
+  format: MyString
+  repeats: 1
+  date: 2018-12-15

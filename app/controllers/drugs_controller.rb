@@ -1,5 +1,6 @@
 class DrugsController < ApplicationController
 
+	before_action :set_drug, only: [:show, :edit, :update, :destroy]
         before_action :logged_in_user 
         before_action :admin_user, only: :destroy
 
@@ -23,15 +24,16 @@ class DrugsController < ApplicationController
   end
 
   def show
-       @drug = Drug.find(params[:id]) 
+    respond_to do |format|
+        format.json { render json: @drug }
+        format.html
+    end
   end
 
   def edit
-    @drug = Drug.find(params[:id])
   end
 
   def update
-    @drug = Drug.find(params[:id])
     if @drug.update_attributes(drug_params)
       flash[:success] = "Medication updated"
       redirect_to drugs_url
@@ -41,7 +43,9 @@ class DrugsController < ApplicationController
   end
 
   def destroy
-       @drug = Drug.find(params[:id]) 
+    @drug.destroy
+    flash[:success] = "Medication deleted"
+    redirect_back(fallback_location: drugs_path )
   end
 
   def find
@@ -60,6 +64,9 @@ class DrugsController < ApplicationController
   end
 
 private
+  def set_drug
+    @drug = Drug.find(params[:id])
+  end
 
   def drug_params
           params.require(:drug).permit(:name,:dnum, :strength, :dose, :freq, :amount, :status, :generic, :igcodes, 

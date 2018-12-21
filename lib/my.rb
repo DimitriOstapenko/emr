@@ -150,7 +150,8 @@ end # EDT module
          :inline_format => true
 
 # Medications box
-    medinfo = "<b>Medications</b>: #{pat.medications}"
+    meds = (pat.med_count >0) ? pat.med_list.join(';  ') : pat.meds
+    medinfo = "<b>Medications</b>: #{meds}"
     pdf.text_box medinfo, :at => [5.mm,212.mm],
          :width => 195.mm,
          :height => 23.mm,
@@ -204,8 +205,7 @@ end # EDT module
     pdf.font_size 10
     pdf.stroke_rectangle [0,240.mm], 200.mm,240.mm
 
-    _3rdind = visit._3rd_index
-    if  _3rdind.nil?
+    if  !visit.cash?
       pdf.text "This visit does not have 3rd party service", size: 16, :align => :center
       return pdf 
     end
@@ -223,13 +223,17 @@ end # EDT module
                Born: #{pat.dob} 
                HCN: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})
                File: #{pat.id}"
-
-        servstr = Date.today.to_s.ljust(85)
-	servstr[15] = visit.invoice_pcode    
-	servstr[30] = visit.invoice_units.to_s
-	servstr[40] = "$#{visit.invoice_amount}"      
-	servstr[52] = "$#{visit.invoice_amount}"       
-	servstr[65] = '$0.00'   
+     serv_arr = []	       
+     visit.services.each do |svc|
+	next unless svc[:btype] == CASH_BILLING
+        str = Date.today.to_s.ljust(85)
+	str[15] = svc[:pcode]    
+	str[30] = svc[:units].to_s rescue '1'
+	str[40] = "$#{svc[:fee]}"      
+	str[52] = "$#{svc[:fee]}"       
+	str[65] = '$0.00'   
+	serv_arr.push(str)
+    end
                    
 #                             1         2         3         4         5         6         7
 #                    123456789012345678901234567890123456789012345678901234567890123456789012345
@@ -237,7 +241,8 @@ end # EDT module
     serviceinfo = "<b> Service details </b>:  
 
                      Date           Descr         Qty       Charges     Payments     Balance   
-		     #{servstr}"
+   		     #{serv_arr.join("")}
+    		     Total: #{sprintf('$%.2f',visit.total_cash)}"
 
 # Clinic address box
     pdf.text_box CLINICINFO, :at => [5.mm,237.mm],
@@ -263,8 +268,8 @@ end # EDT module
          :min_font_size => 9,
          :inline_format => true
 
-    descr = visit.reason.blank? ? visit.proc_descr(visit.invoice_pcode) : visit.reason[0,90]
-    pdf.draw_text descr, at: [5.mm, 162.mm]
+#    descr = visit.reason.blank? ? visit.proc_descr : visit.reason[0,90]
+#    pdf.draw_text descr, at: [5.mm, 162.mm]
     pdf.draw_text "Notes: #{visit.notes[0,68]}", :at => [5.mm,130.mm]
 
     pdf.stroke do
@@ -284,8 +289,8 @@ end # EDT module
     pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,2.mm,1.mm,1.mm])
     pdf.font "Helvetica", size: 10 
     pdf.text_box @label, :at => [2.mm,26.mm],
-         :width => 65.mm,
-         :height => 28.mm,
+         :width => 80.mm,
+         :height => 26.mm,
          :overflow => :shrink_to_fit,
          :min_font_size => 9,
 	 :leading => 0,  # line spacing
@@ -298,12 +303,12 @@ end # EDT module
   def build_address_label ( pat )
     @label = addr_label_string ( pat )
     pdf = Prawn::Document.new(page_size: [90.mm, 29.mm], page_layout: :portrait, margin: [0.mm,2.mm,1.mm,1.mm])
-    pdf.font "Helvetica", size: 11 
+    pdf.font "Helvetica", size: 10 
     pdf.text_box @label, :at => [2.mm,24.mm],
          :width => 85.mm,
          :height => 28.mm,
          :overflow => :shrink_to_fit,
-         :min_font_size => 10,
+         :min_font_size => 8,
 	 :leading => 0,  # line spacing
          :inline_format => true
 
@@ -461,7 +466,7 @@ end # EDT module
     pat = ref.patient	  
     doc = ref.doctor
     to_doc = ref.to_doctor
-    meds = pat.medications
+    meds = pat.meds   # concatenated string of all meds
     algies = pat.allergies
     datestr = ref.date.strftime("%B %d, %Y") rescue ''
     to_contact_info = "#{ref.address_to} \n P: #{ref.to_phone} F: #{ref.to_fax} "

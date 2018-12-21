@@ -29,7 +29,7 @@
 <!-- Row 2 -->
 <div class="row">
   <div class="col-sm-3" id="maiden_name">
-  <%= f.input :maid_name %>
+  <%= f.input :maid_name, label: 'Maiden Name' %>
   </div>
   
   <div class="col-sm-3" id="ifh_number", style="display:none;">
@@ -138,20 +138,20 @@
 <!-- Row 7 -->
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :medications, as: :text, rows:2, placeholder: 'Medications', label: false %>
+  <%= f.input :meds, as: :text, rows:2, placeholder: 'Medications', label: false %>
   </div>
 </div>
 
 <!-- Row 8 -->
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :notes, rows:4, placeholder: 'Patient Notes', label: false %>
+  <%= f.input :notes, rows:4, placeholder: 'Notes', label: false %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.button :submit, "Save Patient's record", class: "btn btn-primary" %>
+  <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
   </div>
 </div>
 

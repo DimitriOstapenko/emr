@@ -1,0 +1,10 @@
+<% provide(:title, 'Edit Medication') %>
+<% provide(:button_text, 'Save Changes') %>
+<%= render "shared/modal", size: 'lg' %>
+
+<div class="col-sm-8 col-sm-offset-2">
+    <h3 class='display-1'>Patient <%= link_to @medication.patient.full_name, @patient %> - Edit Medication</h3>
+    <%= render 'form' %>
+</div>
+
+

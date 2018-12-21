@@ -1,0 +1,33 @@
+<% provide(:title, 'Patient List Of medications') %>
+<%= render 'shared/modal', size: 'lg' %>
+<% active_med_count = @patient.med_count  %>
+
+<div class='spacer-20'></div>
+<div class="col-sm-8 col-sm-offset-2">
+<h3><%= link_to @patient.full_name, @patient %> - Current medications: <%= active_med_count>0 ? active_med_count : 'None' %></h3>
+<table class="tbl table-hover"> 
+  <thead>
+      <tr>
+          <th class="tbl_lmd">Name</th>
+          <th class="tbl_md">Date</th>
+          <th class="tbl_md">Doctor</th>
+          <th class="tbl_sm">Format</th>
+          <th class="tbl_sm">Route</th>
+          <th class="tbl_sm">Strength</th>
+          <th class="tbl_sm">Dose</th>
+          <th class="tbl_sm">Freq</th>
+	  <th class="tbl_sm">Active?</th>
+	  <% if current_user.admin? %>
+	    <th class="tbl_sm">Edit</th>
+	    <th class="tbl_sm">Delete</th>
+ 	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @medications, remote: device_is_desktop?  %>
+
+  </tbody>
+</table>
+</div>
+

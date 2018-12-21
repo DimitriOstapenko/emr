@@ -1,0 +1,24 @@
+    <tr>
+	<td><%= medication.date %> </td>
+	<td><%= medication.doctor.lname rescue 'unknown' %> </td>
+	<td><%= medication.name %> </td>
+	<td><%= medication.route %> </td>
+	<td><%= medication.format %> </td>
+	<td><%= medication.strength %></td>
+	<td><%= medication.dose %></td>
+	<td><%= medication.freq %></td>
+	<% if current_user.admin?  %>
+
+	<td class="td-center">
+        <% if remote %>
+          <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,medication), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+        <% else %>
+          <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,medication) %>
+        <% end %>
+        </td>
+
+        <td class="td-center">
+          <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_medication_path(@patient,medication), method: :delete, data: { confirm: "Are you sure you want to delete procedure #{medication.name}?" } %>
+        <% end %>
+    </tr>
+

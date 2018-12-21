@@ -82,6 +82,7 @@ table {
     padding-right: 5px;
 //    font-size: 1.1em;
 //    background-color: #444;
+    height: 30px;
 }
 
 .navbar-inverse .navbar-nav > .active > a,
@@ -159,11 +160,11 @@ td.hlight {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 1.7em;
+  font-size: 1.6em;
   color: grey;
   text-transform: uppercase;
   letter-spacing: -2px;
-  padding-top: 9px;
+  padding-top: 10px;
   font-weight: bold;
   &:hover {
     color: white;
@@ -411,7 +412,7 @@ input, select{
 
 // Temp!!!!
 .tbl2 th {
-  background:  $brand-info; //#5bc0de;
+  background: $brand-info; //#5bc0de;
   color: white;
   height: 26px;
   padding: 2px;
@@ -523,15 +524,9 @@ table.pretty {
     overflow-y: scroll;
 }
 
-.patient-letters-panel-body {
+.patient-dropdown-panel-body {
     background: $brand-info;
-    max-height: 100px;
-    overflow-y: scroll;
-}
-
-.patient-invoices-panel-body {
-    background: $brand-info;
-    max-height: 100px;
+    max-height: 200px;
     overflow-y: scroll;
 }
 
@@ -549,7 +544,7 @@ table.pretty {
 
 // Notes scrollable PRE panels
 .pre-scrollable {
-    max-height: 140px;
+    max-height: 160px;
     overflow-y: scroll;
     overflow-x: scroll;
 }
@@ -697,3 +692,26 @@ card > hr {
   top: -60px;
   visibility: hidden;
 }
+
+.glyphicon.glyphicon-menu-hamburger {
+    font-size: 20px;
+  &:hover {
+    color: white;
+    text-decoration: none;
+    }
+}
+
+.btn {
+	padding: 10px;
+	margin-top: 10px;
+	border: 0 none;
+	font-weight: 800;
+	font-size: 1.1em;
+//	text-transform: uppercase;
+//	border-radius: 20px;
+}
+
+.drop-down-link {
+  font-size: 1.1em;
+}
+

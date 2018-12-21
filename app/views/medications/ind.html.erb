@@ -1,0 +1,28 @@
+<% provide(:title, 'Patient List Of medications') %>
+<%= render 'shared/modal' %>
+
+<table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
+  <thead>
+      <tr>
+          <th class="tbl_md">Date</th>
+          <th class="tbl_md">Doctor</th>
+          <th class="tbl_lmd">Name</th>
+          <th class="tbl_md">Route</th>
+          <th class="tbl_sm">Format</th>
+          <th class="tbl_sm">Strength</th>
+          <th class="tbl_sm">Dose</th>
+          <th class="tbl_sm">Freq</th>
+	  <% if current_user.admin? %>
+	    <th class="tbl_sm"></th>
+	    <th class="tbl_sm"></th>
+ 	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @medications, remote: device_is_desktop?  %>
+
+  </tbody>
+</table>
+</div>
+

@@ -41,10 +41,12 @@ def non_ana_fee_real
   sprintf '%.2f', non_ana_fee/100.0
 end
 
+# Is it HCP procedure?
 def insured?
   ptype == 1 
 end
 
+# Is it cash(3rd party) procedure
 def cash?
   ptype == 2
 end

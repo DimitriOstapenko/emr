@@ -1,0 +1,28 @@
+<b><%= link_to "Medications (#{@patient.med_count})<span class='caret'></span>".html_safe, '#', remote: remote, 'data-toggle': "collapse", 'data-target': "#medications",  class: "drop-down-link" %> </b>
+   <div class="collapse panel panel-info" id="medications">
+      <div class="tbl patient-dropdown-panel-body">
+         <table class="tbl2 table-hover table-striped table-bordered">
+		 <th>Name</th><th>Date</th><th>Format</th><th>Route</th><th>Strength</th><th>Dose</th><th>Freq</th><th class="tbl_sm">Active</th><th></th>
+            <% @patient.medications.each do |med| %> 
+	    <%= form_with model: [@patient,med] do |f| %>
+            <tr>
+               <td><%= link_to "#{med.name}", patient_medication_path(@patient,med), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+               <td> <%= med.date %> </td> 
+               <td> <%= med.format %> </td> 
+               <td> <%= med.route %> </td> 
+               <td> <%= med.strength %> </td>
+               <td> <%= med.dose %> </td>
+               <td> <%= med.freq %> </td>
+	       <td> <%= f.check_box :active, label: false, onchange: "this.form.submit();" %></td> 
+               <td>
+               <% if med.date == Date.today %>
+                  <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,med), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %>   
+<% end %>
+               <% end %>
+               </td>
+            </tr>
+            <% end %>
+         </table>
+      </div>
+   </div>
+

@@ -60,27 +60,14 @@ class Visit < ApplicationRecord
     [bil_type, bil_type2, bil_type3, bil_type4].reject(&:blank?).join(sep)
   end
   
-# Find index of 3-rd party procedure in the list of procedures, if any
-  def _3rd_index
-    bil_types('').index(BILLING_TYPES[:Invoice].to_s) ||
-    bil_types('').index(BILLING_TYPES[:Cash].to_s) ||
-    bil_types('').index(BILLING_TYPES[:PRV].to_s)
-  end  
-
 # Are there HCP services in this visit?
   def hcp_services?
       !hcp_proc_codes.empty?
   end
 
-# Invoiced service? (first service is invoice)
-  def invoiced?
-    bil_types('').index(INVOICE_BILLING.to_s) == 0
-  end
-
-# Cash only service? (first service is cash) 
+# Visit includes cash service?
   def cash?
-#    bil_types('').index(BILLING_TYPES[:Cash].to_s) && 1
-    bil_types('').index(CASH_BILLING.to_s) == 0
+     self.bil_types.include?(CASH_BILLING.to_s)
   end
 
 # Patient with the doctor?
@@ -92,7 +79,6 @@ class Visit < ApplicationRecord
   def assessed?
     status == ASSESSED
   end  
-
 
 # Is visit ready to bill?
   def ready_to_bill?
@@ -113,7 +99,6 @@ class Visit < ApplicationRecord
   def has_error?
     status == ERROR 
   end  
-
 
 # Service array to help deal with procedures/billings
   def services   
@@ -203,33 +188,9 @@ class Visit < ApplicationRecord
     total_fee - total_insured_fees
   end
 
-  def invoice_amount  
-     serv  = services[_3rd_index]
-     serv[:fee] > 1 ? serv[:fee] : amount
-  end
-  
-  def invoice_units  
-     serv  = services[_3rd_index]
-     serv[:units] rescue 0
-  end
-
-  def invoice_pcode 
-     serv  = services[_3rd_index]
-     serv[:pcode] rescue 0
-  end
-  
-  def invoice_pdescr 
-     pcode = invoice_pcode
-     if pcode == 'INVOICE'
-	reason
-     else
-	proc_descr( invoice_pcode )
-     end
-  end
-
 # Short version of diagnostic code
   def diag_scode
-	  diag_code[0,3].rjust(3,'0') if diag_code.present?
+    diag_code[0,3].rjust(3,'0') if diag_code.present?
   end
 
 # Return diagnosis description
@@ -238,7 +199,7 @@ class Visit < ApplicationRecord
     return diag.descr rescue '' 
   end
 
-# Return procedure description
+# Return procedure description for given code
   def proc_descr ( code = proc_code )
     proc = Procedure.find_by(code: code )	  
     return proc.descr rescue '' 

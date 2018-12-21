@@ -40,7 +40,6 @@ class ReferralsController < ApplicationController
   end
 
   def show
-   @referral = Referral.find( params[:id] )
    redirect_to referrals_path unless @referral
 
    respond_to do |format|
@@ -54,7 +53,6 @@ class ReferralsController < ApplicationController
   end
 
   def download
-    @referral = Referral.find( params[:id] )
     if File.exists?(@referral.filespec)
       send_file @referral.filespec,
              filename: @referral.filename,
@@ -67,13 +65,10 @@ class ReferralsController < ApplicationController
   end
 
   def edit
-    @referral = Referral.find( params[:id] )
     @patient = Patient.find( @referral.patient_id )
   end
 
    def update
-    @referral = Referral.find( params[:id] )
-
     if @referral.update_attributes(referral_params)
       pdf = build_referral( @referral )
       pdf.render_file @referral.filespec
@@ -86,7 +81,6 @@ class ReferralsController < ApplicationController
   end
 
   def destroy
-    @referral = Referral.find( params[:id] )
     if @referral.present?
       File.delete( @referral.filespec ) rescue nil
       @referral.destroy

@@ -7,98 +7,46 @@
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">
-	<pre class="pre-scrollable">
-	<b>Name: <%= @patient.full_name %> <%= @patient.age_str %>  <%= @patient.full_sex %> <% if @patient.chart_file.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-	Born: <%= @patient.dob %>
-	<% if @patient.pat_type == IFH_PATIENT %>
-	IFH #: <%= @patient.ifh_number %> 
-	<% else %>
-	Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) Expires: <%= @patient.hin_expiry %>
-	<% end %>
-	Phone: <%= num_to_phone(@patient.phone) %> Mobile: <%= num_to_phone(@patient.mobile) %> <% if @patient.email.present? %> Email: <%= mail_to @patient.email %> <% end %>
-	Address: <%= @patient.addr %>
-		    <%= @patient.city %> <%= @patient.prov %> 
-		    <%= @patient.postal %>
-	<% if @patient.allergies.present? %>
-	Allergies: <%= @patient.allergies %>
-	<% end %>
-	<% if @patient.medications.present? %>
-	Medications: <%= @patient.medications  %>
-	<% end %> </b>
-         </pre>
-	 
-	 <% if @patient.notes.present? %> 
-	 <b>Notes</b>
-	 <div class="panel panel-info">
-	   <div class="patient-notes-panel-body">
-		   <% html_str = "<pre class='notes'> #{@patient.notes} </pre>" %>
-                   <%= html_str.html_safe %>
-	   </div>
-	</div>
-	<% end %>
-  
-        <% if @patient.invoices.any? %>
-	 <b><%= link_to 'Invoices<span class="caret"></span>'.html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#invoices" %> </b>
-	 <div class="collapse panel panel-info" id="invoices">
-	   <div class="tbl patient-invoices-panel-body">
-	     <table class="tbl2 table-hover table-bordered">
-		<th></th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th><th></th>
-		<% @patient.invoices.each do |i| %>
-		<tr>
-		  <td><%= link_to "Invoice #{i.id}", invoice_path(i), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
-		  <td> <%= i.billto_str %> </td> 
-		  <td> <%= i.date %> </td> 
-		  <td> <%= sprintf("$%.2f",i.amount) %> </td> 
-		  <td> <%= i.paid_str %> </td> 
-		  <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_invoice_path(i), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
-		</tr>
-		<% end %>
-	     </table>
-	   </div>
-	 </div>
-	<% end %>
-	
-        <% if @patient.letters.any? %>
-	&nbsp;<b><%= link_to 'Letters<span class="caret"></span>'.html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#letters" %> </b>
-	 <div class="collapse panel panel-info" id="letters">
-	   <div class="tbl patient-letters-panel-body">
-	     <table class="tbl2 table-hover table-bordered">
-		<th></th><th>From</th><th>To</th><th>Date</th><th>Title</th><th></th>
-		<% @patient.letters.each do |letter| %>
-		<tr>
-		  <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
-		  <td> <%= letter.from %> </td> 
-		  <td> <%= letter.to %> </td> 
-		  <td> <%= letter.date %> </td> 
-		  <td> <%= letter.title %> </td> 
-		  <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
-		</tr>
-		<% end %>
-	     </table>
-	   </div>
-	 </div>
-	<% end %>
+<pre class="pre-scrollable">
+<b>Name: <%= @patient.full_name %> <%= @patient.age_str %>  <%= @patient.full_sex %> <% if @patient.chart_file.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
+Born: <%= @patient.dob %>
+<% if @patient.pat_type == IFH_PATIENT %>
+IFH #: <%= @patient.ifh_number %> 
+<% else %>
+Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) Expires: <%= @patient.hin_expiry %>
+<% end %>
+Phone: <%= num_to_phone(@patient.phone) %> Mobile: <%= num_to_phone(@patient.mobile) %> <% if @patient.email.present? %> Email: <%= mail_to @patient.email %> <% end %>
+Address: <%= @patient.addr %>
+	    <%= @patient.city %> <%= @patient.prov %> 
+	    <%= @patient.postal %>
+<% if @patient.allergies.present? %>
+Allergies: <%= @patient.allergies %>
+<% end %>
+<!-- active meds for this pat -->
+<% if @patient.med_list %>
+Medications:
+     <%= @patient.med_list.join("\n     ") %>
+<% end %> </b>
+<% if @patient.meds.present? %>
+<font color='red'><i> Old Medications to be deleted after conversion: <%= @patient.meds %> </i></font>
+<% end %>
 
-        <% if @patient.referrals.any? %>
-	 &nbsp;<b><%= link_to 'Referrals<span class="caret"></span>'.html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#referrals" %> </b>
-	 <div class="collapse panel panel-info" id="referrals">
-	   <div class="tbl patient-letters-panel-body">
-	     <table class="tbl2 table-hover table-bordered">
-		<th></th><th>Date</th><th>From</th><th>To</th><th>Address</th><th></th>
-		<% @patient.referrals.each do |ref| %>
-		<tr>
-		  <td><%= link_to "Referral #{ref.id}", referral_path(ref), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
-		  <td> <%= ref.date %> </td> 
-		  <td> <%= ref.doctor.lname %> </td> 
-		  <td> <%= ref.to_doctor.lname %> </td> 
-		  <td> <%= ref.address_to %> </td> 
-		  <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_referral_path(ref), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
-		</tr>
-		<% end %>
-	     </table>
-	   </div>
-	 </div>
-	<% end %>
+</pre>
+	 
+ <% if @patient.notes.present? %> 
+ <b>Notes</b>
+ <div class="panel panel-info">
+   <div class="patient-notes-panel-body">
+	   <% html_str = "<pre class='notes'> #{@patient.notes} </pre>" %>
+	   <%= html_str.html_safe %>
+   </div>
+</div>
+<% end %>
+
+&nbsp; <%= render("invoices", remote: remote) if @patient.invoices.any? %>
+&nbsp; <%= render("letters", remote: remote) if @patient.letters.any? %>
+&nbsp; <%= render("referrals", remote: remote) if @patient.referrals.any? %>
+&nbsp; <%= render("medications", remote: remote) if @patient.medications.any? %>
 
   </section>
 
@@ -107,7 +55,7 @@
 <% unless @patient.pat_type == DECEASED_PATIENT %>
   <div id="new_visit" class="col-sm-2">
   <% if remote %>
-     <%= button_to 'New Visit', new_patient_visit_path(@patient), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window',class:"btn btn-primary", method: 'get'  %> </td>
+     <%= button_to 'New Visit', new_patient_visit_path(@patient), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window',class:"btn btn-primary btn-lg", method: 'get'  %> </td>
   <% else %>
      <%= button_to 'New Visit', new_patient_visit_path(@patient), class:"btn btn-primary", method: 'get' %>
   <% end %>
@@ -115,25 +63,28 @@
 <% end %>
 
   <div id="edit_pat" class="col-sm-2">
-    <%= button_to "Edit Patient", edit_patient_path(@patient), remote: remote, 'data-toggle': "modal", 'data-target': '#modal-window', class:"btn btn-primary", method: 'get' %>
+    <%= button_to "Edit Patient", edit_patient_path(@patient), remote: remote, 'data-toggle': "modal", 'data-target': '#modal-window', class:"btn btn-danger btn-lg", method: 'get' %>
   </div>
 
   <div id="modLabel" class="col-sm-2">
-  <%= button_to "Label", label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-primary clickable", method: 'get'  %>
+  <%= button_to "Label", label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-info btn-lg", method: 'get'  %>
   </div>
   
   <div id="invoice" class="col-sm-2">
-    <%= button_to "Invoice", new_patient_invoice_path(@patient), class: "btn btn-primary", method: 'get' %> 
+    <%= button_to "Invoice", new_patient_invoice_path(@patient), class: "btn btn-warning btn-lg", method: 'get' %> 
   </div>
   
-  <div id="invoice" class="col-sm-2">
-    <%= button_to "Letter", new_patient_letter_path(@patient), class: "btn btn-primary", method: 'get' %> 
+  <div id="letter" class="col-sm-2">
+    <%= button_to "Letter", new_patient_letter_path(@patient), class: "btn btn-success btn-lg", method: 'get' %> 
   </div>
   
-  <div id="invoice" class="col-sm-2">
-    <%= button_to "Referral", new_patient_referral_path(@patient), class: "btn btn-primary", method: 'get' %> 
+  <div id="referral" class="col-sm-2">
+    <%= button_to "Referral", new_patient_referral_path(@patient), class: "btn btn-primary btn-lg active", method: 'get' %> 
   </div>
 
+  <div id="medication" class="col-sm-2">
+    <%= button_to "+Medication", new_patient_medication_path(@patient), class: "btn btn-info btn-lg active", method: 'get' %> 
+  </div>
 </div>
   </aside>
 
@@ -143,11 +94,11 @@
         <table class="tbl">
   	  <thead>
 	  <tr>
-	    <th>Date</th>
-	    <th class="tbl_md"></th>
+	    <th>Time Stamp</th>
+	    <th class="tbl_md">Edit</th>
 	    <th>Doctor</th>
 	    <th class="tbl_md">Diag.</th>
-	    <th>Svcs</th>
+	    <th>Services</th>
 	    <th class="tbl_md">Status</th>
 	  </tr>
 	  <tbody>

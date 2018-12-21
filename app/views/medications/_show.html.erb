@@ -1,0 +1,13 @@
+<% provide(:title, "List of Medications") 
+   provide(:button_text, 'Dismiss')
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>: Medication </b>
+</div>
+<div class="modal-body">
+       <%= render 'form' %>
+</div>
+
+

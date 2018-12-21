@@ -1,0 +1,29 @@
+<table class="tbl2 table-hover table-striped"> 
+  <thead>
+      <tr>
+          <th class="tbl_md">Name</th>
+          <th class="tbl_md">Date</th>
+          <th class="tbl_md">Doctor</th>
+          <th class="tbl_sm">Format</th>
+          <th class="tbl_sm">Route</th>
+          <th class="tbl_sm">Strength</th>
+          <th class="tbl_sm">Dose</th>
+          <th class="tbl_sm">Freq</th>
+          <th class="tbl_sm">Active?</th>
+          <% if current_user.admin? %>
+            <th class="tbl_sm">Edit</th>
+            <th class="tbl_sm">Delete</th>
+          <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+<%= render @medications, remote: device_is_desktop?  %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons">
+<%= will_paginate @medications %>
+</div>
+

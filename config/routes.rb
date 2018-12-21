@@ -82,10 +82,11 @@ Rails.application.routes.draw do
     resources :letters 
     resources :referrals 
     resources :charts
+    resources :prescriptions
+    resources :medications
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member
-#      get 'referralform', on: :member
       get 'sendclaim', on: :member
       get 'addcash', on: :member
       resources :documents

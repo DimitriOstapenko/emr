@@ -1,0 +1,9 @@
+<% provide(:title, 'Add Medication') %>
+<% provide(:button_text, 'Add') %>
+<%= render 'shared/modal', size: 'lg' %>
+
+<div class="spacer-20"></div>
+<div class="col-md-6 col-sm-8 col-md-offset-3 col-sm-offset-2">
+    <h3 class='display-1'>Patient <%= link_to @medication.patient.full_name, @patient %> - Add Medication</h3>
+    <%= render 'form' %>
+</div>

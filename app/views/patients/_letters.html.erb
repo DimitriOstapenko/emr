@@ -1,0 +1,19 @@
+<b><%= link_to "Letters (#{@patient.letters.count})<span class='caret'></span>".html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#letters", class: "drop-down-link" %> </b>
+ <div class="collapse panel panel-info" id="letters">
+   <div class="tbl patient-dropdown-panel-body">
+     <table class="tbl2 table-hover table-striped table-bordered">
+        <th></th><th>From</th><th>To</th><th>Date</th><th>Title</th><th></th>
+        <% @patient.letters.each do |letter| %>
+        <tr>
+          <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+          <td> <%= letter.from %> </td> 
+          <td> <%= letter.to %> </td> 
+          <td> <%= letter.date %> </td> 
+          <td> <%= letter.title %> </td> 
+          <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
+        </tr>
+        <% end %>
+     </table>
+   </div>
+ </div>
+

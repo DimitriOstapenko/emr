@@ -1,9 +1,9 @@
-
+<% ttl_visits = 0 %>
 <div class='spacer-30'></div>
 <div class='col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4'>
 <h3 class='display-1'>Billed Visits so far this billing cycle (since <%= @prev_cycle_end_date %>)</h3>
 <div class="well">
-<table class="tbl table-hover"> 
+<table class="tbl"> 
   <thead>
       <tr>
           <th class="tbl_md">Doctor</th>
@@ -13,12 +13,19 @@
   <tbody>
 	  <% @billed_visits.each do |doc_id,visits| %>
 	  <% doc = Doctor.find(doc_id) %>
+	  <% ttl_visits += visits %>
 	  <tr>
 	     <td><%= doc.lname %></td>
 	     <td><%= visits %></td>
 	  </tr>
   	  <% end %>
   </tbody>
+  <tfoot>
+    <tr>
+      <td>Total visits this cycle</td>
+      <td><%= ttl_visits %></td>
+    </tr>
+  </tfoot>
 
 </table>
 </div>

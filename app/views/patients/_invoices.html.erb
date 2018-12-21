@@ -1,0 +1,19 @@
+<b><%= link_to "Invoices (#{@patient.invoices.count})<span class='caret'></span>".html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#invoices", class: "drop-down-link"  %> </b>
+<div class="collapse panel panel-info" id="invoices">
+  <div class="tbl patient-dropdown-panel-body">
+    <table class="tbl2 table-hover table-striped table-bordered">
+        <th></th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th><th></th>
+        <% @patient.invoices.each do |i| %>
+        <tr>
+          <td><%= link_to "Invoice #{i.id}", invoice_path(i), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+          <td> <%= i.billto_str %> </td>
+          <td> <%= i.date %> </td>
+          <td> <%= sprintf("$%.2f",i.amount) %> </td>
+          <td> <%= i.paid_str %> </td>
+          <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_invoice_path(i), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td>
+        </tr>
+        <% end %>
+    </table>
+  </div>
+</div>
+
