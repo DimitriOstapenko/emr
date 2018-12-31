@@ -1,0 +1,32 @@
+<% provide(:title, 'Patient Prescriptions') %>
+<%= render 'shared/modal', size: 'lg' %>
+
+<div class="col-sm-6 col-sm-offset-3">
+<h3><%= link_to @patient.full_name, @patient %> - Prescriptions: </h3>
+<table class="tbl table-hover"> 
+  <thead>
+      <tr>
+          <th class="tbl_sm">Id</th>
+          <th class="tbl_sm">Date</th>
+          <th class="tbl_sm">Visit</th>
+          <th class="tbl_md">Doctor</th>
+          <th class="tbl_sm">Medications</th>
+	  <th class="tbl_sm"></th>
+	  <% if current_user.admin? %>
+	  <th class="tbl_sm">Edit</th>
+	  <th class="tbl_sm">Delete</th>
+ 	  <% end %>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @prescriptions, remote: device_is_desktop?  %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons">
+<%= will_paginate @prescriptions, class: "btn" %>
+</div>
+</div>
+</div>

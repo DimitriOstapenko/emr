@@ -711,7 +711,18 @@ card > hr {
 //	border-radius: 20px;
 }
 
+// patient profile page
 .drop-down-link {
   font-size: 1.1em;
 }
 
+.checkbox-list input[type="checkbox"] {
+  display: inline-block;
+  width: 5%;
+  vertical-align: 1px;
+}
+
+// Supress underlined legend in checkboxes in _prescription_form
+.col-form-label {
+  display: none;
+}

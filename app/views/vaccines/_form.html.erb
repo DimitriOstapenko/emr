@@ -1,4 +1,3 @@
-<% noedit ||= false %>
 <div class='well'>
 <%= simple_form_for @vaccine do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
@@ -9,7 +8,7 @@
   <%= f.input :dose %>
   <%= f.input :din %>
   <%= f.input :notes, placeholder: 'Notes', label: false %>
-  <% unless noedit %>
+  <% unless action_name == 'show' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   <% end %>
 

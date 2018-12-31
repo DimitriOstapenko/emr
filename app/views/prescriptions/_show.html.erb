@@ -1,0 +1,16 @@
+<% provide(:title, "List of Prescriptions") 
+%>
+ 
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>: Prescription <%= @prescription.id %> issued  <%= @prescription.date %> </b>
+</div>
+<div class="modal-body">
+	<% if @prescription.pdf_present? %>
+            <iframe id="myModal" src="/prescriptions/<%= @prescription.id %>" frameborder="0" width="100%" height="700px"></iframe>
+	<% else %>
+           <%= render 'body' %>
+   	<% end %>
+</div>
+
+

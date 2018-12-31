@@ -1,0 +1,23 @@
+<%= form_with model: [@patient,prescription] do |f| %>
+<% visit = Visit.find(prescription.visit_id) %>
+    <tr>
+	<td><%= link_to prescription.id, prescription %></td>
+	<td><%= visit.entry_ts.to_date %>
+	<td><%= link_to 'Visit', patient_visit_path(@patient, visit) %>
+	<td><%= prescription.visit.doctor.lname %>
+	<td><%= prescription.med_list.count rescue 0 %> </td>
+	<td>
+	<% if prescription.pdf_present? %>
+	  <%=  link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_prescription_path(prescription)  %>
+	<% else %>
+	  <%= link_to '<i class="glyphicon glyphicon-question-sign text-warning"></i>'.html_safe, download_prescription_path(prescription) %>
+	<% end %>
+	</td>
+	<% if current_user.admin? %>
+	<td class='center'><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_prescription_path(@patient,prescription), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+	<td class='center'> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_prescription_path(@patient,prescription), method: :delete, data: { confirm: "Are you sure you want to delete prescription #{prescription.id}?" } %> </td>
+	<% end %>
+   </tr>
+<% end %>
+
+

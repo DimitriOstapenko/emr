@@ -56,7 +56,7 @@ class ReferralsController < ApplicationController
     if File.exists?(@referral.filespec)
       send_file @referral.filespec,
              filename: @referral.filename,
-             type: "text/plain",
+             type: "text/pdf",
              disposition: :attachment
     else
       flash.now[:danger] = "File #{@referral.filename} was not found"

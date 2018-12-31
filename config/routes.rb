@@ -2,7 +2,6 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 
-
   get 'password_resets/new'
   get 'password_resets/edit'
 
@@ -76,14 +75,15 @@ Rails.application.routes.draw do
     get 'label', on: :member
     get 'addrlabel', on: :member
     get 'chart', on: :member
+    get 'visit_history', on: :member
     resources :invoices do
       get 'invoice', on: :member
     end
     resources :letters 
     resources :referrals 
     resources :charts
-    resources :prescriptions
     resources :medications
+    resources :prescriptions
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member
@@ -103,6 +103,9 @@ Rails.application.routes.draw do
     resources :services
   end
 
+  get 'budget', to: 'paystubs#budget'
+  get 'billed_visits', to: 'billings#billed_visits_this_cycle'
+  
   resources :reports do
      get 'export', on: :member
      get 'download', on: :member
@@ -112,37 +115,41 @@ Rails.application.routes.draw do
      get 'export', on: :member
      get 'download', on: :member
   end
-  get 'budget', to: 'paystubs#budget'
-  get 'billed_visits', to: 'billings#billed_visits_this_cycle'
 
-  resources :edt_files do
+  resources :edt_files, :forms, :invoices, :letters, :referrals, :daily_charts, :charts, :prescriptions  do
      get 'download', on: :member
   end
 
-  resources :forms do
-     get 'download', on: :member
-  end
+#  resources :forms do
+#     get 'download', on: :member
+#  end
   
-  resources :invoices do
-     get 'download', on: :member
-  end
+#  resources :invoices do
+#     get 'download', on: :member
+#  end
   
-  resources :letters do
-     get 'download', on: :member
-  end
+#  resources :letters do
+#     get 'download', on: :member
+#  end
   
-  resources :referrals do
-     get 'download', on: :member
-  end
+#  resources :referrals do
+#     get 'download', on: :member
+#  end
+  
 
-  resources :daily_charts do
-     get 'download', on: :member
-  end
+ # resources :daily_charts do
+ #    get 'download', on: :member
+ # end
 
-  resources :charts do
-     get 'download', on: :member
-  end
+#  resources :charts do
+#     get 'download', on: :member
+#  end
   
+#  resources :prescriptions do
+#     get 'download', on: :member
+#  end
+
+
   resources :schedules
 
 # resources :billings     # historical billing table - not used

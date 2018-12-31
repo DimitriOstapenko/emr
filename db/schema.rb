@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_20_201322) do
+ActiveRecord::Schema.define(version: 2018_12_31_204821) do
+
+  create_table "arrays_example2", id: false, force: :cascade do |t|
+    t.text "name"
+    t.text "meds"
+    t.integer "repeats"
+  end
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -331,6 +337,22 @@ ActiveRecord::Schema.define(version: 2018_12_20_201322) do
     t.date "date_paid"
     t.float "mho_deduction", default: 0.0
     t.float "clinic_deduction", default: 0.0
+  end
+
+  create_table "prescriptions", force: :cascade do |t|
+    t.integer "visit_id"
+    t.text "meds", default: "--- []\n"
+    t.text "note"
+    t.integer "patient_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "repeats", default: "--- []\n"
+    t.string "qty", default: "--- []\n"
+    t.string "duration", default: "--- []\n"
+    t.string "filename"
+    t.integer "doctor_id"
+    t.index ["patient_id", "created_at"], name: "index_prescriptions_on_patient_id_and_created_at"
+    t.index ["patient_id"], name: "index_prescriptions_on_patient_id"
   end
 
   create_table "procedures", force: :cascade do |t|

@@ -1,25 +1,24 @@
-<% noedit ||= false %>
 <div class="well">
 <%= simple_form_for @drug do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
 
   <div class="row">
   <div class="col-sm-6">
-  <%= f.input :name %>
-  <%= f.input :dnum %>
-  <%= f.input :strength %>
-  <%= f.input :dose %>
-  <%= f.input :freq %>
+  <%= f.input :name, hint: 'Required' %>
+  <%= f.input :dose, hint: 'Required' %>
+  <%= f.input :strength, hint: 'Required' %>
+  <%= f.input :dur_cnt, label: 'Duration Count' %>
   <%= f.input :amount %>
   <%= f.input :status %>
-  <%= f.input :generic %>
+  <%# f.input :dnum %>
+  <%= f.input :generic, label: "Generic Name" %>
   </div>
   
   <div class="col-sm-6">
-  <%= f.input :igcodes %>
-  <%= f.input :format %>
-  <%= f.input :route %>
-  <%= f.input :dur_cnt, label: 'Duration Count' %>
+  <%# f.input :igcodes %>
+  <%= f.input :format, hint: 'Required' %>
+  <%= f.input :route, hint: 'Required' %>
+  <%= f.input :freq, hint: 'Required' %>
   <%= f.input :dur_unit, label: 'Duration Unit' %>
   <%= f.input :refills %>
   <%= f.input :dtype, label: 'Type' %>
@@ -29,7 +28,7 @@
   <div class="col-sm-12">
   <%= f.input :instructions, placeholder: 'Instructions', label: false %>
   <%= f.input :notes, placeholder: 'Notes', label: false %>
-  <% unless noedit %>
+  <% unless action_name == 'show' %>
   <%= f.submit yield(:button_text), class: "btn btn-primary" %>
   <% end %>
   </div>

@@ -1,0 +1,10 @@
+<pre>
+  <b>Medications: </b>
+  <% @prescription.med_list.each_with_index do |med,i| %>
+       <%= "#{i+1} : #{med.name} #{med.strength} #{med.freq}  Quantity:#{@prescription.aqty[i]} Repeats: #{@prescription.arepeats[i]}" %>
+  <% end %>
+
+  <b>Notes: </b>
+       <%= @prescription.note %>
+</pre>
+

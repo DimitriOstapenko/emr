@@ -6,6 +6,7 @@ class Patient < ApplicationRecord
         has_many :letters, dependent: :destroy, inverse_of: :patient
         has_many :referrals, dependent: :destroy, inverse_of: :patient
         has_many :medications, dependent: :destroy, inverse_of: :patient
+        has_many :prescriptions, dependent: :destroy, inverse_of: :patient
         has_one :chart, inverse_of: :patient
 
   	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
@@ -152,9 +153,24 @@ class Patient < ApplicationRecord
       list = self.medications.where(active: true)
       list.map{|med| "#{med.name} #{med.strength} #{med.freq}"} if list.any?
   end
+  
+  # Hash of active medications 
+  def med_hash
+      list = self.medications.where(active: true)
+      list.map{|med| ["#{med.name} #{med.strength} #{med.route} (#{med.dose} #{med.format}) #{med.freq}",med.id]}.to_h if list.any?
+  end
 
+# Count of active medications
   def med_count
-	  self.med_list.count rescue 0
+      self.med_list.count rescue 0
+  end
+
+  def prescription_count
+      self.prescriptions.count rescue 0
+  end
+
+  def visit_history_file
+     File.join(Rails.root, 'public', 'uploads', "visit_history.pdf") 
   end
 
 protected

@@ -59,6 +59,10 @@
 	<%= render 'medication_list' %>
 <% end %>
 
+<% if @patient.meds.present? %>
+<font color='red'><i> Old Medications to be deleted after conversion (medication field in patient profile): <%= @patient.meds %> </i></font>
+<% end %>
+
 <script>
 $(document).ready(function() {
    $("#medication_name").select2();

@@ -9,8 +9,10 @@
 	<td><%= medication.dose %></td>
 	<td><%= medication.freq %></td>
 	<td class='center'><%= f.check_box :active, label: false, onchange: "this.form.submit();" %> </td>
+	<% if current_user.admin? %>
 	  <td class='center'><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,medication), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
 	  <td class='center'> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_medication_path(@patient,medication), method: :delete, data: { confirm: "Are you sure you want to delete medication #{medication.id}?" } %> </td>
+         <% end %>
    </tr>
 <% end %>
 

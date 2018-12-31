@@ -1,0 +1,36 @@
+<b><%= link_to "Prescriptions (#{@patient.prescription_count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#prescriptions",  class: "drop-down-link" %> </b>
+<div class="collapse panel panel-info" id="prescriptions">
+<div class="tbl patient-dropdown-panel-body">
+ <table class="tbl2 table-hover table-striped table-bordered">
+	 <th>#</th><th>Date</th><th>Visit</th><th class="tbl_sm">Medications</th><th>Doctor</th><th></th><th></th>
+    <% @patient.prescriptions.each do |pr| %> 
+    <%= form_with model: [@patient,pr] do |f| %>
+     <tr>
+       <td> <%= link_to "Prescription #{pr.id}", patient_prescription_path(@patient,pr), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td> 
+       <td> <%= pr.date %></td> 
+       <td>
+       <% if pr.visit_id.present? %>
+         <%= link_to pr.visit_id, patient_visit_path(@patient,pr.visit_id), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> 
+       <% end %>
+       </td>
+       <td> <%= pr.ameds.count %> </td> 
+       <td> <%= pr.doctor.lname %> </td> 
+       <td>
+	<% if pr.pdf_present? %>
+	  <%=  link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_prescription_path(pr)  %>
+	<% else %>
+	  <%= link_to '<i class="glyphicon glyphicon-question-sign text-warning"></i>'.html_safe, download_prescription_path(pr) %>
+	<% end %>
+       </td>
+       <td>
+       <% if pr.date == Date.today %>
+	  <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_prescription_path(@patient,pr), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>  
+       <% end %>
+     <% end %>
+     </td>
+    </tr>
+    <% end %>
+ </table>
+</div>
+</div>
+

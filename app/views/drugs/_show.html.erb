@@ -1,6 +1,5 @@
 <%
    provide(:title, 'Show Medication')
-   provide(:button_text, 'Save changes')
 %>
  
 <div class="modal-header">
@@ -8,7 +7,7 @@
 	<b class="modal-title" id="myModalLabel"><%= @drug.name %> </b>
 </div>
 <div class="modal-body">
-       <%= render 'form', noedit: true %>
+       <%= render 'form' %>
 </div>
 
 <div class="modal-footer">

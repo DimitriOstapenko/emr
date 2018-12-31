@@ -1,5 +1,6 @@
 class Medication < ApplicationRecord
       belongs_to :patient, inverse_of: :medications #, counter_cache: true, autosave: true
+#      has_and_belongs_to_many :prescriptions
 
       default_scope -> { order(active: :desc, date: :desc) }
 
@@ -20,7 +21,7 @@ class Medication < ApplicationRecord
   end
 
   def active_str
-	  self.active? ? 'Yes':'No'
+    self.active? ? 'Yes':'No'
   end
 
   def default_values

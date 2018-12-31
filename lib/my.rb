@@ -315,6 +315,53 @@ end # EDT module
     return pdf
   end
   
+# Build prescription pdf for given visit  
+  def build_prescription ( pr )
+
+    today  = Date.today.strftime "%B %d, %Y"
+    pat = pr.patient
+    doc = pr.doctor
+    visit = pr.visit
+
+    if pat.blank?
+      pdf.text "Patient not found in DB", size: 14, :align => :center
+      return pdf
+    end
+
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,20.mm])
+    pdf.font "Helvetica"
+    pdf.font_size 14
+
+    pdf.text CLINIC_NAME,  style: :bold, align: :center, size: 16
+    pdf.text CLINIC_ADDR, align: :center 
+    pdf.text "t: #{CLINIC_PHONE} f: #{CLINIC_FAX}",  align: :center
+    
+    pdf.move_down 10.mm
+
+    pdf.text "For #{pat.full_name}"
+    pdf.text "Address:  #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal}"
+    pdf.text "HCN: #{pat.ohip_num} #{pat.ohip_ver} (#{pat.hin_prov})"
+
+    pdf.move_down 10.mm
+    pdf.text "Medications:", style: :bold
+    pdf.move_down 5.mm
+    pr.med_list.each_with_index do |med,i|
+	    qty = "Qty: #{pr.aqty[i]}" if !pr.aqty[i].blank?
+	    dur = "Dur: #{pr.aduration[i]}" if !pr.aduration[i].blank?
+	    rep = "Rep: #{pr.arepeats[i]}" if !pr.arepeats[i].blank?
+	    pdf.text "#{i+1} : #{med.name} #{med.strength} #{med.route} (#{med.dose} #{med.format}) #{med.freq} #{qty} #{dur} #{rep}"
+    	    pdf.move_down 5.mm
+    end
+
+    pdf.move_down 20.mm
+    pdf.text today
+    pdf.text "Dr. #{pr.doctor.lname}"
+    pdf.text "BSc. MD. CCFP"
+    pdf.text "PHY. # #{doc.provider_no} CPSO #{doc.cpso_num}"
+
+    return pdf
+  end
+
 # Build invoice for given patient  
   def build_invoice ( inv )
 
@@ -346,7 +393,6 @@ end # EDT module
                    Date           Code         Qty       Charges     Payments     Balance   
                   #{servstr} 
                   "
-    pdf.font "Courier"
     pdf.stroke_rectangle [0,240.mm], 200.mm,113.mm
     pdf.text 'Invoice for Professional Services', size: 14, :align => :center
     
@@ -773,6 +819,33 @@ end # EDT module
          end
        end
     end
+
+    return pdf
+  end
+
+  def build_visit_history ( pat )
+    date = Date.today.strftime("%d-%b-%Y") 
+
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,20.mm,20.mm])
+    pdf.font "Courier"
+    pdf.font_size 12
+
+    pdf.text CLINIC_NAME, align: :center, style: :bold, size: 14
+    pdf.text CLINIC_ADDR, align: :center 
+    pdf.text "tel: #{CLINIC_PHONE} fax: #{CLINIC_FAX}", align: :center, size: 10
+    pdf.move_down 10.mm
+
+    pdf.text "History of visits of the patient #{pat.full_name} to the clinic:", style: :bold
+
+    pdf.move_down 5.mm
+    pat.visits.each do |v|
+	 pdf.text "#{v.entry_ts}  Dr. #{v.doctor.lname}"
+    end
+    
+    pdf.move_down 20.mm
+    pdf.text "Signature:   _______________________________"
+    pdf.move_down 5.mm
+    pdf.text "Date: #{date}"
 
     return pdf
   end

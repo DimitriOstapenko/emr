@@ -1,17 +1,13 @@
 class VaccinesController < ApplicationController
 	before_action :logged_in_user 
         before_action :admin_user, only: :destroy
+	before_action :set_vaccine, only: [:show, :edit, :update, :destroy]
 
   def index
       @vaccines = Vaccine.paginate(page: params[:page], per_page: $per_page)
   end
 
   def show
-    if Vaccine.exists?(params[:id])
-       @vaccine = Vaccine.find(params[:id])
-    else
-       redirect_to vaccines_path
-    end
   end
 
   def new
@@ -29,17 +25,15 @@ class VaccinesController < ApplicationController
   end
 
   def destroy
-    Vaccine.find(params[:id]).destroy
+    @vaccine.destroy
     flash[:success] = "Vaccine deleted"
     redirect_back(fallback_location: vaccines_path )
   end
 
   def edit
-    @vaccine = Vaccine.find(params[:id])
   end
 
   def update
-    @vaccine = Vaccine.find(params[:id])
     if @vaccine.update_attributes(vaccine_params)
       flash[:success] = "Vaccine updated"
       redirect_to vaccines_url
@@ -67,6 +61,11 @@ private
   def vaccine_params
           params.require(:vaccine).permit(:name, :target, :route, :dose, :din, :notes)
   end
+
+  def set_vaccine
+    @vaccine = Vaccine.find(params[:id])
+  end
+
 
 # Find vaccine by last name or health card number, depending on input format  
   def myfind (str)

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  visit_id: 1
+  meds: MyText
+  repeats: 1
+  qty: 1
+  note: MyText
+
+two:
+  visit_id: 1
+  meds: MyText
+  repeats: 1
+  qty: 1
+  note: MyText

@@ -46,23 +46,27 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor' %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', hint: 'Required' %>
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service", include_blank: 'None' %> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc'> </span>
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required' %> 
   </div>
 
-  <div class="col-sm-2">
-  <%= f.input :proc_code2, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service", include_blank: 'None'  %>
+  <div class="col-sm-2"> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc2'> </span>
+  <%= f.input :proc_code2, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None'  %>
   </div>
 
-  <div class="col-sm-2">
-  <%= f.input :proc_code3, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service", include_blank: 'None' %>
+  <div class="col-sm-2"> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc3'> </span>
+  <%= f.input :proc_code3, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None' %>
   </div>
 
-  <div class="col-sm-2">
-  <%= f.input :proc_code4, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: "Service", include_blank: 'None'  %>
+  <div class="col-sm-2"> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc4'> </span>
+  <%= f.input :proc_code4, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None'  %>
   </div>
 </div
 
@@ -94,35 +98,16 @@
 
 <div class="row">
   <div class="col-sm-2">
-  <%= f.input :duration, collection: DURATIONS, default: 10  %>
+  <%# f.input :duration, collection: DURATIONS, default: 10  %>
   </div>
   <div class="col-sm-2 ">
-  <%= f.input :vis_type, collection: VISIT_TYPES, placeholder: 'Visit type', default: 'WS', label: 'Vis Type' %>
+  <%# f.input :vis_type, collection: VISIT_TYPES, placeholder: 'Visit type', default: 'WS', label: 'Vis Type' %>
   </div>
   
-  <div class="col-sm-2">
-  <%= f.label "Bill Type" %>
-  <div id="my_bil_type"> <%= @visit.bil_type_str %></div>
   <%= f.hidden_field :bil_type %>
-  </div>
-
-  <div class="col-sm-2">
-  <%= f.label "Bill Type" %>
-  <div id="my_bil_type2"> <%= @visit.bil_type2_str %></div>
   <%= f.hidden_field :bil_type2  %>
-  </div>
-
-  <div class="col-sm-2">
-  <%= f.label "Bill Type" %>
-  <div id="my_bil_type3"> <%= @visit.bil_type3_str %></div>
   <%= f.hidden_field :bil_type3  %>
-  </div>
-
-  <div class="col-sm-2">
-  <%= f.label "Bill Type" %>
-  <div id="my_bil_type4"> <%= @visit.bil_type4_str %></div>
   <%= f.hidden_field :bil_type4  %>
-  </div>
 </div>
 
   <!-- Row 4 -->
@@ -153,7 +138,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :reason, as: :text, rows: 2, placeholder: 'Reason for visit', label: false %>
+  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, input_html: {rows:3} %>
   </div>
 </div>
 
@@ -172,7 +157,7 @@
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
-  <%= f.input :notes, rows:4, placeholder: 'Notes', label: false %>
+     <%= f.input :notes, placeholder: 'Notes', label: false, input_html: {rows:6} %>
   </div>
 </div>
 
@@ -184,11 +169,9 @@
 
 <div class="spacer-10"></div>
 
-<div class="row">
-  <div class="col-sm-12"> 
-    <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
-  </div>
-</div>
+<% unless action_name == 'show' %>
+    <%= f.button :submit, yield(:button_text), class: "btn btn-primary btn-block" %>
+<% end %>
 
 </div>
 
@@ -221,8 +204,6 @@ $(pc).change(function () {
   } else {
     var bt = document.getElementById('visit_bil_type');
     $(bt).val(null);
-    var v = document.getElementById('my_bil_type');
-    v.innerHTML = '';
   }
 });
 
@@ -233,8 +214,6 @@ $(pc2).change(function () {
   } else {
     var bt2 = document.getElementById('visit_bil_type2');
     $(bt2).val(null);
-    var v2 = document.getElementById('my_bil_type2');	  
-    v2.innerHTML = '';
   }
 });
 
@@ -245,8 +224,6 @@ $(pc3).change(function () {
   } else {
     var bt3 = document.getElementById('visit_bil_type3');
     $(bt3).val(null);
-    var v3 = document.getElementById('my_bil_type3');	  
-    v3.innerHTML = '';
   }
 });
 
@@ -257,8 +234,6 @@ $(pc4).change(function () {
   } else {
     var bt4 = document.getElementById('visit_bil_type4');
     $(bt4).val(null);
-    var v4 = document.getElementById('my_bil_type4');	  
-    v4.innerHTML = '';
   }
 });
 
@@ -278,18 +253,18 @@ function get_bil_type ( code, suff ) {
 
 function set_btype( proc, suff ) {
   var v = document.getElementById('visit_bil_type'+suff);
-  var v2 = document.getElementById('my_bil_type'+suff);
+  var v2 = document.getElementById('svc'+suff);
   if ( proc.ptype == '1') {
 	var btype = <%= BILLING_TYPES[@visit.pat_btype] %>; 	
         $(v).val(btype);
 	var btype_str = <%= @visit.pat_btype.to_s.inspect.html_safe %> || 'HCP';
-	v2.innerHTML = btype_str;
+	$(v2).html('('+btype_str+')');
   } else if ( proc.ptype == '2') {
 	$(v).val('4');
-	v2.innerHTML = 'CSH';
+	$(v2).html('(Cash)');
   } else {
         $(v).val(null);
-	v2.innerHTML = '';
+	$(v2).html('');
   }
 }
 

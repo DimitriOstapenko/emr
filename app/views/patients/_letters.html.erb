@@ -5,7 +5,7 @@
         <th></th><th>From</th><th>To</th><th>Date</th><th>Title</th><th></th>
         <% @patient.letters.each do |letter| %>
         <tr>
-          <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+          <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
           <td> <%= letter.from %> </td> 
           <td> <%= letter.to %> </td> 
           <td> <%= letter.date %> </td> 

@@ -1,0 +1,20 @@
+<% provide(:title, @prescription.id) %>
+<%= render "shared/modal" %>
+
+<div class="spacer-20"></div>
+
+<div class="col-sm-6 col-sm-offset-3">
+	<h3 class='display-1'>Patient <%= link_to @patient.full_name, @patient %> Visit of <%= link_to @visit.entry_ts.to_date, patient_visit_path(@patient,@visit) %>: Prescription <%= @prescription.id %> - details  </h3>
+<pre>
+  <b>Medications: </b>
+  <% @prescription.med_list.each_with_index do |med,i| %>
+       <%= "#{i+1} : #{med.name} #{med.strength} #{med.freq}  Quantity:#{@prescription.aqty[i]} Repeats: #{@prescription.arepeats[i]}" %>
+  <% end %>
+
+  <b>Notes: </b>
+       <%= @prescription.note %>
+</pre>
+
+</div>
+
+

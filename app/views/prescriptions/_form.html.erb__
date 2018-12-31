@@ -1,0 +1,43 @@
+<%= simple_form_for [@patient, @prescription],  :html => {:multipart => true} do |f| %> 
+  <%= render 'shared/error_messages', object: f.object %>
+  
+<%= f.input :visit_id, as: :hidden, value: @visit.id %>
+<div class="well">
+<div class="row">
+  <h4><div class="col-sm-1"></div><div class="col-sm-7">Medication</div><div class="col-sm-2">Qty</div><div class="col-sm-2">Repeats</div></h4>
+</div>
+<hr>
+
+<% @patient.med_hash.each_with_index do |(key,val),i| %>
+<div class="row">
+  <div class="col-sm-8 checkbox-list">
+  <div class="col-sm-8">
+     <% checked = @prescription.ameds.include?(val.to_s) %>
+     <%= f.input_field :meds, as: :boolean, label: key, multiple: true, input_html: {checked: checked } %>
+     <%= key %>
+  </div>
+  </div>
+  <div class="col-sm-2">
+     <%= f.input_field :qty, label: false, multiple: true, value: YAML.load(@prescription.qty)[i] %>
+  </div>
+  <div class="col-sm-2">
+     <%= f.input_field :repeats, label: false, multiple: true, value: YAML.load(@prescription.repeats)[i]   %> 
+  </div>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-12">
+     <%= f.input :note %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+    <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
+  </div>
+</div>
+</div>
+
+<% end %>
+

@@ -4,7 +4,7 @@ class VisitsController < ApplicationController
 
 	before_action :logged_in_user 
 #        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
-#	before_action :admin_user, only: :destroy
+	before_action :admin_user, only: :destroy
 
   def index (defdate = Date.today )
     date = params[:date] || defdate
@@ -94,6 +94,7 @@ end
 
   def show
      @visit = Visit.find(params[:id])
+    @patient = @visit.pat
   end
 
    def sendclaim
@@ -132,11 +133,6 @@ end
 
        respond_to(:html)
        redirect_to patient_visit_path
-  end
-
-  def prescription
-       @visit = Visit.find(params[:id])
-       @patient = Patient.find(@visit.patient_id)
   end
 
   def daysheet (defdate = Date.today)

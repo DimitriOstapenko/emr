@@ -171,6 +171,20 @@ class PatientsController < ApplicationController
     flash[:info] = params
   end
 
+  def visit_history
+    @patient = Patient.find(params[:id])
+    @pdf  = build_visit_history(@patient)
+    respond_to do |format|
+        format.html do
+          send_data @pdf.render,
+	    filename: "#{@patient.full_name}_visits.pdf",
+            type: 'application/pdf',
+            disposition: 'inline'
+        end
+	format.js { @pdf.render_file  @patient.visit_history_file }
+    end
+  end
+
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 

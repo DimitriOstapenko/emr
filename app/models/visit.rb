@@ -2,6 +2,7 @@ class Visit < ApplicationRecord
 
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
   has_many :documents, dependent: :destroy, inverse_of: :visit
+
   accepts_nested_attributes_for :documents, :allow_destroy => true, reject_if: proc { |attributes| attributes['document'].blank? }
   
   include SessionsHelper 
