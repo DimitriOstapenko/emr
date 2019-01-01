@@ -31,27 +31,32 @@ end
 
 # List of objects
 def med_list
-  YAML.load(self.meds).reject(&:empty?).map {|m| Medication.find(m)} rescue []
+#  YAML.load(self.meds).reject(&:empty?).map {|m| Medication.find(m)} rescue []
+  self.meds.reject(&:empty?).map {|m| Medication.find(m)} rescue []
 end
 
 # meds column string converted to array (ids of meds in medications table)
 def ameds
-  YAML.load(self.meds).reject(&:empty?) rescue [] 
+#  YAML.load(self.meds).reject(&:empty?) rescue [] 
+  self.meds.reject(&:empty?) rescue [] 
 end
 
 # qty string converted to array
 def aqty
-  YAML.load(self.qty).reject(&:empty?) rescue []
+#  YAML.load(self.qty).reject(&:empty?) rescue []
+  self.qty.reject(&:empty?) rescue []
 end
 
 # repeats string converted to array
 def arepeats
-  YAML.load(self.repeats).reject(&:empty?) rescue []
+#  YAML.load(self.repeats).reject(&:empty?) rescue []
+   self.repeats.reject(&:empty?) rescue []
 end
 
 # duration string converted to array
 def aduration
-  YAML.load(self.duration).reject(&:empty?) rescue []
+#  YAML.load(self.duration).reject(&:empty?) rescue []
+  self.duration.reject(&:empty?) rescue []
 end
 
 private 

@@ -2,7 +2,7 @@ class CreatePrescriptions < ActiveRecord::Migration[5.2]
   def change
     create_table :prescriptions do |t|
       t.integer :visit_id
-      t.text :meds, array: true, default: [].to_yaml
+      t.text :meds, array: true, default: []
       t.integer :repeats
       t.integer :qty
       t.integer :duration

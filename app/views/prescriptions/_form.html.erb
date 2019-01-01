@@ -18,13 +18,13 @@
 
 <% (@patient.med_hash).each_with_index do |(key,val),i| %>
   <div class="col-sm-1">
-     <%= f.input_field :qty, label: false, multiple: true, value: YAML.load(@prescription.qty)[i] %>
+     <%= f.input_field :qty, label: false, multiple: true, value: @prescription.qty[i] %> <%#YAML.load(@prescription.qty)[i] %>
   </div>
   <div class="col-sm-1">
-     <%= f.input_field :repeats, label: false, multiple: true, value: YAML.load(@prescription.repeats)[i]   %> 
+     <%= f.input_field :repeats, label: false, multiple: true, value:  @prescription.repeats[i] %> 
   </div>
   <div class="col-sm-2" style="padding-top: 1px">
-     <%= f.input_field :duration, label: false, multiple: true, value: YAML.load(@prescription.duration)[i]   %> 
+     <%= f.input_field :duration, label: false, multiple: true, value: @prescription.duration[i] %> 
   </div>
 <% end %>
 </div>
