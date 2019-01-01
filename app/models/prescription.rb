@@ -31,34 +31,47 @@ end
 
 # List of objects
 def med_list
-#  YAML.load(self.meds).reject(&:empty?).map {|m| Medication.find(m)} rescue []
-  self.meds.reject(&:empty?).map {|m| Medication.find(m)} rescue []
+  if self.meds.class == String # SQLITE arrays are strings
+    YAML.load(self.meds).reject(&:empty?).map {|m| Medication.find(m)} rescue []
+  else
+    self.meds.reject(&:empty?).map {|m| Medication.find(m)} rescue []
+  end
 end
 
-# meds column string converted to array (ids of meds in medications table)
+# ids of meds in medications table
 def ameds
-#  YAML.load(self.meds).reject(&:empty?) rescue [] 
-  self.meds.reject(&:empty?) rescue [] 
+  if self.meds.class == String
+    YAML.load(self.meds).reject(&:empty?) rescue [] 
+  else
+    self.meds.reject(&:empty?) rescue [] 
+  end
 end
 
 # qty string converted to array
 def aqty
-#  YAML.load(self.qty).reject(&:empty?) rescue []
-  self.qty.reject(&:empty?) rescue []
+  if self.qty.class == String
+    YAML.load(self.qty).reject(&:empty?) rescue []
+  else
+    self.qty.reject(&:empty?) rescue []
+  end
 end
 
 # repeats string converted to array
 def arepeats
-#  YAML.load(self.repeats).reject(&:empty?) rescue []
-   self.repeats.reject(&:empty?) rescue []
+  if self.repeats.class == String
+    YAML.load(self.repeats).reject(&:empty?) rescue []
+  else
+    self.repeats.reject(&:empty?) rescue []
+  end
 end
 
 # duration string converted to array
 def aduration
-#  YAML.load(self.duration).reject(&:empty?) rescue []
-  self.duration.reject(&:empty?) rescue []
+  if self.duration.class == String
+    YAML.load(self.duration).reject(&:empty?) rescue []
+  else
+    self.duration.reject(&:empty?) rescue []
+  end
 end
-
-private 
 
 end
