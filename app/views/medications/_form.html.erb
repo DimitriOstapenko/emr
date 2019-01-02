@@ -60,7 +60,8 @@
 <% end %>
 
 <% if @patient.meds.present? %>
-<font color='red'><i> Old Medications to be deleted after conversion (medication field in patient profile): <%= @patient.meds %> </i></font>
+<font color='red'><i> Old Medications to be deleted after conversion (medication field in patient profile): <%= @patient.meds %> </i></font><p>
+<font color='red'><i> You can add missing medications in <%= link_to "Ref/Medications", drugs_path %> </i></font>
 <% end %>
 
 <script>

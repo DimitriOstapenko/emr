@@ -1,3 +1,4 @@
+// <left> & <right> arrow keys pagination
 (function($) {
     $(document).keydown(handleKey);
     function handleKey(e) {

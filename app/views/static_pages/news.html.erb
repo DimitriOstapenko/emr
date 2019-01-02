@@ -2,59 +2,61 @@
 	
   <h1> Recent changes to Walk-In EMR </h1>
 
-	<div class="panel panel-default">
-		<div class="panel-body news-panel-body">
-			<li> RA Messages page now shows billing cycle totals for claims, services as well as total amounts submitted and paid </li> 
-			<li> Help section updated (staff access level)</li>
-			<li> 'Assessed' and 'With Doctor' statuses added. This will be used for better patient tracking as well as in wait time calculations and Doctors pages </li> 
-			<li> Patients charts are now available in Docs drop-down menu </li>
-			<li> Keyboard <left> <right> arrows can now be used for navigation in pages with page selector </li>
-			<li> Scanned Day Charts now cover period 20-Jan-2006 - 31-Aug-2007 </li>
-			<li> Doctor table reviewed. Added WSIB# and accepts_new_patients. District and Specialty are now drop-downs populated from coresponding collections </li> 
-			<li> Letters and Referreals are now form-driven; pdf's are genereted on the fly and stored on a server. Edit replaces the document </li>
-			<li> Invoices, Referrals and Letters are now associated with patient, but are also accessible through Docs drop-down </li>
-			<li> You can now change status of visits with errors (there’s one in day sheet) to Ready to Bill once error is fixed.
-				Error code in shown on visit page. Description available on mouse over</li>
-			<li> Visit form now pops up when new visit is created to allow date/time entry if necessary. Please use with caution</li>
-			<li> Billed and paid for visits now can be added to. Theres new button on visit form for such visits called “Add Cash Service”</li>
-			<li> 3 User categories are now supported: User, Doctor and Admin. Each one has different views and permissions. Account-related email functionality added </li> 
-			<li> End of day reports can only be generated when billing is done </li> 
-			<li> Doctor selection drop-down moved to the header. Sticky until changed </li>
-			<li> No new visits for Deceased patients </li>
-			<li> Card swipe now works in both daysheet and patients pages </li>
-			<li> Pop-ups are phased in instead of tabs throughout </li>			
-			<li> PDF documents can now be attached to the visit. Amazon S3 cloud service is used for storage.</li>
-			<li> Validation added to allow only 1 visit per patient per day</li>
-			<li> Delete links removed from day sheet - use "cancelled" status instead</li>
-			<li> Validation added for visits requiring diagnosis </li>
-			<li> date/time input added for new visits</li>
-			<li> Logout link moved down to footer </li>
-			<li> Pdf Reports are now generated right after creation and downloaded to client; No intermediate Show Report step </li>
-			<li> Pay stubs are now generated in <b>Docs>Paystubs</b> if new RA file was processed and paid claims imported for the latest billing cycle </li>
-			<li> Chart column link added to patient index. Link will be shown if chart is available </li>
-			<li> For processed claims, visit status will now show the link to paid claim, if one is available </li>
-			<li> Separate section added for Reference links in the header. Section includes: procedures, diagnoses, Insurance providers, Medications and Vaccines </li>
-			<li> RA file is now imported from the ministry site. Claims and services are available for the last 2 billing cycles </li>
-			<li> Previously unbilled visits are shown in daysheet now </li>
-			<li> 4 new 3rd Party procedures: G10, G20, G30, G50. Use for cash services with multiple units to get the right amount. Receipt will show reason for the visit in description and visit notes in notes box </li>
-			<li> Patient search box now supports searches by full or partial ohip number, last name[, first name], last name can now contain spaces, search by DOB: dd-mm-yyyy or dd-mmm-yyyy (abbrev string or digits for month) </li>
-			<li> Daily charts added until May 15 2006 </li>
-			<li> Merged patients records with and without ohip number </li>
-			<li> Address label added to patients index page </li>
-			<li> All forms open in a separate tab called "Form"; Labels open in "Label" tab </li>
-			<li> Invoices: now attributed to patients, not visits. Go to patient profile and click on "Create Invoice" button. PDF files are stored on the server. "Invoice" billing type removed from visit form </li>
-			<li> "Reports" link in a header renamed to "Documents" drop-down. It now has 3 categories: Reports, Invoices and Daily Charts </li>
-			<li> Patient's age is now shown in months or years. Negative integer is used internally to denote age in months. Please alert me if you see negative numbers for age anywhere </li>
-			<li> Label modified: different, larger font, smaller width, middle name is now omitted </li>
-			<li> Links added to day sheet for current day only: Label, Form. Both open in a new tab  </li>
-			<li> Delete links for visits are not accessible anymore in previous days </li>
-			<li> Visit status 'Error' added to mark visits with errors found in Cab.md/MOH </li>
-			<li> 'Clinic' patient type added </li>
-			<li> When card is swiped, search is now performed for patient with the same last name and DOB. Warning message issued if match found </li>
-			<li> Card fields are now compared with our records. Warning message and edit form are shown if mismatch is found</li>
-		</div>
-	</div>
-	
+<ul>
+	<li> Patient Visit History can now be printed by using <Print Visit History> button on patient profile page, under the list of visits </li> 
+	<li> Prescriptions can now be generated from patient profile page if patient has new medication list (see below). If visit is present for the given date, prescription will be associated with it, otherwise prescription is created without visit reference. More than one prescription is allowed for a visit. Prescription PDF files are stored on a server and can be retrieved later if needed. Prescription list will appear on patient profile page if there's at least one prescription generated for a patient </li>
+	<li> Medications are now added from patient profile by using <+Medication> button and include strength, format, route, dose. Added medications will appear in <medications>  list on the same page.  Search is supported by brand or generic name. Each active medication can be marked as such.  Old medication field (text field in patient profile) will be removed once all medications are converted to new format. Patient list of medications is used in prescriptions.
+	</li>
+<li> RA Messages page now shows billing cycle totals for claims, services as well as total amounts submitted and paid </li> 
+<li> Help section updated (staff access level)</li>
+<li> 'Assessed' and 'With Doctor' statuses added. This will be used for better patient tracking as well as in wait time calculations and Doctors pages </li> 
+<li> Patients charts are now available in Docs drop-down menu </li>
+<li> Keyboard <left> <right> arrows can now be used for navigation in pages with page selector </li>
+<li> Scanned Day Charts now cover period 20-Jan-2006 - 31-Aug-2007 </li>
+<li> Doctor table reviewed. Added WSIB# and accepts_new_patients. District and Specialty are now drop-downs populated from coresponding collections </li> 
+<li> Letters and Referreals are now form-driven; pdf's are genereted on the fly and stored on a server. Edit replaces the document </li>
+<li> Invoices, Referrals and Letters are now associated with patient, but are also accessible through Docs drop-down </li>
+<li> You can now change status of visits with errors (there’s one in day sheet) to Ready to Bill once error is fixed.
+	Error code in shown on visit page. Description available on mouse over</li>
+<li> Visit form now pops up when new visit is created to allow date/time entry if necessary. Please use with caution</li>
+<li> Billed and paid for visits now can be added to. Theres new button on visit form for such visits called “Add Cash Service”</li>
+<li> 3 User categories are now supported: User, Doctor and Admin. Each one has different views and permissions. Account-related email functionality added </li> 
+<li> End of day reports can only be generated when billing is done </li> 
+<li> Doctor selection drop-down moved to the header. Sticky until changed </li>
+<li> No new visits for Deceased patients </li>
+<li> Card swipe now works in both daysheet and patients pages </li>
+<li> Pop-ups are phased in instead of tabs throughout </li>			
+<li> PDF documents can now be attached to the visit. Amazon S3 cloud service is used for storage.</li>
+<li> Validation added to allow only 1 visit per patient per day</li>
+<li> Delete links removed from day sheet - use "cancelled" status instead</li>
+<li> Validation added for visits requiring diagnosis </li>
+<li> date/time input added for new visits</li>
+<li> Logout link moved down to footer </li>
+<li> Pdf Reports are now generated right after creation and downloaded to client; No intermediate Show Report step </li>
+<li> Pay stubs are now generated in <b>Docs>Paystubs</b> if new RA file was processed and paid claims imported for the latest billing cycle </li>
+<li> Chart column link added to patient index. Link will be shown if chart is available </li>
+<li> For processed claims, visit status will now show the link to paid claim, if one is available </li>
+<li> Separate section added for Reference links in the header. Section includes: procedures, diagnoses, Insurance providers, Medications and Vaccines </li>
+<li> RA file is now imported from the ministry site. Claims and services are available for the last 2 billing cycles </li>
+<li> Previously unbilled visits are shown in daysheet now </li>
+<li> 4 new 3rd Party procedures: G10, G20, G30, G50. Use for cash services with multiple units to get the right amount. Receipt will show reason for the visit in description and visit notes in notes box </li>
+<li> Patient search box now supports searches by full or partial ohip number, last name[, first name], last name can now contain spaces, search by DOB: dd-mm-yyyy or dd-mmm-yyyy (abbrev string or digits for month) </li>
+<li> Daily charts added until May 15 2006 </li>
+<li> Merged patients records with and without ohip number </li>
+<li> Address label added to patients index page </li>
+<li> All forms open in a separate tab called "Form"; Labels open in "Label" tab </li>
+<li> Invoices: now attributed to patients, not visits. Go to patient profile and click on "Create Invoice" button. PDF files are stored on the server. "Invoice" billing type removed from visit form </li>
+<li> "Reports" link in a header renamed to "Documents" drop-down. It now has 3 categories: Reports, Invoices and Daily Charts </li>
+<li> Patient's age is now shown in months or years. Negative integer is used internally to denote age in months. Please alert me if you see negative numbers for age anywhere </li>
+<li> Label modified: different, larger font, smaller width, middle name is now omitted </li>
+<li> Links added to day sheet for current day only: Label, Form. Both open in a new tab  </li>
+<li> Delete links for visits are not accessible anymore in previous days </li>
+<li> Visit status 'Error' added to mark visits with errors found in Cab.md/MOH </li>
+<li> 'Clinic' patient type added </li>
+<li> When card is swiped, search is now performed for patient with the same last name and DOB. Warning message issued if match found </li>
+<li> Card fields are now compared with our records. Warning message and edit form are shown if mismatch is found</li>
+</ul>
+
 	Please email <a href="mailto:dosta@me.com?subject=EMR staff Inquiry&cc=ostadim1@gmail.com">Dimitri</a> if you have any questions or concerns about this website. 
 	If there's a problem, please provide screenshot, short description and health card string swiped right into email message body.
 	 

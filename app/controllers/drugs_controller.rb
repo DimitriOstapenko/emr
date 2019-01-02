@@ -24,6 +24,10 @@ class DrugsController < ApplicationController
   end
 
   def show
+    respond_to do |format|
+      format.json { render json: @drug }  # need this in /medications/_form
+      format.html
+    end
   end
 
   def edit
