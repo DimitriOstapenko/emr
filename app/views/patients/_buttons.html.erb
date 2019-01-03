@@ -1,6 +1,6 @@
 <% unless @patient.pat_type == DECEASED_PATIENT %>
 <div id="new_visit" class="col-sm-2 col-md-1">
-<%= button_to 'New Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get'  %> </td>
+<%= button_to 'New Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get'  %> 
 </div> 
 <% end %>
 

@@ -73,11 +73,11 @@ Medications:
           </tbody>
 	</table>
 	<div class="col-sm-9"><%= will_paginate @visits %></div>
-	<div class="col-sm-3 col-md-3" style="padding-top: 10px"> <%= button_to "Print Visit History", visit_history_patient_path(@patient),  remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info btn-sm", method: 'get' %> </div>
+	<div class="col-sm-3 col-md-3" style="padding-top: 10px"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info btn-lg ", method: 'get' %> </div>
     <% end %>
   </div>
 
-<div class="col-md-12" style="position: relative; bottom: 20px; top: 5px;">
+<div class="col-sm-12 " style="position: relative; bottom: 20px; top: 5px;">
 <div class="row">  
    <%= render "buttons", remote: remote %> 
 </div>

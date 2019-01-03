@@ -99,7 +99,7 @@
  
  <% if @visit.billed_or_paid? %>
  <div class="col-sm-3 col-md-2">
- <%= button_to "Add Cash Service", addcash_patient_visit_path(@patient,@visit), class: "btn btn-primary active btn-lg" %>
+ <%= button_to "Add Cash Service", addcash_patient_visit_path(@patient,@visit), class: "btn btn-primary active btn-lg", method: :get %>
  </div>
  <% end %>
  
