@@ -50,7 +50,7 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.label "Service" %> <span class='form-text text-muted' id='svc'> </span>
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc'></span>
   <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required' %> 
   </div>
 
@@ -74,7 +74,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: 'Diagnosis' %> 
+  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis %> 
   </div>
 
   <div class="col-sm-2">
@@ -142,18 +142,6 @@
   </div>
 </div>
 
-<!-- Row 6: uploaded docs -->
-<!--
-<div class="row">
-  <div class="col-sm-12"> 
-      <% @visit.documents.each do |d| 
-         next unless d.document.file.present? %>
-      <%= link_to d.document.file.filename, d.document.url.to_s %>
-      <% end %>
-  </div>
-</div>
--->
-
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
@@ -180,7 +168,6 @@
 <script>
 $(document).ready(function() {
 
-//    $.fn.select2.defaults.set( "theme", "classic" );
     $("#visit_diag_code").select2();
     $('#visit_proc_code').select2();
     $('#visit_proc_code2').select2();

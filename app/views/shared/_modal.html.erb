@@ -2,9 +2,17 @@
 
 <% modifier = (defined?(size)).nil? ? '': 'modal-'+size %>
 
-<div id="modal-window" class="modal fade  printable autoprint" role="document" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog <%= modifier %>" role="dialog">
+<div id="modal-window" class="modal fade printable autoprint" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1">
+  <div class="modal-dialog <%= modifier %>" role="document">
     <div class="modal-content"></div>
   </div>
 </div>
+
+<% unless modifier.present? %>
+<div id="modal-window-lg" class="modal fade printable autoprint" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content"></div>
+  </div>
+</div>
+<% end %>
 

@@ -9,7 +9,7 @@
 	<td><%= patient.dob %> </td>
 	<td><%= num_to_phone(patient.phone) %> </td> 
         <td><%= link_to '<i class="glyphicon glyphicon-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
-        <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+        <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window-lg',  method: 'get'  %></td>
 
   	<% if current_user.admin?  %>
           <td>  <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> 

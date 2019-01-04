@@ -204,6 +204,13 @@ td.hlight {
   }
 }
 
+caption {
+  text-transform: uppercase;
+  font-weight: bold;
+  padding-bottom: 0;
+  padding-left: 10px;
+}
+
 /* footer */
 
 footer {
@@ -688,6 +695,7 @@ card > hr {
 .table-responsive {
   overflow-y: visible !important;
 }
+
 
 // Move page down to make anchors visible
 :target {

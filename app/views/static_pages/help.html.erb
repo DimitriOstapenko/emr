@@ -245,31 +245,49 @@ There are 7 submenus in this Drop-Down:
  <dl class="row">
 	 <a id="procedures"></a>
          <dt class="col-sm-1">Procedures (Services):</dt>
-	 <dd class="col-sm-11">Pages in this submenu allow clinic staff to manage services used by the system. There are 2 types of services: insured and non-insured. Insured services require valid service code. Non-insured services can have any unique code assigned to them. There's also description and fee associated with each service. "Active" attribute is used to control which services will show in drop down boxes during visit processing.  </dd>
+	 <dd class="col-sm-11">Pages in this submenu allow clinic staff to manage services used by the system. There are 2 types of services: insured and non-insured. Insured services require valid service code. Non-insured services can have any unique code assigned to them. There's also description and fee associated with each service. "Active" attribute is used to control which services will show in drop down boxes during visit entry stage. Use <Add Procedure> button at the bottom of the page to add new procedure </dd>
+	 
+<p>&nbsp;</p>
+          <center><img src="/images/help/services.png" width=600></center>
  <p>&nbsp;</p>
+
 	 <a id="diagnoses"></a>
     	<dt class="col-sm-1">Diagnoses</dt>
-	<dd>This submenu is used to manage Diagnosis known to the system.</dd>
+	<dd>This submenu is used to manage Diagnosis known to the system. Page lets you edit existing diagnosis' attributes: code, description, problem type and active flag. Only Active diagnoses appear in visit's diagnosis drop-down menu. New diagnoses can be entered into the system by using <Add Diagnosis> button  at the bottom of the page. </dd>
+ <p>&nbsp;</p>
+          <center><img src="/images/help/diagnoses.png" width=600></center>
  <p>&nbsp;</p>
 	 <a id="ins_providers"></a>
     	<dt class="col-sm-1">Insurance Providers</dt>
 	<dd>Pages in this submenu are used to manage insurance providers and law offices known to the system. This information is used form invoice generation.</dd>
  <p>&nbsp;</p>
+          <center><img src="/images/help/providers.png" width=600></center>
+ <p>&nbsp;</p>
 	 <a id="medications"></a>
     	<dt class="col-sm-1">Medications</dt>
 	<dd>Extensive list of known medications with description, dosage, format and other attributes is managed by this section of the system</dd>
+ <p>&nbsp;</p>
+          <center><img src="/images/help/drugs.png" width=600></center>
  <p>&nbsp;</p>
 	 <a id="vaccines"></a>
     	<dt class="col-sm-1">Vaccines</dt>
 	<dd>List of vaccines known to the system</dd>
  <p>&nbsp;</p>
+          <center><img src="/images/help/vaccines.png" width=600></center>
+ <p>&nbsp;</p>
 	 <a id="doctors"></a>
     	<dt class="col-sm-1">Doctors</dt>
-	<dd>List of local doctors with their addresses, phone numbers, locality, specialty and many other attributes. There's 2 categories of doctors: doctors working in the clinic and all the rest.  Billing information for all doctors working in the clinic must be entered into the system during initial setup. Contact information for all other doctors is used to generate refarrals, write letters etc. </dd>
+	<dd>Editable List of local doctors with their addresses, phone numbers, locality, specialty and many other attributes. There's 2 categories of doctors: doctors working in the clinic and all the rest.  Billing information for all doctors working in the clinic must be entered into the system during initial setup. Contact information for all other doctors is used to generate refarrals, write letters etc. </dd>
+ <p>&nbsp;</p>
+          <center><img src="/images/help/doctors.png" width=600></center>
  <p>&nbsp;</p>
 	 <a id="schedules"></a>
     	<dt class="col-sm-1">Schedules</dt>
-	<dd>This section of the system is used to generate doctor's schedule and save it into database. Information about each doctor's schedule is then used on public page to show doctor currently on duty and opening/closing times. </dd>
+	<dd>This section of the system is used to generate doctor's schedules. Once information is stored in DB it is then used on public page to show which doctor is currently on duty as well as schedule for the week and open hours. </dd>
+
+ <p>&nbsp;</p>
+          <center><img src="/images/help/schedules.png" width=500></center>
+ <p>&nbsp;</p>
  </dl>
  </dd>
 
@@ -338,6 +356,11 @@ This last menu groups various forms and has 5 submenus:
 	 <dd class="col-sm-11">Receipts for cash services are generated from <%= link_to "Visit Summary Page", "#visit_summary_page" %>. Just click [Receipt] button and PDF file will be generated based on patient/visit information 
 	 </dd>
  </dl>
+ 
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Prescription", "#prescription" %></dt>
+	 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under patient profile </dd>
+ </dl>
 
  <dl class="row">
          <dt class="col-sm-1"><%= link_to "Referral", "#patient_referral" %></dt>
@@ -348,8 +371,16 @@ This last menu groups various forms and has 5 submenus:
  <dl class="row">
          <dt class="col-sm-1"><%= link_to "Visit Form", "#visit_form" %></dt>
 	 <dd class="col-sm-11">This document contains most visit-related data. This form offers transition for clinics switching from traditional paper form setup to modern day all digital EMR. Although it can be generated based solely on data entered in <%= link_to  "edit visit form", "#edit_visit_form" %>, it's also possible to simply write notes on it. This practice is not recommended as it leads to extra work associated with document scanning and legibility problems as well as need for paper documents storage. Documents with hand-written notes are not easily searcheable and so they should be only used in cases when paper copy is required by 3rd party. </dd>
- </dd>
  </dl>
+
+ <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Visit History", "#visit_history_report" %></dt>
+	 <dd  class="col-sm-11"> Visit history report is generated from patient profile page by using <Print Visit History> button under the list of visits </dd>
+ </dl>
+
+ <p>&nbsp;</p>
+          <center><img src="/images/help/patient_buttons.png" width=800></center>
+ <p>&nbsp;</p>
 
  <!-- Forms reference -->
   <p> &nbsp; </p>
@@ -451,6 +482,20 @@ This last menu groups various forms and has 5 submenus:
   <dd class="col-sm-11">This form is generated for each unique visit of the patient to the clinic </dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/visit_form.png" width=500></center>
+  
+  <p> &nbsp; </p>
+  <a id="prescription"></a>
+    <dt class="col-sm-1">Prescription</dt>
+  <dd class="col-sm-11">Prescriptions are generated from patient profile page based on list of active medications</dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/prescription.png" width=500></center>
+  
+  <p> &nbsp; </p>
+  <a id="visit_history"></a>
+    <dt class="col-sm-1">Visit History</dt>
+    <dd class="col-sm-11">This report is accessible from patient profile page and shows full history of patient's visits to the clinic </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/visit_history.png" width=700></center>
 </div>
 
 &nbsp;

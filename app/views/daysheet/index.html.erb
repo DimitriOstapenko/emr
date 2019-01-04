@@ -3,7 +3,7 @@
 <% date = params[:date].to_date rescue Date.today %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 <% provide(:button_text, 'Save changes') %>
-<%= render "shared/modal", size: 'md' %>
+<%= render "shared/modal" %>
 
 <div id='page'>
 <table class="tbl table-hover" >

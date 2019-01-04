@@ -6,23 +6,19 @@
   <div class="col-sm-6">
   <%= f.input :name, hint: 'Required' %>
   <%= f.input :dose, hint: 'Required' %>
-  <%= f.input :strength, hint: 'Required' %>
-  <%= f.input :dur_cnt, label: 'Duration Count' %>
-  <%= f.input :amount %>
-  <%= f.input :status %>
-  <%# f.input :dnum %>
+  <%= f.input :strength, hint: 'Required', placeholder: 'g/mg/ml/u/%..' %>
   <%= f.input :generic, label: "Generic Name" %>
+  <%= f.input :dur_cnt, label: 'Duration Count' %>
+  <%= f.input :cost, label: 'Price' %>
   </div>
   
   <div class="col-sm-6">
-  <%# f.input :igcodes %>
-  <%= f.input :format, hint: 'Required' %>
+  <%= f.input :format, hint: 'Required', placeholder: 'Tab/Cap, Injectable, Cream, Patch ..' %>
   <%= f.input :route, hint: 'Required' %>
-  <%= f.input :freq, hint: 'Required' %>
-  <%= f.input :dur_unit, label: 'Duration Unit' %>
+  <%= f.input :freq, hint: 'Required', placeholder: 'bid/tid/qid.. 4/day..' %>
+  <%= f.input :amount, label: 'Total Number'%>
+  <%= f.input :dur_unit, label: 'Duration Unit', placeholder: 'Dy/Wk/Mo/Yr' %>
   <%= f.input :refills %>
-  <%= f.input :dtype, label: 'Type' %>
-  <%= f.input :cost %>
   </div>
 
   <div class="col-sm-12">

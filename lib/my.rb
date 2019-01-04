@@ -835,11 +835,11 @@ end # EDT module
     pdf.text "tel: #{CLINIC_PHONE} fax: #{CLINIC_FAX}", align: :center, size: 10
     pdf.move_down 10.mm
 
-    pdf.text "History of visits of the patient #{pat.full_name} to the clinic:", style: :bold
+    pdf.text "#{pat.full_name} : history of visits to the clinic:", style: :bold
 
     pdf.move_down 5.mm
     pat.visits.each do |v|
-	 pdf.text "#{v.entry_ts}  Dr. #{v.doctor.lname}"
+	    pdf.text "#{v.entry_ts.to_s.ljust(20,' ')}  Dr. #{v.doctor.lname.ljust(20,' ')}  Ref # #{v.id}"
     end
     
     pdf.move_down 20.mm
