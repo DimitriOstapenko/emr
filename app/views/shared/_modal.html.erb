@@ -1,6 +1,6 @@
-<!-- Modal size is set here:  modal-dialog modal-lg -->
+<!-- Modal size is set here:  modal-dialog modal-lg Default to large modal-->
 
-<% modifier = (defined?(size)).nil? ? '': 'modal-'+size %>
+<% modifier = (defined?(size)).nil? ? 'modal-lg': 'modal-'+size %>
 
 <div id="modal-window" class="modal fade printable autoprint" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1">
   <div class="modal-dialog <%= modifier %>" role="document">
@@ -8,11 +8,10 @@
   </div>
 </div>
 
-<% unless modifier.present? %>
-<div id="modal-window-lg" class="modal fade printable autoprint" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true" tabindex="-1">
-  <div class="modal-dialog modal-lg">
+<div id="modal-window-sm" class="modal fade printable autoprint" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" tabindex="-1">
+  <div class="modal-dialog">
     <div class="modal-content"></div>
   </div>
 </div>
-<% end %>
+
 

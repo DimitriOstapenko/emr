@@ -1,5 +1,5 @@
 <% provide(:title, @patient.full_name) %>
-<%= render "shared/modal", size:'lg' %>
+<%= render "shared/modal" %>
 <% remote = device_is_desktop? %>
 
 <h1><%= @patient.full_name %> :  Patient Profile &nbsp; <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: remote, 'data-toggle': "modal", 'data-target': '#modal-window' %></h1>

@@ -1,6 +1,6 @@
 <%= form_with model: [@patient,medication] do |f| %>
     <tr>
-	    <td><b><%= medication.name %></b></td>
+	<td><b><%= medication.name %></b></td>
 	<td><%= medication.date %> </td>
 	<td><%= medication.doctor.lname rescue '' %> </td>
 	<td><%= medication.format %> </td>
