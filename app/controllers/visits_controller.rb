@@ -50,6 +50,7 @@ class VisitsController < ApplicationController
 end
 
   def edit
+     @patient = Patient.find(params[:patient_id])
      @visit = Visit.find(params[:id])
   end
 
