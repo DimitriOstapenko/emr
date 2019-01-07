@@ -91,7 +91,7 @@ $(document).ready(function() {
    });
 
    function get_drug ( id ) {
-        var request = "/drugs/" + id;
+        var request = "/drugs/get/" + id;
         var aj = $.ajax({
         url: request,
         type: 'get',

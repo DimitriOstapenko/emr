@@ -7,10 +7,12 @@
 </div>
 <div class="modal-body">
 	<% if @prescription.pdf_present? %>
-            <iframe id="myModal" src="/prescriptions/<%= @prescription.id %>" frameborder="0" width="100%" height="700px"></iframe>
+	    <object type="application/pdf" data="/prescriptions/<%= @prescription.id %>" width="100%" height="700">No Support</object>
 	<% else %>
            <%= render 'body' %>
    	<% end %>
+</div>
+<div class="modal-footer">
 </div>
 
 

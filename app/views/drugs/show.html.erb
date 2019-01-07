@@ -1,4 +1,5 @@
 <% provide(:title, @drug.name) %>
+<%= render "shared/modal" %>
 
 	<h1>Medication:  <%= @drug.name %> - details  </h1>
 
@@ -24,10 +25,10 @@
     </pre>
 
     <% unless current_user.doctor? %>
-    <%= button_to "Edit", edit_drug_path(@drug), class: "btn btn-primary", :method => "get" %>
+    <%= button_to "Edit", edit_drug_path(@drug), class: "btn btn-primary", method: :get %>
     <% end %>
     <p>
-    <%= button_to "Back", drugs_path, class: "btn btn-primary", :method => "get" %>
+    <%= button_to "Back", drugs_path, class: "btn btn-primary", method: :get %>
   </div>
 </div>
 

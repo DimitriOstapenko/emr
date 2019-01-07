@@ -1,6 +1,6 @@
      <tr>
         <% if remote %>
-          <td><%= link_to "#{drug.name}", drug, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+          <td><%= link_to "#{drug.name}", drug, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get %> </td>
         <% else %>
 	  <td><%= link_to drug.name, drug %> </td>
         <% end %>

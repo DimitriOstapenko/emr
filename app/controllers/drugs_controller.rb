@@ -1,6 +1,6 @@
 class DrugsController < ApplicationController
 
-	before_action :set_drug, only: [:show, :edit, :update, :destroy]
+	before_action :set_drug, only: [:show, :get, :edit, :update, :destroy]
         before_action :logged_in_user 
         before_action :admin_user, only: :destroy
 
@@ -24,8 +24,12 @@ class DrugsController < ApplicationController
   end
 
   def show
+  end
+
+# need this in /medications/_form
+  def get
     respond_to do |format|
-      format.json { render json: @drug }  # need this in /medications/_form
+      format.json { render json: @drug }  
       format.html
     end
   end

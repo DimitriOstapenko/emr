@@ -7,7 +7,7 @@
 	<b class="modal-title" id="myModalLabel">Referral for patient <%= @referral.patient.lname %>  To:  <%= @referral.to_doctor.lname %></b>
 </div>
 <div class="modal-body">
-	<iframe id="myModal" src="/referrals/<%= @referral.id %>" frameborder="0" width="100%" height="700px"></iframe>
+	<object type="application/pdf" data="/referrals/<%= @referral.id %>" width="100%" height="700">No Support</object>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" class="close" data-dismiss="modal">Dismiss</button>

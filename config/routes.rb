@@ -69,6 +69,7 @@ Rails.application.routes.draw do
   post '/billings/export_cabmd', to: 'billings#export_cabmd'
   get "/procedures/get_by_code", to: "procedures#get_by_code" 
   get "/procedures/get", to: "procedures#get" 
+  get "/drugs/get", to: "drugs#get" 
   
   resources :users
   resources :patients do
