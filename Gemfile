@@ -30,7 +30,8 @@ gem 'select2-rails',           '4.0.3'
 gem 'json',		       '2.1.0'
 
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
+#  gem 'sqlite3', '1.3.13'
+  gem 'pg', '0.20.0'
   gem 'byebug',  '9.0.6', platform: :mri
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'

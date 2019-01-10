@@ -10,10 +10,10 @@
           <th class="tbl_sm">Dose</th>
           <th class="tbl_sm">Freq</th>
           <th class="tbl_sm">Active?</th>
-          <%# if current_user.admin? %>
+          <% if current_user.admin? %>
             <th class="tbl_sm">Edit</th>
             <th class="tbl_sm">Delete</th>
-          <%# end %>
+          <% end %>
       </tr>
   </thead>
   <tbody>

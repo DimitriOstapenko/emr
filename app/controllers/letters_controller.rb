@@ -44,9 +44,14 @@ class LettersController < ApplicationController
 
    respond_to do |format|
       format.html {
-        send_file(@letter.filespec,
-             type: "application/pdf",
-             disposition: :inline)        
+      begin
+      send_file @letter.filespec, type: "application/pdf", 
+		disposition: :inline, 
+		filename: @letter.filename
+      rescue StandardError => e
+        flash[:danger] =  e.message
+        redirect_to @patient
+      end	      
       }
       format.js
     end

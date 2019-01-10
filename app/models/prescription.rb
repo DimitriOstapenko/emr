@@ -17,7 +17,7 @@ def doctor
 end
 
 def date
-  Date.today
+  self.created_at || Date.today
 end
 
 def filespec
@@ -31,47 +31,32 @@ end
 
 # List of objects
 def med_list
-  if self.meds.class == String # SQLITE arrays are strings
-    YAML.load(self.meds).reject(&:empty?).map {|m| Medication.find(m)} rescue []
-  else
+# SQLITE arrays are strings, PG arrays are arrays
+#  if self.meds.class == String 
+#    YAML.load(self.meds).reject(&:empty?).map {|m| Medication.find(m)} rescue []
+#  Change next 4 procedures in case of SQLITE devel/test environment
+
     self.meds.reject(&:empty?).map {|m| Medication.find(m)} rescue []
-  end
 end
 
 # ids of meds in medications table
 def ameds
-  if self.meds.class == String
-    YAML.load(self.meds).reject(&:empty?) rescue [] 
-  else
     self.meds.reject(&:empty?) rescue [] 
-  end
 end
 
 # qty string converted to array
 def aqty
-  if self.qty.class == String
-    YAML.load(self.qty).reject(&:empty?) rescue []
-  else
     self.qty.reject(&:empty?) rescue []
-  end
 end
 
 # repeats string converted to array
 def arepeats
-  if self.repeats.class == String
-    YAML.load(self.repeats).reject(&:empty?) rescue []
-  else
     self.repeats.reject(&:empty?) rescue []
-  end
 end
 
 # duration string converted to array
 def aduration
-  if self.duration.class == String
-    YAML.load(self.duration).reject(&:empty?) rescue []
-  else
     self.duration.reject(&:empty?) rescue []
-  end
 end
 
 end
