@@ -47,5 +47,3 @@
 
 # ignore pg restore script - platform specific
 /utils/pgrestore.pl
-utils/pgrestore.pl
-utils/pgrestore.pl
