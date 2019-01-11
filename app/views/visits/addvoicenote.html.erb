@@ -1,0 +1,10 @@
+<% 
+   provide(:title, 'Add Voice Note') 
+   provide(:button_text, 'Save changes') 
+   @patient = @visit.pat
+%>
+
+<div class="col-sm-12 col-md-8 col-sm-offset-0 col-md-offset-2">
+   <h3 class='display-1'><%= @patient.full_name %> - Visit <%= @visit.entry_ts.to_date %> : Add Voice Note</h3>
+   <%= render 'voicenote_form' %>
+  </div>

@@ -86,6 +86,12 @@ end
     @visit = Visit.find(params[:id])
   end
 
+# Add voice note to the visit
+  def addvoicenote
+    @visit = Visit.find(params[:id])
+  end
+
+
   def destroy
     @visit = Visit.find(params[:id])
     @visit.destroy

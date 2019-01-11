@@ -62,9 +62,13 @@
 	    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit) %>
           <% end %>
 	  </td>
+	  <% if !device_is_desktop? %>
+	  <td>
+	    <%= link_to '<i class="glyphicon glyphicon-record"></i>'.html_safe, addvoicenote_patient_visit_path(pat,visit) %>
+	  </td>
+   	  <% end %>
   	<% else %>
-	  <td></td>
-	  <td></td>
+		<td colspan=2></td>
 	<% end %>
 
 	<% if current_user.admin? %>

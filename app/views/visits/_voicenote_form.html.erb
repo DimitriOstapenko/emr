@@ -1,0 +1,15 @@
+<%= simple_form_for [@patient, @visit] do |f| %> 
+  <%= render 'shared/error_messages', object: f.object %>
+  
+<div class="well">
+<div class="row">
+  <div class="col-sm-12">
+	  <%= f.input :notes, label: "Doctor's notes", placeholder: "Touch this textbox to begin, use microphone icon top right to begin dictation. You can use spacebar to navigate, long swipe from backspace to delete words and sentences. Touch outside text box to finish entry. Touch <Save> to finish", input_html: {rows:10, class: 'voice-input'}%>
+  </div>
+</div>
+</div>
+
+<%= f.button :submit, yield(:button_text), class: "btn btn-primary btn-block" %>
+
+<% end %>
+

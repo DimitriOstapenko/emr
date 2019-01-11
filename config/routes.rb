@@ -90,6 +90,7 @@ Rails.application.routes.draw do
       get 'receipt', on: :member
       get 'sendclaim', on: :member
       get 'addcash', on: :member
+      get 'addvoicenote', on: :member
       resources :documents
     end
   end

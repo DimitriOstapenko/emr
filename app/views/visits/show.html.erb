@@ -103,6 +103,12 @@
  </div>
  <% end %>
  
+ <% if !device_is_desktop? %>
+ <div class="col-sm-3 col-md-2">
+ <%= button_to "Voice Note", addvoicenote_patient_visit_path(@patient,@visit), class: "btn btn-primary active btn-lg", method: :get %>
+ </div>
+ <% end %>
+
  <% if @visit.ready_to_bill? %>
  <div class="col-sm-3 col-md-2">
  <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-success", method: 'get'  %>

@@ -738,3 +738,14 @@ card > hr {
 .col-form-label {
   display: none;
 }
+
+// Bootstrap form controls focus border
+.form-control:focus {
+  border-color: #FF0000;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+}
+
+.voice-input:focus {
+//	height: 300px;
+	font-size: 1.35em;
+}
