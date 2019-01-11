@@ -107,49 +107,10 @@ Rails.application.routes.draw do
   get 'budget', to: 'paystubs#budget'
   get 'billed_visits', to: 'billings#billed_visits_this_cycle'
   
-  resources :reports do
+  resources :edt_files, :forms, :invoices, :letters, :referrals, :daily_charts, :charts, :prescriptions, :paystubs, :reports  do
+     get 'download', on: :member
      get 'export', on: :member
-     get 'download', on: :member
   end
-
-  resources :paystubs do
-     get 'export', on: :member
-     get 'download', on: :member
-  end
-
-  resources :edt_files, :forms, :invoices, :letters, :referrals, :daily_charts, :charts, :prescriptions  do
-     get 'download', on: :member
-  end
-
-#  resources :forms do
-#     get 'download', on: :member
-#  end
-  
-#  resources :invoices do
-#     get 'download', on: :member
-#  end
-  
-#  resources :letters do
-#     get 'download', on: :member
-#  end
-  
-#  resources :referrals do
-#     get 'download', on: :member
-#  end
-  
-
- # resources :daily_charts do
- #    get 'download', on: :member
- # end
-
-#  resources :charts do
-#     get 'download', on: :member
-#  end
-  
-#  resources :prescriptions do
-#     get 'download', on: :member
-#  end
-
 
   resources :schedules
 

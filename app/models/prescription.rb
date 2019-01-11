@@ -5,7 +5,7 @@ class Prescription < ApplicationRecord
 
 
 def visit
-  Visit.find(self.visit_id) if self.visit_id
+  Visit.find(self.visit_id) rescue nil
 end
 
 def patient

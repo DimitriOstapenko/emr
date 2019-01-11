@@ -1,6 +1,6 @@
 class PrescriptionsController < ApplicationController
 
-  before_action :set_prescription, only: [:show, :edit, :update, :download, :destroy]
+  before_action :set_prescription, only: [:show, :edit, :update, :download, :export, :destroy]
   before_action :logged_in_user
 
   include My::Forms
@@ -82,9 +82,15 @@ class PrescriptionsController < ApplicationController
              type: "text/pdf",
              disposition: :attachment
     else
-      flash[:danger] = "File #{@prescription.filename} was not found"
-      redirect_to patient_prescriptions_path(@patient)
+      flash[:danger] = "File #{@prescription.filename} was not found - regenerating"
+      redirect_to export_prescription_path(@prescription)
     end
+  end
+
+  def export
+      pdf = build_prescription( @prescription )
+      pdf.render_file @prescription.filespec
+      redirect_to patient_prescriptions_url(@patient), alert: "New prescription file generated"
   end
 
   private

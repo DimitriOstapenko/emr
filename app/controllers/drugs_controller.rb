@@ -80,7 +80,7 @@ private
 # Find by name
   def myfind (str)
         if str.match(/^[[:graph:]]+$/)
-          Drug.where("lower(name) like ?", "%#{str}%")
+	  Drug.where("lower(name) like ?", "%#{str.downcase}%")
         end
   end
 

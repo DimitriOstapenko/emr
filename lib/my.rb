@@ -318,7 +318,6 @@ end # EDT module
 # Build prescription pdf for given visit  
   def build_prescription ( pr )
 
-    today  = Date.today.strftime "%B %d, %Y"
     pat = pr.patient
     doc = pr.doctor
     visit = pr.visit
@@ -354,7 +353,7 @@ end # EDT module
     end
 
     pdf.move_down 20.mm
-    pdf.text today
+    pdf.text pr.date.strftime "%B %d, %Y"
     pdf.text "Dr. #{pr.doctor.lname}"
     pdf.text "BSc. MD. CCFP"
     pdf.text "PHY. # #{doc.provider_no} CPSO #{doc.cpso_num}"

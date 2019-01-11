@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 
-#gem 'rails',                   '5.1.4'
 gem 'rails',                   '5.2.1'
 gem 'bcrypt',                  '3.1.11'
 gem 'faker',                   '1.7.3'
@@ -12,10 +11,9 @@ gem 'nokogiri',             '~> 1.8.2'
 gem 'will_paginate',           '3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap-sass',          '3.3.7'
-#gem 'sass-rails',              '5.0.6'
-gem 'sassc'
-gem 'sassc-rails'
-gem 'puma',                    '3.9.1'
+gem 'sassc', 		       '~> 2.0'
+gem 'sassc-rails',	       '~> 2.1'
+gem 'puma', 		       '~> 3.12'
 gem 'uglifier',                '3.2.0'
 gem 'coffee-rails',            '4.2.2'
 gem 'jquery-rails',            '4.3.1'
@@ -28,7 +26,7 @@ gem 'responders'
 gem 'pdf-reader'
 gem 'select2-rails',           '4.0.3'
 gem 'json',		       '2.1.0'
-gem 'pg', 		       '0.20.0'
+gem 'pg', 	  '~> 1.1', '>= 1.1.4'
 
 group :development, :test do
 #  gem 'sqlite3', '1.3.13'
@@ -67,7 +65,7 @@ gem 'popper_js', '~> 1.14.3'
 gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip',    '~> 1.2.2'
 gem 'ffi',        '~> 1.9.24'
-gem 'simple_form'
+gem 'simple_form', '~> 4.1'
 gem 'whenever', require: false
 gem "loofah", ">= 2.2.3" 
 

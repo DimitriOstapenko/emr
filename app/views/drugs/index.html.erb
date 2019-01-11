@@ -17,12 +17,10 @@
 	  <th>Dur.Unit</th>
 	  <th>Refills</th>
 	  <th>Type</th>
-	  <% unless current_user.doctor? %>
+	  <%# if current_user.doctor? %>
 	    <th class='tbl_sm'></th>
-	  <% end %>
-	  <% if  current_user.admin? %>
-	     <th class='tbl_sm'></th>
-     	  <% end %>
+	    <th class='tbl_sm'></th>
+     	  <%# end %>
       </tr>
   </thead>
   <tbody>

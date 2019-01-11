@@ -1,10 +1,10 @@
 <%= form_with model: [@patient,prescription] do |f| %>
-<% visit = Visit.find(prescription.visit_id) %>
+<% visit = prescription.visit %>
     <tr>
 	<td><%= link_to prescription.id, prescription %></td>
-	<td><%= visit.entry_ts.to_date %>
-	<td><%= link_to 'Visit', patient_visit_path(@patient, visit) %>
-	<td><%= prescription.visit.doctor.lname %>
+	<td><%= prescription.date %>
+	<td><%= link_to 'Visit', patient_visit_path(@patient, visit) if visit.present? %>
+	<td><%= prescription.doctor.lname %>
 	<td><%= prescription.med_list.count rescue 0 %> </td>
 	<td>
 	<% if prescription.pdf_present? %>
