@@ -11,8 +11,10 @@
       <tr>
 	  <th class="tbl_xs"></th>
 	  <th class="tbl_sm"><%= sortable 'entry_ts', 'Time' %></th>
+	  <% if date.today? %>
 	  <th class="tbl_sm">Room</th>
-	  <th class="tbl_md">
+ 	  <% end %>
+	  <th class="tbl_lsm">
 	  <% if @docs.present? && @docs.size > 1 %>
           <span class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white"> Doctor <b class="caret"></b></font> </a>
@@ -30,10 +32,14 @@
 
 	  <th class="tbl_lmd">Patient</th>
           <th class="tbl_sm">Type</th>
+	  <% if device_is_desktop? %>
           <th class="tbl_md">HC/IFH #</th>
+	  <% end %>
           <th class="tbl_lsm">Diag.</th>
           <th class="tbl_md">Services</th>
-          <th class="tbl_lsm"><%= sortable 'status', 'Status' %></th>
+	  <% if device_is_desktop? %>
+          <th class="tbl_md">Status</th>
+	  <% end %>
 	  <th class="tbl_sm"></th> 
           <th class="tbl_sm"></th>
           <th class="tbl_sm"></th>

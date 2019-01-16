@@ -13,11 +13,11 @@
   </div>
   
   <div class="col-sm-6">
-  <%= f.input :format, hint: 'Required', placeholder: 'Tab/Cap, Injectable, Cream, Patch ..' %>
-  <%= f.input :route, hint: 'Required' %>
-  <%= f.input :freq, hint: 'Required', placeholder: 'bid/tid/qid.. 4/day..' %>
-  <%= f.input :amount, label: 'Total Number'%>
-  <%= f.input :dur_unit, label: 'Duration Unit', placeholder: 'Dy/Wk/Mo/Yr' %>
+  <%= f.input :format, collection: DRUG_FORMATS, label_method: :first, value_method: :first, hint: 'Required', include_blank: 'Please Select' %>
+  <%= f.input :route, collection: DRUG_ROUTES, label_method: :first, value_method: :first, hint: 'Required', include_blank: 'Please Select' %>
+  <%= f.input :freq, collection: MedFrequency.all, label_method: :name, value_method: :name, hint: 'Required', include_blank: 'Please Select' %>
+  <%= f.input :amount %>
+  <%= f.input :dur_unit, collection: DRUG_DUR_UNITS, label_method: :first, value_method: :first, include_blank: 'Please Select', label: 'Duration Unit' %>
   <%= f.input :refills %>
   </div>
 

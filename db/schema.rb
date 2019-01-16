@@ -10,13 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_31_204821) do
+ActiveRecord::Schema.define(version: 2019_01_15_154950) do
 
-  create_table "arrays_example2", id: false, force: :cascade do |t|
-    t.text "name"
-    t.text "meds"
-    t.integer "repeats"
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
@@ -143,7 +140,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
   end
 
   create_table "documents", force: :cascade do |t|
-    t.integer "visit_id"
+    t.bigint "visit_id"
     t.string "document"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -256,6 +253,20 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.string "from"
   end
 
+  create_table "med_formats", force: :cascade do |t|
+    t.string "name"
+    t.string "descr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "med_frequencies", force: :cascade do |t|
+    t.string "name"
+    t.string "descr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "medications", force: :cascade do |t|
     t.integer "patient_id"
     t.integer "doctor_id"
@@ -341,14 +352,14 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
 
   create_table "prescriptions", force: :cascade do |t|
     t.integer "visit_id"
-    t.text "meds", default: "--- []\n"
+    t.text "meds", default: [], array: true
     t.text "note"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "repeats", default: "--- []\n"
-    t.string "qty", default: "--- []\n"
-    t.string "duration", default: "--- []\n"
+    t.string "repeats", default: [], array: true
+    t.string "qty", default: [], array: true
+    t.string "duration", default: [], array: true
     t.string "filename"
     t.integer "doctor_id"
     t.index ["patient_id", "created_at"], name: "index_prescriptions_on_patient_id_and_created_at"
@@ -441,7 +452,6 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.date "date"
     t.date "app_date"
     t.string "filename"
-    t.integer "to_doctor_id"
     t.string "address_to"
     t.text "reason"
     t.datetime "created_at", null: false
@@ -450,6 +460,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.string "to_phone"
     t.string "to_fax"
     t.string "to_email"
+    t.integer "to_doctor_id"
   end
 
   create_table "reports", force: :cascade do |t|
@@ -462,6 +473,13 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.date "sdate"
     t.date "edate"
     t.integer "timeframe"
+  end
+
+  create_table "routes", force: :cascade do |t|
+    t.string "name"
+    t.string "descr"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "schedules", force: :cascade do |t|
@@ -483,7 +501,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.integer "amt_subm"
     t.integer "amt_paid"
     t.string "errcode"
-    t.integer "claim_id"
+    t.bigint "claim_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["claim_id"], name: "index_services_on_claim_id"
@@ -514,6 +532,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.string "password_digest"
     t.integer "role"
     t.string "remember_digest"
+    t.boolean "remember_me"
     t.string "activation_digest"
     t.boolean "activated", default: false
     t.datetime "activated_at"
@@ -537,7 +556,7 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.text "notes"
     t.string "diag_code"
     t.string "proc_code"
-    t.integer "patient_id"
+    t.bigint "patient_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "doc_id"
@@ -580,4 +599,8 @@ ActiveRecord::Schema.define(version: 2018_12_31_204821) do
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end
 
+  add_foreign_key "documents", "visits"
+  add_foreign_key "prescriptions", "patients"
+  add_foreign_key "services", "claims"
+  add_foreign_key "visits", "patients"
 end

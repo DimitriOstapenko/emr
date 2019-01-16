@@ -1,4 +1,4 @@
-# Import Claim error codes into claim_errors table 
+# Import district codes (used in Doctor model)
 #
 require_relative '../../config/environment'
 require 'csv'

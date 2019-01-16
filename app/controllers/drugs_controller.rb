@@ -16,7 +16,7 @@ class DrugsController < ApplicationController
     @drug = Drug.new(drug_params)
     if @drug.save
        flash[:success] = "Medication created"
-       redirect_to @drug
+       redirect_to drugs_url
     else
        render 'new'
     end

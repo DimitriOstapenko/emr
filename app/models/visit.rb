@@ -101,6 +101,12 @@ class Visit < ApplicationRecord
     status == ERROR 
   end  
 
+# Was visit cancelled?
+  def cancelled?
+    status == CANCELLED 
+  end  
+
+
 # Service array to help deal with procedures/billings
   def services   
     serv = []

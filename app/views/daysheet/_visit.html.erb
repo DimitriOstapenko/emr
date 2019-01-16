@@ -4,17 +4,19 @@
 <tr>
 	<td>
 	<% if visit.ready_to_bill? %>
-	   <i class="glyphicon glyphicon-ok-sign text-primary"></i>
+		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>
   	<% elsif visit.assessed? %>
-	   <i class="glyphicon glyphicon-question-sign text-info"></i>
+		<a title="Assessed"><i class="glyphicon glyphicon-ok-circle text-muted"></i></a>
         <% elsif visit.with_doctor? %>
-	   <i class="glyphicon glyphicon-question-sign text-text-muted"></i>
+	  	<a title="With Doctor"><i class="glyphicon glyphicon-question-sign text-text-muted"></i></a>
 	<% elsif visit.billed_or_paid? %>
-	   <i class="glyphicon glyphicon-ok-sign text-success"></i>
+	  	<a title="Billed"><i class="glyphicon glyphicon-ok-sign text-success"></i></a>
 	<% elsif visit.has_error? %>
-	   <i class="glyphicon glyphicon-exclamation-sign text-danger"></i>
+		<a title="Error"><i class="glyphicon glyphicon-exclamation-sign text-danger"></i></a>
+	<% elsif visit.cancelled? %>
+		<a title="Cancelled"><i class="glyphicon glyphicon-minus-sign text-warning"></i></a>
 	<% else %>
-	   <i class="glyphicon glyphicon-question-sign text-warning"></i>
+		<a title="Arrived"><i class="glyphicon glyphicon-question-sign text-warning"></i></a>
 	<% end %>
 	</td>
 	<% if visit.date == @date %>
@@ -23,15 +25,18 @@
            <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
         <% end %>
 
+	<% if @date.today? %>
 	<td>
 	<% if visit.status < ASSESSED %>
 	<%= f.select :room, EXAM_ROOMS, options={}, html_options = {onchange: 'this.form.submit();', style: "background-color: #eee; height: 20px; width:42px;"} %>
 	<% end %> 
 	</td>
+	<% end %>
 
 	<td><%= visit.doctor.lname %></td>
 	<td><%= link_to pat.full_name, pat %></td>
 	<td><%= pat.pat_type %></td>
+	<% if device_is_desktop? %>
 	<td>
 	<% if pat.pat_type == IFH_PATIENT %>
 		<b><%= pat.ifh_number %></b>
@@ -39,22 +44,25 @@
 	   <%= pat.ohip_num_full %>
         <% end %>
 	</td>
+	<% end %>
 	<td><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
+
+	<% if device_is_desktop? %>
 	<td>
 	<% if visit.status == PAID && visit.claim_id.present? %>
-	  <%= link_to visit.status_str, claim_path(visit.claim_id) %> 		
+	  <% link_to visit.status_str, claim_path(visit.claim_id) %> 		
 	<% else %>
 	  <%= visit.status_str %>
 	<% end %>
 	</td>
+	<% end %>
 	  
-	 <% remote = device_is_desktop? %>
-	
+	 <td><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+	 <td><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get'  %></td>
+
 	<!-- #modal-window is defined in index -->	
-	<td><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
   	<% if visit.editable? || current_user.admin? %>
-	  <td><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get'  %></td>
 	  <td>
 	  <% if remote %>
 	    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get  %>
@@ -68,7 +76,7 @@
 	  </td>
    	  <% end %>
   	<% else %>
-		<td colspan=2></td>
+		<td></td>
 	<% end %>
 
 	<% if current_user.admin? %>

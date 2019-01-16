@@ -103,7 +103,7 @@
  </div>
  <% end %>
  
- <% if !device_is_desktop? %>
+ <% if !device_is_desktop? && @visit.editable? %>
  <div class="col-sm-3 col-md-2">
  <%= button_to "Voice Note", addvoicenote_patient_visit_path(@patient,@visit), class: "btn btn-primary active btn-lg", method: :get %>
  </div>
