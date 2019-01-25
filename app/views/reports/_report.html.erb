@@ -1,5 +1,5 @@
     <tr>
-	<% if report.filespec.present? && File.exists?(report.filespec) && device_is_desktop? %>
+	<% if report.exists? && device_is_desktop? %>
 	  <td><%= link_to report.id, report, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
 	<% else %>
 	  <td><%= report.id %></td>
@@ -20,7 +20,7 @@
 
 	<td><%= report.created_at %></td>
 	
-	<% if report.filespec.present? && File.exists?(report.filespec) %>
+	<% if report.exists? %>
 	  <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_report_path(report)  %></td>
         <% else %> <!-- regenerate report -->
 	  <td><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_report_path(report)  %></td>

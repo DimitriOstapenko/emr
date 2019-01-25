@@ -1,5 +1,5 @@
 class LettersController < ApplicationController
-  before_action :set_letter, only: [:show, :edit, :update, :download, :destroy]
+  before_action :set_letter, only: [:show, :edit, :update, :download, :export, :destroy]
   before_action :logged_in_user 
 #  before_action :admin_user, only: :destroy
   
@@ -12,9 +12,9 @@ class LettersController < ApplicationController
     if current_user.doctor?
       @letters = Letter.where(doctor_id: current_doctor.id)
     elsif @patient.present?
-	    @letters = @patient.letters
+      @letters = @patient.letters
     else
-	    @letters = Letter.all
+      @letters = Letter.all
     end
     @letters = @letters.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
   end
@@ -58,15 +58,22 @@ class LettersController < ApplicationController
   end
 
   def download
-    if File.exists?(@letter.filespec)
+    if @letter.present? && File.exists?(@letter.filespec)
       send_file @letter.filespec,
              filename: @letter.filename,
              type: "text/plain",
              disposition: :attachment
     else
-      flash.now[:danger] = "File #{@letter.filename} was not found"
-      redirect_to letters_path
+      flash.now[:danger] = "File #{@letter.filename} was not found - regenerating"
+      redirect_to export_letter_path(@letter)
     end
+  end
+
+# Generate PDF file, save in letters directory
+  def export
+    @pdf = build_letter( @letter )
+    @pdf.render_file @letter.filespec
+    redirect_to letters_path, alert: "Letter PDF file generated for patient #{@letter.patient.full_name}"
   end
 
   def edit
@@ -97,7 +104,7 @@ class LettersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_letter
       @letter = Letter.find(params[:id])
-      @patient = Patient.find( @letter.patient_id )
+      @patient = @letter.patient
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

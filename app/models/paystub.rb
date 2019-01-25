@@ -22,6 +22,10 @@ class Paystub < ApplicationRecord
 	  PAYSTUBS_PATH.join(filename) rescue nil
   end
   
+  def exists?
+    File.exists?(self.filespec) rescue false
+  end
+  
   def clinic_deduction
       (self.gross_amt / 100.0) * doctor.percent_deduction	  
   end

@@ -1,8 +1,6 @@
 <% provide(:title, @claim.claim_no) %>
 <% codehash = RaErrcode.pluck(:code, :message).to_h %>
 
-	<h1>Claim <%= @claim.claim_no %> </h1>
-
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">

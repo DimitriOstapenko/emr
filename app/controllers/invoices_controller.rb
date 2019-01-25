@@ -13,7 +13,7 @@ class InvoicesController < ApplicationController
     elsif @patient.present?
       @invoices = @patient.invoices
     else
-	    @invoices = Invoice.all
+      @invoices = Invoice.all
     end
     @invoices = @invoices.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
   end
@@ -56,15 +56,23 @@ class InvoicesController < ApplicationController
 
   def download
     @invoice = Invoice.find( params[:id] )
-    if File.exists?(@invoice.filespec)
+    if @invoice.present? && File.exists?(@invoice.filespec)
       send_file @invoice.filespec,
              filename: @invoice.filename,
              type: "text/plain",
              disposition: :attachment
     else
-      flash.now[:danger] = "File #{@invoice.filename} was not found"
-      redirect_to invoices_path
+      flash.now[:danger] = "File #{@invoice.filename} was not found - regenerating"
+      redirect_to export_invoice_path(@invoice)
     end
+  end
+
+# Generate PDF file for the invoice, save in invoices directory
+  def export
+    @invoice = Invoice.find(params[:id])
+    @pdf = build_invoice( @invoice )
+    @pdf.render_file @invoice.filespec
+    redirect_to invoices_path, alert: "PDF invoice generated for patient #{@invoice.patient.full_name}"
   end
 
   def edit

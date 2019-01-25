@@ -17,6 +17,10 @@ class Report < ApplicationRecord
   def filespec
     REPORTS_PATH.join(filename) rescue nil
   end
+	
+  def exists?
+    File.exists?(self.filespec) rescue false
+  end
 
   def filesize 
     sprintf("%.2f", File.size(self.filespec).to_f/2**20) rescue 0

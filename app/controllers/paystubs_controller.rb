@@ -83,7 +83,7 @@ class PaystubsController < ApplicationController
              disposition: :attachment
    else
      flash.now[:danger] = "File #{@paystub.filename} was not found - regenerating" 
-     redirect_to export_report_path(@paystub)
+     redirect_to export_paystub_path(@paystub)
    end
   end
 

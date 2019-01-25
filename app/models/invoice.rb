@@ -27,6 +27,10 @@ def filespec
     INVOICES_PATH.join(filename) rescue nil
 end
 
+def exists?
+    File.exists?(self.filespec) rescue false
+end
+
 def paid_str 
     self.paid? ? 'Yes':'No'
 end

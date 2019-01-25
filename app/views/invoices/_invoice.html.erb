@@ -1,10 +1,15 @@
 <% 
-      provider = Provider.find(invoice.billto )
-      patient = Patient.find(invoice.patient_id)
+      provider = invoice.provider 
+      patient = invoice.patient
 %>
 
     <tr>
-	<td><%= link_to "#{invoice.id}", invoice, remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+	<% if invoice.exists? && device_is_desktop? %>
+	  <td><%= link_to invoice.id, invoice, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+	<% else %>
+	  <td><%= invoice.id %></td>
+	<% end %>  
+
 	<td><%= link_to patient.lname, patient %></td>
 	<td><%= invoice.doctor.lname rescue 'Clinic' %> </td> 
 	<td><%= link_to provider.name, provider %> </td> 
@@ -12,7 +17,14 @@
 	<td><%= invoice.date %></td> 
 	<td>$<%= invoice.amount %></td> 
 	<td><%= invoice.paid ? 'Yes' : 'No' %></td>
-	<td><%=  link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_invoice_path(invoice)  %></td>
+
+
+	<% if invoice.exists? %>
+	  <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_invoice_path(invoice)  %></td>
+        <% else %> <!-- regenerate pdf -->
+	  <td><%= link_to '<i class="glyphicon glyphicon-question-sign"></i>'.html_safe, download_invoice_path(invoice)  %></td>
+  	<% end %>
+
 	<td><%=  link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_invoice_path(invoice), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
 	<td> <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, invoice, method: :delete, data: { confirm: "Are you sure you want to delete invoice # #{invoice.id} billed to #{provider.name} ?" } %> </td>
      </tr>

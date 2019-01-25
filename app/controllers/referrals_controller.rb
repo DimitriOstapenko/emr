@@ -1,5 +1,5 @@
 class ReferralsController < ApplicationController
-  before_action :set_referral, only: [:show, :edit, :update, :download, :destroy]
+  before_action :set_referral, only: [:show, :edit, :update, :download, :export, :destroy]
   before_action :logged_in_user
 # before_action :admin_user, only: :destroy
 
@@ -53,17 +53,24 @@ class ReferralsController < ApplicationController
   end
 
   def download
-    if File.exists?(@referral.filespec)
+      if @referral.present? && File.exists?(@referral.filespec)
       send_file @referral.filespec,
              filename: @referral.filename,
              type: "text/pdf",
              disposition: :attachment
     else
-      flash.now[:danger] = "File #{@referral.filename} was not found"
-      redirect_to referrals_path
+      flash.now[:danger] = "File #{@referral.filename} was not found - regenerating"
+      redirect_to export_referral_path(@referral)
     end
   end
 
+# Generate PDF file, save in referrals directory
+  def export
+    @pdf = build_referral( @referral )
+    @pdf.render_file @referral.filespec
+    redirect_to referrals_path, alert: "Referral PDF file generated for patient #{@referral.patient.full_name}"
+  end
+  
   def edit
     @patient = Patient.find( @referral.patient_id )
   end
@@ -89,22 +96,21 @@ class ReferralsController < ApplicationController
     redirect_to referrals_url
   end
 
-
 # Generate referral form for this visit
-  def referralform
-        @patient = Patient.find(@referral.patient_id)
-	@pdf = build_referral_form( @patient, @visit )
-        
-        respond_to do |format|
-          format.html do
-	    send_data @pdf.render,
-              filename: "referral_#{@patient.full_name}",
-              type: 'application/pdf',
-              disposition: 'inline'
-	  end
-	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "referralform.pdf") }
-	end
-  end
+#  def referralform
+#        @patient = Patient.find(@referral.patient_id)
+#	@pdf = build_referral_form( @patient, @visit )
+#        
+#        respond_to do |format|
+#          format.html do
+#	    send_data @pdf.render,
+#              filename: "referral_#{@patient.full_name}",
+#              type: 'application/pdf',
+#              disposition: 'inline'
+#	  end
+#	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "referralform.pdf") }
+#	end
+#  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

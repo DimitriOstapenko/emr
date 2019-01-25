@@ -4,7 +4,12 @@
 %>
 
 <tr>
-<td><%= link_to claim.claim_no, claim_path(claim) %></td>
+<% if remote %>
+<td><%= link_to claim.claim_no, claim, remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td>
+<% else %>
+<td><%= link_to claim.claim_no, claim %> </td>
+<% end %>
+
 <td><%= claim.accounting_no %></td>
 <td><%= "#{claim.ohip_num} #{claim.ohip_ver}" %></td>
 <td><%= claim.date %></td>

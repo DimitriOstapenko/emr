@@ -23,6 +23,9 @@ def filespec
 	LETTERS_PATH.join(self.filename) rescue nil
 end
 
+def exists?
+    File.exists?(self.filespec) rescue false
+end
 
 def default_values
 	self.date ||= Date.today

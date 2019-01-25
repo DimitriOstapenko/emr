@@ -1,5 +1,4 @@
 <% readonly = (action_name == 'show') ? true:false %>
-
 <%= simple_form_for [@patient,@medication] do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
 
@@ -34,7 +33,7 @@
           <%= f.input :dose, as: :string, readonly: readonly %>
   </div>
   <div class="col-sm-2">
-          <%= f.input :freq, label: 'Frequency', readonly: readonly %>
+  	  <%= f.input :freq, collection: MedFrequency.all, label_method: :name, value_method: :name, include_blank: 'Please Select', readonly: readonly %>
   </div>
   <div class="col-sm-3">
           <%= f.input :route, readonly: true %>

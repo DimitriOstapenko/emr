@@ -253,13 +253,6 @@ ActiveRecord::Schema.define(version: 2019_01_15_154950) do
     t.string "from"
   end
 
-  create_table "med_formats", force: :cascade do |t|
-    t.string "name"
-    t.string "descr"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "med_frequencies", force: :cascade do |t|
     t.string "name"
     t.string "descr"
@@ -473,13 +466,6 @@ ActiveRecord::Schema.define(version: 2019_01_15_154950) do
     t.date "sdate"
     t.date "edate"
     t.integer "timeframe"
-  end
-
-  create_table "routes", force: :cascade do |t|
-    t.string "name"
-    t.string "descr"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "schedules", force: :cascade do |t|
