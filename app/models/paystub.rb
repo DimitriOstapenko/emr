@@ -44,7 +44,8 @@ class Paystub < ApplicationRecord
     other_income = self.cash_amt + self.ifh_amt + self.hc_dep_amt + self.wcb_amt
     self.gross_amt = self.ohip_amt + other_income + self.monthly_premium_amt
     self.clinic_deduction = (self.gross_amt / 100.0) * doctor.percent_deduction	  
-    self.net_amt = self.gross_amt - self.clinic_deduction - other_income  - self.mho_deduction 
+    self.net_amt = self.gross_amt - self.clinic_deduction  - self.mho_deduction 
+    self.chk_amt = self.net_amt - other_income 
   end
 
   def delete_dup_stub

@@ -11,6 +11,7 @@
 <td><%= paystub.services %></td>
 <td><%= sprintf("$%.2f",paystub.gross_amt) %></td>
 <td><%= sprintf("$%.2f",paystub.net_amt) %></td>
+<td><%= sprintf("$%.2f",paystub.chk_amt) %></td>
 <td><%= paystub.ra_file %></td>
 <td class='center'>
 <% if paystub.exists? %>

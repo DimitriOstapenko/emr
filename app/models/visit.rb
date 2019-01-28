@@ -258,7 +258,7 @@ class Visit < ApplicationRecord
 
 # Was visit billed yet?  
   def editable?
-	  (self.entry_ts.to_date == Date.today && self.billing_ref.blank?) || ![BILLED,PAID].include?(self.status)
+	  (self.entry_ts.to_date == Date.today && self.billing_ref.blank?) || ![BILLED,PAID,CANCELLED].include?(self.status)
   end
 
 private 
