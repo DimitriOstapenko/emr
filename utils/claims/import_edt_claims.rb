@@ -171,7 +171,7 @@ content.each do |str|
 end
 
 # Set the totals for this file:
-   claims = Claim.where("ra_file=?", RA_BASENAME).count
+claims = Claim.unscoped.where("ra_file=?", RA_BASENAME).count
    svcs = Claim.joins(:services).where("ra_file=?", RA_BASENAME) 
    services = svcs.count
    sum_claimed = svcs.pluck('amt_subm').sum
