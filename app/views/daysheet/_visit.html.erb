@@ -63,20 +63,17 @@
 
 	<!-- #modal-window is defined in index -->	
   	<% if visit.editable? || current_user.admin? %>
-	  <td>
 	  <% if remote %>
-	    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get  %>
+            <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get  %></td>
           <% else %>
-	    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit) %>
+	    <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit) %></td>
+	    <td><%= link_to '<i class="glyphicon glyphicon-record"></i>'.html_safe, addvoicenote_patient_visit_path(pat,visit) %> </td>
           <% end %>
-	  </td>
-	  <% if !device_is_desktop? %>
-	  <td>
-	    <%= link_to '<i class="glyphicon glyphicon-record"></i>'.html_safe, addvoicenote_patient_visit_path(pat,visit) %>
-	  </td>
-   	  <% end %>
-  	<% else %>
-		<td></td>
+	<% else %> 
+	   <td></td>
+	   <% if !remote %>
+		   <td></td>
+	   <% end %>
 	<% end %>
 
 	<% if current_user.admin? %>

@@ -41,11 +41,11 @@
           <th class="tbl_md">Status</th>
 	  <% end %>
 	  <th class="tbl_sm"></th> 
-          <th class="tbl_sm"></th>
-          <th class="tbl_sm"></th>
+	  <th class="tbl_sm"></th> 
+	  <th class="tbl_sm"></th> 
 	  <% if !device_is_desktop? %>
             <th class="tbl_sm"></th>
-  	  <% end %>
+          <% end %>
 	  <% if current_user.admin? %>
 	    <th class="tbl_sm"></th>  <!-- Delete -->
   	  <% end %>
