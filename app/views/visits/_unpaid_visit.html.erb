@@ -1,0 +1,18 @@
+<% remote = device_is_desktop? %>
+<tr>
+  <td><%= link_to visit.entry_ts, patient_visit_path(visit.patient,visit) %> </td>
+  <td><%= visit.patient.full_name %></td>
+  <td><%= visit.patient.pat_type %></td>
+  <td><%= visit.doctor.lname %></td>
+  <td><%= visit.diag_scode %></td>
+  <td><%= visit.proc_codes %></td>
+  <td><%= visit.billing_ref %></td>
+  <td>
+  <% if remote %>
+    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(visit.patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get %>
+  <% else %>
+    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(visit.patient,visit) %>
+  <% end %>
+  </td>
+</tr>
+

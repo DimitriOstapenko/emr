@@ -31,6 +31,10 @@ class Visit < ApplicationRecord
   def pat
     Patient.find(patient_id) rescue Patient.new 
   end
+  
+  def patient
+      self.pat || Patient.find(patient_id) rescue Patient.new 
+  end
 
 # Symbol for patient's type (:HCP,:WCB...)  
   def pat_btype

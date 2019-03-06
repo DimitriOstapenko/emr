@@ -6,7 +6,7 @@
 %>
 <%= render "shared/modal" %>
 
-<h1> <%= @patient.full_name %> : Visit of <%= @visit.entry_ts %>  </h1>
+<h1> <%= @patient.full_name %>(<%= @patient.pat_type  %>) : Visit of <%= @visit.entry_ts %>  </h1>
 
 <% diag = Diagnosis.find_by(code: @visit.diag_code) %>
 <% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>

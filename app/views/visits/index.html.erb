@@ -1,26 +1,26 @@
 <% provide(:title, 'All visits') %>
+<%= render "shared/modal" %>
 
-<ul class="users">
-<table >
+<table class="tbl table-hover" >
   <thead>
       <tr>
-          <th>Pat Id</th>
- 	  <th>Doc Id</th>
           <th>Date</th>
-          <th>Notes</th>
+          <th class="tbl_lg">Patient</th>
+          <th class="tbl_sm">Type</th>
+ 	  <th>Doctor</th>
           <th>Diag Code</th>
           <th>Proc Code</th>
+          <th>Bill Ref</th>
+          <th class="tbl_sm"></th>
       </tr>
   </thead>
   <tbody>
-	  Visits: <%= @visits.count %> 
+    Visits billed, but not paid by OHIP this year: <%= @visits.count %> 
 
-  <%= render @visits %>
+    <%= render partial: 'unpaid_visit', collection: @visits, as: :visit %>
 
   </tbody>
 </table>
-</ul>
 
-<p>
 <%= will_paginate(@visits) %>
 

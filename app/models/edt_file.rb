@@ -29,4 +29,5 @@ def ftype_str
     EDT_FILE_TYPES.invert[ftype].to_s
 end
 
+
 end

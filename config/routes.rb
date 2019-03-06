@@ -107,6 +107,7 @@ Rails.application.routes.draw do
 
   get 'budget', to: 'paystubs#budget'
   get 'billed_visits', to: 'billings#billed_visits_this_cycle'
+  get 'unpaid_visits', to: 'visits#unpaid_visits'
   
   resources :edt_files, :forms, :invoices, :letters, :referrals, :daily_charts, :charts, :prescriptions, :paystubs, :reports  do
      get 'download', on: :member

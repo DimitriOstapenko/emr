@@ -72,6 +72,13 @@ end
       body << hee_record(h_count, r_count, t_count)
       return [body, h_count, t_count, ttl_fee]
   end
+
+# Date of the last visit that was paid for by OHIP
+  def last_paid_visit_date
+    v = Visit.where(status: PAID).where("billing_ref is not null").order(:entry_ts).limit(1)
+    return v[0].entry_ts.to_date rescue nil 
+  end
+
 end # EDT module
 
 #-------------------------------------------      

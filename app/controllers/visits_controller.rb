@@ -1,6 +1,7 @@
 class VisitsController < ApplicationController
 
   include My::Forms
+  include My::EDT
 
 	before_action :logged_in_user 
 #        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
@@ -57,7 +58,6 @@ end
   def update
     @visit = Visit.find(params[:id])
     @patient = Patient.find(@visit.patient_id)
-    store_location
 
     doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
     if @visit.update_attributes(visit_params)
@@ -73,7 +73,7 @@ end
       set_visit_fees( @visit )
       @visit.save
       flash[:success] = "Visit updated"
-      redirect_back_or(daysheet_url)
+      redirect_back(fallback_location: daysheet_url)
 
     else
       flash.now[:danger] =  doc.errors.full_messages.first rescue ''
@@ -188,6 +188,18 @@ end
 	  end
 	  format.js { @pdf.render_file File.join(Rails.root, 'public', 'uploads', "receipt.pdf") }
 	end
+  end
+
+  # List of unpaid visits this year, until the end of the last paid cycle  
+  def unpaid_visits
+    v = Visit.where(status: BILLED).where("entry_ts >?", Date.today.beginning_of_year).where('entry_ts<?', last_paid_visit_date)
+    if v.any?
+           @visits = v.paginate(page: params[:page])
+           render 'index'
+      else
+           flash.now[:warning] = "No unpaid visits found for this year, excluding current billing cycle"
+           render  inline: '', layout: true
+    end
   end
 
   private
