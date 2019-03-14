@@ -73,6 +73,30 @@ end
       return [body, h_count, t_count, ttl_fee]
   end
 
+# Generate EDT test file with single claim  
+  def generate_single_claim(filename,visit)
+      (name,edt_id) = filename.split('.'); h_count = t_count = r_count = 0; body = ''
+      body << heb_record(edt_id, visit)
+      if visit.hcp_services?
+	 body << heh_record(visit,visit.pat)	      
+	 h_count += 1
+	 visit.update_attribute(:status, BILLED)
+         visit.update_attribute(:export_file, filename)
+         if visit.bil_type == RMB_BILLING                  # only 1 RMB claim supported per visit right now
+	    body << her_record(visit.pat)
+            r_count += 1
+         end
+      end
+      visit.services.each do |svc|
+          next unless hcp_procedure?(svc[:pcode])
+          body << het_record(visit, svc)
+          t_count += 1
+      end
+      body << hee_record(h_count, r_count, t_count)
+      return body
+
+  end
+
 # Date of the last visit that was paid for by OHIP
   def last_paid_visit_date
     v = Visit.where(status: PAID).where("billing_ref is not null").order(:entry_ts).limit(1)
