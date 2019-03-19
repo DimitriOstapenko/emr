@@ -89,7 +89,6 @@ Rails.application.routes.draw do
       get 'visitform', on: :member
       get 'receipt', on: :member
       get 'sendclaim', on: :member
-      get 'exportclaim', on: :member
       get 'addcash', on: :member
       get 'addvoicenote', on: :member
       resources :documents

@@ -6,7 +6,7 @@ class EdtFile < ApplicationRecord
         validates :ftype, presence: true, inclusion: { in: 0..5 }
         validates :filename, length: { maximum: 100 }, presence: true, uniqueness: true
 	validates :lines, numericality: { only_integer: true, only_positive: true }
-        validates :seq_no, presence: true, inclusion: { in: 0..999 }
+        validates :seq_no, presence: true, inclusion: { in: 0..9999 }
 
 # Construct full filespec	
 def filespec
@@ -29,5 +29,8 @@ def ftype_str
     EDT_FILE_TYPES.invert[ftype].to_s
 end
 
+def batch_no
+    self.ftype == EDT_BATCH ? self.batch_id : self.id
+end
 
 end

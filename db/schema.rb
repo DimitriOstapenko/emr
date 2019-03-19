@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_28_201257) do
+ActiveRecord::Schema.define(version: 2019_03_17_203633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 2019_01_28_201257) do
     t.integer "hcp_svcs"
     t.integer "rmb_svcs"
     t.boolean "processed", default: false
+    t.integer "batch_id"
   end
 
   create_table "export_files", force: :cascade do |t|

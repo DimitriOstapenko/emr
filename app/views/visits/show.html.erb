@@ -113,13 +113,6 @@
  <div class="col-sm-3 col-md-2">
  <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-success", method: 'get'  %>
  </div>
-
- <% if current_user.admin? %>
- <div class="col-sm-3 col-md-2">
- <%= button_to "Export Claim(EDT)", exportclaim_patient_visit_path(@patient), class: "btn btn-success", method: 'get'  %>
- </div>
-
- <% end %>
  <% end %>
 
 </div>

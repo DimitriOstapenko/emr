@@ -6,15 +6,16 @@
   <thead>
       <tr>
 	  <th class='tbl_md'><%= sortable 'filename', 'File' %></th>
-	  <th class='tbl_md'><%= sortable 'ftype', 'Type' %></th>
-	  <th class='tbl_md'><%= sortable 'seq_no', 'Seq No' %></th>
+	  <th class='tbl_xmd'><%= sortable 'ftype', 'Type' %></th>
+	  <th class='tbl_sm'><%= sortable 'id', 'Batch' %></th>
           <th class='tbl_md'><%= sortable 'provider_no', 'Provider' %></th>
 	  <th><%= sortable 'upload_date', 'Uploaded' %></th>
-	  <th cless='tbl_md'>Doctors</th>
-	  <th cless='tbl_md'>Claims</th>
-          <th class='tbl_md'>Services</th>
-	  <th cless='tbl_md'>Total Amt</th>
-	  <th class='tbl_sm'></th>
+	  <th cless='tbl_sm'>Doctors</th>
+	  <th cless='tbl_sm'>Claims</th>
+          <th class='tbl_sm'>Services</th>
+	  <th cless='tbl_sm'>Total Amt</th>
+	  <th class='tbl_md'>Status</th>
+	  <th class='tbl_md'></th>
 	   <% if current_user.admin?  %>
           <th class='tbl_sm'></th>
 	  <% end %>

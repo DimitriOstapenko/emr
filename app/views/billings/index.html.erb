@@ -50,7 +50,7 @@
   <% if date == Date.today || date.blank? || current_user.admin? %>
     <% if @not_ready.blank? %>
       <% if BILLING_FORMAT == 'EDT' || current_user.admin? %>
-	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>&nbsp;&nbsp;
+	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-12", method: 'post', params: {date: date}  %>&nbsp;&nbsp;
 	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}   %>
       <% elsif BILLING_FORMAT == 'CSV' %>
 	 <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-12", method: 'post', params: {date: date}  %>

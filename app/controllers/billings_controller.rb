@@ -133,7 +133,7 @@ class BillingsController < ApplicationController
     redirect_back(fallback_location: billings_path )
   end
 
-# EDT claim export (DB,file)  
+# EDT claim export to DB,text file in EDT claim format  
   def export_edt
     store_location
     month_letter = 'ABCDEFGHIJKL'[Time.now.month-1]
@@ -162,7 +162,7 @@ class BillingsController < ApplicationController
 	next
       end
 
-# Call method from EDT module to genarate claims      
+# Call method from EDT module to genarate claims; use edt_file.id as unique batch_seq number      
       (body, claims, svcs, ttl_amt) = generate_claim_for_doc(edt_file.id,filename,visits)  # My::EDT
       ttl_claims += claims
       if edt_file.update_attributes(ftype: EDT_CLAIM, filename: filename, upload_date: Time.now, provider_no: doc.provider_no,

@@ -104,6 +104,7 @@ end
     @patient = @visit.pat
   end
 
+# Send claim to Cab.md  
    def sendclaim
        require 'net/http'
        require 'uri'
@@ -140,21 +141,6 @@ end
 
        respond_to(:html)
        redirect_to patient_visit_path
-  end
-
-# Generate file with single claim - for testing purposes   
-  def exportclaim
-    visit = Visit.find(params[:id])
-    filename = 'testclaim.001'
-
-    body = generate_single_claim(filename,visit)  # My::EDT
-    edt_file = EdtFile.new(ftype: EDT_CLAIM, filename: filename, body: body)
-    edt_file.write
-    flash[:success] = "Test Claim #{filename} created in EDT" 
-    redirect_to patient_visit_path
-
-#    if edt_file.update_attributes(ftype: EDT_CLAIM, filename: filename, upload_date: Time.now, provider_no: doc.provider_no,
-#               group_no: GROUP_NO, body: body, lines: body.lines.count, claims: claims, services: svcs, total_amount: ttl_amt, seq_no: seq_no )
   end
 
   def daysheet (defdate = Date.today)

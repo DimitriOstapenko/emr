@@ -54,7 +54,7 @@ private
 # Find claim by claim_no/ohip_num/accounting_no
   def myfind (str)
         if str.match(/^G[[:digit:]]{,10}$/)
-	  Claim.where("claim_no like ?", "#{str.upcase}%")
+	  Claim.where("claims.claim_no like ?", "#{str.upcase}%")
         elsif str.match(/^[[:digit:]]{,10}$/)
           Claim.where("ohip_num like ?", "%#{str}%")
         elsif str.match(/^[[:graph:]]{,8}$/)
