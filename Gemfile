@@ -1,23 +1,23 @@
 source 'https://rubygems.org'
 
-gem 'rails',                   '~> 5.2.1'
-gem 'bcrypt',                  '3.1.11'
+gem 'rails',                   '~> 5.2.2'
+gem 'bcrypt',                  '3.1.12' # 3.1.11
 gem 'faker',                   '1.7.3'
-gem 'carrierwave',             '1.2.1'
-gem 'mini_magick',             '4.7.0'
+gem 'carrierwave',             '1.3.1'  # 1.2.1
+gem 'mini_magick',             '4.9.3'  # '4.7.0'
 #gem 'fog'
 #gem 'fog-aws',                 '2.0.0'
-gem 'nokogiri',             '~> 1.8.5'
-gem 'will_paginate',           '3.1.6'
+gem 'nokogiri',             '~> 1.10.0' # 1.8.5
+gem 'will_paginate',           '3.1.7'  #'3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap-sass',       '~> 3.4.1'
 gem 'sassc', 		       '~> 2.0'
 gem 'sassc-rails',	       '~> 2.1'
 gem 'puma', 		       '~> 3.12'
-gem 'uglifier',                '3.2.0'
+gem 'uglifier',                '4.1.20'  # 3.2.0
 gem 'coffee-rails',            '4.2.2'
 gem 'jquery-rails',            '4.3.1'
-gem 'turbolinks',              '5.0.1'
+gem 'turbolinks',              '5.2.0'  # 5.0.1
 gem 'jbuilder',                '2.7.0'
 gem 'prawn',		       '2.2.2'
 gem 'prawn-table',	       '0.2.2'
@@ -29,8 +29,8 @@ gem 'pg', 	  '~> 1.1', '>= 1.1.4'
 
 group :development, :test do
 #  gem 'sqlite3', '1.3.13'
-  gem 'byebug',  '9.0.6', platform: :mri
-  gem 'capybara', '~> 2.13'
+  gem 'byebug',  '11.0.1', platform: :mri   	#9.0.6'
+  gem 'capybara', '3.15.0'  			#'~> 2.13'
   gem 'selenium-webdriver'
   gem 'better_errors' #, '~> 2.50'
   gem 'binding_of_caller', '~> 0.8.0'
