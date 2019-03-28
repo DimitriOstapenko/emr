@@ -22,7 +22,7 @@ gem 'jbuilder',                '2.7.0'
 gem 'prawn',		       '2.2.2'
 gem 'prawn-table',	       '0.2.2'
 gem 'responders'
-gem 'pdf-reader'
+gem 'pdf-reader',	       '2.2.0'  #''
 gem 'select2-rails',           '4.0.3'
 gem 'json',		       '2.1.0'
 gem 'pg', 	  '~> 1.1', '>= 1.1.4'
@@ -56,14 +56,14 @@ group :production do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+#gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'activerecord-session_store'
 gem 'popper_js', '~> 1.14.3'
 #gem "rmagick"
 gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip',    '~> 1.2.2'
-gem 'ffi',        '~> 1.9.24'
+gem 'ffi',        '~> 1.10.0'    #'~> 1.9.24'
 gem 'simple_form', '~> 4.1'
 gem 'whenever', require: false
 gem "loofah", ">= 2.2.3" 
