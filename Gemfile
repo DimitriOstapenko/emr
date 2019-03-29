@@ -34,6 +34,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'better_errors' #, '~> 2.50'
   gem 'binding_of_caller', '~> 0.8.0'
+  gem 'bullet'
 #  gem 'savon', '~> 2.0'
 end
 
