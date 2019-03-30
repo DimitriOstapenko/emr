@@ -7,7 +7,7 @@ class DaysheetController < ApplicationController
 	
   def index
       @date = Date.parse(params[:date]) rescue nil
-      store_location
+#    store_location
       if @date.present?
         @daysheet = Visit.where("date(entry_ts) = ?", @date) 
       else 
@@ -17,12 +17,12 @@ class DaysheetController < ApplicationController
       
       @daysheet = @daysheet.where(doc_id: current_doctor.id) if current_user.doctor?
       @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
-      @docs = Doctor.find(@docs_visits.keys) rescue []
+      @docs = Doctor.find(@docs_visits.keys) rescue [] if @docs_visits.size > 1
 	 
-      doc = Doctor.find(params[:doc_id]) rescue nil
-      if doc.present?
+      if params[:doc_id].present?
+	 doc = Doctor.find(params[:doc_id]) rescue nil
 	 @daysheet = @daysheet.where(doc_id: doc.id)
-	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} visits "
+	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} visits"
       else
 	 flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)}"
       end
