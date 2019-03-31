@@ -23,6 +23,6 @@
 <% if current_user.admin? %>
 <div class="bottom_buttons ">
 <%= will_paginate @users, class: "btn" %> 
-<%= button_to "Add User", new_user_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+<%= button_to "Add User", new_user_path, class: "btn btn-primary col-md-2 ", method: 'get'  %>
 </div>
 <% end %>

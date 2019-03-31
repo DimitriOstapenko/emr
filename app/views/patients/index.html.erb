@@ -3,7 +3,7 @@
 <% provide(:title, 'All patients') %>
 <%= render 'shared/modal' %>
 
-<div id="page">
+<!--div id="page" -->
 <table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
@@ -29,11 +29,16 @@
   </tbody>
 </table>
 
-<div class="bottom_buttons ">
-<%= will_paginate @patients, class: "btn" %> 
+<div class='row'>
+<div class="bottom_buttons">
 <% unless current_user.doctor? %>
-<%= button_to "New Patient", new_patient_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+<%= button_to "New Patient", new_patient_path, class: "btn btn-primary col-md-2", method: 'get'  %>
 <% end %>
 </div>
+
+<div class="bottom_nav">
+<%= will_paginate @patients, class: "btn" %> 
 </div>
+</div>
+
 

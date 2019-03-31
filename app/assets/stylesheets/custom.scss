@@ -38,12 +38,12 @@ p {
 
 .container, .help-container {
    width:100%;
-   min-height: 94%; //92%;
+   min-height: 99%; //92%;
    height: auto !important; /* Stick footer to bottom in IE6 */
    height: 100%;
    margin: 0 auto -30px;  /* footer height */
-   padding-left: 5px;
-   padding-right: 5px;
+   padding-left: 0px;
+   padding-right: 0px;
 }
 
 .help-container {
@@ -63,12 +63,13 @@ table {
 
 #header {
    padding: 5px;
-   height: 49px;
+   height: 56px;
 }
 
 #body {
-   padding:1px;
-   min-height: 94%; //92%;
+   padding-left:5px;
+   padding-right:5px;
+//   min-height: 92%; //92%;
    padding-bottom:1px;  
 //   height: 100%;
 //  margin: 0 auto -30px;  /* footer height */
@@ -86,7 +87,7 @@ table {
     padding-right: 5px;
 //    font-size: 1.1em;
 //    background-color: #444;
-    height: 30px;
+//    height: 30px;
 }
 
 .navbar-inverse .navbar-nav > .active > a,
@@ -250,13 +251,19 @@ footer {
 }
 
 .bottom_buttons {
-  display:flex;
-  justify-content:flex-end;
-  align-items:center; 
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 20px;
+  margin-left: 20px;
 }
 
+.bottom_nav {
+  float: right;
+//  padding-top: 20px;
+//  display:flex;
+//  justify-content:flex-end;
+//  align-items: center; 
+//  padding-bottom: 10px;
+//  width: 100%;
+}
 /* sidebar */
 
 aside {
@@ -446,15 +453,17 @@ input, select{
 /* Pagination */
 
 .pagination {
-    font-size: 12px;
+    font-size: 13px;
+    margin-top: 0px;
+    margin-right: 1em;
+    padding: 0.1em 0.1em;
 }
 
-.pagination > * {
-    margin-right: 0.1em;
-    padding: 0.1em 0.1em;
-    margin-top: 10px;
-    margin-bottom: 0px;
-}
+//.pagination > * {
+//    margin-right: 0.1em;
+//    padding: 0.1em 0.1em;
+//    margin-bottom: 0px;
+//}
 
 .pagination a:hover_ {
     background: #202020 none repeat scroll 0 0;

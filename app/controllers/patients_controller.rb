@@ -53,7 +53,8 @@ class PatientsController < ApplicationController
     @patient.entry_date = DateTime.now
     @patient.lastmod_by = current_user.name
     if @patient.save
-       suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  @patient.hin_expiry.to_date < Date.today)
+       expiry = @patient.hin_expiry rescue '1900-01-01'.to_date
+       suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  expiry < Date.today)
        flash[:success] = "Patient created #{suffix}"
        redirect_to @patient
     else
@@ -133,10 +134,10 @@ class PatientsController < ApplicationController
 	  end
 
 	  if msg.present?
-	     flash[:danger] = "Card found for #{@patient.lname}, #{@patient.fname} (#{@patient.sex}) #{msg}"
+	     flash[:danger] = "Patient found: #{@patient.lname}, #{@patient.fname} (#{@patient.sex}) #{msg}"
 	     redirect_to edit_patient_path(@patient.id)
 	  else
-	     flash[:info] = "Card found for #{cardpat.lname}, #{cardpat.fname} (#{cardpat.sex})"
+	     flash[:info] = "Patient found: #{cardpat.lname}, #{cardpat.fname} (#{cardpat.sex})"
              redirect_to @patient
 	  end
        else 
@@ -229,7 +230,7 @@ private
     pat = Patient.new
     pat.entry_date = DateTime.now
     pat.lastmod_by = current_user.name
-    names = str[18,26].split('/')
+    names = str[18,26].split('/') rescue ''
     pat.ohip_num = str[7,10] rescue ''
     pat.ohip_ver = str[61,2].upcase rescue ''
     pat.lname = names[0].strip rescue ''
@@ -237,7 +238,7 @@ private
     sdob = str[53,8]
     pat.dob = Date.strptime(sdob, '%Y%m%d')
     exp_dt = str[45,4] + sdob[6,2]
-    pat.hin_expiry = Date.strptime(exp_dt,'%y%m%d')
+    pat.hin_expiry = Date.strptime(exp_dt,'%y%m%d') rescue '1900-01-01'.to_date
     pat.sex = sex[str[52]]
     return pat
   end

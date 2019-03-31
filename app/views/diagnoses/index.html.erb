@@ -2,7 +2,6 @@
 <%= render "shared/modal", size: 'lg' %>
 
 <table class="tbl2 table-hover table-striped table-bordered" >
-  <caption>Full list of diagnoses</caption>
   <thead>
       <tr>
 	  <th><%= sortable 'code'  %></th>
@@ -24,10 +23,14 @@
   </tbody>
 </table>
 
-<div class="bottom_buttons ">
-<%= will_paginate @diagnoses, class: "btn" %>
+<div class="row">
+<div class="bottom_buttons">
 <% if current_user.admin?  %>
-<%= button_to "Add Diagnosis", new_diagnosis_path, class: "btn btn-primary", :method => "get" %>
+<%= button_to "Add Diagnosis", new_diagnosis_path, class: "btn btn-primary col-md-2", :method => "get" %>
 <% end %>
 </div>
 
+<div class="bottom_nav">
+<%= will_paginate @diagnoses, class: "btn" %>
+</div>
+</div>

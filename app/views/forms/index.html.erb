@@ -24,9 +24,14 @@
   </tbody>
 </table>
 
-<div class="bottom_buttons ">
-<%= will_paginate @forms, class: "btn" %>
+<div class="row">
+<div class="bottom_buttons">
 <% unless current_user.doctor? %>
-<%= button_to "Add Form", new_form_path, class: "btn btn-primary col-md-12", :method => "get" %>
+<%= button_to "Add Form", new_form_path, class: "btn btn-primary col-md-2", :method => "get" %>
 <% end %>
+</div>
+
+<div class="bottom_nav">
+<%= will_paginate @forms, class: "btn" %>
+</div>
 </div>

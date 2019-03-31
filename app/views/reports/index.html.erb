@@ -25,7 +25,12 @@
   </tbody>
 </table>
 
+<div class="row">
 <div class="bottom_buttons ">
+<%= button_to "Create New Report", new_report_path, class: "btn btn-primary col-md-2", method: 'get'  %>
+</div>
+
+<div class="bottom_nav">
 <%= will_paginate @reports, class: "btn" %> 
-<%= button_to "Create New Report", new_report_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+</div>
 </div>

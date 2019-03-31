@@ -26,9 +26,13 @@
   </tbody>
 </table>
 
+<div class="row">
 <div class="bottom_buttons ">
-<%= will_paginate @paystubs, class: "btn" %> 
 <% if @can_generate_new_paystubs %>
-<%= button_to "Create New Paystub", new_paystub_path, class: "btn btn-primary col-md-12 ", method: 'get'  %>
+<%= button_to "Create New Paystub", new_paystub_path, class: "btn btn-primary col-md-2", method: 'get'  %>
 <% end %>
+
+<div class="bottom_nav">
+<%= will_paginate @paystubs, class: "btn" %> 
+</div>
 </div>

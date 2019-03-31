@@ -3,7 +3,6 @@
 
 <table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
-  <caption>Full list of insurance providers</caption>
       <tr>
           <th class="tbl_lg">Name</th>
           <th class="tbl_lg">Address</th>
@@ -28,9 +27,14 @@
   </tbody>
 </table>
 
-<div class="bottom_buttons ">
-<%= will_paginate @providers, class: "btn" %>
+<div class="row">
+<div class="bottom_buttons">
 <% unless current_user.doctor? %>
-<%= button_to "Add Provider", new_provider_path, class: "btn btn-primary col-md-12", :method => "get" %>
+<%= button_to "Add Provider", new_provider_path, class: "btn btn-primary col-md-2", :method => "get" %>
 <% end %>
+</div>
+
+<div class="bottom_nav">
+<%= will_paginate @providers, class: "btn" %>
+</div>
 </div>

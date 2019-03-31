@@ -2,7 +2,6 @@
 <%= render "shared/modal" %>
 
 <table class="tbl2 table-hover table-striped table-bordered" >
-	<caption>Full list of medications </caption>
   <thead>
       <tr>
           <th class="tbl_md">Name</th>
@@ -29,7 +28,13 @@
   </tbody>
 </table>
 
+
+<div class="row>
 <div class="bottom_buttons ">
+<%= button_to "Add Medication", new_drug_path, class: "btn btn-primary col-md-2", method: :get %>
+</div>
+
+<div class="bottom_nav">
 <%= will_paginate @drugs, class: "btn" %>
-<%= button_to "Add Medication", new_drug_path, class: "btn btn-primary btn-block", method: :get %>
+</div>
 </div>
