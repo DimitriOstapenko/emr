@@ -59,7 +59,7 @@ Medications:
         <table class="tbl">
   	  <thead>
 	  <tr>
-	    <th>Time Stamp</th>
+	    <th>Date/Time</th>
 	    <th class="tbl_md">Edit</th>
 	    <th>Doctor</th>
 	    <th class="tbl_md">Diag.</th>
@@ -72,8 +72,11 @@ Medications:
 
           </tbody>
 	</table>
-	<div class="col-sm-9"><%= will_paginate @visits %></div>
-	<div class="col-sm-3 col-md-3" style="padding-top: 10px"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info btn-lg ", method: 'get' %> </div>
+	<div class="spacer-10"></div>
+	<div class="row">
+	<div class="col-md-9"><%= will_paginate @visits, class: "btn" %></div>
+	<div class="col-md-3"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info", method: 'get' %> </div>
+	</div>
     <% end %>
   </div>
 
