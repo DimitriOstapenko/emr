@@ -1,9 +1,6 @@
-<div id='result'></div>
-
 <% provide(:title, 'All patients') %>
 <%= render 'shared/modal' %>
 
-<!--div id="page" -->
 <table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
       <tr>
@@ -32,7 +29,7 @@
 <div class='row'>
 <div class="bottom_buttons">
 <% unless current_user.doctor? %>
-<%= button_to "New Patient", new_patient_path, class: "btn btn-primary col-md-2", method: 'get'  %>
+<%= button_to "New Patient", new_patient_path, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary col-md-2", method: "get"  %>
 <% end %>
 </div>
 
