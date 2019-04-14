@@ -15,7 +15,7 @@
       </tr>
   </thead>
   <tbody>
-    Visits billed, but not paid by OHIP this year: <%= @visits.count %> 
+    Visits billed, but not marked as paid this year: <%= @visits.count %>. IFH visits need to be updated manually after payment is received.
 
     <%= render partial: 'unpaid_visit', collection: @visits, as: :visit %>
 

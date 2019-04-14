@@ -1,7 +1,7 @@
 <% ttl_visits = 0 %>
 <div class='spacer-30'></div>
 <div class='col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4'>
-<h3 class='display-1'>Billed Visits so far this billing cycle (since <%= @prev_cycle_end_date %>)</h3>
+<h3 class='display-1'>Billed Visits so far in this billing cycle (since <%= @prev_cycle_end_date %>)</h3>
 <div class="well">
 <table class="tbl"> 
   <thead>
@@ -21,9 +21,9 @@
   	  <% end %>
   </tbody>
   <tfoot>
-    <tr>
-      <td>Total visits this cycle</td>
-      <td><%= ttl_visits %></td>
+    <tr style="height:30px">
+	    <td><b>Total visits this cycle</b></td>
+	    <td><b><%= ttl_visits %></b></td>
     </tr>
   </tfoot>
 

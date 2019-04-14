@@ -883,7 +883,7 @@ private
   def get_provider_premiums(arr, prov_no)
     arr.each_with_index do |str,i|
             next unless str.match(/PREMIUM PAYMENTS/)
-            return [i+22,arr[i-1,23]] if arr[i+1,21].join('').match(/#{prov_no}/)
+            return [i+22,arr[i-1,23]] if arr[i+1,3].join('').match(/#{prov_no}/)
     end
   end
 
