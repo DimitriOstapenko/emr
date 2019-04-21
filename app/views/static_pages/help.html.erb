@@ -5,7 +5,7 @@
 
 <div class="help-container">
 <div class='header'>Help Section</div>
-<div class="updated">Updated by: Dmitri Ostapenko, Jan 4, 2019</div>
+<div class="updated">Updated by: Dmitri Ostapenko, Apr 20, 2019</div>
 
 <div style="width: 100%; overflow: hidden;">
 <div style="width: 300px; float: left;"> 
@@ -197,7 +197,7 @@ For example, Patients page allows to search patients by Last Name, Date of Birth
  <dl class="row">
 	 <a id="reports"></a>
          <dt class="col-sm-1">Reports:</dt>
-	 <dd class="col-sm-11">This section allows to create various payment reports for the doctors working in the clinic. There are 2 types of reports: Submitted Claims Reports and Paid Claims Reports. User can chose timeframe for each category, but Paid Claims reports can only be generated for selected billing cycle, while Submitted Claims reports can use Day, Month, Range, Year or Billing Cycle as a timeframe. </dd>
+	 <dd class="col-sm-11">This section allows to create various payment reports for the doctors working in the clinic. There are currently 3 types of reports: Submitted Claims, Paid Claims and Cash. User can chose timeframe for each category, but Paid Claims reports can only be generated for selected billing cycle, while Submitted Claims and Cash reports can use Day, Month, Range, Year or Billing Cycle as a timeframe. </dd>
 <p>&nbsp;</p>
           <center><img src="/images/help/create_report_form.png" width=500></center>
 
@@ -301,7 +301,7 @@ This last menu groups various forms and has 5 submenus:
  <p>&nbsp;</p>
  <dl class="row">
          <dt class="col-sm-1">All Forms</dt>
-         <dd class="col-sm-11">Will show all form categories on one page</dd>
+         <dd>Will show all form categories on one page</dd>
  <p>&nbsp;</p>
         <dt class="col-sm-1">WCB Forms</dt>
         <dd>Forms related to WSIB claims</dd>
@@ -352,19 +352,25 @@ This last menu groups various forms and has 5 submenus:
  </dl>
 
  <dl class="row">
+         <dt class="col-sm-1"><%= link_to "Prescription", "#prescription" %></dt>
+	 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under patient profile </dd>
+ </dl>
+
+ <dl class="row">
          <dt class="col-sm-1"><%= link_to "Receipt", "#patient_receipt" %></dt>
 	 <dd class="col-sm-11">Receipts for cash services are generated from <%= link_to "Visit Summary Page", "#visit_summary_page" %>. Just click [Receipt] button and PDF file will be generated based on patient/visit information 
 	 </dd>
  </dl>
  
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Prescription", "#prescription" %></dt>
-	 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under patient profile </dd>
+         <dt class="col-sm-1"><%= link_to "Reports", "#doc_reports" %></dt>
+	 <dd class="col-sm-11">Doctor reports generated from  <%= link_to "Reports Page", "#reports" %>. 
+	 </dd>
  </dl>
 
  <dl class="row">
          <dt class="col-sm-1"><%= link_to "Referral", "#patient_referral" %></dt>
-	 <dd class="col-sm-11">Doctor Referrals are menu driven and are accessible from <%= link_to "Patient Profile Form", "#patient_profile" %>. To generate a referral, click [Referral] button and you will be taken to <%= link_to "Patient Referral Form", "#patient_referral_form" %>   
+	 <dd class="col-sm-11">Doctor Referrals are menu driven and are accessible from <%= link_to "Patient Profile Form", "#patient_profile" %>. To generate a referral, click [Referral] button and you will be taken to <%= link_to "Patient Referral Form", "#patient_referral" %>   
 	 </dd>
  </dl>
 
@@ -383,6 +389,20 @@ This last menu groups various forms and has 5 submenus:
  <p>&nbsp;</p>
 
  <!-- Forms reference -->
+  <p> &nbsp; </p>
+  <a id="address_label"></a>
+   <dt class="col-sm-1">Address Label</dt>
+    <dd class="col-sm-11">Label generated from <%= link_to "Patient List", "#patients" %> </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/address_label.png" width=500 border=1></center>
+
+  <p> &nbsp; </p>
+  <a id="patient_label"></a>
+   <dt class="col-sm-1">Patient Label</dt>
+    <dd class="col-sm-11">Label generated from <%= link_to "Day Sheet", "#day_sheet" %> </dd>
+  <p> &nbsp; </p>
+  <center><img src="/images/help/patient_label.png" width=500 border=1></center>
+
   <p> &nbsp; </p>
   <a id="patient_form"></a>
     <dt class="col-sm-1">Patient Form</dt>
@@ -458,44 +478,64 @@ This last menu groups various forms and has 5 submenus:
   <a id="patient_receipt"></a>
     <dt class="col-sm-1">Patient Receipt</dt>
     <dd class="col-sm-11">Receipt for cash services is generated based on current visit information by clicking [Receipt] button on Visit Summary Page
+    </dd>
   <p> &nbsp; </p>
   <center><img src="/images/help/patient_receipt.png" width=500></center>
 
+  <p> &nbsp; </p>
+  <a id="doc_reports"></a>
+    <dt class="col-sm-1">Submitted Claims report</dt>
+    <dd class="col-sm-11">This report contains claims submitted for billing for given time frame/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
+  <p> &nbsp; </p>
+  <center><img src="/images/help/create_report_form.png" width=500></center>
+  Generated Report looks like this:
+  <center><img src="/images/help/doc_sc_report.png" width=600></center>
+    </dd>
 
   <p> &nbsp; </p>
-  <a id="patient_referral_form"></a>
-    <dt class="col-sm-1">Patient Referral Form</dt>
-    <dd class="col-sm-11">Use this form to generate referrals regarding the patient </dd>
+    <dt class="col-sm-1">Paid Claims report</dt>
+    <dd class="col-sm-11">This report contains claims accepted by MHO and included into payment for billing cycle/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
   <p> &nbsp; </p>
-  <center><img src="/images/help/patient_referral_form.png" width=600></center>
+  <center><img src="/images/help/create_pc_report_form.png" width=500></center>
+  Generated Report looks like this:
+  <center><img src="/images/help/doc_pc_report.png" width=600></center>
+    </dd>
+
+  <p> &nbsp; </p>
+    <dt class="col-sm-1">Cash report</dt>
+    <dd class="col-sm-11">This report contains exclusively cash payments for selected time frame/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
+  <p> &nbsp; </p>
+  <center><img src="/images/help/create_cs_report_form.png" width=500></center>
+  Generated Report looks like this:
+    </dd>
+  <center><img src="/images/help/doc_cs_report.png" width=600></center>
 
   <p> &nbsp; </p>
   <a id="patient_referral"></a>
-    <dt class="col-sm-1">Patient Referral</dt>
-    <dd class="col-sm-11">PDF Referral generated from the <%= link_to "Patient Referral Form", "#patient_referral_form" %> </dd>
-  <p> &nbsp; </p>
-  <center><img src="/images/help/patient_referral.png" width=600 border=1></center>
+    <dt class="col-sm-1"><%= link_to "Patient Referral", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_referral_modal' %></dt>
+    <dd class="col-sm-11">PDF Referral generated from the <%= link_to "Patient Referral Generation Form", "#", 'data-toggle':  "modal", 'data-target': '#patient_referral_form_modal' %> </dd>
+  <%= render "patient_referral" %>
+  <%= render "patient_referral_form" %>
 
   <p> &nbsp; </p>
   <a id="visit_form"></a>
-    <dt class="col-sm-1">Visit Form</dt>
-  <dd class="col-sm-11">This form is generated for each unique visit of the patient to the clinic </dd>
-  <p> &nbsp; </p>
-  <center><img src="/images/help/visit_form.png" width=500></center>
+    <dt class="col-sm-1"><%= link_to "Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_form_modal' %></dt>
+    <dd class="col-sm-11">This form is generated for each unique visit of the patient to the clinic. This document lists patient's contact information, reason for visit, list of medications and allergies, vital signs and doctor's notes. Diagnosis and doctors signature are provided on paper copy, if used. This document is redundant in paperless office and is provided for practices still using paper documents. Most information on this form is optional.
+    </dd>
+  <%= render "visit_form" %>
   
   <p> &nbsp; </p>
   <a id="prescription"></a>
-    <dt class="col-sm-1">Prescription</dt>
+  <dt class="col-sm-1"><%= link_to "Prescription", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#prescription_modal' %></dt>
   <dd class="col-sm-11">Prescriptions are generated from patient profile page based on list of active medications</dd>
-  <p> &nbsp; </p>
-  <center><img src="/images/help/prescription.png" width=500></center>
+  <%= render "prescription" %>
   
   <p> &nbsp; </p>
   <a id="visit_history"></a>
-    <dt class="col-sm-1">Visit History</dt>
-    <dd class="col-sm-11">This report is accessible from patient profile page and shows full history of patient's visits to the clinic </dd>
-  <p> &nbsp; </p>
-  <center><img src="/images/help/visit_history.png" width=700></center>
-</div>
+  <dt class="col-sm-1"><%= link_to "Visit History", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_history_modal' %></dt>
+  <dd class="col-sm-11">This report is accessible from patient profile page and shows full history of patient's visits to the clinic </dd>
+  <%= render "visit_history" %>
 
+  <p> &nbsp; </p>
+</div>
 &nbsp;

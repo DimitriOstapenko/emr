@@ -126,6 +126,9 @@
        prov_no = @report.doctor.provider_no rescue 0
        @claims = Claim.joins(:services).where(provider_no: prov_no).where(date_paid: (@report.sdate..@report.edate)).reorder('').group('claims.id,services.svc_date').order('services.svc_date')
        @pdf = build_pc_report( @report, @claims )
+    elsif @report.rtype == CS_REPORT  # Cash Report
+       @visits, @cash = get_cash_visits( @report )
+       @pdf = build_cs_report( @report, @visits )
     end
 
     @pdf.render_file @report.filespec
@@ -175,22 +178,24 @@ private
         end
   end
 
+# get insured visits and totals  
   def get_visits (rep)
     insured = 0
-    if rep.doc_id
-	    visits = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
-	    total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
-	    visits.each{|v| insured += v.total_insured_fees}
-    else
-	    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
-	    total = Visit.where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
-	    visits.each{|v| insured += v.total_insured_fees}
-    end
+    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc)
+    visits = visits.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).order(entry_ts: :asc) if rep.doc_id
+    total = Visit.where(doc_id: rep.doc_id).where(entry_ts: (rep.sdate..rep.edate)).sum("fee+fee2+fee3+fee4")
+    visits.each{|v| insured += v.total_insured_fees}
     uninsured = total - insured
     return [visits, total, insured, uninsured]
-     
   end
 
+  def get_cash_visits (rep)
+    cash  = 0
+    visits = Visit.where(entry_ts: (rep.sdate..rep.edate)).where('bil_type=4 OR bil_type2=4 OR bil_type3=4 OR bil_type4=4').order(entry_ts: :asc)
+    visits = visits.where(doc_id: rep.doc_id).order(entry_ts: :asc) if rep.doc_id
+    visits.each{|v| cash += v.total_cash}
+    return [visits, cash]
+  end
 
   def sort_column
           Report.column_names.include?(params[:sort]) ? params[:sort] : "id"

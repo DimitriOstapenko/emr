@@ -164,9 +164,19 @@ class Visit < ApplicationRecord
     services.select{|i| i[:btype] && i[:btype] < CASH_BILLING}.count rescue 0
   end
 
+# Cash services for this visit
+  def cash_services 
+    services.select{|i| i[:btype] && i[:btype] == CASH_BILLING} rescue []
+  end
+
 # Total number of cash services
   def total_cash_services
-    services.select{|i| i[:btype] && i[:btype] == CASH_BILLING}.count rescue 0
+    cash_services.count rescue 0
+  end
+
+# String of cash proc_codes  
+  def cash_pcodes  
+    cash_services.map{|pc| pc[:pcode]}.join',' rescue ''
   end
 
 # Total amount of cash 

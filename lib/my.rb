@@ -592,7 +592,7 @@ end # EDT module
  
   end
 
-# Generate doctor's billing report
+# Generate doctor's submitted claims billing report
   def build_sc_report( report, visits )
     @doc = Doctor.find(report.doc_id)
     sdate = report.sdate.strftime("%d %b %Y")
@@ -615,20 +615,20 @@ end # EDT module
     (1..7).map{|key| @totals[key] = 0}
     (1..7).map{|key| @servcounts[key] = 0}
 
-    rows =  [[ "Serv Date", "Patient", "OHIP#", "DOB", "Serv.", "Tp", "Fee", "Diag", "Status", "Acct#"]]
+    rows =  [[ "Serv Date", "Patient", "OHIP#", "DOB", "Serv.", "Typ", "Fee", "Diag", "Status", "Acct#"]]
     visits.all.each do |v|
-      pat = Patient.find(v.patient_id)
+#pat = v.pat  # Patient.find(v.patient_id)
       next unless v.fee > 0
       next if v.bil_type < 1
       @total_hcp_claims += 1 if v.hcp_services?
       status = v.billing_ref.present? ? v.billing_ref : v.status_str
-      rows += [[ v.entry_ts.strftime("%d/%m/%Y"), pat.full_name[0..19], pat.ohip_num_full, pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, status, v.id ]]
+      rows += [[ v.entry_ts.strftime("%d/%m/%Y"), v.pat.full_name[0..19], v.pat.ohip_num_full, v.pat.dob.strftime("%d/%m/%Y"), v.proc_code[0..4], v.bil_type_str, v.fee, v.diag_scode, status, v.id ]]
       @totals[v.bil_type] += v.fee if v.bil_type.present?
       @servcounts[v.bil_type] += 1 if v.bil_type.present?
       serv = v.services
       serv.shift
       serv.each do |s|
-	rows += [[ '','','', '', s[:pcode], BILLING_TYPES.invert[s[:btype]].to_s, s[:fee], v.diag_scode, v.billing_ref, pat.id ]]
+        rows += [[ '','','', '', s[:pcode], BILLING_TYPES.invert[s[:btype]].to_s, s[:fee], v.diag_scode, v.billing_ref, v.pat.id ]]
 	@totals[s[:btype]] += s[:fee] if s[:btype]
         @servcounts[s[:btype]] += 1 if s[:btype]
       end
@@ -681,7 +681,7 @@ end # EDT module
 
     pdf.move_down 5.mm
     pdf.text "#{REPORT_TFRAMES.invert[report.timeframe]} Paid Claims Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
-    pdf.text "For services paid for by MHO in  #{date_range}, RA file #{ra_file}", align: :center, size: 12, style: :bold
+    pdf.text "For services paid by MHO in  #{date_range}, RA file #{ra_file}", align: :center, size: 12, style: :bold
     pdf.text "(Sorted by service date, ascending)", align: :center, size: 10
     pdf.move_down 5.mm
 
@@ -742,8 +742,55 @@ end # EDT module
     end
 
     return pdf
-
   end
+
+# build doctor's cash report 
+  def build_cs_report( report, visits )
+    
+    @doc = Doctor.find(report.doc_id)
+    sdate = report.sdate.strftime("%d %b %Y")
+    edate = report.edate.strftime("%d %b %Y")
+    date_range = report.timeframe == DAILY_REPORT ? sdate : "#{sdate} - #{edate}"
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,20.mm,10.mm])
+
+    pdf.text "#{CLINIC_NAME} #{CLINIC_ADDR} #{CLINIC_PHONE} #{CLINIC_FAX}", align: :center, size: 8
+    pdf.move_down 5.mm
+    pdf.text "#{REPORT_TFRAMES.invert[report.timeframe]} Cash Report For Dr. #{@doc.lname}, Prov# #{@doc.provider_no} Group# #{GROUP_NO}", align: :center, size: 12, style: :bold
+    pdf.text "For services performed:  #{date_range}", align: :center, size: 12, style: :bold
+    pdf.text "(Sorted by visit time, last to first)", align: :center, size: 10
+    pdf.move_down 5.mm
+	  
+    pdf.font "Courier"
+    pdf.font_size 8
+
+    rows =  [[ "Serv Date", "Patient", "OHIP#", "DOB", "Serv.","Type", "Fee", "Status"]]
+    @total_cash = 0
+    visits.all.each do |v|
+      rows += [[ v.entry_ts.strftime("%d/%m/%Y"), v.pat.full_name[0..19], v.pat.ohip_num_full, v.pat.dob.strftime("%d/%m/%Y"), v.cash_pcodes, 'CSH', sprintf("$%.2f",v.total_cash), 'Paid']]
+      @total_cash += v.total_cash
+    end
+
+    pdf.table rows do |t|
+        t.cells.border_width = 0
+        t.column_widths = [23.mm, 38.mm, 30.mm, 22.mm, 25.mm, 15.mm, 20.mm, 15.mm ]
+        t.header = true
+        t.row(0).font_style = :bold
+        t.position = 5.mm
+        t.cells.padding = 3
+        t.cells.style do |c|
+           c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+        end
+    end
+
+    pdf.move_down 10.mm
+    pdf.span(190.mm, :position => :center) do
+	    pdf.text "Total Cash received: #{sprintf("$%.2f", @total_cash)}", size: 9
+    end
+
+	  
+    return pdf
+  end
+
 
 # Generate doctor's monthly Pay Stub based on claims paid by MOH
   def build_paystub( paystub, claims_by_day )
