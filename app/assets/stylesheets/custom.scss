@@ -70,7 +70,7 @@ table {
    padding-left:5px;
    padding-right:5px;
 //   min-height: 92%; //92%;
-   padding-bottom:1px;  
+   padding-bottom:30px;  
 //   height: 100%;
 //  margin: 0 auto -30px;  /* footer height */
 //   height: auto !important; /* Stick footer to bottom in IE6 */
@@ -256,10 +256,10 @@ footer {
 }
 
 .bottom_nav {
-  float: right;
+//  float: right;
 //  padding-top: 20px;
-//  display:flex;
-//  justify-content:flex-end;
+  display: flex;
+  justify-content: flex-end;
 //  align-items: center; 
 //  padding-bottom: 10px;
 //  width: 100%;
