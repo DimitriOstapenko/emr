@@ -4,18 +4,18 @@
 <table class="tbl table-hover" >
   <thead>
       <tr>
-          <th>Date</th>
+          <th><%= sortable 'entry_ts', 'Date' %></th>
           <th class="tbl_lg">Patient</th>
-          <th class="tbl_sm">Type</th>
+	  <th class="tbl_sm">Type</th>
  	  <th>Doctor</th>
-          <th>Diag Code</th>
-          <th>Proc Code</th>
+          <th><%= sortable 'diag_code', 'Diag Code' %></th>
+          <th>Svc Code</th>
           <th>Bill Ref</th>
           <th class="tbl_sm"></th>
       </tr>
   </thead>
   <tbody>
-    Visits billed, but not marked as paid this year: <%= @visits.count %>. IFH visits need to be updated manually after payment is received.
+    Visits billed, but not marked as "Paid" this year: <%= @visits.count %>. IFH visits need to be updated manually after payment is received.
 
     <%= render partial: 'unpaid_visit', collection: @visits, as: :visit %>
 

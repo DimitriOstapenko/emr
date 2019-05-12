@@ -3,9 +3,11 @@ class VisitsController < ApplicationController
   include My::Forms
   include My::EDT
 
-	before_action :logged_in_user 
-#        before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
-	before_action :admin_user, only: :destroy
+  helper_method :sort_column, :sort_direction
+
+  before_action :logged_in_user 
+  before_action :admin_user, only: :destroy
+# before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 
   def index (defdate = Date.today )
     date = params[:date] || defdate
@@ -195,7 +197,8 @@ end
   def unpaid_visits
     v = Visit.where(status: BILLED).where("entry_ts >?", Date.today.beginning_of_year).where('entry_ts<?', last_paid_visit_date)
     if v.any?
-           @visits = v.paginate(page: params[:page])
+#           @visits = v.paginate(page: params[:page])
+	   @visits = v.reorder(sort_column + ' ' + sort_direction, "entry_ts desc").paginate(page: params[:page])
            render 'index'
       else
            flash.now[:warning] = "No unpaid visits found for this year, excluding current billing cycle"
@@ -233,6 +236,14 @@ end
 	      p4 = Procedure.find_by(code: visit.proc_code4) 
 	      visit.fee4 = p4.cost*visit.units4 rescue 0
       end  
+    end
+    
+    def sort_column
+        Visit.column_names.include?(params[:sort]) ? params[:sort] : "entry_ts"
+    end
+
+    def sort_direction
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
     end
 
 end

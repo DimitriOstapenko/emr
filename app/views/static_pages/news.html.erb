@@ -3,6 +3,7 @@
   <h1> Recent changes to Walk-In EMR </h1>
 
 <ul>
+	<li> Billing type in Patient Profile can now only be changed if patient had no previously billed visits </li>
 	<li> Patient Visit History can now be printed by using <Print Visit History> button on patient profile page, under the list of visits </li> 
 	<li> Prescriptions can now be generated from patient profile page if patient has new medication list (see below). If visit is present for the given date, prescription will be associated with it, otherwise prescription is created without visit reference. More than one prescription is allowed for a visit. Prescription PDF files are stored on a server and can be retrieved later if needed. Prescription list will appear on patient profile page if there's at least one prescription generated for a patient </li>
 	<li> Medications are now added from patient profile by using <+Medication> button and include strength, format, route, dose. Added medications will appear in <medications>  list on the same page.  Search is supported by brand or generic name. Each active medication can be marked as such.  Old medication field (text field in patient profile) will be removed once all medications are converted to new format. Patient list of medications is used in prescriptions.

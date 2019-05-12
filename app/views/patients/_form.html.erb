@@ -18,8 +18,8 @@
   <%= f.input :sex, collection: SEXES, hint: 'Required', label: 'Gender', include_blank: false %>
   </div>
   
-  <div class="col-sm-2">
-	  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required', label: 'Type', include_blank: false,
+  <div class="col-sm-2" id="pat_type">
+	  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required *', label: 'Type', include_blank: false,
 	      label_html: { "data-toggle": 'tooltip', class: "has-tip", 
               title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}
   %>
@@ -32,26 +32,27 @@
   <%= f.input :maid_name, label: 'Maiden Name' %>
   </div>
   
-  <div class="col-sm-3" id="ifh_number", style="display:none;">
-  <%= f.input :ifh_number, label:'IFH Number', hint: 'Required' %>
-  </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-3" id="ifh_number", style="display:none;">
+  <%= f.input :ifh_number, label:'IFH Number', hint: 'Required *' %>
+  </div>
+
+  <div class="col-sm-3" id="ohip_number">
   <%= f.input :ohip_num, label: 'Health Card Number', hint: 'Required *' %>
   </div>
 
-  <div class="col-sm-1 padding-0">
+  <div class="col-sm-1 padding-0" id="ohip_ver">
      <%= f.input :ohip_ver, label: 'VC' %>
   </div>
 
-  <div class="col-sm-1">
+  <div class="col-sm-1" >
   <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov.', include_blank: false %>
   </div>
   
   <div class="col-sm-3">
-     <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required *' %>
+     <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required' %>
   </div>
   
   <div class="col-sm-3">
@@ -169,12 +170,35 @@ $(document).ready(function () {
      (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
    });
 
+
 // Show IFH number text field for IFH patients
    var pat_type = $('select[name="patient[pat_type]"]');	
-	
-   (pat_type.val() == 'I') ? $('#ifh_number').show() : $('#ifh_number').hide();
+
+   if (pat_type.val() == 'I') {
+     $('#ifh_number').show();
+     $('#ohip_number').hide();
+     $('#ohip_ver').hide();
+   } else {
+     $('#ifh_number').hide();
+   }
+   
+// Do not allow changes to HC#, IFH#, Patient type if patient has visits and mode is other than admin   
+   if ('<%= action_name %>' == 'edit' && '<%= current_user.admin? %>' == 'false' && Number('<%= @patient.visits.size %>') > '0') {
+      pat_type.attr('disabled', true);
+      $('#patient_ifh_number').prop('readonly', true);
+      $('#patient_ohip_num').prop('readonly',true);
+   }
+
    pat_type.change(function () {
-     (pat_type.val() == 'I') ? $('#ifh_number').show() : $('#ifh_number').hide();
+     if (pat_type.val() == 'I') {
+       $('#ifh_number').show();
+       $('#ohip_number').hide();
+       $('#ohip_ver').hide();
+     } else {
+       $('#ifh_number').hide();
+       $('#ohip_number').show();
+       $('#ohip_ver').show();
+     }
    });
 	
    var pmt_opt = document.getElementById('patient_pat_type').getElementsByTagName("option");
