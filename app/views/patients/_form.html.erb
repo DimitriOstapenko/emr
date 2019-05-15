@@ -183,7 +183,7 @@ $(document).ready(function () {
    }
    
 // Do not allow changes to HC#, IFH#, Patient type if patient has visits and mode is other than admin   
-   if ('<%= action_name %>' == 'edit' && '<%= current_user.admin? %>' == 'false' && Number('<%= @patient.visits.size %>') > '0') {
+   if ('<%= action_name %>' == 'edit' && '<%= current_user.admin? %>' == 'false' && Number('<%= @patient.visits.size %>') > '1') {
       pat_type.attr('disabled', true);
       $('#patient_ifh_number').prop('readonly', true);
       $('#patient_ohip_num').prop('readonly',true);
