@@ -216,7 +216,7 @@ private
 		fname.strip!
 		Patient.where("upper(lname) like ? AND upper(fname) like ?", "%#{lname.upcase}%", "%#{fname.upcase}%") 
 	     else
-		Patient.where("upper(lname) like ?", "%#{lname.upcase}%") 
+		Patient.where("upper(lname) like ? OR upper(maid_name) like ?", "%#{lname.upcase}%", "%#{lname.upcase}") 
 	     end
 	  end
 	else
