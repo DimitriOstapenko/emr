@@ -47,11 +47,11 @@
      <%= f.input :ohip_ver, label: 'VC' %>
   </div>
 
-  <div class="col-sm-1" >
+  <div class="col-sm-1" id="hin_prov" >
   <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov.', include_blank: false %>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-3" id="hin_expiry">
      <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required' %>
   </div>
   
@@ -178,22 +178,34 @@ $(document).ready(function () {
      $('#ifh_number').show();
      $('#ohip_number').hide();
      $('#ohip_ver').hide();
+   } else if (pat_type.val() == 'S') {
+     $('#ifh_number').hide();
+     $('#ohip_number').hide();
+     $('#ohip_ver').hide();
+     $('#hin_prov').hide();
+     $('#hin_expiry').hide();
    } else {
      $('#ifh_number').hide();
    }
    
 // Do not allow changes to HC#, IFH#, Patient type if patient has visits and mode is other than admin   
-   if ('<%= action_name %>' == 'edit' && '<%= current_user.admin? %>' == 'false' && Number('<%= @patient.visits.size %>') > '1') {
-      pat_type.attr('disabled', true);
-      $('#patient_ifh_number').prop('readonly', true);
-      $('#patient_ohip_num').prop('readonly',true);
-   }
+//   if ('<%= action_name %>' == 'edit' && '<%= current_user.admin? %>' == 'false' && Number('<%= @patient.visits.size %>') > '1') {
+//      pat_type.attr('disabled', true);
+//      $('#patient_ifh_number').prop('readonly', true);
+//      $('#patient_ohip_num').prop('readonly',true);
+//   }
 
    pat_type.change(function () {
      if (pat_type.val() == 'I') {
        $('#ifh_number').show();
        $('#ohip_number').hide();
        $('#ohip_ver').hide();
+     } else if (pat_type.val() == 'S') {
+       $('#ifh_number').hide();
+       $('#ohip_number').hide();
+       $('#ohip_ver').hide();
+       $('#hin_prov').hide();
+       $('#hin_expiry').hide();
      } else {
        $('#ifh_number').hide();
        $('#ohip_number').show();

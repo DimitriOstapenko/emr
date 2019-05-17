@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_17_203633) do
+ActiveRecord::Schema.define(version: 2019_05_17_080953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -582,6 +582,8 @@ ActiveRecord::Schema.define(version: 2019_03_17_203633) do
     t.string "billing_ref"
     t.string "document"
     t.integer "room", default: 0
+    t.string "pat_type"
+    t.string "hin_num"
     t.index ["entry_ts"], name: "index_visits_on_entry_ts"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"

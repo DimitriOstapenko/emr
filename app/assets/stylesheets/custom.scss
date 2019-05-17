@@ -540,7 +540,7 @@ table.pretty {
 
 .patient-notes-panel-body {
     background: lightblue;
-    max-height: 230px;
+    max-height: 190px;
     overflow-y: scroll;
 }
 
@@ -553,6 +553,7 @@ table.pretty {
 .visit-notes-panel-body {
     background: #FAFAD2;
     max-height: 200px;
+    overflow-x: scroll;
     overflow-y: scroll;
 }
 

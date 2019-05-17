@@ -1,6 +1,7 @@
 <% remote = device_is_desktop? %>
 <tr>
-  <td><%= link_to visit.entry_ts, patient_visit_path(@patient,visit) %> </td>
+  <td><%= link_to visit.date, patient_visit_path(@patient,visit) %> </td>
+  <td><%= visit.pat_type %></td>
   <td>
   <% if visit.editable? || current_user.admin? %>
   <% if remote %>

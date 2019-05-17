@@ -13,7 +13,7 @@ class Visit < ApplicationRecord
   default_scope -> { order(entry_ts: :desc) }
   attr_accessor :doctor, :proc_codes, :bil_types, :total_fee, :diag_scode
   
-  validates :patient_id, presence: true, numericality: { only_integer: true }
+#  validates :patient_id, presence: true, numericality: { only_integer: true }
   validates :doc_id, presence: true
   validates :proc_code, length: { maximum: 10 }
   validates :proc_code2, length: { maximum: 10 }
@@ -23,6 +23,19 @@ class Visit < ApplicationRecord
 
   validate :diag_required
   after_initialize :default_values
+
+# Patient type and hin_num may change from visit to visit; We won't update on other attr changes
+  before_save { 
+	  self.pat_type ||= pat.pat_type
+	  if self.pat_type == IFH_PATIENT
+	    self.hin_num ||= pat.ifh_number
+	  elsif self.pat_type == CASH_PATIENT
+	    self.hin_num ||= '' 
+	  else 
+	    self.hin_num ||= pat.ohip_num
+	  end
+	  }
+                
 
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 
@@ -279,7 +292,7 @@ private
 # Can only save 1 visit per patient per day  
   def check_uniqueness 
       visits = pat.visits.where('date(entry_ts)=?', self.entry_ts.to_date)
-      errors.add('Error:', "Only 1 visit is allowed per patient per day") if visits.any?
+      errors.add('Error:', "Only 1 visit is allowed by OHIP per patient per day") if visits.any?
   end
 
   def default_values

@@ -2,20 +2,24 @@
 <%= render "shared/modal" %>
 <% remote = device_is_desktop? %>
 
-<h1><%= @patient.full_name %> :  Patient Profile &nbsp; <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window' %></h1>
+<h1><%= @patient.full_name %> (<%= @patient.pat_type %>):  Patient Profile &nbsp; <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window' %></h1>
 
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">
 <pre class="pre-scrollable">
-<b>Name: <%= @patient.full_name %> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
-<%= @patient.age_str %>  <%= @patient.full_sex %> <% if @patient.chart_file.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-Born: <%= @patient.dob %>
-<% if @patient.pat_type == IFH_PATIENT %>
-IFH #: <%= @patient.ifh_number %> 
+<% if @patient.pat_type == CASH_PATIENT %>
+<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
 <% else %>
+<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
+<% if @patient.ohip_num %>
 Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) Expires: <%= @patient.hin_expiry %>
 <% end %>
+<% if @patient.ifh_number %>
+IFH #: <%= @patient.ifh_number %> 
+<% end %>
+<% end %>
+<b><%= @patient.full_name %></b>:  <%= @patient.age_str %>  <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart_file.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
 Phone: <%= num_to_phone(@patient.phone) %> Mobile: <%= num_to_phone(@patient.mobile) %> <% if @patient.email.present? %> Email: <%= mail_to @patient.email %> <% end %>
 Address: <%= @patient.addr %>
 	    <%= @patient.city %> <%= @patient.prov %> 
@@ -35,7 +39,6 @@ Medications:
 </pre>
 	 
  <% if @patient.notes.present? %> 
- <b>Notes</b>
  <div class="panel panel-info">
    <div class="patient-notes-panel-body">
 	   <% html_str = "<pre class='notes'> #{@patient.notes} </pre>" %>
@@ -59,7 +62,8 @@ Medications:
         <table class="tbl">
   	  <thead>
 	  <tr>
-	    <th>Date/Time</th>
+	    <th>Date</th>
+	    <th>Bil.Type</th>
 	    <th class="tbl_md">Edit</th>
 	    <th>Doctor</th>
 	    <th class="tbl_md">Diag.</th>

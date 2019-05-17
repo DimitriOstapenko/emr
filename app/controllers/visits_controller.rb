@@ -215,7 +215,8 @@ end
 				    :fee, :fee2, :fee3, :fee4,
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
-				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, :billing_ref, :document, :room )
+				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, 
+				    :billing_ref, :document, :room, :pat_type, :hin_num )
     end      
 
     def set_visit_fees ( visit )

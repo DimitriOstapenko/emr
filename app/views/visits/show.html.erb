@@ -6,7 +6,7 @@
 %>
 <%= render "shared/modal" %>
 
-<h1> <%= @patient.full_name %> (<%= @patient.pat_type  %>) : Visit of <%= @visit.entry_ts %>  </h1>
+<h1> <%= @patient.full_name %> (<%= @visit.pat_type  %>) : Visit of <%= @visit.entry_ts %>  </h1>
 
 <% diag = Diagnosis.find_by(code: @visit.diag_code) %>
 <% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>
@@ -16,6 +16,13 @@
 	
 <section>
 <pre class="pre-scrollable-large">
+<% if @visit.pat_type == HCP_PATIENT %>
+<b>OHIP Visit HC# </b>: <%= @visit.hin_num %> 
+<% elsif @visit.pat_type == IFH_PATIENT %>   
+<b>IFH Visit Card# </b>: <%= @visit.hin_num %> 
+<% else %>
+<b>CASH VISIT </b>    
+<% end %>   
 <b>Status </b>: <%= @visit.status_str %> 
 <b>Doctor</b> : <%= @visit.doctor.lname %>
 <% if @visit.temp.present? %>
