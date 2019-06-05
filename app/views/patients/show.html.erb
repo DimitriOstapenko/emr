@@ -12,10 +12,10 @@
 <b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
 <% else %>
 <b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
-<% if @patient.ohip_num %>
+<% if @patient.ohip_num.present? %>
 Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) Expires: <%= @patient.hin_expiry %>
 <% end %>
-<% if @patient.ifh_number %>
+<% if @patient.ifh_number.present? %>
 IFH #: <%= @patient.ifh_number %> 
 <% end %>
 <% end %>
