@@ -51,7 +51,7 @@
 	<% if device_is_desktop? %>
 	<td>
 	<% if visit.status == PAID && visit.claim_id.present? %>
-	  <% link_to visit.status_str, claim_path(visit.claim_id) %> 		
+	  <%= link_to visit.status_str, claim_url(visit.claim_id) %> 		
 	<% else %>
 	  <%= visit.status_str %>
 	<% end %>
