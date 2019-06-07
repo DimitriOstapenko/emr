@@ -7,12 +7,12 @@ class DaysheetController < ApplicationController
 	
   def index
       @date = Date.parse(params[:date]) rescue nil
-#    store_location
       if @date.present?
-        @daysheet = Visit.where("date(entry_ts) = ?", @date) 
+        @noerrorvisits = @daysheet = Visit.where("date(entry_ts) = ?", @date) 
       else 
         @daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,ASSESSED,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
 	@date = Date.today
+	@noerrorvisits = @daysheet.where("date(entry_ts) = ?", @date)
       end
       
       @daysheet = @daysheet.where(doc_id: current_doctor.id) if current_user.doctor?
@@ -22,16 +22,17 @@ class DaysheetController < ApplicationController
       if params[:doc_id].present?
 	 doc = Doctor.find(params[:doc_id]) rescue nil
 	 @daysheet = @daysheet.where(doc_id: doc.id)
-	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} visits"
+	 @noerrorvisits =  @noerrorvisits.where(doc_id: doc.id)
+	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} #{'visit'.pluralize(@daysheet.count)}"
       else
-	 flashmsg = "#{@daysheet.count}  #{'visit'.pluralize(@daysheet.count)}"
+	 flashmsg = "#{@noerrorvisits.count}  #{'visit'.pluralize(@noerrorvisits.count)}"
       end
 
       @insured_svcs = @cash_svcs = @ifh_svcs = @total_cash = 0
-      @daysheet.map{|v| @insured_svcs += v.total_insured_services}
-      @daysheet.map{|v| @cash_svcs += v.total_cash_services}
-      @daysheet.map{|v| @total_cash += v.total_cash}
-      @daysheet.map{|v| @ifh_svcs += v.total_ifh_services}
+      @noerrorvisits.map{|v| @insured_svcs += v.total_insured_services}
+      @noerrorvisits.map{|v| @cash_svcs += v.total_cash_services}
+      @noerrorvisits.map{|v| @total_cash += v.total_cash}
+      @noerrorvisits.map{|v| @ifh_svcs += v.total_ifh_services}
       ins_str = @insured_svcs>0 ? ", #{@insured_svcs} insured #{'service'.pluralize(@insured_svcs)}" : ''
       csh_str = @cash_svcs>0 ? ", #{@cash_svcs} cash #{'service'.pluralize(@cash_svcs)} (#{sprintf('$%.2f',@total_cash)})" : ''
       ifh_str = @ifh_svcs>0 ? ", #{@ifh_svcs} IFH #{'service'.pluralize(@ifh_svcs)}" : ''
