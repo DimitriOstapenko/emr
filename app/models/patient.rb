@@ -186,7 +186,7 @@ protected
 
   def validate_age
       return unless dob.present?
-      if dob < 99.years.ago || dob > Date.yesterday
+      if dob < 120.years.ago || dob > Date.yesterday
           errors.add('Error:', 'Date of birth is out of range')
       end
   end
