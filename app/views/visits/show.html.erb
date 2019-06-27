@@ -16,7 +16,7 @@
 	
 <section>
 <pre class="pre-scrollable-large">
-<% if @visit.pat_type == HCP_PATIENT %>
+<% if (HCP_PATIENT..RMB_PATIENT).include?(@visit.pat_type) %>
 <b>OHIP Visit HC# </b>: <%= @visit.hin_num %>  <b> Billing Type: </b> <%= @visit.pat_type %>
 <% elsif @visit.pat_type == IFH_PATIENT %>   
 <b>IFH Visit Card# </b>: <%= @visit.hin_num %> 

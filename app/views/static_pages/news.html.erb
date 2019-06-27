@@ -3,12 +3,17 @@
   <h1> Recent changes to Walk-In EMR </h1>
 
 <ul>
-	<li> Billing type in Patient Profile can now only be changed if patient had no previously billed visits </li>
-	<li> Patient Visit History can now be printed by using <Print Visit History> button on patient profile page, under the list of visits </li> 
-	<li> Prescriptions can now be generated from patient profile page if patient has new medication list (see below). If visit is present for the given date, prescription will be associated with it, otherwise prescription is created without visit reference. More than one prescription is allowed for a visit. Prescription PDF files are stored on a server and can be retrieved later if needed. Prescription list will appear on patient profile page if there's at least one prescription generated for a patient </li>
-	<li> Medications are now added from patient profile by using <+Medication> button and include strength, format, route, dose. Added medications will appear in <medications>  list on the same page.  Search is supported by brand or generic name. Each active medication can be marked as such.  Old medication field (text field in patient profile) will be removed once all medications are converted to new format. Patient list of medications is used in prescriptions.
-	</li>
+<li> Billing type in Patient Profile can now only be changed if patient had no previously billed visits </li>
+<li> Help file is now using modal windows to display large forms and documents </li>
+<li> Added cash reports to Docs>Reports section. It contains all cash payments for the doctor/timeframe with the grand total shown at the bottom </li>
+<li> Visits/Doctor in current billing cycle are now shown in Billing>Visits This Cycle</li>
+<li> Budget for current month can be viewed in Admin>Budget </li>
+<li> Patient Visit History can now be printed by using <Print Visit History> button on patient profile page, under the list of visits </li> 
+<li> Prescriptions can now be generated from patient profile page if patient has new medication list (see below). If visit is present for the given date, prescription will be associated with it, otherwise prescription is created without visit reference. More than one prescription is allowed for a visit. Prescription PDF files are stored on a server and can be retrieved later if needed. Prescription list will appear on patient profile page if there's at least one prescription generated for a patient </li>
+<li> Medications are now added from patient profile by using <+Medication> button and include strength, format, route, dose. Added medications will appear in <medications>  list on the same page.  Search is supported by brand or generic name. Each active medication can be marked as such.  Old medication field (text field in patient profile) will be removed once all medications are converted to new format. Patient list of medications is used in prescriptions.
+</li>
 <li> RA Messages page now shows billing cycle totals for claims, services as well as total amounts submitted and paid </li> 
+<li> Claims, which were billed, but not yet marked as paid are now accessible from Billing>Unpaid Claims. Most of them are IFH claims due to the fact that they are paid by 3rd party and require manual change of status </li>   
 <li> Help section updated (staff access level)</li>
 <li> 'Assessed' and 'With Doctor' statuses added. This will be used for better patient tracking as well as in wait time calculations and Doctors pages </li> 
 <li> Patients charts are now available in Docs drop-down menu </li>
@@ -51,16 +56,18 @@
 <li> Patient's age is now shown in months or years. Negative integer is used internally to denote age in months. Please alert me if you see negative numbers for age anywhere </li>
 <li> Label modified: different, larger font, smaller width, middle name is now omitted </li>
 <li> Links added to day sheet for current day only: Label, Form. Both open in a new tab  </li>
-<li> Delete links for visits are not accessible anymore in previous days </li>
-<li> Visit status 'Error' added to mark visits with errors found in Cab.md/MOH </li>
+<li> Delete links for visits are not accessible anymore in daysheet for previous days </li>
+<li> Visit status 'Error' added to mark visits with errors found by Cab.md/MOH </li>
 <li> 'Clinic' patient type added </li>
-<li> When card is swiped, search is now performed for patient with the same last name and DOB. Warning message issued if match found </li>
+<li> When card is swiped, warning message is issued if patient with the same last name and DOB is present in DB </li>
 <li> Card fields are now compared with our records. Warning message and edit form are shown if mismatch is found</li>
 </ul>
 
 	Please email <a href="mailto:dosta@me.com?subject=EMR staff Inquiry&cc=ostadim1@gmail.com">Dimitri</a> if you have any questions or concerns about this website. 
-	If there's a problem, please provide screenshot, short description and health card string swiped right into email message body.
+	If there's a problem, please provide screenshot, short description of the problem and health card string swiped right into email message body.
 	 
 	Thank you!
 
+
+	<p>&nbsp;</p>
 <%# end %>
