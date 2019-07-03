@@ -58,6 +58,7 @@ end
 	  h_count += 1
 	  v.update_attribute(:status, BILLED) 
 	  v.update_attribute(:export_file, filename) 
+	  v.update_attribute(:billing_ref, v.id) 
 	  if v.bil_type == RMB_BILLING  		# only 1 RMB claim supported per visit right now	
 	    body << her_record(pat)
 	    r_count += 1

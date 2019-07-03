@@ -79,7 +79,7 @@ class BillingsController < ApplicationController
   def update
   end
 
-  # CSV export file (cab.md - tested)
+  # CSV export file (cab.md tested)
   def export_csv
 
     date = params[:date] 
@@ -195,9 +195,10 @@ class BillingsController < ApplicationController
     @visits.all.each do |v| 
        @visit = v
 # Skip visits without insured services
-       next unless v.hcp_services?    
        @patient = Patient.find(v.patient_id)
        @doctor = @visit.doctor
+       next unless v.hcp_services?    
+       next unless @doctor.billing_format == CABMD_FORMAT
        next unless @patient.ohip_num.present?
        @patient.fname = @patient.full_sex unless @patient.fname.present?
        @xml = render_to_string "/visits/show.xml"
@@ -226,7 +227,7 @@ class BillingsController < ApplicationController
     if errors.any?
       flash[:danger] = "#{errors.count} #{'error'.pluralize(errors.count)} encountered while sending claims"
     else
-      flash[:success] = "#{claims_sent} #{'claim'.pluralize(claims_sent)} sent to Cab.md"
+      flash[:success] = "#{claims_sent} #{'claim'.pluralize(claims_sent)} sent to Cab.md. Claims for doctors without CabMd account are to be processed separately"
     end
     redirect_back(fallback_location: billings_path )
   end

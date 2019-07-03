@@ -16,7 +16,7 @@
 	
 <section>
 <pre class="pre-scrollable-large">
-<% if (HCP_PATIENT..RMB_PATIENT).include?(@visit.pat_type) %>
+<% if (HCP_PATIENT..WCB_PATIENT).include?(@visit.pat_type) %>
 <b>OHIP Visit HC# </b>: <%= @visit.hin_num %>  <b> Billing Type: </b> <%= @visit.pat_type %>
 <% elsif @visit.pat_type == IFH_PATIENT %>   
 <b>IFH Visit Card# </b>: <%= @visit.hin_num %> 
@@ -116,7 +116,7 @@
  </div>
  <% end %>
 
- <% if @visit.ready_to_bill? %>
+ <% if @visit.ready_to_bill? && @doctor.billing_format == CABMD_FORMAT %>
  <div class="col-sm-3 col-md-2">
  <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-success", method: 'get'  %>
  </div>

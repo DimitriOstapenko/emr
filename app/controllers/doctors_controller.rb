@@ -61,7 +61,7 @@ private
   def doctor_params
 	  params.require(:doctor).permit(:lname, :fname, :provider_no, :group_no, :cpso_num, :wsib_num, :specialty, :district,
 					 :bills, :address, :city, :prov, :postal, :phone, :fax, :mobile, :email, :licence_no,
-					 :accepts_new_patients, :note, :office, :provider_no, :group_no,  :percent_deduction )
+					 :accepts_new_patients, :note, :office, :provider_no, :group_no,  :percent_deduction, :billing_format )
   end
 
   # Find doctor by last name or provider number, depending on input format

@@ -48,12 +48,12 @@
 <div class="bottom_buttons ">
   <% if date == Date.today || date.blank? || current_user.admin? %>
     <% if @not_ready.blank? %>
-      <% if BILLING_FORMAT == 'EDT' || current_user.admin? %>
+      <% if BILLING_FORMAT == EDT_FORMAT || current_user.admin? %>
 	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
 	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
-      <% elsif BILLING_FORMAT == 'CSV' %>
+      <% elsif BILLING_FORMAT == CSV_FORMAT %>
 	 <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
-      <% elsif BILLING_FORMAT == 'CABMD' %>
+      <% elsif BILLING_FORMAT == CABMD_FORMAT %>
 	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
       <% end %>
     <% end %>

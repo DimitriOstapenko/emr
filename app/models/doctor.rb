@@ -49,6 +49,10 @@ class Doctor < ApplicationRecord
   def bills_str
     self.bills? ? 'Yes' : 'No' 
   end
+
+  def billing_format_str
+    BILLING_FORMATS.invert[self.billing_format]
+  end
   
   def accepts_str
     self.accepts_new_patients? ? 'Yes' : 'No' 

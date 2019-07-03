@@ -26,11 +26,11 @@
 </div>
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-2">
   <%= f.input :cpso_num, label: 'CPSO Number' %>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-2">
   <%= f.input :provider_no, hint: 'Required' %>
   </div>
   
@@ -44,6 +44,10 @@
 
   <div class="col-sm-2">
   <%= f.input :licence_no %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :billing_format, collection: BILLING_FORMATS, include_blank: false %>
   </div>
 </div>
 

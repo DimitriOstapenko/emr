@@ -1,4 +1,4 @@
-  <%= render 'layouts/select_doctor' if device_type == 'desktop' %>
+  <%= render 'layouts/select_doctor' if (device_type == 'desktop' && controller_name == 'daysheet')%>
   <% if controller_name == 'daysheet' || controller_name == 'billings' %>
     <%= render 'layouts/date_select' %>
   <% elsif !%w(visits users static_pages password_resets).include?(controller_name) %>
