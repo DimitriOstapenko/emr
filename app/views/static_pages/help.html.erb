@@ -1,11 +1,22 @@
 <% provide(:title, 'Help') %>
+<%= render "new_patient_form" %>
+<%= render "edit_patient_form" %>
+<%= render "patient_profile" %>
+<%= render "patient_referral" %>
+<%= render "patient_referral_form" %>
+<%= render "prescription" %>
+<%= render "new_visit_form" %>
+<%= render "edit_visit_form" %>
+<%= render "visit_form" %>
+<%= render "visit_history" %>
+<%= render "visit_summary" %>
 
 <!-- Prevent refresh -->
 <body data-turbolinks="false">
 
 <div class="help-container">
 <div class='header'>Help Section</div>
-<div class="updated">Updated by: Dmitri Ostapenko, May 12, 2019</div>
+<div class="updated">Updated by: Dmitri Ostapenko, July 5, 2019</div>
 
 <div style="width: 100%; overflow: hidden;">
 <div style="width: 300px; float: left;"> 
@@ -69,24 +80,37 @@
 <p>&nbsp;</p>
 This Help File describes functionality of Walk-In EMR at the staff user level. Similar documents for administrative and doctor pages are available on request.
 Walk-In EMR (WEMR from now on for short) is patient management system developed for busy walk-in clinic setting using Ruby On Rails with Postgres back end. 
-The system is easily customizable and can be changed to suit other environments, including hospital and family practice.
-Although the goal of the system is paperless office, it can handle any combination of paper/digital workflows. Most documents are generated in industry standard PDF format.
-Simplicity is the ultimate priority of the EMR. All menus and pages are laid out in consitent and predictable way and are functionally familiar to allow for intuitive use and minimal downtime associated with learning.
-In fact most pages are self-explanatory and require no additional learning. Staff that had previous expierience with any EMR should be able to start using the system productively from day 1. 
 
+The system is easy to use, fully customizable and can be changed to accomodate other settings, including hospital and family practice.
+Although the goal of the system is paperless office, WEMR can handle any combination of paper/digital workflows, which makes it easy to transition to digital office at the speed comfortable for the clinic staff. Majority of documents are generated on the fly in industry-standard PDF format and stored either in Amazon Cloud (AWS) or locally on the server. 
+
+Simplicity is the ultimate priority of the WEMR. All menus and pages are laid out in consitent and predictable way and are functionally familiar to allow for intuitive use and minimal downtime associated with learning. As a matter of fact, staff can productively use the system after short introductory session. Computer literate secretary should be able to use the system without any formal training, after just reading this manual.
+
+Most pages are self-explanatory and require no additional learning. Staff that had previous expierience with any EMR should be able to start using the system productively from day 1. 
+
+System allows for Amazon Web Services (AWS) document cloud storage as well as local to the server directory storage.
 <p>&nbsp;</p>
 <a id="user_categories"></a>
 <h3>User Categories</h3>
 
 <p>
-EMR supports 3 user categories: 
-<dt class="col-sm-1">Staff User </dt><dd class="col-sm-11">Reserved to clinic staff, this user class has most privileges as far as creating, viewing and editing data, but cannot perform destructive actions and administrative functions. </dd></dt>
+EMR supports 4 user categories: 
+<dt class="col-sm-1">Staff User </dt><dd class="col-sm-11">Reserved to clinic staff, this user class has most privileges as far as creating, viewing and editing data, but cannot perform destructive actions and administrative functions. For example past billed visits cannot be changed by staff in any way except addition of certain information. Staff can generate any documents, including daily doctor's reports and monthly pay stubs, create invoices and letters, specialist referrals and generate patient forms. </dd></dt>
 
 <p>&nbsp;</p>
 <dt class="col-sm-1">Doctor</dt><dd class="col-sm-11">Doctors have access only to pages relevant to them. They cannot view patient registry, perform admin functions or view other doctors' pages. Some of the functions are limited to viewing only. This includes billing functions, list of medications, diagnoses and service codes, insurance providers etc. Still, doctors have full functionality as far as daysheet during their work hours and can assign diagnoses and service codes to visits during those hours. They also have access to most documents and reference pages relevant to their patients including patient chart. They can generate their own billing reports, create letters, referrals and other documents relating to their patients.</dd>
 
 <p>&nbsp;</p>
-<dt class="col-sm-1">Admin</dt><dd class="col-sm-11"> Users of this class have full system privileges and can perform destructive functions not accessible to ather user classes including deleting visits and patient records with all related information.</dd>
+<dt class="col-sm-1">Admin</dt><dd class="col-sm-11"> Users of this class have full system privileges and can perform destructive functions not accessible to ather user classes including deleting visits and patient records with all related information. This category should be used with caution by experienced user in rare cases of corrupt or erroneous data. Functions available to admin users only currentlyinclude following pages:
+<p>
+<li> Export Files </li>
+<li> EDT files </li>
+<li> Monthly Budget </li>
+
+<p>&nbsp;</p>
+<dt class="col-sm-1">Patient</dt><dd class="col-sm-11"> It's up to the clinic staff to enable patients to use the system. In case such a desision is made, each registered patient will have access to his profile, chart and visit history. Eventually they will also have possiblity to make an appointment and renew prescriptions under certain conditions. Patient pages are currently under development and once ready could be used as paid subsciption service.
+
+</dd>
 </p>
 
   <p> &nbsp; </p>
@@ -95,7 +119,7 @@ EMR supports 3 user categories:
 <div class="panel panel-info text-justify">
 <div class="panel-heading">User Class Assignment</div>
   <div class="panel-body">
-User class is assigned by administrator during user setup which works as follows: administrator creates user by registering name and email and assigning user class. After this information is saved into database, confirmation email is sent automatically to the newly registered user. This email contains activation link. By clicking this link the user is taken to their profile page, where they can assign new password only known to them. After this step new user can log into system remotely from any desktop or mobile device and have access to all pages of their user class. Forgotten password is emaild to user's registered email on request.  
+User class is assigned by administrator during user setup which works as follows: administrator creates user by registering name and email and assigning user class. After this information is saved into database, confirmation email is sent automatically to the newly registered user. This email contains activation link. By clicking this link the user is taken to their profile page, where they can assign new password only known to them. After this step new user can log into system remotely from any desktop or mobile device and have access to all pages accessible by their user class. Forgotten password is emaild to user's registered email on request. Activation links expire in 2 hours (this is customizable parameter).
 
 </div>
 </div>
@@ -106,7 +130,12 @@ User class is assigned by administrator during user setup which works as follows
 <a id="workflow"></a>
 <h3>Workflow</h3>
 <p>
-At the start of the day, after logging in as a staff member, you first have to select the doctor for the shift. Use [Set Doctor] drop-down menu in the navigation bar for this. Selected doctor will become default for all the new visits until changed for another doctor. When patient comes in, after you slide the card in card reader (this is typically done in Patients or Daysheet page) you will get either <%= link_to "New Patient", "#patient_form" %> screen,  or existing <%= link_to "Patient Profile", "#patient_profile" %> page, depending on wether the patient is already in the system or not. 
+At the start of the day, after logging in as a staff member, you first have to select the doctor for the shift. Use [Set Doctor] drop-down menu in the Day Sheet navigation bar for this. Selected doctor will become default for all the new visits until changed at the beginning of the next shift. When patient comes in, after you slide the card in card reader (this is typically done in Patients or Daysheet page) you will get either
+<%= link_to "New Patient", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#new_patient_modal' %>, or existing 
+
+<%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+patient form, depending on wether the patient is already in the system or not. 
+
 </p>
 
 <p>
@@ -114,7 +143,8 @@ In patient profile page you can see patient demographics, visit history, health 
 </p>
 
 <p>
-There's set of buttons under patient demographics panel in patient profile page. To create new visit you would use [New Visit] button, which will take you to <%= link_to "New Visit", "#edit_visit_form" %> page. To edit patient profile you would use [Edit Patient] button. And so on. To create new visit, just click [New Visit] button. You don't have to change anything on the new visit form initialy, although you can change timestamp from default to some point in the pass for occasionaly missed visits. This is an exception rather than the rule however. You can specify reason for the visit at this point, but the rest can be filled later, when more information is available.  
+There's set of buttons under patient demographics panel in patient profile page. To create new visit you would use [New Visit] button, which will take you to <%= link_to "New Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#new_visit_form_modal' %>.
+To edit patient profile you would use [Edit Patient] button. And so on. To create new visit, just click [New Visit] button. You don't have to change anything on the new visit form initialy, although you can change timestamp from default to some point in the pass for occasionaly missed visits. This is an exception rather than the rule however. You can specify reason for the visit at this point, but the rest can be filled later, when more information is available.  
 </p>
 
 <p> 
@@ -146,19 +176,32 @@ For example, Patients page allows to search patients by Last Name, Date of Birth
 <a id="patients"></a>
 <dt class="col-sm-1">Patients</dt>
 
-  <dd class="col-sm-11">This page shows the registry of all patients in the database. Name column is linked to patient profile. Patient's address label can be shown by clicking on envelope icon <i class="glyphicon glyphicon-envelope"></i>. Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you directly to  <%= link_to "edit patient form", "#patient_form" %>. Search box in context of Patients page supports searches by Last Name,[first Name], Date Of Birth and Health Card Number</dd>
+<dd class="col-sm-11">This page shows the registry of all patients in the database. Name column is linked to patient profile. Patient's address label can be shown by clicking on envelope icon <i class="glyphicon glyphicon-envelope"></i>. Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you directly to 
+
+<%= link_to "Edit Patient Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_patient_modal' %> 
+
+Search box on Patients page supports searches by Last Name,[first Name], Date Of Birth and full/partial Health Card Number. To search for patient born on may 21 1959, for example, one of the 3 following formats can be used: 21/05/1959, 21-05-1959, 21-may-1959 </dd>
   
   <p> &nbsp; </p>
   <a id="day_sheet"></a>
   <dt class="col-sm-1">Day Sheet</dt>
   <dd class="col-sm-11">This page contains visits for a given date, current date by default, along with some of the most important visit attributes. 
-  First colum shows visit status icon. Time column is linked to <%= link_to 'visit summary page', "#visit_summary_page" %>. 
+  First colum shows visit status icon. Time column is linked to 
+  
+  <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
+
   Patient type can be 'O': OHIP, 'R': RMB, 'W':WCB, 'I': IFH, 'S': Self Paid or 'D': Deceased. 
   HC/IFH# column contains Health number/IFH number, depending on patient type. 
   Patient's label is accessible through envelope icon <i class="glyphicon glyphicon-envelope"></i>. 
-  Diag: Diagnostic code selected on <%= link_to 'Edit Visit Form', "#edit_visit_form" %>
+  Diag: Diagnostic code selected on 
+  
+  <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_modal' %>.
+
   Status column: Shows short description of the visit's status: 'Arrived', 'With Doctor', 'Billed', 'Paid', 'Cancelled'
-  Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you to  <%= link_to "Edit Visit Form", "#edit_visit_form" %></dd>
+  Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you to  
+  
+  <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_modal' %>.
+  </dd>
   
 <!-- Billing  menu -->
   <p> &nbsp; </p>
@@ -174,7 +217,12 @@ For example, Patients page allows to search patients by Last Name, Date of Birth
  <p>&nbsp;</p>
  	 <a id="paid_claims"></a>
 	 <dt class="col-sm-1">Paid Claims</dt>
-	   <dd class="col-sm-11">Each month MHO produces payment (Remmittance Advice) file showing each claim for each doctor with relevant identification parameters, service codes and amounts submitted and paid. This submenu shows the list of claims for all doctors in chronological order. Each claim can be further described by clicking on Claim# link in the first column. Also, each claim is referenced to EMR visit id, so by clicking visit link (last column) you can go directly to the <%= link_to 'visit summary page', "#visit_summary_page" %>. Search box supports searches by Claim number, Accounting Number or Health Card Number.  Two filters at the top of the page allow to limit the list to specific doctor and to show the only claims that were adjusted by MHO up or down. </dd>
+	 <dd class="col-sm-11">Each month MHO produces payment (Remmittance Advice) file showing each claim for each doctor with relevant identification parameters, service codes and amounts submitted and paid. This submenu shows the list of claims for all doctors in chronological order. Each claim can be further described by clicking on Claim# link in the first column. Also, each claim is referenced to EMR visit id, so by clicking visit link (last column) you can go directly to the 
+	 
+  <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
+
+Search box supports searches by Claim number, Accounting Number or Health Card Number.  Two filters at the top of the page allow to limit the list to specific doctor and to show the only claims that were adjusted by MHO up or down. </dd>
+
  <p>&nbsp;</p>
  	 <a id="paystubs"></a>
 	 <dt class="col-sm-1">Pay Stubs</dt>
@@ -203,7 +251,9 @@ For example, Patients page allows to search patients by Last Name, Date of Birth
 
 	 <a id="invoices"></a>
     	<dt class="col-sm-1">Invoices</dt>
-	<dd>Invoices are created for patients/services not covered by OHIP. Invoices are attributes of patients and are accessible from <%= link_to "patient summary page", "#patient_profile" %> </dd>
+	<dd>Invoices are created for patients/services not covered by OHIP. Invoices are attributes of patients and are accessible from 
+	<%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %>.
+
  <p>&nbsp;</p>
           <center><img src="/images/help/invoice_form.png" width=500></center>
  <p>&nbsp;</p>
@@ -212,7 +262,10 @@ For example, Patients page allows to search patients by Last Name, Date of Birth
  <p>&nbsp;</p>
 	 <a id="letters"></a>
     	<dt class="col-sm-1">Letters</dt>
-	<dd>Letters are form-driven PDF documents generated on the fly. Just like invoices, Letters are associated with patient record and can be generated from <%= link_to "patient summary page", "#patient_profile" %> </dd>
+	<dd>Letters are form-driven PDF documents generated on the fly. Just like invoices, Letters are associated with patient record and can be generated from 
+	<%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %>.
+	
+	</dd>
  <p>&nbsp;</p>
           <center><img src="/images/help/letter_form.png" width=500></center>
  <p>&nbsp;</p>
@@ -514,27 +567,22 @@ This last menu groups various forms and has 5 submenus:
   <a id="patient_referral"></a>
     <dt class="col-sm-1"><%= link_to "Patient Referral", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_referral_modal' %></dt>
     <dd class="col-sm-11">PDF Referral generated from the <%= link_to "Patient Referral Generation Form", "#", 'data-toggle':  "modal", 'data-target': '#patient_referral_form_modal' %> </dd>
-  <%= render "patient_referral" %>
-  <%= render "patient_referral_form" %>
 
   <p> &nbsp; </p>
   <a id="visit_form"></a>
     <dt class="col-sm-1"><%= link_to "Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_form_modal' %></dt>
     <dd class="col-sm-11">This form is generated for each unique visit of the patient to the clinic. This document lists patient's contact information, reason for visit, list of medications and allergies, vital signs and doctor's notes. Diagnosis and doctors signature are provided on paper copy, if used. This document is redundant in paperless office and is provided for practices still using paper documents. Most information on this form is optional.
     </dd>
-  <%= render "visit_form" %>
   
   <p> &nbsp; </p>
   <a id="prescription"></a>
   <dt class="col-sm-1"><%= link_to "Prescription", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#prescription_modal' %></dt>
   <dd class="col-sm-11">Prescriptions are generated from patient profile page based on list of active medications</dd>
-  <%= render "prescription" %>
   
   <p> &nbsp; </p>
   <a id="visit_history"></a>
   <dt class="col-sm-1"><%= link_to "Visit History", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_history_modal' %></dt>
   <dd class="col-sm-11">This report is accessible from patient profile page and shows full history of patient's visits to the clinic </dd>
-  <%= render "visit_history" %>
 
   <p> &nbsp; </p>
 </div>

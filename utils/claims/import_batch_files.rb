@@ -11,8 +11,8 @@ require_relative '../../config/environment'
 
 abort "EDT directory does not exist." unless File.directory?(EDT_PATH)
 
-puts "will look for BC013*.* files in EDT"
-path = EDT_PATH.join("BC013*.*")
+puts "will look for B*.* files in EDT"
+path = EDT_PATH.join("B*.*")
 new_files = Dir.glob(path)
 abort "No files found matching #{path}" unless new_files.any?
 
