@@ -1,15 +1,25 @@
 <% provide(:title, 'Help') %>
-<%= render "new_patient_form" %>
-<%= render "edit_patient_form" %>
-<%= render "patient_profile" %>
-<%= render "patient_referral" %>
-<%= render "patient_referral_form" %>
-<%= render "prescription" %>
-<%= render "new_visit_form" %>
-<%= render "edit_visit_form" %>
-<%= render "visit_form" %>
-<%= render "visit_history" %>
-<%= render "visit_summary" %>
+<%= render "modal", modal_name: 'address_label' %>
+<%= render "modal", modal_name: 'new_patient_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'edit_patient_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'patient_profile', modal_size: 840 %>
+<%= render "modal", modal_name: 'patient_referral', modal_size: 840 %>
+<%= render "modal", modal_name: 'patient_invoice', modal_size: 840 %>
+<%= render "modal", modal_name: 'new_referral_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'patient_referral_form' %>
+<%= render "modal", modal_name: 'patient_referral' %>
+<%= render "modal", modal_name: 'patient_label', modal_size: 600 %>
+<%= render "modal", modal_name: 'patient_letter', modal_size: 600 %>
+<%= render "modal", modal_name: 'patient_letter_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'patient_invoice_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'prescription', modal_size: 600 %>
+<%= render "modal", modal_name: 'reports' %>
+<%= render "modal", modal_name: 'reports_form', modal_size: 600 %>
+<%= render "modal", modal_name: 'new_visit_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'edit_visit_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'visit_form', modal_size: 600 %>
+<%= render "modal", modal_name: 'visit_history', modal_size: 840 %>
+<%= render "modal", modal_name: 'visit_summary', modal_size: 840 %>
 
 <!-- Prevent refresh -->
 <body data-turbolinks="false">
@@ -68,7 +78,7 @@
 <li><a href="#document_list">List of Generated PDF Documents</li>
 </div>
 <div style="float:right; margin-top:180px; margin-right: 150px;"> 
-	<center><img src="/images/help/daysheet.png" width=900></center>
+	<center><img src="/images/help/daysheet.png" width=940></center>
 </div>
 </div>
      
@@ -131,7 +141,7 @@ User class is assigned by administrator during user setup which works as follows
 <h3>Workflow</h3>
 <p>
 At the start of the day, after logging in as a staff member, you first have to select the doctor for the shift. Use [Set Doctor] drop-down menu in the Day Sheet navigation bar for this. Selected doctor will become default for all the new visits until changed at the beginning of the next shift. When patient comes in, after you slide the card in card reader (this is typically done in Patients or Daysheet page) you will get either
-<%= link_to "New Patient", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#new_patient_modal' %>, or existing 
+<%= link_to "New Patient", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#new_patient_form_modal' %>, or existing 
 
 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
 patient form, depending on wether the patient is already in the system or not. 
@@ -178,7 +188,7 @@ For example, Patients page allows to search patients by Last Name, Date of Birth
 
 <dd class="col-sm-11">This page shows the registry of all patients in the database. Name column is linked to patient profile. Patient's address label can be shown by clicking on envelope icon <i class="glyphicon glyphicon-envelope"></i>. Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you directly to 
 
-<%= link_to "Edit Patient Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_patient_modal' %> 
+<%= link_to "Edit Patient Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_patient_form_modal' %> 
 
 Search box on Patients page supports searches by Last Name,[first Name], Date Of Birth and full/partial Health Card Number. To search for patient born on may 21 1959, for example, one of the 3 following formats can be used: 21/05/1959, 21-05-1959, 21-may-1959 </dd>
   
@@ -195,12 +205,12 @@ Search box on Patients page supports searches by Last Name,[first Name], Date Of
   Patient's label is accessible through envelope icon <i class="glyphicon glyphicon-envelope"></i>. 
   Diag: Diagnostic code selected on 
   
-  <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_modal' %>.
+  <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_form_modal' %>.
 
   Status column: Shows short description of the visit's status: 'Arrived', 'With Doctor', 'Billed', 'Paid', 'Cancelled'
   Edit icon, <i class="glyphicon glyphicon-edit"></i> will take you to  
   
-  <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_modal' %>.
+  <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_form_modal' %>.
   </dd>
   
 <!-- Billing  menu -->
@@ -247,7 +257,7 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
          <dt class="col-sm-1">Reports:</dt>
 	 <dd class="col-sm-11">This section allows to create various payment reports for the doctors working in the clinic. There are currently 3 types of reports: Submitted Claims, Paid Claims and Cash. User can chose timeframe for each category, but Paid Claims reports can only be generated for selected billing cycle, while Submitted Claims and Cash reports can use Day, Month, Range, Year or Billing Cycle as a timeframe. </dd>
 <p>&nbsp;</p>
-          <center><img src="/images/help/create_report_form.png" width=500></center>
+          <center><img src="/images/help/report_form.png" width=500></center>
 
 	 <a id="invoices"></a>
     	<dt class="col-sm-1">Invoices</dt>
@@ -280,11 +290,15 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
  <p>&nbsp;</p>
 	 <a id="day_charts"></a>
     	<dt class="col-sm-1">Day Charts</dt>
-	<dd>Day chart is a collection of patient <%= link_to "visit forms", "#visit_form" %> for a given date.</dd>
+	<dd>Day chart is a collection of all patients
+	
+	<%= link_to "Visit Forms", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_form_modal' %>
+
+	for a given date. Date charts are scanned documents. They are used during transition period from paper-only to digital office.</dd>
  <p>&nbsp;</p>
 	 <a id="patient_charts"></a>
     	<dt class="col-sm-1">Patient Charts</dt>
-	<dd>Patients who have one of the doctors working in a clinic as family doctor are called "Clinic Patient" and have chart with history of all their visits to the clinic. Charts submenu gives access to management page for these charts  </dd>
+	<dd>Patients who have designated one of the doctors working in a clinic as their family doctor are called "Clinic Patient" and have chart with history of all their visits to the clinic. Charts submenu gives access to management page for Patient Charts  </dd>
  </dl>
  </dd>
 
@@ -301,45 +315,45 @@ There are 7 submenus in this Drop-Down:
 	 <dd class="col-sm-11">Pages in this submenu allow clinic staff to manage services used by the system. There are 2 types of services: insured and non-insured. Insured services require valid service code. Non-insured services can have any unique code assigned to them. There's also description and fee associated with each service. "Active" attribute is used to control which services will show in drop down boxes during visit entry stage. Use <Add Procedure> button at the bottom of the page to add new procedure </dd>
 	 
 <p>&nbsp;</p>
-          <center><img src="/images/help/services.png" width=600></center>
+          <center><img src="/images/help/services.png" width=800></center>
  <p>&nbsp;</p>
 
 	 <a id="diagnoses"></a>
     	<dt class="col-sm-1">Diagnoses</dt>
 	<dd>This submenu is used to manage Diagnosis known to the system. Page lets you edit existing diagnosis' attributes: code, description, problem type and active flag. Only Active diagnoses appear in visit's diagnosis drop-down menu. New diagnoses can be entered into the system by using <Add Diagnosis> button  at the bottom of the page. </dd>
  <p>&nbsp;</p>
-          <center><img src="/images/help/diagnoses.png" width=600></center>
+          <center><img src="/images/help/diagnoses.png" width=800></center>
  <p>&nbsp;</p>
 	 <a id="ins_providers"></a>
     	<dt class="col-sm-1">Insurance Providers</dt>
 	<dd>Pages in this submenu are used to manage insurance providers and law offices known to the system. This information is used form invoice generation.</dd>
  <p>&nbsp;</p>
-          <center><img src="/images/help/providers.png" width=600></center>
+          <center><img src="/images/help/providers.png" width=800></center>
  <p>&nbsp;</p>
 	 <a id="medications"></a>
     	<dt class="col-sm-1">Medications</dt>
 	<dd>Extensive list of known medications with description, dosage, format and other attributes is managed by this section of the system</dd>
  <p>&nbsp;</p>
-          <center><img src="/images/help/drugs.png" width=600></center>
+          <center><img src="/images/help/drugs.png" width=800></center>
  <p>&nbsp;</p>
 	 <a id="vaccines"></a>
     	<dt class="col-sm-1">Vaccines</dt>
 	<dd>List of vaccines known to the system</dd>
  <p>&nbsp;</p>
-          <center><img src="/images/help/vaccines.png" width=600></center>
+          <center><img src="/images/help/vaccines.png" width=800></center>
  <p>&nbsp;</p>
 	 <a id="doctors"></a>
     	<dt class="col-sm-1">Doctors</dt>
 	<dd>Editable List of local doctors with their addresses, phone numbers, locality, specialty and many other attributes. There's 2 categories of doctors: doctors working in the clinic and all the rest.  Billing information for all doctors working in the clinic must be entered into the system during initial setup. Contact information for all other doctors is used to generate refarrals, write letters etc. </dd>
  <p>&nbsp;</p>
-          <center><img src="/images/help/doctors.png" width=600></center>
+          <center><img src="/images/help/doctors.png" width=800></center>
  <p>&nbsp;</p>
 	 <a id="schedules"></a>
     	<dt class="col-sm-1">Schedules</dt>
 	<dd>This section of the system is used to generate doctor's schedules. Once information is stored in DB it is then used on public page to show which doctor is currently on duty as well as schedule for the week and open hours. </dd>
 
  <p>&nbsp;</p>
-          <center><img src="/images/help/schedules.png" width=500></center>
+          <center><img src="/images/help/schedules.png" width=600></center>
  <p>&nbsp;</p>
  </dl>
  </dd>
@@ -381,59 +395,98 @@ This last menu groups various forms and has 5 submenus:
  <p>&nbsp;</p>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Address Label", "#address_label" %></dt>
+	 <dt class="col-sm-1">
+	 <%= link_to "Address Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#address_label_modal' %> 
+	 </dt>
 	 <dd class="col-sm-11">Similar to patient label, this standard 29mm x 62mm label has full patient address. To be used on all correspondence related to the patient. 
 	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Invoice", "#patient_invoice" %></dt>
-	 <dd class="col-sm-11">Invoices are generated using <%= link_to "Patient Invoice Form", "#patient_invoice_form" %> from <%= link_to "Patient Profile", "#patient_profile" %>
+	 <dt class="col-sm-1">
+
+	 <%= link_to "Patient Invoice", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_invoice_modal' %> 
+
+	 </dt>
+	 <dd class="col-sm-11">Invoices are generated using 
+	 
+	 <%= link_to "Patient Invoice Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_invoice_form_modal' %> 
+	 
+	 from 
+	 
+	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
 	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Letter", "#patient_letter" %></dt>
-	 <dd class="col-sm-11">Letters are generated using <%= link_to "Patient Letter Form", "#patient_letter_form" %> from <%= link_to "Patient Profile", "#patient_profile" %>
+	 <dt class="col-sm-1">
+	 <%= link_to "Patient Letter", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_letter_modal' %> 
+	 </dt>
+	 <dd class="col-sm-11">Letters are generated using 
+	 <%= link_to "Patient Letter Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_letter_form_modal' %> 
+	 from 
+	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
 	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Patient Label", "#patient_label" %></dt>
+	 <dt class="col-sm-1">
+	 <%= link_to "Patient Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_label_modal' %> 
+	 </dt>
 	 <dd class="col-sm-11">Standard 29mm x 62mm label with patient information. This label is used on Referrals, Letters, Lab Requisitions and other documents requiring patient identification. File number on the label denotes unique patient number and allows to go directly to patient profile using URL like this: "https://walkin.drlena.com/patients/48422" where 48422 is file number from the label.
 	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Prescription", "#prescription" %></dt>
-	 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under patient profile </dd>
+	 <dt class="col-sm-1">
+	 <%= link_to "Prescription", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#prescription_modal' %> 
+	 </dt>
+	 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under 
+	 
+	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Receipt", "#patient_receipt" %></dt>
+	 <dt class="col-sm-1">
+	 <%= link_to "Receipt", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#receipt_modal' %> 
+	 </dt>
 	 <dd class="col-sm-11">Receipts for cash services are generated from <%= link_to "Visit Summary Page", "#visit_summary_page" %>. Just click [Receipt] button and PDF file will be generated based on patient/visit information 
 	 </dd>
  </dl>
  
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Reports", "#doc_reports" %></dt>
-	 <dd class="col-sm-11">Doctor reports generated from  <%= link_to "Reports Page", "#reports" %>. 
+	 <dt class="col-sm-1">
+	 <%= link_to "Reports", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#reports_modal' %> 
+ 	</dt>
+	<dd class="col-sm-11">Doctor reports generated from  Docs>Reports Page. 
 	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Referral", "#patient_referral" %></dt>
-	 <dd class="col-sm-11">Doctor Referrals are menu driven and are accessible from <%= link_to "Patient Profile Form", "#patient_profile" %>. To generate a referral, click [Referral] button and you will be taken to <%= link_to "Patient Referral Form", "#patient_referral" %>   
+	 <dt class="col-sm-1">
+	 <%= link_to "Patient Referral", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_referral_modal' %> 
+	 </dt>
+	 <dd class="col-sm-11">Doctor Referrals are menu driven and are accessible from 
+	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+	 To generate a referral, click [Referral] button and you will be taken to 
+	 <%= link_to "Patient Referral Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#new_referral_form_modal' %> 
 	 </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Visit Form", "#visit_form" %></dt>
-	 <dd class="col-sm-11">This document contains most visit-related data. This form offers transition for clinics switching from traditional paper form setup to modern day all digital EMR. Although it can be generated based solely on data entered in <%= link_to  "edit visit form", "#edit_visit_form" %>, it's also possible to simply write notes on it. This practice is not recommended as it leads to extra work associated with document scanning and legibility problems as well as need for paper documents storage. Documents with hand-written notes are not easily searcheable and so they should be only used in cases when paper copy is required by 3rd party. </dd>
+	 <dt class="col-sm-1">
+	 <%= link_to "Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_form_modal' %> 
+	 </dt>
+	 <dd class="col-sm-11">This document contains most visit-related data. This form offers transition for clinics switching from traditional paper form setup to modern day all digital EMR. Although it can be generated based solely on data entered in 
+	 <%= link_to "Edit Visit Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#edit_visit_form_modal' %> 
+	 , it's also possible to simply write notes on it. This practice is not recommended as it leads to extra work associated with document scanning and legibility problems as well as need for paper documents storage. Documents with hand-written notes are not easily searcheable and so they should be only used in cases when paper copy is required by 3rd party. </dd>
  </dl>
 
  <dl class="row">
-         <dt class="col-sm-1"><%= link_to "Visit History", "#visit_history_report" %></dt>
+	 <dt class="col-sm-1">
+	 <%= link_to "Visit History", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_history_modal' %> 
+	 </dt>
 	 <dd  class="col-sm-11"> Visit history report is generated from patient profile page by using <Print Visit History> button under the list of visits </dd>
  </dl>
 
@@ -476,7 +529,7 @@ This last menu groups various forms and has 5 submenus:
   </dl>
 
   <p> &nbsp; </p>
-  <center><img src="/images/help/patient_form.png" width=800></center>
+  <center><img src="/images/help/new_patient_form.png" width=800></center>
 
   <p> &nbsp; </p>
   <a id="visit_summary_page"></a>
@@ -540,7 +593,7 @@ This last menu groups various forms and has 5 submenus:
     <dt class="col-sm-1">Submitted Claims report</dt>
     <dd class="col-sm-11">This report contains claims submitted for billing for given time frame/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
   <p> &nbsp; </p>
-  <center><img src="/images/help/create_report_form.png" width=500></center>
+  <center><img src="/images/help/report_form.png" width=500></center>
   Generated Report looks like this:
   <center><img src="/images/help/doc_sc_report.png" width=600></center>
     </dd>

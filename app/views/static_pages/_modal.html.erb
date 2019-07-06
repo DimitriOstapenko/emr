@@ -1,12 +1,13 @@
-<div id="new_visit_form_modal" class="modal fade" role="dialog">
+<% modal_size ||= 800 %>
+<div id="<%= modal_name %>_modal" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <div class="modal-title">New Visit Form</div>
+	<div class="modal-title"><%= modal_name.split('_').map(&:capitalize).join(' ') %></div>
       </div>
       <div class="modal-body">
-  	<center><img src="/images/help/edit_visit_form.png" width=840></center>
+	      <center><img src="/images/help/<%= modal_name %>.png" width=<%= modal_size %>></center>
 	<p></p>
       </div>
     </div>
