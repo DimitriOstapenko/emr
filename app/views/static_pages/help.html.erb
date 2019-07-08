@@ -20,6 +20,8 @@
 <%= render "modal", modal_name: 'visit_form', modal_size: 600 %>
 <%= render "modal", modal_name: 'visit_history', modal_size: 840 %>
 <%= render "modal", modal_name: 'visit_summary', modal_size: 840 %>
+<%= render "modal", modal_name: 'paid_claims', modal_size: 840 %>
+<%= render "modal", modal_name: 'unpaid_claims', modal_size: 840 %>
 
 <!-- Prevent refresh -->
 <body data-turbolinks="false">
@@ -44,8 +46,10 @@
 <ol>
 <li><a href="#daily_billing">Daily Billing</li>
 <li><a href="#paid_claims">Paid Claims</li>
-<li><a href="#paystubs">Doctors Pay Stubs</li>
+<li><a href="#unpaid_claims">Unpaid Claims</li>
+<li><a href="#paystubs">Doctors' Pay Stubs</li>
 <li><a href="#ra_messages">MHO RA Messages</li>
+<li><a href="#visits_this_cycle">Visits This Cycle</li>
 </ol>
 <li><a href="#docs">Documents</a></li>
 <ol>
@@ -224,24 +228,49 @@ Search box on Patients page supports searches by Last Name,[first Name], Date Of
 	 <a id="daily_billing"></a>
 	 <dt class="col-sm-1">Daily Billing:</dt>
 	   <dd class="col-sm-11">List of visits which have "Ready to Bill", "Billed" or "Paid" status. By default, any previously unbilled visit, not just visits for this day, will appear in this list </dd>
- <p>&nbsp;</p>
- 	 <a id="paid_claims"></a>
-	 <dt class="col-sm-1">Paid Claims</dt>
-	 <dd class="col-sm-11">Each month MHO produces payment (Remmittance Advice) file showing each claim for each doctor with relevant identification parameters, service codes and amounts submitted and paid. This submenu shows the list of claims for all doctors in chronological order. Each claim can be further described by clicking on Claim# link in the first column. Also, each claim is referenced to EMR visit id, so by clicking visit link (last column) you can go directly to the 
+	  
+<p>&nbsp;</p>
+
+<div id="paid_claims"></div>
+<dt class="col-sm-1">
+<%= link_to "Paid Claims", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#paid_claims_modal' %>
+</dt>
+	 <dd class="col-sm-11">Each month MHO produces payment (Remmittance Advice) file showing each claim for each doctor with relevant identification parameters, service codes and amounts submitted and paid. This submenu shows the list of claims for all doctors in chronological order. Each claim can be further detailed by clicking on Claim# link in the first column. Also, each claim is referenced to EMR visit id, so by clicking visit link (last column) you can go directly to the 
 	 
   <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
+  :a
 
 Search box supports searches by Claim number, Accounting Number or Health Card Number.  Two filters at the top of the page allow to limit the list to specific doctor and to show the only claims that were adjusted by MHO up or down. </dd>
 
- <p>&nbsp;</p>
+<p>&nbsp;</p>
+<div id="unpaid_claims"></div>
+<dt class="col-sm-1">
+<%= link_to "Unpaid Claims", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#unpaid_claims_modal' %>
+</dt>
+	 <dd class="col-sm-11"> Claims that were billed, but not paid for by the Ministry will be listed in this section. Due to limits on resubmission of claims, only current year's claims are listed. Just like in other sections of the website, OHIP claims are marked with 'O', RMB claims with 'R', IFH claims with 'I', WCB claims with 'W'. IFH claims, billed to 3-rd party provider, like Blue Cross, should be marked by staff as 'Paid' when the payment is received from the provider. The rest will be marked automatically during RA file processing by the claim processor script at the end of the month.
+
+	 Clicking on first column with the time stamp of the corresponding visit will take you to the  
+	 
+  <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
+
+	 </dd>
+
+<p>&nbsp;</p>
  	 <a id="paystubs"></a>
 	 <dt class="col-sm-1">Pay Stubs</dt>
 	 <dd class="col-sm-11"> This section is used to generate Pay Stubs for each doctor after RA file for previous month is imported into the EMR and reconciled vith the visits by utility scripts. If data for previous month was not yet imported, appropriate warning message will be issued and <Create New Paystub> button will not appear at the bottom of the page. Otherwise, user can create paystub by clicking this button and filling out the form. Fields to be filled are: Doctor, Monthly Premium (From RA File), IFH, Cash, WCB payments received by the doctor, as well as HC Deposit received, if any, and MHO deduction used by the ministry (RA file). Once all this information is entered, click on <Generate Paystub> button and pdf file for the selected doctor will be generated and saved in the system. This file contains visit details, amounts submitted and paid and totals for the paycheck.  
 	 </dd>
+
  <p>&nbsp;</p>
  	<a id="ra_messages"></a>
 	 <dt class="col-sm-1">MHO RA Messages</dt>
 	   <dd class="col-sm-11">This section contains claims summary headers from MHO RA files.  </dd>
+
+<p>&nbsp;</p>
+<a id="visits_this_cycle"></a>
+<dt class="col-sm-1">Visits This Cycle</dt>
+<dd class="col-sm-11">This section shows simple table with number of visits for each doctor in the current billing cycle  </dd>
+
  </dl>
  </dd>
 
@@ -590,7 +619,7 @@ This last menu groups various forms and has 5 submenus:
 
   <p> &nbsp; </p>
   <a id="doc_reports"></a>
-    <dt class="col-sm-1">Submitted Claims report</dt>
+    <dt class="col-sm-1">Submitted Claims Report</dt>
     <dd class="col-sm-11">This report contains claims submitted for billing for given time frame/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
   <p> &nbsp; </p>
   <center><img src="/images/help/report_form.png" width=500></center>
@@ -599,7 +628,7 @@ This last menu groups various forms and has 5 submenus:
     </dd>
 
   <p> &nbsp; </p>
-    <dt class="col-sm-1">Paid Claims report</dt>
+    <dt class="col-sm-1">Paid Claims Report</dt>
     <dd class="col-sm-11">This report contains claims accepted by MHO and included into payment for billing cycle/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
   <p> &nbsp; </p>
   <center><img src="/images/help/create_pc_report_form.png" width=500></center>
@@ -608,7 +637,7 @@ This last menu groups various forms and has 5 submenus:
     </dd>
 
   <p> &nbsp; </p>
-    <dt class="col-sm-1">Cash report</dt>
+    <dt class="col-sm-1">Cash Report</dt>
     <dd class="col-sm-11">This report contains exclusively cash payments for selected time frame/doctor. It is generated from Docs>Reports page by clicking [Create New Report] button at the bottom of the screen
   <p> &nbsp; </p>
   <center><img src="/images/help/create_cs_report_form.png" width=500></center>
