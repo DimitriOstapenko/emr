@@ -1,27 +1,30 @@
 <% provide(:title, 'Help') %>
+<%= render "modal", modal_name: 'daysheet' %>
 <%= render "modal", modal_name: 'address_label' %>
-<%= render "modal", modal_name: 'new_patient_form', modal_size: 840 %>
-<%= render "modal", modal_name: 'edit_patient_form', modal_size: 840 %>
-<%= render "modal", modal_name: 'patient_profile', modal_size: 840 %>
-<%= render "modal", modal_name: 'patient_referral', modal_size: 840 %>
-<%= render "modal", modal_name: 'patient_invoice', modal_size: 840 %>
-<%= render "modal", modal_name: 'new_referral_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'new_patient_form' %>
+<%= render "modal", modal_name: 'edit_patient_form' %>
+<%= render "modal", modal_name: 'patients_list' %>
+<%= render "modal", modal_name: 'patient_profile' %>
+<%= render "modal", modal_name: 'new_referral_form' %>
+<%= render "modal", modal_name: 'patient_referral' %>
+<%= render "modal", modal_name: 'patient_invoice' %>
 <%= render "modal", modal_name: 'patient_referral_form' %>
 <%= render "modal", modal_name: 'patient_referral' %>
 <%= render "modal", modal_name: 'patient_label', modal_size: 600 %>
 <%= render "modal", modal_name: 'patient_letter', modal_size: 600 %>
-<%= render "modal", modal_name: 'patient_letter_form', modal_size: 840 %>
-<%= render "modal", modal_name: 'patient_invoice_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'patient_letter_form' %>
+<%= render "modal", modal_name: 'patient_invoice_form' %>
 <%= render "modal", modal_name: 'prescription', modal_size: 600 %>
 <%= render "modal", modal_name: 'reports' %>
+<%= render "modal", modal_name: 'patient_receipt' %>
 <%= render "modal", modal_name: 'reports_form', modal_size: 600 %>
-<%= render "modal", modal_name: 'new_visit_form', modal_size: 840 %>
-<%= render "modal", modal_name: 'edit_visit_form', modal_size: 840 %>
+<%= render "modal", modal_name: 'new_visit_form' %>
+<%= render "modal", modal_name: 'edit_visit_form' %>
 <%= render "modal", modal_name: 'visit_form', modal_size: 600 %>
-<%= render "modal", modal_name: 'visit_history', modal_size: 840 %>
-<%= render "modal", modal_name: 'visit_summary', modal_size: 840 %>
-<%= render "modal", modal_name: 'paid_claims', modal_size: 840 %>
-<%= render "modal", modal_name: 'unpaid_claims', modal_size: 840 %>
+<%= render "modal", modal_name: 'visit_history' %>
+<%= render "modal", modal_name: 'visit_summary' %>
+<%= render "modal", modal_name: 'paid_claims' %>
+<%= render "modal", modal_name: 'unpaid_claims' %>
 
 <!-- Prevent refresh -->
 <body data-turbolinks="false">
@@ -424,6 +427,7 @@ This last menu groups various forms and has 5 submenus:
  <p>&nbsp;</p>
 
  <dl class="row">
+         <a id="address_label"></a>
 	 <dt class="col-sm-1">
 	 <%= link_to "Address Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#address_label_modal' %> 
 	 </dt>
@@ -460,6 +464,7 @@ This last menu groups various forms and has 5 submenus:
 
  <dl class="row">
 	 <dt class="col-sm-1">
+  	<a id="patient_label"></a>
 	 <%= link_to "Patient Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_label_modal' %> 
 	 </dt>
 	 <dd class="col-sm-11">Standard 29mm x 62mm label with patient information. This label is used on Referrals, Letters, Lab Requisitions and other documents requiring patient identification. File number on the label denotes unique patient number and allows to go directly to patient profile using URL like this: "https://walkin.drlena.com/patients/48422" where 48422 is file number from the label.
@@ -478,9 +483,12 @@ This last menu groups various forms and has 5 submenus:
 
  <dl class="row">
 	 <dt class="col-sm-1">
-	 <%= link_to "Receipt", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#receipt_modal' %> 
+	 <%= link_to "Receipt", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_receipt_modal' %> 
 	 </dt>
-	 <dd class="col-sm-11">Receipts for cash services are generated from <%= link_to "Visit Summary Page", "#visit_summary_page" %>. Just click [Receipt] button and PDF file will be generated based on patient/visit information 
+	 <dd class="col-sm-11">Receipts for cash services are generated from 
+	 
+  	 <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
+	 Just click [Receipt] button and PDF file will be generated based on patient/visit information 
 	 </dd>
  </dl>
  
@@ -525,20 +533,7 @@ This last menu groups various forms and has 5 submenus:
 
  <!-- Forms reference -->
   <p> &nbsp; </p>
-  <a id="address_label"></a>
-   <dt class="col-sm-1">Address Label</dt>
-    <dd class="col-sm-11">Label generated from <%= link_to "Patient List", "#patients" %> </dd>
-  <p> &nbsp; </p>
-  <center><img src="/images/help/address_label.png" width=500 border=1></center>
 
-  <p> &nbsp; </p>
-  <a id="patient_label"></a>
-   <dt class="col-sm-1">Patient Label</dt>
-    <dd class="col-sm-11">Label generated from <%= link_to "Day Sheet", "#day_sheet" %> </dd>
-  <p> &nbsp; </p>
-  <center><img src="/images/help/patient_label.png" width=500 border=1></center>
-
-  <p> &nbsp; </p>
   <a id="patient_form"></a>
     <dt class="col-sm-1">Patient Form</dt>
   <dd class="col-sm-11">This form is used to create new patient or edit existing patient's record. Most fields are self-explanatory, required fields are marked as such under input control. Mouse over question mark icon will give you additional information about the field. Some fields require additional information on how to use them and here it is:
@@ -579,7 +574,7 @@ This last menu groups various forms and has 5 submenus:
     <dt class="col-sm-1">Patient Profile</dt>
   <dd class="col-sm-11">Shows patient demographics info as well as history of visits in chronological order. Has 6 context-specific buttons</dd>
   <p> &nbsp; </p>
-  <center><img src="/images/help/patient_summary.png" width=900></center>
+  <center><img src="/images/help/patient_profile.png" width=900></center>
 
   <p> &nbsp; </p>
   <a id="patient_letter_form"></a>
