@@ -16,6 +16,8 @@
 <%= render "modal", modal_name: 'patient_invoice_form' %>
 <%= render "modal", modal_name: 'prescription', modal_size: 600 %>
 <%= render "modal", modal_name: 'reports' %>
+<%= render "modal", modal_name: 'doctor_paystub_form' %>
+<%= render "modal", modal_name: 'doctor_paystub' %>
 <%= render "modal", modal_name: 'patient_receipt' %>
 <%= render "modal", modal_name: 'reports_form', modal_size: 600 %>
 <%= render "modal", modal_name: 'new_visit_form' %>
@@ -25,6 +27,7 @@
 <%= render "modal", modal_name: 'visit_summary' %>
 <%= render "modal", modal_name: 'paid_claims' %>
 <%= render "modal", modal_name: 'unpaid_claims' %>
+<%= render "modal", modal_name: 'forms', modal_size: 860 %>
 
 <!-- Prevent refresh -->
 <body data-turbolinks="false">
@@ -260,8 +263,14 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
 
 <p>&nbsp;</p>
  	 <a id="paystubs"></a>
-	 <dt class="col-sm-1">Pay Stubs</dt>
-	 <dd class="col-sm-11"> This section is used to generate Pay Stubs for each doctor after RA file for previous month is imported into the EMR and reconciled vith the visits by utility scripts. If data for previous month was not yet imported, appropriate warning message will be issued and <Create New Paystub> button will not appear at the bottom of the page. Otherwise, user can create paystub by clicking this button and filling out the form. Fields to be filled are: Doctor, Monthly Premium (From RA File), IFH, Cash, WCB payments received by the doctor, as well as HC Deposit received, if any, and MHO deduction used by the ministry (RA file). Once all this information is entered, click on <Generate Paystub> button and pdf file for the selected doctor will be generated and saved in the system. This file contains visit details, amounts submitted and paid and totals for the paycheck.  
+	 <dt  class="col-sm-1"><%= link_to "Pay Stubs", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#doctor_paystub_modal' %></dt>
+	 <dd class="col-sm-11"> This section is used to generate and manage Pay Stubs for each doctor after RA file for previous month is imported into the EMR and reconciled vith the corresponding visits by utility scripts. If data for previous month was not yet imported, appropriate warning message will be issued and <Create New Paystub> button will not appear at the bottom of the page. Otherwise, user can create paystub by clicking this button and filling out the 
+	 
+	 <%= link_to "Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#doctor_paystub_form_modal' %>.
+
+	 Fields to be filled are: Doctor, Monthly Premium (From RA File), IFH, Cash, WCB payments received by the doctor, as well as HC Deposit received, if any, and MHO deduction used by the ministry (RA file). Once all this information is entered, click on <Generate Paystub> button and pdf file for the selected doctor will be generated and saved in the system. This file contains visit details, amounts submitted and paid and totals for the paycheck.  
+	 <p>&nbsp;</p>
+	 <center><img src="/images/help/doctor_paystub_form.png" width=600></center>
 	 </dd>
 
  <p>&nbsp;</p>
@@ -318,7 +327,7 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
     	<dt class="col-sm-1">Referrals</dt>
 	<dd>This submenu functions similar to Invoces and letters and is used to manage all doctor referrals in one place. As usual, you have access to viewing, editing or downloading selected document.</dd>
  <p>&nbsp;</p>
-          <center><img src="/images/help/referral_form.png" width=500></center>
+          <center><img src="/images/help/patient_referral_form.png" width=500></center>
  <p>&nbsp;</p>
 	 <a id="day_charts"></a>
     	<dt class="col-sm-1">Day Charts</dt>
@@ -330,173 +339,176 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
  <p>&nbsp;</p>
 	 <a id="patient_charts"></a>
     	<dt class="col-sm-1">Patient Charts</dt>
-	<dd>Patients who have designated one of the doctors working in a clinic as their family doctor are called "Clinic Patient" and have chart with history of all their visits to the clinic. Charts submenu gives access to management page for Patient Charts  </dd>
- </dl>
- </dd>
-
- <!-- Ref  menu -->
-  <p> &nbsp; </p>
-  <a id="ref"></a>
-    <dt class="col-sm-1">Reference (Ref)</dt>
- <dd class="col-sm-11">
-There are 7 submenus in this Drop-Down: 
- <p>&nbsp;</p>
- <dl class="row">
-	 <a id="procedures"></a>
-         <dt class="col-sm-1">Procedures (Services):</dt>
-	 <dd class="col-sm-11">Pages in this submenu allow clinic staff to manage services used by the system. There are 2 types of services: insured and non-insured. Insured services require valid service code. Non-insured services can have any unique code assigned to them. There's also description and fee associated with each service. "Active" attribute is used to control which services will show in drop down boxes during visit entry stage. Use <Add Procedure> button at the bottom of the page to add new procedure </dd>
-	 
-<p>&nbsp;</p>
-          <center><img src="/images/help/services.png" width=800></center>
- <p>&nbsp;</p>
-
-	 <a id="diagnoses"></a>
-    	<dt class="col-sm-1">Diagnoses</dt>
-	<dd>This submenu is used to manage Diagnosis known to the system. Page lets you edit existing diagnosis' attributes: code, description, problem type and active flag. Only Active diagnoses appear in visit's diagnosis drop-down menu. New diagnoses can be entered into the system by using <Add Diagnosis> button  at the bottom of the page. </dd>
- <p>&nbsp;</p>
-          <center><img src="/images/help/diagnoses.png" width=800></center>
- <p>&nbsp;</p>
-	 <a id="ins_providers"></a>
-    	<dt class="col-sm-1">Insurance Providers</dt>
-	<dd>Pages in this submenu are used to manage insurance providers and law offices known to the system. This information is used form invoice generation.</dd>
- <p>&nbsp;</p>
-          <center><img src="/images/help/providers.png" width=800></center>
- <p>&nbsp;</p>
-	 <a id="medications"></a>
-    	<dt class="col-sm-1">Medications</dt>
-	<dd>Extensive list of known medications with description, dosage, format and other attributes is managed by this section of the system</dd>
- <p>&nbsp;</p>
-          <center><img src="/images/help/drugs.png" width=800></center>
- <p>&nbsp;</p>
-	 <a id="vaccines"></a>
-    	<dt class="col-sm-1">Vaccines</dt>
-	<dd>List of vaccines known to the system</dd>
- <p>&nbsp;</p>
-          <center><img src="/images/help/vaccines.png" width=800></center>
- <p>&nbsp;</p>
-	 <a id="doctors"></a>
-    	<dt class="col-sm-1">Doctors</dt>
-	<dd>Editable List of local doctors with their addresses, phone numbers, locality, specialty and many other attributes. There's 2 categories of doctors: doctors working in the clinic and all the rest.  Billing information for all doctors working in the clinic must be entered into the system during initial setup. Contact information for all other doctors is used to generate refarrals, write letters etc. </dd>
- <p>&nbsp;</p>
-          <center><img src="/images/help/doctors.png" width=800></center>
- <p>&nbsp;</p>
-	 <a id="schedules"></a>
-    	<dt class="col-sm-1">Schedules</dt>
-	<dd>This section of the system is used to generate doctor's schedules. Once information is stored in DB it is then used on public page to show which doctor is currently on duty as well as schedule for the week and open hours. </dd>
-
- <p>&nbsp;</p>
-          <center><img src="/images/help/schedules.png" width=600></center>
- <p>&nbsp;</p>
- </dl>
- </dd>
-
-  <!-- Forms  menu -->
-  <p> &nbsp; </p>
-  <a id="forms"></a>
-    <dt class="col-sm-1">Forms</dt>
-  </a>
- <dd class="col-sm-11">
-This last menu groups various forms and has 5 submenus:
- <p>&nbsp;</p>
- <dl class="row">
-         <dt class="col-sm-1">All Forms</dt>
-         <dd>Will show all form categories on one page</dd>
- <p>&nbsp;</p>
-        <dt class="col-sm-1">WCB Forms</dt>
-        <dd>Forms related to WSIB claims</dd>
- <p>&nbsp;</p>
-        <dt class="col-sm-1">Lab Forms</dt>
-        <dd>Various Laboratory forms</dd>
- <p>&nbsp;</p>
-        <dt class="col-sm-1">MTO Forms</dt>
-        <dd>Forms relating to medical examinations for the Ministry of Transport</dd>
- <p>&nbsp;</p>
-        <dt class="col-sm-1">Clinic Forms </dt>
-        <dd>Forms specific to the clinic. Any custom PDF forms used in day to day operations of the clinic fall into this category.  </dd>
- </dl>
- </dd>
-
- <!-- Generated Document List -->
-
- <p> &nbsp; </p>
-  <a id="document_list"></a>
-    <dt class="col-sm-1">List Of Generated Documents</dt>
-  </a>
-   <dd class="col-sm-11">
-   WEMR generates many PDF documents on-the fly. From doctor payment reports to prescriptions and referrals, all these documents are menu-driven, they are created in industry standard PDF format and can be printed or saved for future reference. Here's the list of documents generated by the system:
- <p>&nbsp;</p>
-
- <dl class="row">
-         <a id="address_label"></a>
-	 <dt class="col-sm-1">
-	 <%= link_to "Address Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#address_label_modal' %> 
-	 </dt>
-	 <dd class="col-sm-11">Similar to patient label, this standard 29mm x 62mm label has full patient address. To be used on all correspondence related to the patient. 
+	<dd class="col-sm-11">Patients who have designated one of the doctors working in the clinic as their family doctor are called "Clinic Patient" and have chart with history of all their visits to the clinic. Charts submenu gives access to management page for Patient Charts  </dd>
+	 </dl>
 	 </dd>
- </dl>
 
- <dl class="row">
-	 <dt class="col-sm-1">
+	 <!-- Ref  menu -->
+	  <p> &nbsp; </p>
+	  <a id="ref"></a>
+	    <dt class="col-sm-1">Reference (Ref)</dt>
+	 <dd class="col-sm-11">
+	There are 7 submenus in this Drop-Down: 
+	 <p>&nbsp;</p>
+	 <dl class="row">
+		 <a id="procedures"></a>
+		 <dt class="col-sm-1">Procedures (Services):</dt>
+		 <dd class="col-sm-11">Pages in this submenu allow clinic staff to manage services used by the system. There are 2 types of services: insured and non-insured. Insured services require valid service code. Non-insured services can have any unique code assigned to them. There's also description and fee associated with each service. "Active" attribute is used to control which services will show in drop down boxes during visit entry stage. Use <Add Procedure> button at the bottom of the page to add new procedure </dd>
+		 
+	<p>&nbsp;</p>
+		  <center><img src="/images/help/services.png" width=800></center>
+	 <p>&nbsp;</p>
 
-	 <%= link_to "Patient Invoice", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_invoice_modal' %> 
+		 <a id="diagnoses"></a>
+		<dt class="col-sm-1">Diagnoses</dt>
+		<dd class="col-sm-11">This submenu is used to manage Diagnosis known to the system. Page lets you edit existing diagnosis' attributes: code, description, problem type and active flag. Only Active diagnoses appear in visit's diagnosis drop-down menu. New diagnoses can be entered into the system by using <Add Diagnosis> button  at the bottom of the page. </dd>
+	 <p>&nbsp;</p>
+		  <center><img src="/images/help/diagnoses.png" width=800></center>
+	 <p>&nbsp;</p>
+		 <a id="ins_providers"></a>
+		<dt class="col-sm-1">Insurance Providers</dt>
+		<dd>Pages in this submenu are used to manage insurance providers and law offices known to the system. This information is used form invoice generation.</dd>
+	 <p>&nbsp;</p>
+		  <center><img src="/images/help/providers.png" width=800></center>
+	 <p>&nbsp;</p>
+		 <a id="medications"></a>
+		<dt class="col-sm-1">Medications</dt>
+		<dd>Extensive list of known medications with description, dosage, format and other attributes is managed by this section of the system</dd>
+	 <p>&nbsp;</p>
+		  <center><img src="/images/help/drugs.png" width=800></center>
+	 <p>&nbsp;</p>
+		 <a id="vaccines"></a>
+		<dt class="col-sm-1">Vaccines</dt>
+		<dd>List of vaccines known to the system</dd>
+	 <p>&nbsp;</p>
+		  <center><img src="/images/help/vaccines.png" width=800></center>
+	 <p>&nbsp;</p>
+		 <a id="doctors"></a>
+		<dt class="col-sm-1">Doctors</dt>
+		<dd class="col-sm-11">Editable List of local doctors with their addresses, phone numbers, locality, specialty and many other attributes. There's 2 categories of doctors: doctors working in the clinic and all the rest.  Billing information for all doctors working in the clinic must be entered into the system during initial setup. Contact information for all other doctors is used to generate refarrals, write letters etc. </dd>
+	 <p>&nbsp;</p>
+		  <center><img src="/images/help/doctors.png" width=800></center>
+	 <p>&nbsp;</p>
+		 <a id="schedules"></a>
+		<dt class="col-sm-1">Schedules</dt>
+		<dd>This section of the system is used to generate doctor's schedules. Once information is stored in DB it is then used on public page to show which doctor is currently on duty as well as schedule for the week and open hours. </dd>
 
-	 </dt>
-	 <dd class="col-sm-11">Invoices are generated using 
-	 
-	 <%= link_to "Patient Invoice Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_invoice_form_modal' %> 
-	 
-	 from 
-	 
-	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+	 <p>&nbsp;</p>
+		  <center><img src="/images/help/schedules.png" width=600></center>
+	 <p>&nbsp;</p>
+	 </dl>
 	 </dd>
- </dl>
 
- <dl class="row">
-	 <dt class="col-sm-1">
-	 <%= link_to "Patient Letter", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_letter_modal' %> 
-	 </dt>
-	 <dd class="col-sm-11">Letters are generated using 
-	 <%= link_to "Patient Letter Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_letter_form_modal' %> 
-	 from 
-	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
-	 </dd>
- </dl>
-
- <dl class="row">
-	 <dt class="col-sm-1">
-  	<a id="patient_label"></a>
-	 <%= link_to "Patient Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_label_modal' %> 
-	 </dt>
-	 <dd class="col-sm-11">Standard 29mm x 62mm label with patient information. This label is used on Referrals, Letters, Lab Requisitions and other documents requiring patient identification. File number on the label denotes unique patient number and allows to go directly to patient profile using URL like this: "https://walkin.drlena.com/patients/48422" where 48422 is file number from the label.
-	 </dd>
- </dl>
-
- <dl class="row">
-	 <dt class="col-sm-1">
-	 <%= link_to "Prescription", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#prescription_modal' %> 
-	 </dt>
-	 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under 
+	  <!-- Forms  menu -->
+	  <p> &nbsp; </p>
+	  <a id="forms"></a>
+	    <dt class="col-sm-1"><%= link_to "Forms", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#forms_modal' %>
+	  </a>
+	 <dd class="col-sm-11">
+	This last menu groups various common forms in fillable of plain PDF format and has 5 submenus:
+	 <p>&nbsp;</p>
+	 <dl class="row">
+		 <dt class="col-sm-1">All Forms</dt>
+		 <dd>Will show all form categories on one page</dd>
+	 <p>&nbsp;</p>
+		<dt class="col-sm-1">WCB Forms</dt>
+		<dd>Forms related to WSIB claims</dd>
+	 <p>&nbsp;</p>
+		<dt class="col-sm-1">Lab Forms</dt>
+		<dd>Various Laboratory forms</dd>
+	 <p>&nbsp;</p>
+		<dt class="col-sm-1">MTO Forms</dt>
+		<dd>Forms relating to medical examinations for the Ministry of Transport</dd>
+	 <p>&nbsp;</p>
+		<dt class="col-sm-1">Clinic Forms </dt>
+		<dd>Forms specific to the clinic. Any custom PDF forms used in day to day operations of the clinic fall into this category.  </dd>
+	 </dl>
 	 
-	 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+	 <p>&nbsp;</p>
+	 <center><img src="/images/help/form_form.png" width=600></center>
 	 </dd>
- </dl>
 
- <dl class="row">
-	 <dt class="col-sm-1">
-	 <%= link_to "Receipt", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_receipt_modal' %> 
-	 </dt>
-	 <dd class="col-sm-11">Receipts for cash services are generated from 
+	 <!-- Generated Document List -->
+
+	 <p> &nbsp; </p>
+	  <a id="document_list"></a>
+	    <dt class="col-sm-1">List Of Generated Documents</dt>
+	  </a>
+	   <dd class="col-sm-11">
+	   WEMR generates many PDF documents on-the fly. From doctor payment reports to prescriptions and referrals, all these documents are menu-driven, they are created in industry standard PDF format and can be printed or saved for future reference. Here's the list of documents generated by the system:
+	 <p>&nbsp;</p>
+
+	 <dl class="row">
+		 <a id="address_label"></a>
+		 <dt class="col-sm-1">
+		 <%= link_to "Address Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#address_label_modal' %> 
+		 </dt>
+		 <dd class="col-sm-11">Similar to patient label, this standard 29mm x 62mm label has full patient address. To be used on all correspondence related to the patient. 
+		 </dd>
+	 </dl>
+
+	 <dl class="row">
+		 <dt class="col-sm-1">
+
+		 <%= link_to "Patient Invoice", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_invoice_modal' %> 
+
+		 </dt>
+		 <dd class="col-sm-11">Invoices are generated using 
+		 
+		 <%= link_to "Patient Invoice Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_invoice_form_modal' %> 
+		 
+		 from 
+		 
+		 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+		 </dd>
+	 </dl>
+
+	 <dl class="row">
+		 <dt class="col-sm-1">
+		 <%= link_to "Patient Letter", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_letter_modal' %> 
+		 </dt>
+		 <dd class="col-sm-11">Letters are generated using 
+		 <%= link_to "Patient Letter Form", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_letter_form_modal' %> 
+		 from 
+		 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+		 </dd>
+	 </dl>
+
+	 <dl class="row">
+		 <dt class="col-sm-1">
+		<a id="patient_label"></a>
+		 <%= link_to "Patient Label", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_label_modal' %> 
+		 </dt>
+		 <dd class="col-sm-11">Standard 29mm x 62mm label with patient information. This label is used on Referrals, Letters, Lab Requisitions and other documents requiring patient identification. File number on the label denotes unique patient number and allows to go directly to patient profile using URL like this: "https://walkin.drlena.com/patients/48422" where 48422 is file number from the label.
+		 </dd>
+	 </dl>
+
+	 <dl class="row">
+		 <dt class="col-sm-1">
+		 <%= link_to "Prescription", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#prescription_modal' %> 
+		 </dt>
+		 <dd  class="col-sm-11"> Prescriptions can be generated from patient profile page fro patients with the list of active medications. If this list is not empty, you will see the <Prescription> button under 
+		 
+		 <%= link_to "Patient Profile", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_profile_modal' %> 
+		 </dd>
+	 </dl>
+
+	 <dl class="row">
+		 <dt class="col-sm-1">
+		 <%= link_to "Receipt", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_receipt_modal' %> 
+		 </dt>
+		 <dd class="col-sm-11">Receipts for cash services are generated from 
+		 
+		 <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
+		 Just click [Receipt] button and PDF file will be generated based on patient/visit information 
+		 </dd>
+	 </dl>
 	 
-  	 <%= link_to "Visit Summary Page", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_summary_modal' %>.
-	 Just click [Receipt] button and PDF file will be generated based on patient/visit information 
-	 </dd>
- </dl>
- 
- <dl class="row">
-	 <dt class="col-sm-1">
-	 <%= link_to "Reports", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#reports_modal' %> 
- 	</dt>
-	<dd class="col-sm-11">Doctor reports generated from  Docs>Reports Page. 
+	 <dl class="row">
+		 <dt class="col-sm-1">
+		 <%= link_to "Reports", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#reports_modal' %> 
+		</dt>
+		<dd class="col-sm-11">Doctor reports generated from  Docs>Reports Page. 
 	 </dd>
  </dl>
 
