@@ -871,7 +871,8 @@ end # EDT module
        pdf.span(165.mm, :position => :center) do
 	 pdf.text "MHO Provider Payment Information from RA file #{paystub.ra_file}", size: 12, style: :bold
          pdf.move_down 5.mm
-         section2 = get_provider_totals(msg_arr, @doc.provider_no)
+#         section2 = get_provider_totals(msg_arr, @doc.provider_no)
+	 section2 = []
          section.concat(section2).each do |str|
            pdf.text str
          end
@@ -927,12 +928,20 @@ private
      #{pat.addr} #{pat.city}, #{pat.prov} #{pat.postal}"
   end
 
-  # Find PREMIUM PAYMENTS section for given provider, return as string array
+  # Find PREMIUM PAYMENTS section for given provider, return last line number and section string array
   def get_provider_premiums(arr, prov_no)
+    outarr = []; ind = 0;
     arr.each_with_index do |str,i|
             next unless str.match(/PREMIUM PAYMENTS/)
-            return [i+22,arr[i-1,23]] if arr[i+1,3].join('').match(/#{prov_no}/)
+            if arr[i+1,3].join('').match(/#{prov_no}/) 
+	       arr[i,16].each do|s|
+		 outarr.push("\xC2\xA0#{s}")
+		 ind = i
+	         break if s.match(/\*{10}/)
+	       end
+	    end
     end
+    return [ind, outarr]
   end
 
   # Find PAYMENT DISCOUNT SUMMARY section for given provider, return as string array

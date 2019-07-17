@@ -1,8 +1,8 @@
 <% remote = device_is_desktop? %>
 <tr>
   <td><%= link_to visit.entry_ts, patient_visit_path(visit.patient,visit) %> </td>
-  <td><%= visit.patient.full_name %></td>
-  <td><%= visit.patient.pat_type %></td>
+  <td><%= visit.patient.full_name %> (<%= visit.patient.pat_type %>)</td>
+  <td><%= visit.pat_type %></td>
   <td><%= visit.doctor.lname %></td>
   <td><%= visit.diag_scode %></td>
   <td><%= visit.proc_codes %></td>
