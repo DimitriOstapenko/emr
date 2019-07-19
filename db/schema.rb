@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_021246) do
+ActiveRecord::Schema.define(version: 2019_07_19_185844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,10 +133,10 @@ ActiveRecord::Schema.define(version: 2019_07_03_021246) do
     t.string "doc_code"
     t.integer "percent_deduction"
     t.string "fax"
-    t.integer "wsib_num", default: 0
     t.boolean "accepts_new_patients", default: false
     t.integer "district", default: 0
     t.integer "billing_format"
+    t.string "wsib_num", default: ""
     t.index ["provider_no"], name: "index_doctors_on_provider_no"
   end
 
