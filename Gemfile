@@ -5,7 +5,7 @@ gem 'rails',                   '>= 5.2.2'
 gem 'bcrypt',                  '3.1.12' # 3.1.11
 gem 'faker',                   '1.7.3'
 gem 'carrierwave',             '1.3.1'  # 1.2.1
-gem 'mini_magick',             '4.9.3'  # '4.7.0'
+gem 'mini_magick',          '~> 4.9.4'  # '4.7.0'
 #gem 'fog'
 #gem 'fog-aws',                 '2.0.0'
 gem 'nokogiri',             '~> 1.10.0' # 1.8.5
