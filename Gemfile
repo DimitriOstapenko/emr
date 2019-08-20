@@ -8,7 +8,7 @@ gem 'carrierwave',             '1.3.1'  # 1.2.1
 gem 'mini_magick',          '~> 4.9.4'  # '4.7.0'
 #gem 'fog'
 #gem 'fog-aws',                 '2.0.0'
-gem 'nokogiri',             '~> 1.10.0' # 1.8.5
+gem 'nokogiri',             '~> 1.10.4' 
 gem 'will_paginate',           '3.1.7'  #'3.1.6'
 gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap-sass',       '~> 3.4.1'
