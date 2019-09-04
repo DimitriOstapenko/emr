@@ -5,7 +5,7 @@
     <% @schedules.each do |schedule| %>
       <tr>
         <td><%= Date::DAYNAMES[schedule.dow] %></td>
-        <td>Dr. <%= schedule.doctor.lname %></td>
+        <td class="col-md-5">Dr. <%= schedule.doctor.lname %></td>
         <td><%= schedule.start_time.strftime("%l:%M%p") %></td>
         <td><%= schedule.end_time.strftime("%l:%M%p") %></td>
       </tr>

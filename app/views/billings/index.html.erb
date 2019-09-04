@@ -1,5 +1,5 @@
 <% provide(:title, 'All billing') %>
-<% date = params[:date].to_date rescue nil %>
+<% date = params[:date].to_date rescue Date.today %>
 
 <table class="tbl table-hover"> <!--class="table table-hover table-condensed" > -->
   <thead>
@@ -46,8 +46,10 @@
 
 <div class="row">
 <div class="bottom_buttons ">
-  <% if date == Date.today || date.blank? || current_user.admin? %>
-    <% if @not_ready.blank? %>
+  <% if current_user.admin? %>
+	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
+	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
+  <% elsif date == Date.today && @not_ready.blank? %>
       <% if BILLING_FORMAT == EDT_FORMAT || current_user.admin? %>
 	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
 	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
@@ -56,8 +58,8 @@
       <% elsif BILLING_FORMAT == CABMD_FORMAT %>
 	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
       <% end %>
-    <% end %>
   <% end %>
+
 </div>
 
 <div class="bottom_nav">
