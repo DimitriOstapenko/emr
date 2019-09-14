@@ -1,0 +1,54 @@
+#sm start rvm
+PATH="/home/rails/.rvm/gems/ruby-2.6.3/bin:/home/rails/.rvm/gems/ruby-2.6.3@global/bin:/home/rails/.rvm/rubies/ruby-2.6.3/bin:/home/rails/.rvm/gems/ruby-2.6.3/bin:/home/rails/.rvm/gems/ruby-2.6.3@global/bin:/home/rails/.rvm/rubies/ruby-2.6.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/home/rails/.rvm/bin:/home/rails/.rvm/bin:/home/rails/.rvm/gems/ruby-2.6.3/gems/passenger-6.0.2/bin:/home/rails/.rvm/bin:/home/rails/.rvm/bin"
+GEM_HOME='/home/rails/.rvm/gems/ruby-2.6.3'
+GEM_PATH='/home/rails/.rvm/gems/ruby-2.6.3:/home/rails/.rvm/gems/ruby-2.6.3@global'
+MY_RUBY_HOME='/home/rails/.rvm/rubies/ruby-2.6.3'
+IRBRC='/home/rails/.rvm/rubies/ruby-2.6.3/.irbrc'
+RUBY_VERSION='ruby-2.6.3'
+#sm end rvm
+# Edit this file to introduce tasks to be run by cron.
+#
+
+# Each task to run has to be defined through a single line
+# indicating with different fields when the task will be run
+# and what command to run for the task
+#
+
+# To define the time you can provide concrete values for
+# minute (m), hour (h), day of month (dom), month (mon),
+# and day of week (dow) or use '*' in these fields (for 'any').#
+
+# Notice that tasks will be started based on the cron's system
+# daemon's notion of time and timezones.
+#
+
+# Output of the crontab jobs (including errors) is sent through
+# email to the user the crontab file belongs to (unless redirected).
+#
+
+# For example, you can run a backup of all your user accounts
+# at 5 a.m every week with:
+# 0 5 * * 1 tar -zcf /var/backups/home.tgz /home/
+#
+
+# For more information see the manual pages of crontab(5) and cron(8)
+#
+# Run whenever --update-crontab from emr directory
+
+# m h  dom mon dow   command
+
+MAILTO=dosta@me.com
+PATH="$HOME/emr:$PATH"
+# Full dump of the walkin database
+0 1 * * *  /home/rails/emr/utils/pgbackup.pl > /home/rails/emr/log/pgbackup_cron.log
+
+# Begin Whenever generated tasks for: /home/rails/emr/config/schedule.rb at: 2018-11-21 22:55:04 -0500
+30 6 * * * /bin/bash -l -c 'ruby /home/rails/emr/utils/import_patient_charts.rb >> /home/rails/emr/log/cron.log 2>&1'
+
+30 6 * * * /bin/bash -l -c 'ruby /home/rails/emr/utils/import_daily_charts.rb >> /home/rails/emr/log/cron.log 2>&1'
+
+30 6 * * * /bin/bash -l -c 'ruby /home/rails/emr/utils/claims/import_error_files.rb >> /home/rails/emr/log/cron.log 2>&1'
+
+0 7 * * * /bin/bash -l -c '/usr/bin/rsync -avHS --delete /home/rails/emr/charts/ /media/seagate/charts/ >> /home/rails/emr/log/cron.log 2>&1'
+
+# End Whenever generated tasks for: /home/rails/emr/config/schedule.rb at: 2018-11-21 22:55:04 -0500

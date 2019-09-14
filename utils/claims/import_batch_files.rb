@@ -89,7 +89,7 @@ class BatchFile
 		       hcp_svcs: @hcp_svcs,
 		       rmb_svcs: @rmb_svcs,
 		       services: @ttl_svcs,
-		       total_amount: 0,
+#		       total_amount: 0,
 		       seq_no: @seq_no, # Batch sequence, or id in H claim, not file extension
 		       batch_id: @batch_id,
 		       processed: true ) 
@@ -115,9 +115,10 @@ new_files.each do |f|
      else
 	puts "** Claim file found for this batch: #{claim_file.filename}"
 	if batch_file.accepted
-	  puts "** Claim is accepted as valid; Setting attributes and saving batch"
+          puts "** Claim is accepted as valid; Setting attributes and saving batch; Deleting batch file."
 	  claim_file.processed = true
 	  claim_file.save
+          batch_file.total_amount = claim_file.total_amount
 	  batch_file.Save unless EdtFile.exists?(filename: batch_file.name)
           processed_files += 1
 	  File.delete( batch_file.filespec ) rescue nil
