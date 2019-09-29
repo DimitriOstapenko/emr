@@ -47,3 +47,7 @@
 
 # ignore pg restore script - platform specific
 /utils/pgrestore.pl
+
+# ignore Postgres backups
+
+/backup/**
