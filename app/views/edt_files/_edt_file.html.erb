@@ -17,7 +17,7 @@
 	<td><%= edt_file.doctors %></td>
 	<td><%= edt_file.claims %></td>
 	<td><%= edt_file.services %></td>
-	<td><%= sprintf("$%.2f",edt_file.total_amount) %></td>
+        <td><%= sprintf("$%.2f",edt_file.total_amount) rescue 0 %></td>
 	<td><%= edt_file.processed ? 'Processed':''  %> </td>
 	<% if edt_file.filespec.present? && File.exists?(edt_file.filespec) %>
            <td><%= link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_edt_file_path(edt_file)  %></td>
