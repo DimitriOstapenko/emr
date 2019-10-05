@@ -55,10 +55,10 @@ private
   def myfind (str)
         if str.match(/^G[[:digit:]]{,10}$/)
 	  Claim.where("claims.claim_no like ?", "#{str.upcase}%")
-        elsif str.match(/^[[:digit:]]{,10}$/)
-          Claim.where("ohip_num like ?", "%#{str}%")
         elsif str.match(/^[[:graph:]]{,8}$/)
           Claim.where("accounting_no like ?", "%#{str}%" )
+        elsif str.match(/^[[:digit:]]{,10}$/)
+          Claim.where("ohip_num like ?", "%#{str}%") 
         else
           []
         end
