@@ -28,13 +28,15 @@
 <%= render "modal", modal_name: 'paid_claims' %>
 <%= render "modal", modal_name: 'unpaid_claims' %>
 <%= render "modal", modal_name: 'forms', modal_size: 860 %>
+<%= render "modal", modal_name: 'patient_charts', modal_size: 860 %>
+<%= render "modal", modal_name: 'day_charts', modal_size: 860 %>
 
 <!-- Prevent refresh -->
 <body data-turbolinks="false">
 
 <div class="help-container">
 <div class='header'>Help Section</div>
-<div class="updated">Updated by: Dmitri Ostapenko, July 5, 2019</div>
+<div class="updated">Updated by: Dmitri Ostapenko, October 5, 2019</div>
 
 <div style="width: 100%; overflow: hidden;">
 <div style="width: 300px; float: left;"> 
@@ -330,7 +332,7 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
           <center><img src="/images/help/patient_referral_form.png" width=500></center>
  <p>&nbsp;</p>
 	 <a id="day_charts"></a>
-    	<dt class="col-sm-1">Day Charts</dt>
+        <dt class="col-sm-1"><%= link_to "Day Charts", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#day_charts_modal' %></dt>
 	<dd>Day chart is a collection of all patients
 	
 	<%= link_to "Visit Forms", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#visit_form_modal' %>
@@ -338,7 +340,7 @@ Search box supports searches by Claim number, Accounting Number or Health Card N
 	for a given date. Date charts are scanned documents. They are used during transition period from paper-only to digital office.</dd>
  <p>&nbsp;</p>
 	 <a id="patient_charts"></a>
-    	<dt class="col-sm-1">Patient Charts</dt>
+        <dt class="col-sm-1"><%= link_to "Patient Charts", "#", remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#patient_charts_modal' %></dt>
 	<dd class="col-sm-11">Patients who have designated one of the doctors working in the clinic as their family doctor are called "Clinic Patient" and have chart with history of all their visits to the clinic. Charts submenu gives access to management page for Patient Charts  </dd>
 	 </dl>
 	 </dd>
