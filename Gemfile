@@ -58,7 +58,7 @@ gem 'popper_js', '~> 1.14.3'
 gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip',    '~> 1.3.0'
 gem 'ffi',        '~> 1.10.0'    #'~> 1.9.24'
-gem 'simple_form', '~> 4.1'
+gem 'simple_form', '~> 5.0.0'
 gem 'whenever', require: false
 gem "loofah", ">= 2.2.3" 
 
