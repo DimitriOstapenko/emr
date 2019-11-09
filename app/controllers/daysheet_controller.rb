@@ -40,7 +40,7 @@ class DaysheetController < ApplicationController
       if @daysheet.any?
 	 @daysheet = @daysheet.reorder(sort_column + ' ' + sort_direction, "entry_ts desc").paginate(page: params[:page])
          hideold = helpers.link_to 'Hide Old', daysheet_path(:date => Date.today) if @date == Date.today
-         flash.now[:info] = "#{flashmsg}#{ins_str}#{csh_str}#{ifh_str}  #{hideold}".html_safe
+         flash.now[:info] = "#{flashmsg}#{ins_str}#{csh_str}#{ifh_str} &nbsp; #{hideold}".html_safe
       else  
 	 flash.now[:info] = 'No visits were found for ' + @date.strftime("%B %d, %Y") 
 	 render  inline: '', layout: true

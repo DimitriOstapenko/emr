@@ -172,7 +172,7 @@ td.hlight {
   padding-top: 10px;
   font-weight: bold;
   &:hover {
-    color: white;
+    color: red;
     text-decoration: none;
   }
 }
@@ -419,10 +419,12 @@ input, select{
   width: 30%;
 }
 
+.tbl2 td,
 .tbl td {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: 2px;
 }
 .tbl th {
   background: grey;
@@ -438,7 +440,7 @@ input, select{
 .tbl2 th {
   background: $brand-info; //#5bc0de;
   color: white;
-  height: 26px;
+//  height: 26px;
   padding: 2px;
 }
 
@@ -498,10 +500,12 @@ input, select{
 } 
 
 .alert {
-  margin-bottom: 1px;
+  margin-bottom: 2px;
   height: 30px;
   line-height:30px;
-  padding:2px 35px 5px 5px;
+  padding: 0;
+  width: 100%;
+  float: left;
 }
 
 .alert .glyphicon{

@@ -7,7 +7,7 @@ class EdtFilesController < ApplicationController
     
   def index
 	@edt_files = EdtFile.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	flash[:success] = "Showing All EDT files"
+	flash[:info] = "Showing All EDT files"
 	render 'index'
   end
 
