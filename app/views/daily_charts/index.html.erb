@@ -2,8 +2,8 @@
 <%= render "shared/modal", size: 'lg' %>
 
 <%= form_with url: daily_charts_index_path do |f| %>
-  <div class="row form-control">
-    <div class="col-sm-3 col-md-2">
+  <div class="row form-control" style="height:40px">
+    <div class="col-sm-3 col-md-1 col-md-offset-0">
 	    <%= f.select :year, (Time.now.year-15..Time.now.year),
 		options={prompt:'All years', selected: @year},
                 html_options={onchange: 'this.form.submit();'}
@@ -15,6 +15,10 @@
 	html_options={onchange: 'this.form.submit();'} 
     %>
     </div>
+    <div class="col-sm-5 col-md-9">
+    &nbsp;
+    </div>
+
   </div>
 <% end %>
 
