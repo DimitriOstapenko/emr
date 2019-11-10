@@ -82,19 +82,13 @@ table {
 }
 
 /* navbar */
-.navbar-inverse {
-    padding-left: 5px;
-    padding-right: 5px;
-//    font-size: 1.1em;
-//    background-color: #444;
-//    height: 30px;
-}
 
-.navbar-inverse .navbar-nav > .active > a,
-.navbar-inverse .navbar-nav > .active > a:hover,
-.navbar-inverse .navbar-nav > .active > a:focus {
-    color: #FFF;
-    background-color: #222;
+.navbar .navbar-nav > .active > a,
+.navbar .navbar-nav > .active > a:hover,
+.navbar .navbar-nav > .active > a:focus {
+    color: red;
+//    font-weight: bold;
+    background-color: white;
 }
 
 .spacer-10 {

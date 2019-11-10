@@ -1,5 +1,5 @@
-<% menu_items = [LAB_FORM.to_s,WCB_FORM.to_s] %>
-<li class="dropdown nav-item <%= 'active' if menu_items.include?(params[:ftype]) %>">
+<% menu_items = %w( forms ) %>
+<li class="dropdown nav-item <%= 'active' if menu_items.include?(controller_name) %>">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
   Forms <b class="caret"></b>
   </a>
