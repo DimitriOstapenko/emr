@@ -4,11 +4,15 @@ class PatientsController < ApplicationController
 	before_action :logged_in_user #, only: [:index, :edit, :update]
 	before_action :admin_user,   only: :destroy
 
+        helper_method :sort_column, :sort_direction
+
   def index
+      @sort = sort_column
+      @direction = sort_direction
       if current_user.doctor?
-        @patients = Patient.where(family_dr: current_doctor.lname).paginate(page: params[:page])
+        @patients = Patient.where(family_dr: current_doctor.lname).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
       else
-        @patients = Patient.paginate(page: params[:page])
+        @patients = Patient.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
       end
   end
 
@@ -239,6 +243,14 @@ private
     pat.hin_expiry = Date.strptime(exp_dt,'%y%m%d') rescue '1900-01-01'.to_date
     pat.sex = sex[str[52]]
     return pat
+  end
+
+  def sort_column
+          Patient.column_names.include?(params[:sort]) ? params[:sort] : "lname"
+  end
+
+  def sort_direction
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

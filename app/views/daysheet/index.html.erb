@@ -5,12 +5,16 @@
 <% provide(:button_text, 'Save changes') %>
 <%= render "shared/modal" %>
 
+<%
+    ts  = (@sort == 'entry_ts' && @direction == 'asc')?"Time &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-attributes-alt'></i>":"Time &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-attributes'></i>" 
+%>
+
 <div id='page'>
 <table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
 	  <th class="tbl_xs"></th>
-	  <th class="tbl_lsm"><%= sortable 'entry_ts', 'Time' %></th>
+	  <th class="tbl_lsm"><%= sortable 'entry_ts', ts.html_safe %></th>
 	  <% if date.today? %>
 	  <th class="tbl_sm">Room</th>
  	  <% end %>

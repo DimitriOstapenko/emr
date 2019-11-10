@@ -97,7 +97,7 @@ class Patient < ApplicationRecord
   end
 
   def age_str
-    return '' unless (self.age.any? && self.age.size == 3)
+    return '' unless (self.age.present? && self.age.any? && self.age.size == 3)
     case 
     when age[0] > 2		       
 	    return "#{age[0]}y"
