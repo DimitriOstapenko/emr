@@ -197,13 +197,13 @@ end
   def unpaid_visits
     v = Visit.where(status: BILLED).where("entry_ts >?", Date.today.beginning_of_year).where('entry_ts<?', last_paid_visit_date)
     if v.any?
-#           @visits = v.paginate(page: params[:page])
-	   @visits = v.reorder(sort_column + ' ' + sort_direction, "entry_ts desc").paginate(page: params[:page])
-           render 'index'
+	@visits = v.reorder(sort_column + ' ' + sort_direction, "entry_ts desc").paginate(page: params[:page])
+        flash.now[:info] = "Visits billed, but not marked as \"Paid\" this year: #{@visits.count}. IFH visits need to be updated manually after payment is received."
       else
-           flash.now[:warning] = "No unpaid visits found for this year, excluding current billing cycle"
-           render  inline: '', layout: true
+        @visits = Visit.all.reorder(sort_column + ' ' + sort_direction, "entry_ts desc").paginate(page: params[:page])
+        flash.now[:warning] = "No unpaid visits found for this year, excluding current billing cycle"
     end
+    render 'index'
   end
 
   private
