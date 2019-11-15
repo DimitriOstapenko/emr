@@ -27,10 +27,16 @@ class FormsController < ApplicationController
   end
 
   def download
-    send_file @form.filespec,
-      filename: @form.form_identifier,
-      type: "application/pdf",
-      disposition: :attachment
+    if @form.filespec.present? && File.exists?(@form.filespec)
+      send_file @form.filespec,
+                filename: @form.form_identifier,
+                type: "application/pdf",
+                disposition: :attachment
+    else
+      flash.now[:danger] = "File #{@form.filename} was not found"
+      @forms = Form.paginate(page: params[:page])
+      render 'index'
+    end
   end
 
   def new

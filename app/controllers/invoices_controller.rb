@@ -56,10 +56,11 @@ class InvoicesController < ApplicationController
 
   def download
     @invoice = Invoice.find( params[:id] )
+
     if @invoice.present? && File.exists?(@invoice.filespec)
       send_file @invoice.filespec,
              filename: @invoice.filename,
-             type: "text/plain",
+             type: "application/pdf",
              disposition: :attachment
     else
       flash.now[:danger] = "File #{@invoice.filename} was not found - regenerating"

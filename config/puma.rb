@@ -54,3 +54,5 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+# Added to debug ipad issues on local network
+bind 'tcp://0.0.0.0:3000'

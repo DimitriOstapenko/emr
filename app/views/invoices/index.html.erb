@@ -4,17 +4,17 @@
 <table class="tbl2 table-hover table-striped table-bordered" >
   <thead>
       <tr>
-	  <th class="tbl_sm"><%= sortable 'id', '#' %> </th>
-	  <th class="tbl_md"><%= sortable 'patient_id', 'Patient' %></th>
-	  <th class="tbl_md"><%= sortable 'doctor_id', 'Doctor' %></th>
-	  <th class="tbl_lg"><%= sortable 'billto', 'Bill To' %></th>
-	  <th class="tbl_lmd">Description</th>
+	  <th><%= sortable 'id', '#' %> </th>
+	  <th><%= sortable 'patient_id', 'Patient' %></th>
+	  <th><%= sortable 'doctor_id', 'Doctor' %></th>
+	  <th><%= sortable 'billto', 'Bill To' %></th>
+	  <th>Description</th>
 	  <th> <%= sortable 'date' %></th>
 	  <th> <%= sortable 'amount' %></th>
-	  <th class="tbl_lsm">Paid?</th>
-	  <th class="tbl_sm"></th>
-	  <th class="tbl_sm"></th>
-	  <th class="tbl_sm"></th>
+	  <th>Paid?</th>
+	  <th></th>
+	  <th></th>
+	  <th></th>
       </tr>
   </thead>
   <tbody>
@@ -27,4 +27,5 @@
 <div class="row">
 <div class="bottom_nav">
 <%= will_paginate @invoices, class: "btn" %>
+</div>
 </div>

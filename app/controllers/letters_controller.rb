@@ -61,7 +61,7 @@ class LettersController < ApplicationController
     if @letter.present? && File.exists?(@letter.filespec)
       send_file @letter.filespec,
              filename: @letter.filename,
-             type: "text/plain",
+             type: "application/pdf",
              disposition: :attachment
     else
       flash.now[:danger] = "File #{@letter.filename} was not found - regenerating"
