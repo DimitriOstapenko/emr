@@ -59,7 +59,7 @@
   <tbody>
 
   <% @daysheet.each do |v| %>
-     <%= render 'visit', visit: v %>
+     <%= render 'visit', visit: v, cached: true %>
   <% end %>
 
   </tbody>

@@ -40,7 +40,7 @@
       </tr>
   </thead>
   <tbody>
-	  <%= render partial: "visit", collection: @visits, locals: {date: date}  %>
+	  <%= render partial: "visit", collection: @visits, locals: {date: date}, cached: true  %>
   </tbody>
 </table>
 
