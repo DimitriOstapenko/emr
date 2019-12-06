@@ -21,7 +21,7 @@ require_relative '../../config/environment'
 puts "Scanning claims in #{@sdate}..#{@edate} date range"
 puts "..Looking for missing acc_refs and no match in claims table. Will issue alert in both cases " 
 
-def found_by_hc_and_date?(pat,visit)
+def __found_by_hc_and_date?(pat,visit)
      claims = Claim.where(ohip_num: pat.ohip_num) 
      claims.each do |c|
        if c.date == visit.entry_ts.to_date 
@@ -34,19 +34,41 @@ def found_by_hc_and_date?(pat,visit)
      return false
 end
 
+def found_by_hc_and_date?(pat,visit)
+  paid_claim = Claim.joins(:services).where(ohip_num: pat.ohip_num)
+                    .where('services.svc_date': visit.entry_ts.to_date)
+                    .group('services.svc_date,claims.id').having('SUM(amt_paid)>0')[0] rescue nil
+  if paid_claim
+    visit.update_attributes(:status => PAID, :amount => paid_claim.damt_paid, :claim_id => paid_claim.id, :billing_ref => paid_claim.accounting_no)
+    paid_claim.update_attribute(:visit_id, visit.id)
+    puts "Found by HC/Date : updated: pat: #{pat.id} visit: #{visit.id} date: #{paid_claim.date}"
+    return true
+  else
+    return false
+  end
+end
+
+# Scan all visits in date range
 good_claims_count = no_acc_ref_count = no_claim_count = 0
 Visit.where(entry_ts: (@sdate..@edate)).where(status: (BILLED..PAID)).each do |v| 
 
 # This will cover all HCP containing visits and will exclude all CSH, INV, IFH and PRV claims	
    next unless v.total_insured_services > 0
    pat = Patient.find(v.patient_id)
+
+# We are only interested in insured patients   
    next unless [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(pat.pat_type)
 
-   if v.billing_ref.present? && v.billing_ref.match(/^\w{8}/)
-      if cl = Claim.find_by(accounting_no: v.billing_ref)
-         v.update_attributes(:status => PAID, :amount => cl.damt_paid, :claim_id => cl.id) 
-         cl.update_attribute(:visit_id, v.id)
-	 good_claims_count += 1
+   if v.billing_ref.present? #&& v.billing_ref.match(/^\w{8}/)
+      claims = Claim.where(accounting_no: v.billing_ref)
+      if claims.any?
+         claims.each do |cl| 
+           if cl.amt_paid > 0
+             v.update_attributes(:status => PAID, :amount => cl.damt_paid, :claim_id => cl.id) if cl.amt_paid > 0
+	     good_claims_count += 1
+           end
+           cl.update_attribute(:visit_id, v.id)
+         end
       elsif found_by_hc_and_date?(pat,v) 
          good_claims_count += 1
       else
