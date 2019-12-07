@@ -1,22 +1,29 @@
-# Go through HCP visits in given date range (last 2 months by default) and find visits without:
-#  - CabmdRef in visits.billing_ref field 
+# Go through HCP visits in given date range (last 6 months by default) and find visits without:
+#  - billing reference in visits.billing_ref field 
 #  - corresponding MOH claim.accounting_no in claims
 #
-# Updates status to paid and claim.visit_id to visit.id if claim found but no acc_ref present (manual entry)
-# Updates attributes : 
+# Only insured visits are taken into account
+#
+# Update status to paid and claim.visit_id to visit.id if claim found but no acc_ref present (manual entry)
+# Update attributes : 
 #   - visit.status to PAID 
-#   - claim.visit_id : to visit id
-#   - visit.billing_ref : sets to a claim.accounting_no if match found in lookup by ohip_num, date 
-#   - visit.amount: sets to claim's paid amount
-#   - visit.claim_id: sets to claim id of the  matching claim
+#   - claim.visit_id : to visit id (paid, unpaid and duplicate claims)
+#   - visit.billing_ref : sets to a claim.accounting_no if match found in lookup by ohip_num and date 
+#   - visit.amount: sets to claim's paid amount from good claim (paid_amt > 0)
+#   - visit.claim_id: sets to claim id of the matching claim
+#  
+#  @cutoff_date is latest service date found in services table; This date is used as end date of the range and also as a trigger for visit resubmission
+#  So, if visit was not found in paid claims and visit date is older than 1 month before @cutoff_date, then visit is marked for resubmission.
 #
 # N.B End date is the date of latest successful claim in claims table
 #
 require_relative '../../config/environment'
 
-@sdate = ARGV[0].to_date rescue Date.today - 2.months
-@edate = Service.order(svc_date: :desc).limit(1).pluck(:svc_date).first rescue Date.today
-@edate = @edate.next_day
+@sdate = ARGV[0].to_date rescue Date.today - 6.months
+@edate = ARGV[1].to_date rescue nil
+# Latest service date from RA file, if not present
+@cutoff_date = Service.order(svc_date: :desc).limit(1).pluck(:svc_date).first rescue Date.today
+@edate ||= @cutoff_date 
 
 puts "Scanning claims in #{@sdate}..#{@edate} date range"
 puts "..Looking for missing acc_refs and no match in claims table. Will issue alert in both cases " 
@@ -73,7 +80,11 @@ Visit.where(entry_ts: (@sdate..@edate)).where(status: (BILLED..PAID)).each do |v
          good_claims_count += 1
       else
 	 no_claim_count += 1
-	 puts "Unpaid: No paid claim present for pat #{v.patient_id} HC# #{pat.ohip_num} visit #{v.id} of #{v.entry_ts} (#{v.bil_type_str}); "
+	 puts "Unpaid: No paid claim found for pat #{v.patient_id} HC# #{pat.ohip_num} visit #{v.id} of #{v.entry_ts} (#{v.bil_type_str})"
+         if v.entry_ts.to_date < @cutoff_date - 1.month
+            v.update_attributes(:status => READY) 
+            puts '** Older than 1 month, so this visit marked for resubmission'
+         end
       end
    elsif found_by_hc_and_date?(pat,v)
        good_claims_count += 1
