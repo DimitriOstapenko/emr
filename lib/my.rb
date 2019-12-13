@@ -845,20 +845,21 @@ end # EDT module
 	pdf.text "MHO deduction:  #{sprintf("$%.2f",paystub.mho_deduction)}" 
 	pdf.text "Monthly Premium payment:  #{sprintf("$%.2f",paystub.monthly_premium_amt)}" 
         pdf.move_down 6.mm
+	pdf.text "Received Payments:"
 	pdf.text "IFH Payments:  #{sprintf("$%.2f",paystub.ifh_amt)}" 
 	pdf.text "Cash payments:  #{sprintf("$%.2f",paystub.cash_amt)}" 
 	pdf.text "WCB Payments:  #{sprintf("$%.2f",paystub.wcb_amt)}" 
 	pdf.text "Cash deposits:  #{sprintf("$%.2f",paystub.hc_dep_amt)}" 
 	other_income = paystub.cash_amt + paystub.wcb_amt + paystub.ifh_amt + paystub.hc_dep_amt 
-	pdf.text "Total Other Payments: #{sprintf("$%.2f", other_income)}" 
+	pdf.text "Total Received Payments: #{sprintf("$%.2f", other_income)}" 
         pdf.move_down 6.mm
 	pdf.text "Total Gross amount:  #{sprintf("$%.2f",paystub.gross_amt)}" 
-	pdf.text "(OHIP Amount + Monthly Premium + Other Payments)"
+	pdf.text "(OHIP Amount + Monthly Premium + Received Payments)"
 	pdf.text "Clinic deduction (#{@doc.percent_deduction}%):  #{sprintf("$%.2f",paystub.clinic_deduction)}" 
 	pdf.text "Total Net amount: #{sprintf("$%.2f",paystub.net_amt)}" 
 	pdf.text "(Gross Amount - MHO Deduction - Clinic deduction)"
 	pdf.text "Total Paycheck amount: #{sprintf("$%.2f",paystub.chk_amt)}" 
-	pdf.text "(Net Amount - Other Payments)"
+	pdf.text "(Net Amount - Received Payments)"
       end
       
     pdf.move_down 10.mm
