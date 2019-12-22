@@ -7,21 +7,21 @@ class DailyChartsController < ApplicationController
   def index
       @year =  params[:year] rescue nil
       @month = params[:month] rescue nil
-      @charts = DailyChart
+      charts = DailyChart
       @sdate = @edate = nil
 
       if @year.present?
         @sdate = Date.new(@year.to_i,1) 
         @edate = @sdate + 1.year - 1.day
-	@charts = @charts.where(date: (@sdate..@edate))
+	charts = charts.where(date: (@sdate..@edate))
         if @month.present?
 	  @sdate = Date.parse("#{@month} #{@year.to_i}") 
           @edate = @sdate + 1.month - 1.day
-	  @charts = @charts.where(date: (@sdate..@edate))
+	  charts = charts.where(date: (@sdate..@edate))
 	end
       end
 
-      @charts = @charts.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
+      @daily_charts = charts.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
   end
 
   def new
