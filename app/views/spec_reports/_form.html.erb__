@@ -1,0 +1,45 @@
+<div class="well">
+
+<%= form_with model: [@patient,@spec_report], html: { multipart: true, class: 'dropzone' }  do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <% doc_id = @spec_report.doctor_id %>
+
+<div class="row">
+  <div class="col-sm-12">   
+    <%= f.hidden_field :authenticity_token, value: form_authenticity_token %>
+    <%= f.file_field :filename, label: 'Upload PDF', multiple: false %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= f.submit yield(:button_text), class: "btn btn-primary" %> 
+  </div>
+</div>
+
+<% end %>
+</div>
+
+<script>
+  Dropzone.options.my-dropzone = {
+  paramName: "filename", // The name that will be used to transfer the file
+  maxFilesize: 2, // MB
+  accept: function(filename, done) {
+    done(); 
+  }
+  };
+
+/*
+  $(function() {
+  var mediaDropzone;
+  mediaDropzone = new Dropzone("#my-dropzone");
+  mediaDropzone.options.acceptedFiles = ".pdf,.jpg,.jpeg,.png,.gif";
+  return mediaDropzone.on("success", function(file, responseText) {
+    var imageUrl;
+    imageUrl = responseText.file_name.url;
+    alert(imageUrl);
+  });
+});
+*/
+</script>
+
