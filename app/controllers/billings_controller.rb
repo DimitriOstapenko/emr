@@ -210,13 +210,19 @@ class BillingsController < ApplicationController
        req.body = @xml
 
        res = http.request(req)
-       @xmlhash = JSON.parse(res.body)
+       @xmlhash = JSON.parse(res.body) rescue nil
+       unless @xmlhash
+         flash[:danger] = "Error sending claims - CAB.md billing is not available"
+         redirect_back(fallback_location: billings_path )
+         return
+       end
+
        if @xmlhash['success']
 	  acc_no = @xmlhash['accounting_number']
           v.update_attribute(:status, BILLED)
           v.update_attribute(:billing_ref, acc_no)
 	  claims_sent += 1
-       else
+        elsif
 	  errors = @xmlhash['errors'] || []
 	  refid = @xmlhash['reference_id']
           @visit.update_attribute(:status, ERROR)
