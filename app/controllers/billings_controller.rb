@@ -222,7 +222,7 @@ class BillingsController < ApplicationController
           v.update_attribute(:status, BILLED)
           v.update_attribute(:billing_ref, acc_no)
 	  claims_sent += 1
-        elsif
+       else
 	  errors = @xmlhash['errors'] || []
 	  refid = @xmlhash['reference_id']
           @visit.update_attribute(:status, ERROR)
