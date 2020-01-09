@@ -82,7 +82,7 @@ Visit.where(entry_ts: (@sdate..@edate)).where(status: (BILLED..PAID)).each do |v
 	 no_claim_count += 1
 	 puts "Unpaid: No paid claim found for pat #{v.patient_id} HC# #{pat.ohip_num} visit #{v.id} of #{v.entry_ts} (#{v.bil_type_str})"
          if v.entry_ts.to_date < @cutoff_date - 1.month
-            v.update_attributes(:status => READY) 
+            v.update_attributes(:status => READY) unless (v.status == PAID)  # bug in RMB visits claim import - ignoring for now
             puts '** Older than 1 month, so this visit marked for resubmission'
          end
       end
