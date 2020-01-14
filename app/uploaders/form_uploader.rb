@@ -22,6 +22,15 @@ class FormUploader < CarrierWave::Uploader::Base
     "uploads/#{mounted_as}/#{model.id}"
   end
 
+  def move_to_cache
+    true
+  end
+
+  def move_to_store
+    true
+  end
+
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
   #   # For Rails 3.1+ asset pipeline compatibility:

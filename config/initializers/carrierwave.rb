@@ -11,6 +11,7 @@ CarrierWave.configure do |config|
 #    config.fog_public     = false
 #    config.fog_use_ssl_for_aws = true 
 #  else
+    config.permissions = 0644
     config.storage = :file
 #    config.asset_host = 'http://localhost:3000'
 #  end
