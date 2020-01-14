@@ -1,0 +1,8 @@
+<% 
+provide(:title, 'New Patient Document') 
+%>
+
+<div class="col-sm-6 col-sm-offset-3">
+   <h3 class='display-1'><%= @patient.full_name %> : Upload Patient Document </h3>
+   <%= render 'form' %>
+</div>

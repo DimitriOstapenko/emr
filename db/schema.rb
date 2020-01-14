@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_04_193202) do
+ActiveRecord::Schema.define(version: 2020_01_12_232018) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,6 +277,19 @@ ActiveRecord::Schema.define(version: 2020_01_04_193202) do
     t.boolean "active", default: true
   end
 
+  create_table "patient_docs", force: :cascade do |t|
+    t.bigint "patient_id"
+    t.bigint "doctor_id"
+    t.date "date"
+    t.string "patient_doc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "doc_type"
+    t.index ["doctor_id"], name: "index_patient_docs_on_doctor_id"
+    t.index ["patient_id", "doctor_id"], name: "index_patient_docs_on_patient_id_and_doctor_id"
+    t.index ["patient_id"], name: "index_patient_docs_on_patient_id"
+  end
+
   create_table "patients", force: :cascade do |t|
     t.string "lname"
     t.string "fname"
@@ -506,19 +519,6 @@ ActiveRecord::Schema.define(version: 2020_01_04_193202) do
     t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
-  create_table "spec_reports", force: :cascade do |t|
-    t.bigint "patient_id"
-    t.bigint "doctor_id"
-    t.date "date"
-    t.date "app_date"
-    t.string "filename"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["doctor_id"], name: "index_spec_reports_on_doctor_id"
-    t.index ["patient_id", "doctor_id"], name: "index_spec_reports_on_patient_id_and_doctor_id"
-    t.index ["patient_id"], name: "index_spec_reports_on_patient_id"
-  end
-
   create_table "specialty_codes", force: :cascade do |t|
     t.string "code"
     t.string "description"
@@ -604,9 +604,9 @@ ActiveRecord::Schema.define(version: 2020_01_04_193202) do
   end
 
   add_foreign_key "documents", "visits"
+  add_foreign_key "patient_docs", "doctors"
+  add_foreign_key "patient_docs", "patients"
   add_foreign_key "prescriptions", "patients"
   add_foreign_key "services", "claims"
-  add_foreign_key "spec_reports", "doctors"
-  add_foreign_key "spec_reports", "patients"
   add_foreign_key "visits", "patients"
 end

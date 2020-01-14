@@ -1,7 +1,7 @@
 class Doctor < ApplicationRecord
         has_many :visits
 	has_many :patients, through: :visits
-        has_many :spec_reports, dependent: :destroy, inverse_of: :doctor
+        has_many :patient_docs, dependent: :destroy, inverse_of: :doctor
 
         attr_accessor :full_name, :age
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

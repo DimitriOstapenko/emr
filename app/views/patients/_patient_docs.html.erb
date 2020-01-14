@@ -1,0 +1,22 @@
+<b><%= link_to "Patient Docs (#{@patient.patient_docs.count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#patient_docs",  class: "drop-down-link" %> </b>
+<div class="collapse panel panel-info" id="patient_docs">
+  <div class="tbl patient-dropdown-panel-body">
+     <table class="tbl2 table-hover table-striped table-bordered">
+       <th></th><th>Type</th><th>Date</th><th>From</th><th>File Name</th>
+        <% @patient.patient_docs.each do |doc| %>
+        <tr>
+          <td>
+          <% if doc.exists? %>
+          <%= link_to "Patient Doc #{doc.id}", patient_patient_doc_path(@patient,doc), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+          <% end %>
+          </td>
+          <td> <%= doc.doc_type_str %> </td>
+          <td> <%= doc.date %> </td>
+          <td> <%= doc.doctor.lname %> </td>
+          <td> <%= doc.patient_doc.file.basename rescue ''%> </td>
+        </tr>
+        <% end %>
+     </table>
+  </div>
+</div>
+

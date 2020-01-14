@@ -23,11 +23,11 @@
 </div>
 
 <div id="referral" class="col-sm-2 col-md-2">
-<%= button_to "Referral", new_patient_referral_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary btn-lg disabled", method: 'get' %>
+<%= button_to "Referral", new_patient_referral_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary btn-lg active", method: 'get' %>
 </div>    
 
-<div id="referral" class="col-sm-2 col-md-2">
-<%= button_to "Spec. Report", new_patient_spec_report_path(@patient), class: "btn btn-success disabled", method: 'get' %>
+<div id="referral" class="col-sm-4 col-md-4">
+<%= button_to "Upload Document", new_patient_patient_doc_path(@patient),  class: "btn btn-info active", method: 'get' %>
 </div>    
     
 

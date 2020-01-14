@@ -52,7 +52,7 @@ Medications:
 &nbsp; <%= render("invoices", remote: remote) if @patient.invoices.any? %>
 &nbsp; <%= render("letters", remote: remote) if @patient.letters.any? %>
 &nbsp; <%= render("referrals", remote: remote) if @patient.referrals.any? %>
-&nbsp; <%= render("spec_reports", remote: remote) if @patient.spec_reports.any? %>
+&nbsp; <%= render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
   </section>
 </aside>

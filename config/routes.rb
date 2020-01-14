@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'spec_reports/index'
-  get 'spec_reports/new'
-  get 'spec_reports/create'
   root 'static_pages#home'
 
   get 'password_resets/new'
@@ -83,11 +80,7 @@ Rails.application.routes.draw do
     resources :invoices do
       get 'invoice', on: :member
     end
-    resources :letters, :referrals, :charts, :medications, :prescriptions, :spec_reports
-#    resources :referrals 
-#    resources :charts
-#    resources :medications
-#    resources :prescriptions
+    resources :letters, :referrals, :charts, :medications, :prescriptions, :patient_docs
     resources :visits do  # , shallow: true         #, only: [:show, :create, :destroy, :new, :index]
       get 'visitform', on: :member
       get 'receipt', on: :member

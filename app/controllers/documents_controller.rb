@@ -5,12 +5,11 @@ class DocumentsController < ApplicationController
   end 
 	
   def create
-   @document = Document.new(document_params)
    @visit = Visit.find(params[:visit_id])
    @document = @visit.documents.build(document_params)
-
    if @document.save
-     render :show, status: :created, location: @document
+#    render :show, status: :created, location: @document
+     render json: @document
    else
      render json: @document.errors, status: :unprocessable_entity
    end
@@ -19,7 +18,7 @@ class DocumentsController < ApplicationController
 private
 
  def document_params
-   params.require(:item).permit(:name, :description, :document, :document_data => []) #add document_data as a permitted parameter
+   params.require(:document).permit(:name, :description, :document, :document_data => []) #add document_data as a permitted parameter
  end
 
 end

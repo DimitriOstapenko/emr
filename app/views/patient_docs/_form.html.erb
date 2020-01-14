@@ -1,0 +1,52 @@
+<div class="well">
+  
+  <%= simple_form_for [@patient,@patient_doc], html: {multipart: true, class: " dropzone", id:"my-dropzone"} do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+<div class="row">
+  <div class="col-md-4">
+    <%= f.input :doc_type, collection: PATIENT_DOC_TYPES, hint: 'Required', label: "Document Type", include_blank: 'Please Select' %>
+  </div>
+  <div class="col-md-4">
+  <%= f.input :date, hint: 'Required', html5: true %>
+  </div>
+  <div class="col-md-4">
+    <%= f.input :doctor_id, collection: Doctor.all, value_method: :id, hint: 'Required', label_method: :lname, label: "Doctor", include_blank: 'Please Select', input_html: {onchange: "$('#dropzone_panel').show()"} %>
+  </div>
+</div>
+
+<div id='dropzone_panel' style="display:none;">
+  <div class="dz-message"><span>Drop PDF file here to upload</span> </div> 
+  <%= f.hint 'Acceptable formats: pdf, jpg, jpeg, png, gif' %>
+</div>
+
+<% end %>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= button_to 'Back To Patient Profile', @patient, class: "btn btn-primary", method: :get %> 
+  </div>
+</div>
+
+<script>
+  
+Dropzone.options.myDropzone = {
+paramName: "patient_doc[patient_doc]",
+acceptedFiles: ".pdf,.jpg,.jpeg,.png,.gif",
+maxFiles: 4,
+maxFilesize: 3, // MB
+//addRemoveLinks: true,
+url: "<%= patient_patient_docs_path(@patient.id) %>",
+autoProcessQueue: true,
+autoDiscover: false,
+uploadMultiple: false,
+
+  init: function() {
+    this.on("success", function(file) { window.location = "<%= patient_path(@patient.id) %>"; });
+  }
+};
+  
+</script>
+
