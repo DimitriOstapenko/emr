@@ -18,14 +18,15 @@ class DaysheetController < ApplicationController
 	@noerrorvisits = @daysheet.where("date(entry_ts) = ?", @date)
       end
       
-      @daysheet = @daysheet.where(doc_id: current_doctor.id) if current_user.doctor?
       @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue [] if @docs_visits.size > 1
 	 
-      if params[:doc_id].present?
+      if current_user.doctor?
+         @noerrorvisits = @daysheet = @daysheet.where(doc_id: current_doctor.id)
+	 flashmsg = "#{@noerrorvisits.count}  #{'visit'.pluralize(@noerrorvisits.count)}"
+      elsif params[:doc_id].present?
 	 doc = Doctor.find(params[:doc_id]) rescue nil
-	 @daysheet = @daysheet.where(doc_id: doc.id)
-	 @noerrorvisits =  @noerrorvisits.where(doc_id: doc.id)
+	 @noerrorvisits = @daysheet = @daysheet.where(doc_id: doc.id)
 	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} #{'visit'.pluralize(@daysheet.count)}"
       else
 	 flashmsg = "#{@noerrorvisits.count}  #{'visit'.pluralize(@noerrorvisits.count)}"
