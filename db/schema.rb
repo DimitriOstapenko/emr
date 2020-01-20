@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_12_232018) do
+ActiveRecord::Schema.define(version: 2020_01_18_165854) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,10 +46,11 @@ ActiveRecord::Schema.define(version: 2020_01_12_232018) do
   create_table "charts", force: :cascade do |t|
     t.integer "patient_id"
     t.integer "doctor_id"
-    t.string "filename"
+    t.string "chart"
     t.integer "pages"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "filename"
   end
 
   create_table "claim_errors", force: :cascade do |t|
@@ -315,7 +316,6 @@ ActiveRecord::Schema.define(version: 2020_01_12_232018) do
     t.string "alt_contact_name"
     t.string "alt_contact_phone"
     t.string "email"
-    t.string "chart_file"
     t.string "family_dr"
     t.string "mobile"
     t.string "lastmod_by"
@@ -603,6 +603,7 @@ ActiveRecord::Schema.define(version: 2020_01_12_232018) do
     t.index ["patient_id"], name: "index_visits_on_patient_id"
   end
 
+  add_foreign_key "charts", "patients"
   add_foreign_key "documents", "visits"
   add_foreign_key "patient_docs", "doctors"
   add_foreign_key "patient_docs", "patients"

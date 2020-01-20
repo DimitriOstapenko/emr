@@ -6,16 +6,20 @@ class PatientDoc < ApplicationRecord
         default_scope -> { includes(:doctor).order(date: :desc) }
 
         validates :date, presence: true
-        validates :doctor_id, presence: true
         validates :doc_type, presence: true, numericality: { only_integer: true}
+        validates :doctor_id, presence: true
 
         after_initialize :default_values
 
         mount_uploader :patient_doc, DocumentUploader
- 
+
 def doc_type_str
   PATIENT_DOC_TYPES.invert[self.doc_type] rescue ''
 end  
+
+def filename
+  self.patient_doc_identifier
+end
 
 # absolute pathname
 def filespec

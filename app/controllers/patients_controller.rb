@@ -32,11 +32,6 @@ class PatientsController < ApplicationController
   def show 
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
-       if @patient.chart_file.blank?
-	  charts = Dir.glob("#{CHARTS_PATH}/#{@patient.full_name_norm}*\.pdf")
-	  basename = charts.any? ?  File.basename(charts[0]) : nil
-	  @patient.update_attribute(:chart_file, basename) if basename.present?
-       end
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
 	  flash.now[:danger] = @patient.errors.full_messages.to_sentence
@@ -163,7 +158,11 @@ class PatientsController < ApplicationController
   def chart
     @patient = Patient.find(params[:id])
     begin
-      send_file( @patient.chart_filespec, type: "application/pdf", disposition: "attachment", filename: "#{@patient.full_name_norm}.pdf") 
+      send_file @patient.chart.filespec,
+             filename: @chart.filename_human, # human readable, not real
+             type: "application/pdf",
+             disposition: :attachment
+
       rescue StandardError => e
 	flash[:danger] =  e.message  
         redirect_to @patient 

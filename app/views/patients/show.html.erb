@@ -19,7 +19,7 @@ Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin
 IFH #: <%= @patient.ifh_number %> 
 <% end %>
 <% end %>
-<b><%= @patient.full_name %></b>:  <%= @patient.age_str %>  <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart_file.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
+<b><%= @patient.full_name %></b>:  <%= @patient.age_str %>  <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
 Phone: <%= num_to_phone(@patient.phone) %> Mobile: <%= num_to_phone(@patient.mobile) %> <% if @patient.email.present? %> Email: <%= mail_to @patient.email %> <% end %>
 Address: <%= @patient.addr %>
 	    <%= @patient.city %> <%= @patient.prov %> 

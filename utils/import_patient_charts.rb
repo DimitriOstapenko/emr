@@ -1,7 +1,7 @@
-# Take all lname,fname.pdf files and mport names, and number of pages into db charts table
-#   - Ignore non-pdf files
+# Take all [pat_id].pdf files and import into charts 
+#   - Ignore non-pdf files and files with other than digits in name
 #   - Ignore already imported files
-#   - Find corresponding patient using lname, fname
+#   - Find corresponding patient using file name as patient.id 
 #   - Ignore files with no corresponding patient
 #
 require_relative '../config/environment'
@@ -16,21 +16,15 @@ puts "About to update charts table with files from #{dir}"
 charts_count = 0
 Dir.glob( "#{dir}/*.pdf" ) do |path| 
 	basename = File.basename(path)
-	if !basename.match(/^\S+\.pdf$/)
- 	  puts "File #{basename} is ignored - not a pdf file" 
-	  next
-	end
-
-	next if Chart.exists?(filename: basename) 
+        next unless basename =~ /^\d+\.pdf$/
+	next if File.exists?(path) 
 
 	reader = PDF::Reader.new( path )
-	(lname,fname) = basename.match(/(\S+)\,([a-z]+)/i)[1,2]
-	lname.gsub!('_',' ')
-	patient = Patient.where("lname like ? AND fname like ?", "#{lname}%", "#{fname}%") 
-	patient_id = patient[0].id rescue nil
+        (name,ext) = split('.')
+        patient_id = name.to_i rescue nil
 	
 	unless patient_id
-	  puts "Patient #{lname}, #{fname} was not found in DB - chart ignored" 
+	  puts "Patient with id #{patient_id} was not found in DB - chart ignored" 
 	  next
 	end
 

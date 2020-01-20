@@ -1,2 +1,8 @@
-<h1>Charts#new</h1>
-<p>Find me in app/views/charts/new.html.erb</p>
+<% 
+provide(:title, 'Upload Patient Chart') 
+%>
+
+<div class="col-sm-6 col-sm-offset-3">
+   <h3 class='display-1'> Upload Patient Chart </h3>
+   <%= render 'form' %>
+</div>

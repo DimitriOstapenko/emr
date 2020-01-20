@@ -61,17 +61,17 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
 
-  config.after_initialize do
-	Bullet.enable = true
-	Bullet.alert = true
-	Bullet.bullet_logger = true
-	Bullet.console = true
-	Bullet.growl = false
-	Bullet.rails_logger = true
-	Bullet.bugsnag = false
-	Bullet.airbrake = false
-	Bullet.add_footer = true
+#  config.after_initialize do
+#	Bullet.enable = true
+#	Bullet.alert = true
+#	Bullet.bullet_logger = true
+#	Bullet.console = true
+#	Bullet.growl = false
+#	Bullet.rails_logger = true
+#	Bullet.bugsnag = false
+#	Bullet.airbrake = false
+#	Bullet.add_footer = true
 #	Bullet.counter_cache_enable  = false
-  end
+#  end
 
 end

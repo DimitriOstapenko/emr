@@ -5,13 +5,13 @@
 
 <div class="row">
   <div class="col-md-4">
-    <%= f.input :doc_type, collection: PATIENT_DOC_TYPES, hint: 'Required', label: "Document Type", include_blank: 'Please Select' %>
+  <%= f.input :date, label: 'Issue Date', hint: 'Required', html5: true %>
   </div>
   <div class="col-md-4">
-  <%= f.input :date, hint: 'Required', html5: true %>
+    <%= f.input :doctor_id, collection: Doctor.all, value_method: :id, hint: 'Required for Referrals and Spec. Reports', label_method: :lname, label: "Doctor", include_blank: false, input_html: {onchange: "$('#dropzone_panel').show()"} %>
   </div>
   <div class="col-md-4">
-    <%= f.input :doctor_id, collection: Doctor.all, value_method: :id, hint: 'Required', label_method: :lname, label: "Doctor", include_blank: 'Please Select', input_html: {onchange: "$('#dropzone_panel').show()"} %>
+    <%= f.input :doc_type, collection: PATIENT_DOC_TYPES, hint: 'Required', label: "Document Type", include_blank: 'Please Select', input_html: {onchange: "$('#dropzone_panel').show()"} %>
   </div>
 </div>
 
@@ -36,7 +36,7 @@ Dropzone.options.myDropzone = {
 paramName: "patient_doc[patient_doc]",
 acceptedFiles: ".pdf,.jpg,.jpeg,.png,.gif",
 maxFiles: 4,
-maxFilesize: 3, // MB
+maxFilesize: 5, // MB
 //addRemoveLinks: true,
 url: "<%= patient_patient_docs_path(@patient.id) %>",
 autoProcessQueue: true,

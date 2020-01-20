@@ -16,7 +16,7 @@
 	<% end %>
 
 	<td>
-	<% if patient.chart_file.present? %>
+	<% if patient.chart.present? %>
 	  <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(patient) %>
 	<% end %>
 	</td>

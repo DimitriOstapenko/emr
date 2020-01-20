@@ -7,11 +7,8 @@ class ChartsController < ApplicationController
    before_action :admin_user, only: :destroy
 
   def index
-    @patient = Patient.find(params[:patient_id]) rescue nil
     if current_user.doctor?
       @charts = Chart.where(doctor_id: current_doctor.id)
-    elsif @patient.present?
-      @charts = [@patient.chart]
     else
       @charts = Chart.all
     end
@@ -19,28 +16,46 @@ class ChartsController < ApplicationController
   end
 
   def new
-    @patient = Patient.find(params[:patient_id])
-    @chart = @patient.chart.new
+     @chart = Chart.new
   end
 
   def create
-    @patient = Patient.find(params[:patient_id])
-    @chart = @patient.chart.new
+    c = params[:chart][:chart]
+    fn = c.original_filename
+    patient_id = fn.gsub(/.pdf/,'').to_i rescue nil
+    @patient = Patient.find(patient_id) rescue nil
+
+    if @patient.present?
+       if @patient.chart_exists?
+         @patient.chart.rename   # We rename original file to append to it after save
+         appended_msg =  'Original file appended'
+       end
+       @patient.chart.destroy rescue nil
+       @patient.chart = Chart.new(chart_params)
+       if @patient.chart.save
+          flash[:success] =  "Chart #{@patient.chart.id} for #{@patient.full_name} uploaded. #{appended_msg}"
+          redirect_back(fallback_location: charts_path)
+       else
+          render json: {error: 'Error saving chart'}, status: 422
+       end
+    else
+         flash[:danger] = "Patient is not found in database. Chart is ignored"
+    end
   end
 
   def show
-    redirect_to charts_path unless @chart.present?
-    if File.exists?(@chart.filespec)
+    if @patient.chart_exists?
       respond_to do |format|
       format.html {
         send_file(@chart.filespec,
+             filename: @chart.filename,
              type: "application/pdf",
              disposition: :inline)
              }
       format.js
       end
     else
-      redirect_to charts_path, notice: "File  not fould"
+      redirect_to charts_path, notice: "Chart file #{@chart.filespec} not found"
     end
   end
 
@@ -51,10 +66,10 @@ class ChartsController < ApplicationController
   end
 
   def download
-     if File.exists?(@chart.filespec)
+    if @patient.chart_exists?
       send_file @chart.filespec,
-             filename: @chart.filename,
-             type: "text/plain",
+             filename: @chart.filename, 
+             type: "application/pdf",
              disposition: :attachment
     else
       flash.now[:danger] = "File #{@chart.filename} was not found"
@@ -65,9 +80,8 @@ class ChartsController < ApplicationController
 def destroy
     if @chart.present?
 #      File.delete( @chart.filespec ) rescue nil
-      @chart.destroy
-      @patient.update_attribute(:chart_file, nil)
-      flash[:success] = "Chart deleted"
+#      @chart.destroy
+#      flash[:success] = "Chart deleted"
       redirect_to charts_url
     end
   end
@@ -78,20 +92,18 @@ def destroy
       if @charts.any?
          @charts = @charts.paginate(page: params[:page])
          flash.now[:info] = "Found #{@charts.count} #{'charts'.pluralize(@charts.count)} matching string #{str.inspect}"
-         render 'index'
       else
-         @charts = DailyChart.new
-         flash.now[:warning] = "Chart  #{str.inspect} was not found"
-         render  inline: '', layout: true
+         @charts = Chart.paginate(page: params[:page])
+         flash.now[:warning] = "Chart for patient  #{str.inspect} was not found"
       end
+      render 'index'
   end
-
 
 private
     # Use callbacks to share common setup or constraints between actions.
     def set_chart
-      @chart = Chart.find(params[:id])
-      @patient = Patient.find( @chart.patient_id )
+      @chart = Chart.find(params[:id]) rescue nil
+      @patient = @chart.patient if @chart
     end
 
 # Find chart my last name, first name or partial/full patient id
@@ -99,7 +111,7 @@ private
         if str.match(/^[[:digit:]]+/)
           Chart.where("patient_id like ?", "#{str}%" )
         elsif str.match(/^[[:graph:]]+$/)
-          Chart.where("filename like ?", "%#{str}%")
+          Chart.joins(:patient).where("upper(lname) like ?", "%#{str.upcase}%")
         else
           []
         end
@@ -107,7 +119,7 @@ private
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def chart_params
-      params.require(:chart).permit(:patient_id, :doctor_id, :filename, :pages)
+      params.require(:chart).permit(:patient_id, :doctor_id, :pages, :chart, :filename)
     end
 
     def sort_column

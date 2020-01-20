@@ -1,0 +1,41 @@
+<div class="well">
+  
+  <%= simple_form_for @chart, html: {multipart: true, class: " dropzone", id:"my-dropzone"} do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+
+<div id='dropzone_panel'>
+  <div class="dz-message"><span>Drop PDF file here to upload</span> </div> 
+  <%= f.hint 'Please use patient file# and .pdf extension as file name' %>
+</div>
+
+<% end %>
+
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= button_to 'Back To Charts', charts_path, class: "btn btn-primary", method: :get %> 
+  </div>
+</div>
+
+<script>
+  
+Dropzone.options.myDropzone = {
+paramName: "chart[chart]",
+acceptedFiles: ".pdf",
+maxFiles: 4,
+maxFilesize: 100, // MB
+addRemoveLinks: true,
+url: "<%= charts_path %>",
+autoDiscover: true,
+uploadMultiple: false,
+autoProcessQueue: true,
+//autoQueue: false,
+
+  init: function() {
+    this.on("success", function(file) { window.location = "<%= charts_path %>"; });
+  }
+};
+  
+</script>
+

@@ -15,7 +15,8 @@ class Patient < ApplicationRecord
   	accepts_nested_attributes_for :referrals, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
 #	accepts_nested_attributes_for :visits,  :reject_if => :all_blank, :allow_destroy => true
 	attr_accessor :full_name, :age, :cardstr, :phonestr
-	default_scope -> { order(lname: :asc, fname: :asc) }
+        default_scope -> { includes(:chart).order(lname: :asc, fname: :asc) }
+#        default_scope -> { order(lname: :asc, fname: :asc) }
 
 	before_validation { email.downcase! rescue '' }
 	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') rescue nil }
@@ -41,9 +42,9 @@ class Patient < ApplicationRecord
 		  if: Proc.new { |a| (a.pat_type == 'I')}
 	validates :ohip_ver, length: { maximum: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
-#        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
 	validates :postal, length: { is: 6 }, allow_blank: true
+#        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
 #        validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 #        validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
@@ -51,14 +52,24 @@ class Patient < ApplicationRecord
 	validate :validate_age
 
   def full_name
-    fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
+#    fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
+    fn = self.lname 
+    fn = "#{fn}, #{self.fname}" if self.fname.present?
+    fn = "#{fn} #{self.mname}" if self.mname.present?
+    return fn
   end
  
-# Use single underscore instead of multiple blanks, no middle name
-  def full_name_norm
-    ln = lname.strip.gsub(/\s+/,'_') rescue ''
-    fn = fname.strip.gsub(/\s+/,'_') rescue ''
-    fname.blank? ? ln : "#{ln},#{fn}"
+# Construct Chart filename to be used for downloads
+  def chart_filename
+    fn = self.lname
+    fn = "#{fn},#{self.fname}" if self.fname.present?
+    fn = "#{fn}_#{self.mname}" if self.mname.present?
+    fn = fn.strip.gsub(/\s+/,'_')
+    return fn.concat('.pdf')
+  end  
+  
+  def chart_exists?
+    self.chart.present? && self.chart.exists?
   end
 
 # mm/yy
@@ -143,10 +154,6 @@ class Patient < ApplicationRecord
     return if (last_digit == (10 - sum.to_s[-1].to_i))
     errors.add('OHIP patient:', "Verifying Health Card number") 
     errors.add('Ontario Health Card:', "Number is invalid") 
-  end
-
-  def chart_filespec
-	 CHARTS_PATH.join(self.chart_file)
   end
 
   # List of active medications (Array)

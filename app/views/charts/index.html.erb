@@ -5,14 +5,12 @@
   <thead>
       <tr>
 	  <th><%= sortable 'filename', :Patient %></th> 
-	  <th>Doctor </th> 
-          <th>Pages</th>
-	  <th>Size(M)</th>
-	  <th>Created</th>
-	  <th>Download</th>
-	  <% if current_user.admin? %>
-	  <th>Delete</th>
-	  <% end %>
+          <th class='text-center'>Pages</th>
+	  <th class='text-center'>Size(M)</th>
+	  <th class='text-center'>Created</th>
+	  <th class='text-center'>Updated</th>
+	  <th class='text-center'>Download</th>
+	  <th class='text-center'>View</th>
       </tr>
   </thead>
   <tbody>
@@ -22,8 +20,15 @@
   </tbody>
 </table>
 
+<div class="bottom_buttons">
+<% unless current_user.doctor? %>
+  <%= button_to "Upload Chart", new_chart_path, class: "btn btn-primary col-md-2", method: :get %> <%#, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+<% end %>
+</div>
+
 <div class="row">
 <div class="bottom_nav">
 <%= will_paginate @charts,  class: "btn" %>
+</div>
 </div>
 

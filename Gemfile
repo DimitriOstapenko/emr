@@ -23,6 +23,7 @@ gem 'turbolinks',              '5.2.0'
 gem 'jbuilder',                '2.7.0'
 gem 'prawn',		       '2.2.2'
 gem 'prawn-table',	       '0.2.2'
+gem 'combine_pdf',             '~> 0.2.5'
 gem 'responders'
 gem 'pdf-reader',	       '2.2.0' 
 gem 'select2-rails',           '4.0.3'
@@ -35,7 +36,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'better_errors' #, '~> 2.50'
   gem 'binding_of_caller', '~> 0.8.0'
-  gem 'bullet'
+#  gem 'bullet'   # /Users/dmitri/emr/config/environments/development.rb  - config options
 end
 
 group :development do
