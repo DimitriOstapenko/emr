@@ -17,6 +17,7 @@ end
 
 def filespec
   CHARTS_PATH.join(self.chart_identifier) rescue nil
+# CHARTS_PATH.join(self.chart) rescue nil  # use this instead when running utils/rename_charts.rb script 
 end
 
 def filesize

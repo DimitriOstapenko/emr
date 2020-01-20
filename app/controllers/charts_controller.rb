@@ -109,7 +109,7 @@ private
 # Find chart my last name, first name or partial/full patient id
     def myfind (str)
         if str.match(/^[[:digit:]]+/)
-          Chart.where("patient_id like ?", "#{str}%" )
+          Chart.where("patient_id::varchar like ?", "#{str}%" )
         elsif str.match(/^[[:graph:]]+$/)
           Chart.joins(:patient).where("upper(lname) like ?", "%#{str.upcase}%")
         else
