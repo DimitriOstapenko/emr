@@ -21,4 +21,12 @@ def filesize
   sprintf("%.2f", File.size(self.filespec).to_f/2**20) rescue 0
 end
 
+def self.latest_chart_date
+  DailyChart.maximum(:date) 
+end
+
+def self.earliest_chart_date
+  DailyChart.minimum(:date) 
+end
+
 end
