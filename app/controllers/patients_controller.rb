@@ -9,21 +9,25 @@ class PatientsController < ApplicationController
   def index
       @sort = sort_column
       @direction = sort_direction
-      if current_user.doctor?
-        @patients = Patient.where(family_dr: current_doctor.lname).reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      keyword = params[:findstr];
+      if keyword
+         @patients = Patient.search(keyword)
       else
-        @patients = Patient.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+         @patients = Patient.all
       end
+      @patients = @patients.where(family_dr: current_doctor.lname) if current_user.doctor?
+      @patients = @patients.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      flash[:info] = "#{@patients.count} patients found" if keyword
   end
 
-  def find
+  def __find
       str = params[:findstr].strip
       @patients = myfind(str) 
       if @patients.any?
-         @patients = @patients.paginate(page: params[:page])
+        @patients = @patients.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:info] = "Found #{@patients.count} #{'patient'.pluralize(@patients.count)} matching string #{str.inspect}"
       else
-         @patients = Patient.paginate(page: params[:page])
+        @patients = Patient.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
 	 flash.now[:warning] = "Patient  #{str.inspect} was not found"
       end
       render 'index'
@@ -199,7 +203,7 @@ private
   end
  
 # Find patient by scanned string /last name[, first name]/ entered health card number/ DOB dd-mm-yyyy or dd-mmm-yyyy or dd/mm/yyyy depending on input format  
-  def myfind (str)
+  def __myfind (str)
 	if str.match(/^[[:digit:]]{,12}$/)               # ohip_num
       	  Patient.where("ohip_num like ?", "%#{str}%")  
 	elsif str.match(/^%B6/)  			 # scanned card

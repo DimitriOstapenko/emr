@@ -25,7 +25,7 @@ def sortable(column, title = nil)
 #      css_class = column == sort_column ? "current #{sort_direction}" : nil
       direction = (column == sort_column && sort_direction == "asc") ? "desc" : "asc"
 #      link_to title, { direction: direction, sort: column, date: params[:date]}, {class: "hdr-link"}
-      link_to title, { direction: direction, sort: column }, {class: "hdr-link"}
+      link_to title, { direction: direction, sort: column, findstr: params[:findstr] }, {class: "hdr-link"}
 end
 
 # Returns the full title on a per-page basis.

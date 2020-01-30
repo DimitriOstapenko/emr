@@ -10,6 +10,7 @@ class Patient < ApplicationRecord
         has_many :patient_docs, dependent: :destroy, inverse_of: :patient
         has_one :chart, inverse_of: :patient
 
+
   	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
   	accepts_nested_attributes_for :letters, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
   	accepts_nested_attributes_for :referrals, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
@@ -181,6 +182,32 @@ class Patient < ApplicationRecord
      File.join(Rails.root, 'public', 'uploads', "visit_history.pdf") 
   end
 
+# Global search method
+  def self.search(keyword = '')
+    case keyword
+     when /^[[:digit:]]{,12}$/    # Up to 12 Digits - HC number
+       patients = Patient.where("ohip_num like ?", "%#{keyword}%")
+     when /^%B6/                  # Scanned card
+       hcnum = keyword[8,10]
+       patients = Patient.find_by(ohip_num: hcnum)
+     when /^[[:digit:]]{,2}[\/-][[:alpha:]]{3}[\/-][[:digit:]]{4}/ ,   # Date like 10-Jun-1962
+          /^[[:digit:]]{,2}[\/-][[:digit:]]{,2}[\/-][[:digit:]]{4}/       # or like   30/12/1962
+       dob = keyword.to_date rescue '1900-01-01'
+       patients = Patient.where("dob = ?", dob)
+     when /^[[:graph:]]+/                                             # last name[, fname] 
+       lname,fname = keyword.tr(' ','').split(',')
+       if fname.blank?        # Search by last name or maiden name if no first name given          
+         patients = Patient.where("upper(lname) like ? OR upper(maid_name) like ?", "%#{lname.upcase}%", "%#{lname.upcase}")
+       else
+         patients = Patient.where("upper(lname) like ? AND upper(fname) like ?", "%#{lname.upcase}%", "%#{fname.upcase}%")
+       end
+     else
+       patients = []
+     end
+
+    return patients
+  end
+
 protected
 
   def upcase_some_fields
@@ -198,6 +225,5 @@ protected
           errors.add('Error:', 'Date of birth is out of range')
       end
   end
-
 
 end
