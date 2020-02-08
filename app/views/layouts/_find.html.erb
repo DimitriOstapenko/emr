@@ -12,7 +12,8 @@
      	   title: tool_tip_title, 
            placeholder: "Find #{controller_name.singularize}",
 	   id: "findstr", :onChange => 'javascript: this.form.submit()',
-           autocomplete: "off"
+           autocomplete: "off",
+           value: params[:findstr]
           %>
      </div>
    </div>

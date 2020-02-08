@@ -35,8 +35,8 @@
 Dropzone.options.myDropzone = {
 paramName: "patient_doc[patient_doc]",
 acceptedFiles: ".pdf,.jpg,.jpeg,.png,.gif",
-maxFiles: 4,
-maxFilesize: 5, // MB
+maxFiles: 2,
+maxFilesize: 50, // MB
 //addRemoveLinks: true,
 url: "<%= patient_patient_docs_path(@patient.id) %>",
 autoProcessQueue: true,

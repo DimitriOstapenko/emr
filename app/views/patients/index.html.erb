@@ -1,7 +1,6 @@
 <% provide(:title, 'All patients') %>
 <%= render 'shared/modal' %>
 
-
 <%
     lname = (@sort == 'lname' && @direction == 'asc')?"Name &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-alphabet'></i>":"Name &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-alphabet-alt'></i>" 
     dob = (@sort == 'dob' && @direction == 'asc')?"DOB &nbsp;<i class='glyphicon glyphicon-sort-by-order-alt'></i>":"DOB &nbsp;<i class='glyphicon glyphicon-sort-by-order'></i>" 

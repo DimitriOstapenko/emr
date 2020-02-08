@@ -9,14 +9,14 @@ class PatientsController < ApplicationController
   def index
       @sort = sort_column
       @direction = sort_direction
-      keyword = params[:findstr];
+      keyword = params[:findstr]
       if keyword
          @patients = Patient.search(keyword)
       else
          @patients = Patient.all
       end
       @patients = @patients.where(family_dr: current_doctor.lname) if current_user.doctor?
-      @patients = @patients.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
+      @patients = @patients.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
       flash[:info] = "#{@patients.count} patients found" if keyword
   end
 
@@ -34,6 +34,7 @@ class PatientsController < ApplicationController
   end
 
   def show 
+    redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
@@ -249,11 +250,11 @@ private
   end
 
   def sort_column
-          Patient.column_names.include?(params[:sort]) ? params[:sort] : "lname"
+      Patient.column_names.include?(params[:sort]) ? params[:sort] : "lname,fname"
   end
 
   def sort_direction
-          %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 
 end

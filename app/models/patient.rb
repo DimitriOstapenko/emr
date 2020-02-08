@@ -197,15 +197,15 @@ class Patient < ApplicationRecord
      when /^[[:graph:]]+/                                             # last name[, fname] 
        lname,fname = keyword.tr(' ','').split(',')
        if fname.blank?        # Search by last name or maiden name if no first name given          
-         patients = Patient.where("upper(lname) like ? OR upper(maid_name) like ?", "%#{lname.upcase}%", "%#{lname.upcase}")
+         patients = Patient.where("upper(lname) like ? OR upper(maid_name) like ?", "#{lname.upcase}%", "%#{lname.upcase}")
        else
-         patients = Patient.where("upper(lname) like ? AND upper(fname) like ?", "%#{lname.upcase}%", "%#{fname.upcase}%")
+         patients = Patient.where("upper(lname) like ? AND upper(fname) like ?", "#{lname.upcase}%", "%#{fname.upcase}%")
        end
      else
        patients = []
      end
 
-    return patients
+    return patients.order(:fname)
   end
 
 protected
