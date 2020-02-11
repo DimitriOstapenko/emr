@@ -164,9 +164,9 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
     begin
       send_file @patient.chart.filespec,
-             filename: @chart.filename_human, # human readable, not real
-             type: "application/pdf",
-             disposition: :attachment
+        filename: @patient.chart.filename,
+        type: "application/pdf",
+        disposition: :attachment
 
       rescue StandardError => e
 	flash[:danger] =  e.message  
