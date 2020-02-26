@@ -5,7 +5,7 @@
 
 <div id='dropzone_panel'>
   <div class="dz-message"><span>Drop PDF file here to upload</span> </div> 
-  <%= f.hint 'Please use patient file# and .pdf extension as file name. Existing charts will be appended' %>
+  <%= f.hint 'Please use patient file# and .pdf extension as file name. Existing charts will be appended. Current size limit is 145Mb' %>
 </div>
 
 <% end %>
@@ -24,7 +24,7 @@ Dropzone.options.myDropzone = {
 paramName: "chart[chart]",
 acceptedFiles: ".pdf",
 maxFiles: 4,
-maxFilesize: 125, // MB
+maxFilesize: 145, // MB
 addRemoveLinks: true,
 url: "<%= charts_path %>",
 autoDiscover: true,
