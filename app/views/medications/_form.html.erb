@@ -20,7 +20,7 @@
   </div>
 <% end %>
   <div class="col-sm-3">
-    <%= f.input :doctor_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', label:'Doctor', include_blank: 'Unknown', readonly: readonly %>
+    <%= f.input :doctor_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', label:'Doctor', include_blank: 'Unknown', readonly: readonly, selected: current_doctor.id %>
   </div>
 </div>
 

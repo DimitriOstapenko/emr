@@ -1,10 +1,22 @@
-<h1><%= PROJECT_NAME %></h1>
+<h1>Stoney Creek Medical Walk-In Clinic</h1>
 
-<p>Hi <%= @user.name %>,</p>
+<p>Dear <%= @user.name %>,</p>
 
 <p>
-Welcome to the <%= PROJECT_NAME  %>! Click on the link below to activate your account:
+Welcome to our telemedicine web application! 
+We have found your record and registered you for our online services.
+</p>
+<p>
+As a final step, please click on the link below to activate your account:
 </p>
 
-<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
-                                                    email: @user.email) %>
+<div>
+  <b><%= link_to "Ativate My Account", edit_account_activation_url(@user.activation_token, email: @user.email) %></b>
+</div>
+
+
+<p>
+Best Regards,
+</p>
+
+Stoney Creek Medical Walk-in Clinic staff

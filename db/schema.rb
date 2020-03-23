@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_18_165854) do
+ActiveRecord::Schema.define(version: 2020_03_23_201910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -326,6 +326,7 @@ ActiveRecord::Schema.define(version: 2020_01_18_165854) do
     t.string "maid_name"
     t.string "ifh_number"
     t.boolean "clinic_pat"
+    t.string "pharm_fax"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"

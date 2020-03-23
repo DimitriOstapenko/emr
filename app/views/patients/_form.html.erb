@@ -116,15 +116,19 @@
   <%= f.input :pharmacy %>
   </div>
   
-  <div class="col-sm-3">
-  <%= f.input :pharm_phone, as: :tel, label: 'Pharmacy Phone', value: num_to_phone(@patient.pharm_phone) %>
+  <div class="col-sm-2">
+  <%= f.input :pharm_phone, as: :tel, label: 'Pharm. Phone', value: num_to_phone(@patient.pharm_phone) %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :pharm_fax, as: :tel, label: 'Pharmacy Fax', value: num_to_phone(@patient.pharm_fax) %>
   </div>
   
   <div class="col-sm-3">
   <%= f.input :alt_contact_name, label: 'Emergency Contact' %>
   </div>
 
-  <div class="col-sm-3">
+  <div class="col-sm-2">
   <%= f.input :alt_contact_phone, as: :tel, label: 'Contact phone' %>
   </div>
 </div>
