@@ -37,6 +37,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem 'better_errors' #, '~> 2.50'
   gem 'binding_of_caller', '~> 0.8.0'
+  gem 'mailcatcher'
 #  gem 'bullet'   # /Users/dmitri/emr/config/environments/development.rb  - config options
 end
 

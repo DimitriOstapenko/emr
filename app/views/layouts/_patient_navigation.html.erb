@@ -1,0 +1,2 @@
+<li class="<%= 'active' if controller_name == 'visits' %>"><%= link_to "Visits", patient_visits_path(current_user.id) %></li>
+<li class="<%= 'active' if controller_name == 'patient_docs' %>"><%= link_to "Documents", patient_patient_docs_path(current_user.id) %></li>

@@ -60,18 +60,9 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-
-#  config.after_initialize do
-#	Bullet.enable = true
-#	Bullet.alert = true
-#	Bullet.bullet_logger = true
-#	Bullet.console = true
-#	Bullet.growl = false
-#	Bullet.rails_logger = true
-#	Bullet.bugsnag = false
-#	Bullet.airbrake = false
-#	Bullet.add_footer = true
-#	Bullet.counter_cache_enable  = false
-#  end
+  # mailcatcher on port 1080; don't forget to install and start mailcatcher:
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {:address => "localhost", :port => 1025}
 
 end

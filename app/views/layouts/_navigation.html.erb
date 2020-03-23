@@ -6,11 +6,7 @@
 
       <ul class="nav navbar-nav navbar-right">
       <% if logged_in? %>
-	<% if current_user.doctor? %>
-           <%= render 'layouts/doc_navigation_links' %>
-	<% else %>
-           <%= render 'layouts/navigation_links' %>
-	<% end %>
+           <%= render "layouts/#{current_user.role}_navigation" %>
       <% else %>
   	   <li><%= link_to "Log in", login_path %></li>
       <% end %>

@@ -2,9 +2,10 @@ class PaystubsController < ApplicationController
  
 	include My::Forms	
 
- helper_method :sort_column, :sort_direction
- before_action :logged_in_user #, only: [:index, :edit, :update]
- before_action :admin_user, only: :destroy
+        helper_method :sort_column, :sort_direction
+        before_action :logged_in_user #, only: [:index, :edit, :update]
+        before_action :admin_or_staff_user
+        before_action :admin_user, only: :destroy
 
  def index
     if current_user.doctor?	 

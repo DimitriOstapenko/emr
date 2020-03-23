@@ -2,13 +2,13 @@
 
 <div class="col-sm-6 col-sm-offset-3">
     <h3 class='display-1'><%= @user.name %> -  User profile </h3>
-	   <pre>
-	      Name: <%= @user.name %>
-	      Email: <%= @user.email %>
-	      Role: <%= @user.role %>
-	      Created: <%= @user.created_at %>
-	      Active? <%= @user.activated %>
-           </pre>
+       <pre>
+          Name: <%= @user.name %>
+          Email: <%= @user.email %>
+          Role: <%= @user.role %>
+          Created: <%= @user.created_at %>
+          Active? <%= @user.activated %>
+       </pre>
 	    
 	    <%= button_to "Edit", edit_user_path(@user), class: "btn btn-primary", :method => "get" %>
         

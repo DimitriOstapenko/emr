@@ -1,6 +1,6 @@
 class ExportFilesController < ApplicationController
    before_action :logged_in_user #, only: [:index, :edit, :update]
-   before_action :admin_user,   only: :destroy
+   before_action :admin_user #,   only: :destroy
 
   def index
     @export_files = ExportFile.paginate(page: params[:page])

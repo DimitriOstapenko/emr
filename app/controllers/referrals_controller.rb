@@ -1,6 +1,7 @@
 class ReferralsController < ApplicationController
   before_action :set_referral, only: [:show, :edit, :update, :download, :export, :destroy]
   before_action :logged_in_user
+  before_action :admin_or_staff_user
 # before_action :admin_user, only: :destroy
 
   include My::Forms

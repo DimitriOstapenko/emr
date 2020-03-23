@@ -45,11 +45,11 @@ class User < ApplicationRecord
   end
 
   def set_default_role
-    self.role ||= :user
+    self.role ||= :staff
   end
   
-  def user?
-    self.role == 'user'
+  def staff?
+    self.role == 'staff'
   end
 
   def admin?
@@ -58,6 +58,10 @@ class User < ApplicationRecord
   
   def doctor?
     self.role == 'doctor'
+  end
+  
+  def patient?
+    self.role == 'patient'
   end
 
   # Activates an account.

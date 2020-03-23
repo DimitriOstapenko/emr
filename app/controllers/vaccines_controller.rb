@@ -1,5 +1,6 @@
 class VaccinesController < ApplicationController
 	before_action :logged_in_user 
+        before_action :admin_or_staff_user
         before_action :admin_user, only: :destroy
 	before_action :set_vaccine, only: [:show, :edit, :update, :destroy]
 

@@ -30,10 +30,10 @@ module SessionsHelper
 # Returns true if the user is logged in, false otherwise. Expires regular users
   def logged_in?
     if !session[:expires_at].blank? && current_user.present?
-       if current_user.user? && (session[:expires_at] < Time.zone.now)
+       if session[:expires_at] < Time.zone.now
           log_out 
        else
-          session[:expires_at] = 60.minutes.from_now 
+          session[:expires_at] = 30.minutes.from_now 
        end
     end
     !current_user.nil?

@@ -6,10 +6,16 @@
 <div id="address">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (905)-561-9255 </div>
 </div>
 
-<div class="hdr-text">We are open every day!  </div> 
-	
+<div class="hdr-text">Clinic is closed until further notice </div> 
+
 <div class='spacer-20'></div>
 
+<div class="medium">
+  <font color="red"> Due to exceptional circumstances caused by COVID-19 pandemic our clinic is currently closed. If you are registered patient and want to renew your medication or have another <u>urgent</u> issue, please call Dr. Ostapenko @ (289) 204-0561 and leave a message. She will return your call as soon as possible.
+  </font>
+</div>
+
+<!--
 <p class="medium">
 No appointment is necessary, we service both Ontario and out of province patients.
 New patients are welcome. Driver Medical Exam. We provide specialist referrals and speak many different languages.
@@ -32,15 +38,17 @@ Table below provides most current schedule and is updated daily.
 <%# people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
 <p>
 
+
 <section id='marquee'>
   <div class="container-fluid">
-    <marquee direction="left"><h4> <%= Schedule::doc_on_duty %> ... Flu shots and other injections are provided with no wait time </h4></marquee>
+    <marquee direction="left"><h4> <%# Schedule::doc_on_duty %> ... Flu shots and other injections are provided with no wait time </h4></marquee>
   </div>
 </section>
 
+
 <div class="row">
   <span style="width:420px; float:left; margin-left: 20px; ">
-  <%= render "schedules/full_schedule" %>
+  <%# render "schedules/full_schedule" %>
   </span>
   
   <span style="width:250px; float:right; margin-top: 12px; margin-right: 20px;">
@@ -50,3 +58,4 @@ Table below provides most current schedule and is updated daily.
 </div>
 <div class='spacer-10'></div>
 
+-->

@@ -34,9 +34,24 @@ class ApplicationController < ActionController::Base
    end
 
 # Confirms an admin user.
-    def admin_user
-      redirect_to(root_url) unless current_user && current_user.admin?
-    end
+  def admin_user
+    redirect_back fallback_location: root_path, alert: "This operation is reserved to admin users only" unless current_user && current_user.admin?
+  end
+
+# Confirms staff user  
+  def staff_user
+     redirect_back fallback_location: root_path, alert: "This operation is reserved for staff users only" unless current_user && current_user.staff?
+  end
+
+# Confirms admin or staff user  
+  def admin_or_staff_user
+    redirect_back fallback_location: root_path, alert: "This operation is reserved to staff and admins only" unless current_user && (current_user.admin? || current_user.staff?)
+  end    
+
+# Confirms patient user
+  def patient_user
+    redirect_back fallback_location: root_path, alert: "This operation is reserved to patients only" unless current_user && (current_user.patient? || current_user.admin?)
+  end    
 
 # Is procedure OHIP covered?
   def hcp_procedure?(proc_code)

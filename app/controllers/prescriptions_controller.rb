@@ -1,6 +1,7 @@
 class PrescriptionsController < ApplicationController
 
   before_action :set_prescription, only: [:show, :edit, :update, :download, :export, :destroy]
+  before_action :admin_or_staff_user
   before_action :logged_in_user
 
   include My::Forms
