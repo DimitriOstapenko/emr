@@ -30,13 +30,13 @@
   <!-- Row 0 if new visit or admin --> 
 
      <div class="row">
-     <% if action_name == 'new' %>
-	<div class="col-sm-5">
+     <% if action_name == 'new' || current_user.admin? %>
+	<div class="col-md-4">
 		<%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
   	</div>
      <% end %>
      <% if current_user.admin? && action_name == 'edit' %>
-   	<div class="col-sm-4">
+   	<div class="col-md-2">
 	  <%= f.input :billing_ref %>
   	</div>
     <% end %>
@@ -51,7 +51,7 @@
 
   <div class="col-sm-2">
   <%= f.label "Service" %> <span class='form-text text-muted' id='svc'></span>
-  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required' %> 
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required', selected: 'K081A' %> 
   </div>
 
   <div class="col-sm-2"> 
