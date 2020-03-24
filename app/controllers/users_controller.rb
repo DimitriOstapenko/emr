@@ -2,7 +2,7 @@ class UsersController < ApplicationController
  
       	before_action :logged_in_user #, except: :resend_activation_link
   	before_action :correct_user, only: [:show, :edit, :update]
-  	before_action :admin_user #, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
+#  	before_action :admin_user #, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
 
   def index
     @users = User.paginate(page: params[:page]) 
@@ -55,10 +55,10 @@ class UsersController < ApplicationController
     end
 
 # Confirms the correct user.
-    def correct_user
-      @user = User.find(params[:id]) rescue nil
-      redirect_to(root_url) unless (@user && current_user)
-      redirect_to(root_url) unless (current_user?(@user) || current_user.admin?)
-    end
+#    def correct_user
+#      @user = User.find(params[:id]) rescue nil
+#      redirect_to(root_url) unless (@user && current_user)
+#      redirect_to(root_url) unless (current_user?(@user) || current_user.admin?)
+#    end
 
 end

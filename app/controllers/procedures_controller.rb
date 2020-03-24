@@ -27,11 +27,15 @@ class ProceduresController < ApplicationController
   def get_by_code
     code = params[:code]
     proc = Procedure.find_by(code: code).as_json
-    respond_to do |format|
-        format.json {
-            render json: proc
-        }
+    if proc.present?
+      respond_to do |format|
+        format.json { render json: proc }
+        format.html 
+      end
+    else
+      redirect_to procedures_path
     end
+
   end
 
 # Called by JS in visit _form  

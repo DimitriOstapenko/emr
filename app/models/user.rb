@@ -45,7 +45,7 @@ class User < ApplicationRecord
   end
 
   def set_default_role
-    self.role ||= :staff
+    self.role ||= 'patient'
   end
   
   def staff?

@@ -50,8 +50,20 @@ class ApplicationController < ActionController::Base
 
 # Confirms patient user
   def patient_user
-    redirect_back fallback_location: root_path, alert: "This operation is reserved to patients only" unless current_user && (current_user.patient? || current_user.admin?)
+    redirect_back fallback_location: root_path, alert: "This operation is reserved to patients only" unless current_user && (current_user.patient? )
   end    
+
+# Confirms non-patient user
+  def non_patient_user
+    redirect_back fallback_location: root_path, alert: "You don't have the right to use this operation" if current_user && (current_user.patient? )
+  end    
+
+# Confirms the correct user.
+    def correct_user
+      @user = User.find(params[:id]) rescue nil
+      redirect_to root_url, alert: "You have to be logged in"  unless (@user && current_user)
+      redirect_to root_url, alert: "You don't have the right to use this operation"  unless (current_user?(@user) || current_user.admin?)
+    end
 
 # Is procedure OHIP covered?
   def hcp_procedure?(proc_code)
