@@ -72,8 +72,8 @@ class ApplicationController < ActionController::Base
 # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id]) rescue nil
-      redirect_to root_url, alert: "You have to be logged in"  unless (@user && current_user)
-      redirect_to root_url, alert: "You don't have the right to use this operation"  unless (current_user?(@user) || current_user.admin?)
+      redirect_back fallback_location: root_path, alert: "You have to be logged in"  unless (@user && current_user)
+      redirect_back fallback_location: root_path, alert: "You don't have the right to use this operation"  unless (current_user?(@user) || current_user.admin?)
     end
 
 # Is procedure OHIP covered?
