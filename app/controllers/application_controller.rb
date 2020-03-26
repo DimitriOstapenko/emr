@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 
 # Confirms non-patient user
   def non_patient_user
-    redirect_back fallback_location: root_path, alert: "You don't have the right to use this operation" if current_user && (current_user.patient? )
+    redirect_to visits_path, alert: "You don't have the right to use this operation" if current_user && (current_user.patient? )
   end    
 
 # Confirms the correct user.

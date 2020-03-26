@@ -104,7 +104,7 @@
  <%= button_to "Patient Profile", patient_path(@patient), class: "btn btn-danger", method: 'get'  %>
  </div>
  
- <% if @visit.billed_or_paid? %>
+ <% if @visit.billed_or_paid? && !current_user.patient? %>
  <div class="col-sm-3 col-md-2">
  <%= button_to "Add Cash Service", addcash_patient_visit_path(@patient,@visit), class: "btn btn-primary active", method: :get %>
  </div>

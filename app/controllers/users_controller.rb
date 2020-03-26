@@ -2,7 +2,7 @@ class UsersController < ApplicationController
  
       	before_action :logged_in_user #, except: :resend_activation_link
   	before_action :correct_user, only: [:show, :edit, :update]
-  	before_action :admin_user #, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
+  	before_action :admin_user, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
 
   def index
     @users = User.paginate(page: params[:page]) 

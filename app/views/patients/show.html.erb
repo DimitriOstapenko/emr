@@ -4,7 +4,12 @@
 <% hcnum = "Health Card: #{@patient.ohip_num} #{@patient.ohip_ver} (#{@patient.hin_prov}) Expires: #{@patient.hin_expiry}" %>
 <% ifhnum = "IFH #: #{@patient.ifh_number}" if @patient.ifh_number.present? %> 
 
-<h1><%= @patient.full_name %> (<%= @patient.pat_type %>):  Patient Profile &nbsp; <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window' %></h1>
+<h1><%= @patient.full_name %> (<%= @patient.pat_type %>):  Patient Profile &nbsp; 
+
+  <% unless current_user.patient? %>
+  <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window' %>
+  <% end %>
+</h1>
 
 <div class="row">
   <aside class="col-md-6">
@@ -54,7 +59,7 @@ Medications:
 
   </section>
 <div class="row">
-   <%= render "buttons", remote: remote %> 
+   <%= render "buttons", remote: remote unless current_user.patient? %> 
 </div>
 </aside>
 
