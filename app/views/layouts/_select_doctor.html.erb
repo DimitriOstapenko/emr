@@ -2,7 +2,7 @@
 <%= form_with url: set_doctor_path do |f| %>
   <div class="form-group">
     <div class="col-sm-12 col-md-12 padding-0">
-    <% doc_id = current_doctor.fake? ? nil : current_doctor.id %>
+    <% doc_id = current_doctor.id rescue ' ' %>
     <%= f.collection_select(:doc_id,
                             get_active_doctors,
                             :id,

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
  
       	before_action :logged_in_user #, except: :resend_activation_link
   	before_action :correct_user, only: [:show, :edit, :update]
-#  	before_action :admin_user #, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
+  	before_action :admin_user #, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
 
   def index
     @users = User.paginate(page: params[:page]) 
@@ -41,17 +41,34 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
-      log_out
-      redirect_to login_path
+      sign_out
+      redirect_to root_url
     else
       render 'edit'
+    end
+  end
+
+   def switch_to
+    if current_user && current_user.admin?
+      user = User.find(params[:id])
+      if user.patient_id.present?
+         sign_in(:user,user)
+      else 
+         flash[:info] = 'Patient is not attached to this user'
+      end
+    end
+
+    if user.patient?
+      redirect_to visits_url
+    else
+      redirect_to root_url
     end
   end
 
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :role, :activated)
+      params.require(:user).permit(:ohip_num, :email, :password, :password_confirmation, :role, :patient_id, :invited_by)
     end
 
 # Confirms the correct user.

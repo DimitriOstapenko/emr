@@ -183,5 +183,5 @@ SimpleForm.setup do |config|
   config.wrappers :disabled_form do |b|
     b.use :input, disabled: true, readonly: true
   end
-
+ 
 end

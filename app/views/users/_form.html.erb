@@ -1,19 +1,14 @@
 <div class="row">
-<div class="col-md-4 col-md-offset-4">
+<div class="col-md-12">
 <div class="well">
 
-<h3 class='display-1'><%= yield(:title) %></h3>
 <%= simple_form_for @user,  :html => { :role => 'form'}  do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
-  <%= f.input :name %>
   <%= f.input :email %>
   <%= f.input :password %>
   <%= f.input :password_confirmation  %>
 <% if current_user.admin?  %>
   <%= f.input :role, collection: USER_ROLES, include_blank: false  %>
-  <% if !current_user?(@user) %>
-  <%= f.input :activated, label: 'Active account ?' %>
-  <% end %>
 <% end %>
 
 <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>

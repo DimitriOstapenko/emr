@@ -8,7 +8,7 @@
     <ul>
       <small>
       <% if logged_in? %>
-	<li>Logged in <%= current_user.role %>: <%= link_to "#{current_user.name}", edit_user_path(current_user.id) %></li>
+	<li>Logged in <%= current_user.role %>: <%= link_to "#{current_user.email}", edit_user_path(current_user.id) %></li>
       <% end %>
       <li style="width:40px">&nbsp;</li>
       <li><%= link_to "About", about_path, target: '_new' %></li>

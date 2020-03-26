@@ -59,5 +59,12 @@ en:
     min_size_error: "File size should be greater than %{min_size}"
     max_size_error: "File size should be less than %{max_size}"
 
+    models:
+      user:
+        attributes:
+          patient_id:
+            blank: "Patient was not found in DB"
+
+
 
 

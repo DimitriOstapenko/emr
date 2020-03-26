@@ -32,7 +32,7 @@
      <div class="row">
      <% if action_name == 'new' || current_user.admin? %>
 	<div class="col-md-4">
-		<%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
+	   <%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
   	</div>
      <% end %>
      <% if current_user.admin? && action_name == 'edit' %>
@@ -96,27 +96,22 @@
 
   <!-- Row 3 -->
 
-<div class="row">
-  <div class="col-sm-2">
-  <%# f.input :duration, collection: DURATIONS, default: 10  %>
-  </div>
-  <div class="col-sm-2 ">
-  <%# f.input :vis_type, collection: VISIT_TYPES, placeholder: 'Visit type', default: 'WS', label: 'Vis Type' %>
-  </div>
-  
   <%= f.hidden_field :bil_type %>
   <%= f.hidden_field :bil_type2  %>
   <%= f.hidden_field :bil_type3  %>
   <%= f.hidden_field :bil_type4  %>
-</div>
 
   <!-- Row 4 -->
 
 <div class="row">
-  <div class="col-sm-4" id="visit_statuses">
-  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled %>
+  <div class="col-sm-2" id="visit_statuses">
+  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled, selected: READY %>
   </div>
 
+  <div class="col-sm-2">
+  <%= f.input :duration, collection: DURATIONS, default: 10  %>
+  </div>
+  
   <div class="col-sm-2">
   <%= f.input :temp, label: "Temperature" %>
   </div>

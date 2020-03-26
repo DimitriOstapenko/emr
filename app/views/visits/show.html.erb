@@ -86,33 +86,33 @@
 <div class="row">
  <% if [ARRIVED,READY,ERROR].include?(@visit.status) || current_user.admin? %>
  <div class="col-sm-3 col-md-2">
-  <%= button_to "Edit Visit", edit_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary btn-lg", method: "get" %>
+  <%= button_to "Edit Visit", edit_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary", method: "get" %>
  </div>
  <% end %>
 
 <div class="col-sm-3 col-md-2">
-<%= button_to "Visit Form", visitform_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-info btn-lg", method: 'get'  %>
+<%= button_to "Visit Form", visitform_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-info", method: 'get'  %>
 </div>
 
  <% if @visit.cash? %> 
  <div class="col-sm-3 col-md-2">
- <%= button_to "Receipt", receipt_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-warning btn-lg", method: 'get' %>
+ <%= button_to "Receipt", receipt_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-warning", method: 'get' %>
  </div>
  <% end %>
  
  <div class="col-sm-3 col-md-2">
- <%= button_to "Patient Profile", patient_path(@patient), class: "btn btn-danger btn-lg", method: 'get'  %>
+ <%= button_to "Patient Profile", patient_path(@patient), class: "btn btn-danger", method: 'get'  %>
  </div>
  
  <% if @visit.billed_or_paid? %>
  <div class="col-sm-3 col-md-2">
- <%= button_to "Add Cash Service", addcash_patient_visit_path(@patient,@visit), class: "btn btn-primary active btn-lg", method: :get %>
+ <%= button_to "Add Cash Service", addcash_patient_visit_path(@patient,@visit), class: "btn btn-primary active", method: :get %>
  </div>
  <% end %>
  
  <% if !device_is_desktop? && @visit.editable? %>
  <div class="col-sm-3 col-md-2">
- <%= button_to "Voice Note", addvoicenote_patient_visit_path(@patient,@visit), class: "btn btn-primary active btn-lg", method: :get %>
+ <%= button_to "Voice Note", addvoicenote_patient_visit_path(@patient,@visit), class: "btn btn-primary active", method: :get %>
  </div>
  <% end %>
 

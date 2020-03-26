@@ -3,7 +3,7 @@ class DaysheetController < ApplicationController
 	helper_method :sort_column, :sort_direction
 
 	before_action :logged_in_user
-	before_action :non_patient_user
+#	before_action :non_patient_user
         before_action :current_doctor_set
 	
   def index
@@ -51,6 +51,20 @@ class DaysheetController < ApplicationController
 	 render  inline: '', layout: true
       end
   end
+
+  def set_doctor
+      doc_id = params[:doc_id]
+      if doc_id
+        store_location
+        set_doc_session( doc_id )
+        doc = Doctor.find( doc_id ) || Doctor.new()
+        flash.now[:info] = "Current Doctor is set to Dr. #{doc.lname}"
+        redirect_back_or( daysheet_path )
+      else
+        render '_set_doctor'
+      end
+  end
+
 
   private
 

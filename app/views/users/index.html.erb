@@ -1,16 +1,20 @@
 <% provide(:title, 'All users') %>
+<%= render "shared/modal", size: 'sm' %>
 
 <table class="tbl2 table-hover table-striped table-bordered">
    <thead>
       <tr>
-          <th>User</th>
           <th>Email</th>
           <th>Role</th>
-	  <th>Active?</th>
+	  <th>Confirmed</th>
+          <th>Patient</th>
 	  <th>Created</th>
-	  <th>Updated</th>
-	  <th class='tbl_md'>Switch To</th>
-	  <th class='tbl_sm'>Del</th>
+	  <th>Sign In Count</th>
+	  <th>Last Login</th>
+          <th class='text-center'>Invited By</th>
+          <th class='text-center tbl_sm'>Edit</th>
+          <th class='text-center tbl_sm'>Sw.To</th>
+          <th class='text-center tbl_sm'>Del</th>
       </tr>
   </thead>
   <tbody>
@@ -23,6 +27,6 @@
 <% if current_user.admin? %>
 <div class="bottom_buttons ">
 <%= will_paginate @users, class: "btn" %> 
-<%= button_to "Add User", new_user_path, class: "btn btn-primary col-md-2 ", method: 'get'  %>
+<%= button_to "Add User", new_user_registration_path, class: "btn btn-primary col-md-2 ", method: 'get'  %>
 </div>
 <% end %>

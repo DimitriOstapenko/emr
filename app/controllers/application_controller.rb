@@ -7,8 +7,18 @@ class ApplicationController < ActionController::Base
   helper_method :hcp_procedure?
 
   add_flash_types :info, :warning
+  before_action :configure_permitted_parameters, if: :devise_controller?
 
-#  layout :choose_layout
+# Actions after devise sign-in  
+  def after_sign_in_path_for(resource)
+    if current_user && current_user.patient?
+       stored_location_for(resource) || visits_path
+    else
+       doc = Doctor.find_by(provider_no: '015539')
+       session[:doc_id] = doc.id
+       stored_location_for(resource) || daysheet_path
+    end
+  end
 
 #  def initialize
 #    WillPaginate.per_page = 10 if device_type == 'desktop'
@@ -18,17 +28,18 @@ class ApplicationController < ActionController::Base
 
 # Confirms a logged-in user.
     def logged_in_user
-      unless logged_in?
-        store_location
-        redirect_to login_url, flash: {warning: "Please log in."} 
-      end
+      redirect_to new_user_session_path unless current_user
     end
+
+   def verify_patient
+     redirect_to new_user_session_path if current_user.patient? && current_user.patient_id.blank? 
+   end
 
 # alert if current_doctor is not set
    def current_doctor_set
      unless current_doctor.present? 
        store_location
-       flash.keep[:warning] = "Please set doctor for this shift"
+       flash.now[:warning] = "Please set doctor for this shift"
        redirect_to set_doctor_url if device_type == 'mobile'
      end
    end
@@ -77,5 +88,13 @@ class ApplicationController < ActionController::Base
        "application"
     end
   end
+
+protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:ohip_num, :email, :role, :password, :patient_id)}
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:ohip_num, :email, :role, :password, :current_password, :patient_id)}
+  end
+
 end
   

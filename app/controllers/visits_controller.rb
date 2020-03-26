@@ -6,12 +6,14 @@ class VisitsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :logged_in_user 
+  before_action :verify_patient
   before_action :admin_user, only: :destroy
+
 # before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 
   def index (defdate = Date.today )
     date = params[:date] || defdate
-    @patient = Patient.find(params[:patient_id])
+    @patient = Patient.find(current_user.patient_id)
     if @patient.visits.any?
 	   @visits = @patient.visits.paginate(page: params[:page])
 	   render 'index'

@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 
-  root 'static_pages#home'
+#  root 'static_pages#home'
+   root 'daysheet#index'
 
-  get 'password_resets/new'
-  get 'password_resets/edit'
+  devise_for :users, controllers: { registrations: "my_registrations" }
+  get '/users/', to: 'users#index'
+  get '/switch_to/:id', to: 'users#switch_to', as: :switch_user
+#  get  '/switch_to/:id', to: 'sessions#switch_to', as: :switch_user
 
   get '/ra_messages/index(/:id)' => 'ra_messages#find', constraints: { query_string: /findstr/ }
   get 'ra_messages/index'
@@ -33,9 +36,10 @@ Rails.application.routes.draw do
   get '/diagnoses/index' 
   get '/doctors/index' => 'doctors#find', constraints: { query_string: /findstr/ }
   get '/doctors/index' 
- # post '/daysheet/index', to: 'sessions#set_doctor' 
-  post '/set_doctor', to: 'sessions#set_doctor'
-  get '/set_doctor', to: 'sessions#set_doctor' 
+  
+  post '/set_doctor', to: 'daysheet#set_doctor'
+  get '/set_doctor', to: 'daysheet#set_doctor' 
+  
   get '/daysheet/index', to: 'daysheet#index', as: :daysheet
   get '/vaccines/index', to:  "vaccines#find", constraints: { query_string: /findstr/ }
   get '/vaccines/index' 
@@ -48,18 +52,17 @@ Rails.application.routes.draw do
   get  '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
 
-  get  '/switch_to/:id', to: 'sessions#switch_to', as: :switch_user
 
-  get    '/login',   to: 'sessions#new'
-  post   '/login',   to: 'sessions#create'
-  delete '/logout',  to: 'sessions#destroy'
+#  get    '/login',   to: 'sessions#new'
+#  post   '/login',   to: 'sessions#create'
+#  delete '/logout',  to: 'sessions#destroy'
 
 #  get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
 
-  get  '/patsignup', to: 'patients#new'
-  post '/patsignup', to: 'patients#create'
+#  get  '/patsignup', to: 'patients#new'
+#  post '/patsignup', to: 'patients#create'
 
   get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
   get '/visits' => 'visits#index'

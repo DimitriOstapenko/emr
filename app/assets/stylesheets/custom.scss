@@ -19,6 +19,8 @@ html,body {
   padding-top: 0; 
   overflow-y: scroll;
   font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  font-size: 0.9em;
 }
 
 p.medium {
@@ -44,6 +46,7 @@ p {
    margin: 0 auto -30px;  /* footer height */
    padding-left: 0px;
    padding-right: 0px;
+   overflow-x: hidden;
 }
 
 .help-container {
@@ -159,11 +162,12 @@ td.hlight {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 1.6em;
-  color: grey;
+  font-size: 18px;
+//  color: grey;
+  color: #34d5eb;
   text-transform: uppercase;
   letter-spacing: -2px;
-  padding-top: 10px;
+  padding-top: 14px;
   font-weight: bold;
   &:hover {
     color: red;
@@ -294,10 +298,10 @@ aside {
 
 /* forms */
 
-#session_remember_me, #user_activated, #diagnosis_active {
-  width: 25px;
-  margin-left: 0;
-}
+//#session_remember_me, #user_activated, #diagnosis_active {
+//  width: 25px;
+//  margin-left: 0;
+//}
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
@@ -306,12 +310,24 @@ input, textarea, select, .uneditable-input {
   @include box_sizing;
 }
 
+.simple_form input {
+//  margin-bottom: 10px;
+  clear: both; /* Required for Webkit, but not for Gecko */
+  font-size: 14px;
+}
+
 input {
   height: auto !important;
 }
 
 input[type="date"] {
 	height: 34px !important;
+}
+
+.datetime {
+  direction: ltr;
+  padding: 0;
+  width: auto !important;
 }
 
 input[type="file"] {
@@ -618,8 +634,16 @@ table.pretty {
   left: 5%;
 //  transform: translate(-50%, -50%);
 }
+
+.modal-sm {
+	width: 400px;
+}
+
 .modal-title {
-   font-size: 18px;
+   font-size: 16px;
+}
+.modal-header {
+  height: 45px;
 }
 
 //.modal-footer {

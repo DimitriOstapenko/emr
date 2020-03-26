@@ -1,0 +1,29 @@
+<%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+  <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
+  <h3>Cange your password</h3>
+  <div class="well">
+
+  <%= f.input :reset_password_token, as: :hidden %>
+  <%= f.full_error :reset_password_token %>
+
+  <div class="form-inputs">
+    <%= f.input :password,
+                label: "New password",
+                required: true,
+                autofocus: true,
+                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                input_html: { autocomplete: "new-password" } %>
+    <%= f.input :password_confirmation,
+                label: "Confirm your new password",
+                required: true,
+                input_html: { autocomplete: "new-password" } %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Change my password", class: "btn btn-primary" %>
+  </div>
+
+<%= render "devise/shared/links" %>
+  </div>
+  </div>
+<% end %>
