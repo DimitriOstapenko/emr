@@ -1,8 +1,6 @@
-<% provide(:title, @patient.full_name) %>
-<%= render "shared/modal" %>
 <% remote = device_is_desktop? %>
-
-<h1><%= @patient.full_name %> (<%= @patient.pat_type %>):  Patient Profile &nbsp; <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window' %></h1>
+<% hcnum = "Health Card: #{@patient.ohip_num} #{@patient.ohip_ver} (#{@patient.hin_prov}) Expires: #{@patient.hin_expiry}" %>
+<% ifhnum = "IFH #: #{@patient.ifh_number}" if @patient.ifh_number.present? %> 
 
 <div class="row">
   <aside class="col-md-6">
@@ -12,15 +10,11 @@
 <b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
 <% else %>
 <b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
-<% if @patient.ohip_num.present? %>
-Health Card: <%= @patient.ohip_num %> <%= @patient.ohip_ver %> (<%= @patient.hin_prov %>) Expires: <%= @patient.hin_expiry %>
-<% end %>
-<% if @patient.ifh_number.present? %>
-IFH #: <%= @patient.ifh_number %> 
-<% end %>
+<%= hcnum if hcnum.present? %>
+<%= ifhnum if ifhnum.present? %>
 <% end %>
 <b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-Phone: <%= num_to_phone(@patient.phone) %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if num_to_phone(@patient.mobile) %> <% if @patient.email.present? %> Email: <%= mail_to @patient.email %> <% end %>
+Phone: <%= num_to_phone(@patient.phone) %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{mail_to @patient.email}" if @patient.email.present? %> 
 Address: <%= @patient.addr %>
 	    <%= @patient.city %> <%= @patient.prov %> 
 	    <%= @patient.postal %>
@@ -35,7 +29,6 @@ Medications:
 <% if @patient.meds.present? %>
 <font color='red'><i> Old Medications to be deleted after conversion: <%= @patient.meds %> </i></font>
 <% end %>
-
 </pre>
 	 
  <% if @patient.notes.present? %> 
@@ -55,42 +48,14 @@ Medications:
 &nbsp; <%= render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
   </section>
+<div class="row">
+   <%= render "buttons", remote: remote unless current_user.patient? %> 
+</div>
 </aside>
 
-  <div class="col-md-6">
-    <h3>Visits: (<%= @patient.visits.count %>)</h3>
-    <% if @patient.visits.any? %>
-        <table class="tbl">
-  	  <thead>
-	  <tr>
-	    <th>Date</th>
-	    <th>Bil.Type</th>
-	    <th class="tbl_md">Edit</th>
-	    <th>Doctor</th>
-	    <th class="tbl_md">Diag.</th>
-	    <th>Services</th>
-	    <th class="tbl_md">Status</th>
-	  </tr>
-	  <tbody>
+<%= render 'visits' %>
 
-        <%= render @visits, remote: device_is_desktop? %>
-
-          </tbody>
-	</table>
-	<div class="spacer-10"></div>
-	<div class="row">
-	<div class="col-md-9"><%= will_paginate @visits, class: "btn" %></div>
-	<div class="col-md-3"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info", method: 'get' %> </div>
-	</div>
-    <% end %>
-  </div>
 </div>
 
-  <p>
-<div class="col-md-6" style="position: relative; bottom: 20px; top: 5px;">
-<div class="row">  
-   <%= render "buttons", remote: remote %> 
-</div>
-</div>
 
 

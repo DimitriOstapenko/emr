@@ -59,7 +59,7 @@ class UsersController < ApplicationController
     end
 
     if user.patient?
-      redirect_to visits_url
+      redirect_to patient_path(user.patient_id) 
     else
       redirect_to root_url
     end

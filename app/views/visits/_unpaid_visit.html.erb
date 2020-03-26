@@ -8,10 +8,10 @@
   <td><%= visit.proc_codes %></td>
   <td><%= visit.billing_ref %></td>
   <td>
-  <% if remote %>
+  <% unless current_user.patient? %>  
+  <% if visit.editable? || current_user.admin? %>
     <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(visit.patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get %>
-  <% else %>
-    <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(visit.patient,visit) %>
+  <% end %>
   <% end %>
   </td>
 </tr>

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 # Actions after devise sign-in  
   def after_sign_in_path_for(resource)
     if current_user && current_user.patient?
-       stored_location_for(resource) || visits_path
+      stored_location_for(resource) || patient_path(current_user.patient)
     else
        doc = Doctor.find_by(provider_no: '015539')
        session[:doc_id] = doc.id
@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
 
 # Confirms non-patient user
   def non_patient_user
-    redirect_to visits_path, alert: "You don't have the right to use this operation" if current_user && (current_user.patient? )
+    redirect_to patient_path(current_user.patient), alert: "You don't have the right to use this operation" if current_user && (current_user.patient? )
   end    
 
 # Confirms the correct user.

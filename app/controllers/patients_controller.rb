@@ -2,7 +2,7 @@ class PatientsController < ApplicationController
 	include My::Forms
 
 	before_action :logged_in_user 
-	before_action :non_patient_user, except: [:show, :edit, :update]
+	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history]
 	before_action :admin_user, only: :destroy
 
         helper_method :sort_column, :sort_direction
