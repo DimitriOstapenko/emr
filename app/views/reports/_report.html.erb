@@ -1,6 +1,6 @@
     <tr>
 	<% if report.exists? && device_is_desktop? %>
-	  <td><%= link_to report.id, report, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+	  <td><%= link_to report.id, report, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', onclick: "set_lg_modal()" %></td>
 	<% else %>
 	  <td><%= report.id %></td>
 	<% end %>  

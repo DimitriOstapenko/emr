@@ -11,12 +11,12 @@
   <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New <span class="caret"></span>
   </button>
   <ul class="dropdown-menu">
-    <li><%= link_to 'Medication', new_patient_medication_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get' %> </li>
-    <li><%= link_to 'Invoice', new_patient_invoice_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get' %> </li>
-    <li><%= link_to "Letter", new_patient_letter_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get' %> </li>
-    <li><%= link_to "Referral", new_patient_referral_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get' %></li>
+    <li><%= link_to 'Medication', new_patient_medication_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()" %> </li>
+    <li><%= link_to 'Invoice', new_patient_invoice_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()" %> </li>
+    <li><%= link_to "Letter", new_patient_letter_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()" %> </li>
+    <li><%= link_to "Referral", new_patient_referral_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()" %></li>
   <% if @patient.med_count >0 %>
-    <li><%= link_to "Prescription", new_patient_prescription_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get'  %></li>
+    <li><%= link_to "Prescription", new_patient_prescription_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()"  %></li>
   <% end %>
   </ul>
   </div>

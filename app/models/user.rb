@@ -7,7 +7,7 @@ class User < ApplicationRecord
   enum role: USER_ROLES
 
   before_validation :set_default_role
-  validate :patient_present
+#  validate :patient_present
   validates :ohip_num,  presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
 
   def set_default_role
@@ -15,7 +15,14 @@ class User < ApplicationRecord
     self.role ||= :patient
     if self.role == 'patient'
       patient = Patient.find_by(ohip_num: self.ohip_num)
-      self.patient_id = patient.id if patient.present?
+      if patient.present?
+        self.patient_id = patient.id 
+      else
+        patient = Patient.new(ohip_num: self.ohip_num, email: self.email)
+        patient.save(validate:false)
+        self.patient_id = patient.id 
+        self.new_patient = true
+      end
     end
   end
 

@@ -1,0 +1,125 @@
+<%   provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") %>
+
+
+<h1> <%= @patient.full_name %> (<%= @visit.pat_type  %>) : Visit of <%= @visit.entry_ts %>  </h1>
+
+<% diag = Diagnosis.find_by(code: @visit.diag_code) %>
+<% codes = [@visit.proc_code, @visit.proc_code2, @visit.proc_code3, @visit.proc_code4] %>
+
+<div class="form-group col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
+<div class="row">
+	
+<section>
+<pre class="pre-scrollable-large">
+<% if (HCP_PATIENT..WCB_PATIENT).include?(@visit.pat_type) %>
+<b>OHIP Visit HC# </b>: <%= @visit.hin_num %>  <b> Billing Type: </b> <%= @visit.pat_type %>
+<% elsif @visit.pat_type == IFH_PATIENT %>   
+<b>IFH Visit Card# </b>: <%= @visit.hin_num %> 
+<% else %>
+<b>CASH VISIT </b>    
+<% end %>   
+<b>Status </b>: <%= @visit.status_str %> 
+<b>Doctor</b> : <%= @visit.doctor.lname %>
+<% if @visit.temp.present? %>
+<b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
+<% end %>
+<% if @visit.diag_code.present? %>
+<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
+<% end %>
+<% if @visit.services.any? %>
+<b>Services</b> : <%=  @visit.proc_codes %>
+<%#
+<b>Service types </b>: <%= [@visit.all_btypes_str, @visit.all_units].transpose.map{ |el| "#{el[0]}:#{el[1]}"}.join', ' %>
+<b>Billed total: <%= sprintf '$%.2f',@visit.total_fee %> Insured: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
+<% end %>
+<b>Entry by </b>: <%= @visit.entry_by %>
+<b>Entered at </b>: <%= @visit.entry_ts %>
+<% if @visit.billing_ref.present? %>
+<% if @visit.status == ERROR %>       
+<b>Error code: </b>: <%= link_to @visit.billing_ref, '#', {title: codehash[@visit.billing_ref]}  %>
+<% else %>
+<b>Billing Ref# </b>: <%= @visit.billing_ref %>
+<% end %>
+<% end %>
+<% if @visit.export_file.present? %>
+<b>Export file</b>: <%= @visit.export_file %>
+<% end %>
+<% if @visit.amount.present? %>
+<b>Amount Paid </b>: <%= sprintf '$%.2f', @visit.amount %>
+<% end %>
+<% if @visit.documents.present? %>
+<b>Documents</b>: 
+<% @visit.documents.each do |d| %>
+   <% next unless d.document.file.present? %>
+   <%= link_to d.document.file.filename, d.document.url.to_s %>
+<% end %>
+<% end %>
+</pre>
+
+<% if @visit.reason.present? %>
+<div class="panel panel-info">
+   <div class="visit-notes-panel-body">
+<b>Reason for Visit </b>: <%= @visit.reason %>
+   </div>
+</div>
+<% end %>
+
+<% if @visit.notes.present? %>
+<div class="panel panel-info">
+   <div class="visit-notes-panel-body">
+<b>Notes </b>: <%= @visit.notes.html_safe %>	     
+   </div>
+</div>
+<% end %>
+
+</section>
+</div>
+
+<p>
+<% remote = device_is_desktop? %>
+
+<div class="row">
+ <% if [ARRIVED,READY,ERROR].include?(@visit.status) || current_user.admin? %>
+ <div class="col-sm-3 col-md-2">
+  <%= button_to "Edit Visit", edit_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary", method: "get" %>
+ </div>
+ <% end %>
+
+<div class="col-sm-3 col-md-2">
+<%= button_to "Visit Form", visitform_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-info", method: 'get'  %>
+</div>
+
+ <% if @visit.cash? %> 
+ <div class="col-sm-3 col-md-2">
+ <%= button_to "Receipt", receipt_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-warning", method: 'get' %>
+ </div>
+ <% end %>
+ 
+ <div class="col-sm-3 col-md-2">
+ <%= button_to "Patient Profile", patient_path(@patient), class: "btn btn-danger", method: 'get'  %>
+ </div>
+
+ <% unless current_user.patient? %>
+ <% if @visit.billed_or_paid?  %>
+ <div class="col-sm-3 col-md-2">
+ <%= button_to "Add Cash Service", addcash_patient_visit_path(@patient,@visit), class: "btn btn-primary active", method: :get %>
+ </div>
+ <% end %>
+ 
+ <% if !device_is_desktop? && @visit.editable? %>
+ <div class="col-sm-3 col-md-2">
+ <%= button_to "Voice Note", addvoicenote_patient_visit_path(@patient,@visit), class: "btn btn-primary active", method: :get %>
+ </div>
+ <% end %>
+
+ <% if @visit.ready_to_bill? && @doctor.billing_format == CABMD_FORMAT %>
+ <div class="col-sm-3 col-md-2">
+ <%= button_to "Send to Cab.md", sendclaim_patient_visit_path(@patient), class: "btn btn-success", method: 'get'  %>
+ </div>
+ <% end %>
+ <% end %>
+
+</div>
+</div>
+
+

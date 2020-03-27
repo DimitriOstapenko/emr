@@ -25,3 +25,15 @@
 //= require tooltip.js
 //= require dropzone
 
+
+function set_sm_modal() {
+  document.getElementById('mymodal').className='modal-dialog modal-sm';
+}
+
+function set_md_modal() {
+  document.getElementById('mymodal').className='modal-dialog modal-md';
+}
+
+function set_lg_modal() {
+  document.getElementById('mymodal').className='modal-dialog modal-lg';
+}

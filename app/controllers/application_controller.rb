@@ -12,11 +12,15 @@ class ApplicationController < ActionController::Base
 # Actions after devise sign-in  
   def after_sign_in_path_for(resource)
     if current_user && current_user.patient?
-      stored_location_for(resource) || patient_path(current_user.patient)
+      if current_user.new_patient?
+         edit_patient_path(current_user.patient)
+      else
+         patient_path(current_user.patient)
+      end
     else
-       doc = Doctor.find_by(provider_no: '015539')
-       session[:doc_id] = doc.id
-       stored_location_for(resource) || daysheet_path
+      doc = Doctor.find_by(provider_no: '015539')
+      session[:doc_id] = doc.id
+      stored_location_for(resource) || daysheet_path
     end
   end
 
@@ -92,8 +96,8 @@ class ApplicationController < ActionController::Base
 protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:ohip_num, :email, :role, :password, :patient_id)}
-    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:ohip_num, :email, :role, :password, :current_password, :patient_id)}
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:ohip_num, :email, :role, :password, :password_confirmation)}
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:ohip_num, :email, :role, :password, :password_confirmation, :current_password )}
   end
 
 end

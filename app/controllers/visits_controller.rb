@@ -106,6 +106,7 @@ end
   def show
     @visit = Visit.find(params[:id])
     @patient = @visit.pat
+    @doctor = @visit.doctor
   end
 
 # Send claim to Cab.md  

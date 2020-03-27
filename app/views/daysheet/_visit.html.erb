@@ -58,13 +58,13 @@
 	</td>
 	<% end %>
 	  
-	 <td><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
-	 <td><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get'  %></td>
+	 <td><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()"  %></td>
+	 <td><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()"  %></td>
 
 	<!-- #modal-window is defined in index -->	
   	<% if visit.editable? || current_user.admin? %>
 	  <% if remote %>
-            <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get  %></td>
+            <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get, onclick: "set_lg_modal()"  %></td>
           <% else %>
 	    <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit) %></td>
 	    <td><%= link_to '<i class="glyphicon glyphicon-record"></i>'.html_safe, addvoicenote_patient_visit_path(pat,visit) %> </td>

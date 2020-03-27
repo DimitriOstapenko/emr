@@ -1,3 +1,5 @@
+<% codehash = ClaimError.pluck(:code, :descr).to_h %>
+
 <div class="row">
 <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
 	
@@ -16,7 +18,7 @@
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 <% end %>
 <% if @visit.diag_code.present? %>
-<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= diag.descr rescue '' %>
+<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= @visit.diag.descr rescue '' %>
 <% end %>
 <% if @visit.services.any? %>
 <b>Services</b> : <%=  @visit.proc_codes %>
@@ -28,7 +30,7 @@
 <b>Entered at </b>: <%= @visit.entry_ts %>
 <% if @visit.billing_ref.present? %>
 <% if @visit.status == ERROR %>       
-<b>Error code: </b>: <%= link_to @visit.billing_ref, '#', {title: codehash[@visit.billing_ref]}  %>
+       <b>Error code: </b>: <%= link_to @visit.billing_ref, '#', {title: codehash[@visit.billing_ref]}  %>
 <% else %>
 <b>Billing Ref# </b>: <%= @visit.billing_ref %>
 <% end %>

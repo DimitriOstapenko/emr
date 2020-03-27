@@ -7,14 +7,14 @@
     <section class="user_info">
 <pre class="pre-scrollable">
 <% if @patient.pat_type == CASH_PATIENT %>
-<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
+<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <% else %>
-<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>
+<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <%= hcnum if hcnum.present? %>
 <%= ifhnum if ifhnum.present? %>
 <% end %>
 <b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-Phone: <%= num_to_phone(@patient.phone) %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{mail_to @patient.email}" if @patient.email.present? %> 
+Phone: <%= num_to_phone(@patient.phone) %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
 Address: <%= @patient.addr %>
 	    <%= @patient.city %> <%= @patient.prov %> 
 	    <%= @patient.postal %>
