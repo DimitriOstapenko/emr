@@ -6,7 +6,8 @@ class VisitsController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :logged_in_user 
-  before_action :verify_patient
+  before_action :verify_patient  # missing patient_id in user? (Temp)
+  before_action :non_patient_user, except: [:new, :show, :create, :visitform ]
   before_action :admin_user, only: :destroy
 
 # before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
@@ -42,7 +43,11 @@ class VisitsController < ApplicationController
         @patient.update_attribute(:last_visit_date, @visit.entry_ts)
         doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
         if doc.blank? || doc.errors.blank?
-          flash[:success] = "Visit saved #{params[:entry_ts]} "
+          if current_user.patient?
+            flash[:success] = "Your appointment request was submitted successfully. Dr. Ostapenko will reach you soon"
+          else  
+            flash[:success] = "Visit saved #{params[:entry_ts]} "
+          end
           redirect_to @patient
         else
           flash.now[:danger] =  doc.errors.full_messages.first rescue ''
@@ -219,7 +224,7 @@ end
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
 				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, 
-				    :billing_ref, :document, :room, :pat_type, :hin_num )
+				    :billing_ref, :document, :room, :pat_type, :hin_num, :consented )
     end      
 
     def set_visit_fees ( visit )

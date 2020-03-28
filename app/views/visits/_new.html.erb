@@ -1,6 +1,7 @@
 <%
    provide(:title, 'New Visit')
-   provide(:button_text, 'Save changes')
+   btext = current_user.patient? ? 'Submit Appointment Request' : 'Save changes'
+   provide(:button_text, btext)
 %>
  
 <div class="modal-header">
@@ -8,7 +9,7 @@
 	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>(<%= @patient.pat_type %>) : New Visit</b>
 </div>
 <div class="modal-body">
-       <%= render 'form' %>
+  <%= render "#{current_user.role}_form" %>
 </div>
 
 <div class="modal-footer">

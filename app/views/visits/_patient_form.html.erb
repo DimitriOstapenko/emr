@@ -1,0 +1,65 @@
+<%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
+  <%# render 'shared/error_messages', object: f.object %>
+  <%= f.error_notification %>
+
+  <% doctor = Doctor.find_by(provider_no: '015539')  %>  <!-- Dr. Ostapenko only for now!! -->
+
+<%= f.hidden_field :vis_type, value: TELE_VISIT %>
+<%= f.hidden_field :bil_type, value: HCP_BILLING %>
+<%= f.hidden_field :proc_code, value: 'K081A' %>
+<%= f.hidden_field :status, value: ARRIVED %>
+<%= f.hidden_field :doc_id, value: doctor.id %>
+
+<div class="well">
+  <!-- Row 0 if new visit or admin --> 
+
+<div class="row">
+  <div class="col-sm-4">
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doctor.id, label:'Doctor', hint: 'Required', disabled: true %>
+  </div>
+
+  <!-- Row 3 -->
+
+  <div class="col-sm-2">
+  <%= f.input :temp, hint: 'Required', label: "Temperature" %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :pulse, label: 'Heart Rate' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :bp, as: :string, label:'BP (H/L)' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :weight, label: 'Weight (Kg)' %>
+  </div>
+</div>
+
+  <!-- Row 5: Reason for visit  -->
+
+<div class="row">
+  <div class="col-sm-12">
+  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, hint:'Required', input_html: {rows:2} %>
+  </div>
+</div>
+
+<!-- Row 7: Notes, submit button -->
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:4} %>
+  </div>
+</div>
+
+<%= render "consent_form", f: f %>
+
+<% unless action_name == 'show' %>
+    <%= f.button :submit, yield(:button_text), class: "btn btn-primary btn-block" %>
+<% end %>
+
+</div>
+
+
+<% end %>
+

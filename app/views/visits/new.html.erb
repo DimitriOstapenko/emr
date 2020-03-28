@@ -2,4 +2,4 @@
 <% provide(:button_text, 'Save') %>
 <h1>New Visit - <%= @patient.full_name %></h1>
 
-    <%= render 'form' %>
+<%= render "#{current_user.role}_form" %>

@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_path unless current_user
     end
 
+# Patient user, but patient_id is missing:    
    def verify_patient
      redirect_to new_user_session_path if current_user.patient? && current_user.patient_id.blank? 
    end

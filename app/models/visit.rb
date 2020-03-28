@@ -21,6 +21,9 @@ class Visit < ApplicationRecord
   validates :proc_code3, length: { maximum: 10 }
   validates :proc_code4, length: { maximum: 10 }
   validates :entry_ts, presence: true
+  validates_acceptance_of :consented, if: Proc.new { |v| (v.vis_type == 'TV')}  # For televisits only
+  validates :reason, presence: true, if: Proc.new { |v| (v.vis_type == 'TV')}
+  validates :temp, presence: true, if: Proc.new { |v| (v.vis_type == 'TV')}
 
   validate :diag_required
   after_initialize :default_values
@@ -266,6 +269,7 @@ class Visit < ApplicationRecord
 
 # Generate error if one of the procedures requires diagnosis  
   def diag_required
+    return if self.vis_type == 'TV'
     hcp_codes = hcp_proc_codes.split(',') rescue nil
     return unless hcp_codes.any?
     hcp_codes.each do |code|
@@ -287,6 +291,11 @@ class Visit < ApplicationRecord
 # Was visit billed yet?  
   def editable?
     (self.entry_ts.to_date == Date.today && self.billing_ref.blank?) || ![BILLED,PAID,CANCELLED].include?(self.status)
+  end
+
+# Consent form signed 
+  def consented_str
+    self.consented? ? 'Yes' : 'No' 
   end
 
 private 

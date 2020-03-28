@@ -1,0 +1,275 @@
+<%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
+  <%= render 'shared/error_messages', object: f.object %>
+<% 
+   doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) 
+   @procedures = get_active_procedures 
+   @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
+
+  if current_user.admin? 
+     disabled = []
+  elsif @visit.status == ERROR 
+     disabled = ( BILLED..CANCELLED ).to_a
+  elsif @visit.billing_ref.present?
+     disabled = [ARRIVED,ASSESSED,WITH_DOCTOR,ERROR,CANCELLED]
+  elsif @visit.hcp_proc_codes.present? 
+    if @insured
+       disabled = [BILLED,PAID]
+    else
+       disabled = [READY]
+    end
+  elsif @visit.proc_codes.empty?
+     disabled = [READY,BILLED,PAID] 
+  elsif @visit.cash?
+     disabled = [ASSESSED,READY,BILLED]
+  else 
+     disabled = []
+  end 
+%>
+
+<div class="well">
+  <!-- Row 0 if new visit or admin --> 
+
+     <div class="row">
+     <% if action_name == 'new' || current_user.admin? %>
+	<div class="col-md-4">
+	   <%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
+  	</div>
+     <% end %>
+     <% if current_user.admin? && action_name == 'edit' %>
+   	<div class="col-md-2">
+	  <%= f.input :billing_ref %>
+  	</div>
+    <% end %>
+    </div>
+
+  <!-- Row 1 --> 
+
+<div class="row">
+  <div class="col-sm-4">
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', hint: 'Required' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc'></span>
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required', selected: 'K081A' %> 
+  </div>
+
+  <div class="col-sm-2"> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc2'> </span>
+  <%= f.input :proc_code2, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None'  %>
+  </div>
+
+  <div class="col-sm-2"> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc3'> </span>
+  <%= f.input :proc_code3, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None' %>
+  </div>
+
+  <div class="col-sm-2"> 
+  <%= f.label "Service" %> <span class='form-text text-muted' id='svc4'> </span>
+  <%= f.input :proc_code4, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None'  %>
+  </div>
+</div
+
+  <!-- Row 2 -->
+
+<div class="row">
+  <div class="col-sm-4">
+  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis %> 
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :units, collection: UNITS, prompt:  'Select', label: 'Units' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :units2, collection: UNITS, prompt: 'Select', label: 'Units' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :units3, collection: UNITS, prompt: 'Select', label: 'Units' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :units4, collection: UNITS, prompt: 'Select', label: 'Units' %>
+  </div>
+</div>
+
+  <!-- Row 3 -->
+
+  <%= f.hidden_field :bil_type, value: HCP_BILLING %>
+  <%= f.hidden_field :bil_type2  %>
+  <%= f.hidden_field :bil_type3  %>
+  <%= f.hidden_field :bil_type4  %>
+
+  <!-- Row 4 -->
+
+<div class="row">
+  <div class="col-sm-2" id="visit_statuses">
+  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled, selected: READY %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :duration, collection: DURATIONS, default: 10  %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :temp, label: "Temperature" %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :pulse, label: 'Heart Rate' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :bp, as: :string, label:'BP (H/L)' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :weight, label: 'Weight (Kg)' %>
+  </div>
+</div>
+
+  <!-- Row 5: Reason for visit  -->
+
+<div class="row">
+  <div class="col-sm-12">
+  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, input_html: {rows:2} %>
+  </div>
+</div>
+
+<!-- Row 7: Notes, submit button -->
+<div class="row">
+  <div class="col-sm-12"> 
+     <%= f.input :notes, placeholder: 'Notes', label: false, input_html: {rows:4} %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12"> 
+    <%= f.input :document, label: 'Upload Attachment (pdf/jpg)'  %>
+  </div>
+</div>
+
+<div class="spacer-10"></div>
+
+<% unless action_name == 'show' %>
+    <%= f.button :submit, yield(:button_text), class: "btn btn-primary btn-block" %>
+<% end %>
+
+</div>
+
+<% end %>
+
+<script>
+$(document).ready(function() {
+
+//    $.fn.select2.defaults.set( "theme", "classic" );
+
+    $("#visit_diag_code").select2();
+    $('#visit_proc_code').select2();
+    $('#visit_proc_code2').select2();
+    $('#visit_proc_code3').select2();
+    $('#visit_proc_code4').select2();
+
+    var proccode = $('#new_visit select[name="visit[proc_code]"]');
+
+    (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
+    proccode.change(function () {
+      (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
+    });
+
+});
+
+// Select proper bill type for the procedure
+var pc = document.getElementById("visit_proc_code");
+$(pc).change(function () {
+  if ($(this).val()) {
+    get_bil_type( $(this).val() , '');
+  } else {
+    var bt = document.getElementById('visit_bil_type');
+    $(bt).val(null);
+  }
+});
+
+var pc2 = document.getElementById("visit_proc_code2");
+$(pc2).change(function () {
+  if ($(this).val()) {
+     get_bil_type( $(this).val() , '2' );
+  } else {
+    var bt2 = document.getElementById('visit_bil_type2');
+    $(bt2).val(null);
+  }
+});
+
+var pc3 = document.getElementById("visit_proc_code3");
+$(pc3).change(function () {
+  if ($(this).val()) {
+     get_bil_type( $(this).val() , '3' );
+  } else {
+    var bt3 = document.getElementById('visit_bil_type3');
+    $(bt3).val(null);
+  }
+});
+
+var pc4 = document.getElementById("visit_proc_code4");
+$(pc4).change(function () {
+  if ($(this).val()) {
+    get_bil_type( $(this).val() , '4' );
+  } else {
+    var bt4 = document.getElementById('visit_bil_type4');
+    $(bt4).val(null);
+  }
+});
+
+function get_bil_type ( code, suff ) {
+	var request = "/procedures/get_by_code?code=" + code;
+	var aj = $.ajax({
+        url: request,
+        type: 'get',
+        data: $(this).serialize()
+    }).done(function (data) {
+	select_statuses(data, suff);
+        set_btype(data, suff);
+    }).fail(function (data) {
+        console.log('AJAX request has FAILED');
+    });
+}
+
+function set_btype( proc, suff ) {
+  var v = document.getElementById('visit_bil_type'+suff);
+  var v2 = document.getElementById('svc'+suff);
+  if ( proc.ptype == '1') {
+	var btype = <%= BILLING_TYPES[@visit.pat_btype] %>; 	
+        $(v).val(btype);
+	var btype_str = <%= @visit.pat_btype.to_s.inspect.html_safe %> || 'HCP';
+	$(v2).html('('+btype_str+')');
+  } else if ( proc.ptype == '2') {
+	$(v).val('4');
+	$(v2).html('(Cash)');
+  } else {
+        $(v).val(null);
+	$(v2).html('');
+  }
+}
+
+function select_statuses( proc, suff ) {
+  var v = document.getElementById('visit_statuses').getElementsByTagName("option");
+  var insured = <%= @insured %>;
+  if (proc.ptype == '2' && suff.length === 0  || !insured) {  // CASH
+        v[0].disabled = true;  // ARRIVED
+        v[1].disabled = true;  // WITH_DOCTOR
+        v[2].disabled = true;  // ASSESSED 
+        v[3].disabled = true;  // READY
+        v[4].disabled = false; // BILLED
+        v[5].disabled = false; // PAID 
+     }else{
+        v[0].disabled = false;  
+        v[1].disabled = false;  
+        v[2].disabled = false;  
+        v[3].disabled = false;
+        v[4].disabled = true;
+        v[5].disabled = true;
+     }
+}
+
+</script>

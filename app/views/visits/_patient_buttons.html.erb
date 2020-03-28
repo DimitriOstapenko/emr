@@ -2,11 +2,6 @@
 
 <div class="row">
 <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
- <% if [ARRIVED,READY,ERROR].include?(@visit.status) || current_user.admin? %>
- <div class="col-sm-3 col-md-2">
-  <%= button_to "Edit Visit", edit_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary", method: "get" %>
- </div>
- <% end %>
 
 <div class="col-sm-3 col-md-2">
 <%= button_to "Visit Form", visitform_patient_visit_path(@patient,@visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  class:"btn btn-info", method: 'get'  %>

@@ -38,6 +38,7 @@ class PatientsController < ApplicationController
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
+       flash[:warning] = 'Warning: you did not provide your telephone number. Please enter it in you patient profile (top left drop-down), so that doctor can reach you' unless @patient.phone.present? || @patient.mobile.present?
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
 	  flash.now[:danger] = @patient.errors.full_messages.to_sentence
