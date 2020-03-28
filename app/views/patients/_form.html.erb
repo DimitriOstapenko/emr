@@ -18,10 +18,11 @@
   <%= f.input :sex, collection: SEXES, hint: 'Required', label: 'Gender', include_blank: false %>
   </div>
   
+  <% disabled = true if current_user.patient? %>
   <div class="col-sm-2" id="pat_type">
-	  <%= f.input :pat_type, collection: PATIENT_TYPES, hint: 'Required *', label: 'Type', include_blank: false,
+	  <%= f.input :pat_type, collection: PATIENT_TYPES, label: 'Type', include_blank: false,
 	      label_html: { "data-toggle": 'tooltip', class: "has-tip", 
-              title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}
+              title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}, disabled: disabled
   %>
   </div>
 </div>
@@ -59,9 +60,11 @@
   <%= f.input :dob, as: :date, start_year: 1900, end_year: Date.today.year, hint: 'Required', html5: true %>
   </div>
   
+  <% unless current_user.patient? %>
   <div class="col-sm-1">
 	  <%= f.input :clinic_pat, label: 'Clinic Patient' %>
   </div>
+  <% end %>
 
 </div>
   
@@ -72,11 +75,11 @@
   <%= f.input :addr, label: 'Srteet Address' %>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-sm-3">
   <%= f.input :city %>
   </div>
   
-  <div class="col-sm-2">
+  <div class="col-md-1">
   <%= f.input :prov, collection: PROVINCES, include_blank: false %>
   </div>
   

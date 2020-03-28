@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_27_191008) do
+ActiveRecord::Schema.define(version: 2020_03_28_112836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_03_27_191008) do
   create_table "billings", force: :cascade do |t|
     t.integer "pat_id"
     t.string "doc_code"
-    t.date "visit_date"
+    t.datetime "visit_date"
     t.integer "visit_id"
     t.string "proc_code"
     t.integer "proc_units"

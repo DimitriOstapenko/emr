@@ -35,7 +35,7 @@ class Patient < ApplicationRecord
 	before_save { self.pat_type = 'O' if self.ohip_num.present? && self.hin_prov == 'ON' && self.pat_type == 'R';
 		      self.pat_type = 'R' if self.ohip_num.present? && self.hin_prov != 'ON' && self.pat_type == 'O'; }
 
-	validates :pat_type, presence: true, length: { is: 1 }
+#	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
@@ -218,6 +218,7 @@ protected
 	  fname.upcase! if fname.present?
 	  mname.upcase! if mname.present?
 	  maid_name.upcase! if maid_name.present?
+          pat_type ||= 'O'
   end
 
   def validate_age

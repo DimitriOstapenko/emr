@@ -96,7 +96,7 @@
 
   <!-- Row 3 -->
 
-  <%= f.hidden_field :bil_type %>
+  <%= f.hidden_field :bil_type, value: HCP_BILLING %>
   <%= f.hidden_field :bil_type2  %>
   <%= f.hidden_field :bil_type3  %>
   <%= f.hidden_field :bil_type4  %>
@@ -133,14 +133,14 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, input_html: {rows:3} %>
+  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, input_html: {rows:2} %>
   </div>
 </div>
 
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
-     <%= f.input :notes, placeholder: 'Notes', label: false, input_html: {rows:6} %>
+     <%= f.input :notes, placeholder: 'Notes', label: false, input_html: {rows:4} %>
   </div>
 </div>
 
