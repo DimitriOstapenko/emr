@@ -1,5 +1,5 @@
 <%= simple_form_for (@patient) do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.error_notification %>
 <!-- Row 1 -->
 <div class="row">
   <div class="col-sm-3">
@@ -101,7 +101,7 @@
   </div>
   
   <div class="col-sm-3">
-  <%= f.input :phone, as: :tel,  value: num_to_phone(@patient.phone)  %>
+  <%= f.input :phone, as: :tel,  value: num_to_phone(@patient.phone), hint: 'Required'  %>
   </div>
   
   <div class="col-sm-3">

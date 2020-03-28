@@ -46,7 +46,7 @@ class Patient < ApplicationRecord
 	validates :dob, presence: true
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
 	validates :postal, length: { is: 6 }, allow_blank: true
-#        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
+        validates :phone, presence: true #, length: { is: 10 }, numericality: { only_integer: true }
 #        validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 #        validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
