@@ -68,7 +68,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:ohip_num, :email, :password, :password_confirmation, :role, :patient_id, :invited_by)
+      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :invited_by)
     end
 
 # Confirms the correct user.

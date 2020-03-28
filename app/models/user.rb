@@ -8,7 +8,8 @@ class User < ApplicationRecord
 
   before_validation :set_default_role
 #  validate :patient_present
-  validates :ohip_num,  presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
+  validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
+  validates :ohip_ver, length: { is: 2 }, allow_blank: true
 
   def set_default_role
     self.email.downcase! rescue ''
@@ -18,7 +19,7 @@ class User < ApplicationRecord
       if patient.present?
         self.patient_id = patient.id 
       else
-        patient = Patient.new(ohip_num: self.ohip_num, email: self.email)
+        patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email)
         patient.save(validate:false)
         self.patient_id = patient.id 
         self.new_patient = true

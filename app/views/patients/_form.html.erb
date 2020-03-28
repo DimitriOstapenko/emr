@@ -151,14 +151,16 @@
 </div>
 
 <!-- Row 8 -->
+<% unless current_user.patient? %>
 <div class="row">
   <div class="col-sm-12">
   <%= f.input :notes, rows:4, placeholder: 'Notes', label: false %>
   </div>
 </div>
+<% end %>
 
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-md-5 col-md-offset-4">
   <%= f.button :submit, 'Save Record', class: "btn btn-primary" %>
   </div>
 </div>

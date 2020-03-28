@@ -23,7 +23,6 @@ class Visit < ApplicationRecord
   validates :entry_ts, presence: true
   validates_acceptance_of :consented, if: Proc.new { |v| (v.vis_type == 'TV')}  # For televisits only
   validates :reason, presence: true, if: Proc.new { |v| (v.vis_type == 'TV')}
-  validates :temp, presence: true, if: Proc.new { |v| (v.vis_type == 'TV')}
 
   validate :diag_required
   after_initialize :default_values

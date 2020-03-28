@@ -1,27 +1,55 @@
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
   <%= f.full_error :patient_id %> <%#unless f.error :ohip_num %>
+  
 <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
 <h3>New User Registration</h3>
 <div class="well">
 
+  <div class="row">
+  <div class="col-md-9">
     <%= f.input :ohip_num, label: 'Health Card#' %>
-    <%= f.input :email,
-                required: true,
-                autofocus: true,
-                input_html: { autocomplete: "email" }%>
+  </div>
+  <div class="col-md-3">
+    <%= f.input :ohip_ver, label: 'Ver' %>
+  </div>
+  </div>
 
+  <div class="row">
+  <div class="col-md-12">
+    <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" }%>
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="col-md-12">
     <%= f.input :password,
                 required: true,
                 hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
                 input_html: { autocomplete: "new-password" } %>
+  </div>
+  </div>
+              
+  <div class="row">
+  <div class="col-md-12">
     <%= f.input :password_confirmation,
                 required: true,
                 input_html: { autocomplete: "new-password" } %>
+  </div>
+  </div>
 
+  <div class="row">
+  <div class="col-md-12">
     <%= f.button :submit, "Sign Up", class: "btn btn-primary" %>
+  </div>
+  </div>
 
-<%= render "devise/shared/links" %>
+  <div class="row">
+  <div class="col-md-12">
+  <%= render "devise/shared/links" %>
+  </div>
+  </div>
+
 </div>
 </div>
 <% end %>
