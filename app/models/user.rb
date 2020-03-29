@@ -8,6 +8,8 @@ class User < ApplicationRecord
 
   before_validation :set_default_role
 #  validate :patient_present
+  before_validation { self.ohip_num.gsub!(/\D/,'') rescue nil }
+  before_validation { self.ohip_ver.strip! rescue nil }
   validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
   validates :ohip_ver, length: { is: 2 }, allow_blank: true
 

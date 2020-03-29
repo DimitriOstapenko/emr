@@ -268,13 +268,13 @@ class Visit < ApplicationRecord
 
 # Generate error if one of the procedures requires diagnosis  
   def diag_required
-    return if self.vis_type == 'TV'
+    return if self.vis_type == TELE_VISIT
     hcp_codes = hcp_proc_codes.split(',') rescue nil
     return unless hcp_codes.any?
     hcp_codes.each do |code|
       proc = Procedure.find_by(code: code)      
       if proc.diag_req
-	 errors.add('Error:', "Diagnosis is required for this visit") if diag_code.blank?
+        errors.add('Error:', "Diagnosis is required for this visit") if diag_code.blank?
          return
       end
     end
@@ -309,6 +309,7 @@ private
 	  self.status ||= ARRIVED
 	  self.units ||= 1
 	  self.vis_type ||= WALKIN_VISIT
+          self.bil_type ||= HCP_BILLING
 	  self.duration ||= 10
   end
 
