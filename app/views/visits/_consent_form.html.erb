@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-sm-12"> 
-    <small>
-      <ul>By clicking on checkbox below, I give my explicit consent to the following:
+    <p class="small">
+      By clicking on checkbox below, I give my explicit consent to the following:
 
     1. I understand that the laws that protect privacy and the confidentiality of medical information also apply to telemedicine, and that no information 
        obtained in the use of telemedicine which identifies me will be disclosed to researchers or other entities without my consent.
@@ -17,9 +17,7 @@
     9. I agree that any dispute arriving from the telemedicine consult will be resolved in the Province of Ontario.
     
     <%= f.input :consented, as: :boolean, label:'Yes, I consent', checked_value: true, unchecked_value: false, input_html: {style:'width:25px'} %>
-
-      </ul>
-       </small>
+    </p>
   </div>
   </div>
 </div>

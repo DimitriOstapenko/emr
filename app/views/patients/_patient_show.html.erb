@@ -28,7 +28,7 @@ Medications:
 <% end %> </b>
 </pre>
 
-<p><b> Please make an appointment below. Make sure your Health Card number, email and phone number are present in your profile (use sandwich menu top left to modify). Describe the reason for your virtual visit and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come first served basis.  </b></p>
+<p><b> Please make an appointment by clicking on a button below. Describe the reason for your virtual visit and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come first served basis.  </b></p>
 	 
 &nbsp; <%# render("medications", remote: remote) if @patient.medications.any? %>
 &nbsp; <%# render("prescriptions", remote: remote) if @patient.prescriptions.any? %>
@@ -39,7 +39,7 @@ Medications:
 
 <div class="col-sm-2 col-md-2">
   <div class="btn-group">
-<%= button_to 'Make an Appointment', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-sm", method: 'get'  %>
+<%= button_to 'Make an Appointment', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get'  %>
   </div>
 </div>
 

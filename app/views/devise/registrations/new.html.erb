@@ -8,7 +8,7 @@
 
   <div class="row">
   <div class="col-md-9">
-    <%= f.input :ohip_num, label: 'Health Card#' %>
+    <%= f.input :ohip_num, label: 'Health Card#', autofocus: true, input_html: { autocomplete: "ohip_num"}  %>
   </div>
   <div class="col-md-3">
     <%= f.input :ohip_ver, label: 'Ver' %>

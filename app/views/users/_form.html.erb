@@ -4,16 +4,63 @@
 
 <%= simple_form_for @user,  :html => { :role => 'form'}  do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
+  <div class="row" id="ohip_num">  
+  <div class="col-md-9">
+    <%= f.input :ohip_num %>
+  </div>
+  <div class="col-md-3">
+  <%= f.input :ohip_ver %>
+  </div>
+  </div> 
+
+  <div class="row">  
+  <div class="col-md-12">
   <%= f.input :email %>
+  </div>
+  </div>
+
+  <div class="row">  
+  <div class="col-md-12">
   <%= f.input :password %>
+  </div>
+  </div>
+
+  <div class="row">  
+  <div class="col-md-12">
   <%= f.input :password_confirmation  %>
-<% if current_user.admin?  %>
-  <%= f.input :role, collection: USER_ROLES, include_blank: false  %>
-<% end %>
+  </div>
+  </div>
 
+<% disabled = true unless current_user.admin?  %>
+  <div class="row" >  
+  <div class="col-md-12">
+  <%= f.input :role, collection: USER_ROLES, include_blank: false, disabled: disabled  %>
+  </div>
+  </div>
+
+<div class="row">  
+  <div class="col-md-12">
 <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
+  </div>
+</div>
+
 <% end %>
 
 </div>
 </div>
 </div>
+
+<script>
+  $(document).ready(function () {
+    var role = $('select[name="user[role]"]');
+
+   (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
+   role.change(function () {
+     (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
+
+  });
+  });
+
+</script>
+
+
