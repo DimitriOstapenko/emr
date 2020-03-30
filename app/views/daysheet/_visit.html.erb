@@ -36,7 +36,11 @@
 	</td>
         <td><%= pat.phone %></td>
         <td><%= pat.mobile %></td>
-        <td><%= pat.email %></td>
+        <td class='text-center'>
+          <% if pat.email.present? %>
+          <%= link_to 'email', "mailto:#{pat.email}" %>
+          <% end %>
+        </td>
 	<td class="text-center"><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
 
