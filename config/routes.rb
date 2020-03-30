@@ -88,6 +88,7 @@ Rails.application.routes.draw do
       get 'sendclaim', on: :member
       get 'addcash', on: :member
       get 'addvoicenote', on: :member
+      get 'cancel', on: :member
       resources :documents
     end
   end

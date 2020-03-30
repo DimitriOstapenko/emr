@@ -7,7 +7,7 @@ class VisitsController < ApplicationController
 
   before_action :logged_in_user 
   before_action :verify_patient  # missing patient_id in user? (Temp)
-  before_action :non_patient_user, except: [:new, :show, :create, :visitform ]
+  before_action :non_patient_user, except: [:new, :show, :create, :visitform, :cancel ]
   before_action :admin_user, only: :destroy
 
 # before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
@@ -100,6 +100,11 @@ end
     @visit = Visit.find(params[:id])
   end
 
+  def cancel
+    @visit = Visit.find(params[:id])
+    @visit.update_attribute(:status, CANCELLED) if @visit.date.today?
+    redirect_back(fallback_location: patient_path(@visit.patient))
+  end
 
   def destroy
     @visit = Visit.find(params[:id])

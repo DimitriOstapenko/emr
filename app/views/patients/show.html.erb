@@ -2,9 +2,7 @@
 <%= render "shared/modal" %>
 
 <h1><%= @patient.full_name %> (<%= @patient.pat_type %>):  Patient Profile &nbsp; 
-  <% unless current_user.patient? %>
   <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', onclick: "set_lg_modal()" %>
-  <% end %>
 </h1>
 
   <%= render "#{current_user.role}_show" %>

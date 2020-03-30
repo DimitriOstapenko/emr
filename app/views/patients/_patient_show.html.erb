@@ -35,9 +35,10 @@ Medications:
 &nbsp; <%# render("referrals", remote: remote) if @patient.referrals.any? %>
 &nbsp; <%# render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
+<% disabled = @patient.visits.first.date.today? rescue false %>
 <div class="col-sm-2 col-md-2">
   <div class="btn-group">
-<%= button_to 'Make an Appointment', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get'  %>
+<%= button_to 'Make an Appointment', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get', disabled: disabled  %>
   </div>
 </div>
 

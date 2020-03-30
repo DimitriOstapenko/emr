@@ -2,5 +2,12 @@
   <td><%= link_to visit.date, patient_visit_path(@patient,visit) %></td>
   <td><%= visit.doctor.lname %></td>
   <td><%= visit.diag_descr %></td>
+  <td>
+    <% if visit.status == CANCELLED %>
+    Cancelled
+  <% else %>
+    <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, cancel_patient_visit_path(@patient, visit) if visit.date.today? %>
+  <% end %>
+  </td>
 </tr>
 
