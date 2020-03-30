@@ -4,17 +4,19 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :timeoutable , :validatable
 
+  default_scope -> { order(email: :asc) }
   enum role: USER_ROLES
 
-  before_validation :set_default_role
-#  validate :patient_present
+  before_validation :set_patient
   before_validation { self.ohip_num.gsub!(/\D/,'') rescue nil }
   before_validation { self.ohip_ver.strip! rescue nil }
+  before_validation { self.email.downcase! rescue '' }
+
   validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
   validates :ohip_ver, length: { is: 2 }, allow_blank: true
 
-  def set_default_role
-    self.email.downcase! rescue ''
+# Initialize user, set patient
+  def set_patient
     self.role ||= :patient
     if self.role == 'patient'
       patient = Patient.find_by(ohip_num: self.ohip_num)
@@ -22,10 +24,11 @@ class User < ApplicationRecord
         self.patient_id = patient.id 
       else
         patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email)
-        patient.save(validate:false)
+        patient.save!(validate:false)
         self.patient_id = patient.id 
         self.new_patient = true
       end
+      UserMailer.new_registration(self).deliver
     end
   end
 

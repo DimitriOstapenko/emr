@@ -1,0 +1,13 @@
+Dear Dr. <%= @visit.doctor.lname %>,
+
+<p>Virtual visit was just created by patient <%= @visit.patient.full_name %></p>
+
+<p>You can see it here: </p>
+
+<%= link_to 'Show me new visit', patient_visit_url(@visit.patient, @visit) %> </p>
+
+
+<p>&nbsp</p>
+<p>&nbsp</p>
+
+Walk-In EMR admin

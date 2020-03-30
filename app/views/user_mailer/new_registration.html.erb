@@ -1,0 +1,8 @@
+Dear EMR Walk-in staff member,
+
+<p>New user "<%= @user.name %>", role: <%= @user.role %>  with email <%= @user.email %> registered online at <%= @user.created_at %> </p>
+
+<p><%= link_to "You can see new user profile here", patient_url(@user.patient) %> </p>
+<p>&nbsp;</p>
+
+Walk-In EMR admin

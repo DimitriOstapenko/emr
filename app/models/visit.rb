@@ -26,6 +26,7 @@ class Visit < ApplicationRecord
 
   validate :diag_required
   after_initialize :default_values
+  after_create :notify_doctor, if: Proc.new { |v| (v.vis_type == 'TV')} 
 
 # Patient type and hin_num may change from visit to visit; We won't update on other attr changes
   before_save { 
@@ -39,6 +40,10 @@ class Visit < ApplicationRecord
 	  end
 	  }
                 
+# Send email to the doctor about new Virtual visit  
+  def notify_doctor
+    UserMailer.new_visit(self).deliver
+  end
 
   def doctor
     Doctor.find(doc_id) rescue Doctor.new 

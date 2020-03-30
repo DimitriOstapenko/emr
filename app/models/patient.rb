@@ -34,6 +34,7 @@ class Patient < ApplicationRecord
 	# Force Patient to RMB if province is not ON, to HCP if province is ON when HC number present	
 	before_save { self.pat_type = 'O' if self.ohip_num.present? && self.hin_prov == 'ON' && self.pat_type == 'R';
 		      self.pat_type = 'R' if self.ohip_num.present? && self.hin_prov != 'ON' && self.pat_type == 'O'; }
+        after_save :unmark_as_new
 
 #	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
@@ -228,4 +229,9 @@ protected
       end
   end
 
+# User is redirected to edit patient form on first login. Once profile is saved and patient is validated show them regular patient home page
+  def unmark_as_new
+    user = self.user
+    user.update_attribute(:new_patient, false) if self.valid? rescue nil
+  end
 end

@@ -2,8 +2,10 @@
 <div class="col-md-12">
 <div class="well">
 
+
 <%= simple_form_for @user,  :html => { :role => 'form'}  do |f| %>
-  <%= render 'shared/error_messages', object: f.object %>
+<%= f.error_notification %>
+
   <div class="row" id="ohip_num">  
   <div class="col-md-9">
     <%= f.input :ohip_num %>

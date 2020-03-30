@@ -9,7 +9,13 @@ class ApplicationController < ActionController::Base
   add_flash_types :info, :warning
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-# Actions after devise sign-in  
+#  def initialize
+#    WillPaginate.per_page = 10 if device_type == 'desktop'
+#  end
+
+  private
+
+# after devise sign-in
   def after_sign_in_path_for(resource)
     if current_user && current_user.patient?
       if current_user.new_patient?
@@ -23,12 +29,6 @@ class ApplicationController < ActionController::Base
       stored_location_for(resource) || daysheet_path
     end
   end
-
-#  def initialize
-#    WillPaginate.per_page = 10 if device_type == 'desktop'
-#  end
-
-  private
 
 # Confirms a logged-in user.
     def logged_in_user
