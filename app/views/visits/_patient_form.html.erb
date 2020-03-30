@@ -1,5 +1,4 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
-  <%# render 'shared/error_messages', object: f.object %>
   <%= f.error_notification %>
 
   <% doctor = Doctor.find_by(provider_no: '015539')  %>  <!-- Dr. Ostapenko only for now!! -->
@@ -58,6 +57,7 @@
     <%= f.button :submit, yield(:button_text), class: "btn btn-primary btn-block" %>
 <% end %>
 
+<small><i>Please make sure the phone number shown in the title is correct. Otherwise doctor won't be able to reach you</i></small>
 </div>
 
 

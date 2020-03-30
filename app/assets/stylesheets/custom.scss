@@ -605,13 +605,17 @@ table.pretty {
 .pre-scrollable-lg {
     max-height: 200px;
     overflow-y: scroll;
-    overflow-x: scroll;
+    overflow-x: hidden;
+  overflow:auto; 
+  white-space: pre-wrap; 
 }
 
 .pre-scrollable-xlg {
     max-height: 700px;
-    overflow: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
 
+    white-space: pre-wrap; 
     margin-bottom: 35px;
 }
 

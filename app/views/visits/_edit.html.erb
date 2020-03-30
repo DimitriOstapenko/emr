@@ -8,7 +8,7 @@
 	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>(<%= @patient.pat_type %>) : Visit of <%= @visit.entry_ts %> <%= " - Billing Ref# : #{@visit.billing_ref}" if @visit.billing_ref %></b>
 </div>
 <div class="modal-body">
-       <%= render 'form' %>
+  <%= render "#{current_user.role}_form' %>
 </div>
 
 <div class="modal-footer">
