@@ -30,6 +30,13 @@
 </div>
 <% end %>
 
+<% if @visit.documents.present? %>
+<b>Attached Documents</b>:
+<% @visit.documents.each do |d| %>
+   <% next unless d.document.file.present? %>
+   <%= link_to d.document.file.filename, d.document.url.to_s %>
+<% end %>
+<% end %>
 
 </section>
 </div>

@@ -51,6 +51,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-sm-12">
+    <%= f.input :document, label: 'Upload Document/Picture (pdf/jpg)'  %>
+  </div>
+</div>
+
 <%= render "consent_form", f: f %>
 
 <% unless action_name == 'show' %>
