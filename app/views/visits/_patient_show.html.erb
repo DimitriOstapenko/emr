@@ -14,7 +14,7 @@
 <% end %>   
 <b>Doctor</b> : <%= @visit.doctor.lname %>
 <% if @visit.temp.present? %>
-<b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
+<b>Vital signs</b>: Temp: <%= @visit.temp %> HR: <%= @visit.pulse %> Blood Pressure: <%= @visit.bp %> Weight: <%= @visit.weight %>
 <% end %>
 <% if @visit.diag_code.present? %>
 <b>Diagnosis</b> : <%= @visit.diag_descr  %>

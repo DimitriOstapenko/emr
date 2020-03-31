@@ -5,8 +5,8 @@
   <td>
     <% if visit.status == CANCELLED %>
     Cancelled
-  <% else %>
-    <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, cancel_patient_visit_path(@patient, visit) if visit.date.today? %>
+  <% elsif visit.date.today? && visit.status == ARRIVED %>
+    <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, cancel_patient_visit_path(@patient, visit) %>
   <% end %>
   </td>
 </tr>

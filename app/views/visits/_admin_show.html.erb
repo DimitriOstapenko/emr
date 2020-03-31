@@ -18,16 +18,19 @@
 <b>Vital signs</b>: T: <%= @visit.temp %> P: <%= @visit.pulse %> BP: <%= @visit.bp %>
 <% end %>
 <% if @visit.diag_code.present? %>
-<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= @visit.diag.descr rescue '' %>
+<b>Diagnosis</b> : <%= @visit.diag_code %> : <%= @visit.diag_descr rescue '' %>
 <% end %>
 <% if @visit.services.any? %>
-<b>Services</b> : <%=  @visit.proc_codes %>
+<b>Services</b> : <%=  @visit.proc_codes %> 
 <%#
 <b>Service types </b>: <%= [@visit.all_btypes_str, @visit.all_units].transpose.map{ |el| "#{el[0]}:#{el[1]}"}.join', ' %>
 <b>Billed total: <%= sprintf '$%.2f',@visit.total_fee %> Insured: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
 <% end %>
 <b>Entry by </b>: <%= @visit.entry_by %>
-<b>Entered at </b>: <%= @visit.entry_ts %>
+<b>Entry timestamp </b>: <%= @visit.entry_ts %>
+<% if @visit.status.between?(READY,PAID) %>
+<b>Duration:</b> <%= @visit.duration %> minutes
+<% end %>
 <% if @visit.billing_ref.present? %>
 <% if @visit.status == ERROR %>       
        <b>Error code: </b>: <%= link_to @visit.billing_ref, '#', {title: codehash[@visit.billing_ref]}  %>
