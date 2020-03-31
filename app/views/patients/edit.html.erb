@@ -4,6 +4,10 @@
 <h3 class='display-1'>Edit Your Patient Profile</h3>
 
 <div class="well">
-	<%= render 'form' %>
+  <% if current_user.patient? %>
+    <%= render 'patient_form' %>
+  <% else %>
+    <%= render 'admin_form' %>
+  <% end %>
 </div>
 

@@ -19,12 +19,10 @@
   </div>
   
   <div class="col-sm-2" id="pat_type">
-  <% unless current_user.patient? %>
 	  <%= f.input :pat_type, collection: PATIENT_TYPES, label: 'Type', include_blank: false,
 	      label_html: { "data-toggle": 'tooltip', class: "has-tip", 
-              title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}, disabled: disabled
-  %>
- <% end %>
+              title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}
+          %>
   </div>
 </div>
 
@@ -85,7 +83,7 @@
   </div>
   
   <div class="col-sm-2">
-	  <%= f.input :country, collection: ['Canada','US','Other'], selected: "Canada" %>
+	  <%= f.input :country, collection: ['Canada','US','Other'] %>
   </div>
 
   <div class="col-sm-2">
@@ -140,14 +138,14 @@
 <!-- Row 6 -->  
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :allergies,  placeholder: 'Allergies', label: false  %>
+  <%= f.input :allergies,  placeholder: 'List of current allergies, if any'  %>
   </div>
 </div>
 
 <!-- Row 7 -->
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :meds, as: :text, rows:2, placeholder: 'Medications (This field is being phased out, please use [+Medications] button on patient summary page instead)', label: false %>
+  <%= f.input :meds, as: :text, rows:2, placeholder: 'List of current Medications (This field is being phased out, please use [+Medications] button on patient summary page instead). Once all medications are entered, you can delete text from here', label:'Current Medications' %>
   </div>
 </div>
 
@@ -155,7 +153,7 @@
 <% unless current_user.patient? %>
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :notes, rows:4, placeholder: 'Notes', label: false %>
+  <%= f.input :notes, rows:4 %>
   </div>
 </div>
 <% end %>

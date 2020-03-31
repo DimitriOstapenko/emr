@@ -4,6 +4,10 @@
 <div class="col-sm-10 col-sm-offset-1">
 <h3 class='display-1'> New Patient's Record </h3>
  <div class="well">
-<%= render 'form' %>
+   <% if current_user.patient? %>
+     <%= render 'patient_form' %>
+   <% else %>
+     <%= render 'admin_form' %>
+   <% end %>
 </div>
 </div>

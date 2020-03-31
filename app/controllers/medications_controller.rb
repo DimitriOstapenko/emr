@@ -66,7 +66,7 @@ class MedicationsController < ApplicationController
       @medication.destroy
       flash[:success] = "Medication deleted"
     end
-    redirect_back(fallback_location: @patient)
+    redirect_to @patient
   end
 	
   private

@@ -1,0 +1,170 @@
+<%= simple_form_for (@patient) do |f| %>
+  <%= f.error_notification %>
+  
+  <%= f.hidden_field :pat_type, value: HCP_PATIENT %>
+
+  <!-- Row 1 -->
+
+<div class="row">
+  <div class="col-sm-3">
+     <%= f.input :lname, hint: 'Required'%>
+  </div>
+
+  <div class="col-sm-3">
+  <%= f.input :fname %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :mname, label: 'Middle Name' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :sex, collection: SEXES, hint: 'Required', label: 'Gender', include_blank: false %>
+  </div>
+  
+  <div class="col-sm-2" id="maiden_name">
+  <%= f.input :maid_name, label: 'Maiden Name' %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-3" id="ifh_number", style="display:none;">
+  <%= f.input :ifh_number, label:'IFH Number', hint: 'Required *' %>
+  </div>
+
+  <div class="col-sm-3" id="ohip_number">
+  <%= f.input :ohip_num, label: 'Health Card Number', hint: '10 digits, Required ' %>
+  </div>
+
+  <div class="col-md-1 col-sm-1 padding-0" id="ohip_ver">
+     <%= f.input :ohip_ver, label: 'Version', hint: "2 letters" %>
+  </div>
+
+  <div class="col-md-2 col-sm-2" id="hin_prov" >
+  <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov.', include_blank: false %>
+  </div>
+  
+  <div class="col-md-3 col-sm-3" id="hin_expiry">
+     <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required' %>
+  </div>
+  
+  <div class="col-sm-3">
+  <%= f.input :dob, as: :date, start_year: 1915, end_year: Date.today.year, hint: 'Required', html5: true %>
+  </div>
+  
+</div>
+  
+<!-- Row 3 -->
+<div class="row">
+
+  <div class="col-sm-4">
+  <%= f.input :addr, label: 'Srteet Address' %>
+  </div>
+  
+  <div class="col-sm-3">
+  <%= f.input :city %>
+  </div>
+  
+  <div class="col-md-1 col-sm-1 padding-0">
+  <%= f.input :prov, collection: PROVINCES, include_blank: true %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :country, collection: ['Canada','USA','Other'] %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :postal, label: 'Postal/ZIP' %>
+  </div>
+</div>
+
+<!-- Row 4 -->
+
+<div class="row">
+  <div class="col-sm-3">
+  <%# f.input :family_dr, label: 'Family Doctor' #%>
+  <%= f.input :family_dr, label: 'Family Doctor, if known', collection: Doctor.all, hint:'Optional', label_method: :lname, value_method: :lname, prompt: 'Select' %>
+  </div>
+  
+  <div class="col-sm-3">
+  <%= f.input :phone, as: :tel, label: 'Home Phone', value: num_to_phone(@patient.phone) %>
+  </div>
+  
+  <div class="col-sm-3">
+  <%= f.input :mobile, as: :tel, value: num_to_phone(@patient.mobile) %>
+  </div>
+  
+  <div class="col-sm-3">
+  <%= f.input :email, hint: 'Required' %>
+  </div>
+</div>
+
+<!-- Row 5 -->
+<div class="row">
+  <div class="col-sm-3">
+  <%= f.input :pharmacy, label:'Pharmacy name, if known', hint: 'Optional' %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :pharm_phone, as: :tel, label: 'Pharm. Phone', value: num_to_phone(@patient.pharm_phone), hint: 'Optional' %>
+  </div>
+  
+  <div class="col-sm-2">
+  <%= f.input :pharm_fax, as: :tel, label: 'Pharmacy Fax', value: num_to_phone(@patient.pharm_fax), hint: 'Optional' %>
+  </div>
+  
+  <div class="col-sm-3">
+  <%= f.input :alt_contact_name, label: 'Emergency Contact', hint:'Optional' %>
+  </div>
+
+  <div class="col-sm-2">
+  <%= f.input :alt_contact_phone, as: :tel, label: "Contact's phone", hint: 'Optional' %>
+  </div>
+</div>
+  
+<!-- Row 6 -->  
+<div class="row">
+  <div class="col-sm-12">
+  <%= f.input :allergies, label: 'Allergies, if present', hint: 'Optional'  %>
+  </div>
+</div>
+
+<!-- Row 7 -->
+<div class="row">
+  <div class="col-sm-12">
+  <%= f.input :meds, as: :text, rows:2, label: 'List of current medications', hint: 'Optional'  %>
+  </div>
+</div>
+
+<!-- Row 8 -->
+<% unless current_user.patient? %>
+<div class="row">
+  <div class="col-sm-12">
+  <%= f.input :notes, rows:4, placeholder: 'Notes', label: false %>
+  </div>
+</div>
+<% end %>
+
+<div class="row">
+  <div class="col-md-5 col-md-offset-4">
+  <%= f.button :submit, 'Save Record', class: "btn btn-primary" %>
+  </div>
+</div>
+
+<div class="spacer-20"></div>
+<% end %>
+
+<script defer>
+$('body').tooltip({ selector: "[data-toggle~='tooltip']"});
+$(document).ready(function () {
+// Show maiden name text field for female patients 
+   var sex = $('select[name="patient[sex]"]');
+	
+   (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
+   sex.change(function () {
+     (sex.val() =='F') ? $('#maiden_name').show() : $('#maiden_name').hide();
+   });
+
+});
+</script>
+

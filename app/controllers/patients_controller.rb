@@ -38,10 +38,11 @@ class PatientsController < ApplicationController
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     if Patient.exists?(params[:id]) 
        @patient = Patient.find(params[:id]) 
-       flash[:warning] = 'Warning: you did not provide your telephone number. Please enter it in you patient profile (top left drop-down), so that doctor can reach you' unless @patient.phone.present? || @patient.mobile.present?
+       flash[:warning] = 'Warning: you did not provide your telephone number. Please enter it in you patient profile so that doctor can reach you' unless @patient.phone.present? || @patient.mobile.present?
        @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
        if !@patient.valid?
-	  flash.now[:danger] = @patient.errors.full_messages.to_sentence
+#        @patient.errors.messages[:phone] = []  # suppress duplicate message shown above
+        flash.now[:danger] = @patient.errors.full_messages.to_sentence
        end
     else
        redirect_to patients_path
@@ -197,7 +198,7 @@ class PatientsController < ApplicationController
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 
-					  :phone, :mobile, :full_name, :addr, :city, :prov,
+					  :phone, :mobile, :full_name, :addr, :city, :prov, :country,
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :pharm_fax, :notes, :alt_contact_name,
 					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count,
