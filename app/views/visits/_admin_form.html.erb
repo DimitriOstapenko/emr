@@ -36,7 +36,7 @@
   	</div>
      <% end %>
      <% if current_user.admin? && action_name == 'edit' %>
-   	<div class="col-md-2">
+   	<div class="col-md-4">
 	  <%= f.input :billing_ref %>
   	</div>
     <% end %>
@@ -149,6 +149,11 @@
     <%= f.input :document, label: 'Attach document/picture (pdf/jpg)'  %>
   </div>
 </div>
+<b> Attached documents: </b>
+<% @visit.documents.each do |d| %>
+   <% next unless d.document.file.present? %>
+   &nbsp;|&nbsp;<%= link_to d.document.file.filename, d.document.url.to_s %>
+ <% end %>
 
 <div class="spacer-10"></div>
 

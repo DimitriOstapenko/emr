@@ -47,13 +47,13 @@
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
-     <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:4} %>
+     <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:4}, hint: 'Optional' %>
   </div>
 </div>
 
 <div class="row">
   <div class="col-sm-12">
-    <%= f.input :document, label: 'Upload Document/Picture (pdf/jpg)'  %>
+    <%= f.input :document, label: 'Upload Document/Picture (pdf/jpg)', hint: 'Optional'  %>
   </div>
 </div>
 

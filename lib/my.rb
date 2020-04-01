@@ -886,20 +886,34 @@ end # EDT module
   def build_visit_history ( pat )
     date = Date.today.strftime("%d-%b-%Y") 
 
-    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,20.mm,20.mm])
+    pdf = Prawn::Document.new( :page_size => "LETTER", margin: [10.mm,10.mm,10.mm,15.mm])
     pdf.font "Courier"
-    pdf.font_size 12
+    pdf.font_size 10
 
-    pdf.text CLINIC_NAME, align: :center, style: :bold, size: 14
+    pdf.text CLINIC_NAME, align: :center, style: :bold, size: 12
     pdf.text CLINIC_ADDR, align: :center 
-    pdf.text "tel: #{CLINIC_PHONE} fax: #{CLINIC_FAX}", align: :center, size: 10
+    pdf.text "tel: #{CLINIC_PHONE} fax: #{CLINIC_FAX}", align: :center
     pdf.move_down 10.mm
 
-    pdf.text "#{pat.full_name} : history of visits to the clinic:", style: :bold
+    pdf.text "#{pat.full_name} : history of visits to the clinic:", style: :bold, size: 12, align: :center
+    pdf.move_down 10.mm
 
-    pdf.move_down 5.mm
+    rows =  [[ "Svc Date", "Doctor", "Diagnosis",  "Ref. Code" ]]
     pat.visits.each do |v|
-	    pdf.text "#{v.entry_ts.to_s.ljust(20,' ')}  Dr. #{v.doctor.lname.ljust(20,' ')}  Ref # #{v.id}"
+      next if v.status == CANCELLED
+      rows += [[ v.entry_ts.to_date.strftime("%d/%m/%Y"), "Dr. #{v.doctor.lname}", v.diag_descr, v.id ]]
+    end
+
+    pdf.table rows do |t|
+      t.cells.border_width = 0
+      t.column_widths = [35.mm, 45.mm, 80.mm, 20.mm  ]
+      t.header = true
+      t.row(0).font_style = :bold
+      t.position = 15.mm
+      t.cells.padding = 3
+      t.cells.style do |c|
+        c.background_color = c.row.odd? ? 'EEEEEE' : 'FFFFFF'
+       end
     end
     
     pdf.move_down 20.mm
