@@ -19,7 +19,7 @@
 <% if @visit.diag_code.present? %>
 <b>Diagnosis</b> : <%= @visit.diag_descr  %>
 <% end %>
-<b>Status: </b> <%= @visit.status_str %>
+<b>Status: </b> <%= @visit.patient_status_str %>
 </pre>
 
 <% if @visit.reason.present? %>

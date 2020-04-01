@@ -1,6 +1,6 @@
 <h3>Stoney Creek Medical Walk-In Clinic patient registration</h3>
 <p>Welcome <%= @email %>!</p>
 
-<p>You can confirm your account email through the link below:</p>
+<p>You can confirm your account email through the link below. After this you can log in and book your first telemedicine visit</p>
 
 <p><%= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token) %></p>
