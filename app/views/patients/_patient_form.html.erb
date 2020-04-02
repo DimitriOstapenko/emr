@@ -1,5 +1,6 @@
 <%= simple_form_for (@patient) do |f| %>
   <%= f.error_notification %>
+  <%# render 'shared/error_messages', object: f.object %>
   
   <%= f.hidden_field :pat_type, value: HCP_PATIENT %>
 

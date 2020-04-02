@@ -293,7 +293,7 @@ class Visit < ApplicationRecord
     hcp_codes.each do |code|
       proc = Procedure.find_by(code: code)      
       if proc.diag_req
-        errors.add('Error:', "Diagnosis is required for this visit") if diag_code.blank?
+        errors.add(:diag_code, "Diagnosis is required for this visit") if diag_code.blank?
          return
       end
     end
@@ -320,7 +320,7 @@ private
 # Can only save 1 visit per patient per day  
   def check_uniqueness 
       visits = pat.visits.where('date(entry_ts)=?', self.entry_ts.to_date)
-      errors.add('Error:', "Only 1 visit is allowed by OHIP per patient per day") if visits.any?
+      errors.add(:reason, "Only 1 visit is allowed by OHIP per patient per day") if visits.any?
   end
 
   def default_values

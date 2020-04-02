@@ -42,7 +42,7 @@ class Patient < ApplicationRecord
 		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || (a.hin_prov != 'ON' &&  a.pat_type == 'R')}
 	validates :ifh_number,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.pat_type == 'I')}
-	validates :ohip_ver, length: { maximum: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
+	validates :ohip_ver, length: { is: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
 	validates :postal, length: { maximum: 6 }, allow_blank: true
@@ -91,10 +91,19 @@ class Patient < ApplicationRecord
     end
   end
 
-# Formatted phone number
+# Formatted home phone number
   def phonestr
     ActiveSupport::NumberHelper.number_to_phone(phone, area_code: :true)
   end
+
+# Formatted home phone number
+  def mobilestr
+    ActiveSupport::NumberHelper.number_to_phone(mobile, area_code: :true)
+  end
+
+  def mobile_or_home_phone
+    mobilestr || phonestr
+  end 
 
 # Sex: Male, Female, Unknown
   def full_sex
@@ -131,12 +140,12 @@ class Patient < ApplicationRecord
 # Don't validate out of province or non-ohip numbers   
     if (hin_prov == 'ON' &&  pat_type == 'O')
       if hin_expiry.blank?
-         errors.add('Health Card:', "Expiry date is required")
+         errors.add(:hin_expiry, "Expiry date is required")
 	 return
       end
       expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
-      errors.add('Health Card:', "Card is expired") if expiry < Date.today
-      errors.add('Health Card:', "Card number for ON must be 10 digits long") if ohip_num.present? && ohip_num.length != 10
+      errors.add(:hin_expiry, "Card is expired") if expiry < Date.today
+      errors.add(:ohip_num, "Card number for ON must be 10 digits long") if ohip_num.present? && ohip_num.length != 10
     end 
 
 # Check sum test is disabled for now    
@@ -154,8 +163,7 @@ class Patient < ApplicationRecord
     end
 
     return if (last_digit == (10 - sum.to_s[-1].to_i))
-    errors.add('OHIP patient:', "Verifying Health Card number") 
-    errors.add('Ontario Health Card:', "Number is invalid") 
+    errors.add(:ohip_num, "Number is invalid") 
   end
 
   # List of active medications (Array)
@@ -223,8 +231,9 @@ protected
 
   def validate_age
       return unless dob.present?
-      if dob < 120.years.ago || dob > Date.yesterday
-          errors.add('Error:', 'Date of birth is out of range')
+#      if dob < 110.years.ago || dob > Date.yesterday
+      if !dob.between?(110.years.ago, Date.today)
+          errors.add(:dob, 'Date of birth is out of range')
       end
   end
 

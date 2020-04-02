@@ -39,8 +39,8 @@ class Paystub < ApplicationRecord
 
   def set_amounts
     self.ohip_amt ||= 0
-    errors.add('Paystub error:', "% Deduction not defined for this doctor") unless doctor.percent_deduction.present?
-    errors.add('Paystub error:', "MHO deduction not defined for this doctor") unless self.mho_deduction.present?
+    errors.add(:doc_id, "% Deduction not defined for this doctor") unless doctor.percent_deduction.present?
+    errors.add(:doc_id, "MHO deduction not defined for this doctor") unless self.mho_deduction.present?
     other_income = self.cash_amt + self.ifh_amt + self.hc_dep_amt + self.wcb_amt
     self.gross_amt = self.ohip_amt + other_income + self.monthly_premium_amt
     self.clinic_deduction = (self.gross_amt / 100.0) * doctor.percent_deduction	  

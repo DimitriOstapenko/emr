@@ -19,7 +19,7 @@ def write
       file = File.open(self.filespec, 'w')
       file.write( self.body )
       rescue Errno::ENOENT => e
-	errors.add('Error:', e.message.inspect)
+	errors.add(:filename, e.message.inspect)
       ensure
         file.close
       end
