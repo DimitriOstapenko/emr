@@ -42,7 +42,7 @@ class Patient < ApplicationRecord
 		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || (a.hin_prov != 'ON' &&  a.pat_type == 'R')}
 	validates :ifh_number,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.pat_type == 'I')}
-	validates :ohip_ver, length: { is: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
+#	validates :ohip_ver, length: { is: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
 	validates :dob, presence: true
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
 	validates :postal, length: { maximum: 6 }, allow_blank: true
