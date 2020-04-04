@@ -7,7 +7,7 @@
 	<td><%= patient.ohip_or_ifh_num_full %> </td>
 	<td><%= patient.hin_expiry_short %> </td>
 	<td><%= patient.dob %> </td>
-	<td><%= num_to_phone(patient.phone) %> </td> 
+	<td><%= patient.mobile_or_home_phone %> </td> 
         <td><%= link_to '<i class="glyphicon glyphicon-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
         <td><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
 

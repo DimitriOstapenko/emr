@@ -7,6 +7,7 @@ class PatientsController < ApplicationController
         before_action :verify_patient  # is patient set and is rigtht patient?
 
         helper_method :sort_column, :sort_direction
+        rescue_from ::ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
       @sort = sort_column
@@ -37,17 +38,10 @@ class PatientsController < ApplicationController
 
   def show 
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
-    if Patient.exists?(params[:id]) 
-       @patient = Patient.find(params[:id]) 
-       flash[:warning] = 'Warning: you did not provide your telephone number. Please enter it in you patient profile so that doctor can reach you' unless @patient.phone.present? || @patient.mobile.present?
-       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
-       if !@patient.valid?
-#        @patient.errors.messages[:phone] = []  # suppress duplicate message shown above
-        flash.now[:danger] = @patient.errors.full_messages.to_sentence
-       end
-    else
-       redirect_to patients_path
-    end
+    @patient = Patient.find(params[:id]) 
+    flash[:warning] = 'Warning: you did not provide your telephone number. Please enter it in you patient profile so that doctor can reach you' unless @patient.phone.present? || @patient.mobile.present?
+    @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
+    flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
   end
 
   def new
@@ -259,6 +253,11 @@ private
 
   def sort_direction
       %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def record_not_found(exception)
+      flash[:warning] = exception.message
+      redirect_back fallback_location: patients_path
   end
 
 end

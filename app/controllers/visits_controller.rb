@@ -10,6 +10,8 @@ class VisitsController < ApplicationController
   before_action :non_patient_user, except: [:new, :show, :create, :visitform, :cancel ]
   before_action :admin_user, only: :destroy
 
+  rescue_from ::ActiveRecord::RecordNotFound, with: :record_not_found
+
 # before_action :current_doctor_set #, only: [:create, :visitform, :receipt]  
 
   def index (defdate = Date.today )
@@ -258,6 +260,11 @@ end
 
     def sort_direction
           %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+    end
+
+    def record_not_found(exception)
+      flash[:warning] = exception.message
+      redirect_back fallback_location: daysheet_path
     end
 
 end
