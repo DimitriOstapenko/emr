@@ -15,6 +15,8 @@ class User < ApplicationRecord
   validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
   validates :ohip_ver, length: { is: 2 }, allow_blank: true
 
+  after_create_commit :send_emails
+
 # Initialize user, set patient
   def set_patient
     self.role ||= :patient
@@ -28,9 +30,13 @@ class User < ApplicationRecord
         self.patient_id = patient.id 
         self.new_patient = true
       end
-      UserMailer.new_registration(self).deliver
+#      UserMailer.new_registration(self).deliver
     end
   end
+
+  def send_emails
+      UserMailer.new_registration(self).deliver
+  end  
 
 # name attribute dropped, this is not to break legacy code 
   def name

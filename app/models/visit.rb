@@ -238,7 +238,7 @@ class Visit < ApplicationRecord
 # Return diagnosis description
   def diag_descr
     diag = Diagnosis.find_by(code: diag_code )	  
-    return diag.descr rescue '' 
+    return diag.descr rescue cash_pcodes 
   end
 
 # Return procedure description for given code
@@ -259,7 +259,7 @@ class Visit < ApplicationRecord
       when 7 
          return 'Cancelled' 
       when 1..6 
-         return 'Processed'    
+         return 'Complete'    
       else
          return ''
     end
