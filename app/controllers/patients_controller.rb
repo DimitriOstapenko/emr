@@ -4,6 +4,7 @@ class PatientsController < ApplicationController
 	before_action :logged_in_user 
 	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history, :chart ]
 	before_action :admin_user, only: :destroy
+        before_action :verify_patient  # is patient set and is rigtht patient?
 
         helper_method :sort_column, :sort_direction
 

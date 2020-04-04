@@ -35,9 +35,12 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_path unless current_user
     end
 
-# Patient user, but patient_id is missing:    
+# Patient user, but patient_id is missing or wrong (does not belong to this patient)
    def verify_patient
-     redirect_to new_user_session_path if current_user.patient? && current_user.patient_id.blank? 
+     return unless current_user && current_user.patient?
+     redirect_to root_path if current_user.patient_id.blank? 
+     pat_id = params[:patient_id] || params[:id] rescue nil
+     redirect_back fallback_location: patient_path(current_user.patient_id), warning: "You don't have the right to use this operation" unless (current_user.patient_id.to_s == pat_id)
    end
 
 # alert if current_doctor is not set
@@ -51,34 +54,34 @@ class ApplicationController < ActionController::Base
 
 # Confirms an admin user.
   def admin_user
-    redirect_back fallback_location: root_path, alert: "This operation is reserved to admin users only" unless current_user && current_user.admin?
+    redirect_back fallback_location: root_path, warning: "This operation is reserved to admin users only" unless current_user && current_user.admin?
   end
 
 # Confirms staff user  
   def staff_user
-     redirect_back fallback_location: root_path, alert: "This operation is reserved for staff users only" unless current_user && current_user.staff?
+     redirect_back fallback_location: root_path, warning: "This operation is reserved for staff users only" unless current_user && current_user.staff?
   end
 
 # Confirms admin or staff user  
   def admin_or_staff_user
-    redirect_back fallback_location: root_path, alert: "This operation is reserved to staff and admins only" unless current_user && (current_user.admin? || current_user.staff?)
+    redirect_back fallback_location: root_path, warning: "This operation is reserved to staff and admins only" unless current_user && (current_user.admin? || current_user.staff?)
   end    
 
 # Confirms patient user
   def patient_user
-    redirect_back fallback_location: root_path, alert: "This operation is reserved to patients only" unless current_user && (current_user.patient? )
+    redirect_back fallback_location: root_path, warning: "This operation is reserved to patients only" unless current_user && current_user.patient? 
   end    
 
 # Confirms non-patient user
   def non_patient_user
-    redirect_to patient_path(current_user.patient), alert: "You don't have the right to use this operation" if current_user && (current_user.patient? )
+    redirect_to patient_path(current_user.patient), warning: "You don't have the right to use this operation" if current_user && current_user.patient? 
   end    
 
 # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id]) rescue nil
-      redirect_back fallback_location: root_path, alert: "You have to be logged in"  unless (@user && current_user)
-      redirect_back fallback_location: root_path, alert: "You don't have the right to use this operation"  unless (current_user?(@user) || current_user.admin?)
+      redirect_back fallback_location: root_path, warning: "You have to be logged in"  unless (@user && current_user)
+      redirect_back fallback_location: root_path, warning: "You don't have the right to use this operation"  unless (current_user?(@user) || current_user.admin?)
     end
 
 # Is procedure OHIP covered?
