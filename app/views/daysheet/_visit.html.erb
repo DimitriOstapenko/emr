@@ -1,7 +1,7 @@
 <% pat = Patient.find(visit.patient_id) rescue nil %>
 <% remote = device_is_desktop? %>
 <%= simple_form_for [pat,visit] do |f| %>
-<tr>
+  <tr>
 	<td>
 	<% if visit.ready_to_bill? %>
 		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>

@@ -20,11 +20,11 @@ class User < ApplicationRecord
 # Initialize user, set patient
   def set_patient
     self.role ||= :patient
-    if self.role == 'patient'
+    if self.patient?
       patient = Patient.find_by(ohip_num: self.ohip_num)
       if patient.present?
         self.patient_id = patient.id 
-        patient.update_attribute(:email, self.email)
+#        patient.update_attribute(:email, self.email) 
       else
         patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email)
         patient.save!(validate:false)
@@ -33,6 +33,11 @@ class User < ApplicationRecord
       end
 #      UserMailer.new_registration(self).deliver
     end
+  end
+
+# Override Devise::Confirmable#after_confirmation  
+  def after_confirmation
+    self.patient.update_attribute(:email, self.email) if self.patient?
   end
 
   def send_emails

@@ -533,7 +533,11 @@ input, select{
   background-color :#ffc107;  // overrides default colors!
 }
 
-#flash_alert {
+#flash_alert {               // devise alers
+  font-weight: bold;
+}
+
+#flash_notice {		     // devise notices
   font-weight: bold;
 }
 

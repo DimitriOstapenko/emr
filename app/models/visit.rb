@@ -31,6 +31,7 @@ class Visit < ApplicationRecord
 # Patient type and hin_num may change from visit to visit; We won't update on other attr changes
   before_save { 
 	  self.pat_type ||= pat.pat_type
+          self.status = ASSESSED if (self.status == READY && self.diag_code.blank? && self.hcp_services?)
 	  if self.pat_type == IFH_PATIENT
 	    self.hin_num ||= pat.ifh_number
 	  elsif self.pat_type == CASH_PATIENT
@@ -287,7 +288,7 @@ class Visit < ApplicationRecord
 
 # Generate error if one of the procedures requires diagnosis  
   def diag_required
-    return if self.vis_type == TELE_VISIT
+    return if self.vis_type == TELE_VISIT  # patient-created visits have no diagnosis
     hcp_codes = hcp_proc_codes.split(',') rescue nil
     return unless hcp_codes.any?
     hcp_codes.each do |code|
