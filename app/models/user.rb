@@ -24,6 +24,7 @@ class User < ApplicationRecord
       patient = Patient.find_by(ohip_num: self.ohip_num)
       if patient.present?
         self.patient_id = patient.id 
+        patient.update_attribute(:email, self.email)
       else
         patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email)
         patient.save!(validate:false)

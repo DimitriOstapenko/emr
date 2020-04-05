@@ -11,10 +11,12 @@
 	<li>Logged in <%= current_user.role %>: <%= link_to "#{current_user.email}", edit_user_path(current_user.id) %></li>
       <% end %>
       <li style="width:40px">&nbsp;</li>
+      <% if current_user && !current_user.patient? %>
       <li><%= link_to "About", about_path, target: '_new' %></li>
       <li><%= link_to "Help", help_path, target: '_new' %></li>
-      <li><%= link_to "Contact", contact_path, target: '_new' %></li>
       <li><%= link_to "News", news_path, target: '_new' %></li>
+      <% end %>
+      <li><%= link_to "Contact", contact_path, target: '_new' %></li>
       <li><%= link_to "Terms", terms_path, target: '_new' %></li>
       <li><%= link_to "Privacy Policy", privacy_path, target: '_new' %></li>
       </small>

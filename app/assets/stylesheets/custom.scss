@@ -533,6 +533,10 @@ input, select{
   background-color :#ffc107;  // overrides default colors!
 }
 
+#flash_alert {
+  font-weight: bold;
+}
+
 .alert .glyphicon{
     display:table-cell;
 }
