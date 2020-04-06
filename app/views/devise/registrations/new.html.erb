@@ -1,3 +1,4 @@
+<% provide(:title, 'Patient Registration') %>
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
   <%= f.full_error :patient_id %> <%#unless f.error :ohip_num %>
