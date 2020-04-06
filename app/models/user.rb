@@ -1,20 +1,20 @@
 class User < ApplicationRecord
-# Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+# :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :timeoutable , :validatable
 
   default_scope -> { order(email: :asc) }
   enum role: USER_ROLES
 
-  before_validation :set_patient
-  before_validation { self.ohip_num.gsub!(/\D/,'') rescue nil }
-  before_validation { self.ohip_ver.strip! rescue nil }
-  before_validation { self.email.downcase! rescue '' }
+  before_validation { self.ohip_num.upcase!; 
+                      self.ohip_num.gsub!(/\W/,'');
+                      self.ohip_num, self.ohip_ver = self.ohip_num.match(/(\d+)(\S+)/).captures rescue nil;
+                      self.email.downcase! rescue '' }
 
   validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
   validates :ohip_ver, length: { is: 2 }, allow_blank: true
 
+  after_validation :set_patient
   after_create_commit :send_emails
 
 # Initialize user, set patient
@@ -24,14 +24,12 @@ class User < ApplicationRecord
       patient = Patient.find_by(ohip_num: self.ohip_num)
       if patient.present?
         self.patient_id = patient.id 
-#        patient.update_attribute(:email, self.email) 
       else
         patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email)
         patient.save!(validate:false)
         self.patient_id = patient.id 
         self.new_patient = true
       end
-#      UserMailer.new_registration(self).deliver
     end
   end
 

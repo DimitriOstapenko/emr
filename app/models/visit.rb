@@ -252,17 +252,17 @@ class Visit < ApplicationRecord
     VISIT_STATUSES.invert[status].to_s rescue ''
   end
 
-# Do not show patient real status, only New, Processed and Cancelled  
+# Do not show patient real status
   def patient_status_str
     case self.status
       when 0
          return 'New visit' 
       when 7 
          return 'Cancelled' 
-      when 1..6 
+      when 3..5 
          return 'Complete'    
       else
-         return ''
+         return 'In Process'
     end
   end
 
