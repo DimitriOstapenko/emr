@@ -8,7 +8,8 @@ class User < ApplicationRecord
 
   before_validation { self.ohip_num.upcase!; 
                       self.ohip_num.gsub!(/\W/,'');
-                      self.ohip_num, self.ohip_ver = self.ohip_num.match(/(\d+)(\S+)/).captures rescue nil;
+                      self.ohip_num, ver = self.ohip_num.match(/(\d+)(\S*)/).captures rescue nil;
+                      self.ohip_ver ||= ver
                       self.email.downcase! rescue '' }
 
   validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true

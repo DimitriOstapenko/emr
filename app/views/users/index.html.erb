@@ -4,12 +4,12 @@
 <table class="tbl2 table-hover table-striped table-bordered">
    <thead>
       <tr>
-          <th>Email</th>
-          <th>Role</th>
-	  <th>Confirmed</th>
-	  <th>Created</th>
-	  <th>Sign In Count</th>
-	  <th>Last Login</th>
+          <th> <%= sortable 'email', 'Email' %></th>
+          <th class='text-center'>Role</th>
+	  <th class='text-center'>Confirmed</th>
+          <th class='text-center'><%= sortable 'created_at', 'Created' %></th>
+	  <th class='text-center'><%= sortable 'sign_in_count', 'Sign In Count' %></th>
+          <th class='text-center'><%= sortable 'last_sign_in_at', 'Last Sign in' %></th>
           <th class='text-center'>Invited By</th>
           <th class='text-center tbl_sm'>Edit</th>
           <th class='text-center tbl_sm'>Sw.To</th>

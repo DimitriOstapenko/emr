@@ -4,8 +4,10 @@ class UsersController < ApplicationController
   	before_action :correct_user, only: [:show, :edit, :update]
   	before_action :admin_user, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
 
+        helper_method :sort_column, :sort_direction
+
   def index
-    @users = User.paginate(page: params[:page]) 
+    @users = User.all.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
   end
 
   def show
@@ -70,6 +72,15 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :invited_by)
     end
+
+    def sort_column
+        User.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
+    end
+
+    def sort_direction
+          %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+    end
+
 
 # Confirms the correct user.
 #    def correct_user
