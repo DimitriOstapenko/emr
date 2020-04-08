@@ -1,0 +1,20 @@
+<%
+=begin %>
+
+<li class="dropdown nav-item">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-menu-hamburger text-muted" style='font-size: 30px;'></i></a>
+<ul class="dropdown-menu">
+
+<% if logged_in? %>
+ <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
+<% else %>
+ <li class="login_link"><%= link_to "<i class='glyphicon glyphicon-log-in'></i> Login".html_safe, new_user_session_path %></li>
+ <li><%= link_to "<i class='glyphicon glyphicon-registration-mark'></i> Register".html_safe, new_user_registration_path  %> </li>
+<% end %>
+</ul>
+</li>
+
+<%
+=end %>
+
+

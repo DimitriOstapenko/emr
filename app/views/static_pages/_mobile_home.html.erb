@@ -1,0 +1,27 @@
+<% provide(:title, 'Welcome') %>
+
+<div class="hdr-text">OHIP covered telemedicine visits for all </div> 
+<div class="spacer-10"></div>
+<div style="float:left">
+<div id='logo' style="padding:10px">
+<img src='/images/clinic.jpg' width="350" style="padding:20px"></img>
+</div>
+</div>
+
+<div style="padding:10px;">
+<font size=4>
+  <p> Don't want to stay in a busy waiting room during pandemic? You don't have to. You can now call a doctor and discuss your medical issue or renew your medication.</p>
+  <p> Simply register with your OHIP card, confirm your email and login to make your first telephone appointment with a doctor right away. </p>
+    
+<div class='spacer-10'></div>
+<div align="center"> <%= link_to 'Yes! I want to talk to a doctor', new_user_registration_path, class: "btn btn-primary btn-lg" %> </div>
+<div class='spacer-20'></div>
+
+<p>Already registered? Please log in to make an appointment with <b>Dr. Ostapenko</b>. She will call you back as soon as she can. </p>
+
+<div align="center"><%= link_to 'Make an Appointment', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+
+<div class='spacer-20'></div>
+<p>Don’t have a health card? We still can help. Please call the number below and leave a message. We will respond as soon as we can. </p>
+
+<h1> (289) 204-0561 </h1>

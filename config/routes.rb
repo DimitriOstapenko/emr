@@ -71,6 +71,8 @@ Rails.application.routes.draw do
   get "/procedures/get_by_code", to: "procedures#get_by_code" 
   get "/procedures/get", to: "procedures#get" 
   get "/drugs/get", to: "drugs#get" 
+
+  get "/patients/get", to: "patients#get"
   
   resources :users
   resources :patients do

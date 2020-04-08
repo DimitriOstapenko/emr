@@ -1,0 +1,12 @@
+<footer>
+  <nav>
+    <ul>
+      <% if logged_in? %>
+        <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
+      <% end %>
+      <li><%= link_to "Contact", contact_path %></li>
+      <li><%= link_to "Terms", terms_path %></li>
+      <li><%= link_to "Privacy Policy", privacy_path %></li>
+    </ul>
+  </nav>
+</footer>

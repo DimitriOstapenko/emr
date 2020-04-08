@@ -14,6 +14,7 @@ class User < ApplicationRecord
 
   validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
   validates :ohip_ver, length: { is: 2 }, allow_blank: true
+  validates :email, presence: true;
 
   after_validation :set_patient
   after_create_commit :send_emails

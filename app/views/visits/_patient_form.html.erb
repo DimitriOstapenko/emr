@@ -27,7 +27,7 @@
   </div>
 
   <div class="col-sm-2">
-  <%= f.input :bp, as: :string, label:'BP (H/L)', hint:'Optional' %>
+  <%= f.input :bp, as: :string, label:'Blood Pressure (H/L)', hint:'Optional' %>
   </div>
 
   <div class="col-sm-2">
@@ -39,14 +39,14 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, hint:'Required', input_html: {rows:2} %>
+  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, hint:'Required', input_html: {rows:4} %>
   </div>
 </div>
 
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
-     <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:4}, hint: 'Optional' %>
+     <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:2}, hint: 'Optional' %>
   </div>
 </div>
 

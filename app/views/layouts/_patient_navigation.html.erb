@@ -1,1 +1,2 @@
-<li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Home", patient_path(current_user.patient) %></li>
+<li><%# link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
+<li><div style="float:right; margin-right:20px;"><%= link_to "<i class='glyphicon glyphicon-home'></i> Home".html_safe, patient_path(current_user.patient) %></div></li>

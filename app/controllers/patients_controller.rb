@@ -1,7 +1,7 @@
 class PatientsController < ApplicationController
 	include My::Forms
 
-	before_action :logged_in_user 
+	before_action :logged_in_user, except: [:get]
 	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history, :chart ]
 	before_action :admin_user, only: :destroy
         before_action :verify_patient  # is patient set and is rigtht patient?
@@ -23,6 +23,21 @@ class PatientsController < ApplicationController
       flash[:info] = "#{@patients.count} patients found" if keyword
   end
 
+# try and get 1 patient by full ohip_num 
+  def get 
+    str = params[:findstr].strip.gsub(/\D/,'');
+    @patient = Patient.find_by(ohip_num: str).as_json
+    if @patient.present?
+      respond_to do |format|
+        format.json { render json: @patient }
+        format.html
+      end
+    else
+      flash.now[:warning] = "Patient not found #{str.inspect} "
+      render  inline: '', layout: true
+    end
+  end
+
   def __find
       str = params[:findstr].strip
       @patients = myfind(str) 
@@ -39,9 +54,13 @@ class PatientsController < ApplicationController
   def show 
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     @patient = Patient.find(params[:id]) 
-    flash[:warning] = 'Warning: you did not provide your telephone number. Please enter it in you patient profile so that doctor can reach you' unless @patient.phone.present? || @patient.mobile.present?
-    @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
-    flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
+    if @patient.lname && @patient.fname
+      flash[:warning] = 'Please provide your telephone number' unless @patient.mobile_or_home_phone
+      @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
+      flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
+    else
+      redirect_to edit_patient_path(@patient)
+    end
   end
 
   def new

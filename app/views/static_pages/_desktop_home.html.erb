@@ -1,0 +1,106 @@
+<% provide(:title, 'Welcome') %>
+<div class="spacer-10"></div>
+<div style="float:left">
+<div id='logo' style="padding:20px">
+<img src='/images/clinic.jpg' width="480" style="padding:20px"></img>
+</div>
+<div id="address">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (289) 204-0561 </div>
+</div>
+
+<div class="hdr-text">OHIP covered telemedicine visits for all </div> 
+
+<div class='spacer-20'></div>
+
+<div style="padding:20px;">
+<font size=3>
+  <p> Don't want to stay in a busy waiting room during pandemic? You don't have to. You can now call a doctor and discuss your medical issue or renew your medication.</p>
+  <p> Simply register with your OHIP card, confirm your email and login to make your first telephone appointment with a doctor right away. </p>
+    
+<div class='spacer-10'></div>
+<div align="center"> <%= link_to 'Yes! I want to talk to a doctor', new_user_registration_path, class: "btn btn-primary btn-lg" %> </div>
+<div class='spacer-20'></div>
+
+<p>Already registered? Please log in to make an appointment with <b>Dr. Ostapenko</b>. She will call you back as soon as she can. </p>
+
+<div align="center"><%= link_to 'Make an Appointment', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+
+<div class='spacer-20'></div>
+<div class='spacer-20'></div>
+<p>Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
+
+<p>
+Covid-19 is here and it’s not a regular flu. This virus is much more contagious and much more deadly, especially for older people with health conditions.  There’s no cure and no vaccine at this point. So please treat the situation seriously and take all measures to keep yourself safe.
+If you have any or all of these symptoms: fever, coughing, weakness, sweating, muscle pain, do not go to see a doctor, this is a sure way to spread the infection!  Please stay at home and call a doctor. You can register and make a telemedicine appointment with dr. Ostapenko using the buttons above.
+</p>
+
+<p>
+<b>Mask or no mask?</b> Surgical masks in general, but especially N95 (US) or FFP3 (Europe) help to prevent the spread of the disease. If you have Covid-19 symptoms, it’s crucial to wear a mask in public.
+</p>
+<p>
+<b>Think you might have it?</b> <a href="https://covid-19.ontario.ca/self-assessment/#q1" target="_new">Here is official Ontario quick self-assessment page</a>
+
+<p>
+At this point self-isolation is the best way to keep you safe and prevent the spread of this virus. Please stay home as much as possible. If you do have to get out, respect social distancing rules, do not touch your face and wash your hands often. Here are some helpful videos.
+</p>
+</font>
+</div>
+
+<div class='spacer-20'></div>
+<b>
+<div class="row">
+  <div class="col-md-3 col-md-offset-2">
+<a href="https://oma.us12.list-manage.com/track/click?u=f3031ca7cb6af54104b9de2cd&id=61aeb9b491&e=b5dca5db64" target="_new">A video on #socialdistancing</a>
+  </div>
+  <div class="col-md-3">
+<a href="https://oma.us12.list-manage.com/track/click?u=f3031ca7cb6af54104b9de2cd&id=cc0e3b2071&e=b5dca5db64" target="_new">A quick video with five tips for COVID-19 </a>
+  </div>
+  <div class="col-md-3">
+<a href="https://oma.us12.list-manage.com/track/click?u=f3031ca7cb6af54104b9de2cd&id=440e19b368&e=b5dca5db64" target="_new">A video on how to wash your hands</a>
+  </div>
+</b>
+</div>
+
+<!--
+<p class="medium">
+No appointment is necessary, we service both Ontario and out of province patients.
+New patients are welcome. Driver Medical Exam. We provide specialist referrals and speak many different languages.
+Pharmacy is available on the premises. Need a flushot? We provide flu shots and other injections without wait.  
+</p>
+
+<p class="medium">
+<h3>9am to 8pm, Mon-Fri, 9am to 2pm on weekends & holidays</h3>
+</p>
+
+<div class='spacer-10'></div>
+<p class="medium">
+We work together with the public Health Department and many specialists to satisfy the needs of our patients.
+Please arrive half an hour before closing time.  Schedules are subject to change without notice. 
+Table below provides most current schedule and is updated daily.
+</p>
+
+<div class='spacer-10'></div>
+
+<%# people_waiting = Visit.where(status: ARRIVED).count rescue 0 %>
+<p>
+
+
+<section id='marquee'>
+  <div class="container-fluid">
+    <marquee direction="left"><h4> <%# Schedule::doc_on_duty %> ... Flu shots and other injections are provided with no wait time </h4></marquee>
+  </div>
+</section>
+
+
+<div class="row">
+  <span style="width:420px; float:left; margin-left: 20px; ">
+  <%# render "schedules/full_schedule" %>
+  </span>
+  
+  <span style="width:250px; float:right; margin-top: 12px; margin-right: 20px;">
+  <div class="caption-text"><a href="https://medimap.ca/Stoney-Creek-Medical-Walk-In-Clinic" target="_new">Show current Wait Time</a></div> 
+  <img src='/images/map.png' width="240"></img>
+  </span>
+</div>
+<div class='spacer-10'></div>
+
+-->

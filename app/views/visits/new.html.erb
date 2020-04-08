@@ -1,5 +1,6 @@
 <% provide(:title, 'New Visit') %>
 <% provide(:button_text, 'Save') %>
-<h1>New Visit - <%= @patient.full_name %></h1>
+<h3> New Visit </h3>
+<h5><%= @patient.full_name %>, tel. <%= @patient.mobile_or_home_phone %></h5>
 
 <%= render "#{current_user.role}_form" %>

@@ -1,17 +1,19 @@
 <nav class="navbar navbar-expand-lg navbar-light">
 
     <ul class="nav navbar-nav navbar-left">
-    <%= render 'layouts/logo' %>
+      <%= render "layouts/#{device_type}_logo" %>
     </ul>
 
-      <ul class="nav navbar-nav navbar-right">
-      <% if logged_in? %>
-           <%= render "shared/modal" %>
-           <%= render "layouts/#{current_user.role}_navigation" %>
-      <% else %>
-           <li class="login_link"><%= link_to "<i class='glyphicon glyphicon-log-in'></i> Login".html_safe, new_user_session_path %></li>
-      <% end %>
-      <li style="width:10px;"></li>
-      </ul>
+    <ul class="nav navbar-nav navbar-right">
+    <% if logged_in? %>
+         <%= render "shared/modal" %>
+         <%= render "layouts/#{current_user.role}_navigation" %>
+    <% else %>
+       <% if device_is_desktop? %>
+         <li class="login_link"><%= link_to "<i class='glyphicon glyphicon-log-in'></i> Login".html_safe, new_user_session_path %></li>
+       <% end %>
+    <% end %>
+    <li style="width:10px;"></li>
+    </ul>
 </nav>
 
