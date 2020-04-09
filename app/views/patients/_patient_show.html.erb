@@ -25,8 +25,11 @@ Medications:
      <%= @patient.med_list.join("\n     ") %>
 <% end %> </b>
 </pre>
+<% if @patient.visits.count == 0 %>
+  <p><b>  Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment.</b></p>
+<% end %>
 
-<p><b> To request an appointment please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis.  </b></p>
+<p><b> To request a call back from the doctor, please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis. This service is covered by OHIP.  </b></p>
 	 
 &nbsp; <%# render("medications", remote: remote) if @patient.medications.any? %>
 &nbsp; <%# render("prescriptions", remote: remote) if @patient.prescriptions.any? %>
@@ -38,7 +41,7 @@ Medications:
 <% disabled = @patient.visits.first.date.today? rescue false %>
 <div class="col-sm-2 col-md-2">
   <div class="btn-group">
-<%= button_to 'Make an Appointment', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get', disabled: disabled  %>
+<%= button_to 'Yes, I would like to speak with the doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-success btn-lg", method: 'get', disabled: disabled  %>
   </div>
 </div>
 
