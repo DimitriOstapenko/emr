@@ -39,7 +39,7 @@ class Patient < ApplicationRecord
 	validates :lname, presence: true, length: { maximum: 50 }
 	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
-		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || (a.hin_prov != 'ON' &&  a.pat_type == 'R')}
+		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || a.pat_type == 'R' }
 	validates :ifh_number,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.pat_type == 'I')}
 #	validates :ohip_ver, length: { is: 2 }, if: Proc.new { |a| a.hin_prov == 'ON' &&  a.pat_type == 'O'}
@@ -102,7 +102,7 @@ class Patient < ApplicationRecord
   end
 
   def mobile_or_home_phone
-    mobilestr || phonestr
+    mobilestr.present? ?  mobilestr : phonestr
   end 
 
 # Sex: Male, Female, Unknown

@@ -54,11 +54,11 @@ class PatientsController < ApplicationController
   def show 
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     @patient = Patient.find(params[:id]) 
-    if @patient.lname && @patient.fname
-      flash[:warning] = 'Please provide your telephone number' unless @patient.mobile_or_home_phone
+    if @patient.lname.present? && @patient.fname.present? && @patient.mobile_or_home_phone.present? 
       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
       flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
     else
+      flash[:warning] = 'Please provide your telephone number' unless @patient.mobile_or_home_phone.present?
       redirect_to edit_patient_path(@patient)
     end
   end
