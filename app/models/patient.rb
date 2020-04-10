@@ -105,6 +105,10 @@ class Patient < ApplicationRecord
     mobilestr.present? ?  mobilestr : phonestr
   end 
 
+  def addr_full
+    "#{addr} #{city}, #{prov} #{postal}"
+  end
+
 # Sex: Male, Female, Unknown
   def full_sex
     SEXES.invert[sex].to_s rescue 'Unknown'

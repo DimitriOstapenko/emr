@@ -5,7 +5,7 @@
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">
-<pre class="pre-scrollable-xlg">
+<pre class="pre-scrollable-lg">
 <% if @patient.pat_type == CASH_PATIENT %>
 <b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <% else %>
@@ -13,9 +13,10 @@
 <%= hcnum if hcnum.present? %>
 <%= ifhnum if ifhnum.present? %>
 <% end %>
-<b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-Phone: <%= num_to_phone(@patient.phone) %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
-Address: <%= @patient.addr %> <%= @patient.city %> <%= @patient.prov %> <%= @patient.postal %>
+<b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; 
+Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
+<%= "Phone: #{num_to_phone(@patient.phone)}" if @patient.phone.present? %><%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
+<%= "Address: #{@patient.addr_full}" if @patient.addr.present? %> 
 <% if @patient.allergies.present? %>
 Allergies: <%= @patient.allergies %>
 <% end %>
@@ -25,24 +26,24 @@ Medications:
      <%= @patient.med_list.join("\n     ") %>
 <% end %> </b>
 </pre>
-<% if @patient.visits.count == 0 %>
-  <p><b>  Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment.</b></p>
-<% end %>
-
-<p><b> To request a call back from the doctor, please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis. This service is covered by OHIP.  </b></p>
 	 
-&nbsp; <%# render("medications", remote: remote) if @patient.medications.any? %>
+&nbsp; <%= render("medications", remote: remote) if @patient.medications.any? %>
 &nbsp; <%# render("prescriptions", remote: remote) if @patient.prescriptions.any? %>
 &nbsp; <%# render("invoices", remote: remote) if @patient.invoices.any? %>
 &nbsp; <%# render("letters", remote: remote) if @patient.letters.any? %>
 &nbsp; <%# render("referrals", remote: remote) if @patient.referrals.any? %>
 &nbsp; <%# render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
+<p>&nbsp;</p>
+
+<% if @patient.visits.count == 0 %>
+  <p><b>  Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment.</b></p>
+<% end %>
+
+<p><b> If you would like to speak with doctor, please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis. This service is covered by OHIP.  </b></p>
 
 <% disabled = @patient.visits.first.date.today? rescue false %>
-<div class="col-sm-2 col-md-2">
-  <div class="btn-group">
-<%= button_to 'Yes, I would like to speak with the doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-success btn-lg", method: 'get', disabled: disabled  %>
-  </div>
+<div class="col-sm-2 col-md-6 col-md-offset-3 col-sm-offset-3">
+<%= button_to 'Yes, I would like callback from doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get', disabled: disabled  %>
 </div>
 
   </section>

@@ -80,7 +80,10 @@ class ApplicationController < ActionController::Base
 # Confirms the correct user.
     def correct_user
       @user = User.find(params[:id]) rescue nil
-      redirect_back fallback_location: root_path, warning: "You have to be logged in"  unless (@user && current_user)
+      unless (@user && current_user)
+        redirect_back fallback_location: root_path, warning: "You have to be logged in" 
+        return
+      end
       redirect_back fallback_location: root_path, warning: "You don't have the right to use this operation"  unless (current_user?(@user) || current_user.admin?)
     end
 

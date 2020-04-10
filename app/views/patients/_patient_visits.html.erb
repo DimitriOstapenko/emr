@@ -2,13 +2,13 @@
 <div class="col-md-6">
     <h3>Visits: (<%= @patient.visits.count %>)</h3>
     <% if @patient.visits.any? %>
-        <table class="tbl">
+      <table class="tbl2 table-hover table-striped table-bordered">
   	  <thead>
 	  <tr>
-	    <th class="tbl_md">Date</th>
-	    <th class="tbl_md">Doctor</th>
-	    <th class="tbl_lg">Diagnosis</th>
-            <th class="tbl_lsm"></th>
+	    <th>Date</th>
+            <th>Doctor</th>
+	    <th>Diagnosis</th>
+	    <th></th>
 	  </tr>
 	  <tbody>
 
@@ -21,7 +21,8 @@
 	<div class="row">
 	  <div class="col-md-12"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info", method: 'get', onclick: "set_lg_modal()" %> </div>
 	</div>
-        <div style="float:right">
+	<div class="spacer-10"></div>
+	<div class="row" style="float: right">
 	<%= will_paginate @visits %>
         </div>
     <% end %>
