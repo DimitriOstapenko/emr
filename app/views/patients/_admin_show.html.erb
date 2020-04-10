@@ -14,7 +14,7 @@
 <%= ifhnum if ifhnum.present? %>
 <% end %>
 <b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-<%= "Phone: #{num_to_phone(@patient.phone)}" if @patient.phone.present? %><%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
+<%= "Phone: #{num_to_phone(@patient.phone)}" if @patient.phone.present? %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
 <%= "Address: #{@patient.addr_full}" if @patient.addr.present? %>
 <% if @patient.allergies.present? %>
 Allergies: <%= @patient.allergies %>
