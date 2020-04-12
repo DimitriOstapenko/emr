@@ -1,4 +1,4 @@
-#require 'dotenv/load'
+# Send SMS message to a phone
 require 'nexmo'
 
 #NEXMO_API_KEY = ENV['NEXMO_API_KEY']
@@ -7,7 +7,6 @@ NEXMO_API_KEY = '370954b9'
 NEXMO_API_SECRET = '157259c74bc4099b'
 #TO_NUMBER = ENV['TO_NUMBER']
 TO_NUMBER = "33699436691"
-
 
 client = Nexmo::Client.new(
   api_key: NEXMO_API_KEY,
