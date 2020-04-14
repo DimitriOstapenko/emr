@@ -26,6 +26,7 @@ class PatientsController < ApplicationController
 # try and get 1 patient by full ohip_num 
   def get 
     str = params[:findstr].strip.gsub(/\D/,'');
+    return if str.blank?
     @patient = Patient.find_by(ohip_num: str).as_json
     if @patient.present?
       respond_to do |format|

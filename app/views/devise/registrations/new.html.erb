@@ -1,7 +1,8 @@
 <% provide(:title, 'Patient Registration') %>
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-  <%= f.full_error :patient_id %> <%#unless f.error :ohip_num %>
+  <%# f.full_error :patient_id %> <%#unless f.error :ohip_num %>
+  <%# display = f.object.errors[:email].present? ? 'display: all' : 'display: none' %>
   
 <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
 <h3>Patient Sign Up</h3>
@@ -17,13 +18,13 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12" id="email" style="display: none" >
+    <div class="col-md-12" id="email" >
     To get access to your patient record, please sign up below:
     <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
   </div>
   </div>
 
-  <div class="row" id="password" style="display: none">
+  <div class="row" id="password">
   <div class="col-md-12">
     <%= f.input :password,
                 required: true,
@@ -32,7 +33,7 @@
   </div>
   </div>
               
-  <div class="row" id="password_conf" style="display: none">
+  <div class="row" id="password_conf">
   <div class="col-md-12">
     <%= f.input :password_confirmation,
                 required: true,
@@ -40,13 +41,7 @@
   </div>
   </div>
 
-  <div class="row" id='next'> 
-  <div class="col-md-12 col-sm-12">
-    <button type="button" class="btn btn-primary col-md-12 btn-block">Next </button>
-  </div>
-  </div>
-
-  <div class="row" id="submit" style="display: none">
+  <div class="row" id="submit">
   <div class="col-md-12">
     <%= f.button :submit, "Sign Up", class: "btn btn-primary" %>
   </div>
@@ -85,12 +80,6 @@ $(ohip_num).change(function () {
         result = `Clinic patient found:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} :  ${data.addr}`;
         $("#results").append(result);
       }
-        $("#email").show();
-        $("#password").show();
-        $("#password_conf").show();
-        $("#submit").show();
-        $("#next").hide();
-      console.log(data);
     }).fail(function (data) {
         console.log('AJAX request has FAILED');
     });
