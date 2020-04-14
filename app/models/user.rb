@@ -12,7 +12,7 @@ class User < ApplicationRecord
                       self.ohip_ver ||= ver
                       self.email.downcase! rescue '' }
 
-  validates :ohip_num, presence:true, length: { is: 10 }, numericality: { only_integer: true }, uniqueness: true
+  validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true
   validates :ohip_ver, length: { is: 2 }, allow_blank: true
   validates :email, presence: true;
 

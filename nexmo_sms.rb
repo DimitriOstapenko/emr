@@ -1,12 +1,12 @@
 # Send SMS message to a phone
 require 'nexmo'
+require_relative './config/environment'
 
-#NEXMO_API_KEY = ENV['NEXMO_API_KEY']
-NEXMO_API_KEY = '370954b9'
-#NEXMO_API_SECRET = ENV['NEXMO_API_SECRET']
-NEXMO_API_SECRET = '157259c74bc4099b'
-#TO_NUMBER = ENV['TO_NUMBER']
+NEXMO_API_KEY = Rails.application.credentials[:nexmo_sms][:api_key] 
+NEXMO_API_SECRET =  Rails.application.credentials[:nexmo_sms][:api_secret] 
+
 TO_NUMBER = "33699436691"
+# TO_NUMBER =  Rails.application.credentials[:nexmo_voice][:to_number] 
 
 client = Nexmo::Client.new(
   api_key: NEXMO_API_KEY,
@@ -14,7 +14,7 @@ client = Nexmo::Client.new(
 )
 
 client.sms.send(
-  from: 'Vonage SMS API',
+  from: 'Walk-In EMR',
   to: TO_NUMBER,
   text: 'A text message sent using the Nexmo SMS API'
 )

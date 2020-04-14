@@ -4,7 +4,7 @@
   <%= f.full_error :patient_id %> <%#unless f.error :ohip_num %>
   
 <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-<h3>Patient Lookup</h3>
+<h3>Patient Sign Up</h3>
 <div class="well">
 
   <b><font color=green><span id="results"></span></font></b>
@@ -12,12 +12,13 @@
 
   <div class="row">
   <div class="col-md-12">
-    <%= f.input :ohip_num, label: 'Health Card# including version code', autofocus: true, input_html: { autocomplete: "ohip_num"}  %>
+    <%= f.input :ohip_num, label: 'Your Health Card Number', autofocus: true, input_html: { autocomplete: "ohip_num"}  %>
   </div>
   </div>
 
   <div class="row">
     <div class="col-md-12" id="email" style="display: none" >
+    To get access to your patient record, please sign up below:
     <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
   </div>
   </div>
@@ -53,7 +54,7 @@
 
   <div class="row">
   <div class="col-md-12">
-  <%= render "devise/shared/links" %>
+  <%# render "devise/shared/links" %>
   </div>
   </div>
 
@@ -81,7 +82,7 @@ $(ohip_num).change(function () {
         data: $(this).serialize()
     }).done(function (data) {
       if (data.lname !== undefined) {
-        result = `Clinic patient:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} :  ${data.addr}`;
+        result = `Clinic patient found:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} :  ${data.addr}`;
         $("#results").append(result);
       }
         $("#email").show();

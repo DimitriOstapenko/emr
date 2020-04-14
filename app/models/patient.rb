@@ -146,10 +146,11 @@ class Patient < ApplicationRecord
       if hin_expiry.blank?
          errors.add(:hin_expiry, "Expiry date is required")
 	 return
+         errors.add(:ohip_num, "Card number for ON must be 10 digits long ") if ohip_num.present? && ohip_num.length != 10
+         return
       end
       expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
       errors.add(:hin_expiry, "Card is expired") if expiry < Date.today
-      errors.add(:ohip_num, "Card number for ON must be 10 digits long") if ohip_num.present? && ohip_num.length != 10
     end 
 
 # Check sum test is disabled for now    
