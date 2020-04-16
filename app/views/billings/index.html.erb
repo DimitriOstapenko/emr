@@ -6,7 +6,7 @@
       <tr>
 	  <th class="tbl_xs"></th>
           <% if date  %>
-            <th class="tbl_lsm"><%= sortable 'entry_ts', :Time %></th>
+            <th class="tbl_md"><%= sortable 'entry_ts', :Time %></th>
           <% else %>
             <th class="tbl_md"><%= sortable 'entry_ts', :Date %></th>
           <%end %>
@@ -28,15 +28,15 @@
 	  </th>
 
 	  <th class="tbl_lmd">Patient</th>
-	  <th class="tbl_sm">Type</th>
-          <th class="tbl_md">Diagnosis</th>
+	  <th class="tbl_sm text-center">Type</th>
+          <th class="tbl_md text-center">Diagnosis</th>
 	  <th class="tbl_lmd">Services</th>
-          <th class="tbl_lsm">Insured</th>
-          <th class="tbl_lsm">IFH</th>
-          <th class="tbl_lsm">Cash</th>
-          <th class="tbl_xmd">Ttl. Fee</th>
-          <th class="tbl_md">Status</th>
-	  <th class="tbl_md">Acc Ref#</th>
+          <th class="tbl_lsm text-center">Insured</th>
+          <th class="tbl_lsm text-center">IFH</th>
+          <th class="tbl_lsm text-center">Cash</th>
+          <th class="tbl_xmd text-center">Ttl. Fee</th>
+          <th class="tbl_md text-center">Status</th>
+	  <th class="tbl_md text-center">Acc Ref#</th>
       </tr>
   </thead>
   <tbody>
@@ -47,12 +47,10 @@
 <div class="row">
 <div class="bottom_buttons ">
   <% if current_user.admin? %>
-	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
-	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
+	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
   <% elsif date == Date.today && @not_ready.blank? %>
-      <% if BILLING_FORMAT == EDT_FORMAT || current_user.admin? %>
+      <% if BILLING_FORMAT == EDT_FORMAT %>
 	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
-	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
       <% elsif BILLING_FORMAT == CSV_FORMAT %>
 	 <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
       <% elsif BILLING_FORMAT == CABMD_FORMAT %>

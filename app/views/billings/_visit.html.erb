@@ -21,20 +21,20 @@
 
 	<td><%= doctor.lname %> </td>
 	<td><%= link_to patient.full_name, patient %> </td>
-	<td><%= patient.pat_type %></td>
-	<td><%= visit.diag_scode %></td>
+	<td class="text-center"><%= patient.pat_type %></td>
+	<td class="text-center"><%= visit.diag_scode %></td>
 	<td><%= visit.proc_codes %></td>
-	<td><%= sprintf("%.2f",visit.total_insured_fees) %></td>
-	<td><%= sprintf("%.2f",visit.total_ifh_fees) %></td>
-	<td><%= sprintf("%.2f",visit.total_cash) %></td>
-	<td><%= sprintf("%.2f",visit.total_fee) %></td>
-	<td>
+	<td class="text-center"><%= sprintf("%.2f",visit.total_insured_fees) %></td>
+	<td class="text-center"><%= sprintf("%.2f",visit.total_ifh_fees) %></td>
+	<td class="text-center"><%= sprintf("%.2f",visit.total_cash) %></td>
+	<td class="text-center"><%= sprintf("%.2f",visit.total_fee) %></td>
+	<td class="text-center">
 	<% if visit.status == PAID && visit.claim_id.present? %>
 	  <%= link_to visit.status_str, claim_path(visit.claim_id) %> 		
 	<% else %>
 	  <%= visit.status_str %>
   	<% end %>	
 	</td>
-	<td><%= visit.billing_ref %></td>
+	<td class="text-center"><%= visit.billing_ref %></td>
 
 </tr>

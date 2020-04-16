@@ -37,3 +37,9 @@ function set_md_modal() {
 function set_lg_modal() {
   document.getElementById('mymodal').className='modal-dialog modal-lg';
 }
+
+$(document).on('turbolinks:load', function(){
+    $(".alert-alert").delay(2000).slideUp(500, function(){
+          $(".alert").alert('close');
+      });
+    });
