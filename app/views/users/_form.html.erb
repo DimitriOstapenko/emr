@@ -2,11 +2,10 @@
 <div class="col-md-12">
 <div class="well">
 
-
 <%= simple_form_for @user,  :html => { :role => 'form'}  do |f| %>
 <%= f.error_notification %>
 
-  <div class="row" id="ohip_num">  
+  <div class="row" id="ohip_num" style="display: none">  
   <div class="col-md-9">
     <%= f.input :ohip_num %>
   </div>
@@ -17,7 +16,7 @@
 
   <div class="row">  
   <div class="col-md-12">
-  <%= f.input :email %>
+  <%= f.input :email, autofocus: true, input_html: { autocomplete: "email" } %>
   </div>
   </div>
 
@@ -53,15 +52,15 @@
 </div>
 
 <script>
-  $(document).ready(function () {
-    var role = $('select[name="user[role]"]');
+//  $(document).ready(function () {
+//    var role = $('select[name="user[role]"]');
 
-   (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
-   role.change(function () {
-     (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
+//   (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
+//   role.change(function () {
+//     (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
 
-  });
-  });
+//  });
+//  });
 
 </script>
 

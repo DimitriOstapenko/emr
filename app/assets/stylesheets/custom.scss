@@ -522,8 +522,8 @@ input, select{
 
 .alert {
   margin-bottom: 2px;
-  height: 30px;
-  line-height:30px;
+//  height: 30px;
+//  line-height:30px;
   padding: 0;
   width: 100%;
   float: left;
@@ -534,11 +534,16 @@ input, select{
 }
 
 #flash_alert {               // devise alers
-  font-weight: bold;
+//  background-color :$alert-info-bg;  // overrides default colors!
+  @extend .alert;
+  padding-left: 5px;
 }
 
 #flash_notice {		     // devise notices
-  font-weight: bold;
+//  background-color :$alert-info-bg;  // overrides default colors!
+  display: flex;
+  @extend .alert;
+  padding-left: 5px;
 }
 
 .alert .glyphicon{
@@ -551,6 +556,10 @@ input, select{
     padding-right: 15px;
     display:table-cell;
     line-height:30px;
+}
+
+.table-warning {
+  background-color: #dff0d8;
 }
 
 .hdr-link {
@@ -709,7 +718,6 @@ cursor: pointer;
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-//  background-color: ;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.4rem;

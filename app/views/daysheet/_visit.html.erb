@@ -1,7 +1,11 @@
+<% cl = nil %>
+<% cl = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? %>
+
 <% pat = Patient.find(visit.patient_id) rescue nil %>
 <% remote = device_is_desktop? %>
-<%= simple_form_for [pat,visit] do |f| %>
-  <tr>
+<%# simple_form_for [pat,visit] do |f| %>
+  <!--tr style='background-color: #dff0d8;' -->
+  <tr class="<%= cl %>">
 	<td>
 	<% if visit.ready_to_bill? %>
 		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>
@@ -76,4 +80,4 @@
 	    <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
         <% end %>
 </tr>
-<% end %>
+<%# end %>

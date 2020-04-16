@@ -10,7 +10,7 @@ class Patient < ApplicationRecord
         has_many :patient_docs, dependent: :destroy, inverse_of: :patient
         has_one :chart, inverse_of: :patient
 
-        has_one :user
+        has_one :user, dependent: :destroy
 
   	accepts_nested_attributes_for :invoices, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }
   	accepts_nested_attributes_for :letters, :allow_destroy => false, reject_if: proc { |attributes| attributes['filespec'].blank? }

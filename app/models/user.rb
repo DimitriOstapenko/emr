@@ -12,8 +12,9 @@ class User < ApplicationRecord
                       self.ohip_ver ||= ver
                       self.email.downcase! rescue '' }
 
-  validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true
-  validates :ohip_ver, length: { is: 2 }, allow_blank: true
+  validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, if: Proc.new { |u| u.patient? }
+  validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
+ 
   validates :email, presence: true;
 
   after_validation :set_patient

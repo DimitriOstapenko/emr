@@ -331,6 +331,7 @@ private
 	  self.vis_type ||= WALKIN_VISIT
           self.bil_type ||= HCP_BILLING
 	  self.duration ||= 10
+          self.proc_code ||= 'K081A' # televisit!!
   end
 
 end

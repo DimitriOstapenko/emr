@@ -75,7 +75,7 @@ class PatientsController < ApplicationController
     if @patient.save
        expiry = @patient.hin_expiry rescue '1900-01-01'.to_date
        suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  expiry < Date.today)
-       flash[:success] = "Patient created #{suffix}"
+       flash[:info] = "Patient created #{suffix}"
        redirect_to @patient
     else
        render 'new'
@@ -84,7 +84,7 @@ class PatientsController < ApplicationController
 
   def destroy
     Patient.find(params[:id]).destroy
-    flash[:success] = "Patient deleted"
+    flash[:info] = "Patient deleted"
     redirect_back(fallback_location: patients_path )
   end
 
@@ -96,8 +96,8 @@ class PatientsController < ApplicationController
     @patient = Patient.find(params[:id])
     @patient.lastmod_by = current_user.name
     if @patient.update_attributes(patient_params)
-      flash[:success] = "Profile updated"
-      redirect_to @patient
+      flash[:info] = "Patient profile updated"
+      redirect_to patient_path(@patient)
     else
       render 'edit'
     end
@@ -172,7 +172,7 @@ class PatientsController < ApplicationController
 	  end
        end
     else     
-       flash.now[:success] = "Card number not read yet  #{params.inspect}"
+       flash.now[:info] = "Card number not read yet  #{params.inspect}"
        @patient = Patient.find(params[:id])
        redirect_to :back
     end

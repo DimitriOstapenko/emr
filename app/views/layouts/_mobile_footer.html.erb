@@ -1,12 +1,34 @@
-<footer>
-  <nav>
-    <ul>
+<footer class="page-footer font-small blue">
+    <div class="container text-center text-md-right">
+    <div class="row">
       <% if logged_in? %>
-        <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
+      <div class="col-md-3 mx-auto">
+        <ul class="list-unstyled">
+            <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
+        </ul>
+      </div>
       <% end %>
-      <li><%= link_to "Contact", contact_path %></li>
-      <li><%= link_to "Terms", terms_path %></li>
-      <li><%= link_to "Privacy Policy", privacy_path %></li>
-    </ul>
-  </nav>
+      <div class="col-md-3 mx-auto">
+        <ul class="list-unstyled">
+          <li>
+            <%= link_to "Contact", contact_path %>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-3 mx-auto">
+        <ul class="list-unstyled">
+          <li>
+            <%= link_to "Terms", terms_path %>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-3 mx-auto">
+        <ul class="list-unstyled">
+          <li>
+            <%= link_to "Privacy Policy", privacy_path %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </footer>

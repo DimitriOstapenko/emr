@@ -46,9 +46,9 @@ class VisitsController < ApplicationController
         doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
         if doc.blank? || doc.errors.blank?
           if current_user.patient?
-            flash[:success] = "Your appointment request was submitted successfully. Dr. Ostapenko will reach you soon"
+            flash[:info] = "Your appointment request was submitted"
           else  
-            flash[:success] = "Visit saved #{params[:entry_ts]} "
+            flash[:info] = "Visit saved #{params[:entry_ts]} "
           end
           redirect_to @patient
         else
@@ -83,7 +83,7 @@ end
       
       set_visit_fees( @visit )
       @visit.save
-      flash[:success] = "Visit updated"
+      flash[:info] = "Visit updated"
       redirect_back(fallback_location: daysheet_url)
 
     else
@@ -111,7 +111,7 @@ end
   def destroy
     @visit = Visit.find(params[:id])
     @visit.destroy
-    flash[:success] = "Visit deleted"
+    flash[:info] = "Visit deleted"
     redirect_back(fallback_location: daysheet_path)
   end
 
@@ -145,7 +145,7 @@ end
        
        if @xmlhash['success'] 
 	  acc_num = @xmlhash['accounting_number']
-          flash[:success] = "Claim #{acc_num} sent to cab.md " 
+          flash[:info] = "Claim #{acc_num} sent to cab.md " 
           @visit.update_attribute(:status, BILLED)
           @visit.update_attribute(:billing_ref, acc_num)
        else

@@ -43,7 +43,9 @@ Medications:
 
 <% disabled = @patient.visits.first.date.today? rescue false %>
 <div class="col-sm-2 col-md-8 col-md-offset-2 col-sm-offset-3">
+  <font size=3>
 <%= button_to 'Yes, I would like callback from doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get', disabled: disabled  %>
+  </font>
 </div>
 
   </section>

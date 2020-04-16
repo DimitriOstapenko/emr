@@ -65,4 +65,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {:address => "localhost", :port => 1025}
 
+
+  config.web_console.whitelisted_ips = '192.168.1.14'  # macbook air in france
+
 end
