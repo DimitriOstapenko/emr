@@ -18,7 +18,7 @@ class PatientsController < ApplicationController
       else
          @patients = Patient.all
       end
-      @patients = @patients.where(family_dr: current_doctor.lname) if current_user.doctor?
+#      @patients = @patients.where(family_dr: current_doctor.lname) if current_user.doctor?
       @patients = @patients.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
       flash[:info] = "#{@patients.count} patients found" if keyword
   end
