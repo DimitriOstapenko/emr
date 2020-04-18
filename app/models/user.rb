@@ -6,9 +6,6 @@ class User < ApplicationRecord
   default_scope -> { order(email: :asc) }
   enum role: USER_ROLES
 
-  belongs_to :doctor
-  belongs_to :patient
-
   before_validation { self.ohip_num.upcase!; 
                       self.ohip_num.gsub!(/\W/,'');
                       self.ohip_num, ver = self.ohip_num.match(/(\d+)(\S*)/).captures rescue nil;
@@ -53,9 +50,13 @@ class User < ApplicationRecord
     self.email
   end
 
-#  def patient
-#    Patient.find(self.patient_id) rescue nil
-#  end
+  def patient
+    Patient.find(self.patient_id) rescue nil
+  end
+  
+  def doctor
+    Doctor.find(self.doctor_id) rescue nil
+  end
 
   def staff?
     self.role == 'staff'
