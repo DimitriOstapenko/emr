@@ -48,11 +48,11 @@
   </div>
   
   <div class="col-md-3 col-sm-3" id="hin_expiry">
-     <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: false, label: "Expires On", hint: 'Required' %>
+     <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required' %>
   </div>
   
   <div class="col-sm-3">
-  <%= f.input :dob, as: :date, start_year: 1915, end_year: Date.today.year, hint: 'Required', html5: false %>
+  <%= f.input :dob, as: :date, start_year: 1915, end_year: Date.today.year, hint: 'Required', html5: true %>
   </div>
   
 </div>

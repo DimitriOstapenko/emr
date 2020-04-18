@@ -1,17 +1,17 @@
 <li>
 <%= form_with url: set_doctor_path do |f| %>
   <div class="form-group">
-    <div class="col-sm-12 col-md-12 padding-0">
+    <div class="col-sm-12 col-md-12">
     <% doc_id = current_doctor.id rescue ' ' %>
     <%= f.collection_select(:doc_id,
                             get_active_doctors,
                             :id,
                             :lname,
                             options = {prompt: 'Set Doctor', selected: doc_id},
-                            html_options = {onchange: 'this.form.submit();', style: "background-color: #fff;"}
+                            html_options = {onchange: 'this.form.submit();', class: 'form-control'}
                            ) %>
     </div>
   </div>
   <% end %>
 </li>
-<li style="width:40px">&nbsp;</li>
+<li style="width:30px">&nbsp;</li>

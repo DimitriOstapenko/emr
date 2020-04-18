@@ -3,7 +3,7 @@ class SchedulesController < ApplicationController
   helper_method :sort_column, :sort_direction
 
   before_action :logged_in_user
-  before_action :admin_or_staff_user
+  before_action :non_patient_user
 
   def index
     @schedules = Schedule.all

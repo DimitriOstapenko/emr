@@ -1,8 +1,8 @@
         <% date = Date.parse(params[:date]) rescue Time.now %>
         <% prevday = date.prev_day.strftime('%d-%m-%Y') %>
         <% nextday = date.next_day.strftime('%d-%m-%Y') %>
-       <li style="width: 35px; align:left; top: 2px;"><%= link_to '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: prevday )  %></li>
-       <li style="width:120px">
+       <li style="width: 35px; align:left; top: 4px;"><%= link_to '<span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: prevday )  %></li>
+       <li style="width:155px">
        <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
                <div class="form-group">
                 <div class="col-sm-12 col-md-12 padding-0">
@@ -10,16 +10,18 @@
                             id: '_datepicker',
                             onChange: 'this.form.submit()',
                             value: date.strftime('%Y-%m-%d'),
-                            style:"width:130px;height: 25px !important;" %>
+                            class: 'form-control',
+                            style:"width:165px;" %>
                 </div>
              </div>
        <% end %>
        </li>
 
-       <li style="width: 30px; top: 2px;">
+       <li style="width: 35px; top: 4px;">
        <% if date < Date.today %>
          <%= link_to '<span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>'.html_safe, params.permit(:date).merge(date: nextday )  %> </li>
        <% else %>
            &nbsp;</li>
        <% end %>
 
+       <li style="width: 25px;">&nbsp;</li>

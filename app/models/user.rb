@@ -6,6 +6,9 @@ class User < ApplicationRecord
   default_scope -> { order(email: :asc) }
   enum role: USER_ROLES
 
+  belongs_to :doctor
+  belongs_to :patient
+
   before_validation { self.ohip_num.upcase!; 
                       self.ohip_num.gsub!(/\W/,'');
                       self.ohip_num, ver = self.ohip_num.match(/(\d+)(\S*)/).captures rescue nil;
@@ -50,9 +53,9 @@ class User < ApplicationRecord
     self.email
   end
 
-  def patient
-    Patient.find(self.patient_id) rescue nil
-  end
+#  def patient
+#    Patient.find(self.patient_id) rescue nil
+#  end
 
   def staff?
     self.role == 'staff'
@@ -71,9 +74,5 @@ class User < ApplicationRecord
   end
 
 private 
-
-def patient_present
-  errors.add(:patient_id, "This health card number is not registered in our database. We currently accept clinic patients only") unless self.patient_id 
-end
 
 end

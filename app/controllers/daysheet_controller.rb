@@ -58,7 +58,7 @@ class DaysheetController < ApplicationController
         store_location
         set_doc_session( doc_id )
         doc = Doctor.find( doc_id ) || Doctor.new()
-        flash.now[:info] = "Current Doctor is set to Dr. #{doc.lname}"
+        flash[:success] = "Current Doctor is set to Dr. #{doc.lname}"
         redirect_back_or( daysheet_path )
       else
         render '_set_doctor'

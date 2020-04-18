@@ -256,7 +256,7 @@ GEM
     simple_form (5.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
-    sorbet-runtime (0.5.5510)
+    sorbet-runtime (0.5.5525)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)

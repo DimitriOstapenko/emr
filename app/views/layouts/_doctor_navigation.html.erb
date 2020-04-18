@@ -1,13 +1,13 @@
   <% if current_doctor.present? %>
-    <li class="navbar-text active">Dr. <%= current_doctor.lname %></li>
+    <li class="nav-item active "><a class="navbar-link" href='#'>Dr. <%= current_doctor.lname %></a></li>
   <% end %>
-  <li style="width:40px">&nbsp;</li>
+  <li style="width:100px">&nbsp;</li>
   <% if controller_name == 'daysheet' || controller_name == 'billings' %>
     <%= render 'layouts/date_select' %>
   <% elsif !%w(visits users static_pages password_resets).include?(controller_name) %>
     <%= render 'layouts/find' %>
   <% end %>
-  <li class="<%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
+  <li class="nav-item <%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
   <%= render 'layouts/doctor_billing' %>
   <%= render 'layouts/doctor_docs' %>
   <%= render 'layouts/doctor_ref' %>

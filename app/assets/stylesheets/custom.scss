@@ -66,8 +66,8 @@ table {
 
 #findstr {
 	border-radius: 5px;
-	height: 26px !important;
-	padding: 5px 5px 5px 8px;
+//	height: 26px !important;
+//	padding: 5px 5px 5px 8px;
 }
 
 #header {
@@ -98,7 +98,15 @@ table {
     color: red;
 //    font-weight: bold;
     background-color: white;
+
+  height: 40px;
 }
+
+.navbar-nav > li > a {
+    padding-top: 20px;
+    padding-bottom: 10px;
+//    line-height: 20px;
+  }
 
 .spacer-10 {
   height: 10px;
@@ -168,12 +176,12 @@ td.hlight {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 18px;
+  font-size: 19px;
 //  color: grey;
   color: #34d5eb;
   text-transform: uppercase;
   letter-spacing: -2px;
-  padding-top: 14px;
+//  padding-top: 14px;
   font-weight: bold;
   &:hover {
     color: red;
@@ -321,6 +329,18 @@ input, textarea, select, .uneditable-input {
   clear: both; /* Required for Webkit, but not for Gecko */
   font-size: 14px;
 }
+
+//.simple_form_ label {
+//  float: left;
+//  width: 200px;
+//  text-align: left;
+//  margin: 2px 2px;
+//  font-size: 15px;
+//}
+
+//.simple_form select {
+//  font-size: 14px;
+//}
 
 input {
   height: auto !important;

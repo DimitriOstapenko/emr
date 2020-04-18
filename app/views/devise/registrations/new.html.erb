@@ -17,9 +17,11 @@
   </div>
   </div>
 
+  <div id="note" style="display: none">
+    To access to your patient record, please enter:
+  </div>
   <div class="row">
     <div class="col-md-12" id="email" >
-    To get access to your patient record, please sign up below:
     <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
   </div>
   </div>
@@ -79,6 +81,7 @@ $(ohip_num).change(function () {
       if (data.lname !== undefined) {
         result = `Clinic patient found:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} :  ${data.addr}`;
         $("#results").append(result);
+        $('#note').show()
       }
     }).fail(function (data) {
         console.log('AJAX request has FAILED');

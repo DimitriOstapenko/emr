@@ -51,14 +51,10 @@ class UsersController < ApplicationController
   end
 
    def switch_to
-    if current_user && current_user.admin?
-      user = User.find(params[:id])
-      if user.patient_id.present?
-         sign_in(:user,user)
-      else 
-         flash[:info] = 'Patient is not attached to this user'
-      end
-    end
+    user = User.find(params[:id])
+    set_doc_session(user.doctor_id) if user.doctor?
+    sign_in(:user, user)
+    flash.now[:info] = 'Switched to new user'
 
     if user.patient?
       redirect_to patient_path(user.patient_id) 
@@ -70,7 +66,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :invited_by)
+      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :doctor_id, :invited_by)
     end
 
     def sort_column

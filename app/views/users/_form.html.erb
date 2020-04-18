@@ -38,6 +38,12 @@
   <%= f.input :role, collection: USER_ROLES, include_blank: false, disabled: disabled  %>
   </div>
   </div>
+  
+  <div class="row" id='doctor'>  
+  <div class="col-md-12">
+  <%= f.input :doctor_id, collection: get_active_doctors, value_method: :id, label_method: :lname, label: "Doctor", include_blank: 'Please Select', disabled: disabled %>
+  </div>
+  </div>
 
 <div class="row">  
   <div class="col-md-12">
@@ -51,17 +57,17 @@
 </div>
 </div>
 
+
 <script>
-//  $(document).ready(function () {
-//    var role = $('select[name="user[role]"]');
+  $(document).ready(function () {
+    var role = $('select[name="user[role]"]');
 
-//   (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
-//   role.change(function () {
-//     (role.val() =='patient') ? $('#ohip_num').show() : $('#ohip_num').hide();
+   (role.val() =='doctor') ? $('#doctor').show() : $('#doctor').hide();
+   role.change(function () {
+     (role.val() =='doctor') ? $('#doctor').show() : $('#doctor').hide();
 
-//  });
-//  });
+  });
+  });
 
 </script>
-
 

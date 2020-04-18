@@ -5,7 +5,7 @@ module DoctorsHelper
     @current_doctor ||= Doctor.find(session[:doc_id] ) rescue nil
   end
 
-# Returns true if the given docttor is the current
+# Returns true if the given doctor is the current one
   def current_doctor?(doctor)
     doctor == current_doctor
   end
@@ -13,6 +13,7 @@ module DoctorsHelper
 # Remember current doctor
   def set_doc_session ( id )
     session[:doc_id] = id
+    logger.debug "****** set_doc_session:  #{session[:doc_id]}"
   end
 
 end

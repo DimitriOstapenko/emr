@@ -24,8 +24,12 @@ class ApplicationController < ActionController::Base
          patient_path(current_user.patient)
       end
     else
-      doc = Doctor.find_by(provider_no: '015539')
-      session[:doc_id] = doc.id
+      if current_user.doctor?
+        set_doc_session(current_user.doctor_id)
+      else 
+        doc = Doctor.find_by(provider_no: DEFAULT_PROVIDER_NO ) 
+        set_doc_session(doc.id)
+      end
       stored_location_for(resource) || daysheet_path
     end
   end

@@ -15,12 +15,11 @@
  <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
 </ul>
 </li>
+
 <% path = current_user.patient? ? 'patient_path(current_user.patient)' : 'root_path' %>
-<%= link_to "Walk-In EMR", eval(path), id: "logo" %>
-
+   <li class="nav-item"> <%= link_to "Walk-In EMR", eval(path), id: "logo" %> </li>
 <% else %>
-      <li> <%= link_to "Stoney Creek Medical Walk-In Clinic", root_path, id: "logo" %></li>
+  <li class="nav-item"> <%= link_to "Stoney Creek Medical Walk-In Clinic", root_path, id: "logo" %></li>
 <% end %>
-
 
 
