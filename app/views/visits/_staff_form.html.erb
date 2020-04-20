@@ -1,7 +1,7 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
-  <%= render 'shared/error_messages', object: f.object %>
+<%= f.error_notification %>
 <% 
-   doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) 
+   doc_id = @visit.doctor.id || current_doctor.id 
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
 
@@ -26,7 +26,7 @@
   end 
 %>
 
-<div class="well">
+<div class="cyan-well">
   <!-- Row 0 if new visit or admin --> 
 
      <div class="row">
@@ -73,7 +73,7 @@
   <!-- Row 2 -->
 
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-4" id="diagnosis">
   <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis %> 
   </div>
 
@@ -176,6 +176,12 @@ $(document).ready(function() {
     (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
     proccode.change(function () {
       (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
+    });
+
+    var stat = document.getElementById("visit_status");
+    var diagcode = $('#diagnosis select[name="visit[diag_code]"]');
+    diagcode.change(function () {
+      stat.value = <%= READY %>;
     });
 
 });

@@ -6,13 +6,10 @@
  
 <div class="modal-header">
 	<button type="button" class="close" data-dismiss="modal">&times;</button>
+        <i class="glyphicon glyphicon-user"></i>&nbsp;
 	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>, tel. <%= @patient.mobile_or_home_phone %> : New Visit</b>
 </div>
 <div class="modal-body">
   <%= render "#{current_user.role}_form" %>
 </div>
-
-<div class="modal-footer">
-</div>
-
 

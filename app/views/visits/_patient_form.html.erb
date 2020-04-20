@@ -1,19 +1,17 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
   <%= f.error_notification %>
 
-  <% doctor = Doctor.find_by(provider_no: '015539')  %>  <!-- Dr. Ostapenko only for now!! -->
-
 <%= f.hidden_field :vis_type, value: TELE_VISIT %>
 <%= f.hidden_field :bil_type, value: HCP_BILLING %>
 <%= f.hidden_field :status, value: ARRIVED %>
-<%= f.hidden_field :doc_id, value: doctor.id %>
+<%= f.hidden_field :doc_id, value: current_doctor.id %>
 
-<div class="well">
+<div class="cyan-well">
   <!-- Row 0 if new visit or admin --> 
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doctor.id, label:'Doctor', hint: 'Required', disabled: true %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required', readonly: true %>
   </div>
 
   <!-- Row 3 -->
@@ -30,9 +28,11 @@
   <%= f.input :bp, as: :string, label:'Blood Pr. (H/L)', hint:'Optional' %>
   </div>
 
-  <div class="col-sm-2" style='display: none'>
+  <% if device_is_desktop? %>
+  <div class="col-sm-2">
   <%= f.input :weight, label: 'Weight (Kg)', hint:'Optional' %>
   </div>
+  <% end %>
 </div>
 
   <!-- Row 5: Reason for visit  -->

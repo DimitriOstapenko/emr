@@ -4,7 +4,7 @@
 <div class="col-sm-10 col-md-10 col-sm-offset-1 col-md-offset-1">
 	
 <section>
-<pre class="pre-scrollable-large">
+<pre class="pre-scrollable-lg">
 <% if (HCP_PATIENT..WCB_PATIENT).include?(@visit.pat_type) %>
 <b>OHIP Visit HC# </b>: <%= @visit.hin_num %>  <b> Billing Type: </b> <%= @visit.pat_type %>
 <% elsif @visit.pat_type == IFH_PATIENT %>   

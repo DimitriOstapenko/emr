@@ -1,7 +1,6 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
-  <%= render 'shared/error_messages', object: f.object %>
+<%= f.error_notification %>
 <% 
-   doc_id = @visit.doctor.id || (current_doctor.id if current_doctor) 
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
 
@@ -26,7 +25,7 @@
   end 
 %>
 
-<div class="well">
+<div class="cyan-well">
   <!-- Row 0 if new visit or admin --> 
 
      <div class="row">
@@ -46,7 +45,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', hint: 'Required', disabled: true %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required', readonly: true %>
   </div>
 
   <div class="col-sm-2">
@@ -73,8 +72,8 @@
   <!-- Row 2 -->
 
 <div class="row">
-  <div class="col-sm-4">
-  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis %> 
+  <div class="col-sm-4" id="diagnosis">
+  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis, include_blank: 'None'  %> 
   </div>
 
   <div class="col-sm-2">
@@ -105,7 +104,7 @@
 
 <div class="row">
   <div class="col-sm-2" id="visit_statuses">
-  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled, selected: ASSESSED %>
+  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled  %>
   </div>
 
   <div class="col-sm-2">
@@ -176,6 +175,12 @@ $(document).ready(function() {
     (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
     proccode.change(function () {
       (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
+    });
+
+    var stat = document.getElementById("visit_status");
+    var diagcode = $('#diagnosis select[name="visit[diag_code]"]');
+    diagcode.change(function () {
+      stat.value = <%= READY %>;
     });
 
 });

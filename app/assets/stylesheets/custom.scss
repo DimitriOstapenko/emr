@@ -541,12 +541,11 @@ input, select{
 } 
 
 .alert {
-  margin-bottom: 2px;
-//  height: 30px;
-//  line-height:30px;
-  padding: 0;
+  padding: 1px;
+  padding-left: 5px;
   width: 100%;
   float: left;
+  margin-bottom: 2px;
 }
 
 .notice {
@@ -574,8 +573,13 @@ input, select{
 .alert span{
     padding-left: 5px;
     padding-right: 15px;
-    display:table-cell;
+    display: table-cell;
     line-height:30px;
+}
+
+.cyan-well{
+  @extend .well;
+  background-color: cyan !important;
 }
 
 .table-warning {
@@ -640,19 +644,22 @@ table.pretty {
     max-height: 160px;
     overflow-y: scroll;
     overflow-x: scroll;
+    background-color: $gray-medium-light;
 }
 
 .pre-scrollable-md {
     max-height: 180px;
     overflow-y: scroll;
     overflow-x: scroll;
+    background-color: $gray-medium-light;
 }
 
 .pre-scrollable-lg {
     max-height: 200px;
     overflow-y: scroll;
     overflow-x: hidden;
-  white-space: pre-wrap; 
+    white-space: pre-wrap; 
+    background-color: $gray-medium-light;
 }
 
 .pre-scrollable-xlg {
@@ -662,6 +669,7 @@ table.pretty {
 
     white-space: pre-wrap; 
     margin-bottom: 35px;
+    background-color: $gray-medium-light;
 }
 
 // Chrome doesn't display scrollbar sometimes. Force it.
