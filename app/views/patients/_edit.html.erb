@@ -7,7 +7,7 @@
 	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %> - Edit Patient Record</b>
 </div>
 <div class="modal-body">
- <div class="well">
+ <div class="cyan_well">
    <% if current_user.patient? %>
     <%= render 'patient_form' %>
   <% else %>
