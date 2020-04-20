@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+    <ul class="nav navbar-nav navbar-right">
+<font size=3>
+<b>
+<div class="row">
+  <div class="col-xs-3 col-xs-offset-1">
+     <div class="nav-item <%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></div>
+  </div>
+  <div class="col-xs-4">
+  <span class="nav-item <%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></span>
+  </div>
+  <div class="col-xs-4">
+  <span class="nav-item <%= 'active' if controller_name == 'billings' %>"><%= link_to "Billing", billings_path %></span>
+  </div>
+</div>
+</b>
+</font>
+
+<p> &nbsp; </p>
+
+<% if controller_name == 'daysheet' || controller_name == 'billings' %>
+    <div class="col-xs-6 col-xs-offset-6"><%= render 'layouts/mobile_date_select' %></div>
+<% elsif %w(patients ).include?(controller_name) %>
+    <%= render 'layouts/mobile_find' %>
+<% end %>
+    </ul>
+</nav>

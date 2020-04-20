@@ -1,0 +1,13 @@
+<% date = Date.parse(params[:date]) rescue Time.now %>
+<%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
+    <div class="form-group">
+       <div class="col-sm-12 col-md-12 padding-0">
+          <%= f.date_field :date,
+                            id: '_datepicker',
+                            onChange: 'this.form.submit()',
+                            value: date.strftime('%Y-%m-%d'),
+                            class: 'form-control',
+                            style:"width:165px;" %>
+       </div>
+    </div>
+<% end %>

@@ -1,0 +1,14 @@
+ <tr>
+  <td><%= user.email %></td>
+  <td class='text-center'><%= user.role %></td>
+  <td class='text-center'><%= user.confirmed? %></td>
+  <td class='text-center'><%= user.created_at.to_date %></td>
+
+   <% if current_user?(user) %>
+       <td colspan=3></td>
+     <% else %>
+       <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_user_path(user),  method: :get, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', onclick: "set_sm_modal()" %> </td>
+       <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-random"></i>'.html_safe, switch_user_path(user),  method: :get %> </td>
+       <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, user, method: :delete, data: { confirm: "Delete user #{user.name}, #{user.email}?" } %></td>
+     <% end %>
+ </tr>

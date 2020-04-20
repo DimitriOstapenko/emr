@@ -6,7 +6,7 @@ require_relative './config/environment'
 
 client = Nexmo::Client.new(
   application_id: Rails.application.credentials[:nexmo_voice][:application_id],
-  private_key: File.read('nexmo_voice.key')
+  private_key: File.read('config/nexmo_voice.key')
 )
 
 ncco = [{

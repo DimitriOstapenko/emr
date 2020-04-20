@@ -46,7 +46,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', hint: 'Required' %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', hint: 'Required', disabled: true %>
   </div>
 
   <div class="col-sm-2">
@@ -105,7 +105,7 @@
 
 <div class="row">
   <div class="col-sm-2" id="visit_statuses">
-  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled, selected: READY %>
+  <%= f.input :status, collection: VISIT_STATUSES, include_blank: false,  placeholder: 'Status', disabled: disabled, selected: ASSESSED %>
   </div>
 
   <div class="col-sm-2">
@@ -140,7 +140,7 @@
 <!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
-     <%= f.input :notes, placeholder: 'Notes', label: false, input_html: {rows:4} %>
+     <%= f.input :notes, placeholder: 'Doctor Notes', label: false, input_html: {rows:4} %>
   </div>
 </div>
 

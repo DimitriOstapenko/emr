@@ -10,18 +10,18 @@
   <thead>
       <tr>
           <th class="tbl_lmd"><%= sortable 'lname', lname.html_safe %></th>
-          <th class="tbl_sm">Gen</th>
-          <th class="tbl_sm">Age</th>
-	  <th class="tbl_sm">Type</th> 
-	  <th class="tbl_md">Last Visit </th>
-          <th ><%= sortable 'ohip_num', 'HC/IFH#' %></th>
-	  <th>Expiry</th> 
-	  <th><%= sortable 'dob', dob.html_safe %></th> 
-          <th>Phone</th>
- 	  <th class="tbl_sm">Lbl</th>
+          <th class="tbl_sm text-center">Gen</th>
+          <th class="tbl_sm text-center">Age</th>
+	  <th class="tbl_sm text-center">Type</th> 
+	  <th class="tbl_md text-center">Last Visit </th>
+          <th class="text-center"><%= sortable 'ohip_num', 'HC/IFH#' %></th>
+	  <th class="text-center">Expiry</th> 
+	  <th class="text-center"><%= sortable 'dob', dob.html_safe %></th> 
+          <th class="text-center">Phone</th>
+ 	  <th class="tbl_sm text-center">Lbl</th>
  	  <th class="tbl_sm"></th>
 	  <%= "<th class='tbl_sm'></th>".html_safe if current_user.admin? %>
-          <th class="tbl_sm">Chrt</th>
+          <th class="tbl_sm text-center">Chrt</th>
       </tr>
   </thead>
   <tbody>

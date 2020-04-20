@@ -8,9 +8,9 @@
   </head>
 
   <body>
-  <%= render 'layouts/facebook_messenger' %>
+  <%# render 'layouts/facebook_messenger' %>
   <div class="container">
-    <%= render 'layouts/navigation' if device_is_desktop? %>
+    <%= render 'layouts/navigation' %>
    <div id="body">
       <%= render 'layouts/messages' %>
       <%= yield %>

@@ -1,7 +1,0 @@
-<li><%# link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
-<% unless device_is_desktop? %>
-    <b>
-    <%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %>
-    <span style="float: right; margin-right:25px;"><%= link_to "Home", patient_path(current_user.patient) %></span></b>
-<% end %>
-

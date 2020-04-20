@@ -1,3 +1,8 @@
+<nav class="navbar navbar-expand-lg navbar-light">
+  <ul class="nav navbar-nav navbar-left">
+     <%= render "layouts/#{device_type}_logo" %>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
   <li class="nav-item active "><a class="navbar-link" href='#'><%= "Dr. #{current_doctor.lname}" if current_doctor.present? %></a></li>
   <li style="width:100px">&nbsp;</li>
     
@@ -12,3 +17,6 @@
   <%= render 'layouts/doctor_docs' %>
   <%= render 'layouts/doctor_ref' %>
   <%= render 'layouts/forms' %>
+  <li class="unstyled" style="width:10px"></li>
+   </ul>
+</nav>

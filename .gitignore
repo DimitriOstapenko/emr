@@ -6,6 +6,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+# Nexmo voice private key
+/config/nexmo_voice.key
+
 # Ignore Site initialization file
 /config/initializers/01_globals.rb
 # Cron jobs
