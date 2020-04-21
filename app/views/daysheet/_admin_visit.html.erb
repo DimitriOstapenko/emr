@@ -1,0 +1,73 @@
+<% highlight = nil; highlight = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? 
+   pat = visit.patient 
+   remote = device_is_desktop?
+%>
+
+  <!--tr style='background-color: #dff0d8;' -->
+  <tr class="<%= highlight %>">
+	<td>
+	<% if visit.ready_to_bill? %>
+		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>
+  	<% elsif visit.assessed? %>
+		<a title="Assessed"><i class="glyphicon glyphicon-ok-circle text-muted"></i></a>
+        <% elsif visit.with_doctor? %>
+	  	<a title="With Doctor"><i class="glyphicon glyphicon-question-sign text-text-muted"></i></a>
+	<% elsif visit.billed_or_paid? %>
+	  	<a title="Billed"><i class="glyphicon glyphicon-ok-sign text-success"></i></a>
+	<% elsif visit.has_error? %>
+		<a title="Error"><i class="glyphicon glyphicon-exclamation-sign text-danger"></i></a>
+	<% elsif visit.cancelled? %>
+		<a title="Cancelled"><i class="glyphicon glyphicon-minus-sign text-warning"></i></a>
+	<% else %>
+		<a title="Arrived"><i class="glyphicon glyphicon-question-sign text-warning"></i></a>
+	<% end %>
+	</td>
+	<% if visit.date == @date %>
+           <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
+        <% else %>
+           <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
+        <% end %>
+
+	<td><%= link_to pat.full_name, pat %></td>
+	<td class='text-center'><%= pat.pat_type %></td>
+	<td>
+	<% if pat.pat_type == IFH_PATIENT %>
+	   <b><%= pat.ifh_number %></b>
+        <% else %>
+	   <%= pat.ohip_num_full %>
+        <% end %>
+	</td>
+        <td><%= pat.phone %></td>
+        <td><%= pat.mobile %></td>
+        <td class='text-center'>
+          <% if pat.email.present? %>
+          <%= link_to 'email', "mailto:#{pat.email}" %>
+          <% end %>
+        </td>
+	<td class="text-center"><%= visit.diag_scode %></td>
+	<td><%= visit.proc_codes %></td>
+
+	<% if device_is_desktop? %>
+	<td>
+	<% if visit.status == PAID && visit.claim_id.present? %>
+	  <%= link_to visit.status_str, claim_url(visit.claim_id) %> 		
+	<% else %>
+	  <%= visit.status_str %>
+	<% end %>
+	</td>
+	<% end %>
+	  
+	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()"  %></td>
+	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()"  %></td>
+
+	<!-- #modal-window is defined in index -->	
+        <% if remote %>
+          <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get, onclick: "set_lg_modal()"  %></td>
+        <% else %>
+          <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit) %></td>
+          <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-record"></i>'.html_safe, addvoicenote_patient_visit_path(pat,visit) %> </td>
+        <% end %>
+
+	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_visit_path(pat,visit), method: :delete, data: { confirm: "Are you sure you want to delete visit #{visit.id} for patient #{pat.lname}?" } %> </td>
+</tr>
+<%# end %>

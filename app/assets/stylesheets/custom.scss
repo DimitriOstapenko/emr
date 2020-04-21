@@ -97,14 +97,21 @@ table {
 .navbar .navbar-nav > .active > a:focus {
     color: red;
 //    font-weight: bold;
-    background-color: white;
+//    background-color: white;
+//  height: 40px;
+}
 
+.navbar-mobile {
+  font-size: 18px;
+  padding-top: 5px;
+  padding-bottom: 0;
   height: 40px;
+  line-height: 40px;
 }
 
 .navbar-nav > li > a {
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding-top: 22px;
+    padding-bottom: 0px;
 //    line-height: 20px;
   }
 
@@ -197,7 +204,7 @@ td.hlight {
 
 .hdr-text {
   margin-right: 10px;
-  font-size: 1.8em;
+  font-size: 1.95em;
   color: grey;
   text-transform: uppercase;
   letter-spacing: -2px;

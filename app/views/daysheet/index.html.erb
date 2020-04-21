@@ -32,8 +32,8 @@
 	  <% if !device_is_desktop? %>
             <th class="tbl_sm"></th>
           <% end %>
-	  <% if current_user.admin? %>
-	    <th class="tbl_sm"></th>  <!-- Delete -->
+	  <% unless current_user.patient? %>
+	    <th class="tbl_sm"></th>  <!-- Delete/cancel -->
   	  <% end %>
 
       </tr>

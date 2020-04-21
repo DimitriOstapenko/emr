@@ -104,7 +104,12 @@ end
 
   def cancel
     @visit = Visit.find(params[:id])
-    @visit.update_attribute(:status, CANCELLED) if @visit.date.today?
+    if @visit.date.today?
+      @visit.update_attribute(:status, CANCELLED) 
+      flash[:success] = "Visit cancelled, but kept in database"
+    else 
+      flash[:warning] = "Cannot cancel past visits"
+    end 
     redirect_back(fallback_location: patient_path(@visit.patient))
   end
 
