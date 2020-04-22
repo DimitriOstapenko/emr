@@ -1,13 +1,15 @@
 class Visit < ApplicationRecord
 
+  include My::Sms
+
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
   has_many :documents, dependent: :destroy, inverse_of: :visit
   has_one :doctor
 
   accepts_nested_attributes_for :documents, :allow_destroy => true, reject_if: proc { |attributes| attributes['document'].blank? }
   
-  include SessionsHelper 
-  include DoctorsHelper 
+#  include SessionsHelper 
+#  include DoctorsHelper 
  
   mount_uploader :document, DocumentUploader
 
@@ -26,7 +28,7 @@ class Visit < ApplicationRecord
 
   validate :diag_required
   after_initialize :default_values
-  after_create :notify_doctor, if: Proc.new { |v| (v.vis_type == 'TV')} 
+  after_create :notify_doctor_and_patient, if: Proc.new { |v| (v.vis_type == 'TV')} 
 
 # Patient type and hin_num may change from visit to visit; We won't update on other attr changes
   before_save { 
@@ -42,8 +44,10 @@ class Visit < ApplicationRecord
 	  }
                 
 # Send email to the doctor about new Virtual visit  
-  def notify_doctor
+  def notify_doctor_and_patient
     UserMailer.new_visit(self).deliver
+    logger.debug("****************** about to send sms")
+    send_new_visit_sms(self)
   end
 
   def doctor

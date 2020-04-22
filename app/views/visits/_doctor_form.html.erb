@@ -1,12 +1,11 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
 <%= f.error_notification %>
+<%= f.hidden_field :doc_id, value: current_doctor.id %>
 <% 
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
 
-  if current_user.admin? 
-     disabled = []
-  elsif @visit.status == ERROR 
+  if @visit.status == ERROR 
      disabled = ( BILLED..CANCELLED ).to_a
   elsif @visit.billing_ref.present?
      disabled = [ARRIVED,ASSESSED,WITH_DOCTOR,ERROR,CANCELLED]
@@ -26,16 +25,15 @@
 %>
 
 <div class="cyan-well">
-  <!-- Row 0 if new visit or admin --> 
+  <!-- Row 0 if new visit --> 
 
      <div class="row">
-     <% if action_name == 'new' || current_user.admin? %>
+     <% if action_name == 'new' %>
 	<div class="col-md-4">
 	   <%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
   	</div>
-     <% end %>
-     <% if current_user.admin? && action_name == 'edit' %>
-   	<div class="col-md-2">
+     <% elsif action_name == 'edit' %>
+   	<div class="col-md-4">
 	  <%= f.input :billing_ref %>
   	</div>
     <% end %>
@@ -45,7 +43,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required', readonly: true %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required', disabled: true %>
   </div>
 
   <div class="col-sm-2">

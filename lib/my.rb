@@ -982,5 +982,45 @@ private
 
   end # Forms module
 
+# SMS and voice calls   
+  module Sms
+  require 'nexmo'
+
+  def send_new_visit_sms( visit )
+  
+  client = Nexmo::Client.new(
+    api_key: Rails.application.credentials[:nexmo_sms][:api_key],
+    api_secret: Rails.application.credentials[:nexmo_sms][:api_secret]
+  )
+
+# Notify doctor
+  if visit.doctor.mobile.present?
+    client.sms.send(
+      from: 'Walk-In EMR',
+      to: visit.doctor.mobile,
+      text: "New appoinment requested by #{ visit.patient.full_name } #{visit.patient.age_str} #{visit.patient.sex} \n Reason:  #{visit.reason}" 
+    )
+  end
+
+  phone_number = visit.patient.mobile
+  return unless phone_number.present?
+  insight = client.number_insight.advanced( number: phone_number, country: 'CA') rescue nil
+  return unless insight
+  return unless insight.current_carrier.country ==  'CA'
+  return unless insight.original_carrier.network_type == 'mobile' 
+  return unless insight.valid_number == 'valid'
+
+  client.sms.send(
+    from: 'Walk-In EMR',
+    to: phone_number,
+    text: "Your telemedicine appointment is confirmed. Dr. #{ visit.doctor.lname } will call you shortly" 
+  )
+  
+  end
+
+  def call_phone(phone_number)
+  end
+  end # nexmo module
+
 end # My
 

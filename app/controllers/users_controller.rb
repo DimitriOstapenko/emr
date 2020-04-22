@@ -7,7 +7,14 @@ class UsersController < ApplicationController
         helper_method :sort_column, :sort_direction
 
   def index
-    @users = User.all.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
+    keyword = params[:findstr]
+    if keyword
+       @users = User.search(keyword)
+    else
+       @users = User.all
+    end
+    @users = @users.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
+    flash[:info] = "#{@users.count} users found" if keyword
   end
 
   def show

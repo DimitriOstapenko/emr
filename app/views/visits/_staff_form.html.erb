@@ -5,9 +5,7 @@
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
 
-  if current_user.admin? 
-     disabled = []
-  elsif @visit.status == ERROR 
+  if @visit.status == ERROR 
      disabled = ( BILLED..CANCELLED ).to_a
   elsif @visit.billing_ref.present?
      disabled = [ARRIVED,ASSESSED,WITH_DOCTOR,ERROR,CANCELLED]
@@ -27,16 +25,15 @@
 %>
 
 <div class="cyan-well">
-  <!-- Row 0 if new visit or admin --> 
+  <!-- Row 0 if new visit --> 
 
      <div class="row">
-     <% if action_name == 'new' || current_user.admin? %>
+     <% if action_name == 'new'  %>
 	<div class="col-md-4">
 	   <%= f.input :entry_ts, as: :datetime,  datetime_separator: ' at ', label: 'Visit Date/time', html5: true %>
   	</div>
-     <% end %>
-     <% if current_user.admin? && action_name == 'edit' %>
-   	<div class="col-md-2">
+     <% elsif action_name == 'edit' %>
+   	<div class="col-md-4">
 	  <%= f.input :billing_ref %>
   	</div>
     <% end %>
