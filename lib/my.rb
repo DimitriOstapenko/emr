@@ -996,10 +996,10 @@ private
 # Notify doctor
   if visit.doctor.mobile.present?
     client.sms.send(
-      from: 'Walk-In EMR',
+      from: Rails.application.credentials[:nexmo_sms][:from_number],
       to: visit.doctor.mobile,
       text: "New appoinment requested by #{ visit.patient.full_name } #{visit.patient.age_str} #{visit.patient.sex} \n Reason:  #{visit.reason}" 
-    )
+    ) rescue nil
   end
 
   phone_number = visit.patient.mobile
@@ -1011,10 +1011,10 @@ private
   return unless insight.valid_number == 'valid'
 
   client.sms.send(
-    from: 'Walk-In EMR',
+    from: Rails.application.credentials[:nexmo_voice][:from_number],
     to: phone_number,
     text: "Your telemedicine appointment is confirmed. Dr. #{ visit.doctor.lname } will call you shortly" 
-  )
+  ) rescue nil
   
   end
 
