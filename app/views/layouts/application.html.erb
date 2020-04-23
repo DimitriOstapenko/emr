@@ -4,11 +4,12 @@
     <title><%= full_title(yield(:title)) %></title>
     <%= render 'layouts/metatags' %>
     <%= render 'layouts/rails_default' %>  
+    <%= render "shared/modal" if device_is_desktop? %>
     <link rel="icon"  href="/favicon.ico" sizes="16x16" />
   </head>
 
   <body>
-  <%= render 'layouts/facebook_messenger' %>
+  <%= render 'layouts/facebook_messenger' if Rails.env.production? %>
   <div class="container">
     <%= render 'layouts/navigation' %>
    <div id="body">

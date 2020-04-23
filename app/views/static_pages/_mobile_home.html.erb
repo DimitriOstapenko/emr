@@ -1,25 +1,23 @@
 <% provide(:title, 'Welcome') %>
-
-<div class="hdr-text">OHIP covered telemedicine visits for all </div> 
+<div class="hdr-text">Digital Walk-In Clinic for canadians <img src="/images/leaf.png" width=45> </div> 
 <div class="spacer-10"></div>
 <div style="float:left">
 <div id='logo' style="padding:10px">
-<img src='/images/mobile_clinic.jpg' width="320" style="padding:20px"></img>
+<img src='/images/mobile_clinic.jpg' width="320" style="padding:10px"></img>
 </div>
 </div>
 
 <div style="padding:10px;">
 <font size=4>
- <p> Don't want to stay in a busy waiting room during pandemic? You don't have to. You can now discuss your medical issue with a doctor as well as  renew your medication over the phone.</p>
+ <p> Don't want to stay in a busy waiting room during pandemic? You don't have to. You can now discuss your medical issue and renew your medication over the phone.</p>
   <p> Simply register with your OHIP card, confirm your email and login to make your first telephone appointment. Once registered, you will have access to your patient record and visit history. Our clinic served over 65000 patients over the last 15 years. </p>
 
-<div class='spacer-10'></div>
-<div align="center"> <%= link_to 'Yes! I want to talk to a doctor', new_user_registration_path, class: "btn btn-primary btn-lg" %> </div>
+<div align="center"> <%# link_to 'Yes! I want to talk to a doctor', new_user_registration_path, class: "btn btn-primary btn-lg" %> </div>
 <div class='spacer-20'></div>
 
-<p>Already registered? Please log in to make an appointment with <b>Dr. Ostapenko</b>. She will call you back as soon as she can. </p>
-
-<div align="center"><%= link_to 'Make an Appointment', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+<font size=4>
+<div align="center"><%= link_to 'Request Callback From Dr. Ostapenko', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+</font>
 
 <div class='spacer-20'></div>
 <p>Don’t have a health card? We still can help. Please call the number below and leave a message. We will respond as soon as we can. </p>

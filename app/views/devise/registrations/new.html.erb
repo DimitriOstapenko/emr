@@ -80,7 +80,8 @@ $(ohip_num).change(function () {
         data: $(this).serialize()
     }).done(function (data) {
       if (data.lname !== undefined) {
-        result = `Clinic patient found:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} :  ${data.addr}`;
+//        console.log(data);
+        result = `Clinic patient found:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} Last visit: ${data.last_visit_date}`;
         $("#results").append(result);
         $('#note').show()
       }
