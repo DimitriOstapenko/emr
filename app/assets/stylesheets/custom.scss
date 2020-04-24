@@ -183,12 +183,10 @@ td.hlight {
 #logo {
   float: left;
   margin-right: 10px;
-  font-size: 19px;
-//  color: grey;
+  font-size: 20px;
   color: #34d5eb;
   text-transform: uppercase;
   letter-spacing: -2px;
-//  padding-top: 14px;
   font-weight: bold;
   &:hover {
     color: red;
@@ -212,7 +210,8 @@ td.hlight {
 //  font-family: "Gill Sans", sans-serif;
   font-family: system-ui;
   margin-right: 10px;
-  font-size: 2.6em;
+  line-height: 1.18;
+  font-size: 2.5em;
   color: grey;
   text-transform: uppercase;
   letter-spacing: -2px;
