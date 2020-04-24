@@ -223,7 +223,7 @@ class Patient < ApplicationRecord
   end
   
   def has_visit_today?
-    self.visits.order(entry_ts: :desc).first || false
+    self.visits.order(entry_ts: :desc).first.entry_ts.today? rescue false
   end
 
 protected
