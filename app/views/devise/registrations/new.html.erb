@@ -9,6 +9,10 @@
 <h3>Patient Sign Up</h3>
 <div class="well">
 
+  <div id="note"> 
+  <small>Clinic patient? Please enter your health card number so that we can locate your patient record</small> 
+  </div>
+
   <b><font color=green><span id="results"></span></font></b>
   <p>&nbsp;</p>
 
@@ -18,9 +22,6 @@
   </div>
   </div>
 
-  <div id="note" style="display: none">
-    To access your patient record, please enter:
-  </div>
   <div class="row">
     <div class="col-md-12" id="email" >
     <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
@@ -83,7 +84,7 @@ $(ohip_num).change(function () {
 //        console.log(data);
         result = `Clinic patient found:<br> ${data.lname}, ${data.fname} dob:  ${data.dob} Last visit: ${data.last_visit_date}`;
         $("#results").append(result);
-        $('#note').show()
+        $('#note').hide()
       }
     }).fail(function (data) {
         console.log('AJAX request has FAILED');
