@@ -1,11 +1,12 @@
 <% provide(:title, 'Welcome') %>
+
 <div class="spacer-10"></div>
-<div style="float:left">
-<div id='logo' style="padding:20px">
+<aside>
+<div id='homepic' style="padding:20px">
 <img src='/images/clinic.jpg' width="480" style="padding:20px"></img>
-</div>
 <div id="address">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (289) 204-0561 </div>
 </div>
+</aside>
 
 <div class="hdr-text">Digital Walk-In Clinic for canadians <img src="/images/leaf.png" width=45 valign=top> </div> 
 
@@ -25,6 +26,7 @@
 
 <div class='spacer-20'></div>
 <div class='spacer-20'></div>
+
 <p>Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
 
 <p>
@@ -32,12 +34,20 @@ Covid-19 is here and it’s not a regular flu. This virus is much more contagiou
 If you have any or all of these symptoms: fever, coughing, weakness, sweating, muscle pain, do not go to see a doctor, this is a sure way to spread the infection!  Please stay at home and call a doctor. You can register and make a telemedicine appointment with dr. Ostapenko using the button above.
 </p>
 
+
 <p>
 <b>Mask or no mask?</b> Surgical masks in general, but especially N95 (US) or FFP3 (Europe) help to prevent the spread of the disease. If you have Covid-19 symptoms, it’s crucial to wear a mask in public.
 </p>
 <p>
 <b>Think you might have it?</b> <a href="https://covid-19.ontario.ca/self-assessment/#q1" target="_new">Here is official Ontario quick self-assessment page</a>
 
+
+
+<div class='spacer-20'></div>
+<div class='spacer-20'></div>
+<%= render "footer_icons" %>
+
+<!--
 <p>
 At this point self-isolation is the best way to keep you safe and prevent the spread of this virus. Please stay home as much as possible. If you do have to get out, respect social distancing rules, do not touch your face and wash your hands often. Here are some helpful videos.
 </p>
@@ -59,7 +69,6 @@ At this point self-isolation is the best way to keep you safe and prevent the sp
 </b>
 </div>
 
-<!--
 <p class="medium">
 No appointment is necessary, we service both Ontario and out of province patients.
 New patients are welcome. Driver Medical Exam. We provide specialist referrals and speak many different languages.
