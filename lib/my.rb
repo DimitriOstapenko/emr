@@ -987,7 +987,8 @@ private
   require 'nexmo'
 
   def send_new_visit_sms( visit )
-  
+  return unless Time.now.between?(OFFICE_START_TIME,OFFICE_END_TIME) 
+
   client = Nexmo::Client.new(
     api_key: Rails.application.credentials[:nexmo_sms][:api_key],
     api_secret: Rails.application.credentials[:nexmo_sms][:api_secret]

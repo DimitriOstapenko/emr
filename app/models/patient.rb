@@ -221,6 +221,10 @@ class Patient < ApplicationRecord
 
     return patients.order(:fname)
   end
+  
+  def has_visit_today?
+    self.visits.order(entry_ts: :desc).first || false
+  end
 
 protected
 

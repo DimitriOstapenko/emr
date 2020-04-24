@@ -35,21 +35,23 @@ Medications:
 &nbsp; <%# render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
 <% if @patient.visits.count == 0 %>
-  <p>&nbsp;</p>
   <p><b>  Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment.</b></p>
 <% end %>
 
-<p><b> If you would like to speak with doctor, please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis. This service is covered by OHIP.*  </b></p>
+<% unless @patient.has_visit_today? %>
+<p><b> To book your visit, please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis. This service is covered by OHIP.*  </b></p>
+<% end %>
 
-<% disabled = @patient.visits.first.date.today? rescue false %>
 <div class="col-sm-2 col-md-8 col-md-offset-2 col-sm-offset-3">
   <font size=3>
-<%= button_to 'Yes, I would like callback from doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-lg", method: 'get', disabled: disabled  %>
+<%= button_to 'Yes, I would like callback from doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-success btn-lg", method: 'get', disabled: @patient.has_visit_today?  %>
   </font>
 </div>
 
   </section>
+  <% if @patient.has_visit_today? %>
   <div style="float:right"><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
+  <% end %>
 </aside>
 
 <div class="spacer-20"></div>

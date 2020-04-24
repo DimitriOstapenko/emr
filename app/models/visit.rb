@@ -46,7 +46,6 @@ class Visit < ApplicationRecord
 # Send email to the doctor about new Virtual visit  
   def notify_doctor_and_patient
     UserMailer.new_visit(self).deliver
-    logger.debug("****************** about to send sms")
     send_new_visit_sms(self)
   end
 

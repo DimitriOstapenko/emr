@@ -17,6 +17,8 @@ class ApplicationController < ActionController::Base
 
 # after devise sign-in
   def after_sign_in_path_for(resource)
+    doc = Doctor.find_by(provider_no: DEFAULT_PROVIDER_NO ) 
+    set_doc_session(doc.id)
     if current_user && current_user.patient?
       if current_user.new_patient?
          edit_patient_path(current_user.patient)
@@ -26,9 +28,6 @@ class ApplicationController < ActionController::Base
     else
       if current_user.doctor?
         set_doc_session(current_user.doctor_id)
-      else 
-        doc = Doctor.find_by(provider_no: DEFAULT_PROVIDER_NO ) 
-        set_doc_session(doc.id)
       end
       stored_location_for(resource) || daysheet_path
     end

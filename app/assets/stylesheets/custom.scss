@@ -562,13 +562,13 @@ input, select{
 }
 
 #flash_alert {               // devise alers
-//  background-color :$alert-info-bg;  // overrides default colors!
+  background-color :$alert-info-bg;  // overrides default colors!
   @extend .alert;
   padding-left: 5px;
 }
 
 #flash_notice {		     // devise notices
-//  background-color :$alert-info-bg;  // overrides default colors!
+  background-color :$alert-info-bg;  // overrides default colors!
   display: flex;
   @extend .alert;
   padding-left: 5px;
