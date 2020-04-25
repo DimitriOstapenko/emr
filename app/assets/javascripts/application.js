@@ -24,6 +24,7 @@
 //= require pagination-keys.js
 //= require tooltip.js
 //= require dropzone
+//= require zoho.js
 
 
 function set_sm_modal() {
@@ -42,4 +43,5 @@ $(document).on('turbolinks:load', function(){
     $(".alert-alert").delay(2000).slideUp(500, function(){
           $(".alert").alert('close');
       });
-    });
+});
+

@@ -15,9 +15,11 @@ gem 'dropzonejs-rails',        '~> 0.8.4'
 gem 'mini_magick',          '~> 4.9.4'  
 gem 'will_paginate',           '>= 3.2.1' 
 gem 'bootstrap-will_paginate', '>= 1.0.0'
+
 gem 'bootstrap-sass',       '>= 3.4.1'
-gem 'sassc', 		       '>= 2.0'
-gem 'sassc-rails',	       '>= 2.1'
+gem 'sassc', '~> 2.3'
+gem 'sassc-rails', '~> 2.1', '>= 2.1.2'
+
 gem 'uglifier',                '>= 4.1.20' 
 gem 'coffee-rails',            '>= 4.2.2'
 gem 'jquery-rails',            '>= 4.3.1'
