@@ -9,7 +9,7 @@
   </head>
 
   <body>
-  <%= render 'layouts/facebook_messenger' if Rails.env.production? %>
+  <%# render 'layouts/facebook_messenger' if Rails.env.production? %>
   <div class="container">
     <%= render 'layouts/navigation' %>
    <div id="body">
@@ -20,5 +20,6 @@
 
   <%= render "layouts/#{device_type}_footer"  %>
   <%# debug(params) if DEBUG_FLAG >0  %>
+  <%= render 'layouts/salesiq_chat' %>
   </body>
 </html>
