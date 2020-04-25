@@ -850,9 +850,17 @@ card > hr {
 //	margin-left: 10px;
 //	border: 0 none;
 	font-weight: 500;
-	font-size: 1em;
+	font-size: 1.1em;
 //	text-transform: uppercase;
 //	border-radius: 20px;
+}
+
+/* inverse colors on mouse-over and focus */
+.btn:hover,
+.btn:focus {
+  color: #9555af;
+  border-color: currentColor;
+  background-color: white;
 }
 
 // patient profile page
