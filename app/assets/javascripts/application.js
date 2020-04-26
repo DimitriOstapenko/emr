@@ -26,7 +26,6 @@
 //= require dropzone
 //= require zoho.js
 
-
 function set_sm_modal() {
   document.getElementById('mymodal').className='modal-dialog modal-sm';
 }
