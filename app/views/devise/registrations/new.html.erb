@@ -10,7 +10,7 @@
 <div class="well">
 
   <div id="note"> 
-  <small>Clinic patient? Please enter your health card number so that we can locate your patient record</small> 
+  Clinic patient? If health card number matches our records, we will retrieve your patient profile
   </div>
 
   <b><font color=green><span id="results"></span></font></b>
@@ -24,7 +24,7 @@
 
   <div class="row">
     <div class="col-md-12" id="email" >
-    <%= f.input :email, required: true, autofocus: true, input_html: { autocomplete: "email" } %>
+    <%= f.input :email, required: true, autofocus: false, input_html: { autocomplete: "email" } %>
   </div>
   </div>
 
@@ -47,7 +47,7 @@
 
   <div class="row" id="submit">
   <div class="col-md-12">
-    <%= f.button :submit, "Sign Up", class: "btn btn-primary" %>
+    <%= f.button :submit, "Sign Up to make an appointment", class: "btn btn-primary" %>
   </div>
   </div>
 
