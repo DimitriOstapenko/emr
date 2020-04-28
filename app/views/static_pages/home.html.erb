@@ -1,2 +1,5 @@
-
+<%  if request.host.match(/renewmymeds/i) %>
+<%= render "#{device_type}_rmm_home" %>
+<% else %>
 <%= render "#{device_type}_home" %>
+<% end %>
