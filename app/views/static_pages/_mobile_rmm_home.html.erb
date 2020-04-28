@@ -2,42 +2,36 @@
 
 <div id="logo">Stoney Creek Medical Walk-In Clinic</div>
 
-<div class="spacer-10"></div>
+<div class="row pt-4">
+ <div class="col-xs-12">
+  <div class="hdr-text"> 
+    Prescription Renewals Over The Phone
+    <img src="/images/pills.png" width=50></img>
+  </div> 
+ </div>
+</div>
+
 <div class="row">
-  <div class="col-md-4">
-<div id='homepic' style="padding:50px">
-  <img src='/images/pharm.jpg'></img> 
+  <div class="col-xs-12">
+    <div align="center" style="padding:25px"> <img src='/images/pharm.jpg'></img> </div>
+  </div>
 </div>
-</div>
 
-<div class="col-md-8">
-<div class="hdr-text"> 
-  Medication Renewals Over The Phone
-  <img src="/images/pills.png" width=50></img>
-</div> 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
+<div class="row" style="padding:10px">
+  <div class="col-xs-12">
+    <p><font size=6>D</font>id you know? You can now renew your medications over the phone. </p>
+    <p><font size=6>S</font>imply register with your OHIP card, confirm your email and login. Request callback from doctor, discuss your needs and then just go to pharmacy near you to pick up your prescription. Simple as that! </p>
 
-<div>
-<font size=3>
- <p> Did you know? You can now renew your medications over the phone. </p>
- <p> Simply register with your OHIP card, confirm your email and login. Request callback from doctor, discuss your needs and then just go to pharmacy near you to pick up your prescription. Simple as that! </p>
+<div align="center" class="p-3"><%= link_to 'Yes! I want to renew my prescription now', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
 
-<div class='spacer-20'></div>
-<div align="center"><%= link_to 'Yes! I want to renew my prescription now', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+<p>Don’t have a health card? We still can help. Please call the number below to talk to a doctor. 
+<i><b>Sorry, no renewals of opioid medications! </b></i></p>
 
-<div class='spacer-20'></div>
+<h1> (289) 204-0561 </h1>
 
-<p>Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
-
-</font>
-
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
-
+<div class='pt-4 ml-2'>
 <%= render "footer_icons" %>
-
-
 </div>
+
 </div>
 

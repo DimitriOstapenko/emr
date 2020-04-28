@@ -335,6 +335,7 @@ private
           self.bil_type ||= HCP_BILLING
 	  self.duration ||= 10
           self.proc_code ||= 'K081A' # televisit!!
+          self.notes ||= 'Verbal consent was obtained. '
   end
 
 end
