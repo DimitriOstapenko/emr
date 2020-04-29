@@ -1,10 +1,9 @@
 <% provide(:title, 'Welcome') %>
 
-<div class="spacer-10"></div>
-<div class="row">
-  <div class="col-md-4">
+<div class="col-md-4">
 <div id='homepic' style="padding:50px">
   <img src='/images/pharm.jpg'></img> 
+<h1> (289) 204-0561 </h1>
 </div>
 </div>
 
@@ -13,30 +12,22 @@
   <img src="/images/pills.png" width=50></img>
   Medication Renewals Over The Phone
 </div> 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
 
-<div style="padding:20px;">
+<div class="pt-4">
 <font size=3>
   <p><font size=6>D</font>id you know? You can now renew your medications over the phone - free of charge. </p>
   <p>Simply register with your OHIP card, and log in to request callback from doctor. Discuss your needs and then just go to pharmacy near you to pick up your prescription. Simple as that! </p>
 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
-<div align="center"><%= link_to 'Yes! I want to renew my prescription now', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+<div align="center" class="pt-4"><%= link_to 'Yes! I want to renew my prescription now', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
-
-<p>Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
+<p class="pt-4"><i>We never send surprise bills for insured services! Free is free. </i></b> 
+<p class="pt-2">Don’t have a health card? We still can help. Please call the number below and leave a message. We will respond as soon as we can. </p>
 
 </font>
 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
-
+<div class="pt-5">
 <%= render "footer_icons" %>
-
+</div>
 
 </div>
 </div>
