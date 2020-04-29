@@ -1,30 +1,26 @@
 <% provide(:title, 'Welcome') %>
 
-<div class="spacer-10"></div>
 <aside>
-<div id='homepic' style="padding:20px">
+<div id='homepic' class="p5">
 <img src='/images/clinic.jpg' width="480" style="padding:20px"></img>
 <div id="address">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (289) 204-0561 </div>
 </div>
 </aside>
 
 <div class="hdr-text">Digital Walk-In Clinic for canadians <img src="/images/leaf.png" width=45 valign=top> </div> 
-<div class='spacer-20'></div>
 
-<div style="padding:20px;">
+<div class="p-5">
 <font size=3>
- <p> Need to see a doctor, but don't want to go to clinic during pandemic? You don't have to. You can now discuss your medical issue and renew your medications over the phone.</p>
+  <p><font size=6>N</font>eed to see a doctor, but don't want to go to clinic during pandemic? You don't have to. You can now discuss your medical issue and renew your medications over the phone.</p>
   <p> Simply register with your OHIP card, confirm your email and login to make your first telephone appointment right away. Once registered, you will have access to your patient record and visit history. Our clinic served over 65000 patients over the last 15 years. </p>
     
 <div align="center"> <%# link_to 'Yes! I want to talk to a doctor', new_user_registration_path, class: "btn btn-primary btn-lg" %> </div>
 
-<div class='spacer-20'></div>
-<div align="center"><%= link_to 'Request Callback From Dr. Ostapenko', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+<div align="center" class="pt-4"><%= link_to 'Request Callback From Dr. Ostapenko', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
+<p class="pt-5"><b><i>We never send surprize bills for insured services! Free is free. </i></b> 
 
-<p>Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
+<p class="pt-5">Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
 
 <p>
 Covid-19 is here and it’s not a regular flu. This virus is much more contagious and much more deadly, especially for older people with health conditions.  There’s no cure and no vaccine at this point. So please treat the situation seriously and take all measures to keep yourself safe.
@@ -33,7 +29,7 @@ If you have any or all of these symptoms: fever, coughing, weakness, sweating, m
 
 
 <p>
-<b>Mask or no mask?</b> Surgical masks in general, but especially N95 (US) or FFP3 (Europe) help to prevent the spread of the disease. If you have Covid-19 symptoms, it’s crucial to wear a mask in public.
+<b>Mask or no mask?</b> Surgical masks in general, but especially N95 (US) or FFP3 (Europe) help to prevent the spread of the disease. If you have Covid-19 symptoms, it’s recommended to wear a mask in public.
 </p>
 <p>
 <b>Think you might have it?</b> <a href="https://covid-19.ontario.ca/self-assessment/#q1" target="_new">Here is official Ontario quick self-assessment page</a>
@@ -41,9 +37,9 @@ If you have any or all of these symptoms: fever, coughing, weakness, sweating, m
 
 </font>
 
-<div class='spacer-20'></div>
-<div class='spacer-20'></div>
+<div class='pt-5'>
 <%= render "footer_icons" %>
+</div>
 
 <!--
 <p>
