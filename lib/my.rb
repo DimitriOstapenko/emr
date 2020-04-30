@@ -983,7 +983,7 @@ private
   end # Forms module
 
 # SMS and voice calls   
-  module Sms
+  module Nexmo_phone
   require 'nexmo'
 
   def send_new_visit_sms( visit )
@@ -1003,6 +1003,7 @@ private
     ) rescue nil
   end
 
+# Notify patient if in Canada and phone is mobile phone 
   phone_number = visit.patient.mobile
   return unless phone_number.present?
   insight = client.number_insight.advanced( number: phone_number, country: 'CA') rescue nil
@@ -1013,15 +1014,45 @@ private
 
   client.sms.send(
     from: Rails.application.credentials[:nexmo_voice][:from_number],
-    to: phone_number,
+    to: phone_number, # 33699436691
     text: "Your telemedicine appointment is confirmed. Dr. #{ visit.doctor.lname } will call you shortly" 
   ) rescue nil
   
-  end
+  end # send_new_visit_sms
 
-  def call_phone(phone_number)
-  end
-  end # nexmo module
+# Call doctor's phone during business hours and notify them about new patient  
+  def voice_message_to_doctor( visit )
+     return unless Time.now.between?(OFFICE_START_TIME,OFFICE_END_TIME) 
+     return unless visit.doctor.mobile.present?
+ 
+    client = Nexmo::Client.new(
+      application_id: Rails.application.credentials[:nexmo_voice][:application_id],
+      private_key: File.read('config/nexmo_voice.key')
+    )
+
+      ncco = [{
+        "action": "talk",
+        "voiceName": "Tatyana",
+        "text": "Здравствуйте доктор #{visit.doctor.lname}! К вам только что зарегистрировался пациент #{visit.patient.full_name}"
+      }]
+
+      response = client.voice.create(
+        to: [{
+          type: 'phone',
+#          number: '33699436691'
+          number: visit.doctor.mobile 
+        }],
+        from: {
+          type: 'phone',
+          number: Rails.application.credentials[:nexmo_voice][:from_number]
+        },
+        ncco: ncco
+      ) rescue nil
+
+#      logger.debug("************ #{response}")
+
+  end # voice_message_to_doctor 
+  end # Nexmo_phone module
 
 end # My
 

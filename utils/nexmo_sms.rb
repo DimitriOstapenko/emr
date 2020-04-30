@@ -1,6 +1,6 @@
 # Send SMS message to a phone
 require 'nexmo'
-require_relative './config/environment'
+require_relative '../config/environment'
 
 NEXMO_API_KEY = Rails.application.credentials[:nexmo_sms][:api_key] 
 NEXMO_API_SECRET =  Rails.application.credentials[:nexmo_sms][:api_secret] 

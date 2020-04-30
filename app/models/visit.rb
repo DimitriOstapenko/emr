@@ -1,6 +1,6 @@
 class Visit < ApplicationRecord
 
-  include My::Sms
+  include My::Nexmo_phone
 
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
   has_many :documents, dependent: :destroy, inverse_of: :visit
@@ -46,7 +46,8 @@ class Visit < ApplicationRecord
 # Send email to the doctor about new Virtual visit  
   def notify_doctor_and_patient
     UserMailer.new_visit(self).deliver
-    send_new_visit_sms(self)
+    send_new_visit_sms(self)       # to patient & doctor if mobiles are present
+    voice_message_to_doctor(self)  # notify doctor about new visit 
   end
 
   def doctor
