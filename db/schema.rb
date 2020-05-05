@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_192341) do
+ActiveRecord::Schema.define(version: 2020_05_05_102155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -554,29 +554,13 @@ ActiveRecord::Schema.define(version: 2020_04_17_192341) do
     t.boolean "new_patient", default: false
     t.string "ohip_ver"
     t.bigint "doctor_id"
+    t.date "dob"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["doctor_id"], name: "index_users_on_doctor_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["patient_id"], name: "index_users_on_patient_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-  end
-
-  create_table "users_", id: false, force: :cascade do |t|
-    t.bigint "id"
-    t.string "name"
-    t.string "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string "password_digest"
-    t.integer "role"
-    t.string "remember_digest"
-    t.boolean "remember_me"
-    t.string "activation_digest"
-    t.boolean "activated"
-    t.datetime "activated_at"
-    t.string "reset_digest"
-    t.datetime "reset_sent_at"
   end
 
   create_table "vaccines", force: :cascade do |t|

@@ -139,6 +139,24 @@ table {
   margin-left: ($spacer * .5) !important;
 }
 
+.ml-3 {
+  margin-left: ($spacer * 1) !important;
+}
+
+.mr-1 {
+  margin-right: ($spacer * .25) !important;
+}
+
+.mr-2 {
+  margin-right: ($spacer * .5) !important;
+}
+
+.mr-3 {
+  margin-right: ($spacer * 1) !important;
+}
+
+
+
 .px-2 {
   padding-left: ($spacer * .5) !important;
   padding-right: ($spacer * .5) !important;
@@ -889,8 +907,8 @@ card > hr {
 
 .btn {
 //	padding: 6px;
-	margin-top: 10px;
-	margin-bottom: 10px;
+//	margin-top: 10px;
+//	margin-bottom: 10px;
 //	margin-left: 10px;
 //	border: 0 none;
 	font-weight: 500;
@@ -927,7 +945,12 @@ card > hr {
 .form-control:focus {
   border-color: #FF0000;
 //  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
+  background-color: #E9F0FD!important;
 }
+
+.form-inline {
+  display: inline-block;
+ }
 
 .voice-input:focus {
 //	height: 300px;

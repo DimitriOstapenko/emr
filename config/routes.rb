@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 #   root 'daysheet#index'
-  root :to => "static_pages#rmm_home", :constraints => { :domain => "renewmymeds.ca" }
+#  root :to => "static_pages#rmm_home", :constraints => { :domain => "renewmymeds.ca" }
 
   devise_for :users, controllers: { registrations: "my_registrations" }
   get '/users/', to: 'users#index'
@@ -50,18 +50,9 @@ Rails.application.routes.draw do
   get  '/news', to: 'static_pages#news'
   get  '/terms', to: 'static_pages#terms'
   get  '/privacy', to: 'static_pages#privacy'
-#  get  '/signup',  to: 'users#new'
-#  post '/signup',  to: 'users#create'
-#  get    '/login',   to: 'sessions#new'
-#  post   '/login',   to: 'sessions#create'
-#  delete '/logout',  to: 'sessions#destroy'
 
-#  get '/patients(/:id)', to: 'patients#find', constraints: { query_string: /findstr/ }
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
-
-#  get  '/patsignup', to: 'patients#new'
-#  post '/patsignup', to: 'patients#create'
 
   get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
   get '/visits' => 'visits#index'
@@ -74,6 +65,7 @@ Rails.application.routes.draw do
   get "/drugs/get", to: "drugs#get" 
 
   get "/patients/get", to: "patients#get"
+  post "/users/lookup", to: "users#lookup"  # lookup by dob and last 4 digits of HC
   
   resources :users
   resources :patients do

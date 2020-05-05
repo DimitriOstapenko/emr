@@ -199,6 +199,8 @@ class Patient < ApplicationRecord
 # Global search method
   def self.search(keyword = '')
     case keyword
+     when /^[[:digit:]]{4}$/       # Last 4 digits of HC number
+       patients = Patient.where("ohip_num ~ ?", "#{keyword}$")
      when /^[[:digit:]]{,12}$/    # Up to 12 Digits - HC number
        patients = Patient.where("ohip_num like ?", "%#{keyword}%")
      when /^%B6/                  # Scanned card
@@ -219,9 +221,9 @@ class Patient < ApplicationRecord
        patients = []
      end
 
-    return patients.order(:fname)
+    return patients.order(:fname) rescue nil
   end
-  
+
   def has_visit_today?
     self.visits.order(entry_ts: :desc).first.entry_ts.today? rescue false
   end

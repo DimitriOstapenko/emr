@@ -27,7 +27,7 @@ class User < ApplicationRecord
       if patient.present?
         self.patient_id = patient.id 
       else
-        patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email)
+        patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email, dob: self.dob)
         patient.save!(validate:false)
         self.patient_id = patient.id 
         self.new_patient = true

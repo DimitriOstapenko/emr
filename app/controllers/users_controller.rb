@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
  
-      	before_action :logged_in_user #, except: :resend_activation_link
+      	before_action :logged_in_user, except: [:lookup]  #, except: :resend_activation_link
   	before_action :correct_user, only: [:show, :edit, :update]
-  	before_action :admin_user, except: [:show, :edit, :update]   #,     only: [:index, :new, :create, :destroy]
+  	before_action :admin_user, except: [:show, :edit, :update, :lookup]   #,     only: [:index, :new, :create, :destroy]
 
         helper_method :sort_column, :sort_direction
 
@@ -70,10 +70,30 @@ class UsersController < ApplicationController
     end
   end
 
-  private
+# Preliminary lookup by DOB and last 4 digits of HC
+  def lookup
+    ohip4 = params[:user][:ohip4].strip rescue nil
+    dob = params[:user][:dob].to_date rescue nil
+    if ohip4.present? && dob.present?
+      patients = Patient.search(ohip4)
+      patient = patients.where(dob: dob).first if patients
+      if patient.present? && patient.user.present? 
+        flash[:danger] = "Patient with this health card number is already registered. Please try logging in"
+        redirect_to root_path
+      else 
+        ohip_num =  patient.ohip_num_full rescue nil
+        @resource = User.new(ohip_num: ohip_num, dob: dob)
+        render "devise/registrations/new"
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
+private
 
     def user_params
-      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :doctor_id, :invited_by)
+      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :doctor_id, :invited_by, :dob )
     end
 
     def sort_column

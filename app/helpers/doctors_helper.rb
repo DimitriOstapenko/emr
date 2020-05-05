@@ -13,7 +13,7 @@ module DoctorsHelper
 # Remember current doctor
   def set_doc_session ( id )
     session[:doc_id] = id
-    logger.debug "****** set_doc_session:  #{session[:doc_id]}"
+#    logger.debug "****** set_doc_session:  #{session[:doc_id]}"
   end
 
 end

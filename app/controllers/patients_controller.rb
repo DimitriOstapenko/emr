@@ -1,7 +1,7 @@
 class PatientsController < ApplicationController
 	include My::Forms
 
-	before_action :logged_in_user, except: [:get]
+	before_action :logged_in_user, except: [:get ]
 	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history, :chart ]
 	before_action :admin_user, only: :destroy
         before_action :verify_patient  # is patient set and is rigtht patient?
@@ -37,19 +37,6 @@ class PatientsController < ApplicationController
       flash.now[:warning] = "Patient not found #{str.inspect} "
       render  inline: '', layout: true
     end
-  end
-
-  def __find
-      str = params[:findstr].strip
-      @patients = myfind(str) 
-      if @patients.any?
-        @patients = @patients.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:info] = "Found #{@patients.count} #{'patient'.pluralize(@patients.count)} matching string #{str.inspect}"
-      else
-        @patients = Patient.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page])
-	 flash.now[:warning] = "Patient  #{str.inspect} was not found"
-      end
-      render 'index'
   end
 
   def show 
@@ -221,33 +208,6 @@ private
 					 )
   end
  
-# Find patient by scanned string /last name[, first name]/ entered health card number/ DOB dd-mm-yyyy or dd-mmm-yyyy or dd/mm/yyyy depending on input format  
-  def __myfind (str)
-	if str.match(/^[[:digit:]]{,12}$/)               # ohip_num
-      	  Patient.where("ohip_num like ?", "%#{str}%")  
-	elsif str.match(/^%B6/)  			 # scanned card
-	  hcnum = str[8,10]
-	  Patient.find_by(ohip_num: hcnum)
-	elsif str.match('^[[:digit:]]{,2}[/-][[:alpha:]]{3}[/-][[:digit:]]{4}') || # Date Of Birth
-	      str.match('^[[:digit:]]{,2}[/-][[:digit:]]{,2}[/-][[:digit:]]{4}')
-	  dob = str.to_date rescue '1900-01-01'
-	  Patient.where("dob = ?", dob)	
-	elsif str.match(/^[[:graph:]]+/)  		 # last name[, fname]
-	  lname,fname = str.split(',')
-	  if lname.present?
-	     lname.strip! 
-	     if fname.present?
-		fname.strip!
-		Patient.where("upper(lname) like ? AND upper(fname) like ?", "%#{lname.upcase}%", "%#{fname.upcase}%") 
-	     else
-		Patient.where("upper(lname) like ? OR upper(maid_name) like ?", "%#{lname.upcase}%", "%#{lname.upcase}") 
-	     end
-	  end
-	else
-	  []
-	end
-  end
-
 # Accept 1st line from health card, return new patient with known data prefilled
   def create_patient_from_card ( str )
     sex = {'1' =>'M', '2'=>'F'}
