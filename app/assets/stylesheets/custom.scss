@@ -103,10 +103,11 @@ table {
 }
 
 .navbar-mobile {
-  font-size: 18px;
+  font-size: 16px;
   padding-top: 5px;
   padding-bottom: 0;
   height: 40px;
+  font-weight: 500;
   line-height: 40px;
 }
 
@@ -155,7 +156,20 @@ table {
   margin-right: ($spacer * 1) !important;
 }
 
+.m-1 {
+	margin-right: ($spacer * .25) !important;
+	margin-left: ($spacer * .25) !important;
+}	
 
+.m-2 {
+	margin-right: ($spacer * .5) !important;
+	margin-left: ($spacer * .5) !important;
+}	
+
+.m-3 {
+	margin-right: ($spacer * 1) !important;
+	margin-left: ($spacer * 1) !important;
+}	
 
 .px-2 {
   padding-left: ($spacer * .5) !important;

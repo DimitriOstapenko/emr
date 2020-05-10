@@ -1,15 +1,15 @@
+<div class="row m-1">
 <% unless @patient.pat_type == DECEASED_PATIENT %>
-<div class="col-sm-2 col-md-2">
-  <div class="btn-group">
-<%= button_to 'New Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary btn-sm", method: 'get'  %> 
-  </div>
+<div class="col-md-3 col-xs-4">
+<%= button_to 'New Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary", method: 'get'  %> 
 </div> 
 <% end %>
 
-<div class="col-sm-4 col-md-2">
-  <div class="btn-group dropup" style="padding-right:20px;">
-  <button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New <span class="caret"></span>
+<div class="col-md-3 col-xs-4">
+  <div class="btn-group dropup">
+  <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New <span class="caret"></span>
   </button>
+
   <ul class="dropdown-menu">
     <li><%= link_to 'Medication', new_patient_medication_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()" %> </li>
     <li><%= link_to 'Invoice', new_patient_invoice_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()" %> </li>
@@ -22,6 +22,8 @@
   </div>
 </div>
 
-<div class="col-sm-3 col-md-4" style="padding-left:25px;">
+<div class="col-md-5 col-xs-4">
 <%= button_to "Upload Document", new_patient_patient_doc_path(@patient),  class: "btn btn-success btn-sm", method: 'get' %>
 </div>
+</div>
+<div class='p-3'></div>

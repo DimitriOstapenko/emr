@@ -1,0 +1,44 @@
+<% provide(:title, 'All patients') %>
+<%= render 'shared/modal' %>
+
+<%
+    lname = (@sort == 'lname' && @direction == 'asc')?"Name &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-alphabet'></i>":"Name &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-alphabet-alt'></i>" 
+    dob = (@sort == 'dob' && @direction == 'asc')?"DOB &nbsp;<i class='glyphicon glyphicon-sort-by-order-alt'></i>":"DOB &nbsp;<i class='glyphicon glyphicon-sort-by-order'></i>" 
+%>
+
+<table class="tbl2 table-hover table-striped table-bordered"> <!--class="table table-hover table-condensed" > -->
+  <thead>
+      <tr>
+          <th class="tbl_lmd"><%= sortable 'lname', lname.html_safe %></th>
+          <th class="tbl_sm text-center">Gen</th>
+          <th class="tbl_sm text-center">Age</th>
+	  <th class="tbl_sm text-center">Type</th> 
+	  <th class="tbl_md text-center">Last Visit </th>
+          <th class="text-center"><%= sortable 'ohip_num', 'HC/IFH#' %></th>
+	  <th class="text-center">Expiry</th> 
+	  <th class="text-center"><%= sortable 'dob', dob.html_safe %></th> 
+          <th class="text-center">Phone</th>
+ 	  <th class="tbl_sm text-center">Lbl</th>
+ 	  <th class="tbl_sm"></th>
+	  <%= "<th class='tbl_sm'></th>".html_safe if current_user.admin? %>
+          <th class="tbl_sm text-center">Chrt</th>
+      </tr>
+  </thead>
+  <tbody>
+
+  <%= render @patients, cached: true %>
+
+  </tbody>
+</table>
+
+<div class="bottom_buttons">
+<% unless current_user.doctor? %>
+<%= button_to "New Patient", new_patient_path, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary col-md-2", method: "get"  %>
+<% end %>
+</div>
+
+<div class="bottom_nav">
+<%= will_paginate @patients, class: "btn" %> 
+</div>
+
+

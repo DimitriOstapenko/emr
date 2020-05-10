@@ -1,0 +1,8 @@
+<tr>
+  <td><%= link_to visit.date, patient_visit_path(@patient,visit) %></td>
+  <td class="text-center"><%= visit.pat_type %></td>
+  <td class="text-center"><%= visit.diag_scode %></td>
+  <td><%= visit.proc_codes %></td>
+  <td><%= visit.status_str %></td>
+</tr>
+

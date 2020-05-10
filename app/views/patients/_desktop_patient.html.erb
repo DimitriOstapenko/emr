@@ -1,0 +1,24 @@
+    <tr>
+	<td><%= link_to "#{patient.full_name}", patient %> </td>
+	<td class="text-center"><%= patient.sex %></td> 
+	<td class="tbl_sm text-center"><%= patient.age_str %></td>
+	<td class="tbl_sm text-center"><%= patient.pat_type %> </td>
+	<td class="text-center"><%= patient.last_visit_date %> </td> 
+	<td class="text-center"><%= patient.ohip_or_ifh_num_full %> </td>
+	<td class="text-center"><%= patient.hin_expiry_short %> </td>
+	<td class="text-center"><%= patient.dob %> </td>
+	<td class="text-center"><%= patient.mobile_or_home_phone %> </td> 
+        <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+        <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+
+  	<% if current_user.admin?  %>
+          <td class="text-center">  <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> 
+	<% end %>
+
+	<td class="text-center">
+	<% if patient.chart.present? %>
+	  <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(patient) %>
+	<% end %>
+	</td>
+     </tr>
+

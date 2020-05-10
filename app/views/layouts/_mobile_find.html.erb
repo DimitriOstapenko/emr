@@ -1,7 +1,6 @@
-<li class="nav-item active">
+<div class="col-xs-10 col-xs-offset-1">
 <%= form_with  method: :get, skip_enforcing_utf8: :true do |f| %>
   <div class="form-group">
-    <div class="col-xs-10 col-xs-offset-1">
 	  <%= f.search_field :findstr, 
 	   class: "form-control", 
            placeholder: "Find #{controller_name.singularize}",
@@ -10,7 +9,5 @@
            value: params[:findstr]
           %>
      </div>
-   </div>
 <% end %>
-</li>
-
+</div>

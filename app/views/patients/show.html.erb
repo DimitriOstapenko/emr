@@ -1,10 +1,10 @@
 <% provide(:title, @patient.full_name) %>
 
-<p>&nbsp;</p>
-<h2><%= @patient.full_name %> :  Patient Profile &nbsp; 
 <% if device_is_desktop? %>
+  <h2><%= @patient.full_name %> :  Patient Profile &nbsp; 
   <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', onclick: "set_lg_modal()" %>
 <% else %>
+  <h2><%= @patient.full_name %>  
   <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_path(@patient) %>
 <% end %>
 </h2>

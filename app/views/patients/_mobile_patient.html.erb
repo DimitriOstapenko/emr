@@ -1,0 +1,12 @@
+    <tr>
+	<td><%= link_to "#{patient.full_name}", patient %> </td>
+	<td class="text-center"><%= patient.sex %></td> 
+	<td class="tbl_sm text-center"><%= patient.age_str %></td>
+	<td class="tbl_sm text-center"><%= patient.pat_type %> </td>
+	<td class="text-center"><%= patient.mobile_or_home_phone %> </td> 
+        <td class="text-center">
+          <%= link_to 'email', "mailto:#{patient.email}" if patient.email.present? %>
+        </td>
+
+     </tr>
+

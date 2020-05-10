@@ -1,18 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light">
-  <ul class="nav navbar-nav navbar-right">
-  <%= render 'layouts/select_doctor' if (device_type == 'desktop' && controller_name == 'daysheet')%>
-  <% if controller_name == 'daysheet' || controller_name == 'billings' %>
-    <%= render 'layouts/date_select' %>
-  <% elsif !%w( visits users static_pages password_resets patient_docs).include?(controller_name) %>
-    <%= render 'layouts/find' %>
-  <% end %>
-  <li class="<%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></li>
-  <li class="<%= 'active' if controller_name == 'daysheet' %>"><%= link_to "Day Sheet", daysheet_path %></li>
-  <%= render 'layouts/billing' %>
-  <%= render 'layouts/docs' %>
-  <%= render 'layouts/ref' %>
-  <%= render 'layouts/forms' %>
-  <li class="unstyled" style="width:15px"></li>
-  </ul>
+<% show_search_controllers = %w(users patients) %>
+<nav class="navbar navbar-mobile navbar-expand-lg bg-info">
+    <ul class="nav ml-2">
+<div class="row">
+  <div class="col-xs-3">
+     <div class="nav-item <%= 'active' if controller_name == 'patients' %>"><%= link_to " Patients", patients_path %></div>
+  </div>
+  <div class="col-xs-3">
+  <div class="nav-item <%= 'active' if controller_name == 'daysheet' %>"><%= link_to "DaySheet", daysheet_path %></div>
+  </div>
+  <div class="col-xs-3">
+  <div class="nav-item <%= 'active' if controller_name == 'billings' %>"><%= link_to "Billing", billings_path %></div>
+  </div>
+  <div class="col-xs-3">
+  <div class="nav-item <%= 'active' if controller_name == 'users' %>"><%= link_to "Users", users_path %></div>
+  </div>
+</div>
+
+<p> &nbsp; </p>
+
+<% if controller_name == 'daysheet' %>
+    <%= render 'layouts/mobile_date_select' %>
+<% elsif show_search_controllers.include?(controller_name) %>
+    <%= render 'layouts/mobile_find' %>
+<% end %>
+    </ul>
 </nav>
-  

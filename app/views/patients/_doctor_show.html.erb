@@ -47,11 +47,11 @@ Medications:
 
   </section>
 <div class="row">
-   <%= render "buttons", remote: remote unless current_user.patient? %> 
+   <%= render "buttons", remote: remote %> 
 </div>
 </aside>
 
-<%= render "visits" %>
+<%= render "doctor_#{device_type}_visits" %>
 
 </div>
 

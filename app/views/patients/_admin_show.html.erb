@@ -4,7 +4,6 @@
 
 <div class="row">
   <aside class="col-md-6">
-    <section class="user_info">
 <pre class="pre-scrollable-lg">
 <% if @patient.pat_type == CASH_PATIENT %>
 <b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
@@ -45,13 +44,12 @@ Medications:
 &nbsp; <%= render("referrals", remote: remote) if @patient.referrals.any? %>
 &nbsp; <%= render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
-  </section>
-<div class="row">
-   <%= render "buttons", remote: remote unless current_user.patient? %> 
-</div>
+
+   <%= render "buttons", remote: remote  %> 
+
 </aside>
 
-<%= render 'visits' %>
+<%= render "admin_#{device_type}_visits" %>
 
 </div>
 
