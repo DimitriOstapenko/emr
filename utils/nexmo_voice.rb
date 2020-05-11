@@ -19,6 +19,7 @@ response = client.voice.create(
   to: [{
     type: 'phone',
     number: '33699436691'
+#   number: '12897751961'
 #    number: Rails.application.credentials[:nexmo_voice][:to_number] 
   }],
   from: {

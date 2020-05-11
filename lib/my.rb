@@ -1006,6 +1006,7 @@ private
 # Notify patient if in Canada and phone is mobile phone 
   phone_number = visit.patient.mobile
   return unless phone_number.present?
+  phone_number = "1#{phone_number}" unless phone_number[0] == '1'
   insight = client.number_insight.advanced( number: phone_number, country: 'CA') rescue nil
   return unless insight
   return unless insight.current_carrier.country ==  'CA'
