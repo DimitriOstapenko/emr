@@ -996,10 +996,11 @@ private
 
 # Notify doctor
   if visit.doctor.mobile.present?
+    msg = "Appoinment request: #{ visit.patient.full_name } #{visit.patient.age_str} #{visit.patient.sex} \n Reason:  #{visit.reason}"[0..159]  # standard sms length limit; do not send 2-nd concatenated msg 
     client.sms.send(
       from: Rails.application.credentials[:nexmo_sms][:from_number],
       to: visit.doctor.mobile,
-      text: "New appoinment requested by #{ visit.patient.full_name } #{visit.patient.age_str} #{visit.patient.sex} \n Reason:  #{visit.reason}" 
+      text: msg 
     ) rescue nil
   end
 
