@@ -1,4 +1,4 @@
-<% highlight = nil; highlight = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? 
+<% highlight = nil; highlight = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? && !visit.cash? 
    pat = visit.patient 
    desktop = device_is_desktop?
 %>

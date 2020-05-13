@@ -7,14 +7,11 @@
 <%= f.hidden_field :doc_id, value: current_doctor.id rescue 1215 %>  <!-- !!!! Dr. Ostapenko -->
 
 <div class="cyan-well">
-  <!-- Row 0 if new visit or admin --> 
 
 <div class="row">
   <div class="col-sm-4">
   <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required', disabled: true %>
   </div>
-
-  <!-- Row 3 -->
 
   <div class="col-sm-2">
   <%= f.input :temp, label: "Temperature", hint:'Optional' %>
@@ -35,15 +32,12 @@
   <% end %>
 </div>
 
-  <!-- Row 5: Reason for visit  -->
-
 <div class="row">
   <div class="col-sm-12">
   <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, hint:'Required', input_html: {rows:3} %>
   </div>
 </div>
 
-<!-- Row 7: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
      <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:2}, hint: 'Optional' %>

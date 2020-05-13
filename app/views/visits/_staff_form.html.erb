@@ -24,6 +24,11 @@
   end 
 %>
 
+  <%= f.hidden_field :bil_type   %>
+  <%= f.hidden_field :bil_type2  %>
+  <%= f.hidden_field :bil_type3  %>
+  <%= f.hidden_field :bil_type4  %>
+
 <div class="cyan-well">
   <!-- Row 0 if new visit --> 
 
@@ -71,7 +76,7 @@
 
 <div class="row">
   <div class="col-sm-4" id="diagnosis">
-  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis %> 
+  <%=  f.input :diag_code, collection: get_active_diagnoses, label_method: :descr_with_code, value_method: :code, prompt: 'Select', label: :Diagnosis, include_blank: 'None' %> 
   </div>
 
   <div class="col-sm-2">
@@ -92,13 +97,6 @@
 </div>
 
   <!-- Row 3 -->
-
-  <%= f.hidden_field :bil_type, value: HCP_BILLING %>
-  <%= f.hidden_field :bil_type2  %>
-  <%= f.hidden_field :bil_type3  %>
-  <%= f.hidden_field :bil_type4  %>
-
-  <!-- Row 4 -->
 
 <div class="row">
   <div class="col-sm-2" id="visit_statuses">
@@ -126,7 +124,7 @@
   </div>
 </div>
 
-  <!-- Row 5: Reason for visit  -->
+  <!-- Row 4: Reason for visit  -->
 
 <div class="row">
   <div class="col-sm-12">
@@ -134,7 +132,7 @@
   </div>
 </div>
 
-<!-- Row 7: Notes, submit button -->
+<!-- Row 5: Notes, submit button -->
 <div class="row">
   <div class="col-sm-12"> 
      <%= f.input :notes, placeholder: 'Notes', label: false, input_html: {rows:4} %>
