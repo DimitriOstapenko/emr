@@ -20,7 +20,7 @@
   <%= f.input :fname %>
   </div>
 
-  <div class="col-md-2 col-xs-12">
+  <div class="col-md-3 col-xs-12">
   <%= f.input :sex, collection: SEXES, hint: 'Required', label: 'Gender', include_blank: false %>
   </div>
   
@@ -30,7 +30,7 @@
 </div>  
   
 <div class="row">
-  <div class="col-md-3" id="ifh_number", style="display:none;">
+  <div class="col-md-2" id="ifh_number", style="display:none;">
   <%= f.input :ifh_number, label:'IFH Number', hint: 'Required *' %>
   </div>
 
@@ -38,11 +38,11 @@
   <%= f.input :ohip_num, label: 'Health Card Number', hint: 'Required ' %>
   </div>
 
-  <div class="col-md-1" id="ohip_ver">
+  <div class="col-md-2" id="ohip_ver">
      <%= f.input :ohip_ver, label: 'Version', hint: "2 letr" %>
   </div>
 
-  <div class="col-md-1" id="hin_prov" >
+  <div class="col-md-2" id="hin_prov" >
   <%= f.input :hin_prov, collection: PROVINCES, label: 'Prov', include_blank: false %>
   </div>
   
@@ -50,8 +50,8 @@
      <%= f.input :hin_expiry, start_year: Date.today.year, end_year: Date.today.year+5, html5: true, label: "Expires On", hint: 'Required' %>
   </div>
   
-  <div class="col-md-3">
-  <%= f.input :family_dr, label: 'Family Doctor, if known', collection: Doctor.all, hint:'Optional', label_method: :lname, value_method: :lname, prompt: 'Select' %>
+  <div class="col-md-2">
+  <%= f.input :family_dr, label: 'Family Doctor', collection: Doctor.all, hint:'Optional', label_method: :lname, value_method: :lname, prompt: 'Select' %>
   </div>
 </div>
   
@@ -92,7 +92,7 @@
   <%= f.input :mobile, as: :tel, value: num_to_phone(@patient.mobile), hint: "Optional" %>
   </div>
   
-  <div class="col-md-3">
+  <div class="col-md-4">
   <%= f.input :pharmacy, label:'Pharmacy name', hint: 'Optional' %>
   </div>
   
@@ -108,20 +108,20 @@
   
 <!-- Row 6 -->  
 <div class="row">
-  <div class="col-md-11">
+  <div class="col-md-12">
   <%= f.input :allergies, label: 'Allergies, if any', hint: 'Optional'  %>
   </div>
 </div>
 
 <!-- Row 7 -->
 <div class="row" >
-  <div class="col-md-11">
+  <div class="col-md-12">
   <%= f.input :meds, label: 'List of current medications', hint: 'Optional'  %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-md-11 col-xs-12">
+  <div class="col-md-12 col-xs-12">
   <%= f.button :submit, 'Save Record', class: "btn btn-lg btn-primary" %>
   </div>
 </div>

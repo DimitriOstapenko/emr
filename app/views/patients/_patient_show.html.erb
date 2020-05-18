@@ -42,14 +42,18 @@ Medications:
 <p><b> To book your visit, please click the button below. Describe the reason for your virtual visit, upload any documents/pictures and save it. Dr. Ostapenko will get in touch with you as soon as she can. As usual, appointments are handled on first come - first served basis. This service is covered by OHIP.*  </b></p>
 <% end %>
 
+  </section>
+
+<% if @patient.has_visit_today? %>
+  You appointment for today is registered. Please wait for the doctor to call you back at one of the numbers provided.
+
+<% else %>
 <div class="col-sm-2 col-md-8 col-md-offset-2 col-sm-offset-3">
   <font size=3>
 <%= button_to 'Yes, I would like callback from doctor', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-success btn-lg", method: 'get', disabled: @patient.has_visit_today?  %>
   </font>
 </div>
 
-  </section>
-  <% if @patient.has_visit_today? %>
   <div style="float:right"><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
   <% end %>
 </aside>

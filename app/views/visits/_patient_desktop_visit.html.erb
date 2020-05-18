@@ -6,7 +6,7 @@
     <% if visit.status == CANCELLED %>
     Cancelled
   <% elsif visit.date.today? && visit.status == ARRIVED %>
-    <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, cancel_patient_visit_path(@patient, visit) %>
+    <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, cancel_patient_visit_path(@patient, visit), data: { confirm: "Are you sure you want to cancel your appointment?" } %>
   <% end %>
   </td>
 </tr>
