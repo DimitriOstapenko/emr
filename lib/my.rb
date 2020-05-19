@@ -987,6 +987,7 @@ private
   require 'nexmo'
 
   def send_new_visit_sms( visit )
+  return unless Rails.env.production?
   return unless Time.now.between?(OFFICE_START_TIME,OFFICE_END_TIME) 
 
   client = Nexmo::Client.new(
@@ -1024,6 +1025,7 @@ private
 
 # Call doctor's phone during business hours and notify them about new patient  
   def voice_message_to_doctor( visit )
+     return unless Rails.env.production?
      return unless Time.now.between?(OFFICE_START_TIME,OFFICE_END_TIME) 
      return unless visit.doctor.mobile.present?
  

@@ -47,7 +47,7 @@ class Visit < ApplicationRecord
   def notify_doctor_and_patient
     UserMailer.new_visit(self).deliver
     send_new_visit_sms(self)       # to patient & doctor if mobiles are present
-    voice_message_to_doctor(self)  # notify doctor about new visit 
+#    voice_message_to_doctor(self)  # notify doctor about new visit 
   end
 
   def doctor
