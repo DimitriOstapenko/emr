@@ -1,8 +1,9 @@
 <% highlight = nil; highlight = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? && !visit.cash? 
    pat = visit.patient 
-   desktop = device_is_desktop?
+   remote = device_is_desktop?
 %>
-  
+
+<!--tr style='background-color: #dff0d8;' -->
   <tr class="<%= highlight %>">
 	<td>
 	<% if visit.ready_to_bill? %>
@@ -36,7 +37,8 @@
 	   <%= pat.ohip_num_full %>
         <% end %>
 	</td>
-        <td class="text-center"><%= pat.mobile_or_home_phone %></td>
+        <td><%= pat.phone %></td>
+        <td><%= pat.mobile %></td>
         <td class='text-center'>
           <% if pat.email.present? %>
           <%= link_to 'email', "mailto:#{pat.email}" %>
@@ -55,12 +57,12 @@
 	</td>
 	<% end %>
 	  
-	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: desktop, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()"  %></td>
-	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: desktop, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()"  %></td>
+	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(pat), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()"  %></td>
+	 <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-file"></i>'.html_safe, visitform_patient_visit_path(pat,visit), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', method: 'get', onclick: "set_lg_modal()"  %></td>
 
 	<!-- #modal-window is defined in index -->	
-  	<% if visit.editable?  %>
-	  <% if desktop %>
+  	<% if visit.editable? %>
+	  <% if remote %>
             <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', method: :get, onclick: "set_lg_modal()"  %></td>
           <% else %>
 	    <td class='text-center'><%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(pat,visit) %></td>

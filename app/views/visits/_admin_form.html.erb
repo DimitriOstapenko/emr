@@ -1,6 +1,7 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
 <%= f.error_notification %>
 <% 
+   doc_id = @visit.doctor.id || current_doctor.id 
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
 
@@ -48,7 +49,7 @@
 
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required' %>
+  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: doc_id, label:'Doctor', hint: 'Required' %>
   </div>
 
   <div class="col-sm-2">
