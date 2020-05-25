@@ -15,27 +15,8 @@
       <tr>
 	  <th class="tbl_xs"></th>
 	  <th class="tbl_lsm"><%= sortable 'entry_ts', ts.html_safe %></th>
-          
-          <% if device_is_desktop? && !current_user.doctor? %>
-          <th class="tbl_lsm">
-          <% if @docs.present? && @docs.size > 1 %>
-          <span class="dropdown" >
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white"> Doctor <b class="caret"></b></font> </a>
-            <ul class="dropdown-menu">
-              <li><%= link_to "All", params.permit(:date).merge(date: params[:date]) %></li>
-              <% @docs.each do | doc | %>
-                <li><%= link_to doc.lname, params.permit(:doc_id,:date).merge(doc_id: doc.id, date: params[:date]) %> </li>
-              <% end %>
-            </ul>
-          </span>
-          <% else %>
-                Doctor 
-          <% end %>
-          </th>
-         <% end %>
-
 	  <th class="tbl_lmd">Patient</th>
-          <th class="tbl_sm text-center">Type</th>
+          <th class="tbl_sm">Type</th>
           <th class="tbl_md text-center">HC/IFH #</th>
           <th class="tbl_md text-center">Phone</th>
           <th class="tbl_lsm text-center">email</th>
@@ -45,15 +26,7 @@
           <th class="tbl_sm">Status</th>
 	  <% end %>
 	  <th class="tbl_sm"></th> 
-	  <th class="tbl_sm"></th> 
-	  <th class="tbl_sm"></th> 
-	  <% if !device_is_desktop? %>
-            <th class="tbl_sm"></th>
-          <% end %>
-	  <% unless current_user.patient? %>
-	    <th class="tbl_sm"></th>  <!-- Delete/cancel -->
-  	  <% end %>
-
+	  <th class="tbl_sm"></th>  <!-- Delete/cancel -->
       </tr>
   </thead>
   <tbody>

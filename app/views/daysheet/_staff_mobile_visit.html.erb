@@ -1,0 +1,49 @@
+<% highlight = nil; highlight = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? && !visit.cash? 
+   pat = visit.patient 
+   remote = device_is_desktop?
+%>
+
+  <!--tr style='background-color: #dff0d8;' -->
+  <tr class="<%= highlight %>">
+	<td>
+	<% if visit.ready_to_bill? %>
+		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>
+  	<% elsif visit.assessed? %>
+		<a title="Assessed"><i class="glyphicon glyphicon-ok-circle text-muted"></i></a>
+        <% elsif visit.with_doctor? %>
+	  	<a title="With Doctor"><i class="glyphicon glyphicon-question-sign text-text-muted"></i></a>
+	<% elsif visit.billed_or_paid? %>
+	  	<a title="Billed"><i class="glyphicon glyphicon-ok-sign text-success"></i></a>
+	<% elsif visit.has_error? %>
+		<a title="Error"><i class="glyphicon glyphicon-exclamation-sign text-danger"></i></a>
+	<% elsif visit.cancelled? %>
+		<a title="Cancelled"><i class="glyphicon glyphicon-minus-sign text-warning"></i></a>
+	<% else %>
+		<a title="Arrived"><i class="glyphicon glyphicon-question-sign text-warning"></i></a>
+	<% end %>
+	</td>
+	<% if visit.date == @date %>
+           <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
+        <% else %>
+           <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
+        <% end %>
+
+	<td><%= link_to pat.full_name, pat %></td>
+	<td class='text-center'><%= pat.pat_type %></td>
+	<td>
+	<% if pat.pat_type == IFH_PATIENT %>
+	   <b><%= pat.ifh_number %></b>
+        <% else %>
+	   <%= pat.ohip_num_full %>
+        <% end %>
+	</td>
+        <td class="text-center"><%= pat.mobile_or_home_phone %></td>
+        <td class='text-center'>
+          <% if pat.email.present? %>
+          <%= link_to 'email', "mailto:#{pat.email}" %>
+          <% end %>
+        </td>
+	<td class="text-center"><%= visit.diag_scode %></td>
+	<td><%= visit.proc_codes %></td>
+</tr>
+<%# end %>

@@ -106,11 +106,15 @@ end
     @visit = Visit.find(params[:id])
     if @visit.date.today?
       @visit.update_attribute(:status, CANCELLED) 
-      flash[:success] = "Your appointment was cancelled"
+      flash[:success] = "Visit cancelled"
     else 
       flash[:warning] = "Cannot cancel past visits"
     end 
-    redirect_to patient_path(@visit.patient)
+    if current_user.patient?
+       redirect_to patient_path(@visit.patient)
+    else 
+       redirect_to daysheet_path
+    end   
   end
 
   def destroy
