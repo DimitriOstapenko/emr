@@ -2,7 +2,7 @@ class MedicationsController < ApplicationController
 
   before_action :set_medication, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
-  before_action :admin_or_staff_user
+  before_action :non_patient_user 
   before_action :admin_user, only: :destroy
 
   include My::Forms

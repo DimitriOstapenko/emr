@@ -14,7 +14,7 @@
                <td> <%= med.dose %> </td>
                <td> <%= med.freq %> </td>
 	       <td> <%= f.check_box :active, label: false, onchange: "this.form.submit();" %></td> 
-               <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,med), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %>   </td>
+               <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,med), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_lg_modal()"   %> </td>
                <td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_medication_path(@patient,med), method: :delete, data: { confirm: "Are you sure you want to delete #{med.name}?" } %></td>
             </tr>
             <% end %>
