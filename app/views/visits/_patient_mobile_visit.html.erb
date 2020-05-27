@@ -3,14 +3,14 @@
   <td><%= visit.doctor.lname %>
   <td><%= visit.diag_descr %></td>
   <td class="text-center">
-  <% if visit.date.today? && !visit.cancelled? %>
+  <% if visit.arrived? %>
     <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(@patient,visit) %>
   <% end %>
   </td>
   <td class="text-center">
     <% if visit.status == CANCELLED %>
     Cancelled
-  <% elsif visit.date.today? && visit.status == ARRIVED %>
+  <% elsif visit.date.today? && visit.arrived? %>
     <%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, cancel_patient_visit_path(@patient, visit) %>
   <% end %>
   </td>

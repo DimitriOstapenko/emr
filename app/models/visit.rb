@@ -136,6 +136,9 @@ class Visit < ApplicationRecord
     status == CANCELLED 
   end  
 
+  def arrived?
+    status == ARRIVED
+  end
 
 # Service array to help deal with procedures/billings
   def services   
