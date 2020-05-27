@@ -2,7 +2,7 @@
   <td><%= link_to visit.date, patient_visit_path(@patient,visit) %></td>
   <td class="text-center"><%= visit.pat_type %></td>
   <td class="text-center">
-  <% if visit.editable? || current_user.admin? %>
+  <% if visit.editable? %>
     <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(@patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', onclick: "set_lg_modal()"  %>
   <% end %>
   </td>

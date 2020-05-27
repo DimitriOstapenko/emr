@@ -8,11 +8,12 @@
 	    <th>Date</th>
             <th>Doctor</th>
 	    <th>Diagnosis</th>
-	    <th></th>
+            <th class="text-center">Edit</th>
+	    <th class="text-center">Cancel</th>
 	  </tr>
 	  <tbody>
 
-        <%= render @visits, remote: device_is_desktop? %>
+        <%= render @visits, remote: true %>
 
           </tbody>
 	</table>

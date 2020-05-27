@@ -7,7 +7,7 @@ class VisitsController < ApplicationController
 
   before_action :logged_in_user 
   before_action :verify_patient  # missing patient_id in user? (Temp)
-  before_action :non_patient_user, except: [:new, :show, :create, :visitform, :cancel ]
+  before_action :non_patient_user, except: [:new, :show, :create, :visitform, :cancel, :update, :edit ]
   before_action :admin_user, only: :destroy
 
   rescue_from ::ActiveRecord::RecordNotFound, with: :record_not_found
@@ -37,28 +37,30 @@ class VisitsController < ApplicationController
     visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID) # Allow double visits for cash services (HC Deposit)
     if visits_that_day.any?
        flash[:warning] = "Only 1 visit is allowed per patient per day"
-       redirect_to @patient
     else
       set_visit_fees ( @visit )
       if @visit.save
         @visit.update_attribute(:entry_by, current_user.name)
         @patient.update_attribute(:last_visit_date, @visit.entry_ts)
-        doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
-        if doc.blank? || doc.errors.blank?
-          if current_user.patient?
-            flash[:info] = "Your appointment request was submitted"
-          else  
-            flash[:info] = "Visit saved #{params[:entry_ts]} "
+        docs = params[:visit][:document] || []
+        docs.each do |d|
+          doc = @visit.documents.create(:document => d)
+          if doc.blank? || doc.errors.blank?
+            if current_user.patient?
+              flash[:info] = "Your appointment request was submitted"
+            else  
+              flash[:info] = "Visit saved #{params[:entry_ts]} "
+            end
+          else
+            flash.now[:danger] =  doc.errors.full_messages.first rescue ''
+            render 'new'
           end
-          redirect_to @patient
-        else
-          flash.now[:danger] =  doc.errors.full_messages.first rescue ''
-          render 'new'
         end
       else 
         render 'new'
       end
     end
+    redirect_to @patient
 end
 
   def edit
@@ -68,9 +70,19 @@ end
 
   def update
     @visit = Visit.find(params[:id])
-    @patient = Patient.find(@visit.patient_id)
+    @patient = @visit.patient 
 
-    doc = @visit.documents.create(:document => params[:visit][:document]) if params[:visit][:document].present?
+    docs = params[:visit][:document] || []
+    docs.each do |d|
+      doc = @visit.documents.create(:document => d)
+      if doc.blank? || doc.errors.blank?
+        flash[:info] = "Visit saved"
+      else
+        flash.now[:danger] =  doc.errors.full_messages.first rescue ''
+        render 'edit'
+      end
+    end
+
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
       if @visit.status == ARRIVED
@@ -84,8 +96,11 @@ end
       set_visit_fees( @visit )
       @visit.save
       flash[:info] = "Visit updated"
-      redirect_back(fallback_location: daysheet_url)
-
+      if current_user.patient?
+        redirect_to @patient
+      else
+        redirect_back(fallback_location: daysheet_url)
+      end
     else
       flash.now[:danger] =  doc.errors.full_messages.first rescue ''
       render 'edit'
@@ -240,7 +255,7 @@ end
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
 				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, 
-				    :billing_ref, :document, :room, :pat_type, :hin_num, :consented )
+				    :billing_ref, {documents: []}, :room, :pat_type, :hin_num, :consented )
     end      
 
     def set_visit_fees ( visit )

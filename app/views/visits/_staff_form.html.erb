@@ -139,9 +139,18 @@
   </div>
 </div>
 
+<% if @visit.documents.present? %>
+<b>Attached Documents</b>:
+<% @visit.documents.each do |d| %>
+   <% next unless d.document.file.present? %>
+   &nbsp;|&nbsp;<%= link_to d.document.file.filename, d.document.url.to_s %>
+<% end %>
+<% end %>
+
 <div class="row">
   <div class="col-sm-12"> 
-    <%= f.input :document, label: 'Upload Attachment (pdf/jpg)'  %>
+    <%= f.label 'Add Documents (pdf/jpg/png/txt)' %>
+    <%= f.file_field :document, multiple: true, hint: 'Optional'  %>
   </div>
 </div>
 
