@@ -3,6 +3,7 @@
    remote = device_is_desktop?
 %>
 
+<%=   simple_form_for [pat,visit] do |f|  %>
   <!--tr style='background-color: #dff0d8;' -->
   <tr class="<%= highlight %>">
 	<td>
@@ -26,6 +27,14 @@
            <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
         <% else %>
            <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
+        <% end %>
+        
+        <% if @date.today? %>
+        <td class="text-center pt-3" >
+        <% if visit.status < ASSESSED %>
+        <%= f.input :room, collection: EXAM_ROOMS, label: false, include_blank: false, input_html: {onchange: 'this.form.submit();'} %>
+        <% end %>
+        </td>
         <% end %>
 
         <% if device_is_desktop? %>
@@ -75,4 +84,4 @@
         </td>
 
 </tr>
-<%# end %>
+<% end %>

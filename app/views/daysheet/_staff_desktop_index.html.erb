@@ -15,6 +15,7 @@
       <tr>
 	  <th class="tbl_xs"></th>
 	  <th class="tbl_lsm"><%= sortable 'entry_ts', ts.html_safe %></th>
+          <th class="tbl_lsm">Room</th>
           
           <% if device_is_desktop? && !current_user.doctor? %>
           <th class="tbl_lsm">
