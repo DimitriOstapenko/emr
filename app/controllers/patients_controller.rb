@@ -46,8 +46,7 @@ class PatientsController < ApplicationController
       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
       flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
     else
-      flash[:warning] = 'Please provide your telephone number' unless @patient.mobile_or_home_phone.present?
-      redirect_to edit_patient_path(@patient)
+      redirect_to edit_patient_path(@patient), warning: "Please provide your first name, last name and phone number " 
     end
   end
 

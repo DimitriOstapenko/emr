@@ -37,7 +37,7 @@ class Patient < ApplicationRecord
 
 #	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
-	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
+#	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || a.pat_type == 'R' }
 	validates :ifh_number,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
