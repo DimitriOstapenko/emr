@@ -1,7 +1,9 @@
 <%= simple_form_for [@patient, @visit],  :html => {:multipart => true} do |f| %> 
 <%= f.error_notification %>
 <%= f.hidden_field :doc_id, value: current_doctor.id %>
+
 <% 
+   proc_code = @visit.proc_code.blank? ? 'K081A' : @visit.proc_code
    @procedures = get_active_procedures 
    @insured = [HCP_PATIENT,RMB_PATIENT,WCB_PATIENT].include?(@patient.pat_type) 
 
@@ -24,6 +26,7 @@
   end 
 %>
 
+proc_code: <%= @visit.proc_code.inspect %>
   <%= f.hidden_field :bil_type  %>
   <%= f.hidden_field :bil_type2  %>
   <%= f.hidden_field :bil_type3  %>
@@ -53,7 +56,7 @@
 
   <div class="col-sm-2">
   <%= f.label "Service" %> <span class='form-text text-muted' id='svc'></span>
-  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required', selected: 'K081A' %> 
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required', selected: proc_code %> 
   </div>
 
   <div class="col-sm-2"> 
