@@ -53,7 +53,7 @@
 
   <div class="col-sm-2">
   <%= f.label "Service" %> <span class='form-text text-muted' id='svc'></span>
-  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required' %> 
+  <%= f.input :proc_code, collection: @procedures, label_method: :code, value_method: :code, prompt: 'Select', label: false, include_blank: 'None', hint: 'Required', selected: 'K081A' %> 
   </div>
 
   <div class="col-sm-2"> 
