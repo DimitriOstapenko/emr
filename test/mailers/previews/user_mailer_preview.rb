@@ -25,4 +25,10 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.new_visit(visit)
   end
 
+  def invite_doctor
+    doctor = Doctor.where(bills: true).first  # must have user 
+    user = doctor.user rescue nil
+    UserMailer.invite_doctor( user )
+  end
+
 end

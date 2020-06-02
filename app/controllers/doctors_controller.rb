@@ -57,6 +57,25 @@ class DoctorsController < ApplicationController
     end
   end
 
+# Invite doctor to register  
+  def invite_to_register
+    @doctor = Doctor.find(params[:id])
+    if @doctor.present? && @doctor.email.present?
+      @user = @doctor.user || User.build( email: @doctor.email, role: :doctor, invited_by: current_user.name, password: Time.now, doctor_id: @doctor.id )
+      if @user.save
+        UserMailer.invite_doctor(@user).deliver_now
+        msg =  "Doctor '#{@doctor.lname}' was invited to complete registration"
+      else
+        msg = "Doctor was not invited. Errors saving user: #{@user.errors.full_messages.join}"
+      end
+    else
+      msg = "Doctor was not found or email is missing"
+    end
+
+    flash[:info] = msg
+    redirect_to doctors_path
+  end
+
 
 private
   def doctor_params

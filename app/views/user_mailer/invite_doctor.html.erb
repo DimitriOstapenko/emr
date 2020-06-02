@@ -1,0 +1,28 @@
+<div class="email-container">
+<div class='email-header'>Invitation to register for Walk-In EMR doctor access</div>
+<h4>Dear Dr. <b><%= @doctor.lname %>,</h4>
+
+<p>&nbsp;</p>
+We are excited to invite you to complete registration to our EMR system. Once registered, you will be able to see your patients data, billing information, claim history, reference documents and payment reports. You will also be able to use our system from home to manage virtual appointments and submit your claims to OHIP. 
+
+<p>
+Please follow the link below to complete registration using our secure registration form. Enter your new password, twice, and your account will be ready to go.
+
+<p>&nbsp;</p>
+
+<b><%= link_to 'Complete my Online Registration', edit_password_url(@user, reset_password_token: @raw),  method: :get %></b>
+<p>&nbsp;</p>
+
+We are looking forward to working with you,
+<p>&nbsp;</p>
+
+<h5><a href="https://walkin.drlena.com">Stoney Creek Medical Walk-In Clinic</a></h5>
+<p><pre>
+140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (289) 204-0561
+During clinic open hours: (905) 561-9255 
+Site-related questions?
+Contact: Dimitri - email: <a href="mailto:dosta@me.com">dosta@me.com</a> 
+</pre></p>
+
+</div>
+</div>

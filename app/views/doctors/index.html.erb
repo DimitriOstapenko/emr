@@ -5,21 +5,20 @@
   <thead>
       <tr>
           <th class='tbl_lmd'>Name</th>
-          <th class='tbl_sm'>District</th>
-          <th class='tbl_sm'>Spec.</th>
           <th>Provider#</th>
           <th>Group#</th>
           <th>CPSO#</th>
 	  <th>WSIB#</th>
           <th class='tbl_sm'>Bills?</th>
           <th>Bil.Fmt</th>
-	  <th class='tbl_lg'> Address</th>
           <th class='tbl_md'>City</th>
           <th>Phone </th>
-	  <th class='tbl_sm'> </th>
-	  <% if  current_user.admin?  %>
-	      <th class='tbl_sm' colspan=2> </th>
-	  <% end %>
+          <th > email</th>
+	  <th class='tbl_md text-center'>Registered?</th>
+	  <th class='tbl_md text-center'>Invite</th>
+          <% if current_user.admin? %>
+            <th  colspan=2 class="tbl_sm"></th>
+          <% end %>
       </tr>
   </thead>
   <tbody>

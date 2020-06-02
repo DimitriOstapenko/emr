@@ -1,0 +1,41 @@
+@import 'bootstrap/variables';
+@import 'bootstrap-email';
+
+.email-container {
+  margin: 10px 20px 20px;
+  }
+
+.email-header {
+  font-size: $font-size-h4;
+  color: white;
+  line-height: 30px;
+  background: $brand-info;
+  margin-bottom: 30px;
+  height: 30px;
+  padding-left: 20px;
+}
+
+.email-table {
+  float: left;
+  width: 50%;
+  padding: 20px;
+  background: #ddd;
+  margin: 20px auto;
+  text-align: left;
+  font-family: 'Helvetica Neue';
+  border: 1px solid black;
+  }
+
+.header-row {
+  background: #ccc;
+  height: 20px;
+  }
+
+.email-btn {
+  height: 40px;
+  background: $btn-primary-bg;
+  font-size: 16px;
+  color: white;
+//  font-weight: bold;
+} 
+

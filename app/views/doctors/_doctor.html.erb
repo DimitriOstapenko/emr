@@ -4,18 +4,21 @@
         <% else %>
 	  <td><%= link_to "#{doctor.full_name}", doctor %> </td>
   	<% end %>
-	<td><%= doctor.district %></td> 
-	<td><%= doctor.specialty %></td>
 	<td><%= doctor.provider_no %> </td>
 	<td><%= doctor.group_no %> </td> 
 	<td><%= doctor.cpso_num %> </td> 
 	<td><%= doctor.wsib_num %> </td> 
 	<td><%= doctor.bills_str %> </td> 
 	<td><%= doctor.billing_format_str %> </td> 
-	<td><%= doctor.address %> </td> 
 	<td><%= doctor.city %> </td> 
 	<td><%= doctor.phone %> </td> 
-	<td><%= doctor.accepts_str %> </td> 
+	<td><%= doctor.email %> </td> 
+        <td class="text-center"><%= doctor.user.present? ? 'Yes' : 'No' %> </td>
+        <td class="text-center">
+        <% if doctor.email.present? %>
+          <%= link_to 'Invite', invite_to_register_doctor_path( doctor ) %>
+        <% end %>
+        </td>
 
 	<td>
           <% if remote %>

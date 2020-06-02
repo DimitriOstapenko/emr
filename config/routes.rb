@@ -88,8 +88,12 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :ra_messages, :ra_accounts, :ra_errcodes, :doctors, :diagnoses, :procedures, :providers, 
+  resources :ra_messages, :ra_accounts, :ra_errcodes, :diagnoses, :procedures, :providers, 
 	    :drugs, :vaccines, :export_files, :claim_errors
+   
+  resources :doctors do
+    get 'invite_to_register', on: :member
+  end
 
   resources :account_activations, only: [:edit]
   resources :password_resets,     only: [:new, :create, :edit, :update]

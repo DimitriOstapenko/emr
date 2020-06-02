@@ -21,4 +21,19 @@ class UserMailer < ApplicationMailer
      mail to: email, subject: "New visit created by patient", from: 'admin@drlena.com'
    end
 
+# Invite doctor to confirm their email and change password; Pass user object with doctor_id set 
+   def invite_doctor( user )
+     @user = user
+     @doctor = user.doctor
+     return unless @user && @doctor
+
+     @raw, hashed = Devise.token_generator.generate(User, :reset_password_token)
+     @user.reset_password_sent_at = @user.confirmed_at = Time.now.utc
+     @user.reset_password_token = hashed
+     @user.save
+
+     mail to: @doctor.email, subject: "Invitation to register to Walk-In EMR"
+
+   end
+
 end

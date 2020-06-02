@@ -2,7 +2,12 @@ Dear EMR Walk-in staff member,
 
 <p>New user "<%= @user.name %>", role: <%= @user.role %> registered online at <%= @user.created_at %> </p>
 
+<% if @user.role == 'patient' %>
 <p><%= link_to "You can see new patient profile here", patient_url(@user.patient) %> </p>
+<% elsif @user.role == 'doctor' %>
+<p>This account is associated with Dr. <%= @user.doctor.lname rescue 'unknown' %> </p>
+<% end %>
+
 <p>&nbsp;</p>
 
 Walk-In EMR admin

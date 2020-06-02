@@ -2,12 +2,12 @@ class User < ApplicationRecord
 # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :timeoutable , :validatable
-  belongs_to :patient
+#  belongs_to :patient
 
   default_scope -> { order(email: :asc) }
   enum role: USER_ROLES
 
-  before_validation { self.ohip_num.upcase!; self.email.downcase! rescue '' }
+  before_validation { self.email.downcase! rescue '' }
 
   validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, if: Proc.new { |u| u.patient? }
   validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
