@@ -61,13 +61,10 @@ class DoctorsController < ApplicationController
   def invite_to_register
     @doctor = Doctor.find(params[:id])
     if @doctor.present? && @doctor.email.present?
-      @user = @doctor.user || User.new( email: @doctor.email, role: :doctor, invited_by: current_user.name, password: Time.now, doctor_id: @doctor.id, patient_id: Patient.first.id )
-      if @user.save
-        UserMailer.invite_doctor(@user).deliver_now
-        msg =  "Doctor '#{@doctor.lname}' was invited to complete registration"
-      else
-        msg = "Doctor was not invited. Errors saving user: #{@user.errors.full_messages.join}"
-      end
+      @user = @doctor.user 
+      @user ||= User.create( email: @doctor.email, role: :doctor, invited_by: current_user.name, password: Time.now, doctor_id: @doctor.id, patient_id: Patient.first.id ) 
+      UserMailer.invite_doctor(@user).deliver_now
+      msg =  "Doctor '#{@doctor.lname}' was invited to complete registration"
     else
       msg = "Doctor was not found or email is missing"
     end
@@ -75,7 +72,6 @@ class DoctorsController < ApplicationController
     flash[:info] = msg
     redirect_to doctors_path
   end
-
 
 private
   def doctor_params

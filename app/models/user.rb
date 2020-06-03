@@ -3,7 +3,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :timeoutable , :validatable
   belongs_to :patient
-  belongs_to :doctor
+#  belongs_to :doctor
 
   default_scope -> { order(email: :asc) }
   enum role: USER_ROLES
