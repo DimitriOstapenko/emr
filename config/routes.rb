@@ -2,11 +2,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
 #   root 'daysheet#index'
-#  root :to => "static_pages#rmm_home", :constraints => { :domain => "renewmymeds.ca" }
-  match '/404', via: :all, to: 'errors#not_found'
-  match '/422', via: :all, to: 'errors#unprocessable_entity'
-  match '/500', via: :all, to: 'errors#server_error'
-
+  
   devise_for :users, controllers: { registrations: "my_registrations" }
   get '/users/', to: 'users#index'
   get '/switch_to/:id', to: 'users#switch_to', as: :switch_user
