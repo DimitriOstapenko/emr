@@ -1,7 +1,12 @@
  <tr>
   <td><%= user.email %></td>
   <td class='text-center'><%= user.role %></td>
-  <td class='text-center'><%= user.patient.lname if user.patient? %></td>
+  <td class="text-center">
+  <% if user.patient? %>
+    <%= user.patient.lname rescue '' %>
+  <% elsif user.doctor? %>
+    <%= user.doctor.lname rescue '' %>
+  <% end %>
   <td class='text-center'><%= user.confirmed? %></td>
   <td class='text-center'><%= user.created_at.to_date %></td>
   <td class='text-center'><%= user.sign_in_count %></td>
