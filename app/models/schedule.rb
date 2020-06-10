@@ -1,5 +1,5 @@
 class Schedule < ApplicationRecord
-	default_scope -> { order(dow: :asc, start_time: :desc) }
+	default_scope -> { order(dow: :asc, start_time: :asc) }
 
         validates :doctor_id, presence: true
 	validates :dow, presence: true, inclusion: 0..6
