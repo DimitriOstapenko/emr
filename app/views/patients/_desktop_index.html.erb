@@ -32,9 +32,7 @@
 </table>
 
 <div class="bottom_buttons">
-<% unless current_user.doctor? %>
 <%= button_to "New Patient", new_patient_path, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary col-md-2", method: "get"  %>
-<% end %>
 </div>
 
 <div class="bottom_nav">
