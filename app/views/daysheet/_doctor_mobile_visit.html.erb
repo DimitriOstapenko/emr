@@ -1,8 +1,10 @@
-<% highlight = nil; highlight = 'table-warning' if visit.proc_code.present? && !visit.diag_code.present? && !visit.cash? 
-   pat = visit.patient 
-   desktop = device_is_desktop?
+<% cl = nil;
+   cl = 'table-warning' if (!visit.proc_code.present? || !visit.diag_code.present?) && !visit.cash?
+   pat = visit.patient
+   remote = device_is_desktop?
+   cl = 'table-success' if visit.vis_type == 'TV' && !visit.ready?
 %>
-  
+
   <tr class="<%= highlight %>">
 	<td>
 	<% if visit.ready_to_bill? %>

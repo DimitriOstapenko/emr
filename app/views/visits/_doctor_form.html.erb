@@ -26,7 +26,6 @@
   end 
 %>
 
-proc_code: <%= @visit.proc_code.inspect %>
   <%= f.hidden_field :bil_type  %>
   <%= f.hidden_field :bil_type2  %>
   <%= f.hidden_field :bil_type3  %>
@@ -183,9 +182,11 @@ $(document).ready(function() {
       (proccode.val() =='') ? $('#visit_statuses').hide() : $('#visit_statuses').show();
     });
 
+    var v = document.getElementById('visit_statuses').getElementsByTagName("option");
     var stat = document.getElementById("visit_status");
     var diagcode = $('#diagnosis select[name="visit[diag_code]"]');
     diagcode.change(function () {
+      v[3].disabled = false;  // READY
       stat.value = <%= READY %>;
     });
 

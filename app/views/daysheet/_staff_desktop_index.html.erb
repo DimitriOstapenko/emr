@@ -1,5 +1,6 @@
 <div id='result'></div>
 
+
 <% date = params[:date].to_date rescue Date.today %>
 <% provide(:title, "Day Sheet for " + date.to_s  ) %>
 <% provide(:button_text, 'Save changes') %>
@@ -17,7 +18,6 @@
 	  <th class="tbl_lsm"><%= sortable 'entry_ts', ts.html_safe %></th>
           <th class="tbl_lsm">Room</th>
           
-          <% if device_is_desktop? && !current_user.doctor? %>
           <th class="tbl_lsm">
           <% if @docs.present? && @docs.size > 1 %>
           <span class="dropdown" >
@@ -29,9 +29,6 @@
               <% end %>
             </ul>
           </span>
-          <% else %>
-                Doctor 
-          <% end %>
           </th>
          <% end %>
 

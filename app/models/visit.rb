@@ -116,6 +116,10 @@ class Visit < ApplicationRecord
     status == READY
   end  
 
+  def ready?
+    self.ready_to_bill?
+  end
+
 # Is visit paid for?
   def paid?
     status == PAID

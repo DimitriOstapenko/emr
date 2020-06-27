@@ -982,7 +982,7 @@ private
 
   end # Forms module
 
-# SMS and voice calls   
+# SMS and voice calls  number format: 19991112222 
   module Nexmo_phone
   require 'nexmo'
 
@@ -1017,7 +1017,7 @@ private
 
   client.sms.send(
     from: Rails.application.credentials[:nexmo_voice][:from_number],
-    to: phone_number, # 33699436691
+    to: phone_number, # 33699436691  19059022448
     text: "Your telemedicine appointment is confirmed. Dr. #{ visit.doctor.lname } will call you shortly" 
   ) rescue nil
   
