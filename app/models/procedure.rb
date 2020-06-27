@@ -7,7 +7,7 @@ class Procedure < ApplicationRecord
 	validates :code, presence: true, length: { maximum: 10 }, uniqueness: { case_sensitive: false }
 	validates :code, format: { with: VALID_PCODE_REGEX, message: "for HCP procedure can only be in format <letter><3_digit_number><letter>" }, if: Proc.new { |a| (a.ptype == 1)}
 	validates :ptype, presence: true, length: { maximum: 5 }
-	validates :descr, length: { maximum: 255 }, presence: true
+#	validates :descr, length: { maximum: 255 }, presence: true
 	validates :cost, presence: true, numericality: true #{greater_than_or_equal_to: 0} 
 	validates :unit, presence: true, inclusion: { in: 0..20 }
 	validates :fac_req, inclusion: { in: [true, false] }, allow_blank: true
