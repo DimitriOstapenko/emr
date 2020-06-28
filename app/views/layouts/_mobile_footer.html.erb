@@ -2,13 +2,13 @@
     <div class="container text-center text-md-right">
     <div class="row">
       <% if logged_in? %>
-      <div class="col-md-3 mx-auto">
+      <div class="col-md-3 mx-auto col-md-offset-2">
         <ul class="list-unstyled">
             <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
         </ul>
       </div>
       <% end %>
-      <div class="col-md-3 mx-auto">
+      <div class="col-md-3 mx-auto col-md-offset-2">
         <ul class="list-unstyled">
           <li>
             <%= link_to "Contact", contact_path %>
