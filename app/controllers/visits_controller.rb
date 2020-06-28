@@ -37,6 +37,7 @@ class VisitsController < ApplicationController
     visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID) # Allow double visits for cash services (HC Deposit)
     if visits_that_day.any?
        flash[:warning] = "Only 1 visit is allowed per patient per day"
+       redirect_to @patient
     else
       set_visit_fees ( @visit )
       if @visit.save
@@ -56,12 +57,12 @@ class VisitsController < ApplicationController
             render 'new'
           end
         end
+        redirect_to @patient
       else 
         render 'new'
       end
     end
-    redirect_to @patient
-end
+  end
 
   def edit
      @patient = Patient.find(params[:patient_id])
