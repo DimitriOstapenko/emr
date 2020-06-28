@@ -58,7 +58,8 @@ class ApplicationController < ActionController::Base
 
 # Confirms an admin user.
   def admin_user
-    redirect_back fallback_location: root_path, warning: "This operation is reserved to admin users only" unless current_user && current_user.admin?
+#    redirect_back fallback_location: root_path, warning: "This operation is reserved to admin users only" unless current_user && current_user.admin?
+    redirect_to root_path, warning: "This operation is reserved to admin users only" unless current_user && current_user.admin?
   end
 
 # Confirms staff user  

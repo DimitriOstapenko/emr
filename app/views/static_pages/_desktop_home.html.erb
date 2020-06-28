@@ -4,14 +4,15 @@
   <div class="col-md-5">
     <img src='/images/clinic.jpg' width="480"></img>
     <div id="address">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (905) 561-9255 
-      <br>During off hours please call: (289) 204-0561
+      <br>During off hours please call: (289) 204-0561 or <%= link_to "register online", new_user_session_path %>.
     </div>
 
     <p>
     <div class="ml-3 pt-3">
     <div class="panel panel-info p-3 news-panel-body">
      <div class="panel-body">
-       Clinic is now open by appointment only Mon-Sat from 9am to 2pm. You can <%= link_to "book your appointment online", new_user_session_path %>  Please call the clinic during business hours to make an appointment : <b> (905) 561-9255 </b>
+       Clinic is now open every day. Please <%= link_to "book your appointment online", new_user_session_path %> or call the clinic  during business hours: <b> (905) 561-9255 </b>.
+       For telemedicine visits, our goal is to call you back within an hour of your online request if it was made between 8am and 8pm.
   <%= render "schedules/full_schedule" %>
     </div>
   </div>
@@ -19,10 +20,12 @@
   </div>
 
 <div class="col-md-7">
-  <div class="hdr-text">Digital Walk-In Clinic for canadians <img src="/images/leaf.png" width=45 valign=top> </div> 
+  <div class="hdr-text">We are now open every Day!  <img src="/images/leaf.png" width=45 valign=top> </div> 
   <div class='pt-5'></div>
 <font size=3>
-  <p><font size=6>N</font>eed to see a doctor, but don't want to go to clinic during pandemic? You don't have to. You can now discuss your medical issue and renew your medications over the phone.</p>
+  <p><font size=6>A</font>fter long disruption to regular services at our Stoney Creek location, we are now happy to announce resumption of full 7 day schedule. Patients who need to see a doctor now can come to the clinic. </p>
+
+  <p><font size=6>I</font>f there's no need for phisical visit, you can discuss your medical issue with one of our doctors over the phone. You can also renew your prescripton over the phone and pick it up at the pharmacy of your choice. Please register below and request callback from doctor.</p>
 
   <p>
   Let's first look you up. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database. If found, you will have immediate access to your patient record and visit history </p>
