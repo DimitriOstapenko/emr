@@ -5,7 +5,7 @@
    cl = 'table-success' if visit.vis_type == 'TV' && !visit.ready?
 %>
 
-  <tr class="<%= highlight %>">
+  <tr class="<%= cl %>">
 	<td>
 	<% if visit.ready_to_bill? %>
 		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>
