@@ -7,7 +7,7 @@
 
 <%=   simple_form_for [pat,visit] do |f|  %>
   <tr class="<%= cl %>">
-	<td>
+	<td class="text-center">
 	<% if visit.ready_to_bill? %>
 		<a title="Ready To Bill"><i class="glyphicon glyphicon-ok-sign text-primary"></i></a>
   	<% elsif visit.assessed? %>
@@ -24,11 +24,14 @@
 		<a title="Arrived"><i class="glyphicon glyphicon-question-sign text-warning"></i></a>
 	<% end %>
 	</td>
+        <td class="text-center"><%= visit.vis_type %></td>
+        <td class="text-center">
 	<% if visit.date == @date %>
-           <td><%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %></td>
+           <%= link_to visit.entry_ts.strftime("%H:%M"), patient_visit_path(pat,visit) %>
         <% else %>
-           <td><%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %></td>
+           <%= link_to visit.entry_ts.strftime("%d-%b"), patient_visit_path(pat,visit) %>
         <% end %>
+        </td>
         
         <% if @date.today? %>
         <td class="text-center pt-3" >

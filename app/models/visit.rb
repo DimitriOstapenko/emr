@@ -67,6 +67,10 @@ class Visit < ApplicationRecord
     PATIENT_TYPES.invert[pat.pat_type]
   end
 
+  def type
+    VISIT_TYPES.invert[self.vis_type]
+  end
+
   def date 
     entry_ts.to_date rescue '1900-01-01'
   end

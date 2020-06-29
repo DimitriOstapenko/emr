@@ -5,6 +5,7 @@
 	
 <section>
 <pre class="pre-scrollable-lg">
+<b>Visit Type:</b> <%= @visit.type %>
 <% if (HCP_PATIENT..WCB_PATIENT).include?(@visit.pat_type) %>
 <b>OHIP Visit HC# </b>: <%= @visit.hin_num %>  <b> Billing Type: </b> <%= @visit.pat_type %>
 <% elsif @visit.pat_type == IFH_PATIENT %>   

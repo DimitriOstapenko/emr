@@ -13,9 +13,11 @@
 <table class="tbl2 table-hover table-bordered" >
   <thead>
       <tr>
-	  <th class="tbl_xs"></th>
-	  <th class="tbl_lsm"><%= sortable 'entry_ts', ts.html_safe %></th>
-          <th class="tbl_lsm">Room</th>
+          <th class="tbl_xs"></th>
+          <th class="tbl_sm text-center">Visit</th>
+          <th class="tbl_lsm text-center"><%= sortable 'entry_ts', ts.html_safe %></th>
+          <th class="tbl_lsm text-center">Room</th>
+
           <th class="tbl_lsm">
           <% if @docs.present? && @docs.size > 1 %>
           <span class="dropdown" >
@@ -27,10 +29,10 @@
               <% end %>
             </ul>
           </span>
-          <% else %>
-                Doctor 
-          <% end %>
           </th>
+         <% else %>
+           Doctor
+         <% end %>
 
 	  <th class="tbl_lmd">Patient</th>
           <th class="tbl_sm text-center">Type</th>
