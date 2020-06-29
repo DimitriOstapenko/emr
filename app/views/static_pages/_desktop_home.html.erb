@@ -3,17 +3,18 @@
 <div class="row">  
   <div class="col-md-5">
     <img src='/images/clinic.jpg' width="480"></img>
-    <div id="address">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (905) 561-9255 
+    <div id="address" class="pt-3">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (905) 561-9255 
       <br>During off hours please call: (289) 204-0561 or <%= link_to "register online", new_user_session_path %>.
     </div>
 
     <p>
     <div class="ml-3 pt-3">
-    <div class="panel panel-info p-3 news-panel-body">
-     <div class="panel-body">
-       Clinic is now open every day. Please <%= link_to "book your appointment online", new_user_session_path %> or call the clinic  during business hours: <b> (905) 561-9255 </b>.
-       For telemedicine visits, our goal is to call you back within an hour of your online request if it was made between 8am and 8pm.
+    <div class="panel panel-info p-2 news-panel-body">
+      <div class="panel-body "><p align="justify"> 
+       This is current schedule updated daily. Please <%= link_to "book your appointment online", new_user_session_path %> or call the clinic  during business hours: <b> (905) 561-9255 </b>.
+       For telemedicine visits, our goal is to call you back within an hour of your online request, provided it was made between 8am and 8pm.
   <%= render "schedules/full_schedule" %>
+        </p>
     </div>
   </div>
   </div>
@@ -25,24 +26,29 @@
 <font size=3>
   <p><font size=6>A</font>fter long disruption to regular services at our Stoney Creek location, we are now happy to announce resumption of full 7 day schedule. Patients who need to see a doctor now can come to the clinic. </p>
 
-  <p><font size=6>I</font>f there's no need for phisical visit, you can discuss your medical issue with one of our doctors over the phone. You can also renew your prescription over the phone and pick it up at the pharmacy of your choice. Please register below and request callback from doctor.</p>
+<div class="pt-3">
+  <font size=6>I</font>f there's no need for physical visit, you can discuss your medical issue with one of our doctors over the phone. You can also renew your prescription over the phone and pick it up at the pharmacy of your choice. Please register below and request callback from doctor.
+</div>
 
-  <p>
-  Let's first look you up. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database. If found, you will have immediate access to your patient record and visit history </p>
+<div class="pt-3">
+<font size=6>L</font>et's first look you up. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database.
+</div>
 
+<div class="pt-3">
   <%= render "#{device_type}_lookup" %>
+</div>
 
-<p> If you are registered already, you are ready to make your telephone appointment: </p>
+<p> If you have registered already, go ahead and make your telephone appointment. Just click the button below and describe your symptoms.  </p>
 
 <div align="center" class="pt-4"><%= link_to 'Request Callback From Doctor', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
 
-<p class="pt-4"><i>We never send surprise bills for insured services! Free is free. </i> </p>
+<div class="pt-5"><i class="glyphicon glyphicon-exclamation-sign mr-2"></i><b>If you have COVID-19 symptoms, please do not come to the clinic. Register online or call the numbers provided. </b></div> 
 
 </div>
 </div>
 <div class="row ml-3 mr-3">
 <div class="col-md-12">
-<p class="pt-5">Don’t have a health card? We still can help. Please call the number above and leave a message. We will respond as soon as we can. </p>
+<p class="pt-3">Don’t have a health card? We still can help. Please call the clinic directly during business hours. </p>
 
 <p>
 Covid-19 is here and it’s not a regular flu. This virus is much more contagious and much more deadly, especially for older people with health conditions.  There’s no cure and no vaccine at this point. So please treat the situation seriously and take all measures to keep yourself safe.
