@@ -286,12 +286,12 @@ td.hlight {
 //  font-family: "Gill Sans", sans-serif;
   font-family: system-ui;
   margin-left: 10px;
-  line-height: 1.18;
+  line-height: 1;
   font-size: 2.5em;
   color: grey;
   text-transform: uppercase;
   letter-spacing: -2px;
-  padding-top: 9px;
+//  padding-top: 9px;
   font-weight: bold;
   &:hover {
     color: red;
@@ -929,8 +929,8 @@ card > hr {
 //	margin-bottom: 10px;
 //	margin-left: 10px;
 //	border: 0 none;
-	font-weight: 500;
-	font-size: 1.1em;
+	font-weight: 600;
+	font-size: 1.1em !important;
 //	text-transform: uppercase;
 //	border-radius: 20px;
 }
