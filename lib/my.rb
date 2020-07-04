@@ -880,6 +880,10 @@ end # EDT module
        end
     end
 
+
+    pdf.move_down 10.mm
+    pdf.text "* You might have noticed discrepancy in service fees in your daily reports issued between April 1 and June 28. This was because we did not update our system to use new fee schedule effective April 1. Let us assure you that your pay cheque is always calculated based on OHIP issued remittance file (RA) and not based on our internal calculations. Please feel free to verify all your claims by logging into our system and using Billing>Paid Claims menu.", style: :italic 
+
     return pdf
   end
 
