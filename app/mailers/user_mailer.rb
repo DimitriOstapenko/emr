@@ -6,7 +6,7 @@ class UserMailer < ApplicationMailer
   #   en.user_mailer.password_reset.subject
   #
   
-# Send new registration notification to staff members
+# Send new registration notification to admin members
    def new_registration(user)
      @user = user
      emails = User.where('role=?', ADMIN_ROLE).pluck(:email) rescue REPLY_TO

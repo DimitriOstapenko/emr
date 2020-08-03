@@ -4,7 +4,8 @@
   <div class="col-md-5">
     <img src='/images/clinic.jpg' width="480"></img>
     <div id="address" class="pt-3">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (905) 561-9255 
-      <br>During off hours please call: (289) 204-0561 or <%= link_to "register online", new_user_session_path %>.
+      <br>During off hours please <%= link_to "register online", new_user_session_path %>. In case of any registration problems, you can
+      <a href="mailto:drlena@me.com?subject=Patient Inquiry">send me an email</a>
     </div>
 
     <p>
@@ -31,7 +32,7 @@
   <p><font size=6>I</font>f there's no need for physical visit, you can discuss your medical issue with one of our doctors over the phone. You can also renew your prescription over the phone and pick it up at the pharmacy of your choice. Please register below and request callback from doctor.  </p>
 
   <div class="pt-3"></div>
-  <p> <font size=6>N</font>ot registered yet? Registration is easy, let's first look you up. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database.</p>
+  <p> <font size=6>N</font>ot registered yet? Registration is easy and secure, we just need last 4 digits of you health card number. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database.</p>
 
 <div class="pt-3">
   <%= render "#{device_type}_lookup" %>
