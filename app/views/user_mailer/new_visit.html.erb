@@ -1,13 +1,13 @@
-Dear Dr. <%= @visit.doctor.lname %>,
+<b>Dear Dr. <%= @visit.doctor.lname %>,</b>
 
-<p>Virtual visit was just created by patient <%= @visit.patient.full_name %></p>
+<div style="height: 20px;"></div>
+Virtual visit was just created by patient <b> <%= @visit.patient.full_name %> <%= @visit.patient.age_str %> <%= @visit.patient.full_sex %></p></b>
+<p>Reason given: "<%= @visit.reason %>" </p>
 
-<p>You can see it here: </p>
 
+<div style="height: 20px;"></div>
 <%= link_to 'Show me new visit', patient_visit_url(@visit.patient, @visit) %> </p>
 
 
-<p>&nbsp</p>
-<p>&nbsp</p>
-
-Walk-In EMR admin
+<div style="height: 30px;"></div>
+Stoney Creek Medical Walk-In Clinic

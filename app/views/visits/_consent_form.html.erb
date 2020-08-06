@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row pt-3">
   <div class="col-sm-12"> 
     <p class="small">
       By clicking on checkbox below, I give my explicit consent to the following:
@@ -16,7 +16,9 @@
     7. I understand that I may expect the anticipated benefits from the use of telemedicine in my care, but that no results can be guaranteed or assured.
     9. I agree that any dispute arriving from the telemedicine consult will be resolved in the Province of Ontario.
     
-    <%= f.input :consented, as: :boolean, label:'Yes, I consent', checked_value: true, unchecked_value: false, input_html: {style:'width:25px'} %>
+    <div class="pt-3">
+    <%= f.input :consented, as: :boolean, label:'Yes, I consent', checked_value: true, unchecked_value: false, input_html: {style:'width:30px;'} %>
+    </div>
     </p>
   </div>
   </div>

@@ -19,16 +19,7 @@ class Patient < ApplicationRecord
 	attr_accessor :full_name, :age, :cardstr, :phonestr
         default_scope -> { includes(:chart).order(lname: :asc, fname: :asc) }
 
-	before_validation { email.downcase! rescue '' }
-	before_validation { self.ohip_num = ohip_num.gsub(/\D/,'') rescue nil }
-	before_validation { phone.gsub!(/\D/,'') rescue '' }
-	before_validation { mobile.gsub!(/\D/,'') rescue '' }
-	before_validation { pharm_phone.gsub!(/\D/,'')  rescue '' }
-	before_validation { postal.tr!(' -','') rescue '' }
-	before_validation { ohip_ver.strip! rescue '' }
-	before_validation { fname.strip!.gsub!(/\s+/,' ') rescue '' }
-	before_validation { lname.strip!.gsub!(/\s+/,' ') rescue '' }
-	before_validation :upcase_some_fields 
+	before_validation :cleanup_some_fields 
 
 	# Force Patient to RMB if province is not ON, to HCP if province is ON when HC number present	
 	before_save { self.pat_type = 'O' if self.ohip_num.present? && self.hin_prov == 'ON' && self.pat_type == 'R';
@@ -37,7 +28,6 @@ class Patient < ApplicationRecord
 
 #	validates :pat_type, presence: true, length: { is: 1 }
 	validates :lname, presence: true, length: { maximum: 50 }
-#	validates :fname, :mname, length: { maximum: 50 }, allow_blank: true
 	validates :ohip_num,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
 		  if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O') || a.pat_type == 'R' }
 	validates :ifh_number,  presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true,
@@ -46,15 +36,14 @@ class Patient < ApplicationRecord
 	validates :dob, presence: true
 	validates :sex, presence: true, length: { is: 1 },  inclusion: %w(M F X) 
 	validates :postal, length: { maximum: 6 }, allow_blank: true
-        validates :phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
+        validates :phone, presence: true, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
         validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
         validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
-	validate :hc_expiry 
+	validate :validate_card
 	validate :validate_age
 
   def full_name
-#    fname.blank? ? lname : "#{lname}, #{fname} #{mname}"
     fn = self.lname 
     fn = "#{fn}, #{self.fname}" if self.fname.present?
     fn = "#{fn} #{self.mname}" if self.mname.present?
@@ -89,6 +78,10 @@ class Patient < ApplicationRecord
     else	    
       ohip_ver.blank? ? ohip_num : [ohip_num, ohip_ver].join(' ')
     end
+  end
+
+  def pat_type_str 
+    return self.pat_type == CASH_PATIENT ? 'CASH PATIENT' : 'INSURED PATIENT'  
   end
 
 # Formatted home phone number
@@ -139,18 +132,13 @@ class Patient < ApplicationRecord
 	  Invoice.where(patient_id: self.id)
   end
 
-  def hc_expiry
+  def validate_card
    return unless self.ohip_num.present? && self.ohip_ver.present?
 # Don't validate out of province or non-ohip numbers   
     if (hin_prov == 'ON' &&  pat_type == 'O')
-      if hin_expiry.blank?
-         errors.add(:hin_expiry, "Expiry date is required")
-	 return
-         errors.add(:ohip_num, "Card number for ON must be 10 digits long ") if ohip_num.present? && ohip_num.length != 10
-         return
-      end
-      expiry = hin_expiry.to_date rescue '1900-01-01'.to_date
-      errors.add(:hin_expiry, "Card is expired") if expiry < Date.today
+      (errors.add(:ohip_num, "Card number for ON must be 10 digits long "); return) if ohip_num.length != 10
+      expiry = hin_expiry.to_date rescue '2030-01-01'.to_date
+      (errors.add(:hin_expiry, "Card is expired"); return) if expiry < Date.today
     end 
 
 # Check sum test is disabled for now    
@@ -230,14 +218,24 @@ class Patient < ApplicationRecord
 
 protected
 
-  def upcase_some_fields
-	  ohip_ver.upcase! if ohip_ver.present?
-	  postal.upcase! if postal.present?
-	  lname.upcase! if lname.present?
-	  fname.upcase! if fname.present?
-	  mname.upcase! if mname.present?
-	  maid_name.upcase! if maid_name.present?
-          pat_type ||= 'O'
+  def cleanup_some_fields
+    self.email.downcase! rescue '' 
+    self.ohip_num = ohip_num.gsub(/\D/,'') rescue nil 
+    self.phone.gsub!(/\D/,'') rescue '' 
+    self.mobile.gsub!(/\D/,'') rescue ''
+    self.pharm_phone.gsub!(/\D/,'')  rescue '' 
+    self.postal.tr!(' -','') rescue '' 
+    self.ohip_ver.strip! rescue ''
+    self.fname.strip!.gsub!(/\s+/,' ') rescue '' 
+    self.lname.strip!.gsub!(/\s+/,' ') rescue '' 
+    self.ohip_ver.upcase! if ohip_ver.present?
+    self.postal.upcase! if postal.present?
+    self.lname.upcase! if lname.present?
+    self.fname.upcase! if fname.present?
+    self.mname.upcase! if mname.present?
+    self.maid_name.upcase! if maid_name.present?
+    self.hin_expiry ||= '2030-01-01'.to_date
+    pat_type ||= 'O'
   end
 
   def validate_age

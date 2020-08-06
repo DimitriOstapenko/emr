@@ -1,30 +1,19 @@
 <% remote = device_is_desktop? %>
-<% hcnum = "Health Card: #{@patient.ohip_num} #{@patient.ohip_ver} (#{@patient.hin_prov}) Expires: #{@patient.hin_expiry}" %>
+<% hcnum = "Health Card: #{@patient.ohip_num} #{@patient.ohip_ver} (#{@patient.hin_prov})" %>
 <% ifhnum = "IFH #: #{@patient.ifh_number}" if @patient.ifh_number.present? %> 
 
 <div class="row">
   <aside class="col-md-6">
     <section class="user_info">
 <pre class="pre-scrollable-lg">
-<% if @patient.pat_type == CASH_PATIENT %>
-<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
-<% else %>
-<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
+<b><%= @patient.pat_type_str %></b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>  <%= @patient.age_str %> <%= @patient.full_sex %></b> 
 <%= hcnum if hcnum.present? %>
 <%= ifhnum if ifhnum.present? %>
-<% end %>
-<b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; 
-Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
-<%= "Phone: #{num_to_phone(@patient.phone)}" if @patient.phone.present? %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
-<%= "Address: #{@patient.addr_full}" if @patient.addr.present? %> 
-<% if @patient.allergies.present? %>
-Allergies: <%= @patient.allergies %>
-<% end %>
-<!-- active meds for this pat -->
-<% if @patient.med_list %>
-Medications:
-     <%= @patient.med_list.join("\n     ") %>
-<% end %> </b>
+<b>Born:</b> <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
+<b>Phone:</b> <%= num_to_phone(@patient.phone) if @patient.phone.present? %>
+<b>Address:</b> <%= @patient.addr_full if @patient.addr.present? %> 
+<b>Allergies:</b> <%= @patient.allergies if @patient.allergies.present? %>
+<b>Medications:</b> <%= @patient.med_list.join("\n     ")  if @patient.med_list %>
 </pre>
 	 
 &nbsp; <%# render("medications", remote: remote) if @patient.medications.any? %>
@@ -36,18 +25,20 @@ Medications:
 
 <font size=3>
 <% if @patient.visits.count == 0 %>
-  <p><b>  Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment.</b></p>
+  <h4> Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment. </h4>
 <% end %>
 
 <% unless @patient.has_visit_today? %>
-<p><b> To book your visit, please click the button below. Describe the reason for your visit, upload any documents/pictures and save it. Doctor on duty will get in touch with you as soon as they can. Doctor will decide if you need in-person visit. Medications are renewed over the phone. </b></p>
+<div class="pt-3">  
+To book your visit, please click the button below. Doctor on duty will get in touch with you as soon as possible. Doctor will decide if you need in-person visit. Medications can be renewed over the phone.
+</div>
 <% end %>
 </font>
 
   </section>
 
 <% if @patient.has_visit_today? %>
-  You appointment for today is registered. Please wait for the doctor to call you back at one of the numbers provided.
+  You appointment for today is registered. Please wait for the doctor to call you back at the number provided.
 
 <% else %>
 <div class="col-sm-2 col-md-8 col-md-offset-2 col-sm-offset-3 pt-5">
@@ -56,7 +47,7 @@ Medications:
   </font>
 </div>
 
-  <div class="pt-3" style="float:right" ><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
+  <div class="pt-3" style="float:left" ><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
 
  <div class="ml-3 pt-5" style="clear: both">
     <div class="panel panel-info news-panel-body">

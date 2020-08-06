@@ -20,11 +20,13 @@ class UserMailerPreview < ActionMailer::Preview
     UserMailer.new_registration(user)
   end
   
+# send email to doctor  
   def new_visit
-    visit = Visit.last
+    visit = Visit.find_by(vis_type: 'TV')
     UserMailer.new_visit(visit)
   end
 
+# Invite doctor to register  
   def invite_doctor
     doctor = Doctor.where(bills: true).first  # must have user 
     user = doctor.user rescue nil

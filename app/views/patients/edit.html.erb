@@ -1,13 +1,15 @@
 <% provide(:title, 'Edit patient') %>
 <% provide(:button_text, 'Update Record') %>
 
-<h3 class='display-1'>Edit Your Patient Profile</h3>
 
+<div class="col-md-8 col-md-offset-2">
+<h3 class='display-1'>Edit Patient Profile</h3>
 <div class="cyan-well">
   <% if current_user.patient? %>
     <%= render 'patient_form' %>
   <% else %>
     <%= render 'admin_form' %>
   <% end %>
+</div>
 </div>
 

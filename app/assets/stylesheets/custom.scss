@@ -402,10 +402,14 @@ aside {
 
 /* forms */
 
-//#session_remember_me, #user_activated, #diagnosis_active {
-//  width: 25px;
-//  margin-left: 0;
-//}
+.boolean {
+  font-size: 1.05em;
+  display: inline;
+  }
+
+.form-check-label { 
+  margin-left: 5px;
+}
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
@@ -419,18 +423,6 @@ input, textarea, select, .uneditable-input {
   clear: both; /* Required for Webkit, but not for Gecko */
   font-size: 14px;
 }
-
-//.simple_form_ label {
-//  float: left;
-//  width: 200px;
-//  text-align: left;
-//  margin: 2px 2px;
-//  font-size: 15px;
-//}
-
-//.simple_form select {
-//  font-size: 14px;
-//}
 
 input {
   height: auto !important;

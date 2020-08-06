@@ -44,8 +44,9 @@ Medications:
 &nbsp; <%= render("referrals", remote: remote) if @patient.referrals.any? %>
 &nbsp; <%= render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
-
+<div class="pt-4">
    <%= render "buttons", remote: remote  %> 
+</div>   
 
 </aside>
 

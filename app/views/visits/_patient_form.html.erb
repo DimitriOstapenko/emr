@@ -7,19 +7,22 @@
 <%= f.hidden_field :doc_id, value: current_doctor.id rescue 1215 %>  <!-- !!!! Dr. Ostapenko -->
 
 <div class="cyan-well">
-
 <div class="row">
   <div class="col-sm-4">
-  <%= f.input :doc_id, collection: get_active_doctors, label_method: :lname, value_method: :id, prompt: 'Select', selected: current_doctor.id, label:'Doctor', hint: 'Required', disabled: true %>
+    <% if device_is_desktop? %>
+    <h3>Your Vitals:</h3>
+  <% end %>
   </div>
 
   <div class="col-sm-2">
   <%= f.input :temp, label: "Temperature", hint:'Optional' %>
   </div>
 
+  <% if device_is_desktop? %>
   <div class="col-sm-2">
   <%= f.input :pulse, label: 'Heart Rate', hint:'Optional' %>
   </div>
+  <% end %>
 
   <div class="col-sm-2">
   <%= f.input :bp, as: :string, label:'Blood Pr. (H/L)', hint:'Optional' %>
@@ -34,13 +37,7 @@
 
 <div class="row">
   <div class="col-sm-12">
-  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, hint:'Required', input_html: {rows:3} %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-12"> 
-     <%= f.input :notes, placeholder: 'Note to doctor', label: false, input_html: {rows:2}, hint: 'Optional' %>
+  <%= f.input :reason, as: :text, placeholder: 'Reason for visit', label: false, hint:'Required', input_html: {rows:6} %>
   </div>
 </div>
 
