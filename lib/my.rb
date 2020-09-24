@@ -986,7 +986,7 @@ private
 
 # SMS and voice calls  number format: 19991112222 
   module Nexmo_phone
-  require 'nexmo'
+  require 'vonage'
 
   def send_new_visit_sms( visit )
   return unless Rails.env.production?

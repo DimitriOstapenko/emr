@@ -8,7 +8,8 @@ gem 'nokogiri', '~> 1.10', '>= 1.10.8'
 gem 'pg', 	  '~> 1.1', '>= 1.1.4'
 gem 'devise',   '~> 4.7', '>= 4.7.1'
 
-gem 'nexmo',  '~> 7.0'  
+#gem 'nexmo',  '~> 7.0'  
+gem 'vonage'
 
 gem 'carrierwave',             '1.3.1'  
 gem 'dropzonejs-rails',        '~> 0.8.4'

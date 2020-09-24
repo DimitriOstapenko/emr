@@ -3,6 +3,7 @@
   <h3>Cange your password</h3>
   <div class="well">
 
+f.error   <%= f.object.errors[:base].to_sentence  %>
   <%= f.input :reset_password_token, as: :hidden %>
   <%= f.full_error :reset_password_token %>
 
