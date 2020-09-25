@@ -3,9 +3,13 @@
   <div class="hdr-text">We are now open every Day!  <img src="/images/leaf.png" width=45 valign=top> </div>
   <div class='pt-4'></div>
 <font size=3>
-  <p><font size=6>W</font>e are now happy to announce resumption of full 7 day schedule. Patients who need to see a doctor now can come to the clinic. Please register below to save time.</p>
+  <p><font size=6>W</font>e are happy to announce resumption of full 7 day schedule. Please register below to save time. During callback, doctor will decide if you need to come to the clinic.</p>
 
-  <p><font size=6>I</font>f there's no need for physical visit, you can discuss your medical issue with one of our doctors over the phone. You can also renew your prescription over the phone and pick it up at the pharmacy of your choice. </p>
+  <div class="pt-3"></div>
+  <p> <font size=6>P</font>rescriptions can be renewed over the phone. You can pick them up at the pharmacy of your choice. Please register below and request callback from doctor.</p>
+
+  <div class="pt-3"></div>
+  <p> <font size=6>N</font>ot registered yet? Registration is easy and secure, just use the form below. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database.</p>
 
   <%= render "#{device_type}_lookup" %>
 
@@ -24,7 +28,9 @@
 <p class="pt-3">Don’t have a health card? We still can help. Please call the clinic directly during business hours. </p>
 
 <h1> (905) 561-9255 </h1>
-<h1>Off hours: register online</h1>
+<h1>Off hours: 
+<%= link_to 'Request Callback', new_user_session_path %></div>
+</h1>
 
   <p>
     <div class="panel panel-info pt-3 news-panel-body">
