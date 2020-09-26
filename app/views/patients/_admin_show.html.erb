@@ -26,6 +26,9 @@ Medications:
 <% if @patient.meds.present? %>
 <font color='red'><i> Old Medications to be deleted after conversion: <%= @patient.meds %> </i></font>
 <% end %>
+<% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
+<b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
+<% end %>
 </pre>
 	 
  <% if @patient.notes.present? %> 

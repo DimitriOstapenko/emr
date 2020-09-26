@@ -16,7 +16,10 @@
           <th class="tbl_xs"></th>
           <th class="tbl_sm text-center">Visit</th>
           <th class="tbl_lsm text-center"><%= sortable 'entry_ts', ts.html_safe %></th>
-          <th class="tbl_lsm text-center">Room</th>
+
+          <% if @date.today? %>
+          <th class="tbl_lsm text-center">Room </th>
+          <% end %>
 
           <th class="tbl_lsm">
           <% if @docs.present? && @docs.size > 1 %>

@@ -14,6 +14,9 @@
 <b>Address:</b> <%= @patient.addr_full if @patient.addr.present? %> 
 <b>Allergies:</b> <%= @patient.allergies if @patient.allergies.present? %>
 <b>Medications:</b> <%= @patient.med_list.join("\n     ")  if @patient.med_list %>
+<% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
+<b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
+<% end %>
 </pre>
 	 
 &nbsp; <%# render("medications", remote: remote) if @patient.medications.any? %>
@@ -25,12 +28,12 @@
 
 <font size=3>
 <% if @patient.visits.count == 0 %>
-  <h4> Welcome to our virtual clinic, <%= @patient.fname %>! You are all set for your first doctor appointment. </h4>
+  <h4> Welcome to Stoney Creek Walk-In clinic, <%= @patient.fname %>! You are all set for your first virtual appointment with the doctor. </h4>
 <% end %>
 
 <% unless @patient.has_visit_today? %>
 <div class="pt-3">  
-To book your visit, please click the button below. Doctor on duty will get in touch with you as soon as possible. Doctor will decide if you need in-person visit. Medications can be renewed over the phone.
+To book your visit, please click the button below. Doctor on duty will get in touch with you as soon as possible. Doctor will decide if you need in-person visit. Medications can be renewed over the phone. It helps if you provide phone number of your pharmacy in your patient profile, but it's ok if you don't.
 </div>
 <% end %>
 </font>

@@ -9,7 +9,7 @@
     </div>
 
     <p>
-    <div class="ml-3 pt-3">
+    <div class="ml-3 pt-3" >
     <div class="panel panel-info p-2 news-panel-body">
       <div class="panel-body "><p align="justify"> 
        This is current schedule updated daily. Please <%= link_to "book your appointment online", new_user_session_path %> or call the clinic  during business hours: <b> (905) 561-9255 </b>.
@@ -25,20 +25,17 @@
   <div class="hdr-text">We are now open every Day!  <img src="/images/leaf.png" width=45 valign=top> </div> 
   <div class='pt-5'></div>
 <font size=3>
-  <p><font size=6>C</font>linic is now open 7 days a week. Please check current schedule below. Patients who registered online for virtual appointment are served first. During callback to discuss your medical issue, the doctor will decide if you need to come to the clinic. </p> 
+  <p><font size=6>C</font>linic is now open 7 days a week. Please check current schedule below. Patients who registered online for virtual appointment are served first. During callback to discuss your medical issue, doctor will decide if you need to come to the clinic. </p> 
   <div class="pt-3"></div>
-  <p> <font size=6>P</font>rescriptions can be renewed over the phone. You can pick them up at the pharmacy of your choice. Please register below and request callback from doctor.</p>
-
-  <div class="pt-3"></div>
-  <p> <font size=6>N</font>ot registered yet? Registration is easy and secure, we just need your date of birth and last 4 digits of you health card number. More than 65000 patients visited our clinic over the last 15 years, so chances are you are in our database.</p>
+  <p> <font size=6>P</font>rescriptions can now be renewed over the phone. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice. Please register below and request callback from doctor.</p>
 
 <div class="pt-3">
   <%= render "#{device_type}_lookup" %>
 </div>
 
-<p> If you have registered already, go ahead and make your telephone appointment. Just click the button below and describe your symptoms. Doctor on duty (see the schedule) will call you back.  </p>
+<p> If you have registered already, go ahead and make your telephone appointment. Just click the button below, log in and describe your symptoms. Doctor on duty (see the schedule) will call you back.  </p>
 
-<div align="center" class="pt-4"><%= link_to 'Book An Appointment', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+<div align="center" class="pt-4"><%= link_to 'Request Doctor Callback', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
 
 <div class="pt-4">
   <i>
