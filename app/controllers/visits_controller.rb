@@ -246,6 +246,12 @@ class VisitsController < ApplicationController
     render 'index'
   end
 
+# How much was billed so far in the last 45 days?  
+  def total_unpaid_visits
+    @total_unpaid = Visit.where(status: BILLED).where("entry_ts > ?", Date.today - 45.days).sum{|v| v.total_fee}
+    flash[:info] = "Currently total of billed claims of all doctors for this month is: #{ sprintf "$%.0f", @total_unpaid}"
+  end
+
   private
 
     def visit_params
