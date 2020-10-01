@@ -248,8 +248,10 @@ class VisitsController < ApplicationController
 
 # How much was billed so far in the last 45 days?  
   def total_unpaid_visits
-    @total_unpaid = Visit.where(status: BILLED).where("entry_ts > ?", Date.today - 45.days).sum{|v| v.total_fee}
-    flash[:info] = "Currently total of billed claims of all doctors for this month is: #{ sprintf "$%.0f", @total_unpaid}"
+    next_cutoff_date = Claim.order(date_paid: :desc).limit(1).pluck(:date_paid).first + 3.days rescue Date.today 
+    prev_cutoff_date = next_cutoff_date - 45.days 
+    @total_unpaid = Visit.where(status: BILLED).where("entry_ts > ?", prev_cutoff_date).where("entry_ts <?", next_cutoff_date).sum{|v| v.total_fee}
+    flash[:info] = "Current total of billed claims for all doctors for period ending #{next_cutoff_date} is: #{ sprintf "$%.0f", @total_unpaid}"
   end
 
   private
