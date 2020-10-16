@@ -186,6 +186,8 @@ class Patient < ApplicationRecord
 
 # Global search method
   def self.search(keyword = '')
+    valid_email_regex = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
+    keyword.strip!
     case keyword
      when /^[[:digit:]]{4}$/       # Last 4 digits of HC number
        patients = Patient.where("ohip_num ~ ?", "#{keyword}$")
@@ -198,6 +200,9 @@ class Patient < ApplicationRecord
           /^[[:digit:]]{,2}[\/-][[:digit:]]{,2}[\/-][[:digit:]]{4}/       # or like   30/12/1962
        dob = keyword.to_date rescue '1900-01-01'
        patients = Patient.where("dob = ?", dob)
+     when /#{valid_email_regex}/     # search by email
+       puts "got email #{keyword}"
+       patients = Patient.joins(:user).where("upper(users.email) like ?", "%#{keyword.upcase}")
      when /^[[:graph:]]+/                                             # last name[, fname] 
        lname,fname = keyword.tr(' ','').split(',')
        if fname.blank?        # Search by last name or maiden name if no first name given          
