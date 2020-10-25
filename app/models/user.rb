@@ -15,7 +15,7 @@ class User < ApplicationRecord
  
   validates :email, presence: true;
 
-  before_validation :set_patient
+  before_validation :set_patient, :delete_unconfirmed_user
   after_create_commit :send_emails
 
 # Initialize user, set patient
@@ -94,4 +94,9 @@ class User < ApplicationRecord
 
 private 
 
+# We delete unconfirmed user, if present, to prevent error caused by unique ohip_num constraint in user table    
+  def delete_unconfirmed_user
+    unconfirmed_user = User.find_by('ohip_num': self.ohip_num, confirmed_at: nil)
+    unconfirmed_user.destroy if unconfirmed_user.present?
+  end
 end

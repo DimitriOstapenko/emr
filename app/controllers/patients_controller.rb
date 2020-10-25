@@ -56,6 +56,7 @@ class PatientsController < ApplicationController
 
   def create
     @patient = Patient.new(patient_params)
+
     @patient.entry_date = DateTime.now
     @patient.lastmod_by = current_user.name
     if @patient.save

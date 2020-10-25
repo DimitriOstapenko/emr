@@ -19,7 +19,7 @@ class Patient < ApplicationRecord
 	attr_accessor :full_name, :age, :cardstr, :phonestr
         default_scope -> { includes(:chart).order(lname: :asc, fname: :asc) }
 
-	before_validation :cleanup_some_fields 
+	before_validation :cleanup_some_fields
 
 	# Force Patient to RMB if province is not ON, to HCP if province is ON when HC number present	
 	before_save { self.pat_type = 'O' if self.ohip_num.present? && self.hin_prov == 'ON' && self.pat_type == 'R';
