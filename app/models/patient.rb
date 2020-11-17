@@ -142,7 +142,7 @@ class Patient < ApplicationRecord
     end 
 
 # Check sum test is disabled for now    
-    return
+    return unless hin_prov == 'ON'
     arr = ohip_num.split('')
     last_digit = arr[-1].to_i
 
