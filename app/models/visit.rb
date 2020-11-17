@@ -347,7 +347,7 @@ private
           self.bil_type ||= HCP_BILLING
 	  self.duration ||= 10
 #          self.proc_code ||= 'K081A' # televisit!!
-          self.notes = "Verbal consent was obtained. #{self.notes}" if self.vis_type == 'TV'  #unless pat.user && pat.user.patient?
+          self.notes ||= "Verbal consent was obtained." if self.consented?  #unless pat.user && pat.user.patient?
   end
 
 end
