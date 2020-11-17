@@ -12,6 +12,7 @@ class User < ApplicationRecord
 
   validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, if: Proc.new { |u| u.patient? }
   validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
+  validate :validate_card # checksum test
  
   validates :email, presence: true;
 
@@ -100,3 +101,27 @@ private
     unconfirmed_user.destroy if unconfirmed_user.present?
   end
 end
+
+# Validate ON cards. Number only, version code is ignored
+ def validate_card
+# validate ON health cards only
+   return unless self.ohip_num.present? && self.ohip_num.length == 10
+
+# Check sum test 
+    arr = ohip_num.split('')
+    last_digit = arr[-1].to_i
+
+    def sumDigits(num, base = 10)
+       num.to_s(base).split(//).inject(0) {|z, x| z + x.to_i(base)}
+    end
+
+    sum = 0
+    arr[0..arr.length-2].each_with_index do |dig, i|
+        sum += i.odd? ? dig.to_i : sumDigits(dig.to_i * 2)
+    end
+
+    return if (last_digit == (10 - sum.to_s[-1].to_i))
+    errors.add(:ohip_num, "ON health card number is invalid")
+  end
+
+
