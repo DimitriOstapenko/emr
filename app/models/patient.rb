@@ -156,6 +156,7 @@ class Patient < ApplicationRecord
     end
 
     return if (last_digit == (10 - sum.to_s[-1].to_i))
+    return if last_digit == 0
     errors.add(:ohip_num, "Number is invalid") 
   end
 
