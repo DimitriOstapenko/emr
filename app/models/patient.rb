@@ -132,14 +132,16 @@ class Patient < ApplicationRecord
 	  Invoice.where(patient_id: self.id)
   end
 
+  def card_invalid?
+    self.validate_card
+  end
+
   def validate_card
-   return unless self.ohip_num.present? && self.ohip_ver.present?
+   return unless self.ohip_num.present?
 # Don't validate out of province or non-ohip numbers   
-    if (hin_prov == 'ON' &&  pat_type == 'O')
-      (errors.add(:ohip_num, "Card number for ON must be 10 digits long "); return) if ohip_num.length != 10
-      expiry = hin_expiry.to_date rescue '2030-01-01'.to_date
-#      (errors.add(:hin_expiry, "Card is expired"); return) if expiry < Date.today
-    end 
+   return unless (hin_prov == 'ON' &&  pat_type == 'O')
+   (errors.add(:ohip_num, "Card number for ON must be 10 digits long "); return) if ohip_num.length != 10
+   expiry = hin_expiry.to_date rescue '2030-01-01'.to_date
 
 # Check sum test is disabled for now    
     return unless hin_prov == 'ON'
