@@ -157,9 +157,10 @@ class Patient < ApplicationRecord
         sum += i.odd? ? dig.to_i : sumDigits(dig.to_i * 2)
     end
 
-    return if (last_digit == (10 - sum.to_s[-1].to_i))
-    return if last_digit == 0
-    errors.add(:ohip_num, "Number is invalid") 
+    sum_last_digit = sum.to_s[-1].to_i
+    return if (last_digit == (10 - sum_last_digit))
+    return if last_digit == 0 && sum_last_digit == 0
+    errors.add(:ohip_num, "for ON is invalid")
   end
 
   # List of active medications (Array)

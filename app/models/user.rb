@@ -102,6 +102,10 @@ private
   end
 end
 
+  def card_invalid?
+    self.validate_card
+  end
+
 # Validate ON cards. Number only, version code is ignored
  def validate_card
 # validate ON health cards only
@@ -120,9 +124,10 @@ end
         sum += i.odd? ? dig.to_i : sumDigits(dig.to_i * 2)
     end
 
-    return if (last_digit == (10 - sum.to_s[-1].to_i))
-    return if last_digit == 0
-    errors.add(:ohip_num, "ON health card number is invalid")
+    sum_last_digit = sum.to_s[-1].to_i
+    return if (last_digit == (10 - sum_last_digit))
+    return if last_digit == 0 && sum_last_digit == 0
+    errors.add(:ohip_num, ": ON health card number is invalid")
   end
 
 
