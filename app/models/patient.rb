@@ -139,7 +139,7 @@ class Patient < ApplicationRecord
     return unless full_ohip_num 
     require "uri"
     require "net/http"
-    require "JSON"
+    require "json"
 
     ohip_num,ohip_ver = full_ohip_num.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
     patient = Patient.new(ohip_num: ohip_num, ohip_ver: ohip_ver)
@@ -174,7 +174,7 @@ class Patient < ApplicationRecord
 
 # Call HCV to validate OHIP number if not recently validated
   def hcv_validate
-    require "JSON"
+    require "json"
 
 # Validate only not recently validated cards or cards with errors    
     return if self.validated_at && self.validated_at > 5.days.ago
