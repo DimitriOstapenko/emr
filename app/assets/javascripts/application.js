@@ -44,3 +44,28 @@ $(document).on('turbolinks:load', function(){
       });
 });
 
+function get_patient ( ohip_num ) {
+        var request = "/patients/get?findstr=" + ohip_num;
+        var aj = $.ajax({
+        url: request,
+        type: 'get',
+        data: $(this).serialize()
+    }).done(function (data) {
+      $('#note').hide();
+      if (data.last_visit_date) {
+        var ok_icon = '<span class="glyphicon glyphicon-ok"></span>';
+        result = `${ok_icon} Patient record found:<br> ${data.lname}, ${data.fname} born ${data.dob}<br> Last visit: ${data.last_visit_date}`;
+        $("#results").html(result);
+        $("#register_button").show();
+      } else if (data.lname) {
+        result = `New patient: ${data.lname}, ${data.fname} born ${data.dob}`;
+        $("#register_button").show();
+        $("#results").html(result);
+      } else
+        result = `Invalid card number:  ${data.notes}`;
+        $("#results").html(result);
+    }).fail(function (data) {
+        console.log('AJAX request has FAILED');
+    });
+}
+

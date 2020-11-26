@@ -332,6 +332,12 @@ class Visit < ApplicationRecord
     self.consented? ? 'Yes' : 'No' 
   end
 
+# Meds Renewed?
+  def meds_renewed_str
+    self.meds_renewed? ? 'Yes' : 'No' 
+  end
+
+
 private 
 # Can only save 1 visit per patient per day  
   def check_uniqueness 

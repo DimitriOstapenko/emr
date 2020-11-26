@@ -70,25 +70,26 @@ class UsersController < ApplicationController
     end
   end
 
+# moved to patient   
 # Preliminary lookup by DOB and last 4 digits of HC
-  def lookup
-    ohip4 = params[:user][:ohip4].strip rescue nil
-    dob = params[:user][:dob].to_date rescue nil
-    if ohip4.present? && dob.present?
-      patients = Patient.search(ohip4)
-      patient = patients.where(dob: dob).first if patients
-      if patient.present? && patient.user.present? 
-        flash[:danger] = "Patient with this health card number is already registered. Please try logging in"
-        redirect_to root_path
-      else 
-        ohip_num =  patient.ohip_num_full rescue nil
-        @resource = User.new(ohip_num: ohip_num, dob: dob)
-        render "devise/registrations/new"
-      end
-    else
-      redirect_to root_path
-    end
-  end
+#  def lookup
+#    ohip4 = params[:user][:ohip4].strip rescue nil
+#    dob = params[:user][:dob].to_date rescue nil
+#    if ohip4.present? && dob.present?
+#      patients = Patient.search(ohip4)
+#      patient = patients.where(dob: dob).first if patients
+#      if patient.present? && patient.user.present? 
+#        flash[:danger] = "Patient with this health card number is already registered. Please try logging in"
+#        redirect_to root_path
+#      else 
+#        ohip_num =  patient.ohip_num_full rescue nil
+#        @resource = User.new(ohip_num: ohip_num, dob: dob)
+#        render "devise/registrations/new"
+#      end
+#    else
+#      redirect_to root_path
+#    end
+#  end
 
 private
 

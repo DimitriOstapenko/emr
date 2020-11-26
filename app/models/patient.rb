@@ -40,7 +40,8 @@ class Patient < ApplicationRecord
         validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
         validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
-	validate :validate_card
+        validate :hcv_validate, on: [:create, :update]
+#	validate :validate_card  # basic checksum validation
 	validate :validate_age
 
   def full_name
@@ -129,22 +130,88 @@ class Patient < ApplicationRecord
   end
 
   def invoices
-	  Invoice.where(patient_id: self.id)
+    Invoice.where(patient_id: self.id)
   end
 
+
+  # Look up patient in MOH database and create patient if valid. Otherwise, return error in patient.notes  
+  def self.hcv_lookup(full_ohip_num = nil)
+    return unless full_ohip_num 
+    require "uri"
+    require "net/http"
+    require "JSON"
+
+    ohip_num,ohip_ver = full_ohip_num.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
+    patient = Patient.new(ohip_num: ohip_num, ohip_ver: ohip_ver)
+
+    (patient.notes = 'Ontario health card number must be 10 digit long'; return patient) unless ohip_num
+    (patient.notes = 'error: Version Code is missing/wrong size'; return patient) unless ohip_ver
+
+    response = patient.get_hcv_response
+    (patient.notes = response.message; return patient) unless response.message == 'OK'
+
+    json = JSON.parse(response.body)
+    status = json['status']
+    resp = json['response']
+    (patient.notes = "Bad response status: #{status}"; return patient ) unless status == 'success'
+
+    moh_status = resp['MOH-card-status'] || 'invalid'
+    moh_message = resp['MOH-Message'] || "The Health Number does not exist on the ministry's system"
+    (patient.notes =  moh_message; return patient) unless moh_status == 'valid'
+    eligible = resp['MOH-card-eligible'] == true
+    (patient.notes = 'Card ineligible'; return patient) unless eligible
+
+    fname = resp['First-name']
+    lname = resp['Last-name']
+    sex = resp['Gender']
+    dob = Date.strptime( resp['DOB'], '%m/%e/%y')
+    dob = dob - 100.years if dob > Date.today
+    patient.assign_attributes(lname: lname, fname: fname, sex: sex, dob: dob, hin_prov: 'ON', pat_type: 'O', hin_expiry: Date.today + 10.years, prov: 'ON', validated_at: Time.now )
+    patient.save
+    
+    return patient
+  end
+
+# Call HCV to validate OHIP number if not recently validated
+  def hcv_validate
+    require "JSON"
+
+# Validate only not recently validated cards or cards with errors    
+    return if self.validated_at && self.validated_at > 5.days.ago
+# do not validate non-Ontario cards    
+    return unless self.ohip_num && self.ohip_num.length == 10
+
+    response = self.get_hcv_response
+    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response.message == 'OK'
+
+    json = JSON.parse(response.body)
+    status = json['status']
+    resp = json['response']
+    (errors.add(:ohip_num, "bad response status: #{status}"); return;) unless status == 'success'
+
+    moh_status = resp['MOH-card-status']
+    moh_msg = resp['MOH-Message']
+    eligible = resp['MOH-card-eligible'] == true
+    (errors.add(:ohip_num, ": is invalid: #{moh_msg}"); return;) unless moh_status == 'valid'
+    (errors.add(:ohip_num, ": is ineligible"); return;) unless eligible
+
+    self.update_attribute(:validated_at, Time.now)
+  end
+
+# Card checksum is invalid  
   def card_invalid?
     self.validate_card
   end
 
+# Does card pass checksum test?
   def validate_card
    return unless self.ohip_num.present?
+
 # Don't validate out of province or non-ohip numbers   
    return unless (hin_prov == 'ON' &&  pat_type == 'O')
    (errors.add(:ohip_num, "Card number for ON must be 10 digits long "); return) if ohip_num.length != 10
    expiry = hin_expiry.to_date rescue '2030-01-01'.to_date
 
-# Check sum test is disabled for now    
-    return unless hin_prov == 'ON'
     arr = ohip_num.split('')
     last_digit = arr[-1].to_i
 
@@ -225,6 +292,25 @@ class Patient < ApplicationRecord
     self.visits.order(entry_ts: :desc).first.entry_ts.today? rescue false
   end
 
+# Call HCV service through MDMax and get a response  !!! Dependency: provider_no and username
+  def get_hcv_response
+    require "uri"
+    require "net/http"
+
+    url = URI("https://api.mdmax.ca/api/1.1/wf/api-validation-call")
+    https = Net::HTTP.new(url.host, url.port);
+    https.use_ssl = true
+
+    request = Net::HTTP::Post.new(url)
+    request["Authorization"] = "Bearer 3a213663160927a0335e7f3baf2c8b28"
+#    request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
+    form_data = [['Provider-number', '015539'],['HCN', self.ohip_num],['VC', self.ohip_ver],['User', 'dimitri']]
+    request.set_form form_data, 'multipart/form-data'
+    response = https.request(request)
+    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response.message == 'OK'
+    return response
+  end
+
 protected
 
   def cleanup_some_fields
@@ -260,4 +346,7 @@ protected
     user = self.user
     user.update_attribute(:new_patient, false) if self.valid? rescue nil
   end
+
 end
+
+

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_05_102155) do
+ActiveRecord::Schema.define(version: 2020_11_26_201626) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -327,6 +327,8 @@ ActiveRecord::Schema.define(version: 2020_05_05_102155) do
     t.string "ifh_number"
     t.boolean "clinic_pat"
     t.string "pharm_fax"
+    t.datetime "validated_at"
+    t.datetime "latest_medication_renewal"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"
@@ -619,6 +621,7 @@ ActiveRecord::Schema.define(version: 2020_05_05_102155) do
     t.string "pat_type"
     t.string "hin_num"
     t.boolean "consented", default: false
+    t.boolean "meds_renewed", default: false
     t.index ["entry_ts"], name: "index_visits_on_entry_ts"
     t.index ["patient_id", "created_at"], name: "index_visits_on_patient_id_and_created_at"
     t.index ["patient_id"], name: "index_visits_on_patient_id"

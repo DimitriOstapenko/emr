@@ -30,6 +30,9 @@ Medications:
 <% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
 <b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
 <% end %>
+<% if @patient.latest_medication_renewal.present? %>
+<b>Latest medication renewal: </b> <%= @patient.latest_medication_renewal.to_date %> 
+<% end %>
 </pre>
 	 
  <% if @patient.notes.present? %> 

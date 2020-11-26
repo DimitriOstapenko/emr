@@ -16,4 +16,5 @@ module DoctorsHelper
 #    logger.debug "****** set_doc_session:  #{session[:doc_id]}"
   end
 
+
 end

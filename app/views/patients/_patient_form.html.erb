@@ -1,7 +1,14 @@
+<h3> <%= @patient.full_name %> (<%= @patient.sex %>)  <%= @patient.age_str %>  HC# <%= @patient.ohip_num_full %> </h3>
+<div class="p-3"></div>
+
 <%= simple_form_for (@patient) do |f| %>
   <%= f.error_notification %>
   <%# render 'shared/error_messages', object: f.object %>
-  
+
+  <%= f.hidden_field :lname %>
+  <%= f.hidden_field :fname %>
+  <%= f.hidden_field :sex %>
+  <%= f.hidden_field :dob %>
   <%= f.hidden_field :pat_type, value: HCP_PATIENT %>
   <%= f.hidden_field :country, value: 'Canada' %>
   <%= f.hidden_field :email %>
@@ -11,8 +18,12 @@
   <%= f.hidden_field :hin_expiry %>
   <%= f.hidden_field :mobile %>
   <%= f.hidden_field :pharm_fax %>
+  <%= f.hidden_field :ohip_num %>
+  <%= f.hidden_field :ohip_ver %>
+  <%= f.hidden_field :hin_prov %>
 
-<!-- Row 1 -->
+
+<!-- Row 1 
 <div class="row">
   <div class="col-md-3 col-xs-12">
      <%= f.input :lname, hint: 'Required'%>
@@ -30,33 +41,18 @@
     <%= f.input :dob, as: :date, label: 'Born', start_year: 1915, end_year: Date.today.year, hint: 'Required', html5: true %>
   </div>
 </div>  
+-->
   
 <!-- Row 2 -->
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-md-3">
   <%= f.input :phone, as: :tel, label: 'Phone', value: num_to_phone(@patient.phone), hint: 'Required' %>
   </div>
 
-  <div class="col-md-3" id="ohip_number">
-  <%= f.input :ohip_num, label: 'Health Card Number', hint: 'Required ' %>
-  </div>
-
-  <div class="col-md-2" id="ohip_ver">
-     <%= f.input :ohip_ver, label: 'Version Code', hint: "2 letters" %>
-  </div>
-
-  <div class="col-md-2" id="hin_prov" >
-  <%= f.input :hin_prov, collection: PROVINCES, label: 'Card Province', include_blank: false %>
-  </div>
-  
   <div class="col-md-3">
   <%= f.input :family_dr, label: 'Family Doctor', collection: Doctor.all, hint:'Optional', label_method: :lname, value_method: :lname, prompt: 'Select' %>
   </div>
   
-</div>
-  
-<!-- Row 3 -->
-<div class="row">
   <div class="col-md-3">
   <%= f.input :pharmacy, label:'Preferred Pharmacy', hint: 'Optional' %>
   </div>
@@ -64,8 +60,10 @@
   <div class="col-md-3">
   <%= f.input :pharm_phone, as: :tel, label: 'Pharmacy Phone', value: num_to_phone(@patient.pharm_phone), hint: 'Optional' %>
   </div>
-  
-  <div class="col-md-6">
+</div>
+
+<div class="row">  
+  <div class="col-md-12">
   <%= f.input :allergies, label: 'Allergies, if any', hint: 'Optional'  %>
   </div>
 </div>

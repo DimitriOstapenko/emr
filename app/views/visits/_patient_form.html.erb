@@ -43,6 +43,10 @@
   </div>
 </div>
 
+<div class="pt-2 checkbox-list">
+    <%= f.input :meds_renewed, as: :boolean, label:'I would like to renew my medications', checked_value: true, unchecked_value: false, input_html: {style:'width: 40px;'} %>
+</div>
+
 <% if @visit.documents.present? %>
 <b>Attached Documents</b>: |
 <% @visit.documents.each do |d| %>

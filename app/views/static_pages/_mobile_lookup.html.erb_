@@ -1,0 +1,25 @@
+<div class="p-3">
+<%= simple_form_for :patient, url: patients_lookup_path do |f| %>
+  <%= f.error_notification %>
+
+<div class='ml-2'><b>Patient Registration</b></div>
+<div class="panel panel-default ml-2">
+<div class="panel-body">
+<div class="row">
+  <div class="col-md-2 col-md-offset-1 col-xs-6">
+    <%= f.input :dob, as: :date, html5: true, label: 'Date of birth', placeholder: 'dd/mm/yy' %>
+  </div>
+  <div class="col-md-2 col-xs-6">
+     <%= f.input :ohip4, label: 'Health Card#', placeholder: 'last 4 digits' %>
+  </div>
+
+  <div class="col-md-3 col-xs-12 pt-4">
+  <%= f.button :submit, "Look up My Record" , class: "btn-primary btn-lg"  %>
+  </div>
+</div>
+
+</div>
+</div>
+
+<% end %>
+</div>

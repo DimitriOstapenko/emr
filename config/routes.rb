@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
 #   root 'daysheet#index'
   
-  devise_for :users, controllers: { registrations: "my_registrations" }
+  devise_for :users, controllers: { registrations: "my_registrations", sessions: 'users/sessions' }
   get '/users/', to: 'users#index'
   get '/switch_to/:id', to: 'users#switch_to', as: :switch_user
 #  get  '/switch_to/:id', to: 'sessions#switch_to', as: :switch_user
@@ -64,7 +64,8 @@ Rails.application.routes.draw do
   get "/drugs/get", to: "drugs#get" 
 
   get "/patients/get", to: "patients#get"
-  post "/users/lookup", to: "users#lookup"  # lookup by dob and last 4 digits of HC
+  post "/patients/lookup4", to: "patients#lookup4"  # lookup by dob and last 4 digits of HC
+  post "/patients/lookup", to: "patients#lookup"  # lookup by HC#
   
   resources :users
   resources :patients do

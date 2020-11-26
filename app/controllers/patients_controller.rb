@@ -1,7 +1,8 @@
 class PatientsController < ApplicationController
 	include My::Forms
+        include PatientsHelper
 
-	before_action :logged_in_user, except: [:get ]
+	before_action :logged_in_user, except: [:get, :lookup, :lookup4 ]
 	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history, :chart ]
 	before_action :admin_user, only: :destroy
         before_action :verify_patient  # is patient set and is rigtht patient?
@@ -25,17 +26,18 @@ class PatientsController < ApplicationController
 
 # try and get 1 patient by full ohip_num 
   def get 
-    str = params[:findstr].strip.gsub(/\D/,'');
+    fullnum = params[:findstr].strip.upcase
+    str = fullnum.gsub(/\D/,'') if fullnum
     return if str.blank?
-    @patient = Patient.find_by(ohip_num: str).as_json
+    @patient = Patient.find_by(ohip_num: str).as_json || Patient.hcv_lookup(fullnum).as_json
     if @patient.present?
       respond_to do |format|
         format.json { render json: @patient }
         format.html
       end
     else
-      flash.now[:warning] = "Patient not found #{str.inspect} "
-      render  inline: '', layout: true
+        flash.now[:warning] = "Patient not found #{str.inspect} "
+        render  inline: '', layout: true
     end
   end
 
@@ -46,7 +48,7 @@ class PatientsController < ApplicationController
       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
       flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
     else
-      redirect_to edit_patient_path(@patient), warning: "Please provide your name and phone number " 
+      redirect_to edit_patient_path(@patient), warning: "Please provide your phone number " 
     end
   end
 
@@ -197,6 +199,55 @@ class PatientsController < ApplicationController
     end
   end
 
+  # Preliminary lookup by DOB and last 4 digits of HC
+  def lookup4
+    ohip4 = params[:user][:ohip4].strip rescue nil
+    dob = params[:user][:dob].to_date rescue nil
+    if ohip4.present? && dob.present?
+      patients = Patient.search(ohip4)
+      patient = patients.where(dob: dob).first if patients
+      if patient.present? && patient.user.present?
+        flash[:danger] = "Patient with this health card number is already registered. Please try logging in"
+        redirect_to root_path
+      else
+        ohip_num =  patient.ohip_num_full rescue nil
+        @resource = User.new(ohip_num: ohip_num, dob: dob)
+        render "devise/registrations/new"
+      end
+    else
+      redirect_to root_path
+    end
+  end
+
+# Patient lookup by full ohip number  
+  def lookup
+    fullnum = params[:patient][:ohip_num].strip.upcase rescue nil
+    ohip_num,ohip_ver = fullnum.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
+
+    @patient = Patient.find_by(ohip_num: ohip_num) 
+    if @patient.present?
+      set_pat_session(@patient.id)
+      if User.exists?(ohip_num: ohip_num)
+        flash[:info] = "You are already registered - please log in, #{@patient.fname.capitalize}"
+        redirect_to new_user_session_path
+      else
+ #       flash[:info] = "Patient record found, but user is not registered yet"
+        redirect_to new_user_registration_path, format: 'js'
+      end
+    else
+      @patient = Patient.hcv_lookup(fullnum)
+      if @patient.id
+        set_pat_session(@patient.id)
+        flash[:info] = "New Patient with valid card"
+        redirect_to new_user_registration_path, format: 'js'
+      else
+        flash[:warning] = "Bad card number: #{@patient.notes}"
+        redirect_to root_path
+      end
+    end
+    
+  end
+
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 
@@ -204,7 +255,7 @@ private
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :pharm_fax, :notes, :alt_contact_name,
 					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count,
-				    	  :allergies, :meds, :maid_name, :ifh_number, :clinic_pat
+				    	  :allergies, :meds, :maid_name, :ifh_number, :clinic_pat, :validated_at, :latest_medication_renewal
 					 )
   end
  

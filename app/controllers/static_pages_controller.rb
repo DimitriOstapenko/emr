@@ -1,5 +1,9 @@
 class StaticPagesController < ApplicationController
+
+  include PatientsHelper
+
   def home
+    clear_pat_session
   end
 
   def help

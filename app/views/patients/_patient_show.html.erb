@@ -17,6 +17,9 @@
 <% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
 <b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
 <% end %>
+<% if @patient.latest_medication_renewal.present? %>
+<b>Latest medication renewal: </b> <%= @patient.latest_medication_renewal.to_date %> 
+<% end %>
 </pre>
 	 
 &nbsp; <%# render("medications", remote: remote) if @patient.medications.any? %>
@@ -27,8 +30,9 @@
 &nbsp; <%# render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
 <font size=3>
-<% if @patient.visits.count == 0 %>
-  <h4> Welcome to Stoney Creek Walk-In clinic, <%= @patient.fname %>! You are all set for your first virtual appointment with the doctor. </h4>
+<% if @patient.visits.count.zero? %>
+  <h4> Welcome to Stoney Creek Walk-In clinic, <%= @patient.fname.capitalize %>! </h4> 
+You are all set for your first virtual appointment with one of our doctors. 
 <% end %>
 
 <% unless @patient.has_visit_today? %>

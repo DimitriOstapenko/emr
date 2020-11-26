@@ -1,5 +1,7 @@
 class MyRegistrationsController < Devise::RegistrationsController
 
+  respond_to :html, :js
+
 # Log in user after registration
   def after_confirmation_path_for(resource_name, resource)
     sign_in(resource)

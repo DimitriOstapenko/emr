@@ -43,6 +43,7 @@ class VisitsController < ApplicationController
       if @visit.save
         @visit.update_attribute(:entry_by, current_user.name)
         @patient.update_attribute(:last_visit_date, @visit.entry_ts)
+        @patient.update_attribute(:latest_medication_renewal, @visit.entry_ts) if @visit.meds_renewed?
         docs = params[:visit][:document] || []
         docs.each do |d|
           doc = @visit.documents.create(:document => d)
@@ -264,7 +265,7 @@ class VisitsController < ApplicationController
 				    :bil_type, :bil_type2, :bil_type3, :bil_type4, 
 				    :reason, :notes, :entry_ts, :status, :duration, 
 				    :entry_by, :provider_id, :temp, :bp, :pulse, :weight, :export_file, 
-				    :billing_ref, {documents: []}, :room, :pat_type, :hin_num, :consented )
+				    :billing_ref, {documents: []}, :room, :pat_type, :hin_num, :consented, :meds_renewed )
     end      
 
     def set_visit_fees ( visit )

@@ -2,6 +2,7 @@
   <td><%= link_to visit.date, patient_visit_path(@patient,visit) %></td>
   <td><%= visit.doctor.lname %>
   <td><%= visit.diag_descr %></td>
+  <td><%= visit.meds_renewed_str %></td>
   <td class="text-center">
   <% if visit.arrived? %>
     <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_visit_path(@patient,visit), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', onclick: "set_lg_modal()"  %>
