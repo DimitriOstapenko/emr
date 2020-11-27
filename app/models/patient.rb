@@ -181,8 +181,8 @@ class Patient < ApplicationRecord
 # do not validate non-Ontario cards    
     return unless self.ohip_num && self.ohip_num.length == 10
 
-    response = self.get_hcv_response
-    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response.message == 'OK'
+    response = self.get_hcv_response rescue nil
+    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response && response.message == 'OK'
 
     json = JSON.parse(response.body)
     status = json['status']
@@ -304,10 +304,10 @@ class Patient < ApplicationRecord
     request = Net::HTTP::Post.new(url)
     request["Authorization"] = MDMAX_BEARER
 #    request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
-    form_data = [['Provider-number', '015539'],['HCN', self.ohip_num],['VC', self.ohip_ver],['User', 'dimitri']]
+    form_data = [['Provider-number', MDMAX_PROVIDER_NUMBER],['HCN', self.ohip_num],['VC', self.ohip_ver],['User', MDMAX_USER]]
     request.set_form form_data, 'multipart/form-data'
-    response = https.request(request)
-    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response.message == 'OK'
+    response = https.request(request) rescue nil
+    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response && response.message == 'OK'
     return response
   end
 

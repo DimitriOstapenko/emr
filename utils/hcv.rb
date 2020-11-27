@@ -25,7 +25,7 @@ https = Net::HTTP.new(url.host, url.port);
 https.use_ssl = true
 
 request = Net::HTTP::Post.new(url)
-request["Authorization"] = "Bearer 3a213663160927a0335e7f3baf2c8b28"
+request["Authorization"] = "Bearer #{MDMAX_BEARER}"
 #request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
 #form_data = [['Provider-number', '015539'],['HCN', '6728304590'],['VC', 'AG'],['User', 'dimitri']]
 #form_data = [['Provider-number', '015539'],['HCN', '9132049280'],['VC', 'RE'],['User', 'dimitri']]

@@ -52,7 +52,8 @@ function get_patient ( ohip_num ) {
         data: $(this).serialize()
     }).done(function (data) {
       $('#note').hide();
-      if (data.last_visit_date) {
+//      if (data.last_visit_date) {
+      if (data.validated_at) {
         var ok_icon = '<font size=4><i class="glyphicon glyphicon-ok"></i></font> ';
         result = ok_icon + "Patient record found:<br>" + data.lname +', '+ data.fname + ' born ' + data.dob + " <br> Last visit: " + data.last_visit_date;
         $("#results").html(result);
