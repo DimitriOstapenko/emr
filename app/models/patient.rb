@@ -302,7 +302,7 @@ class Patient < ApplicationRecord
     https.use_ssl = true
 
     request = Net::HTTP::Post.new(url)
-    request["Authorization"] = "Bearer 3a213663160927a0335e7f3baf2c8b28"
+    request["Authorization"] = MDMAX_BEARER
 #    request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
     form_data = [['Provider-number', '015539'],['HCN', self.ohip_num],['VC', self.ohip_ver],['User', 'dimitri']]
     request.set_form form_data, 'multipart/form-data'

@@ -53,14 +53,12 @@ function get_patient ( ohip_num ) {
     }).done(function (data) {
       $('#note').hide();
       if (data.last_visit_date) {
-        var ok_icon = '<span class="glyphicon glyphicon-ok"></span>';
-//        result = `${ok_icon} Patient record found:<br> ${data.lname}, ${data.fname} born ${data.dob}<br> Last visit: ${data.last_visit_date}`;
+        var ok_icon = '<font size=4><i class="glyphicon glyphicon-ok"></i></font> ';
         result = ok_icon + "Patient record found:<br>" + data.lname +', '+ data.fname + ' born ' + data.dob + " <br> Last visit: " + data.last_visit_date;
         $("#results").html(result);
         $("#register_button").show();
       } else if (data.lname) {
-//        result = `New patient: ${data.lname}, ${data.fname} born ${data.dob}`;
-        result = "New patient:" + data.lname +', ' + data.fname + ' born '  + data.dob;
+        result = "New patient: " + data.lname +', ' + data.fname + ' born '  + data.dob;
         $("#register_button").show();
         $("#results").html(result);
       } else
