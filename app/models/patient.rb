@@ -137,8 +137,6 @@ class Patient < ApplicationRecord
   # Look up patient in MOH database and create patient if valid. Otherwise, return error in patient.notes  
   def self.hcv_lookup(full_ohip_num = nil)
     return unless full_ohip_num 
-    require "uri"
-    require "net/http"
     require "json"
 
     ohip_num,ohip_ver = full_ohip_num.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
@@ -147,8 +145,8 @@ class Patient < ApplicationRecord
     (patient.notes = 'Ontario health card number must be 10 digit long'; return patient) unless ohip_num
     (patient.notes = 'error: Version Code is missing/wrong size'; return patient) unless ohip_ver
 
-    response = patient.get_hcv_response
-    (patient.notes = response.message; return patient) unless response.message == 'OK'
+    response = patient.get_hcv_response 
+    (patient.notes = 'HCV service error'; return patient) unless response && response.message == 'OK'
 
     json = JSON.parse(response.body)
     status = json['status']
@@ -196,6 +194,10 @@ class Patient < ApplicationRecord
     (errors.add(:ohip_num, ": is ineligible"); return;) unless eligible
 
     self.update_attribute(:validated_at, Time.now)
+  end
+
+  def user_id
+    self.user.id rescue nil
   end
 
 # Card checksum is invalid  
@@ -307,7 +309,7 @@ class Patient < ApplicationRecord
     form_data = [['Provider-number', MDMAX_PROVIDER_NUMBER],['HCN', self.ohip_num],['VC', self.ohip_ver],['User', MDMAX_USER]]
     request.set_form form_data, 'multipart/form-data'
     response = https.request(request) rescue nil
-    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response && response.message == 'OK'
+    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message rescue ''}"); return;) unless response && response.message == 'OK'
     return response
   end
 

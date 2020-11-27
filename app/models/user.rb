@@ -22,7 +22,6 @@ class User < ApplicationRecord
   def set_patient
     self.role ||= :patient
     if self.patient?
-      logger.debug("**************** ohip_num: #{self.ohip_num}")
       self.ohip_num.upcase!;  self.ohip_num.gsub!(/\W/,''); 
       self.ohip_num, self.ohip_ver = self.ohip_num.match(/(\d+)(\S*)/).captures rescue nil
       patient = Patient.find_by(ohip_num: self.ohip_num)

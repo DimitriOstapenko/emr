@@ -29,10 +29,12 @@ class PatientsController < ApplicationController
     fullnum = params[:findstr].strip.upcase
     str = fullnum.gsub(/\D/,'') if fullnum
     return if str.blank?
-    @patient = Patient.find_by(ohip_num: str).as_json || Patient.hcv_lookup(fullnum).as_json
+    @patient = Patient.find_by(ohip_num: str) || Patient.hcv_lookup(fullnum)
     if @patient.present?
+      set_pat_session(@patient.id)
+      response = { patient: @patient, user: @patient.user }
       respond_to do |format|
-        format.json { render json: @patient }
+        format.json { render json: response.to_json }
         format.html
       end
     else
@@ -232,14 +234,14 @@ class PatientsController < ApplicationController
         redirect_to new_user_session_path
       else
  #       flash[:info] = "Patient record found, but user is not registered yet"
-        redirect_to new_user_registration_path, format: 'js'
+        redirect_to new_user_registration_path
       end
     else
       @patient = Patient.hcv_lookup(fullnum)
       if @patient.id
         set_pat_session(@patient.id)
         flash[:info] = "New Patient with valid card"
-        redirect_to new_user_registration_path, format: 'js'
+        redirect_to new_user_registration_path
       else
         flash[:warning] = "Bad card number: #{@patient.notes}"
         redirect_to root_path

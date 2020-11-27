@@ -51,22 +51,29 @@ function get_patient ( ohip_num ) {
         type: 'get',
         data: $(this).serialize()
     }).done(function (data) {
+      var patient = data.patient;
+      var user = data.user;
       $('#note').hide();
-//      if (data.last_visit_date) {
-      if (data.validated_at) {
+      if (patient && patient.last_visit_date) { // Patient in DB and has record
         var ok_icon = '<font size=4><i class="glyphicon glyphicon-ok"></i></font> ';
-        result = ok_icon + "Patient record found:<br>" + data.lname +', '+ data.fname + ' born ' + data.dob + " <br> Last visit: " + data.last_visit_date;
+	if (user) {
+          result = ok_icon + "Registered patient found:<br>" + patient.lname +', '+ patient.fname + ' login email ' + user.email + " <br> Last login: " + user.last_sign_in_at;
+          $("#login_button").show();
+	} else {	
+          result = ok_icon + "Unregistered clinic patient:<br>" + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
+          $("#register_button").show();
+	}
         $("#results").html(result);
-        $("#register_button").show();
-      } else if (data.lname) {
-        result = "New patient: " + data.lname +', ' + data.fname + ' born '  + data.dob;
-        $("#register_button").show();
-        $("#results").html(result);
+      } else if (patient.lname) { // successful HCV lookup
+          result = "New patient: " + patient.lname +', ' + patient.fname + ' born '  + patient.dob;
+          $("#register_button").show();
+          $("#results").html(result);
       } else
-        result = 'Invalid card number: ' +  data.notes;
+        result = 'Invalid card number: ' +  patient.notes;
         $("#results").html(result);
     }).fail(function (data) {
         console.log('AJAX request has FAILED');
+        $("#register_button").show();
     });
 }
 
