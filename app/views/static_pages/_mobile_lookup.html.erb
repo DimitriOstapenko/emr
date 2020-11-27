@@ -5,9 +5,14 @@
 <div class="panel panel-default ml-2">
 <div class="panel-body">
   <%= f.input :ohip_num, label: 'Your Ontario Health Card#', placeholder: 'XXXXXXXXXXX AA', input_html: {style: "height: 45px !important; font-size: 1.3em; font-weight:bold; "} %>
-  <div id="register_button" style="display:none">
-    <%= f.button :submit, 'Register', class: "btn btn-primary" %>
   </div>
+  <div style="display:none" id="register_button">
+  <%= button_to 'Register', patients_lookup_path, class:"btn btn-primary", method: 'get' %>
+  </div>
+  <div style="display:none" id="login_button">
+  <%= button_to 'Log In', new_user_session_path, class:"btn btn-primary", method: 'get' %>
+  </div>
+
   <div class="text-success pt-3" id="results"></div>
 </div>
 </div>
