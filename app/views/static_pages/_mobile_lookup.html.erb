@@ -4,8 +4,9 @@
 
 <div class="panel panel-default ml-2">
 <div class="panel-body">
-  <%= f.input :ohip_num, label: 'Your Ontario Health Card#', placeholder: 'XXXXXXXXXXX AA', input_html: {style: "height: 45px !important; font-size: 1.3em; font-weight:bold; "} %>
-  </div>
+  <img src="/images/on_32.png"> <b>Your Ontario Health Card#</b>
+  <%= f.input :ohip_num, label: false, placeholder: 'XXXXXXXXXXX AA', input_html: {style: "height: 45px !important; font-size: 1.3em; font-weight:bold; "} %>
+
   <div style="display:none" id="register_button">
   <%= button_to 'Register', patients_lookup_path, class:"btn btn-primary", method: 'get' %>
   </div>

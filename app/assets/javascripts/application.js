@@ -57,7 +57,8 @@ function get_patient ( ohip_num ) {
       if (patient && patient.last_visit_date) { // Patient in DB and has record
         var ok_icon = '<font size=4><i class="glyphicon glyphicon-ok"></i></font> ';
 	if (user) {
-          result = ok_icon + "Registered patient found:<br>" + patient.lname +', '+ patient.fname + ' login email ' + user.email + " <br> Last login: " + user.last_sign_in_at;
+	  var last_login = (typeof user.last_sign_in_at === 'undefined') ? '' : " <br> Last login: " + user.last_sign_in_at;
+          result = ok_icon + "Registered patient found:<br>" + patient.lname +', '+ patient.fname + '; login email: ' + user.email + last_login
           $("#login_button").show();
 	} else {	
           result = ok_icon + "Unregistered clinic patient:<br>" + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
