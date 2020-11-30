@@ -139,6 +139,13 @@
   </div>
 </div>
 
+
+<div class="row">
+  <div class="col-sm-12"> 
+    <%= f.input :meds_renewed, as: :boolean, label:'Medications renewed',  input_html: {style:'width: 40px;'} %>
+  </div>
+</div>
+
 <% if @visit.documents.present? %>
 <b>Attached Documents</b>:
 <% @visit.documents.each do |d| %>
