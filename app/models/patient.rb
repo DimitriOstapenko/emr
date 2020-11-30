@@ -40,7 +40,7 @@ class Patient < ApplicationRecord
         validates :mobile, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
         validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
-        validate :hcv_validate, on: [:create, :update]
+        validate :hcv_validate, on: [:create, :update], if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O')}
 #	validate :validate_card  # basic checksum validation
 	validate :validate_age
 

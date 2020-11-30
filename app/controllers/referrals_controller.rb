@@ -32,7 +32,7 @@ class ReferralsController < ApplicationController
        pdf = build_referral( @referral )
        pdf.render_file @referral.filespec
        flash[:success] =  "Referral ##{@referral.id} created"
-       redirect_to referrals_path
+       redirect_to @patient
     else
        flash[:danger] =  "Error creating referral"
        render 'new'
@@ -72,7 +72,6 @@ class ReferralsController < ApplicationController
   end
   
   def edit
-    @patient = Patient.find( @referral.patient_id )
   end
 
    def update
@@ -81,7 +80,7 @@ class ReferralsController < ApplicationController
       pdf.render_file @referral.filespec
 
       flash[:success] = "Referral updated"
-      redirect_to referrals_path
+      redirect_to @patient
     else
       render 'edit'
     end
@@ -116,6 +115,7 @@ class ReferralsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_referral
       @referral = Referral.find(params[:id])
+      @patient = @referral.patient
     end
 
     def referral_params

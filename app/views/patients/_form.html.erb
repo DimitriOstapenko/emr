@@ -1,5 +1,7 @@
 <%= simple_form_for (@patient) do |f| %>
   <%= f.error_notification %>
+  <%= render 'shared/error_messages', object: f.object %>
+
 <!-- Row 1 -->
 <div class="row">
   <div class="col-sm-3">

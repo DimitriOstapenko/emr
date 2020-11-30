@@ -32,7 +32,7 @@ class LettersController < ApplicationController
        @letter.update_attribute(:filename, "letter_#{@letter.id}.pdf")
        pdf = build_letter( @letter )
        pdf.render_file @letter.filespec
-       redirect_to @letter, notice: 'Letter was successfully created.'
+       redirect_to @patient, notice: 'Letter was successfully created.'
     else
        flash[:danger] =  "Error creating letter"
        render :new
@@ -80,12 +80,13 @@ class LettersController < ApplicationController
   end
 
   def update
+    @patient = Patient.find( @letter.patient_id )
     if @letter.update(letter_params)
       pdf = build_letter( @letter)
       pdf.render_file @letter.filespec	    
 	    
       flash[:success] = "Letter updated"
-      redirect_to letters_path
+      redirect_to @patient
     else
       render 'edit'
     end

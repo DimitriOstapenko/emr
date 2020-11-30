@@ -10,7 +10,11 @@
           <td> <%= ref.doctor.lname %> </td>
           <td> <%= ref.to_doctor.lname %> </td>
           <td> <%= ref.address_to %> </td>
-          <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_referral_path(ref), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td>
+          <% if current_user.patient? || current_user.doctor? %>
+            <td></td>
+          <% else %>
+            <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_referral_path(ref), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td>
+          <% end %>
         </tr>
         <% end %>
      </table>

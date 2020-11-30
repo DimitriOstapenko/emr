@@ -1,6 +1,7 @@
 class InvoicesController < ApplicationController
   include My::Forms
 
+  before_action :set_invoice, only: [:show, :edit, :update, :download, :export, :destroy]
   helper_method :sort_column, :sort_direction
   before_action :logged_in_user, :non_patient_user
 # before_action :admin_user, only: :destroy
@@ -32,7 +33,7 @@ class InvoicesController < ApplicationController
        pdf = build_invoice( @invoice )
        pdf.render_file @invoice.filespec
        flash[:success] =  "Invoice ##{@invoice.id} created"
-       redirect_to invoices_path
+       redirect_to @patient
     else
        flash[:danger] =  "Error creating invoice"
        render 'new'
@@ -40,9 +41,6 @@ class InvoicesController < ApplicationController
   end
 
   def show
-   @invoice = Invoice.find( params[:id] )
-   redirect_to invoices_path unless @invoice
-
    respond_to do |format|
       format.html {
         send_file(@invoice.filespec,
@@ -54,8 +52,6 @@ class InvoicesController < ApplicationController
   end
 
   def download
-    @invoice = Invoice.find( params[:id] )
-
     if @invoice.present? && File.exists?(@invoice.filespec)
       send_file @invoice.filespec,
              filename: @invoice.filename,
@@ -72,36 +68,31 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
     @pdf = build_invoice( @invoice )
     @pdf.render_file @invoice.filespec
-    redirect_to invoices_path, alert: "PDF invoice generated for patient #{@invoice.patient.full_name}"
+    redirect_to @patient, alert: "PDF invoice generated for patient #{@patient.full_name}"
   end
 
   def edit
-    @invoice = Invoice.find( params[:id] )
-    @patient = Patient.find( @invoice.patient_id )
   end
 
   def update
-    @invoice = Invoice.find( params[:id] )
-
     if @invoice.update_attributes(invoice_params)
       pdf = build_invoice( @invoice )
       pdf.render_file @invoice.filespec	    
 	    
       flash[:success] = "Invoice updated"
-      redirect_to invoices_path
+      redirect_to @patient
     else
       render 'edit'
     end
   end
 
   def destroy
-    @invoice = Invoice.find( params[:id] )
     if @invoice.present?
       File.delete( @invoice.filespec ) rescue nil
       @invoice.destroy
       flash[:success] = "Invoice deleted"
     end
-    redirect_to invoices_url
+    redirect_to @patient
   end
 
 
@@ -116,6 +107,12 @@ private
 
   def sort_direction
           %w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
+  end
+
+  def set_invoice
+      @invoice = Invoice.find(params[:id])
+      @patient = @invoice.patient
+
   end
 
 end

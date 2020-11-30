@@ -10,7 +10,11 @@
           <td> <%= letter.to %> </td> 
           <td> <%= letter.date %> </td> 
           <td> <%= letter.title %> </td> 
-          <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
+          <% if current_user.patient? || current_user.doctor? %>
+            <td></td>
+          <% else %>
+            <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
+          <% end %>
         </tr>
         <% end %>
      </table>
