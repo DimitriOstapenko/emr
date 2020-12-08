@@ -10,8 +10,7 @@
 <b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <% else %>
 <b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
-<%= hcnum if hcnum.present? %>
-<%= ifhnum if ifhnum.present? %>
+<%= hcnum if hcnum.present? %> <%= ifhnum if ifhnum.present? %>
 <% end %>
 <b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
 Phone: <%= num_to_phone(@patient.phone) %> <%= "Mobile: #{num_to_phone(@patient.mobile)}" if @patient.mobile.present? %> <%= "Email: #{@patient.email}" if @patient.email.present? %> 
@@ -19,19 +18,21 @@ Address: <%= @patient.addr %> <%= @patient.city %> <%= @patient.prov %> <%= @pat
 <% if @patient.allergies.present? %>
 Allergies: <%= @patient.allergies %>
 <% end %>
-<!-- active meds for this pat -->
 <% if @patient.med_list %>
 Medications:
      <%= @patient.med_list.join("\n     ") %>
-<% end %> </b>
+<% end %>
 <% if @patient.meds.present? %>
-<font color='red'><i> Old Medications to be deleted after conversion: <%= @patient.meds %> </i></font>
+<font color='red'><i>Old Medications to be deleted after conversion: <%= @patient.meds %> </i></font>
 <% end %>
 <% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
 <b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
 <% end %>
 <% if @patient.latest_medication_renewal.present? %>
 <b>Latest medication renewal: </b> <%= @patient.latest_medication_renewal.to_date %> 
+<% if @patient.latest_medication_renewal > 20.days.ago %>
+<b><font color='red'>Attention! medications renewed less than 20 days ago</font></b>
+<% end %>
 <% end %>
 </pre>
 	 
