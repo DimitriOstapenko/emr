@@ -26,6 +26,9 @@
 <b>Service types </b>: <%= [@visit.all_btypes_str, @visit.all_units].transpose.map{ |el| "#{el[0]}:#{el[1]}"}.join', ' %>
 <b>Billed total: <%= sprintf '$%.2f',@visit.total_fee %> Insured: </b><%= sprintf '$%.2f',@visit.total_insured_fees %> <b>Other services:</b> <%= sprintf '$%.2f',@visit.total_non_insured_fees %>
 <% end %>
+<% if @visit.meds_renewed? %>
+<b>Medications renewed </b>
+<% end %>
 <b>Entry by </b>: <%= @visit.entry_by %>
 <b>Entry timestamp </b>: <%= @visit.entry_ts %>
 <% if @visit.status.between?(READY,PAID) %>

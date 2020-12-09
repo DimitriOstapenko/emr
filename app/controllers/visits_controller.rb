@@ -42,8 +42,8 @@ class VisitsController < ApplicationController
       set_visit_fees ( @visit )
       if @visit.save
         @visit.update_attribute(:entry_by, current_user.name)
+        @patient.update_attribute(:latest_medication_renewal, @visit.entry_ts) if @visit.meds_renewed? && @visit.diag_code.present?
         @patient.update_attribute(:last_visit_date, @visit.entry_ts)
-        @patient.update_attribute(:latest_medication_renewal, @visit.entry_ts) if @visit.meds_renewed?
         docs = params[:visit][:document] || []
         docs.each do |d|
           doc = @visit.documents.create(:document => d)
@@ -87,6 +87,7 @@ class VisitsController < ApplicationController
 
     if @visit.update_attributes(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
+      @patient.update_attribute(:latest_medication_renewal, @visit.entry_ts) if @visit.meds_renewed? && @visit.diag_code.present?
       if @visit.status == ARRIVED
         room = params[:visit][:room].to_i
         if room > 0 
