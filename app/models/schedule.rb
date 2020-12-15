@@ -16,19 +16,13 @@ def self.closing_time
 end
 
 def self.doc_on_duty
-    now = Time.now.to_i
-    opening = '9:00AM'.to_time.to_i
-    closing = self.closing_time.to_time.to_i	
-    midnight = ('0:01AM'.to_time + 1.day).to_i
-    schedule_today = Schedule.where(dow: Date.today.wday).order(:start_time)
-    docs = schedule_today.map{|s| "#{s.doctor.lname} : #{s.start_time.strftime('%l:%M%p')} - #{s.end_time.strftime('%l:%M%p')}"}.join', Dr. ' if schedule_today.any?
-    
-    if now > midnight || now < opening
-      return "Clinic is now closed. Doctors working later today: Dr. #{docs}"
-    elsif now < closing && now > opening
-      return "Doctor on duty: Dr. #{Visit.first.doctor.lname} ... Last patient sign in at: #{self.closing_time} "
+    sched = self.where('end_time > ?', Time.now).where('start_time < ?', Time.now).where(dow: Time.now.wday).first rescue nil
+    doc = Doctor.find(sched.doctor_id) if sched
+    if doc.present?
+      last_signin_time = (sched.end.time - 30.minutes).strftime("%I:%M %p") rescue '7:30 Pm'
+      return "Doctor on duty: Dr. #{doc.lname} ... Last patient sign in at: #{last_signin_time} "
     else 
-      return 'Clinic is now closed. Will open again tomorrow at 9:00am'
+      return "Clinic is now closed. Please check the schedule below"
     end
 end
 
