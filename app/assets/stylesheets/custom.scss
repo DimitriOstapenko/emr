@@ -259,8 +259,9 @@ td.hlight {
 //  float: left;
   margin-right: 10px;
   margin-left: 10px;
-  font-size: 20px;
-  color: #34d5eb;
+  font-size: 19px;
+//  color: #34d5eb;
+  color: $gray;
   text-transform: uppercase;
   letter-spacing: -2px;
   font-weight: bold;

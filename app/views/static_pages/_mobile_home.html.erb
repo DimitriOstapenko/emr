@@ -1,12 +1,12 @@
 <% provide(:title, 'Welcome') %>
 
-  <div class="hdr-text">We are now open every Day!  <img src="/images/leaf.png" width=45 valign=top> </div>
+  <div class="hdr-text"> <i class='glyphicon glyphicon-time'></i> 24/7 Virtual Visits!</div>
   <div class='pt-4'></div>
 <font size=3>
   <p><font size=6>C</font>linic is now open 7 days a week. Schedule is shown below.  Please register for callback to save time. During callback, doctor will decide if you need to come to the clinic. Registered patients are given priority.</p>
 
   <div class="pt-3"></div>
-  <p> <font size=6>P</font>rescriptions can be renewed over the phone. You can pick them up at the pharmacy of your choice. Just register below and request callback from doctor.</p>
+  <p> <font size=6>P</font>rescriptions can be renewed over the phone. You can pick them up at the pharmacy of your choice. </p>
 
   <%= render "#{device_type}_lookup" %>
 
@@ -17,17 +17,18 @@
 
 <div class="pt-4">
   <i>
-    Patients with online appointments for visits at the clinic  <u>will be given priority</u>. Please, no registrations from our parking lot or waiting room. We will be checking timestamps of all online bookings before letting you jump the line. Thank you for understanding.
+    Patients with online appointments for visits at the clinic  <u>will be given priority</u>
   </i>
 </div>
 
-<div class="pt-5"><i class="glyphicon glyphicon-exclamation-sign mr-2"></i><b>If you have COVID-19 symptoms, please do not come to the clinic. Register online or call the numbers provided. </b></div> 
+<h2> (905) 561-9255 </h2>
+
+<div class="pt-1"><i class="glyphicon glyphicon-exclamation-sign mr-2"></i><b>If you have COVID-19 symptoms, please do not come to the clinic. Register online or call the numbers provided. </b></div> 
 <p class="pt-3">Don’t have a health card? We still can help. Please call the clinic directly during business hours. </p>
 
-<h1> (905) 561-9255 </h1>
-<h1>Off hours: 
-<%= link_to 'Request Callback', new_user_session_path %></div>
-</h1>
+    <div class="ml-3 pt-3">
+  <%= Schedule.doc_on_duty %>
+    </div>
 
   <p>
     <div class="panel panel-info pt-3 news-panel-body">
@@ -39,6 +40,8 @@
     </div>
   </div>
 </font>
+
+<h2>Off hours: <%= link_to 'Request Callback', new_user_session_path %> </h2>
 
 <div class='pt-3'>
 <%= render "footer_icons" %>

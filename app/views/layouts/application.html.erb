@@ -18,7 +18,7 @@
    </div>
   </div>
 
-  <%= render "layouts/#{device_type}_footer"  %>
+  <%= render "layouts/desktop_footer" if device_is_desktop?  %>
   <%# debug(params) if DEBUG_FLAG >0  %>
   </body>
 </html>

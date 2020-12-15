@@ -20,7 +20,7 @@ def self.doc_on_duty
     doc = Doctor.find(sched.doctor_id) if sched
     if doc.present?
       last_signin_time = (sched.end.time - 30.minutes).strftime("%I:%M %p") rescue '7:30 Pm'
-      return "Doctor on duty: Dr. #{doc.lname} ... Last patient sign in at: #{last_signin_time} "
+      return "Working at the clinic right now: <b>Dr. #{doc.lname}</b>. We accept patients until <b>#{last_signin_time}</b>".html_safe
     else 
       return "Clinic is now closed. Please check the schedule below"
     end
