@@ -176,11 +176,18 @@ class Patient < ApplicationRecord
 
 # Validate only not recently validated cards or cards with errors    
     return if self.validated_at && self.validated_at > 5.days.ago
-# do not validate non-Ontario cards    
+
+# Do not validate non-Ontario cards    
     return unless self.ohip_num && self.ohip_num.length == 10
 
+# DO not validate patients under 2 years old  - they are likely not to have version code
+    return unless self.age[0] > 2    
+
+# For the rest, version code is required    
+    (errors.add(:ohip_ver, ": Version Code is missing"); return;) unless self.ohip_ver.present?
+    
     response = self.get_hcv_response rescue nil
-    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message}"); return;) unless response && response.message == 'OK'
+    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.inspect}"); return;) unless response && response.message && response.message == 'OK'
 
     json = JSON.parse(response.body)
     status = json['status']
