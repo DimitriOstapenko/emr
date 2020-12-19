@@ -19,8 +19,8 @@ def self.doc_on_duty
     sched = self.where('end_time > ?', Time.now).where('start_time < ?', Time.now).where(dow: Time.now.wday).first rescue nil
     doc = Doctor.find(sched.doctor_id) if sched
     if doc.present?
-      last_signin_time = (sched.end.time - 30.minutes).strftime("%I:%M %p") rescue '7:30 Pm'
-      return "Working at the clinic right now: <b>Dr. #{doc.lname}</b>. We accept patients until <b>#{last_signin_time}</b>".html_safe
+      last_signin_time = (sched.end.time - 30.minutes).strftime("%I:%M %p") rescue '7:30pm'
+      return "On duty at the clinic: <b>Dr. #{doc.lname}</b>.<br> We accept patients until <b>#{last_signin_time}</b>".html_safe
     else 
       return "Clinic is now closed. Please check the schedule below"
     end

@@ -1,11 +1,13 @@
-<div class="p-3">
   <%= simple_form_for :patient, url: patients_lookup_path do |f| %>
   <%= f.error_notification %>
 
-<div class="panel panel-default ml-2">
-<div class="panel-body">
-  <img src="/images/on_32.png"> <b>Your Ontario Health Card#</b>
-  <%= f.input :ohip_num, label: false, placeholder: 'XXXXXXXXXXX AA', input_html: {style: "height: 45px !important; font-size: 1.3em; font-weight:bold; "} %>
+<div class="pt-3"></div>
+<div class="row">
+<div class="card card-info col-md-5 col-md-offset-4 bg-success" >
+  <img class="card-img-top" src="/images/card.jpg">
+<div class="card-body">
+
+  <%= f.input :ohip_num, label: false, placeholder: 'XXXXXXXXXXX AA', input_html: {style: "height: 45px !important; font-size: 1.4em; font-weight:bold; "} %>
 
   <div style="display:none" id="register_button">
   <%= button_to 'Register', patients_lookup_path, class:"btn btn-primary", method: 'get' %>
@@ -17,9 +19,9 @@
   <div class="text-success pt-3" id="results"></div>
 </div>
 </div>
-
-<% end %>
 </div>
+<% end %>
+<div class="pt-3"></div>
 
 <script>
 $(document).ready(function() {

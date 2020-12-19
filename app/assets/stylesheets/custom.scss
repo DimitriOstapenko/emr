@@ -271,6 +271,20 @@ td.hlight {
   }
 }
 
+#mobile_logo {
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 1.5em;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: -2px;
+  font-weight: bold;
+  &:hover {
+    color: red;
+    text-decoration: none;
+  }
+}
+
 #homepic  {
   float: left;
   margin-right: 10px;
@@ -288,16 +302,22 @@ td.hlight {
   font-family: system-ui;
   margin-left: 10px;
   line-height: 1;
-  font-size: 2.5em;
-  color: grey;
+  font-size: 1.4em;
+//  color: grey;
   text-transform: uppercase;
-  letter-spacing: -2px;
+//  letter-spacing: -2px;
 //  padding-top: 9px;
   font-weight: bold;
   &:hover {
     color: red;
     text-decoration: none;
   }
+}
+
+.subhdr {
+  font-family: system-ui;
+  line-height: 1.2;
+  font-size: 1.5em;
 }
 
 .caption-text {
