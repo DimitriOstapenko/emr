@@ -1,9 +1,9 @@
 <% show_search_controllers = %w(users patients) %>
 <nav class="navbar navbar-mobile navbar-expand-lg bg-info">
-    <ul class="nav ml-2">
+    <ul class="nav">
 <div class="row">
   <div class="col-xs-3">
-     <div class="nav-item <%= 'active' if controller_name == 'patients' %>"><%= link_to " Patients", patients_path %></div>
+     <div class="nav-item ml-3 <%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path %></div>
   </div>
   <div class="col-xs-3">
   <div class="nav-item <%= 'active' if controller_name == 'daysheet' %>"><%= link_to "DaySheet", daysheet_path %></div>
@@ -20,7 +20,7 @@
 
 <% if controller_name == 'daysheet' %>
     <%= render 'layouts/mobile_date_select' %>
-<% elsif show_search_controllers.include?(controller_name) %>
+<% elsif show_search_controllers.include?(controller_name) && action_name == 'index' %>
     <%= render 'layouts/mobile_find' %>
 <% end %>
     </ul>

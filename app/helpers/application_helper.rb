@@ -4,7 +4,7 @@ module ApplicationHelper
 # /mobile|android|iphone|blackberry|iemobile|kindle/
     def device_type
       ua  = request.user_agent.downcase rescue 'unknown'
-      if ua.match(/macintosh|windows/)
+      if ua.match(/macintosh|windows|ipad|tablet/)
 	 'desktop'
       else 
 	 'mobile'

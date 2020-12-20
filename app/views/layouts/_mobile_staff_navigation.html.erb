@@ -20,7 +20,7 @@
 
 <% if controller_name == 'daysheet' %>
     <%= render 'layouts/mobile_date_select' %>
-<% elsif show_search_controllers.include?(controller_name) %>
+<% elsif show_search_controllers.include?(controller_name) && action_name == 'index' %>
     <%= render 'layouts/mobile_find' %>
 <% end %>
     </ul>

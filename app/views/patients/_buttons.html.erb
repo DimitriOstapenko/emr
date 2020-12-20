@@ -1,13 +1,17 @@
 <div class="row m-1">
 <% unless @patient.pat_type == DECEASED_PATIENT %>
-<div class="col-md-3 col-xs-4">
+<div class="col-md-3 col-xs-12 pt-3">
 <%= button_to 'New Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary", method: 'get'  %> 
 </div> 
 <% end %>
 
-<div class="col-md-3 col-xs-4">
-  <div class="btn-group dropup">
-  <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New <span class="caret"></span>
+<div class="col-md-4 col-xs-12 pt-3">
+<%= button_to "Upload Document", new_patient_patient_doc_path(@patient),  class: "btn btn-success btn-sm", method: 'get' %>
+</div>
+
+<div class="col-md-3 col-xs-12 pt-3">
+  <div class="btn-group dropup col-xs-12">
+  <button class="btn btn-danger dropdown-toggle btn-block" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add New <span class="caret"></span>
   </button>
 
   <ul class="dropdown-menu">
@@ -22,8 +26,5 @@
   </div>
 </div>
 
-<div class="col-md-5 col-xs-4">
-<%= button_to "Upload Document", new_patient_patient_doc_path(@patient),  class: "btn btn-success btn-sm", method: 'get' %>
-</div>
 </div>
 <div class='p-3'></div>

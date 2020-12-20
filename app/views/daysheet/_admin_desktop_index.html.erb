@@ -8,20 +8,19 @@
 <%
     ts  = (@sort == 'entry_ts' && @direction == 'asc')?"Time &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-attributes-alt'></i>":"Time &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-attributes'></i>" 
 %>
-
 <div id='page'>
-<table class="tbl2 table-hover table-bordered" >
+<table class="table table-hover table-striped table-bordered table-wrapper-scroll-x">
   <thead>
       <tr>
-          <th class="tbl_xs"></th>
-          <th class="tbl_sm text-center">Visit</th>
-          <th class="tbl_lsm text-center"><%= sortable 'entry_ts', ts.html_safe %></th>
+          <th></th>
+          <th class="text-center">Visit</th>
+          <th class="text-center"><%= sortable 'entry_ts', ts.html_safe %></th>
 
           <% if @date.today? %>
-          <th class="tbl_lsm text-center">Room </th>
+          <th class="text-center">Room </th>
           <% end %>
 
-          <th class="tbl_lsm">
+          <th>
           <% if @docs.present? && @docs.size > 1 %>
           <span class="dropdown" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><font color="white"> Doctor <b class="caret"></b></font> </a>
@@ -37,25 +36,16 @@
            Doctor
          <% end %>
 
-	  <th class="tbl_lmd">Patient</th>
-          <th class="tbl_sm text-center">Type</th>
-          <th class="tbl_md text-center">HC/IFH #</th>
-          <th class="tbl_md text-center">Phone</th>
-          <th class="tbl_lsm text-center">email</th>
-          <th class="tbl_lsm text-center">Diag.</th>
-          <th class="tbl_md">Services</th>
-	  <% if device_is_desktop? %>
-          <th class="tbl_sm">Status</th>
-	  <% end %>
-	  <th class="tbl_sm"></th> 
-	  <th class="tbl_sm"></th> 
-	  <th class="tbl_sm"></th> 
-	  <% if !device_is_desktop? %>
-            <th class="tbl_sm"></th>
-          <% end %>
-	  <% unless current_user.patient? %>
-	    <th class="tbl_sm"></th>  <!-- Delete/cancel -->
-  	  <% end %>
+          <th>Patient</th>
+          <th class="text-center">Type</th>
+          <th class="text-center">HC/IFH #</th>
+          <th class="text-center">Phone</th>
+          <th class="text-center">email</th>
+          <th class="text-center">Diag.</th>
+          <th>Services</th>
+          <th>Status</th>
+	  <th colspan=3></th> 
+	  <th></th>  <!-- Delete/cancel -->
 
       </tr>
   </thead>

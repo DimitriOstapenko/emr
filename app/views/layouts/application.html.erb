@@ -9,17 +9,19 @@
   </head>
 
   <body>
-  <%# render 'layouts/facebook_messenger' if Rails.env.production? %>
-  <div class="container">
-    <%= render 'layouts/navigation' %>
+  <div class="container-fluid">
+   <%= render 'layouts/navigation' %>
+  
    <div id="body">
       <%= render 'layouts/messages' %>
       <%= yield %>
    </div>
   </div>
 
-  <%= render "layouts/desktop_footer" if device_is_desktop?  %>
+  <div class="footer navbar-fixed-bottom">
+    <%= render "layouts/#{device_type}_footer"  %>
   <%# debug(params) if DEBUG_FLAG >0  %>
+  </div>
   </body>
 </html>
 

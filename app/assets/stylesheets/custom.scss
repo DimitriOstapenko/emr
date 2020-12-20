@@ -20,8 +20,9 @@ html,body {
   padding-top: 0; 
   overflow-y: scroll;
   font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  padding-bottom: 40px;
 
-  font-size: 0.94em;
+  font-size: 0.96em;
 //  font-size: 0.9em;
 }
 
@@ -47,13 +48,17 @@ p {
 
 .container, .help-container {
    width:100%;
-   min-height: 99%; //92%;
+   min-height: 100%; //92%;
    height: auto !important; /* Stick footer to bottom in IE6 */
    height: 100%;
-   margin: 0 auto -30px;  /* footer height */
+   margin: 0 auto -35px;  /* footer height */
    padding-left: 0px;
    padding-right: 0px;
-   overflow-x: hidden;
+//   overflow-x: hidden;
+}
+
+.container-fluid {
+//   overflow-x: auto;
 }
 
 .help-container {
@@ -77,13 +82,8 @@ table {
 }
 
 #body {
-   padding-left:5px;
-   padding-right:5px;
-//   min-height: 92%; //92%;
-   padding-bottom:30px;  
-//   height: 100%;
-//  margin: 0 auto -30px;  /* footer height */
-//   height: auto !important; /* Stick footer to bottom in IE6 */
+   padding-top: 3em;
+   clear: both;
 }
 
 #footer, #pushup {
@@ -103,18 +103,23 @@ table {
 }
 
 .navbar-mobile {
+  position: fixed;
+  width: 100%;
   font-size: 16px;
-  padding-top: 5px;
-  padding-bottom: 0;
   height: 40px;
   font-weight: 500;
-  line-height: 40px;
+  line-height: 35px;
+  z-index: 1000;
+  margin-top: 0;
+//  float:none;
+//  margin: 0 auto;
+//  display: table;
+//  table-layout: fixed;
 }
 
 .navbar-nav > li > a {
     padding-top: 22px;
     padding-bottom: 10px;
-//    line-height: 20px;
 }
 
 .spacer-10 {
@@ -271,13 +276,11 @@ td.hlight {
   }
 }
 
-#mobile_logo {
-  margin-right: 10px;
-  margin-left: 10px;
-  font-size: 1.5em;
+#mobile-logo {
+  text-align: center;
+  font-size: 1.4em;
   color: white;
   text-transform: uppercase;
-  letter-spacing: -2px;
   font-weight: bold;
   &:hover {
     color: red;
@@ -300,7 +303,7 @@ td.hlight {
 .hdr-text {
 //  font-family: "Gill Sans", sans-serif;
   font-family: system-ui;
-  margin-left: 10px;
+//  margin-left: 10px;
   line-height: 1;
   font-size: 1.4em;
 //  color: grey;
@@ -344,9 +347,13 @@ caption {
 /* footer */
 
 footer {
+  position: fixed;
+  height: 35px;
+  bottom: 0;
+  width: 100%;
+
   margin-right: 15px;
   margin-top: 5px;
-  padding-top: 5px;
   border-top: 1px solid $gray-medium-light;
   color: $gray-light;
   a {
@@ -356,6 +363,7 @@ footer {
     }
   }
   small {
+	  margin-top: 10px;
     float: left;
   }
   ul {
@@ -644,11 +652,9 @@ input, select{
 } 
 
 .alert {
-  padding: 1px;
-  padding-left: 5px;
-  width: 100%;
+  margin-bottom: 1px;
+  padding:2px 35px 2px 5px;
   float: left;
-  margin-bottom: 2px;
 }
  
 #flash_info {
