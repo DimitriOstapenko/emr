@@ -1,7 +1,7 @@
 <b><%= link_to "Invoices (#{@patient.invoices.count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#invoices", class: "drop-down-link"  %> </b>
 <div class="collapse panel panel-info" id="invoices">
   <div class="tbl patient-dropdown-panel-body">
-    <table class="tbl2 table-hover table-striped table-bordered">
+    <table class="table table-hover table-striped table-bordered">
         <th></th><th>To</th><th>Date</th><th>Amount</th><th>Paid?</th><th></th>
         <% @patient.invoices.each do |i| %>
         <tr>

@@ -1,7 +1,7 @@
 <b><%= link_to "Referrals (#{@patient.referrals.size})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#referrals",  class: "drop-down-link" %> </b>
 <div class="collapse panel panel-info" id="referrals">
   <div class="tbl patient-dropdown-panel-body">
-     <table class="tbl2 table-hover table-striped table-bordered">
+     <table class="table table-hover table-striped table-bordered">
         <th></th><th>Date</th><th>From</th><th>To</th><th>Address</th><th></th>
         <% @patient.referrals.each do |ref| %>
         <tr>

@@ -1,7 +1,7 @@
 <b><%= link_to "Medications (#{@patient.med_count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#medications",  class: "drop-down-link" %> </b>
    <div class="collapse panel panel-info" id="medications">
       <div class="tbl patient-dropdown-panel-body">
-         <table class="tbl2 table-hover table-striped table-bordered">
+         <table class="table table-hover table-striped table-bordered">
 		 <th>Name</th><th>Date</th><th>Format</th><th>Route</th><th>Strength</th><th>Dose</th><th>Freq</th><th class="tbl_sm">Active</th><th></th>
             <% @patient.medications.each do |med| %> 
 	    <%= form_with model: [@patient,med] do |f| %>

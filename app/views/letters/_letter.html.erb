@@ -7,7 +7,7 @@
 	  <td><%= letter.id %></td>
 	<% end %>  
 
-	<td><%= link_to patient.lname, patient %></td>
+        <td><%= link_to patient.lname, patient rescue ''%></td>
 	<td><%= letter.from %></td> 
 	<td><%= letter.to %></td> 
 	<td><%= letter.address_to %></td> 

@@ -1,7 +1,7 @@
 <b><%= link_to "Letters (#{@patient.letters.count})<span class='caret'></span>".html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#letters", class: "drop-down-link" %> </b>
  <div class="collapse panel panel-info" id="letters">
    <div class="tbl patient-dropdown-panel-body">
-     <table class="tbl2 table-hover table-striped table-bordered">
+     <table class="table table-hover table-striped table-bordered">
         <th></th><th>From</th><th>To</th><th>Date</th><th>Title</th><th></th>
         <% @patient.letters.each do |letter| %>
         <tr>
