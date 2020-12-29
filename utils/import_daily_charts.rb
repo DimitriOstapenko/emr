@@ -7,11 +7,14 @@ require 'find'
 require 'fileutils'
 
 dir  = CHARTS_PATH.join('Daily')
-puts "About to update daily_charts table with files from #{dir}"
+dir = File.realdirpath( dir ) if File.symlink?( dir )
 
+puts "About to update daily_charts table with files from #{dir}"
+        
 charts_count = 0
 Find.find( dir ) do |path| 
 	basename = File.basename(path)
+        puts basename
 	next unless basename.match(/^\d{4}-\d{2}-\d{2}\.pdf$/)
 	next if DailyChart.exists?(filename: basename)
 	(date, ext) = basename.split('.') 
@@ -30,5 +33,4 @@ end
 
 puts "Added #{charts_count} charts to charts table"
 puts "Now #{DailyChart.count} rows in daily_charts table"
-
 
