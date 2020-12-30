@@ -70,6 +70,11 @@ table {
   width: 100%;
 }
 
+.table-wrapper-scroll-x {
+display: block;
+overflow: auto;
+}
+
 #findstr {
 	border-radius: 5px;
 //	height: 26px !important;
@@ -295,7 +300,7 @@ td.hlight {
 }
 
 #address {
-  font-size: 1.5em;
+  font-size: 1.3em;
 //  font-weight: bold;
   margin-left: 15px;  
 }
@@ -305,7 +310,7 @@ td.hlight {
   font-family: system-ui;
 //  margin-left: 10px;
   line-height: 1;
-  font-size: 1.4em;
+  font-size: 1.8em;
 //  color: grey;
   text-transform: uppercase;
 //  letter-spacing: -2px;
@@ -572,7 +577,7 @@ input, select{
 }
 
 .table th{
-  background: #17a2b8;
+  background: #17a2b8; // bs5 info
   color: white;
   height:35px;
 }

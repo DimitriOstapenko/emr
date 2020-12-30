@@ -7,9 +7,13 @@
 
     <div id="address" class="pt-3">140 Centennial Pkwy N, Hamilton, ON L8E 1H9 (905) 561-9255 </div>
 
-    <div class="ml-3 pt-3">
+  <div class="row pt-3">
+  <div class="card text-center col-md-5 col-md-offset-2 bg-danger">
+  <div class="card-body">
   <%= Schedule.doc_on_duty %>
-    </div>
+  </div>
+  </div>
+  </div>
 
     <div class="p-3">
       You can set up your vistual visit or request prescription renewal even when the clinic is closed : <%= link_to "request callback from doctor", new_user_session_path %>. In case of any registration problems, please
@@ -38,7 +42,7 @@
 
   <p><font size=6>O</font>ur clinic is open 7 days a week. Please check current schedule below. Please register online and doctor will call you back. During callback to discuss your medical issue, doctor will decide if you need to come to the clinic. </p> 
   <div class="pt-3"></div>
-  <p> <font size=6>P</font>rescriptions can now be renewed over the phone with online registration. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice. Please register below and request callback from doctor, or click button below if you are already registered. 2 step TB tests and Driving Physical Exam are available at $50 and $120. We do not renew prescriptions for narcotics and controlled medications. </p>
+  <p> <font size=6>P</font>rescriptions can now be renewed over the phone with online registration. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice. Please register below and request callback from doctor, or click button below if you are already registered. 2 step TB tests and Driving Physical Exam are available at $50/step and $120. We do not renew prescriptions for narcotics and controlled medications. </p>
 
 <div class="pt-2">
   <%= render "#{device_type}_lookup" %>
@@ -57,6 +61,24 @@
 <div class="pt-5"><i class="glyphicon glyphicon-exclamation-sign mr-2"></i><b>If you have COVID-19 symptoms, please do not come to the clinic. Register online or call the numbers provided. </b></div> 
 
 <div class="pt-5"> All visiting patients are required to wear a mask </div>
+
+
+<div class="row">
+<div class="card col-md-3 col-md-offset-8 bg-success">
+  <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+    <img src="/images/happy.gif" class="img-fluid" />
+  </div>
+  <div class="card-body">
+    <h4 class="card-title"><font color=red>Seasons Greetings!</font></h4>
+    <p class="card-text">
+    Happy New Year to all our patients! Warm wishes from all of us
+    </p>
+    <div class="pull-right"><i> Clinic staff </i></div>
+  </div>
+</div>
+</div>
+
+
 
 </div>
 </div>
