@@ -154,6 +154,10 @@ overflow: auto;
   margin-left: ($spacer * 1) !important;
 }
 
+.ml-5 {
+  margin-left: ($spacer * 2) !important;
+}
+
 .mr-1 {
   margin-right: ($spacer * .25) !important;
 }
@@ -300,7 +304,7 @@ td.hlight {
 }
 
 #address {
-  font-size: 1.3em;
+  font-size: 1.2em;
 //  font-weight: bold;
   margin-left: 15px;  
 }
