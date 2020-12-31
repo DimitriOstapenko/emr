@@ -277,8 +277,9 @@ td.hlight {
 //  color: #34d5eb;
   color: $gray;
   text-transform: uppercase;
-  letter-spacing: -2px;
+//  letter-spacing: -2px;
   font-weight: bold;
+//  font-style: italic;
   &:hover {
     color: red;
     text-decoration: none;
