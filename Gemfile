@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 #ruby '2.7.0'
 gem 'rails' , '>= 5.2.3'
 gem 'puma', '~> 4.3', '>= 4.3.3'
-gem 'nokogiri', '~> 1.10', '>= 1.10.8'
+gem 'nokogiri', '~> 1.10', '>= 1.10.10'
 gem 'pg', 	  '~> 1.1', '>= 1.1.4'
 gem 'devise',   '~> 4.7', '>= 4.7.1'
 
