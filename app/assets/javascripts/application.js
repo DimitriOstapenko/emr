@@ -60,14 +60,17 @@ function get_patient ( ohip_num ) {
 	  var last_login = (typeof user.last_sign_in_at === 'undefined') ? '' : " <br> Last login: " + user.last_sign_in_at;
           result = ok_icon + "Registered patient found:<br>" + patient.lname +', '+ patient.fname + '; login email: ' + user.email + last_login
           $("#login_button").show();
+	  $("#explanation").hide();
 	} else {	
           result = ok_icon + "Unregistered clinic patient:<br>" + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
           $("#register_button").show();
+	  $("#explanation").hide();
 	}
         $("#results").html(result);
       } else if (patient.lname) { // successful HCV lookup
           result = "New patient: " + patient.lname +', ' + patient.fname + ' born '  + patient.dob;
           $("#register_button").show();
+	  $("#explanation").hide();
           $("#results").html(result);
       } else
         result = 'Invalid card number: ' +  patient.notes;

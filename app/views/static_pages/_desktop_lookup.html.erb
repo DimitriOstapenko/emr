@@ -4,19 +4,20 @@
 
 <small>
 <div class="card bg-success mb-3">
+  
 <div class="card-body">
 <div class="row">
-  <div class="col-md-4 padding-0">
-  <img src="/images/on_32_tr.png" width=32><b> Your Ontario Health Card#</b>
+  <div class="col-md-4">
+  <img src="/images/on_32_tr.png" width=32><b> Your Health Card#</b>
   <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-search"></i></span>
     <%= f.input :ohip_num, label: false, placeholder: 'XXXXXXXXXXX AA'  %>
   </div>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-2 pt-1">
   <%= f.label '', class: 'pt-4' %>
-  <div style="width:100px; display:none" id="register_button">
+  <div style="width:100px; display:none; float:left" id="register_button">
   <%# button_to 'Register', patients_lookup_path, remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-primary", method: 'get' %>
   <%= button_to 'Register', patients_lookup_path, class:"btn btn-primary", method: 'get' %>
   </div>
@@ -25,16 +26,17 @@
   </div>
   </div>
 
-  <div class="col-md-4 pt-3 ml-3">
-    <div class="text-muted" style="font-size: 1.1em;">
+  <div class="col-md-3 pt-3 ml-3">
+    <div class="text-muted" id="explanation">
       <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
-      If you visited our clinic before, we will look up your record. Once registered, you will have access to your patient profile and will be able to book a visit.
+      If you visited our clinic before, we will look up your record. After registration you will be able to log in to your patient profile and book a visit.
     </div>
   </div>
-  
-  <div class="col-md-1 pt-4 mr-1">
+
+  <div class="col-md-2 pt-3">
     <img src="/images/card.jpg" width=95>
   </div>
+  
 </div>
 
 <span class="text-success" id="results"></span>
