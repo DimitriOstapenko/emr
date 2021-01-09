@@ -62,7 +62,7 @@ function get_patient ( ohip_num ) {
           $("#login_button").show();
 	  $("#explanation").hide();
 	} else {	
-          result = ok_icon + "Patient record found:<br>" + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date + "<br>Please register below:";
+          result = ok_icon + "Patient record found:<br>" + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
           $("#register_button").show();
 	  $("#explanation").hide();
 	}
