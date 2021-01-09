@@ -15,6 +15,10 @@ def device_is_desktop?
   device_type == 'desktop'
 end
 
+def device_is_mobile?
+  device_type != 'desktop'
+end
+
 def sortable(column, title = nil)
       title ||= ActiveSupport::Inflector.titleize(column)
 #      css_class = column == sort_column ? "current #{sort_direction}" : nil
