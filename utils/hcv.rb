@@ -1,4 +1,4 @@
-#curl --location --request POST 'https://api.mdmax.ca/api/1.1/wf/api-validation-call' --header 'Authorization: Bearer 3a213663160927a0335e7f3baf2c8b28' --header 'Cookie: __cfduid=deef3863bc8d33051df1916a9e4dfd571605555555' --form 'Provider-number=015539' --form 'HCN=6728304590' --form 'VC=AG' --form 'User=dimitri'
+#curl --location --request POST 'https://api.mdmax.ca/api/1.1/wf/api-validation-call' --header 'Authorization: Bearer 4b4ff4db2f26795aa19494705c39cd9c' --header 'Cookie: __cfduid=deef3863bc8d33051df1916a9e4dfd571605555555' --form 'Provider-number=015539' --form 'HCN=6728304590' --form 'VC=AG' --form 'User=dimitri'
 #{
 #    "status": "success",
 #    "response": {
@@ -16,6 +16,8 @@
 #}
 
 
+
+require_relative '../config/environment'
 require "uri"
 require "net/http"
 require "JSON"
@@ -25,14 +27,12 @@ https = Net::HTTP.new(url.host, url.port);
 https.use_ssl = true
 
 request = Net::HTTP::Post.new(url)
-request["Authorization"] = "Bearer #{MDMAX_BEARER}"
-#request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
-#form_data = [['Provider-number', '015539'],['HCN', '6728304590'],['VC', 'AG'],['User', 'dimitri']]
-#form_data = [['Provider-number', '015539'],['HCN', '9132049280'],['VC', 'RE'],['User', 'dimitri']]
-form_data = [['Provider-number', '015539'],['HCN', '3333333333'],['VC', 'XX'],['User', 'dimitri']]
+request["Authorization"] = MDMAX_BEARER
+request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
+form_data = [['Provider-number', '015539'],['HCN', '6728304590'],['VC', 'AG'],['User', 'dimitri']]
 request.set_form form_data, 'multipart/form-data'
 response = https.request(request)
-#puts response.read_body
+puts response.read_body
 
 puts "request status: #{response.message}"
 json = JSON.parse(response.body)
