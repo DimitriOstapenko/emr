@@ -58,11 +58,11 @@ function get_patient ( ohip_num ) {
         var ok_icon = '<font size=4><i class="glyphicon glyphicon-ok"></i></font> ';
 	if (user) {
 	  var last_login = (typeof user.last_sign_in_at === 'undefined') ? '' : " <br> Last login: " + user.last_sign_in_at;
-          result = ok_icon + "Registered patient found:<br>" + patient.lname +', '+ patient.fname + '<br> login email: ' + user.email + last_login
+          result = ok_icon + "Patient found: " + patient.lname +', '+ patient.fname + '; login email: ' + user.email + last_login
           $("#login_button").show();
 	  $("#explanation").hide();
 	} else {	
-          result = ok_icon + "Patient record found:<br>" + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
+          result = ok_icon + "Patient record found: " + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
           $("#register_button").show();
 	  $("#explanation").hide();
 	}
