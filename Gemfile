@@ -6,7 +6,7 @@ gem 'rails' , '>= 5.2.3'
 gem 'puma', '~> 4.3', '>= 4.3.3'
 gem 'nokogiri', '~> 1.10', '>= 1.10.10'
 gem 'pg', 	  '~> 1.1', '>= 1.1.4'
-gem 'devise',   '~> 4.7', '>= 4.7.1'
+gem 'devise', '~> 4.7', '>= 4.7.3'
 
 gem 'nexmo',  '~> 7.0'  
 #gem 'vonage'
@@ -67,7 +67,7 @@ gem 'popper_js', '~> 1.14.3'
 gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip',    '~> 1.3.0'
 gem 'ffi',        '>= 1.10.0'  
-gem 'simple_form', '~> 5.0.0'
+gem 'simple_form', '~> 5.0', '>= 5.0.3'
 gem 'whenever', require: false
 gem "loofah", ">= 2.2.3" 
 

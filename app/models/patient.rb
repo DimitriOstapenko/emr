@@ -304,10 +304,13 @@ class Patient < ApplicationRecord
 # call hcv to check card validity  
   def card_valid?
     response = self.get_hcv_response
+    return unless response
     json = JSON.parse(response.body)
-    status = json['status']
+    return unless json
+    status = json['status'] rescue nil
+    return unless status == 'success'
     response = json['response']
-#    puts response.inspect
+    return unless response
     eligible = response['MOH-card-eligible'] == true
   end
 
