@@ -29,7 +29,8 @@ https.use_ssl = true
 request = Net::HTTP::Post.new(url)
 request["Authorization"] = MDMAX_BEARER
 request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
-form_data = [['Provider-number', '015539'],['HCN', '6728304590'],['VC', 'AG'],['User', 'dimitri']]
+#form_data = [['Provider-number', '015539'],['HCN', '6728304590'],['VC', 'AG'],['User', 'dimitri']]
+form_data = [['Provider-number', '015539'],['HCN', '7502394344'],['VC', 'RR'],['User', 'dimitri']]
 request.set_form form_data, 'multipart/form-data'
 response = https.request(request)
 puts response.read_body

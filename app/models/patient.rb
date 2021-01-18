@@ -301,6 +301,16 @@ class Patient < ApplicationRecord
     self.visits.order(entry_ts: :desc).first.entry_ts.today? rescue false
   end
 
+# call hcv to check card validity  
+  def card_valid?
+    response = self.get_hcv_response
+    json = JSON.parse(response.body)
+    status = json['status']
+    response = json['response']
+#    puts response.inspect
+    eligible = response['MOH-card-eligible'] == true
+  end
+
 # Call HCV service through MDMax and get a response  !!! Dependency: provider_no and username
   def get_hcv_response
     require "uri"

@@ -229,6 +229,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find_by(ohip_num: ohip_num) 
     if @patient.present?
       set_pat_session(@patient.id)
+      @patient.update_attribute(:ohip_ver, ohip_ver) if @patient.card_valid?  # Override version just in case
       if User.exists?(ohip_num: ohip_num)
         flash[:info] = "You are already registered - please log in, #{@patient.fname.capitalize}"
         redirect_to new_user_session_path

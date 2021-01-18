@@ -3,8 +3,8 @@ class StaticPagesController < ApplicationController
   include PatientsHelper
 
   def home
-#    clear_pat_session
-    redirect_to current_user.patient if current_user && current_user.patient
+    clear_pat_session
+#    redirect_to current_user.patient if current_user && current_user.patient
   end
 
   def help
