@@ -19,4 +19,5 @@ class MyRegistrationsController < Devise::RegistrationsController
     redirect_to patient_path(current_user.patient)
   end
 
+
 end

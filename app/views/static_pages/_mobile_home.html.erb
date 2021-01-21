@@ -1,4 +1,5 @@
 <% provide(:title, 'Welcome') %>
+<% hcv = SvcMonitor.find_by(name: 'hcv')  %>
 
 <font size=4>
   <div class="hdr-text "><center> <i class='glyphicon glyphicon-time'></i> 24/7 Online Visits</center></div>
@@ -13,7 +14,7 @@
     </div>
   </div>
 
-  <%= render "#{device_type}_lookup" %>
+  <%= render "#{device_type}_lookup" if hcv.up %>
 
   <div class="pt-2"><center> Already registered? Please log in below. </center></div>
 

@@ -23,12 +23,13 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    logger.debug("**** new called")
   end
 
   def create
+    logger.debug("**** create.called")
     @user = User.new(user_params)
     if @user.save
-#      @user.send_activation_email #!!! ?
       flash[:info] = "Please check your email to activate your account."
       redirect_back(fallback_location: root_url )
     else

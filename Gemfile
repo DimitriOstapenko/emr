@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 gem 'rails' , '>= 5.2.3'
 gem 'puma', '~> 4.3', '>= 4.3.3'
 gem 'nokogiri', '~> 1.10', '>= 1.10.10'
-gem 'pg', 	  '~> 1.1', '>= 1.1.4'
+gem 'pg', '~> 1.2', '>= 1.2.3'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 
 gem 'nexmo',  '~> 7.0'  

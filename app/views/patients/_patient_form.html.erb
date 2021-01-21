@@ -5,10 +5,6 @@
   <%= f.error_notification %>
   <%= render 'shared/error_messages', object: f.object %>
 
-  <%= f.hidden_field :lname %>
-  <%= f.hidden_field :fname %>
-  <%= f.hidden_field :sex %>
-  <%= f.hidden_field :dob %>
   <%= f.hidden_field :pat_type, value: HCP_PATIENT %>
   <%= f.hidden_field :country, value: 'Canada' %>
   <%= f.hidden_field :email %>
@@ -23,7 +19,14 @@
   <%= f.hidden_field :hin_prov %>
 
 
-<!-- Row 1 
+<!-- Row 1 -->
+
+<% if @patient.lname && @patient.fname %>
+  <%= f.hidden_field :lname %>
+  <%= f.hidden_field :fname %>
+  <%= f.hidden_field :sex %>
+  <%= f.hidden_field :dob %>
+<% else %>  
 <div class="row">
   <div class="col-md-3 col-xs-12">
      <%= f.input :lname, hint: 'Required'%>
@@ -41,7 +44,7 @@
     <%= f.input :dob, as: :date, label: 'Born', start_year: 1915, end_year: Date.today.year, hint: 'Required', html5: true %>
   </div>
 </div>  
--->
+<% end %>
   
 <!-- Row 2 -->
 <div class="row">

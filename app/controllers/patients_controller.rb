@@ -64,9 +64,9 @@ class PatientsController < ApplicationController
     @patient.entry_date = DateTime.now
     @patient.lastmod_by = current_user.name
     if @patient.save
-       expiry = @patient.hin_expiry rescue '1900-01-01'.to_date
-       suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  expiry < Date.today)
-       flash[:info] = "Patient created #{suffix}"
+ #      expiry = @patient.hin_expiry rescue '1900-01-01'.to_date
+ #      suffix  = ' (Health card is expired)' if (@patient.hin_prov == 'ON' && @patient.pat_type == 'O' &&  expiry < Date.today)
+       flash[:info] = "Patient created"
        redirect_to @patient
     else
        render 'new'
@@ -184,7 +184,6 @@ class PatientsController < ApplicationController
   end
 
   def invoices
-    flash[:info] = params
   end
 
   def visit_history
@@ -239,13 +238,14 @@ class PatientsController < ApplicationController
       end
     else
       @patient = Patient.hcv_lookup(fullnum)
-      if @patient.id
+      if @patient
         set_pat_session(@patient.id)
         flash[:info] = "New Patient with valid card"
         redirect_to new_user_registration_path
       else
-        flash[:warning] = "Bad card number: #{@patient.notes}"
-        redirect_to root_path
+#        flash[:warning] = "Bad card number: #{@patient.notes}"
+        #redirect_to root_path
+        redirect_to new_user_registration_path(ohip_num: ohip_num, ohip_ver: ohip_ver)
       end
     end
     

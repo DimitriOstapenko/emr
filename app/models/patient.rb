@@ -41,7 +41,6 @@ class Patient < ApplicationRecord
         validates :pharm_phone, length: { is: 10 }, numericality: { only_integer: true }, allow_blank: true
 	
         validate :hcv_validate, on: [:create, :update], if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O')}
-#	validate :validate_card  # basic checksum validation
 	validate :validate_age
 
   def full_name
@@ -133,11 +132,14 @@ class Patient < ApplicationRecord
     Invoice.where(patient_id: self.id)
   end
 
-
   # Look up patient in MOH database and create patient if valid. Otherwise, return error in patient.notes  
   def self.hcv_lookup(full_ohip_num = nil)
-    return unless full_ohip_num 
+    
     require "json"
+    return unless full_ohip_num 
+
+    hcv = SvcMonitor.find_by(name: 'hcv')
+    return unless hcv && hcv.up
 
     ohip_num,ohip_ver = full_ohip_num.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
     patient = Patient.new(ohip_num: ohip_num, ohip_ver: ohip_ver)
@@ -173,6 +175,9 @@ class Patient < ApplicationRecord
 # Call HCV to validate OHIP number if not recently validated
   def hcv_validate
     require "json"
+
+    hcv = SvcMonitor.find_by(name: 'hcv')
+    return unless hcv && hcv.up
 
 # Validate only not recently validated cards or cards with errors    
     return if self.validated_at && self.validated_at > 5.days.ago
@@ -303,6 +308,9 @@ class Patient < ApplicationRecord
 
 # call hcv to check card validity  
   def card_valid?
+    hcv = SvcMonitor.find_by(name: 'hcv')
+    return unless hcv && hcv.up
+
     response = self.get_hcv_response
     return unless response
     json = JSON.parse(response.body)
@@ -318,6 +326,9 @@ class Patient < ApplicationRecord
   def get_hcv_response
     require "uri"
     require "net/http"
+    
+    hcv = SvcMonitor.find_by(name: 'hcv')
+    return unless hcv && hcv.up
 
     url = URI("https://api.mdmax.ca/api/1.1/wf/api-validation-call")
     https = Net::HTTP.new(url.host, url.port);

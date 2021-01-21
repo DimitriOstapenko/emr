@@ -11,7 +11,7 @@ class User < ApplicationRecord
   before_validation { self.email.downcase! rescue '' }
 
   validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, if: Proc.new { |u| u.patient? }
-  validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
+#  validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
 
   validates :email, presence: true;
 
@@ -28,9 +28,9 @@ class User < ApplicationRecord
       if patient.present?
         self.patient_id = patient.id 
       else
-#        patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email, dob: self.dob)
-#        patient.save!(validate:false)
-#        self.patient_id = patient.id 
+        patient = Patient.new(ohip_num: self.ohip_num, ohip_ver: self.ohip_ver, email: self.email, dob: self.dob)
+        patient.save(validate:false)
+        self.patient = patient
         self.new_patient = true
       end
     end

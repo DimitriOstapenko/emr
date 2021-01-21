@@ -1,4 +1,5 @@
 <% provide(:title, 'Welcome') %>
+<% hcv = SvcMonitor.find_by(name: 'hcv')  %>
 <div class="row">  
   <div class="col-md-5 col-sm-12">
     <img src='/images/clinic22.jpg'width="580" style="margin-left: 20px "</img>
@@ -41,7 +42,7 @@
   <p> <font size=7>P</font>rescriptions can now be renewed over the phone with online registration. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice. Enter your OHIP number to register, or click button below to log into your patient profile and book a visit. 2 step TB tests and Driving Physical Exam are available at $50/step and $120. <b> We do not renew prescriptions for narcotics and controlled medications.</b> </p>
 
 <div class="pt-2">
-  <%= render "#{device_type}_lookup" %>
+  <%= render "#{device_type}_lookup" if hcv.up %>
 </div>
 
 <p class="pt-3"> Registered already? Go ahead and book your visit. Just click the button below, log in and describe your symptoms. Doctor on duty (see the schedule) will call you back to discuss your issue or renew your medications. Doctor will advise if you need to come to the clinic. </p>
