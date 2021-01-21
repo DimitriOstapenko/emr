@@ -4,10 +4,14 @@
 
 require_relative '../config/environment'
 
-patient = Patient.first
+hcv = SvcMonitor.find_by(name: 'hcv')
+SvcMonitor.create!(name: 'hcv', up: true) unless hcv
+
+# Get most recently validated patient
+patient = Patient.where.not(validated_at: nil).where(prov: 'ON').last
 response = patient.get_hcv_response
+abort ("Did not get valid responce") unless response
 json = JSON.parse(response.body)
-hcv = (SvcMonitor.find_by(name: 'hcv') || SvcMonitor.create!(name: 'hcv', up: true)) 
 
 if json['status'] == 'success'
   puts "We're up.."
