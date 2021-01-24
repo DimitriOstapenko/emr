@@ -46,6 +46,7 @@ class PatientsController < ApplicationController
   def show 
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     @patient = Patient.find(params[:id]) 
+    set_pat_session(@patient.id)
     if @patient.lname.present? && @patient.mobile_or_home_phone.present? 
       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
       flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?

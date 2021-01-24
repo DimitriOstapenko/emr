@@ -55,16 +55,16 @@ function get_patient ( ohip_num ) {
       var user = data.user;
       $('#note').hide();
       $("#submit").hide();
-      if (patient && patient.last_visit_date) { // Patient in DB and has record
+      if (patient && user) { // Patient has confirmed account
         var ok_icon = '<font size=4><i class="glyphicon glyphicon-ok"></i></font> ';
 	if (user) {
-	  var last_login = (typeof user.last_sign_in_at === 'undefined') ? '' : " <br> Last login: " + user.last_sign_in_at;
-          result = ok_icon + "Patient found: " + patient.lname +', '+ patient.fname + '; login email: ' + user.email + last_login
+//	  var last_login = (typeof user.last_sign_in_at === 'undefined') ? '' : " <br> Last login: " + user.last_sign_in_at;
+          result = ok_icon + "Patient found: " + patient.lname +', '+ patient.fname + '; login email: ' + user.email 
           $("#login_button").show();
 	  $("#explanation").hide();
 	  $("#submit").hide();
 	} else {	
-          result = ok_icon + "Patient record found: " + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
+          result = ok_icon + "Clinic patient: " + patient.lname +', '+ patient.fname + ' born ' + patient.dob + " <br> Last visit: " + patient.last_visit_date;
           $("#register_button").show();
 	  $("#explanation").hide();
 	  $("#submit").show();

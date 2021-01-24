@@ -12,11 +12,20 @@ class User < ApplicationRecord
 
   validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, if: Proc.new { |u| u.patient? }
 #  validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
+  validates :ohip_ver, length: { is: 2 }, format: {with: /\A[a-zA-Z]{2}\z/, message: "2 letter code"}, if: Proc.new { |u| u.patient? }   # self registered patients are form ON, so version is required 
 
   validates :email, presence: true;
 
   before_validation :set_patient, :delete_unconfirmed_user
   after_create_commit :send_emails
+
+#  def authenticatable_salt
+#    "#{super}#{session_token}"
+#  end
+
+#  def invalidate_session!
+#    self.session_token = SecureRandom.hex
+#  end
 
 # Initialize user, set patient
   def set_patient

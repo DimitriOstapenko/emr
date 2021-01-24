@@ -2,10 +2,10 @@ class MyRegistrationsController < Devise::RegistrationsController
 
   respond_to :html, :js
 
-# Go to login screen after registration  
+# Show  modal "Check your email" after registration
 #  def after_sign_up_path_for(resource)
    def after_inactive_sign_up_path_for(resource)    
-      redirect_to new_user_session_path && return
+     root_path(show_popup: true)
   end
 
 # Log in user after registration

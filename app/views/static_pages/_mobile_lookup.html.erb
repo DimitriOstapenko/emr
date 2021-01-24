@@ -7,7 +7,7 @@
   <img class="card-img-top" src="/images/card.jpg" style="height:180px;">
 <div class="card-body">
 
-  <%= f.input :ohip_num, label: false, placeholder: 'XXXXXXXXXXX AA', hint: "Please enter your health card number", input_html: {style: "height: 45px !important; font-size: 1.4em; font-weight:bold; "} %>
+  <%= f.input :ohip_num, label: 'New User:', placeholder: 'XXXXXXXXXXX AA', hint: "Please enter your health card number", input_html: {style: "height: 45px !important; font-size: 1.4em; font-weight:bold; "} %>
 
   <div style="display:none" id="register_button">
   <%= button_to 'Register', patients_lookup_path, class:"btn btn-primary", method: 'get' %>

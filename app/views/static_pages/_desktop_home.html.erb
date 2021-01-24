@@ -1,5 +1,6 @@
 <% provide(:title, 'Welcome') %>
 <% hcv = SvcMonitor.find_by(name: 'hcv')  %>
+<% show_popup = params[:show_popup] rescue false %>
 <div class="row">  
   <div class="col-md-5 col-sm-12">
     <img src='/images/clinic22.jpg'width="580" style="margin-left: 20px "</img>
@@ -41,13 +42,19 @@
   <div class="pt-3"></div>
   <p> <font size=7>P</font>rescriptions can now be renewed over the phone with online registration. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice. Enter your OHIP number to register, or click button below to log into your patient profile and book a visit. 2 step TB tests and Driving Physical Exam are available at $50/step and $120. <b> We do not renew prescriptions for narcotics and controlled medications.</b> </p>
 
+<% if current_patient && current_patient.user && current_patient.user.confirmed_at %>
+  <h2> Welcome back, <%= current_patient.fname %> </h2>
+  <%= render "/devise/sessions/new" %>
+<% else %>
+<div class="pt-2">
+  <font size=7>N</font>ew patient? Please enter your health card number to register:
+</div>
 <div class="pt-2">
   <%= render "#{device_type}_lookup" if hcv.up %>
 </div>
-
 <p class="pt-3"> Registered already? Go ahead and book your visit. Just click the button below, log in and describe your symptoms. Doctor on duty (see the schedule) will call you back to discuss your issue or renew your medications. Doctor will advise if you need to come to the clinic. </p>
-
 <div align="center" class="pt-4"><%= link_to 'BOOK A VISIT', new_user_session_path, class: "btn btn-warning btn-lg" %></div>
+<% end %>
 
 <div class="pt-4">
   <i>
@@ -84,4 +91,11 @@ If you have any or all of these symptoms: fever, coughing, weakness, sweating, m
 <div class='p-3'>
 <%= render "footer_icons" %>
 </div>
+
+  <script>
+    var show_popup = "<%= show_popup %>";
+    if (show_popup) {
+      alert("Please check your email and confirm your account");
+    }
+  </script>
 
