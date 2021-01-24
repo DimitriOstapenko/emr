@@ -14,10 +14,10 @@ abort ("Did not get valid responce") unless response
 json = JSON.parse(response.body)
 
 if json['status'] == 'success'
-  puts "We're up.."
+  puts "#{Time.now} We're up.."
   hcv.update_attribute(:up, true)
 else
-  puts "We're down!"
+  puts "#{Time.now} We're down!"
   hcv.send_hcv_alert
   hcv.update_attribute(:up, false)
 end

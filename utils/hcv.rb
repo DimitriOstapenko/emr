@@ -20,7 +20,7 @@
 require_relative '../config/environment'
 require "uri"
 require "net/http"
-require "JSON"
+#require "JSON"
 
 url = URI("https://api.mdmax.ca/api/1.1/wf/api-validation-call")
 https = Net::HTTP.new(url.host, url.port);
