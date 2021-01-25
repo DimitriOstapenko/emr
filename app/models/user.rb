@@ -12,7 +12,7 @@ class User < ApplicationRecord
 
   validates :ohip_num, presence:true, length: { maximum: 12 }, numericality: { only_integer: true }, uniqueness: true, if: Proc.new { |u| u.patient? }
 #  validates :ohip_ver, length: { is: 2 }, allow_blank: true, if: Proc.new { |u| u.patient? }
-  validates :ohip_ver, length: { is: 2 }, format: {with: /\A[a-zA-Z]{2}\z/, message: "2 letter code"}, if: Proc.new { |u| u.patient? }   # self registered patients are form ON, so version is required 
+#  validates :ohip_ver, length: { is: 2 }, format: {with: /\A[a-zA-Z]{2}\z/, message: "2 letter code"}, if: Proc.new { |u| u.patient? }   # self registered patients are form ON, so version is required 
 
   validates :email, presence: true;
 
