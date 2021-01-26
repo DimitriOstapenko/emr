@@ -23,11 +23,11 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    logger.debug("**** new called")
+#    logger.debug("**** new called")
   end
 
   def create
-    logger.debug("**** create.called")
+#    logger.debug("**** create.called")
     @user = User.new(user_params)
     if @user.save
       flash[:info] = "Please check your email to activate your account."
@@ -50,9 +50,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(user_params)
-      flash[:success] = "Profile updated"
-      sign_out
-      redirect_to root_url
+#      sign_out
+#      sign_in(@user)
+      flash[:success] = "User profile updated"
+      redirect_to @user
     else
       render 'edit'
     end

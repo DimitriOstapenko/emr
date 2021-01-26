@@ -45,24 +45,26 @@ To book your visit, please click the button below. Doctor on duty will get in to
 
 <% if @patient.has_visit_today? %>
   <h4> Welcome to Stoney Creek Walk-In clinic, <%= @patient.fname.capitalize %>! </h4> 
-  <p class="pt-3">
-  Your appointment for today is registered. Please wait for the doctor to call you back at the number provided. We normally call our patients within an hour of online request made during office hours. We can't guarantee response time during off hours.  
-  </p>
-  <p class="pt-3">
-  You can edit your new visit to add documents/pictures and to provide more details/vital signs. Just click on the icon in edit column on the right. Once diagnosis is assigned, new visit becomes uneditable.
-  </p>
+  You appointment for today is registered. Please wait for the doctor to call you back at the number provided. We normally call our patients withing an hour of online request made during office hours. We can't guarantee response time during off hours.
+  You can edit your new visit to add documents/pictures and to provide more details/vital signs. Just click on the icon in edit column 
+  in the list of visits on the right. Once diagnosis is assigned, new visit becomes uneditable.
 
 <% else %>
-<div class="col-sm-2 col-md-6 col-md-offset-3 pt-5">
+<div class="col-sm-12 col-md-6 col-md-offset-3  pt-5">
   <font size=3>
 <%= button_to 'Book Virtual Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-success btn-lg", method: 'get', disabled: @patient.has_visit_today?  %>
   </font>
 </div>
 
-  <div class="pt-5" style="float:left" ><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
-  <div class="pt-3" style="float:left" > <b> By using this website you agree to all <%= link_to 'Terms And Conditions', terms_path %> regarding our clinic's services </b> </div>
+   <div class="col-md-6 p-5">
+    <small>* Only one appointment per patient per day is allowed by OHIP </small></div>
+ </div>
 
- <div class="pt-3" style="clear: both">
+   <div class="col-md-6">
+     <b> By using this website you agree to all <%= link_to 'Terms And Conditions', terms_path %> regarding our clinic's services </b>
+   </div>
+
+ <div class="ml-3 pt-3" style="clear: both">
     <div class="panel panel-info news-panel-body">
       <div class="panel-body "><p align="justify">
        This is current schedule updated daily. Please <%= link_to "book your appointment online", new_user_session_path %> or call the clinic  during business hours: <b> (905) 561-9255 </b>.
@@ -76,7 +78,7 @@ To book your visit, please click the button below. Doctor on duty will get in to
   <% end %>
 </aside>
 
-<div class="spacer-20"></div>
+<div class="pt-3"></div>
 <%= render "patient_#{device_type}_visits" %>
 
 </div>

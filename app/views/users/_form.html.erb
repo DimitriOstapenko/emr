@@ -33,11 +33,13 @@
   </div>
 
 <% disabled = true unless current_user.admin?  %>
+  <% if current_user.admin? %>
   <div class="row" >  
   <div class="col-md-12">
   <%= f.input :role, collection: USER_ROLES, include_blank: false, disabled: disabled  %>
   </div>
   </div>
+<% end %>
   
   <div class="row" id='doctor'>  
   <div class="col-md-12">

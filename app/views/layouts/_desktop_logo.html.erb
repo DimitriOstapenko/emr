@@ -5,21 +5,17 @@
 
 <% if current_user.patient? %>
         <li><%= link_to "<font color='red'><i class='glyphicon glyphicon-user'></i></font> Patient Profile".html_safe, edit_patient_path(current_user.patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', method: "get", onclick: "set_lg_modal()"  %></li>
-	<li><%= link_to "<i class='glyphicon glyphicon-user'></i> User Profile".html_safe, edit_user_path(current_user.id), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', method: "get", onclick: "set_sm_modal()"  %></li>
-<% else %>
-	<li><%= link_to "<i class='glyphicon glyphicon-user'></i> User Profile".html_safe, edit_user_path(current_user.id), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', method: "get", onclick: "set_sm_modal()"  %></li>
-
 <% end %>
+
+  <li><%= link_to "<i class='glyphicon glyphicon-user'></i> User Profile".html_safe, edit_user_path(current_user.id), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', method: "get", onclick: "set_sm_modal()"  %></li>
 
  <li class="divider"></li>
  <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
 </ul>
 </li>
-
-<% path = current_user.patient? ? 'patient_path(current_user.patient)' : 'root_path' %>
-   <li class="nav-item"> <%= link_to "Walk-In EMR", eval(path), id: "logo" %> </li>
-<% else %>
-  <li class="nav-item"> <%= link_to "Stoney Creek Medical Walk-In Clinic", root_path, id: "logo" %></li>
 <% end %>
+
+<% title = (current_user.patient? && device_is_desktop?) ? 'Stoney Creek Walk-In Clinic' : 'Walk-In EMR' %>
+<li class="nav-item"> <%= link_to title, root_path, id: "logo" %> </li>
 
 
