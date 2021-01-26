@@ -51,6 +51,12 @@
                 input_html: { autocomplete: "new-password", class: form_class } %>
   </div>
   </div>
+              
+  <div class="row">
+  <div class="col-md-12">
+    <%= f.input :first_visit_reason, label: "Reason for visit", as: :text, input_html: { class: form_class } %>
+  </div>
+  </div>
 
   <div class="row" id="submit">
   <div class="col-md-12">

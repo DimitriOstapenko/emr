@@ -44,7 +44,8 @@ To book your visit, please click the button below. Doctor on duty will get in to
   </section>
 
 <% if @patient.has_visit_today? %>
-  You appointment for today is registered. Please wait for the doctor to call you back at the number provided.
+  <h4> Welcome to Stoney Creek Walk-In clinic, <%= @patient.fname.capitalize %>! </h4> 
+  You appointment for today is registered. Please wait for the doctor to call you back at the number provided. You can edit your new visit to add documents/pictures and to provide more details/vital signs. Just click on the icon in edit column on the right. Once diagnosis is assigned, new visit becomes uneditable.
 
 <% else %>
 <div class="col-sm-2 col-md-8 col-md-offset-2 col-sm-offset-3 pt-5">

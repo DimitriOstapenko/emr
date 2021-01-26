@@ -75,7 +75,7 @@ class UsersController < ApplicationController
 private
 
     def user_params
-      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :doctor_id, :invited_by, :dob )
+      params.require(:user).permit(:ohip_num, :ohip_ver, :email, :password, :password_confirmation, :role, :patient_id, :doctor_id, :invited_by, :dob, :first_visit_reason )
     end
 
     def sort_column

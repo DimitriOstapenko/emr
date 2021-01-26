@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:ohip_num, :ohip_ver, :dob, :email, :role, :password, :password_confirmation)}
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:ohip_num, :ohip_ver, :dob, :email, :role, :password, :password_confirmation, :first_visit_reason)}
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:ohip_num, :ohip_ver, :dob, :email, :role, :password, :password_confirmation, :current_password )}
   end
 

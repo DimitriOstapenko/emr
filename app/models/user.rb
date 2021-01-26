@@ -47,7 +47,10 @@ class User < ApplicationRecord
 
 # Override Devise::Confirmable#after_confirmation  
   def after_confirmation
-    self.patient.update_attribute(:email, self.email) if self.patient?
+    if self.patient?
+      self.patient.update_attribute(:email, self.email) 
+      self.patient.visits.create!(consented: true, reason: self.first_visit_reason, doc_id: 1215) unless self.patient.has_visit_today?   # !!!!!!!!!!!!!!!!!!!!!!!!!!  Dr Ostapenko
+    end 
   end
 
   def send_emails
