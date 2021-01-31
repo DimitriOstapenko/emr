@@ -339,10 +339,10 @@ class Visit < ApplicationRecord
 
 
 private 
-# Can only save 1 visit per patient per day  
+# Can only save 1 visit per patient per doctor per day  
   def check_uniqueness 
-      visits = pat.visits.where('date(entry_ts)=?', self.entry_ts.to_date)
-      errors.add(:reason, "Only 1 visit is allowed by OHIP per patient per day") if visits.any?
+    has_visits = pat.visits.where(doc_id: OWNER_DOC_ID).order(entry_ts: :desc).first.entry_ts.today? rescue nil  #where('date(entry_ts)=?', self.entry_ts.to_date)
+    errors.add(:reason, "Only 1 visit is allowed by OHIP per patient per day") if has_visits
   end
 
   def default_values

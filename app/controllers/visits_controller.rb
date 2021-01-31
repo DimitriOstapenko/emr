@@ -34,8 +34,9 @@ class VisitsController < ApplicationController
   def create
     @patient = Patient.find(params[:patient_id])
     @visit = @patient.visits.build(visit_params)
-    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID) # Allow double visits for cash services (HC Deposit)
-    if visits_that_day.any?
+#    visits_that_day = @patient.visits.where('date(entry_ts)=?', @visit.entry_ts.to_date).where("status<>?", PAID) # Allow double visits for cash services (HC Deposit)
+    has_visit_that_day =  @pqtient.visits.where(doc_id: OWNER_DOC_ID).where("status<>?", PAID).order(entry_ts: :desc).first.entry_ts.today? rescue nil 
+    if has_visit_that_day
        flash[:warning] = "Only 1 visit is allowed per patient per day"
        redirect_to @patient
     else

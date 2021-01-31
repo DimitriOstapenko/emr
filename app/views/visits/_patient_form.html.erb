@@ -4,9 +4,9 @@
 <%= f.hidden_field :vis_type, value: TELE_VISIT %>
 <%= f.hidden_field :bil_type, value: HCP_BILLING %>
 <%= f.hidden_field :status, value: ARRIVED %>
-<%# current_doctor_id = Visit.first.doctor.id  rescue 1215 %>
-<% current_doctor_id = 1215 %>
-<%= f.hidden_field :doc_id, value: current_doctor_id  %>  <!-- !!!! Dr. Ostapenko -->
+<%# current_doctor_id = Visit.first.doctor.id  rescue OWNER_DOC_ID %>
+<% current_doctor_id = OWNER_DOC_ID %>
+<%= f.hidden_field :doc_id, value: current_doctor_id  %>
 
 <div class="well">
 <div class="row">

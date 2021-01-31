@@ -302,8 +302,9 @@ class Patient < ApplicationRecord
     return patients.order(:fname) rescue nil
   end
 
+# same day visits to different doctors are now allowed  
   def has_visit_today?
-    self.visits.order(entry_ts: :desc).first.entry_ts.today? rescue false
+    self.visits.where(doc_id: OWNER_DOC_ID).order(entry_ts: :desc).first.entry_ts.today? rescue false
   end
 
 # call hcv to check card validity  
