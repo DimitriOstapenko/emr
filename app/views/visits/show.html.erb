@@ -1,11 +1,7 @@
 <%   provide(:title, "#{@patient.full_name} : #{@visit.entry_ts}") %>
 
 <h1> 
-  <% if current_user.patient? %>
-    <%= "#{@patient.full_name} (#{@visit.pat_type}) : Visit of #{@visit.entry_ts.to_date}" %>
-  <% else %>
-    <%= "#{@patient.full_name} (#{@visit.pat_type}) : Visit of #{@visit.entry_ts}" %>
-  <% end %>
+  <%= @patient.full_name %>, <%= @patient.age_str %>  <%= @patient.sex %> : Visit of <%= @visit.entry_ts.to_date %>
 </h1>
 	
 <%= render "#{current_user.role}_show" %>

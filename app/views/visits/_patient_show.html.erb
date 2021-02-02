@@ -6,7 +6,7 @@
 <section>
 <pre class="pre-scrollable-lg">
 <% if (HCP_PATIENT..WCB_PATIENT).include?(@visit.pat_type) %>
-<b>Health Card # </b>: <%= @visit.hin_num %> 
+<b>Health Card: </b>: <%= @visit.hin_num %> <%= @patient.ohip_ver %>  (<%= @patient.hin_prov %>)
 <% elsif @visit.pat_type == IFH_PATIENT %>   
 <b>IFH Visit Card# </b>: <%= @visit.hin_num %> 
 <% else %>
