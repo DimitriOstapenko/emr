@@ -11,7 +11,7 @@ gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'nexmo',  '~> 7.0'  
 #gem 'vonage'
 
-gem 'carrierwave',             '1.3.1'  
+gem 'carrierwave',             '1.3.2'  
 gem 'dropzonejs-rails',        '~> 0.8.4'
 gem 'mini_magick',          '~> 4.9.4'  
 gem 'will_paginate',           '>= 3.2.1' 
