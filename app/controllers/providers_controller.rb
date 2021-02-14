@@ -51,7 +51,7 @@ class ProvidersController < ApplicationController
 
   def update
     @provider = Provider.find(params[:id])
-    if @provider.update_attributes(provider_params)
+    if @provider.update(provider_params)
       flash[:success] = "Provider updated"
       redirect_to providers_url
     else

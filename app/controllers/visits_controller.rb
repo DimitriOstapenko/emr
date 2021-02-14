@@ -86,7 +86,7 @@ class VisitsController < ApplicationController
       end
     end
 
-    if @visit.update_attributes(visit_params)
+    if @visit.update(visit_params)
       @patient.update_attribute(:last_visit_date, @visit.entry_ts)
       @patient.update_attribute(:latest_medication_renewal, @visit.entry_ts) if @visit.meds_renewed? && @visit.diag_code.present?
       if @visit.status == ARRIVED

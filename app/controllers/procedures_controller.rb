@@ -78,7 +78,7 @@ class ProceduresController < ApplicationController
 
   def update
     @procedure = Procedure.find(params[:id])
-    if @procedure.update_attributes(procedure_params)
+    if @procedure.update(procedure_params)
       flash[:success] = "Procedure updated"
       redirect_to procedures_url 
     else

@@ -37,7 +37,7 @@ class DrugsController < ApplicationController
   end
 
   def update
-    if @drug.update_attributes(drug_params)
+    if @drug.update(drug_params)
       flash[:success] = "Medication updated"
       redirect_to drugs_url
     else

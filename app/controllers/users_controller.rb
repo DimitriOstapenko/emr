@@ -49,7 +49,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if @user.update(user_params)
 #      sign_out
 #      sign_in(@user)
       flash[:success] = "User profile updated"

@@ -64,7 +64,7 @@ class FormsController < ApplicationController
   end
  
   def update
-    if @form.update_attributes(form_params)
+    if @form.update(form_params)
       flash[:success] = "Form updated"
       redirect_to forms_path
     else

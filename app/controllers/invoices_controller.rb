@@ -75,7 +75,7 @@ class InvoicesController < ApplicationController
   end
 
   def update
-    if @invoice.update_attributes(invoice_params)
+    if @invoice.update(invoice_params)
       pdf = build_invoice( @invoice )
       pdf.render_file @invoice.filespec	    
 	    

@@ -87,7 +87,7 @@ class PatientsController < ApplicationController
   def update
     @patient = Patient.find(params[:id])
     @patient.lastmod_by = current_user.name
-    if @patient.update_attributes(patient_params)
+    if @patient.update(patient_params)
       flash[:info] = "Patient profile updated"
       redirect_to patient_path(@patient)
     else

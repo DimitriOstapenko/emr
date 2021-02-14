@@ -75,7 +75,7 @@ class ReferralsController < ApplicationController
   end
 
    def update
-    if @referral.update_attributes(referral_params)
+    if @referral.update(referral_params)
       pdf = build_referral( @referral )
       pdf.render_file @referral.filespec
 

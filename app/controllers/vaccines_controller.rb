@@ -34,7 +34,7 @@ class VaccinesController < ApplicationController
   end
 
   def update
-    if @vaccine.update_attributes(vaccine_params)
+    if @vaccine.update(vaccine_params)
       flash[:success] = "Vaccine updated"
       redirect_to vaccines_url
     else

@@ -163,7 +163,7 @@ class BillingsController < ApplicationController
 # Call method from EDT module to genarate claims; use edt_file.id as unique batch_seq number      
       (body, claims, svcs, ttl_amt) = generate_claim_for_doc(edt_file.id,filename,visits)  # My::EDT
       ttl_claims += claims
-      if edt_file.update_attributes(ftype: EDT_CLAIM, filename: filename, upload_date: Time.now, provider_no: doc.provider_no,
+      if edt_file.update(ftype: EDT_CLAIM, filename: filename, upload_date: Time.now, provider_no: doc.provider_no,
                group_no: GROUP_NO, body: body, lines: body.lines.count, claims: claims, services: svcs, total_amount: ttl_amt, seq_no: seq_no )
 # Write claim to file
         edt_file.write

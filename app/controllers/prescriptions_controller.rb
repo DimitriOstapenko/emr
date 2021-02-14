@@ -64,7 +64,7 @@ class PrescriptionsController < ApplicationController
   end
 
   def update
-    if @prescription.update_attributes(prescription_params)
+    if @prescription.update(prescription_params)
       pdf = build_prescription( @prescription )
       pdf.render_file @prescription.filespec rescue nil
 

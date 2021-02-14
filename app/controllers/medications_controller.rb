@@ -52,7 +52,7 @@ class MedicationsController < ApplicationController
   end
 
   def update
-    if @medication.update_attributes(medication_params)
+    if @medication.update(medication_params)
 
       flash[:success] = "Medication updated"
       redirect_back(fallback_location: @patient)

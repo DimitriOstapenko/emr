@@ -49,7 +49,7 @@ class DoctorsController < ApplicationController
   end
 
   def update
-    if @doctor.update_attributes(doctor_params)
+    if @doctor.update(doctor_params)
       flash[:success] = "Profile updated"
       redirect_to doctors_path
     else
