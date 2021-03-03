@@ -59,7 +59,7 @@ def HR2(s)
    payee_address = s[33,25]	
 #   puts "Biling agent: #{billing_agent} Payee address: #{payee_address}"
 
-   puts("HR2: msg: error updating address, billing agent") unless $ra_msg.update_attributes(:payee_addr => payee_address, :bil_agent => billing_agent)
+   puts("HR2: msg: error updating address, billing agent") unless $ra_msg.update(:payee_addr => payee_address, :bil_agent => billing_agent)
 end
 
 # Addr 2 : once per file
@@ -177,7 +177,7 @@ claims = Claim.unscoped.where("ra_file=?", RA_BASENAME).count
    sum_claimed = svcs.pluck('amt_subm').sum
    sum_paid = svcs.pluck('amt_paid').sum
 
-   if $ra_msg.update_attributes(msg_text: $hr8_messages, claims: claims, svcs: services, sum_claimed: sum_claimed, sum_paid: sum_paid)  
+   if $ra_msg.update(msg_text: $hr8_messages, claims: claims, svcs: services, sum_claimed: sum_claimed, sum_paid: sum_paid)  
      puts "ra_messages table updated with new totals"
    else
      puts "error saving messages to ra_messages table"

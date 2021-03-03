@@ -1,3 +1,5 @@
+<%= session[:patient_id] if current_user.admin? %>
+
 <%= render "#{current_user.role}_#{device_type}_index" %>
 
 <script>

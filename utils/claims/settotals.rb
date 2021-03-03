@@ -9,5 +9,5 @@ RaMessage.all.each do |ra|
   sum_claimed = svcs.pluck('amt_subm').sum
   sum_paid = svcs.pluck('amt_paid').sum
   puts "#{ra.ra_file}, #{claims}, #{services}, #{sum_claimed}, #{sum_paid}"
-  ra.update_attributes(claims: claims, svcs: services, sum_claimed: sum_claimed, sum_paid: sum_paid)  
+  ra.update(claims: claims, svcs: services, sum_claimed: sum_claimed, sum_paid: sum_paid)  
 end

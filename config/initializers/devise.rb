@@ -18,7 +18,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = REPLY_TO
+  config.mailer_sender = "staff@drlena.com" # REPLY_TO
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -167,6 +167,9 @@ Devise.setup do |config|
   # secure: true in order to force SSL only cookies.
   # config.rememberable_options = {}
 
+   config.rememberable_options = {}
+   config.rememberable_options[:secure] = true if Rails.env.production?
+
   # ==> Configuration for :validatable
   # Range for password length.
   config.password_length = 8..128
@@ -180,7 +183,7 @@ Devise.setup do |config|
   # The time you want to timeout the user session without activity. After this
   # time the user will be asked for credentials again. Default is 30 minutes.
   # config.timeout_in = 30.minutes
-  config.timeout_in = 30.minutes
+  config.timeout_in = 30.days
 
   # ==> Configuration for :lockable
   # Defines which strategy will be used to lock an account.

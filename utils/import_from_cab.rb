@@ -64,11 +64,11 @@ def visit_created?(pat,row)
   if visit.present?
      case
        when visit.proc_code2.blank? 
-	       visit.update_attributes(:proc_code2=> pcode, :bil_type2 => HCP_BILLING, :units2=> units)
+	       visit.update(:proc_code2=> pcode, :bil_type2 => HCP_BILLING, :units2=> units)
        when visit.proc_code3.blank? 
-	       visit.update_attributes(:proc_code3=> pcode, :bil_type3 => HCP_BILLING, :units3=> units)
+	       visit.update(:proc_code3=> pcode, :bil_type3 => HCP_BILLING, :units3=> units)
        when visit.proc_code4.blank? 
-	       visit.update_attributes(:proc_code4=> pcode, :bil_type4 => HCP_BILLING, :units4=> units) 
+	       visit.update(:proc_code4=> pcode, :bil_type4 => HCP_BILLING, :units4=> units) 
        end
   else	  
     $entry_ts += 10.minutes

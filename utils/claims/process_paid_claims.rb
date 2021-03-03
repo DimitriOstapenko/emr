@@ -32,7 +32,7 @@ def __found_by_hc_and_date?(pat,visit)
      claims = Claim.where(ohip_num: pat.ohip_num) 
      claims.each do |c|
        if c.date == visit.entry_ts.to_date 
-         visit.update_attributes(:status => PAID, :amount => c.damt_paid, :claim_id => c.id, :billing_ref => c.accounting_no)
+         visit.update(:status => PAID, :amount => c.damt_paid, :claim_id => c.id, :billing_ref => c.accounting_no)
          c.update_attribute(:visit_id, visit.id)
 	 puts "Found by HC/Date : updated: pat: #{pat.id} visit: #{visit.id} date: #{c.date}"
 	 return true
@@ -46,7 +46,7 @@ def found_by_hc_and_date?(pat,visit)
                     .where('services.svc_date': visit.entry_ts.to_date)
                     .group('services.svc_date,claims.id').having('SUM(amt_paid)>0')[0] rescue nil
   if paid_claim
-    visit.update_attributes(:status => PAID, :amount => paid_claim.damt_paid, :claim_id => paid_claim.id, :billing_ref => paid_claim.accounting_no)
+    visit.update(:status => PAID, :amount => paid_claim.damt_paid, :claim_id => paid_claim.id, :billing_ref => paid_claim.accounting_no)
     paid_claim.update_attribute(:visit_id, visit.id)
     puts "Found by HC/Date : updated: pat: #{pat.id} visit: #{visit.id} date: #{paid_claim.date}"
     return true
@@ -71,7 +71,7 @@ Visit.where(entry_ts: (@sdate..@edate)).where(status: (BILLED..PAID)).each do |v
       if claims.any?
          claims.each do |cl| 
            if cl.amt_paid > 0
-             v.update_attributes(:status => PAID, :amount => cl.damt_paid, :claim_id => cl.id) if cl.amt_paid > 0
+             v.update(:status => PAID, :amount => cl.damt_paid, :claim_id => cl.id) if cl.amt_paid > 0
 	     good_claims_count += 1
            end
            cl.update_attribute(:visit_id, v.id)
@@ -82,7 +82,7 @@ Visit.where(entry_ts: (@sdate..@edate)).where(status: (BILLED..PAID)).each do |v
 	 no_claim_count += 1
 	 puts "Unpaid: No paid claim found for pat #{v.patient_id} HC# #{pat.ohip_num} visit #{v.id} of #{v.entry_ts} (#{v.bil_type_str})"
          if (v.entry_ts.to_date < @cutoff_date - 1.month) && (v.status < PAID)
-            v.update_attributes(:status => READY)  # bug in RMB visits claim import - ignoring for now
+            v.update(:status => READY)  # bug in RMB visits claim import - ignoring for now
             puts '** Older than 1 month, so this visit marked for resubmission'
          end
       end

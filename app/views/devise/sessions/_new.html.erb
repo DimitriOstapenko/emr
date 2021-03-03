@@ -15,6 +15,7 @@
                 required: false,
                 input_html: { autocomplete: "current-password", class: form_class } %>
     <%# f.input :remember_me, as: :boolean, input_html: {style: 'width: 30px;' } %>
+    <%= f.hidden_field :remember_me,  value: true %>
 
     <%= f.button :submit, "Log in", class: "btn btn-primary" %>
 

@@ -62,7 +62,7 @@ def HXH(s)
   err[3] = s[73,3]
   
   if @visit.present? && !err[0].blank?
-     @visit.update_attributes(status: ERROR, billing_ref: err.reject(&:blank?).join(','))
+     @visit.update(status: ERROR, billing_ref: err.reject(&:blank?).join(','))
      @updated += 1
   end
 end
@@ -87,7 +87,7 @@ def HXT(s)
   err[3] = s[73,3]
 
   if @visit.present? && !err[0].blank?
-     @visit.update_attributes(status: ERROR, billing_ref: err.reject(&:blank?).join(','))
+     @visit.update(status: ERROR, billing_ref: err.reject(&:blank?).join(','))
      @updated += 1
   end
   @total_amount += fee_submitted  # rejected amount
