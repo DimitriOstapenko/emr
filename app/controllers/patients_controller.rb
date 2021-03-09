@@ -46,7 +46,7 @@ class PatientsController < ApplicationController
   def show 
     redirect_to patients_path(findstr: params[:findstr]) if params[:findstr]
     @patient = Patient.find(params[:id]) 
-    set_pat_session(@patient.id)
+    set_pat_session(@patient.id) if current_user.patient?
     if @patient.lname.present? && @patient.mobile_or_home_phone.present? 
       @visits = @patient.visits.paginate(page: params[:page], per_page: 14) 
       flash.now[:danger] = @patient.errors.full_messages.to_sentence unless @patient.valid?
@@ -229,7 +229,7 @@ class PatientsController < ApplicationController
     @patient = Patient.find_by(ohip_num: ohip_num) 
     if @patient.present?
       set_pat_session(@patient.id)
-      @patient.update_attribute(:ohip_ver, ohip_ver) if @patient.card_valid?  # Override version just in case
+      @patient.update_attribute(:ohip_ver, ohip_ver) if @patient.card_valid?  # Override version just in case it was changed
       if User.exists?(ohip_num: ohip_num)
         flash[:info] = "You are already registered - please log in, #{@patient.fname.capitalize}"
         redirect_to new_user_session_path
