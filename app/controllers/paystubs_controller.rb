@@ -36,14 +36,12 @@ class PaystubsController < ApplicationController
     
     if Claim.find_by("date_paid > ?", @sdate)
        flash.now[:success] = "Claims were imported for this month. Can create paystub"
-#       @paystub.claims = Claim.where(provider_no: prov_no).where(date_paid: (@sdate..@edate)).pluck('count(*)').join
-#       @paystub.ohip_amt = Claim.joins(:services).where(provider_no: prov_no).where(date_paid: (@sdate..@edate)).reorder('').pluck("sum(services.amt_paid)/100.0").join
        ((@paystub.claims,@paystub.services,@paystub.ohip_amt,@paystub.ra_file,@paystub.date_paid)) = Claim.joins(:services)
 	       .where(provider_no: prov_no)
 	       .where(date_paid: (@sdate..@edate))
        	       .reorder('')
                .group(:ra_file,:date_paid)
-	       .pluck('count(distinct claims.id), count(*), sum(services.amt_paid)/100.0, claims.ra_file, claims.date_paid')
+         .pluck(Arel.sql('count(distinct claims.id), count(*), sum(services.amt_paid)/100.0, claims.ra_file, claims.date_paid'))
    
        if @paystub.save
          flash.now[:success] = "Paystub created : #{@paystub.id}"
@@ -94,8 +92,9 @@ class PaystubsController < ApplicationController
       name = "#{@paystub.doctor.lname}_#{Date::MONTHNAMES[@paystub.month]}_#{@paystub.year}"
       @sdate = Date.new(@paystub.year, @paystub.month)
       @edate = 1.month.since(@sdate)
-      svcs = Claim.joins(:services).where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate)).reorder('').group('services.svc_date,pmt_pgm')
-      @claims = svcs.pluck('svc_date, count(distinct claims.id), count(*), pmt_pgm, SUM(amt_subm)/100.0, SUM(amt_paid)/100.0')
+
+      @claims = Claim.joins(:services).where(provider_no: @paystub.doctor.provider_no).where(date_paid: (@sdate..@edate)).group('services.svc_date,pmt_pgm').pluck(:svc_date,Arel.sql('count(distinct claims.id),count(*), pmt_pgm, SUM(amt_subm)/100.0, SUM(amt_paid)/100.0'))
+
       @paystub.update_attribute(:filename, name+'.pdf')
 
       pdf = build_paystub( @paystub,@claims )
@@ -105,7 +104,7 @@ class PaystubsController < ApplicationController
 
 # Calculate clinic budget for this month: sum of all deductions to the clinic  
   def budget
-	  budget = Paystub.where(year: Time.now.year, month: Time.now.month).reorder('').pluck('SUM(clinic_deduction)').first
+    budget = Paystub.where(year: Time.now.year, month: Time.now.month).reorder('').pluck(Arel.sql('SUM(clinic_deduction)')).first
 	  budget ||= 0.0
 	  flash.now[:info] = "This month's budget (sum of deductions of all active doctors): #{sprintf("$%.2f",budget)} "
 	  render  inline: '', layout: true

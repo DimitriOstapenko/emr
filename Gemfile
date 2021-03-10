@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-#ruby '2.6.4'
+ruby '2.6.4'
 gem 'rails', '~> 6.1'
 gem 'bundler', '~> 2.1', '>= 2.1.4'
 gem 'pg'
