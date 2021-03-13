@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
 
-ruby '2.6.4'
+#ruby '2.6.4'
 gem 'rails', '~> 6.1'
 gem 'bundler', '~> 2.1', '>= 2.1.4'
 gem 'pg'
 gem 'puma', '~> 5.1', '>= 5.1.1'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem 'nokogiri', '~> 1.11', '>= 1.11.1'
+
+gem 'bootsnap', '~> 1.7', '>= 1.7.2'
 
  gem 'nexmo',  '~> 7.0'  
 #gem 'vonage'
@@ -42,15 +44,15 @@ group :development, :test do
   gem 'capybara', '~> 3.35', '>= 3.35.3'
   gem 'selenium-webdriver'
   gem 'better_errors', '~> 2.9', '>= 2.9.1'
-  gem 'binding_of_caller', '~> 0.8.0'
+  gem 'binding_of_caller', '~> 1.0'
 #  gem 'bullet'   # /Users/dmitri/emr/config/environments/development.rb  - config options
 end
 
 group :development do
   gem 'web-console',           '3.5.1'
   gem 'listen',                '3.0.8'
-  gem 'spring',                '2.0.2'
-  gem 'spring-watcher-listen', '2.0.1'
+  gem 'spring' #, '~> 2.1', '>= 2.1.1'
+##  gem 'spring-watcher-listen', '~> 2.0', '>= 2.0.1'
 end
 
 group :test do
@@ -63,7 +65,7 @@ end
 group :production do
 end
 
-gem 'activerecord-session_store'
+gem 'activerecord-session_store', '~> 2.0'
 gem 'popper_js', '~> 2.6'
 #gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip', '~> 2.3'

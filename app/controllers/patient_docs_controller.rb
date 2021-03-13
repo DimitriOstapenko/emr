@@ -1,6 +1,6 @@
 class PatientDocsController < ApplicationController
   
-  before_action :set_patient_doc, only: [:show, :edit, :update, :download, :export, :destroy]
+  before_action :set_patient_doc, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user
 
   def index
@@ -42,6 +42,12 @@ class PatientDocsController < ApplicationController
       flash[:danger] =  "Patient document file #{@patient_doc.patient_doc.url} not found"  
       redirect_to @patient_doc.patient
     end
+  end
+
+  def destroy
+    @patient_doc.destroy
+    flash[:info] = "Document deleted"
+    redirect_back(fallback_location: @patient_doc.patient )
   end
 
 private

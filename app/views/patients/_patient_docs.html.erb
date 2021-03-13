@@ -2,7 +2,7 @@
 <div class="collapse panel panel-info" id="patient_docs">
   <div class="tbl patient-dropdown-panel-body">
      <table class="table table-hover table-striped table-bordered">
-       <th></th><th>Type</th><th>Date</th><th>From Dr.</th><th>File Name</th>
+       <th></th><th>Type</th><th>Date</th><th>From Dr.</th><th></th>
         <% @patient.patient_docs.each do |doc| %>
         <tr>
           <td>
@@ -13,7 +13,11 @@
           <td> <%= doc.doc_type_str %> </td>
           <td> <%= doc.date %> </td>
           <td> <%= doc.doctor.lname rescue '' %> </td>
-          <td> <%= doc.filename %> </td>
+          <% if current_user.staff? || current_user.admin? %>
+            <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_patient_doc_path(@patient,doc), method: :delete, data: { confirm: "Are you sure you want to delete #{doc.doc_type_str}  #{doc.id}?" } %></td>
+          <% else %>
+            <td> </td>
+          <% end %>
         </tr>
         <% end %>
      </table>
