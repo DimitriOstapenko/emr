@@ -42,7 +42,7 @@ end
 
 def join_files
   backup_chart = "#{self.filespec}_"
-  if File.exists?(backup_chart)
+  if File.exists?(backup_chart) && self.exists?
 #     (CombinePDF.load(backup_chart) << CombinePDF.load(self.filespec)).save(self.filespec)
      (CombinePDF.load(self.filespec) << CombinePDF.load(backup_chart)).save(self.filespec)
      File.rename(backup_chart, File.join(File.dirname(backup_chart), File.basename(backup_chart,'.pdf_') + '.bak')) # prevent second combine

@@ -28,15 +28,17 @@ class ChartsController < ApplicationController
 
     if @patient.present?
        if @patient.chart_exists?
-         @patient.chart.rename   # We rename original file to append to it after save
+         @patient.chart.rename rescue nil  # We rename original file to append to it after save
          appended_msg =  'Original file appended'
        end
        @patient.chart.destroy rescue nil
        @patient.chart = Chart.new(chart_params)
+#       logger.debug("#################### #{@patient.chart} ")
        if @patient.chart.save
           flash[:success] =  "Chart #{@patient.chart.id} for #{@patient.full_name} uploaded. #{appended_msg}"
           redirect_back(fallback_location: charts_path)
        else
+          flash[:danger] = "Error saving chart"
           render json: {error: 'Error saving chart'}, status: 422
        end
     else
