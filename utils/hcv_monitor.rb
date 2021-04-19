@@ -5,15 +5,15 @@
 require_relative '../config/environment'
 
 hcv = SvcMonitor.find_by(name: 'hcv')
-SvcMonitor.create!(name: 'hcv', up: true) unless hcv
+SvcMonitor.create!(name: 'hcv', up: false) unless hcv
 
 # Get most recently validated patient
 patient = Patient.where.not(validated_at: nil).where(prov: 'ON').last
 response = patient.get_hcv_response
-abort ("Did not get valid responce") unless response
-json = JSON.parse(response.body)
+#abort ("Did not get valid response") unless response
+json = JSON.parse(response.body) if response.present?
 
-if json['status'] == 'success'
+if response && json['status'] == 'success' 
   puts "#{Time.now} We're up.."
   hcv.update_attribute(:up, true)
 else
