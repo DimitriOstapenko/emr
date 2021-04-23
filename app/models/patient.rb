@@ -324,12 +324,14 @@ class Patient < ApplicationRecord
   end
 
 # Call HCV service through MDMax and get a response  !!! Dependency: provider_no and username
-  def get_hcv_response
+  def get_hcv_response(verify_service: true)
     require "uri"
     require "net/http"
-    
-    hcv = SvcMonitor.find_by(name: 'hcv')
-    return unless hcv && hcv.up
+  
+    if verify_service  
+      hcv = SvcMonitor.find_by(name: 'hcv')
+      return unless hcv && hcv.up
+    end
 
     url = URI("https://api.mdmax.ca/api/1.1/wf/api-validation-call")
     https = Net::HTTP.new(url.host, url.port);
