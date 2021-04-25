@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
   get '/visits' => 'visits#index'
   get '/billings' => 'billings#index'
+  post '/billings/clear_errors', to: 'billings#clear_errors'
   post '/billings/export_csv', to: 'billings#export_csv'
   post '/billings/export_edt', to: 'billings#export_edt'
   post '/billings/export_cabmd', to: 'billings#export_cabmd'

@@ -46,17 +46,24 @@
 
 <div class="row">
 <div class="bottom_buttons ">
+  <div class="col-md-2">
   <% if current_user.admin? %>
-	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
+	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-success", method: 'post', params: {date: date}  %>
   <% elsif date == Date.today && @not_ready.blank? %>
       <% if BILLING_FORMAT == EDT_FORMAT %>
-	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success col-md-2", method: 'post', params: {date: date}  %>
+	 <%= button_to "Export Claim File (EDT)", billings_export_edt_path, class: "btn btn-success", method: 'post', params: {date: date}  %>
       <% elsif BILLING_FORMAT == CSV_FORMAT %>
-	 <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
+	 <%= button_to "Export Claim File (CSV)", billings_export_csv_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
       <% elsif BILLING_FORMAT == CABMD_FORMAT %>
-	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary col-md-2", method: 'post', params: {date: date}  %>
+	 <%= button_to "Send claims to Cab.md", billings_export_cabmd_path, class: "btn btn-primary", method: 'post', params: {date: date}  %>
       <% end %>
   <% end %>
+  </div>
+  <div class="col-md-3">
+    <% if Billing.any_errors? %>
+      <%= button_to "Clear all errors", billings_clear_errors_path, class: "btn btn-danger"  %>
+    <% end %>
+  </div>
 
 </div>
 

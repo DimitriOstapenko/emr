@@ -13,9 +13,9 @@ class BillingsController < ApplicationController
         store_location
 
       if @date.present?
-        @visits = Visit.where("date(entry_ts) = ?", @date).where(status: [READY,BILLED,PAID])
+        @visits = Visit.where("date(entry_ts) = ?", @date).where(status: [READY,BILLED,PAID,ERROR])
       else
-        @visits = Visit.where(status: READY )
+        @visits = Visit.where(status: [READY,ERROR] )
         @date = Date.today
 	flash_add = 'ready to bill'
       end
@@ -241,6 +241,12 @@ class BillingsController < ApplicationController
     @prev_cycle_end_date = Claim.joins(:services).reorder('svc_date desc').limit(1).pluck(:svc_date).join
     @billed_visits = Visit.where('entry_ts>? AND status=?',@prev_cycle_end_date,BILLED).reorder('').group(:doc_id).count
     render 'billed_visits'
+  end
+
+  def clear_errors
+    Visit.where(status: ERROR).update_all(status: READY)
+    flash.now[:info] = "All visits with errors are now marked as 'Ready'"
+    redirect_back(fallback_location: billings_path )
   end
 
 private

@@ -22,4 +22,8 @@ class Billing < ApplicationRecord
     pat.full_name if pat
   end
 
+  def self.any_errors?
+    Visit.where(status: ERROR).any? rescue false
+  end
+
 end
