@@ -142,7 +142,7 @@ class Patient < ApplicationRecord
     return unless hcv && hcv.up
 
     ohip_num,ohip_ver = full_ohip_num.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
-    patient = Patient.new(ohip_num: ohip_num, ohip_ver: ohip_ver)
+    patient = Patient.new(ohip_num: ohip_num, ohip_ver: ohip_ver.upcase)
 
     (patient.notes = 'Ontario health card number must be 10 digit long'; return patient) unless ohip_num
     (patient.notes = 'error: Version Code is missing/wrong size'; return patient) unless ohip_ver
@@ -164,7 +164,7 @@ class Patient < ApplicationRecord
     fname = resp['First-name']
     lname = resp['Last-name']
     sex = resp['Gender']
-    dob = Date.strptime( resp['DOB'], '%m/%e/%y')
+    dob = Date.parse(resp['DOB']) rescue Time.now - 100.years
     dob = dob - 100.years if dob > Date.today
     patient.assign_attributes(lname: lname, fname: fname, sex: sex, dob: dob, hin_prov: 'ON', pat_type: 'O', hin_expiry: Date.today + 10.years, prov: 'ON', validated_at: Time.now )
     patient.save
@@ -339,11 +339,11 @@ class Patient < ApplicationRecord
 
     request = Net::HTTP::Post.new(url)
     request["Authorization"] = MDMAX_BEARER
-#    request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
+    request["Cookie"] = "__cfduid=deef3c863bc8d33051df1916a9e4dfd571605555555"
     form_data = [['Provider-number', MDMAX_PROVIDER_NUMBER],['HCN', self.ohip_num],['VC', self.ohip_ver],['User', MDMAX_USER]]
     request.set_form form_data, 'multipart/form-data'
     response = https.request(request) rescue nil
-    (errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message rescue ''}"); return;) unless response && response.message == 'OK'
+    errors.add(:ohip_num, ": Error returned from HCV service; message: #{response.message rescue ''}") #; return;) unless response && response.message == 'OK'
     return response
   end
 

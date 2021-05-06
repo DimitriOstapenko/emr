@@ -252,6 +252,23 @@ class PatientsController < ApplicationController
     
   end
 
+# Call HCV service to validate card  
+  def card_validator
+    fullnum = params[:patient][:ohip_num].strip.upcase rescue nil
+    ohip_num,ohip_ver = fullnum.match(/([[:digit:]]{10})\s*([[:alpha:]]{2}?)/).captures rescue nil
+    return unless ohip_num && ohip_ver
+    patient = Patient.new(ohip_num: ohip_num, ohip_ver: ohip_ver.upcase)
+    raw = patient.get_hcv_response
+
+    if raw.body.present?
+      json = JSON.parse(raw.body)
+      @status = json['status']
+      @response = json['response']
+    else
+      flash[:warning] = 'Card invalid'
+    end
+  end
+
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 

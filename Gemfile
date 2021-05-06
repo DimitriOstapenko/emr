@@ -42,17 +42,16 @@ group :development, :test do
   gem 'faker', '~> 2.16'
   gem 'byebug', '~> 11.1', '>= 11.1.3'
   gem 'capybara', '~> 3.35', '>= 3.35.3'
-  gem 'selenium-webdriver'
   gem 'better_errors', '~> 2.9', '>= 2.9.1'
   gem 'binding_of_caller', '~> 1.0'
 #  gem 'bullet'   # /Users/dmitri/emr/config/environments/development.rb  - config options
 end
 
 group :development do
-  gem 'web-console',           '3.5.1'
+  gem 'web-console'
   gem 'listen',                '3.0.8'
   gem 'spring' #, '~> 2.1', '>= 2.1.1'
-##  gem 'spring-watcher-listen', '~> 2.0', '>= 2.0.1'
+  gem 'spring-watcher-listen', '~> 2.0', '>= 2.0.1'
 end
 
 group :test do
@@ -60,6 +59,7 @@ group :test do
   gem 'minitest-reporters', '~> 1.4', '>= 1.4.3'
   gem 'guard', '~> 2.16', '>= 2.16.2'
   gem 'guard-minitest', '~> 2.4', '>= 2.4.6'
+  gem 'selenium-webdriver'
 end
 
 group :production do

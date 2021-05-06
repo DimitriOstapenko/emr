@@ -108,6 +108,9 @@ Rails.application.routes.draw do
   get 'unpaid_visits', to: 'visits#unpaid_visits'
   get 'total_unpaid_visits', to: 'visits#total_unpaid_visits'
   
+  get 'card_validator', to: 'patients#card_validator'
+  post 'card_validator', to: 'patients#card_validator'
+  
   resources :edt_files, :forms, :invoices, :letters, :referrals, :daily_charts, :charts, :prescriptions, :paystubs, :reports  do
      get 'download', on: :member
      get 'export', on: :member

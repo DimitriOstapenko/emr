@@ -1,0 +1,26 @@
+<div class="p-5">
+<%= simple_form_for :patient do |f| %>
+  <%= f.error_notification %>
+  <%# render 'shared/error_messages', object: f.object %>
+
+  <div class="row">
+  <div class="col-md-2">
+     <%= f.input :ohip_num, label: false, placeholder: 'OHIP Number'%>
+  </div>
+
+  <div class="col-md-2">
+  <%= f.button :submit, 'Validate Card', class: "btn btn-primary" %>
+  </div>
+  </div>
+<% end %>
+  
+
+  <div class="m-5"></div>
+  <% if @response.present? %>
+    HCV Response status : <%= @status %>
+    <%= simple_format @response.to_yaml %>
+  <% end %>
+  
+</div>
+
+
