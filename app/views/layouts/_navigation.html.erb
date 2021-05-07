@@ -1,21 +1,26 @@
-<% img = '<img src="/images/leaf.png" width=25>' %> 
+<% img = '<img src="/images/leaf2.png" width=25>' %> 
 <% if logged_in? %>
    <%= render "layouts/#{device_type}_#{current_user.role}_navigation" %>
 <% else %>
-<nav class="navbar navbar-expand-lg navbar-light">
   <% if device_is_desktop? %>
-  <ul class="nav navbar-nav navbar-left">
+<div id="topbar" class="d-flex align-items-center fixed-top">
+  <ul class="nav navbar-nav">
     <li class="nav-item"> <%= link_to "#{img} Stoney Creek Medical Walk-In Clinic".html_safe, root_path, id: "logo" %></li>
+    <li class="nav-item" style="padding-left: 20em"><i class="glyphicon glyphicon-time"></i> Mon - Fri, 9am to 7:30pm; Sat,Sun: 9am to 1:30pm
+     &nbsp; <i class="glyphicon glyphicon-phone"></i> 905-561-9255
+    </li>
   </ul>
   <ul class="nav navbar-nav navbar-right">
-    <li class="login_link"><%= link_to "<i class='glyphicon glyphicon-log-in'></i> Login".html_safe, new_user_session_path %></li>
+    <li class="nav-item"><%= link_to "<i class='glyphicon glyphicon-log-in'></i> Login".html_safe, new_user_session_path, id: "login_link" %></li>
   </ul>
+</div>
 <% else %>
+  <nav class="navbar navbar-expand-lg navbar-light">
   <ul class="nav navbar-nav navbar-mobile">
   <li class="nav-item btn-primary"><%= link_to "Stoney Creek Walk-In Clinic".html_safe, root_path, id: "mobile-logo" %>
-  <center><font size=3 color=white>  140 Centennial Pkwy N, Hamilton, ON L8E 1H9 </font> </center>
+  <center><font color=white>  140 Centennial Pkwy N, Hamilton, ON L8E 1H9 </font> </center>
   </li>
   </ul>
+  </div>
 <% end %>
-</nav>
 <% end %>

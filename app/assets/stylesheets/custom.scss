@@ -59,6 +59,8 @@ p {
 
 .container-fluid {
 //   overflow-x: auto;
+   padding-left: 0;
+   padding-right: 0;
 }
 
 .help-container {
@@ -98,13 +100,27 @@ overflow: auto;
 
 /* navbar */
 
+#topbar {
+    background: #3fbbc0;
+    color: #fff;
+    height: 40px;
+    line-height: 40px;
+//    font-size: 16px;
+    font-weight: 600;
+    z-index: 996;
+    transition: all 0.5s;
+}
+
 .navbar .navbar-nav > .active > a,
 .navbar .navbar-nav > .active > a:hover,
 .navbar .navbar-nav > .active > a:focus {
     color: red;
 //    font-weight: bold;
 //    background-color: white;
-//  height: 40px;
+}
+
+.nav-item {
+  font-size: 13px;
 }
 
 .navbar-mobile {
@@ -113,11 +129,10 @@ overflow: auto;
   font-size: 16px;
   height: 40px;
   font-weight: 500;
-  line-height: 35px;
+  line-height: 30px;
   z-index: 1000;
   margin-top: 0;
-//  float:none;
-//  margin: 0 auto;
+  margin: 0 auto;
 //  display: table;
 //  table-layout: fixed;
 }
@@ -270,25 +285,34 @@ td.hlight {
 /* header */
 
 #logo {
-//  float: left;
-  margin-right: 10px;
-  margin-left: 10px;
-  font-size: 19px;
-//  color: #34d5eb;
-  color: $gray;
+  padding-left: 20px;
+  color: white; //$gray;
   text-transform: uppercase;
-//  letter-spacing: -2px;
+  font-size: 15px;
   font-weight: bold;
-//  font-style: italic;
+  padding-top: 10px;
+    height: 40px;
   &:hover {
     color: red;
+    background: #3fbbc0;
+    text-decoration: none;
+  }
+}
+
+#login_link {
+  color: white;
+  padding-top: 10px;
+  padding-right: 20px;
+  &:hover {
+    color: red;
+    background: #3fbbc0;
     text-decoration: none;
   }
 }
 
 #mobile-logo {
   text-align: center;
-  font-size: 1.4em;
+  font-size: 1.6em;
   color: white;
   text-transform: uppercase;
   font-weight: bold;
@@ -305,9 +329,9 @@ td.hlight {
 }
 
 #address {
-  font-size: 1.2em;
+//  font-size: 1.1em;
 //  font-weight: bold;
-  margin-left: 15px;  
+//  margin-left: 15px;  
 }
 
 .hdr-text {
