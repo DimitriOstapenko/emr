@@ -1,6 +1,6 @@
 <% if logged_in? %>
 <li class="dropdown nav-item">
-<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-menu-hamburger text-muted"></i></a>
+<a href="#" id="dropdown-menu"  data-toggle="dropdown"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
 <ul class="dropdown-menu">
 
 <% if current_user.patient? %>
@@ -16,6 +16,6 @@
 <% end %>
 
 <% title = (current_user.patient? && device_is_desktop?) ? 'Stoney Creek Walk-In Clinic' : 'Walk-In EMR' %>
-<li class="nav-item"> <%= link_to title, root_path, id: "logo" %> </li>
+<li class="nav-item"> <%= link_to title, root_path, id: "logged-in-logo" %> </li>
 
 

@@ -120,7 +120,7 @@ overflow: auto;
 }
 
 .nav-item {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .navbar-mobile {
@@ -298,6 +298,30 @@ td.hlight {
     text-decoration: none;
   }
 }
+
+#logged-in-logo {
+  padding-left: 20px;
+  color: $gray;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+    height: 40px;
+  &:hover {
+    color: red;
+    background: white;
+    text-decoration: none;
+  }
+}
+
+#dropdown-menu {
+  padding-left: 20px;
+  color: gray;
+  &:hover {
+    color: white !important;
+    background: gray;
+    text-decoration: none;
+  }
+  }
 
 #login_link {
   color: white;
