@@ -43,6 +43,10 @@ class Patient < ApplicationRecord
         validate :hcv_validate, on: [:create, :update], if: Proc.new { |a| (a.hin_prov == 'ON' &&  a.pat_type == 'O')}
 	validate :validate_age
 
+  def email
+    self.user.email rescue nil
+  end
+
   def full_name
     fn = self.lname 
     fn = "#{fn}, #{self.fname}" if self.fname.present?

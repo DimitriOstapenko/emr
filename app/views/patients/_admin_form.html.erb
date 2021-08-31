@@ -96,21 +96,17 @@
 <!-- Row 4 -->
 
 <div class="row">
-  <div class="col-sm-3">
+  <div class="col-sm-4">
   <%# f.input :family_dr, label: 'Family Doctor' #%>
   <%= f.input :family_dr, collection: Doctor.all, label_method: :lname, value_method: :lname, prompt: 'Select', hint: 'Optional' %>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-4">
   <%= f.input :phone, as: :tel,  value: num_to_phone(@patient.phone), hint: 'Required'  %>
   </div>
   
-  <div class="col-sm-3">
+  <div class="col-sm-4">
   <%= f.input :mobile, as: :tel, value: num_to_phone(@patient.mobile) %>
-  </div>
-  
-  <div class="col-sm-3">
-  <%= f.input :email %>
   </div>
 </div>
 
