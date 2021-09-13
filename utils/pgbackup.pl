@@ -4,10 +4,16 @@
 
 use strict;
 my $dow = (localtime)[6];
+
 my $target_dir = '/home/rails/backup/';
+#my $target_dir = '/Users/dmitri/emr/backup/';
+
 my $target_file = $target_dir.'walkin'.$dow.'.gz';
 
 print  "This is ", `uname -a`, `date`, " \n";
+
 `/usr/bin/pg_dump --no-acl -d walkin -Z5 > $target_file`;
+#`/usr/local/bin/pg_dump --no-acl -d walkin -Z5 > $target_file`;
+
 print "Finished writing to $target_file";
 
