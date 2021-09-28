@@ -6,7 +6,7 @@ gem 'bundler', '~> 2.1', '>= 2.1.4'
 gem 'pg'
 gem 'puma', '~> 5.1', '>= 5.1.1'
 gem 'devise', '~> 4.7', '>= 4.7.3'
-gem 'nokogiri', '~> 1.11', '>= 1.11.1'
+gem 'nokogiri', '~> 1.12'
 
 gem 'bootsnap', '~> 1.7', '>= 1.7.2'
 
