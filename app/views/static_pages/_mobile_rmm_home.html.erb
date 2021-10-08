@@ -27,7 +27,11 @@
 <i><b>Sorry, no renewals of opioid medications! </b></i></p>
 </div>
 
+<% if Time.now.to_i % 5 < 2 %>
+<h1> (289) 775-1961 </h1>
+<% else %>
 <h1> (905) 561-9255 </h1>
+<% end %>
 
 </div>
 <%= render "footer_icons" %>
