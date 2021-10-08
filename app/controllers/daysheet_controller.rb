@@ -13,12 +13,13 @@ class DaysheetController < ApplicationController
 
       if @date.present?
         @noerrorvisits = @daysheet = Visit.where("date(entry_ts) = ?", @date) 
+        @televisits = @noerrorvisits.where(vis_type: 'TV').count rescue 0
       else 
         @daysheet = Visit.where(status: [ARRIVED,WITH_DOCTOR,ASSESSED,READY,ERROR] ).or(Visit.where('date(entry_ts) = ? AND status<?', Date.today, CANCELLED))
 	@date = Date.today
 	@noerrorvisits = @daysheet.where("date(entry_ts) = ?", @date)
+        @televisits = Visit.where('date(entry_ts) = ? AND vis_type=?', Date.today,  'TV').count rescue 0
       end
-      @televisits = Visit.where('date(entry_ts) = ? AND vis_type=?', Date.today,  'TV')
       
       @docs_visits = Visit.where("date(entry_ts) = ?",@date).group('doc_id').reorder('').size
       @docs = Doctor.find(@docs_visits.keys) rescue [] if @docs_visits.size > 1
@@ -31,7 +32,7 @@ class DaysheetController < ApplicationController
 	 @noerrorvisits = @daysheet = @daysheet.where(doc_id: doc.id)
 	 flashmsg = "Daysheet for Dr. #{doc.lname} : #{@daysheet.count} #{'visit'.pluralize(@daysheet.count)}"
       else
-        flashmsg = "#{@noerrorvisits.count}  #{'visit'.pluralize(@noerrorvisits.count)}, #{@televisits.count} #{'televisit'.pluralize(@televisits.count)} "
+        flashmsg = "#{@noerrorvisits.count}  #{'visit'.pluralize(@noerrorvisits.count)}, #{@televisits} #{'televisit'.pluralize(@televisits)} "
       end
 
       @cash_svcs = @total_cash = 0
