@@ -11,8 +11,9 @@
 <%= ifhnum if ifhnum.present? %>
 <b>Born:</b> <%= @patient.dob %>
 <b>Phone:</b> <%= num_to_phone(@patient.phone) if @patient.phone.present? %>
-<b>Address:</b> <%= @patient.addr_full if @patient.addr.present? %> 
-<b>Allergies:</b> <%= @patient.allergies if @patient.allergies.present? %>
+<b>Email:</b> <%= @patient.email if @patient.email.present? %>
+<b>Address:</b> <%= @patient.addr_full if !@patient.addr.empty? %> 
+<b>Allergies:</b> <%= @patient.allergies %>
 <% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
 <b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
 <% end %>

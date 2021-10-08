@@ -370,7 +370,6 @@ DEPENDENCIES
   mini_magick (~> 4.9.4)
   minitest-reporters (~> 1.4, >= 1.4.3)
   nexmo (~> 7.0)
-  nokogiri (~> 1.11, >= 1.11.1)
   pdf-reader (~> 2.4, >= 2.4.2)
   pg
   popper_js (~> 2.6)
