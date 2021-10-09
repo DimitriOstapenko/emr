@@ -1,28 +1,3 @@
-#curl --location --request POST 'https://api.mdmax.ca/api/1.1/wf/api-validation-call-testing-v3' \
-#--header 'Authorization: Bearer eae0c0f2f6446408a900f31a9af201dd' \
-#--form 'provider-number="123456"' \
-#--form 'hcn="1234567890"' \
-#--form 'vc="AA"' \
-#--form 'user="dimitri"' \
-#--form 'mcedt-email="dosta@me.com"' \
-#--form 'mcedt-pass="Kwartira39@@"'
-
-#{
-#    "status": "success",
-#    "response": {
-#        "First-name": "Justin",
-#        "Last-name": "Trudeau",
-#        "Gender": "M",
-#        "DOB": "1979-01-21",
-#        "MOH-Duration": 1,
-#        "MOH-card-status": "valid",
-#        "MOH-card-eligible": true,
-#        "MOH-Message": "You will receive payment for billable services rendered on this day.",
-#        "MOH-response-code": "50",
-#        "MOH-action": "NOT_ON_ACTIVE_ROSTER"
-#    }
-
-
 require_relative '../config/environment'
 require "uri"
 require "net/http"
