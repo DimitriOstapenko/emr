@@ -49,7 +49,9 @@ class User < ApplicationRecord
   def after_confirmation
     if self.patient?
       self.patient.update_attribute(:email, self.email) 
-      self.patient.visits.create!(entry_by: self.email, vis_type: TELE_VISIT, consented: true, reason: self.first_visit_reason, doc_id: OWNER_DOC_ID) unless self.patient.has_visit_today?   # !!!!!!!!!!!!!!!!!!!!!!!!!!  Dr Ostapenko
+      # !!!!!!!!!!!!!!!!!!!!!!!!!!  Dr Ostapenko
+      self.patient.visits.create!(entry_by: self.user.email, vis_type: TELE_VISIT, consented: true, reason: self.first_visit_reason,
+                                  'proc_code':'K081A', 'proc_code2': 'K301A', doc_id: OWNER_DOC_ID) unless self.patient.has_visit_today?   
     end 
   end
 

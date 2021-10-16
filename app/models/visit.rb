@@ -41,6 +41,10 @@ class Visit < ApplicationRecord
 	  else 
 	    self.hin_num ||= pat.ohip_num
 	  end
+          if self.vis_type = 'TV'
+            self.proc_code = 'K081A' 
+            self.proc_code2 = 'K301A' 
+          end
 	  }
                 
 # Send email to the doctor about new Virtual visit  

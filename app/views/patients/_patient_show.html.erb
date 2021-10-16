@@ -12,7 +12,7 @@
 <b>Born:</b> <%= @patient.dob %>
 <b>Phone:</b> <%= num_to_phone(@patient.phone) if @patient.phone.present? %>
 <b>Email:</b> <%= @patient.email if @patient.email.present? %>
-<b>Address:</b> <%= @patient.addr_full if !@patient.addr.empty? %> 
+<b>Address:</b> <%= @patient.addr_full %> 
 <b>Allergies:</b> <%= @patient.allergies %>
 <% if @patient.pharmacy.present? || @patient.pharm_phone.present? %>
 <b>Pharmacy:</b> <%= @patient.pharmacy if @patient.pharmacy %>  <%= " ph: #{@patient.pharm_phone}" if  @patient.pharm_phone %>
