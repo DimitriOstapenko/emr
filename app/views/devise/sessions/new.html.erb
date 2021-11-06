@@ -3,8 +3,13 @@
 <%= render 'shared/error_messages', object: f.object %>
 <% form_class= device_is_mobile? ? 'reg-form-control' : '' %>
 
+
+<% if current_patient && current_patient.user && current_patient.user.confirmed_at %>
+<h2> Welcome back, <%= current_patient.fname %>! Please log in below </h2>
+<% end %>
+
 <div class='form-group row align-center'>
-<div class="col-md-3 col-sm-4 col-md-offset-4 col-sm-offset-4">
+<div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
 <div class="well">
     <%= f.input :email,
                 required: false,
