@@ -4,10 +4,12 @@
 <div class="row">  
   <div class="col-md-5 col-sm-12">
     <img src='/images/clinic22.jpg' width="580" style="margin-left: 20px "></img>
-    <div id="address" class="pt-3 ml-5">140 Centennial Parkway North, Hamilton, ON L8E 1H9 <p>Phone: (905) 561-9255 fax: (905) 561-4391 </div>
+    <div id="address" class="pt-3 ml-5">140 Centennial Parkway North, Hamilton, ON L8E 1H9  -  <%= link_to 'see directions',
+    "https://www.google.com/maps/dir//Stoney+Creek+Medical+Walk-In+Clinic,+140+Centennial+Pkwy+N,+Stoney+Creek,+ON+L8E+1H9,+Canada/@43.233076,-79.7631224,17z/data=!4m9!4m8!1m0!1m5!1m1!1s0x882c9894d9c1cac5:0xeb749383c5b18494!2m2!1d-79.7609284!2d43.233076!3e0", target: "_blank" %> <p>Phone: (905) 561-9255 fax: (905) 561-4391 </div>
 
+  <% bg = Schedule.clinic_open? ? 'bg-success' : 'bg-danger' %>
   <div class="row pt-3">
-  <div class="card text-center col-md-5 col-md-offset-3 bg-danger">
+  <div class="card text-center col-md-5 col-md-offset-3 <%= bg %>">
   <div class="card-body">
   <%= Schedule.doc_on_duty %>
   </div>
@@ -16,9 +18,6 @@
 
     <div class="pt-3">
       You can set up your virtual visit or request prescription renewal even when the clinic is closed : <%= link_to "request callback from doctor", new_user_session_path %>.
-    </div>
-    <div class="pt-3">
-       For telemedicine visits, our goal is to call you back within an hour of your online request, provided it was made between 8am and 8pm Monday to Friday, or between 9am and 2pm on weekends.
     </div>
 
     <p>
@@ -41,7 +40,7 @@
    <p><font size=6>O</font>ur clinic is open 7 days a week. Current schedule is shown below. Please register here and doctor will call you back. During callback to discuss your medical issue, doctor will decide if you need to come to the clinic. You can also go directly to the clinic, but registering saves time. </p>
   <div class="pt-3"></div>
 
-  <p> <font size=6>P</font>rescriptions can now be renewed over the phone with online registration. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice. Please enter your OHIP number to register, or click button below to log into your patient profile and book a visit. 2 step TB tests and Driving Physical Exam are available at $50/step and $120. <b> We do not renew prescriptions for narcotics and controlled medications.</b> </p>
+  <p> <font size=6>P</font>rescriptions can now be renewed over the phone with online registration. Just wait for callback from doctor to discuss what you need. You can pick your prescription at the pharmacy of your choice.  2 step TB tests and Driving Physical Exam are available at $60/step and $120. <b> We do not renew prescriptions for narcotics and controlled medications.</b> </p>
 
   <div class="pt-3"></div>
   <p> <font size=6>E</font>ven if you are out of province or don't have a health card, we still can help. Please call the clinic directly during business hours or just walk in. </p>
@@ -51,15 +50,19 @@
   <%= render "/devise/sessions/new" %>
 <% else %>
 <div class="pt-2">
-  <font size=6>N</font>ew patient? <%= link_to 'Please enter your health card number to register', new_user_registration_path %>
+  <font size=6>N</font>ew patient? <%= link_to 'Please register', new_user_registration_path %>
 </div>
 <div class="pt-2">
   <%= render "#{device_type}_lookup" if hcv.up %>
 </div>
 
 <p class="pt-3">Registered already? Go ahead and book your visit. Just click the button below, log in and describe your symptoms. Doctor on duty (see the schedule) will call you back to discuss your issue or renew your medications. Doctor will advise if you need to come to the clinic. </p>
-<div align="center" class="pt-4"><%= link_to 'Book a visit', new_user_session_path, class: "btn btn-warning btn-md" %></div>
+<div align="center" class="pt-4"><%= link_to 'Book a visit', new_user_session_path, class: "btn btn-success btn-lg" %></div>
 <% end %>
+
+<div class="pt-3">
+   For telemedicine visits, our goal is to call you back within an hour of your online request, provided it was made between 8am and 8pm Monday to Friday, or between 9am and 2pm on weekends.
+</div>
 
 <div class="pt-4">
   <i>

@@ -26,11 +26,15 @@ def self.doc_on_duty
     end
 end
 
+def self.clinic_open?
+  self.where('end_time > ?', Time.now).where('start_time < ?', Time.now).where(dow: Time.now.wday).first && Doctor.find(sched.doctor_id)
+end
+
 def from
     self.start_time.strftime("%l:%M%p")
 end
 
-def from
+def to
     self.end_time.strftime("%l:%M%p")
 end
 

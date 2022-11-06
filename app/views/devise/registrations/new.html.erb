@@ -5,8 +5,10 @@
 <% form_class= device_is_mobile? ? 'reg-form-control' : '' %>
 
 <div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-<h3>New Patient Registration</h3>
-<div class="well">
+<div class="card bg-light">
+  <div class="card-body">
+    <h3 class="card-title">New Patient Registration</h3>
+    <div class="pt-2"></div>
 
 <% if current_patient.present? %>
   <% ohip_num ||= current_patient.ohip_num
@@ -16,7 +18,7 @@
    %>
 <% else %>
   <div id="note"> 
-  Clinic patient? If health card number matches our records, we will retrieve your patient profile
+    <!--  Clinic patient? If health card number matches our records, we will retrieve your patient profile -->
   </div>
 <% end %>
 
@@ -25,13 +27,13 @@
 
   <div class="row">
   <div class="col-md-12">
-    <%= f.input :ohip_num, label: 'Your Health Card Number', autofocus: false, input_html: {value: "#{ohip_num} #{ohip_ver}", class: form_class }, readonly: readonly %> 
+    <%= f.input :ohip_num, required: true, hint: "Required", autofocus: true, label: 'Your Health Card Number', input_html: {value: "#{ohip_num} #{ohip_ver}", class: form_class }, readonly: readonly %> 
   </div>
   </div>
 
   <div class="row">
     <div class="col-md-12" id="email" >
-    <%= f.input :email, required: true, autofocus: true, hint: "Please enter your email address", input_html: { autocomplete: "email", value: email, class: form_class } %>
+    <%= f.input :email, required: true, hint: "* Please enter your email address", input_html: { autocomplete: "email", value: email, class: form_class } %>
   </div>
   </div>
 
@@ -39,7 +41,7 @@
   <div class="col-md-12">
     <%= f.input :password,
                 required: true,
-                hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
+                hint: ("* #{@minimum_password_length} characters minimum" if @minimum_password_length),
                 input_html: { autocomplete: "new-password", class: form_class } %>
   </div>
   </div>
@@ -64,12 +66,11 @@
   </div>
   </div>
 
-  <div class="row">
-  <div class="col-md-12">
+  <div class="card-footer">
   <%= render "devise/shared/links" %>
   </div>
-  </div>
 
+</div>
 </div>
 </div>
 <% end %>

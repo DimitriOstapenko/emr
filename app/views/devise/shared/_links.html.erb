@@ -1,12 +1,12 @@
 
-<div class="pt-3 row">
+<div class="pt-5 row">
   <div class="col-md-12">
   <%- if controller_name != 'sessions' %>
     <%= link_to "Log in", new_session_path(resource_name) %><br />
   <% end %>
 
   <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-    <%= link_to "New user? Sign up", new_registration_path(resource_name) %><br />
+    New patient? <%= link_to "Please register", new_registration_path(resource_name) %><br />
   <% end %>
 
   <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
