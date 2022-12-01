@@ -27,7 +27,7 @@ def self.doc_on_duty
 end
 
 def self.clinic_open?
-  self.where('end_time > ?', Time.now).where('start_time < ?', Time.now).where(dow: Time.now.wday).first && Doctor.find(sched.doctor_id)
+  self.where('end_time > ?', Time.now).where('start_time < ?', Time.now).where(dow: Time.now.wday).first rescue nil
 end
 
 def from

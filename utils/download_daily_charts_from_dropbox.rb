@@ -10,6 +10,8 @@
 # ./dropbox_uploader.sh -s download test3.txt . # -s : do not overwrite
 # ./dropbox_uploader.sh move /test.pdf /UploadedCharts/Daily/test.pdf
 #
+# /home/rails/Dropbox-Uploader/dropbox_uploader.sh download /2012-01-17.pdf /home/rails/emr/charts/Daily/2012/2012-01-17.pdf
+#
 # Script tested and works fine on development(OSX) and production(debian) boxes
 #
 require_relative '../config/environment'
@@ -27,8 +29,10 @@ puts  "Will look for files in dropbox in the date range:  #{start_date}..#{end_d
 count = 0
 for date in start_date..end_date do
   filename = date.strftime("%Y-%m-%d.pdf")
+#  puts  "system : #{SCRIPT} download /#{filename} #{DOWNLOAD_DIR}/#{date.year}/#{filename}"
   if system "#{SCRIPT} download /#{filename} #{DOWNLOAD_DIR}/#{date.year}/#{filename}"
     count += 1
+#    puts "system : #{SCRIPT} move /#{filename} /UploadedCharts/Daily/#{filename}"
     system "#{SCRIPT} move /#{filename} /UploadedCharts/Daily/#{filename}"
   end
 end
