@@ -71,5 +71,5 @@ gem 'rubyzip', '~> 2.3'
 gem 'ffi', '~> 1.14', '>= 1.14.2'
 gem 'simple_form', '~> 5.1'
 gem 'whenever', require: false
-gem 'loofah', '~> 2.9'
+gem 'loofah', '~> 2.19'
 
