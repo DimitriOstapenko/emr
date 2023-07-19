@@ -54,6 +54,7 @@
 # ignore Postgres backups
 
 /backup/**
+/pgbackup/**
 
 # Ignore charts
 /charts/**
