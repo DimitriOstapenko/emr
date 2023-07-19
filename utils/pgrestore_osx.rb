@@ -10,7 +10,7 @@ require_relative '../config/environment'
 require 'date'
 
 dow = Date.today.wday.to_s
-target = '/Users/jimosta/emr/backup/walkin'+dow+'.gz'
+target = '/Users/jimosta/emr/pgbackup/walkin'+dow+'.gz'
 puts "This is restore.rb on #{Socket.gethostname} #{Date.today}"
 
 puts "Dropping db 'walkin'"
