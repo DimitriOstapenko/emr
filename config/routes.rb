@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   root 'static_pages#home'
-  get '/other_clinics', to: 'static_pages#other_clinics'
 #   root 'daysheet#index'
   
   devise_for :users, controllers: { registrations: "my_registrations", sessions: 'users/sessions' }
