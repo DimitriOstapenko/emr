@@ -14,6 +14,10 @@ class StaticPagesController < ApplicationController
 #    flash[:info] = "pat #{current_patient.inspect}  user : #{current_user.inspect}"
   end
 
+  def other_clinics
+    render 'walkin_clinics_stoney_creek'
+  end
+
   def help
   end
 
