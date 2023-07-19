@@ -22,6 +22,7 @@ class DailyChartsController < ApplicationController
       end
 
       @daily_charts = charts.reorder(sort_column + ' ' + sort_direction).paginate(page: params[:page]) 
+
   end
 
   def new

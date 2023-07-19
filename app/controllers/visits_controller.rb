@@ -9,6 +9,7 @@ class VisitsController < ApplicationController
   before_action :verify_patient  # missing patient_id in user? (Temp)
   before_action :non_patient_user, except: [:new, :show, :create, :visitform, :cancel, :update, :edit ]
   before_action :admin_user, only: :destroy
+#  before_action :admin_user, except: [:edit, :update, :destroy]
 
   rescue_from ::ActiveRecord::RecordNotFound, with: :record_not_found
 

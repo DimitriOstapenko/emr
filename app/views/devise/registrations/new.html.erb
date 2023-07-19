@@ -14,7 +14,8 @@
   <% ohip_num ||= current_patient.ohip_num
      ohip_ver ||= current_patient.ohip_ver
      email = current_patient.email 
-     readonly = ohip_num.present?
+#     readonly = ohip_num.present?
+     readonly = false
    %>
 <% else %>
   <div id="note"> 

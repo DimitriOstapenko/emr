@@ -20,22 +20,18 @@
   </div>
   </div>
   <%= render "#{device_type}_lookup" if hcv.up %>
-  <!--
   <div class="pt-2"><center> Already registered? Please log in below. </center></div>
 
   <div align="center" class="pt-4">
   <%= link_to 'Request Doctor Callback', new_user_session_path, class: "btn btn-success btn-lg" %></div>
-  -->
   <% end %>
 
-<h2> (905) 561-9255 </h2>
 
   <div class="ml-3 pt-2">
   <%= Schedule.doc_on_duty %>
   </div>
 
     <div class="pt-3"></div>
-      <!--
     <div class="panel panel-info news-panel-body">
       <div class="panel-body "><p align="justify"> 
        Our goal is to call you back within an hour of your request, if made between 8am and 8pm. We can't guarantee prompt callbacks during off hours.
@@ -45,7 +41,6 @@
 </font>
 
 <h2>Off hours: <%= link_to 'Request Callback', new_user_session_path %> </h2>
-      -->
 
 <div class='pt-5'>
 <div class='pt-5'>

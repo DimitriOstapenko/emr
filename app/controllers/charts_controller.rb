@@ -8,6 +8,8 @@ class ChartsController < ApplicationController
    before_action :admin_user, only: :destroy
 
   def index
+#!!
+    redirect_back(fallback_location: charts_path)
     if current_user.doctor?
       @charts = Chart.where(doctor_id: current_doctor.id)
     else

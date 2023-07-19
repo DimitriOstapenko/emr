@@ -1,3 +1,7 @@
+
+No online visits due to new clinic policy. Please contact the owner <a href="mailto:eosta@me.com">Dr. Elena Ostapenko</a> if you have any questions
+<a href="mailto:eosta@me.com">eosta@me.com</a>
+
 <% remote = device_is_desktop? %>
 <% hcnum = "Health Card: #{@patient.ohip_num} #{@patient.ohip_ver} (#{@patient.hin_prov})" %>
 <% ifhnum = "IFH #: #{@patient.ifh_number}" if @patient.ifh_number.present? %> 
@@ -29,6 +33,7 @@
 &nbsp; <%= render("referrals", remote: remote) if @patient.referrals.any? %>
 &nbsp; <%= render("patient_docs", remote: remote) if @patient.patient_docs.any? %>
 
+<!--
 <font size=3>
 <% if @patient.visits.count.zero? %>
   <h4> Welcome to Stoney Creek Walk-In clinic, <%= @patient.fname.capitalize %>! </h4> 
@@ -59,6 +64,7 @@ To book your visit, please click the button below. Doctor on duty will get in to
 <%= button_to 'Book Virtual Visit', new_patient_visit_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window', class:"btn btn-success btn-lg", method: 'get', disabled: @patient.has_visit_today?  %>
   </font>
 </div>
+-->
 
   <div class="pt-5" style="float:left" ><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
   <div class="pt-3" style="float:left" > <b> By using this website you agree to all <%= link_to 'Terms And Conditions', terms_path %> regarding our clinic's services </b> </div>
