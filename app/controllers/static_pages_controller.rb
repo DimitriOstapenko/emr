@@ -18,6 +18,10 @@ class StaticPagesController < ApplicationController
     render 'walkin_clinics_stoney_creek'
   end
 
+  def other_doctors
+    render 'other_doctors'
+  end
+
   def help
   end
 

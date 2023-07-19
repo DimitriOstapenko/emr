@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root 'static_pages#home'
   get '/other_clinics', to: 'static_pages#other_clinics'
+  get '/other_doctors', to: 'static_pages#other_doctors'
   
   devise_for :users, controllers: { registrations: "my_registrations", sessions: 'users/sessions' }
   get '/users/', to: 'users#index'
