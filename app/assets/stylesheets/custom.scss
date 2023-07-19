@@ -14,6 +14,13 @@ $spacer: 1rem !default;
 }
 
 /* universal */
+pre {
+background-color: transparent;
+  overflow:auto;
+  white-space: pre-wrap;
+  border: 0;
+  padding: 10px;
+}
 
 html,body {
   height: 100%;
@@ -875,6 +882,8 @@ table.pretty {
   border: 0;
   padding: 10px;
 }
+
+
 
 #modal-window {
   position: fixed;
