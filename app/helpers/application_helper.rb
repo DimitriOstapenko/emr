@@ -38,7 +38,7 @@ end
     end
 
     def project_url 
-	'http://walkin.drlena.com'
+	'https://drlena.com'
     end
 
 # Calculate current wait time based on daysheet patient's status    
