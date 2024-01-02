@@ -16,7 +16,8 @@ def self.closing_time
 end
 
 def self.doc_on_duty
-    sched = self.where('end_time > ?', Time.now.in_time_zone("America/New_York")).where('start_time < ?', Time.now.in_time_zone("America/New_York")).where(dow: Time.now.in_time_zone("America/New_York").wday).first rescue nil
+#    sched = self.where('end_time > ?', Time.now.in_time_zone("America/New_York")).where('start_time < ?', Time.now.in_time_zone("America/New_York")).where(dow: Time.now.in_time_zone("America/New_York").wday).first rescue nil
+    sched = self.clinic_open?
     doc = Doctor.find(sched.doctor_id) if sched
     if doc.present?
       last_signin_time = (sched.end.time - 30.minutes).strftime("%I:%M %p") rescue '7:30pm'
@@ -26,8 +27,11 @@ def self.doc_on_duty
     end
 end
 
+# Returns matching row in schedule if found
 def self.clinic_open?
-  self.where('end_time > ?', Time.now.in_time_zone("America/New_York")).where('start_time < ?', Time.now.in_time_zone("America/New_York")).where(dow: Time.now.in_time_zone("America/New_York").wday).first rescue false
+  now = Time.now - 6.hours
+  dow = Time.now.in_time_zone("America/New_York").wday 
+  self.where('end_time > ?', now).where('start_time < ?', now).where(dow: dow).first rescue false
 end
 
 def from
