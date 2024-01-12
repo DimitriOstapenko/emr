@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 6.1'
 gem 'bundler', '~> 2.1', '>= 2.1.4'
 gem 'pg'
-gem 'puma', '~> 5.1', '>= 5.1.1'
+gem 'puma', '~> 6.4', '>= 6.4.2'
 gem 'devise', '~> 4.7', '>= 4.7.3'
 gem "nokogiri", ">= 1.12.5"
 
