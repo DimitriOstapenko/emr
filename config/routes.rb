@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'static_pages#home'
   get '/other_clinics', to: 'static_pages#other_clinics'
   get '/other_doctors', to: 'static_pages#other_doctors'
+  get '/show_schedule', to: 'static_pages#show_schedule'
   
   devise_for :users, controllers: { registrations: "my_registrations", sessions: 'users/sessions' }
   get '/users/', to: 'users#index'
@@ -117,7 +118,7 @@ Rails.application.routes.draw do
      get 'export', on: :member
   end
 
-  resources :schedules
+  resources :schedules 
 
 # resources :billings     # historical billing table - not used
   

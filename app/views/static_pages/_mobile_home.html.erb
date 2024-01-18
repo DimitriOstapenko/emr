@@ -31,12 +31,17 @@
   <%= Schedule.doc_on_duty %>
   </div>
 
-    <div class="pt-3"></div>
+    <div align="center" class="pt-4">
     <div class="panel panel-info news-panel-body">
       <div class="panel-body "><p align="justify"> 
        Our goal is to call you back within an hour of your request, if made between 8am and 8pm. We can't guarantee prompt callbacks during off hours.
-  <%= render "schedules/full_schedule" %>
+
+
+       <div class="pt-3"></div>
+       <%= link_to 'See Current Schedule', show_schedule_path, class: "btn btn-primary btn-lg" %>
+  <%# render "schedules/full_schedule" %>
     </div>
+   </div>
   </div>
 </font>
 

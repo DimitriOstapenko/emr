@@ -22,6 +22,10 @@ class StaticPagesController < ApplicationController
     render 'other_doctors'
   end
 
+  def show_schedule
+    render "/schedules/_full_schedule"
+  end
+
   def help
   end
 
