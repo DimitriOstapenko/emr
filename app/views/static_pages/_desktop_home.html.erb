@@ -16,6 +16,11 @@
   <%= Schedule.doc_on_duty %>
   
   <%= link_to 'or check other walk-in clinics in Stoney Creek', other_clinics_path %>
+
+  <div class="pt-3">
+    <%= link_to 'See Current Schedule', show_schedule_path, class: "btn btn-primary btn-lg" %>
+  </div>
+
   </div>
   </div>
   </div>
@@ -24,17 +29,19 @@
     <div class="pt-3">
       You can set up your virtual visit or request prescription renewal even when the clinic is closed : <%= link_to "request callback from doctor", new_user_session_path %>.
     </div>
-  -->
 
     <p>
     <div class="ml-3" >
     <div class="panel panel-info news-panel-body">
       <div class="panel-body "><p align="justify"> 
   <%= render "schedules/full_schedule" %>
-
     </div>
   </div>
   </div>
+-->
+
+
+
   </div>
 
 <div class="col-md-6 col-md-offset-1">
