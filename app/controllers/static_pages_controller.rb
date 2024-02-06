@@ -26,6 +26,9 @@ class StaticPagesController < ApplicationController
     render "/schedules/_full_schedule"
   end
 
+  def show_directions
+  end
+
   def help
   end
 

@@ -1,0 +1,11 @@
+<%
+   if device_is_desktop? 
+     width = '800'; height = '600' 
+   else
+     width = '400'; height = '500'
+  end
+%>
+
+<div class="text-center pt-3">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5813.748881079234!2d-79.76606432180672!3d43.23309209612236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882c9894d9c1cac5%3A0xeb749383c5b18494!2sStoney%20Creek%20Medical%20Clinic!5e0!3m2!1sen!2sfr!4v1707221824476!5m2!1sen!2sfr" width="<%= width %>" height="<%= height %>" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
