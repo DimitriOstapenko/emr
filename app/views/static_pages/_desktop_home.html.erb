@@ -13,7 +13,7 @@
     </div>
 
   <% bg = Schedule.clinic_open? ? 'bg-success' : 'bg-danger' %>
-  <div class="row pt-3">
+  <div class="row pt-5">
   <div class="card text-center col-md-5 col-md-offset-3 <%= bg %>">
   <div class="card-body">
   <%= Schedule.doc_on_duty %>
@@ -49,7 +49,6 @@
 
 <div class="col-md-6 col-md-offset-1">
   <div class="hdr-text">We are open every Day! </div> 
-<font size=2>
   <div class="pull-right"> <i class='glyphicon glyphicon-time'></i><i> 24/7 Virtual Visits</i> </div>
   <div class='pt-5'></div>
 
