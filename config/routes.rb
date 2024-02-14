@@ -55,6 +55,8 @@ Rails.application.routes.draw do
 
   post  '/patients(/:id)/card', to: 'patients#card'
   get '/patients(/:id)/card', to: 'patients#card'
+  get '/patients(/:id)/ai_chat', to: 'patients#ai_chat', as: :ai_chat
+  patch '/patients(/:id)/ai_chat', to: 'patients#ai_chat', as: :response_ai_chat
 
   get '/visits' => 'visits#daysheet', constraints: { query_string: /date/ }
   get '/visits' => 'visits#index'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_11_183720) do
+ActiveRecord::Schema.define(version: 2024_02_14_130855) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -357,6 +357,8 @@ ActiveRecord::Schema.define(version: 2021_02_11_183720) do
     t.string "pharm_fax"
     t.datetime "validated_at"
     t.datetime "latest_medication_renewal"
+    t.string "question"
+    t.text "response"
     t.index ["email"], name: "index_patients_on_email"
     t.index ["last_visit_date"], name: "index_patients_on_last_visit_date"
     t.index ["lname"], name: "index_patients_on_lname"

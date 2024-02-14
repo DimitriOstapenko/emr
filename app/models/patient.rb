@@ -351,6 +351,22 @@ class Patient < ApplicationRecord
     return response
   end
 
+  def ai_response(question = '')
+    client = OpenAI::Client.new
+
+    response = client.chat(
+      parameters: {
+      model: "gpt-3.5-turbo", # Required.
+      messages: [
+       { role: "user", content: question },
+      ],
+      temperature: 0.4,
+    }
+
+  )
+    self.response = response.dig("choices", 0, "message", "content")
+  end
+
 protected
 
   def cleanup_some_fields

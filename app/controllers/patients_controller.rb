@@ -3,7 +3,7 @@ class PatientsController < ApplicationController
         include PatientsHelper
 
 	before_action :logged_in_user, except: [:get, :lookup, :lookup4 ]
-	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history, :chart ]
+	before_action :non_patient_user, except: [:show, :edit, :update, :label, :visit_history, :chart, :ai_chat ]
 	before_action :admin_user, only: :destroy
         before_action :verify_patient  # is patient set and is rigtht patient?
 
@@ -87,12 +87,20 @@ class PatientsController < ApplicationController
   def update
     @patient = Patient.find(params[:id])
     @patient.lastmod_by = current_user.name
+
+    question = params[:patient][:question] rescue nil
+    if question
+      @patient.ai_response(question)
+    end
+      
+
     if @patient.update(patient_params)
       flash[:info] = "Patient profile updated"
       redirect_to patient_path(@patient)
     else
       render 'edit'
     end
+
   end
 
   def label
@@ -269,6 +277,12 @@ class PatientsController < ApplicationController
     end
   end
 
+
+  def ai_chat
+    @patient = Patient.find(params[:id])
+    flash[:info] = 'Ai chat' + params[:message]
+  end
+
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 
@@ -276,7 +290,7 @@ private
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :pharm_fax, :notes, :alt_contact_name,
 					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count,
-				    	  :allergies, :meds, :maid_name, :ifh_number, :clinic_pat, :validated_at, :latest_medication_renewal
+				    	  :allergies, :meds, :maid_name, :ifh_number, :clinic_pat, :validated_at, :latest_medication_renewal, :question
 					 )
   end
  

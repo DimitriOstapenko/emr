@@ -43,8 +43,9 @@ class ApplicationController < ActionController::Base
    def verify_patient
      return unless current_user && current_user.patient?
      redirect_to root_path if current_user.patient_id.blank? 
-     pat_id = params[:patient_id] || params[:id] rescue nil
-     redirect_back fallback_location: patient_path(current_user.patient_id), warning: "You don't have the right to use this operation" unless (current_user.patient_id.to_s == pat_id)
+     pat_id = params[:patient_id] || params[:id] || params['patient']['id'] rescue nil
+     
+     redirect_back fallback_location: patient_path(current_user.patient_id), warning: "You don't have the right to use this operation" unless (current_user.patient_id.to_i == pat_id.to_i)
    end
 
 # alert if current_doctor is not set

@@ -142,9 +142,16 @@ GEM
     dropzonejs-rails (0.8.5)
       rails (> 3.1)
     erubi (1.12.0)
+    event_stream_parser (1.0.0)
     execjs (2.9.1)
     faker (2.23.0)
       i18n (>= 1.8.11, < 2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
+    faraday-net_http (3.1.0)
+      net-http
     ffi (1.16.3)
     formatador (1.1.0)
     globalid (1.2.1)
@@ -202,7 +209,10 @@ GEM
       ruby-progressbar
     msgpack (1.7.2)
     multi_json (1.15.0)
+    multipart-post (2.4.0)
     nenv (0.3.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -303,6 +313,10 @@ GEM
       railties (>= 5.2)
     rexml (3.2.6)
     rouge (4.2.0)
+    ruby-openai (6.3.1)
+      event_stream_parser (>= 0.3.0, < 2.0.0)
+      faraday (>= 1)
+      faraday-multipart (>= 1)
     ruby-progressbar (1.13.0)
     ruby-rc4 (0.1.5)
     ruby-vips (2.2.0)
@@ -350,6 +364,7 @@ GEM
       concurrent-ruby (~> 1.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    uri (0.13.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.1)
@@ -412,6 +427,7 @@ DEPENDENCIES
   rails (~> 6.1)
   rails-controller-testing (~> 1.0, >= 1.0.5)
   responders
+  ruby-openai
   rubyzip (~> 2.3)
   sassc (~> 2.0)
   sassc-rails (~> 2.1)

@@ -37,6 +37,8 @@ gem 'pdf-reader', '~> 2.4', '>= 2.4.2'
 gem 'select2-rails', '~> 4.0', '>= 4.0.13'
 #gem 'json',		       '~> 2.3.0'
 
+gem "ruby-openai"
+
 group :development, :test do
   gem 'faker', '~> 2.16'
   gem 'byebug', '~> 11.1', '>= 11.1.3'

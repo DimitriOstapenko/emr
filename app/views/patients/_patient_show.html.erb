@@ -1,6 +1,7 @@
-
+<!--
 No online visits due to new clinic policy. Please contact the owner <a href="mailto:eosta@me.com">Dr. Elena Ostapenko</a> if you have any questions
 <a href="mailto:eosta@me.com">eosta@me.com</a>
+-->
 
 <% remote = device_is_desktop? %>
 <% hcnum = "Health Card: #{@patient.ohip_num} #{@patient.ohip_ver} (#{@patient.hin_prov})" %>
@@ -67,7 +68,9 @@ To book your visit, please click the button below. Doctor on duty will get in to
 -->
 
   <div class="pt-5" style="float:left" ><small>* Only one appointment per patient per day is allowed by OHIP </small></div>
+  <!--
   <div class="pt-3" style="float:left" > <b> By using this website you agree to all <%= link_to 'Terms And Conditions', terms_path %> regarding our clinic's services </b> </div>
+  -->
 
  <div class="pt-3" style="clear: both">
     <div class="panel panel-info news-panel-body">
