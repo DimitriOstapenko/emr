@@ -7,13 +7,13 @@
 	<% unless current_user.doctor? %>
 	<td>
           <% if remote %>
-            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+            <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_schedule_path(schedule), remote: true, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window' %>
           <% else %>
-            <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_schedule_path(schedule) %>
+            <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_schedule_path(schedule) %>
           <% end %>
         </td>
 
-	<td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, schedule,
+	<td><%= link_to '<i class="bi bi-x-square"></i>'.html_safe, schedule,
 		method: :delete, data: { confirm: "Are you sure you want to delete schedule for Dr. #{schedule.doctor.full_name} ?" } %>
 	</td>
         <% end %>

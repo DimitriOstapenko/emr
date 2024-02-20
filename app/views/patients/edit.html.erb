@@ -1,15 +1,19 @@
 <% provide(:title, 'Edit patient') %>
 <% provide(:button_text, 'Update Record') %>
 
-
-<div class="col-md-8 col-md-offset-2">
-<h3 class='display-1'>Edit Patient Profile</h3>
-<div class="well">
+<div class='container-flex mx-auto'>
+<div class="card bg-light mx-auto" style="max-width: 44rem">
   <% if current_user.patient? %>
-    <%= render 'patient_form' %>
+    <div class="card-body">
+    <h3 class="card-title mb-3">Edit Patient Profile</h3>
+      <%= render 'patient_form' %>
+    </div>
   <% else %>
-    <%= render 'admin_form' %>
+    <div class="card-body">
+    <h3 class="card-title mb-3">Edit Patient Profile</h3>
+      <%= render 'admin_form' %>
+    </div>
   <% end %>
 </div>
-</div>
 
+</div>

@@ -2,7 +2,7 @@
 <% hcv = SvcMonitor.find_by(name: 'hcv')  %>
 
 <font size=3>
-  <div class="hdr-text"><center> <i class='glyphicon glyphicon-time'></i> 24/7 Online Visits</center></div>
+  <div class="hdr-text"><center> <i class='bi bi-clock'></i>&nbsp; 24/7 Online Visits</center></div>
   
   <% if current_patient && current_patient.user && current_patient.user.confirmed_at %>
 
@@ -15,43 +15,52 @@
     <ul>
       <li> 100% OHIP covered </li>
       <li> Fast doctor callbacks </li>
-      <li> Prescription renewals over the phone </li>
+      <li> No Appointment required </li>
     </ul>
   </div>
   </div>
-  <%= render "#{device_type}_lookup" if hcv.up %>
-  <div class="pt-2"><center> Already registered? Please log in below. </center></div>
 
-  <div align="center" class="pt-4">
-  <%= link_to 'Request Doctor Callback', new_user_session_path, class: "btn btn-success btn-lg" %></div>
-  <% end %>
-
-
-  <div class="ml-3 pt-2">
-  <%= Schedule.doc_on_duty %>
-  </div>
-
-    <div align="center" class="pt-4">
-    <div class="panel panel-info news-panel-body">
-      <div class="panel-body "><p align="justify"> 
-       Our goal is to call you back within an hour of your request, if made between 8am and 8pm. We can't guarantee prompt callbacks during off hours.
-
-
-       <div class="pt-3"></div>
-       <%= link_to 'See Current Schedule', show_schedule_path, class: "btn btn-primary btn-lg" %>
-  <%# render "schedules/full_schedule" %>
+  <div align="center" class="pt-2">
+    <div class="card card-block text-white bg-primary w-75">
+      <h1 class="card-title text-center pt-3"> <i class="bi bi-phone"></i> Login/Register </h1>
+      <div class="card-body pt-0">
+         <%= link_to 'You can register your visit and request doctor callback here', new_user_session_path, class: " stretched-link text-white " %>
+      </div>
     </div>
-   </div>
   </div>
 
-<div class="pt-2 text-center"><%= link_to 'Show Directions', show_directions_path, class: "btn btn-danger btn-lg" %></div>
-</font>
+  <% end %>
+  
 
+  <div align="center" class="pt-3">
+      Get instant help on any health-related issue from our dedicated AI-powered virtual assistant. You can ask questions about your condition, treatment options or dosages of medications.
+  </div>
 
-<div class="pt-3"><h5><%= link_to 'Other walk-in clinics in Stoney Creek', other_clinics_path %></h5> </div>
-<div class="pt-2"><h5><%= link_to 'Family doctors in Hamilton accepting new patients', other_doctors_path %><h5> </div>
-
-
-<div class="pt-3 position-absolute bottom-0 end-0">
-<%= render "footer_icons" %>
+<div align="center" class="pt-3"></div>
+<div class="card text-center mx-auto bg-info w-75">
+  <h1 class="card-title pt-2"><i class="bi bi-question-circle" style="font-size: 20px"></i>&nbsp; Ask The Expert </h1>
+  <div class="card-body pt-0">
+      <%= link_to 'AI Virtual Assistant - Ask any question in any language and get instant answer', static_pages_ai_chat_path, class: "btn btn-info stretched-link" %>
+   </div>
 </div>
+
+
+  <div align="center" class="pt-3">
+       Our goal is to call you back within an hour of your request, if made between 8am and 8pm. We can't guarantee prompt callbacks during off hours.
+  </div>
+
+  <div align="center" class="pt-3">
+  <div class="card card-block text-white w-75" style="background-color: #00AA9E;">
+      <h1 class="card-title pt-3"> <i class="bi bi-calendar3"></i>&nbsp; Schedule</h1>
+      <div class="card-body pt-0">
+         <%= link_to "#{Schedule.doc_on_duty}", show_schedule_path, class: "btn btn-outline stretched-link fs-6 text-white" %>
+      </div>
+  </div>
+  </div>
+
+<div class="pt-5 fs-6"> <i class="bi bi-pin-map"></i> <%= link_to 'Show driving directions', show_directions_path %> </div>
+<div class='pt-2 fs-6'> <i class="bi bi-journal-medical"></i> <%= link_to 'Other walk-in clinics in Stoney Creek', other_clinics_path %></div>
+<div class="pb-5 pt-2 fs-6"> <i class="bi bi-info-circle"></i> <%= link_to 'Family doctors in Hamilton accepting new patients', other_doctors_path %></div>
+
+
+<%= render "footer_icons" %>

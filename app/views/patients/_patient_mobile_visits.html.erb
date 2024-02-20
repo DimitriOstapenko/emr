@@ -1,5 +1,9 @@
 <!-- Visit panel on right hand side of patient profile -->
-<div class="col-md-6">
+
+<div class='pt-3'></div>
+
+<%= render "ai_chat" %>
+
     <h3>Visits: (<%= @patient.visits.count %>)</h3>
     <% if @patient.visits.any? %>
       <table class="table table-hover table-striped table-bordered">
@@ -28,8 +32,4 @@
 	<%= will_paginate @visits %>
         </div>
         
-        <%= render "ai_chat" %>
-
-        <%= render "google_biz_link" %>
     <% end %>
-  </div>

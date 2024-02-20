@@ -5,10 +5,10 @@
 %>
  
 <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal">&times;</button>
-        <i class="glyphicon glyphicon-user"></i>&nbsp;
-	<b class="modal-title" id="myModalLabel"><%= @patient.full_name %>, tel. <%= @patient.mobile_or_home_phone %> : New Visit</b>
+  <div class="modal-title"><b><%= @patient.full_name %>, tel. <%= @patient.mobile_or_home_phone %> : New Visit</b></div>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
+
 <div class="modal-body">
   <%= render "#{current_user.role}_form" %>
 </div>

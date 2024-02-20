@@ -1,30 +1,36 @@
 <% email = current_patient.email if current_patient.present? %>
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 <%= render 'shared/error_messages', object: f.object %>
+
 <% form_class= device_is_mobile? ? 'reg-form-control' : '' %>
 
+<div class="card rounded-2xl mx-auto my-auto  bg-light devise-card-width ">
+  
+ <div class="card-header">
+  <% if current_patient && current_patient.user && current_patient.user.confirmed_at %>
+    <div class="fs-5"> Welcome back, <%= current_patient.fname %>! Please log in below </div>
+  <% else %>
+    <div class="fs-5"> Log In </div>
+   <% end %>
+ </div>
 
-<% if current_patient && current_patient.user && current_patient.user.confirmed_at %>
-<h2> Welcome back, <%= current_patient.fname %>! Please log in below </h2>
-<% end %>
+   <div class="card-body">
+    <div class="mb-3">
+        <%= f.input :email, required: false, autofocus: true, autocomplete: "email", value: email, class: form_class %>
+    </div>
 
-<div class='form-group row align-center'>
-<div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-<div class="well">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email", value: email, class: form_class } %>
-              
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password", class: form_class } %>
-    <%= f.input :remember_me, as: :boolean, input_html: {style: 'width: 20px; margin-top: 20px;' } %>
+    <div class="mb-3">
+        <%= f.input :password, required: false, autocomplete: "current-password", class: form_class  %>
+    </div>
 
-    <%= f.button :submit, "Log in to book a visit", class: "btn btn-primary" %>
+    <div class="mb-3">
+      <%= f.input :remember_me, as: :boolean %>
+    </div>
+
+    <%= button_tag tupe: "submit", class: "btn btn-primary" do %>  <i class='bi-box-arrow-in-right'></i>  Login to book a visit <% end %>
 
 <%= render "devise/shared/links" %>
-</div>
-</div>
-</div>
+
+   </div>
+
 <% end %>

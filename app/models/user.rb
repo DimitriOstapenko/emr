@@ -106,6 +106,11 @@ class User < ApplicationRecord
     return users.order(:email)
   end
 
+# auth token for mail testing  
+  def generate_token
+    SecureRandom.urlsafe_base64
+  end
+
 private 
 
 # We delete unconfirmed user, if present, to prevent error caused by unique ohip_num constraint in user table    

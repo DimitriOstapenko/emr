@@ -1,21 +1,30 @@
+
+<ul class="nav navbar-nav navbar-left">
 <% if logged_in? %>
 <li class="dropdown nav-item">
-<a href="#" id="dropdown-menu"  data-toggle="dropdown"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+  <button class="btn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
 <ul class="dropdown-menu">
 
 <% if current_user.patient? %>
-        <li><%= link_to "<font color='red'><i class='glyphicon glyphicon-user'></i></font> Patient Profile".html_safe, edit_patient_path(current_user.patient), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', method: "get", onclick: "set_lg_modal()"  %></li>
+   <li class="dropdown-item" ><%= link_to "<i class='bi-person-vcard'></i> Patient Profile".html_safe, edit_patient_path(current_user.patient), remote: true, 'data-bs-toggle': "modal", 'data-bs-target': '#modal-window', method: "get", onclick: "set_lg_modal()"  %></li>
 <% end %>
 
-  <li><%= link_to "<i class='glyphicon glyphicon-user'></i> User Profile".html_safe, edit_user_path(current_user.id), remote: true, 'data-toggle': "modal", 'data-target': '#modal-window', method: "get", onclick: "set_sm_modal()"  %></li>
+ <li class="dropdown-item"><%= link_to "<i class='bi bi-pencil-square'></i> User Profile".html_safe, edit_user_path(current_user.id), remote: true, 'data-bs-toggle': "modal", 'data-bs-target': '#modal-window', method: "get", onclick: "set_sm_modal()"   %></li>
 
  <li class="divider"></li>
- <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
+ <li class="dropdown-item"><%= link_to "<i class='bi-box-arrow-right'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
 </ul>
 </li>
 <% end %>
 
+
 <% title = (current_user.patient? && device_is_desktop?) ? 'Stoney Creek Walk-In Clinic' : 'Walk-In EMR' %>
 <li class="nav-item"> <%= link_to title, root_path, id: "logged-in-logo" %> </li>
+
+</ul>
+
 
 

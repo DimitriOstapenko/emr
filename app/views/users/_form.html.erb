@@ -1,6 +1,5 @@
 <div class="row">
 <div class="col-md-12">
-<div class="well">
 
 <%= simple_form_for @user,  :html => { :role => 'form'}  do |f| %>
 <%= f.error_notification %>
@@ -47,7 +46,7 @@
   </div>
   </div>
 
-<div class="row">  
+<div class="row mt-3">  
   <div class="col-md-12">
 <%= f.button :submit, yield(:button_text), class: "btn btn-primary" %>
   </div>
@@ -55,7 +54,6 @@
 
 <% end %>
 
-</div>
 </div>
 </div>
 

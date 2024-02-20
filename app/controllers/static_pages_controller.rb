@@ -29,6 +29,17 @@ class StaticPagesController < ApplicationController
   def show_directions
   end
 
+  def ai_chat 
+    if params[:patient] 
+      @question =  params[:patient][:question]
+      @patient = Patient.new() 
+      @patient.ai_response( @question )
+      @patient.save(validate: false)
+    end 
+      render "/static_pages/_ai_chat"
+  end
+
+
   def help
   end
 

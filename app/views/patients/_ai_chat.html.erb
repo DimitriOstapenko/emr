@@ -1,21 +1,26 @@
-<div class="pt-5"></div>
 <div class="card text-white bg-primary">
   <div class="card-header m-3 pt-3">
-  <font size=5><i class="glyphicon glyphicon-info-sign"></i> &nbsp; AI MED. EXPERT HELP</font>
+  <font size=5 color='yellow'><i class="bi bi-info-square"></i> &nbsp; AI MED. EXPERT HELP</font>
   </div>
   <div class="card-body card-info">
-    <h4 class="card-title"> Got medical question? You can ask me anything. Confidentiality guaranteed </b></h4>
+    <h5 class="card-title"> Got medical question? You can ask me anything in any language</b></h5>
   <p class="card-text">
 
     <%= simple_form_for @patient  do |f| %>
-    <%= f.input :question, label: false, placeholder: "Type your question here", class: "form-control col-md-2" %>
+      <%= f.input :question, label: false, placeholder: "Type your question here", class: "form-control col-md-2",  input_html: {value:''} %>
     <%= f.button :submit, "Get answer", class:"btn btn-info col-md-2" %>
 
-    <div class='pt-5'>
-    <%= @patient.response %>
+    <div class='pt-3'>
+      <i>   <%= @patient.question %> </i> <p>
+      <div class="pt-2">
+        <%= @patient.response %>
+      </div>
     </div>
   <% end %>
 
   </p>
-  </div>
 </div>
+</div>
+
+<div class='mb-5'></div>
+

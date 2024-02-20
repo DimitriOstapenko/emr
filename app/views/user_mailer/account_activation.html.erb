@@ -1,22 +1,36 @@
-<h1>Stoney Creek Medical Walk-In Clinic</h1>
+<body class="bg-red-100">
+  <div class="container">
+    <h2 class='text-danger'> Stoney Creek Medical Walk-In Clinic </h2>
+    <div class="space-y-6 p-6">
+      <h1 class="text-2xl fw-800">
+        Dear <%= @user.email %>
+      </h1>
 
-<p>Dear <%= @user.name %>,</p>
+      We received your request for registration to visit Stoney Creek Walk-In clinic. You can complete this registration by clicking on a button below.
+      If you did not request this registration, please just ignore this email
 
-<p>
-Welcome to our telemedicine web application! 
-We have found your record and registered you for our online services.
-</p>
-<p>
-As a final step, please click on the link below to activate your account:
-</p>
+      <% token = @token || @user.activation_token %>
 
-<div>
-  <b><%= link_to "Ativate My Account", edit_account_activation_url(@user.activation_token, email: @user.email) %></b>
-</div>
+      <div class='mt-6'>
+        <%= link_to "Ativate My Account", edit_account_activation_url(token, email: @user.email), class: "btn btn-red-500 rounded-full px-6 w-full w-lg-48"  %>
+      </div>
 
 
-<p>
-Best Regards,
-</p>
+      <p class="pt-5">If you have any questions, you can contact us at <a href = "mailto:ostadim1@gmail.com">staff@stoneycreek_clinic.com</a>.</p>
 
-Stoney Creek Medical Walk-in Clinic staff
+      <div class='mt-5'>
+        Best regards and see you soon!
+      </div>
+
+  <hr class="border border-danger border-1">
+  <small>
+    Stoney Creek Medical Walk-in Clinic <br>
+    140 Centennial Pkwy N, <br>
+    Stoney Creek, ON,  L8E 1H9 <br> 
+    tel. 905.561.9255 
+  </small>
+  
+    </div>
+  </div>
+</body>
+

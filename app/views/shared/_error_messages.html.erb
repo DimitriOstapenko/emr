@@ -1,12 +1,14 @@
 <%if object.errors.any? %>
-<div id="error_explanation" class='card bg-danger'>
+<div id="error_explanation" class='card bg-warning'>
     <div class="card-body">
-    <% object.errors.keys.each do |attr| %>
-	<div class="row">
-	   <span class="card-text"><i class="glyphicon glyphicon-exclamation-sign"></i>&nbsp;<%= object.errors.full_messages_for(attr).first %></span>
+    <% object.errors.attribute_names.each do |attr| %>
+        <div class="row">
+           <span class="card-text text-muted"><i class="bi-exclamation-circle"></i>&nbsp;<%= object.errors.full_messages_for(attr).first %></span>
         </div>
     <% end %>
     </div>
 </div>
+<div class='pb-3'></div>
 <% end %>
+
 

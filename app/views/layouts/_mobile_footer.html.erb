@@ -1,36 +1,16 @@
-<footer class="page-footer small pt-2">
-  <font size=3>
-    <div class="container text-center text-md-right">
-    <div class="row">
+<footer>
+  <small>
+  <div class="container-flex mx-3">
+    <div class="d-flex justify-content-between border-top">WalkIn EMR  -  &copy; <%= Date.today.year %>
+    <div class="d-flex justify-content-end">
+      <%= link_to "Contact", contact_path, target: '_new', class: "px-2" %>
+      <%= link_to "Terms", terms_path, target: '_new', class: "px-2" %>
+      <%= link_to "Privacy", privacy_path, target: '_new', class: "px-2"  %>
       <% if logged_in? %>
-      <div class="col-md-3 mx-auto col-md-offset-2">
-        <ul class="list-unstyled">
-            <li><%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %></li>
-        </ul>
-      </div>
+          <%= link_to "<i class='glyphicon glyphicon-log-out'></i> Logout".html_safe, destroy_user_session_path, method: :delete %>
       <% end %>
-      <div class="col-md-3 mx-auto col-md-offset-2">
-        <ul class="list-unstyled">
-          <li>
-            <%= link_to "Contact", contact_path %>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-3 mx-auto">
-        <ul class="list-unstyled">
-          <li>
-            <%= link_to "Terms", terms_path %>
-          </li>
-        </ul>
-      </div>
-      <div class="col-md-3 mx-auto">
-        <ul class="list-unstyled">
-          <li>
-            <%= link_to "Privacy", privacy_path %>
-          </li>
-        </ul>
-      </div>
     </div>
   </div>
-  </font>
+  </small>
 </footer>
+

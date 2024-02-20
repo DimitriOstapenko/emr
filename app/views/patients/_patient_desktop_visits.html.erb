@@ -1,5 +1,7 @@
 <!-- Visit panel on right hand side of patient profile -->
-<div class="col-md-6">
+
+        <%= render "ai_chat" %>
+
     <h3>Visits: (<%= @patient.visits.count %>)</h3>
     <% if @patient.visits.any? %>
       <table class="table table-hover table-striped table-bordered">
@@ -20,19 +22,11 @@
           </tbody>
 	</table>
 
-	<div class="spacer-10"></div>
-	<div class="row">
+	<div class="row pt-3">
 	  <div class="col-md-12"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-info", method: 'get', onclick: "set_lg_modal()" %> </div>
 	</div>
-	<div class="spacer-10"></div>
-	<div class="row" style="float: right">
+	<div class="row mt-3 my_pagination" style="float: right">
 	<%= will_paginate @visits %>
         </div>
 
-        <%= render "ai_chat" %>
-
-        <div class='pt-5'>
-        <%= render "google_biz_link" %>
-        </div>
     <% end %>
-  </div>

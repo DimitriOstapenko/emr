@@ -1,32 +1,35 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 6.1'
-gem 'bundler', '~> 2.1', '>= 2.1.4'
-gem 'pg'
-gem 'puma', '~> 6.4', '>= 6.4.2'
-gem 'devise', '~> 4.7', '>= 4.7.3'
-gem "nokogiri", ">= 1.12.5"
+ruby '3.1.2'
 
+gem 'rails', '~> 7.1', '>= 7.1.3'
+gem 'pg'
+gem 'puma', '~> 6.4'
+gem 'bundler', '~> 2.5', '>= 2.5.6'
+gem 'sass-rails', '>= 6'
+gem 'devise', '~> 4.7', '>= 4.7.3'
+gem 'nokogiri', '~> 1.11', '>= 1.11.1'
 gem 'bootsnap', '~> 1.7', '>= 1.7.2'
+gem 'i18n', '~> 1.14', '>= 1.14.1'
 
  gem 'nexmo',  '~> 7.0'  
 #gem 'vonage'
 
+gem 'webpacker', '~> 5.0'
 gem 'carrierwave', '~> 2.1'
 gem 'dropzonejs-rails',        '~> 0.8.4'
 gem 'mini_magick',          '~> 4.9.4'  
 gem 'will_paginate', '~> 3.3'
+#gem 'will_paginate', '~> 4.0'
 
-gem 'bootstrap-sass',       '~> 3.4.1'
-gem 'bootstrap-will_paginate', '>= 1.0.0'
-gem 'bootstrap-email', '~> 0.3.4'
+gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 
-gem 'sassc', '~> 2.0'
-gem 'sassc-rails', '~> 2.1'
+#gem 'bootstrap-email', '~> 0.3.4'
+gem 'bootstrap-email', '~> 1.4', '>= 1.4.1'
 
 gem 'uglifier',                '>= 4.1.20' 
 gem 'coffee-rails',            '>= 4.2.2'
-gem 'jquery-rails',            '>= 4.3.1'
+gem 'jquery-rails', '~> 4.6'
 gem 'turbolinks',              '~> 5.2.0' 
 gem 'jbuilder',                '~> 2.7.0'
 gem 'prawn',		       '~> 2.4.0'
@@ -35,7 +38,7 @@ gem 'combine_pdf', '~> 1.0', '>= 1.0.21'
 gem 'responders'
 gem 'pdf-reader', '~> 2.4', '>= 2.4.2'
 gem 'select2-rails', '~> 4.0', '>= 4.0.13'
-#gem 'json',		       '~> 2.3.0'
+gem 'popper_js', '~> 2.8', '>= 2.8.6'
 
 gem "ruby-openai"
 
@@ -50,7 +53,7 @@ end
 
 group :development do
   gem 'web-console'
-  gem 'listen',                '3.0.8'
+  gem 'listen', '~> 3.8'
   gem 'spring' #, '~> 2.1', '>= 2.1.1'
   gem 'spring-watcher-listen', '~> 2.0', '>= 2.0.1'
 end
@@ -67,8 +70,6 @@ group :production do
 end
 
 gem 'activerecord-session_store', '~> 2.0'
-gem 'popper_js', '~> 2.6'
-#gem 'sprockets',  '~> 3.7.2'
 gem 'rubyzip', '~> 2.3'
 gem 'ffi', '~> 1.14', '>= 1.14.2'
 gem 'simple_form', '~> 5.1'

@@ -360,10 +360,11 @@ class Patient < ApplicationRecord
       messages: [
        { role: "user", content: question },
       ],
-      temperature: 0.4,
+      temperature: 0.6,
     }
 
   )
+    self.question =  question
     self.response = response.dig("choices", 0, "message", "content")
   end
 

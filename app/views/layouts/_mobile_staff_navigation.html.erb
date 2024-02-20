@@ -1,27 +1,20 @@
 <% show_search_controllers = %w(users patients) %>
-<nav class="navbar navbar-mobile navbar-expand-lg bg-info">
-    <ul class="nav ml-2">
-<div class="row">
-  <div class="col-xs-3">
-     <div class="nav-item <%= 'active' if controller_name == 'patients' %>"><%= link_to " Patients", patients_path %></div>
-  </div>
-  <div class="col-xs-3">
-  <div class="nav-item <%= 'active' if controller_name == 'daysheet' %>"><%= link_to "DaySheet", daysheet_path %></div>
-  </div>
-  <div class="col-xs-3">
-  <div class="nav-item <%= 'active' if controller_name == 'billings' %>"><%= link_to "Billing", billings_path %></div>
-  </div>
-  <div class="col-xs-3">
-  <div class="nav-item <%= 'active' if controller_name == 'users' %>"><%= link_to "Users", users_path %></div>
-  </div>
-</div>
 
-<p> &nbsp; </p>
-
-<% if controller_name == 'daysheet' %>
-    <%= render 'layouts/mobile_date_select' %>
-<% elsif show_search_controllers.include?(controller_name) && action_name == 'index' %>
-    <%= render 'layouts/mobile_find' %>
-<% end %>
+<nav class="navbar navbar-expand bg-info">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item ms-3 <%= 'active' if controller_name == 'patients' %>"><%= link_to "Patients", patients_path, class: 'nav-link' %></li>
+      <li class="nav-item <%= 'active' if controller_name == 'daysheet' %>"><%= link_to "DaySheet", daysheet_path, class: 'nav-link' %></li>
+      <li class="nav-item <%= 'active' if controller_name == 'billings' %>"><%= link_to "Billing", billings_path, class: 'nav-link' %></li>
+      <li class="nav-item <%= 'active' if controller_name == 'users' %>"><%= link_to "Users", users_path, class: 'nav-link' %></li>
     </ul>
 </nav>
+<nav class="navbar navbar-expand bg-info">
+    <ul class="navbar-nav ms-auto">
+    <% if controller_name == 'daysheet' %>
+       <li class="nav-item mx-3"> <%= render 'layouts/mobile_date_select' %> </li>
+    <% elsif show_search_controllers.include?(controller_name) && action_name == 'index' %>
+      <li class="nav-item mx-3"> <%= render 'layouts/mobile_find' %> </li>
+    <% end %>
+    </ul>
+</nav>
+

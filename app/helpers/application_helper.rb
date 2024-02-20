@@ -19,6 +19,21 @@ def device_is_mobile?
   device_type != 'desktop'
 end
 
+# user in messages partial
+def flash_class(level)
+  bootstrap_alert_class = {
+    "success" => "alert-success",
+    "error" => "alert-danger",
+    "danger" => "alert-danger",
+    "info" => "alert-info",
+    "alert" => "alert-primary",
+    "warn" => "alert-warning",
+    "warning" => "alert-warning",
+  }
+  bootstrap_alert_class[level]
+end
+
+
 def sortable(column, title = nil)
       title ||= ActiveSupport::Inflector.titleize(column)
 #      css_class = column == sort_column ? "current #{sort_direction}" : nil

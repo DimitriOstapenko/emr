@@ -1,4 +1,5 @@
-<div class="well">
+<div class="card">
+  <div class='card-body'>
 <%= simple_form_for(@schedule) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -15,4 +16,5 @@
      <%= f.submit yield(:button_text), class: "btn btn-primary" %> 
   </div>
 <% end %>
+</div>
 </div>

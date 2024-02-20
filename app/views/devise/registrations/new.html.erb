@@ -4,11 +4,11 @@
 <%= render 'shared/error_messages', object: f.object %>
 <% form_class= device_is_mobile? ? 'reg-form-control' : '' %>
 
-<div class="col-md-4 col-sm-4 col-md-offset-4 col-sm-offset-4">
-<div class="card bg-light">
+<div class="container pt-5">
+<div class="card col-md-6 col-sm-12 rounded-2xl mx-auto bg-light">
+
   <div class="card-body">
     <h3 class="card-title">New Patient Registration</h3>
-    <div class="pt-2"></div>
 
 <% if current_patient.present? %>
   <% ohip_num ||= current_patient.ohip_num
@@ -55,22 +55,23 @@
   </div>
   </div>
               
-  <div class="row">
+  <div class="row pt-2">
   <div class="col-md-12">
     <%= f.input :first_visit_reason, label: "Reason for visit", as: :text, input_html: { class: form_class } %>
   </div>
   </div>
 
-  <div class="row" id="submit">
+  <div class="row pt-3" id="submit">
   <div class="col-md-12">
-    <%= f.button :submit, "Submit and check your email", class: "btn btn-primary btn-lg" %>
+    <%= f.button :submit, "Submit and check your email", class: "btn btn-primary" %>
   </div>
   </div>
 
-  <div class="card-footer">
+  <div class="card-footer_">
   <%= render "devise/shared/links" %>
   </div>
 
+</div>
 </div>
 </div>
 </div>

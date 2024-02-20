@@ -1,10 +1,10 @@
 <% provide(:title, 'Welcome') %>
 <% hcv = SvcMonitor.find_by(name: 'hcv')  %>
 <% show_popup = params[:show_popup] rescue false %>
-<div class="row">  
-  <div class="col-md-5 col-sm-12">
-    <img src='/images/clinic22.jpg' width="580" style="margin-left: 20px "></img>
-    <div id="address" class="pt-3 ml-5">140 Centennial Parkway North, Hamilton, ON L8E 1H9  tel. 905.561.9255   &nbsp;&nbsp <%= link_to 'See Directions', show_directions_path %>
+<div class="row ms-auto justify-content-center">  
+  <div class="col-md-6 col-sm-12">
+    <img src='/images/clinic2.jpg' width="700"></img>
+    <div id="address" class="pt-3 ml-5">140 Centennial Parkway North, Hamilton, ON L8E 1H9  tel. 905.561.9255   &nbsp;&nbsp <%= link_to '<i class="bi bi-pin-map-fill"></i> Get Directions'.html_safe, show_directions_path %>
       
       <!--
       "https://www.google.com/maps/dir//Stoney+Creek+Medical+Walk-In+Clinic,+140+Centennial+Pkwy+N,+Stoney+Creek,+ON+L8E+1H9,+Canada/@43.233076,-79.7631224,17z/data=!4m9!4m8!1m0!1m5!1m1!1s0x882c9894d9c1cac5:0xeb749383c5b18494!2m2!1d-79.7609284!2d43.233076!3e0", target: "_blank" %>
@@ -12,21 +12,37 @@
 
     </div>
 
-  <% bg = Schedule.clinic_open? ? 'bg-success' : 'bg-danger' %>
-  <div class="row pt-5">
-  <div class="card text-center col-md-5 col-md-offset-3 <%= bg %>">
-  <div class="card-body">
-  <%= Schedule.doc_on_duty %>
-  
-  <%= link_to 'or check other walk-in clinics in Stoney Creek', other_clinics_path %>
+    <div class='pt-3'></div>
 
-  <div class="pt-3">
-    <%= link_to 'See Current Schedule', show_schedule_path, class: "btn btn-primary btn-lg" %>
-  </div>
+    <div class="row justify-content-center">
 
-  </div>
-  </div>
-  </div>
+      <div class="col-5 p-3">
+        <% bg = Schedule.clinic_open? ? 'bg-light' : 'bg-warning' %>
+        <div class="card text-center mx-auto <%= bg %>" style="min-height: 14rem;">
+          <div class="card-title fs-4 pt-2"><i class="bi bi-clock" style="font-size: 20px"></i> Schedule </div>
+        <div class="card-body">
+        <%= Schedule.doc_on_duty %>
+        
+        <div class="pt-3">
+          <%= link_to 'Check Current Schedule', show_schedule_path, class: "btn btn-primary" %>
+        </div>
+
+        </div>
+        </div>
+      </div>
+      <div class="col-5 p-3">
+        <div class="card card-block text-center mx-auto bg-info" style="min-height: 14rem;">
+          <div class="card-title fs-4 pt-2"><i class="bi bi-question-circle" style="font-size: 20px"></i> Ask AI </div>
+        <div class="card-body">
+        <%= link_to 'AI Virtual Assistant - Ask any question in any language and get instant answer', static_pages_ai_chat_path, class: "btn btn-info" %>
+        </div>
+        </div>
+      </div>
+
+      <div class="col-2 p-3">
+      </div>
+
+    </div>
 
   <!--
     <div class="pt-3">
@@ -73,7 +89,7 @@
 </div>
 
 <p class="pt-3">Registered already? Go ahead and book your visit. Just click the button below, log in and describe your symptoms. Doctor on duty (see the schedule) will call you back to discuss your issue or renew your medications. Doctor will advise if you need to come to the clinic. </p>
-<div align="center" class="pt-4"><%= link_to 'Book a visit', new_user_session_path, class: "btn btn-success btn-lg" %></div>
+<div align="center" class="pt-4"><%= link_to 'Book a visit', new_user_session_path, class: "btn btn-success btn-lg p-3" %></div>
 <% end %>
 
 <div class="pt-3">
@@ -91,32 +107,32 @@
 </div>
 </div>
 
-<div class="pt-5"> 
-<div class="row">
-  <div class="col-md-3">
-  <img src="/images/office/400/13.png">
+<div class="pt-5 d-flex justify-content-evenly"> 
+<div class="row  row-cols-1 row-cols-md-4 g-4">
+  <div class="col">
+  <img src="/images/office/300/13.png">
   </div>
 
-  <div class="col-md-3">
-  <img src="/images/office/400/clinic.jpg">
+  <div class="col">
+  <img src="/images/office/300/12.png">
   </div>
 
-  <div class="col-md-3">
-  <img src="/images/office/400/1.png">
+  <div class="col">
+  <img src="/images/office/300/1.png">
   </div>
 
-  <div class="col-md-3">
-  <img src="/images/office/400/6.png">
-  </div>
-</div>
-</div>
-
+  <div class="col">
+  <img src="/images/office/300/6.png">
   </div>
 </div>
+</div>
+
+  </div>
+</div>
 
 
-<div class='pt-5'>
-<%= render "footer_icons" %>
+<div class="pt-5">
+  <%= render "footer_icons" %>
 </div>
 
   <script>

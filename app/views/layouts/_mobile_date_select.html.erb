@@ -1,4 +1,3 @@
-<div class='col-xs-4 col-xs-offset-7'>
 <% date = Date.parse(params[:date]) rescue Time.now %>
 <%= form_with  method: :get, skip_enforcing_utf8: :true  do |f| %>
     <div class="form-group">
@@ -12,4 +11,3 @@
        </div>
     </div>
 <% end %>
-</div>

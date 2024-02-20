@@ -93,7 +93,6 @@ class PatientsController < ApplicationController
       @patient.ai_response(question)
     end
       
-
     if @patient.update(patient_params)
       flash[:info] = "Patient profile updated"
       redirect_to patient_path(@patient)
@@ -277,12 +276,6 @@ class PatientsController < ApplicationController
     end
   end
 
-
-  def ai_chat
-    @patient = Patient.find(params[:id])
-    flash[:info] = 'Ai chat' + params[:message]
-  end
-
 private
   def patient_params
 	  params.require(:patient).permit(:lname, :fname, :mname, :dob, :sex, :ohip_num, :ohip_ver, 
@@ -290,7 +283,8 @@ private
 					  :postal,:country, :entry_date, :hin_prov, :hin_expiry,
 					  :pat_type, :pharmacy, :pharm_phone, :pharm_fax, :notes, :alt_contact_name,
 					  :alt_contact_phone, :email, :family_dr, :lastmod_by, :cardstr, :visits_count,
-				    	  :allergies, :meds, :maid_name, :ifh_number, :clinic_pat, :validated_at, :latest_medication_renewal, :question
+				    	  :allergies, :meds, :maid_name, :ifh_number, :clinic_pat, :validated_at, 
+                                          :latest_medication_renewal, :question, :response
 					 )
   end
  
