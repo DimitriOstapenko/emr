@@ -32,7 +32,7 @@
 <%= button_to "Create New Paystub", new_paystub_path, class: "btn btn-primary col-md-2", method: 'get'  %>
 <% end %>
 
-<div class="bottom_nav">
+<div class="bottom_nav my_pagination">
 <%= will_paginate @paystubs, class: "btn" %> 
 </div>
 </div>

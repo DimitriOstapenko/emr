@@ -129,16 +129,6 @@ overflow: auto;
 
 /* navbar */
 
-#topbar_ {
-    background: #3fbbc0;
-    color: #fff;
-    height: 40px;
-    line-height: 40px;
-    font-weight: 600;
-    z-index: 996;
-    transition: all 0.5s;
-}
-
 .navbar-nav > li > a:hover, 
 .navbar .navbar-nav > .active > a,
 .navbar .navbar-nav > .active > a:hover,
@@ -249,7 +239,7 @@ td.hlight {
     background: gray;
     text-decoration: none;
   }
-  }
+}
 
 #mobile-logo {
   font-size: 1.3em;
@@ -364,7 +354,6 @@ footer {
   text-transform: uppercase;
 }
 
-
 .devise-card-width {
   width: 20rem;
 }
@@ -383,7 +372,7 @@ footer {
   text-align: center;
   padding: 0.3em;
   cursor: default;
-  font-size: 0.8em;
+  font-size: 0.5em;
 }
 
 .my_pagination a, .my_pagination span, .my_pagination em {
@@ -400,6 +389,7 @@ footer {
     font-weight: bold;
     background: #999;
     color: white;
+    text-shadow: 1px 1px 1px #171717;
 }
 
 .my_pagination a {
@@ -426,5 +416,8 @@ footer {
      border-top-right-radius: 0.3rem;
      border-bottom-right-radius: 0.3rem;
 }
+
+
+
 
 
