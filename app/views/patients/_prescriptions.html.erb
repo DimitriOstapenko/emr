@@ -17,14 +17,14 @@
        <td> <%= pr.doctor.lname %> </td> 
        <td>
 	<% if pr.pdf_present? %>
-	  <%=  link_to '<i class="glyphicon glyphicon-download"></i>'.html_safe, download_prescription_path(pr)  %>
+	  <%=  link_to '<i class="bi bi-arrow-down-square"></i>'.html_safe, download_prescription_path(pr)  %>
 	<% else %>
-	  <%= link_to '<i class="glyphicon glyphicon-question-sign text-warning"></i>'.html_safe, download_prescription_path(pr) %>
+	  <%= link_to '<i class="bi bi-question-square text-warning"></i>'.html_safe, download_prescription_path(pr) %>
 	<% end %>
        </td>
        <td>
        <% if pr.date == Date.today %>
-	  <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_prescription_path(@patient,pr), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>  
+	  <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_patient_prescription_path(@patient,pr), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>  
        <% end %>
      <% end %>
      </td>

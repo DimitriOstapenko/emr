@@ -3,7 +3,11 @@ provide(:title, 'New Schedule')
 provide(:button_text, 'Create Schedule')
 %>
 
-<div class="col-sm-6 col-sm-offset-3">
-   <h3 class='display-1'> New schedule </h3>
-   <%= render 'form' %>
+<div class='card bg-light mx-auto mt-3 card-width'>
+  <div class='card-body'>
+    <h5 class="card-title"> New Schedule </h5>
+    <p class="card-text">
+      <%= render 'form' %>
+    </p>
+</div>
 </div>

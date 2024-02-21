@@ -7,14 +7,14 @@
         <tr>
           <td>
           <% if doc.exists? %>
-          <%= link_to " #{doc.filename}", patient_patient_doc_path(@patient,doc), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %>
+          <%= link_to " #{doc.filename}", patient_patient_doc_path(@patient,doc), remote: true, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window' %>
           <% end %>
           </td>
           <td> <%= doc.doc_type_str %> </td>
           <td> <%= doc.date %> </td>
           <td> <%= doc.doctor.lname rescue '' %> </td>
           <% if current_user.staff? || current_user.admin? %>
-            <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_patient_doc_path(@patient,doc), method: :delete, data: { confirm: "Are you sure you want to delete #{doc.doc_type_str}  #{doc.id}?" } %></td>
+            <td class="text-center"><%= link_to '<i class="bi bi-x-square"></i>'.html_safe, patient_patient_doc_path(@patient,doc), method: :delete, data: { confirm: "Are you sure you want to delete #{doc.doc_type_str}  #{doc.id}?" } %></td>
           <% else %>
             <td> </td>
           <% end %>

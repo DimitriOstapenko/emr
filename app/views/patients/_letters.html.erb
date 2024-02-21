@@ -1,4 +1,4 @@
-<b><%= link_to "Letters (#{@patient.letters.count})<span class='caret'></span>".html_safe, '#', remote: :true, 'data-toggle': "collapse", 'data-target': "#letters", class: "drop-down-link" %> </b>
+<b><%= link_to "Letters (#{@patient.letters.count})<span class='caret'></span>".html_safe, '#', remote: :true, 'data-bs-toggle': "collapse", 'data-bs-target': "#letters", class: "drop-down-link" %> </b>
  <div class="collapse panel panel-info" id="letters">
    <div class="tbl patient-dropdown-panel-body">
      <table class="table table-hover table-striped table-bordered">
@@ -13,7 +13,7 @@
           <% if current_user.patient? || current_user.doctor? %>
             <td></td>
           <% else %>
-            <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
+            <td> <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
           <% end %>
         </tr>
         <% end %>

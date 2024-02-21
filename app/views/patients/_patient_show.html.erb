@@ -6,7 +6,7 @@
   <div class="col-md-6">
 <div class='card'>
 <pre class="pre-scrollable-lg">
-<b><%= @patient.pat_type_str %></b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>  <%= @patient.age_str %> <%= @patient.full_sex %></b> 
+<b><%= @patient.pat_type_str %></b> <%= link_to '<i class="bi bi-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>  <%= @patient.age_str %> <%= @patient.full_sex %></b> 
 <%= hcnum if hcnum.present? %>
 <%= ifhnum if ifhnum.present? %>
 <b>Born:</b> <%= @patient.dob %>

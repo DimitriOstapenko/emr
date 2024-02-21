@@ -1,4 +1,4 @@
-<b><%= link_to "Medications (#{@patient.med_count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#medications",  class: "drop-down-link" %> </b>
+<b><%= link_to "Medications (#{@patient.med_count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-bs-toggle': "collapse", 'data-bs-target': "#medications",  class: "drop-down-link" %> </b>
    <div class="collapse panel panel-info" id="medications">
       <div class="tbl patient-dropdown-panel-body">
          <table class="table table-hover table-striped table-bordered">
@@ -18,8 +18,8 @@
                  <td colspan=2></td>
                <% else %>
 	         <td> <%= f.check_box :active, label: false, onchange: "this.form.submit();" %></td> 
-                 <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_patient_medication_path(@patient,med), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_lg_modal()"   %> </td>
-                 <td><%= link_to '<i class="glyphicon glyphicon-remove-sign"></i>'.html_safe, patient_medication_path(@patient,med), method: :delete, data: { confirm: "Are you sure you want to delete #{med.name}?" } %></td>
+                 <td> <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_patient_medication_path(@patient,med), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_lg_modal()"   %> </td>
+                 <td><%= link_to '<i class="bi bi-x-square"></i>'.html_safe, patient_medication_path(@patient,med), method: :delete, data: { confirm: "Are you sure you want to delete #{med.name}?" } %></td>
                <% end %>
             </tr>
             <% end %>
