@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
 
+#  skip_before_action :verify_authenticity_token, only: [:create]
   def create_
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
