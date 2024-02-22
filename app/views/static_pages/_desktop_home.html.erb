@@ -18,23 +18,23 @@
 
       <div class="col-5 p-3">
         <% bg = Schedule.clinic_open? ? 'bg-light' : 'bg-warning' %>
-        <div class="card text-center mx-auto <%= bg %>" style="min-height: 14rem;">
+        <div class="card text-center mx-auto mb-3 border-secondary <%= bg %>" style="min-height: 14rem;">
           <div class="card-title fs-4 pt-2"><i class="bi bi-clock" style="font-size: 20px"></i> Schedule </div>
         <div class="card-body">
         <%= Schedule.doc_on_duty %>
         
         <div class="pt-3">
-          <%= link_to 'Check Current Schedule', show_schedule_path, class: "btn btn-primary" %>
+          <%= link_to 'Check Current Schedule', show_schedule_path, class: "btn btn-primary stretched-link" %>
         </div>
 
         </div>
         </div>
       </div>
       <div class="col-5 p-3">
-        <div class="card card-block text-center mx-auto bg-info" style="min-height: 14rem;">
-          <div class="card-title fs-4 pt-2"><i class="bi bi-question-circle" style="font-size: 20px"></i> Ask AI </div>
+        <div class="card card-block text-center mb-3 mx-auto bg-info border-secondary" style="min-height: 14rem;">
+          <div class="card-title fs-4 pt-2"><i class="bi bi-question-circle" style="font-size: 20px"></i> Ask Virtual Doctor </div>
         <div class="card-body">
-        <%= link_to 'AI Virtual Assistant - Ask any question in any language and get instant answer', static_pages_ai_chat_path, class: "btn btn-info" %>
+        <%= link_to 'AI powered Virtual Assistant - ask medical question in any language and get instant answer', static_pages_ai_chat_path, class: "btn btn-info stretched-link" %>
         </div>
         </div>
       </div>
