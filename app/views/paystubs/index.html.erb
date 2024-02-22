@@ -31,9 +31,9 @@
 <% if @can_generate_new_paystubs %>
 <%= button_to "Create New Paystub", new_paystub_path, class: "btn btn-primary col-md-2", method: 'get'  %>
 <% end %>
+</div>
+</div>
 
-<div class="bottom_nav my_pagination">
-<%= will_paginate @paystubs, class: "btn" %> 
-</div>
-</div>
+<div class="my_pagination">
+<%= will_paginate @paystubs  %> 
 </div>

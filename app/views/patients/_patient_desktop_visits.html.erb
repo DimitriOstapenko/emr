@@ -25,6 +25,7 @@
 	<div class="row pt-3">
 	  <div class="col-md-12"> <%= link_to "Print Visit History", visit_history_patient_path(@patient),  remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window', class: "btn btn-info", method: 'get', onclick: "set_lg_modal()" %> </div>
 	</div>
+
 	<div class="row mt-3 my_pagination" style="float: right">
 	<%= will_paginate @visits %>
         </div>

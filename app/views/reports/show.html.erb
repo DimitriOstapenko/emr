@@ -41,13 +41,14 @@
 <%  remote = device_is_desktop? %>
 <%= render 'shared/modal', size: 'lg' %>
 
-<div class="bottom_buttons ">
-    <%= will_paginate @visits, class: "btn" %>
+</div>
+
+<div class="my_pagination">
+    <%= will_paginate @visits %>
     <% if @report.filespec.blank? %> 
-       <%= button_to "Generate PDF", export_report_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
+       <%= button_to "Generate PDF", export_report_path, :method => "get", formtarget: "Form" %>
     <% else %>
        <%# button_to "Show PDF", show_pdf_report_path(@report), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary clickable", :method => "get", formtarget: 'form' %>
     <% end %>
 </div>
 
-</div>

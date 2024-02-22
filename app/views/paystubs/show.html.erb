@@ -43,13 +43,13 @@
 <%	   
 =end %>
 
-<div class="bottom_buttons ">
-<%= will_paginate @claims, class: "btn" %>
+<div class="my_pagination ">
+    <%= will_paginate @claims %>
+
     <% if @paystub.filename.blank? %> 
        <%= button_to "Generate PDF", export_paystub_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
     <% else %>
        <%= button_to "Show PDF", show_pdf_paystub_path, class: "btn btn-primary", :method => "get", formtarget: "Form" %>
     <% end %>
-</div>
 
 </div>

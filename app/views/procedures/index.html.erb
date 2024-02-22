@@ -34,7 +34,8 @@
 <%= button_to "Add Procedure", new_procedure_path, class: "btn btn-primary col-md-2", :method => "get" %>
 <% end %>
 </div>
+</div>
 
-<div class="bottom_nav my_pagination">
-<%= will_paginate @procedures, class: "btn" %>
+<div class="my_pagination">
+<%= will_paginate @procedures %>
 </div>

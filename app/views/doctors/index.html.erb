@@ -32,7 +32,8 @@
 <div class="bottom_buttons ">
 <%= button_to "Add New Doctor", new_doctor_path, class: "btn btn-primary col-md-2", method: :get %>
 </div>
+</div>
 
-<div class="bottom_nav my_pagination">
-<%= will_paginate @doctors, class: "btn" %>
+<div class="my_pagination">
+<%= will_paginate @doctors %>
 </div>

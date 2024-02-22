@@ -57,11 +57,8 @@
 
   </tbody>
 </table>
-
-<% if @daysheet.any? %>
-<div class="bottom_nav my_pagination">
-<%= will_paginate @daysheet, class: "btn" %> 
 </div>
-<% end %>
 
+<div class=" my_pagination">
+<%= will_paginate @daysheet if @daysheet.any? %> 
 </div>

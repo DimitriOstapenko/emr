@@ -33,7 +33,8 @@
 <div class="bottom_buttons ">
 <%= button_to "Add Medication", new_drug_path, class: "btn btn-primary col-md-2", method: :get %>
 </div>
+</div>
 
-<div class="bottom_nav my_pagonation">
-<%= will_paginate @drugs, class: "btn" %>
+<div class="my_pagination">
+<%= will_paginate @drugs %>
 </div>

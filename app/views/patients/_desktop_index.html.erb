@@ -35,8 +35,7 @@
 <%= button_to "New Patient", new_patient_path, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary col-md-2", method: "get"  %>
 </div>
 
-<div class="bottom_nav my_pagination">
-<%= will_paginate @patients, class: "btn" %> 
+<div class="my_pagination">
+<%= will_paginate @patients  %> 
 </div>
-
 

@@ -28,7 +28,6 @@
   </tbody>
 </table>
 
-<div class="row">
-<div class="bottom_nav my_pagination">
-<%= will_paginate @edt_files, class: "btn" if @edt_files %> 
+<div class="my_pagination">
+<%= will_paginate @edt_files if @edt_files %> 
 </div>

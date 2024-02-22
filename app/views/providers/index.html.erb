@@ -33,7 +33,8 @@
 <%= button_to "Add Provider", new_provider_path, class: "btn btn-primary col-md-2", :method => "get" %>
 <% end %>
 </div>
+</div>
 
-<div class="bottom_nav my_pagination">
-<%= will_paginate @providers, class: "btn" %>
+<div class="my_pagination">
+<%= will_paginate @providers %>
 </div>

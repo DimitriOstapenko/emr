@@ -64,18 +64,12 @@
       <%= button_to "Clear all errors", billings_clear_errors_path, class: "btn btn-danger"  %>
     <% end %>
   </div>
-
-</div>
-
-<div class="bottom_nav my_pagination">
-  <%= will_paginate @visits, class: "btn" %>
 </div>
 </div>
 
-<script>
-$zoho.salesiq.ready=function(embedinfo)
-{ $zoho.salesiq.floatbutton.visible("hide"); }
-</script>
+<div class="my_pagination">
+  <%= will_paginate @visits %>
+</div>
 
 
 

@@ -30,8 +30,8 @@
 <%= button_to "Add Form", new_form_path, class: "btn btn-primary col-md-2", :method => "get" %>
 <% end %>
 </div>
-
-<div class="bottom_nav my_pagination">
-<%= will_paginate @forms, class: "btn" %>
 </div>
+
+<div class="my_pagination">
+<%= will_paginate @forms %>
 </div>
