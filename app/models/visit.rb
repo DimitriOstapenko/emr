@@ -1,6 +1,6 @@
 class Visit < ApplicationRecord
 
-  include My::Nexmo_phone
+#  include My::Nexmo_phone
 
   belongs_to :patient, inverse_of: :visits #, counter_cache: true, autosave: true
   has_many :documents, dependent: :destroy, inverse_of: :visit
