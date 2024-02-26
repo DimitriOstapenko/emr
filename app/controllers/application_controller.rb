@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
       if current_user.doctor?
         set_doc_session(current_user.doctor_id)
       end
-      stored_location_for(resource) || daysheet_path
+      stored_location_for(resource) || root_path
     end
   end
 

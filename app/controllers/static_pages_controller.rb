@@ -7,9 +7,11 @@ class StaticPagesController < ApplicationController
     
     if current_user && current_user.patient
       redirect_to current_user.patient 
-    elsif current_patient && current_patient.user && current_patient.user.confirmed_at
-      redirect_to new_user_session_url
+#    elsif current_patient && current_patient.user && current_patient.user.confirmed_at
+#      redirect_to new_user_session_url
     end
+
+    root_path
 
 #    flash[:info] = "pat #{current_patient.inspect}  user : #{current_user.inspect}"
   end

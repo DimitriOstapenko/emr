@@ -6,15 +6,16 @@
 
 <div class="card rounded-2xl mx-auto my-auto  bg-light devise-card-width ">
   
- <div class="card-header">
+   <div class="card-body">
+     <div class="card-title">
   <% if current_patient && current_patient.user && current_patient.user.confirmed_at %>
     <div class="fs-5"> Welcome back, <%= current_patient.fname %>! Please log in below </div>
   <% else %>
     <div class="fs-5"> Log In </div>
-   <% end %>
- </div>
+  <% end %>
+     </div>
 
-   <div class="card-body">
+   <div class="card-text">
     <div class="mb-3">
         <%= f.input :email, required: false, autofocus: true, autocomplete: "email", value: email, class: form_class %>
     </div>
@@ -32,5 +33,7 @@
 <%= render "devise/shared/links" %>
 
    </div>
+   </div>
+</div>
 
 <% end %>

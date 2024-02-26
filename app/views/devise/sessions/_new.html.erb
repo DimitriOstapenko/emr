@@ -3,9 +3,12 @@
 <%= render 'shared/error_messages', object: f.object %>
 <% form_class= device_is_mobile? ? 'reg-form-control' : '' %>
 
-<div class='form-group row'>
-<div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-<div class="card my-auto">
+  <div class="card rounded-2xl mx-auto my-auto  bg-light devise-card-width">
+  <div class='card-body'>
+    <div class='card-title fs-5'>
+      Log into my account
+    </div>
+    <div class='card-text'>
     <%= f.input :email,
                 required: false,
                 autofocus: true,
@@ -17,10 +20,9 @@
     <%# f.input :remember_me, as: :boolean, input_html: {style: 'width: 30px;' } %>
     <%= f.hidden_field :remember_me,  value: true %>
 
-    <%= f.button :submit, "Log in", class: "btn btn-primary" %>
+    <%= f.button :submit, "Log in", class: "btn btn-primary " %>
 
-<%# render "devise/shared/links" %>
-</div>
-</div>
+    </div>
+  </div>
 </div>
 <% end %>

@@ -12,7 +12,7 @@
     <%= f.input :question, label: false, placeholder: "Type your question here", class: "form-control col-md-2" %>
     <div class="pt-3"></div>
     <%= f.button :submit, "Get answer", class:"btn btn-info" %>
-    <%= f.button :submit, "Clear form", :class => 'btn btn-outline-info', :type => 'reset' %>
+    <%= f.button :submit, "Clear form", class: 'btn btn-outline-info', id: 'btnClear', type: 'reset' %>
     <div class='pt-3'>
     <%= @patient.response %>
     </div>
@@ -22,4 +22,14 @@
   </div>
 </div>
 </div>
+
+<script>
+  $(document).ready(function() {
+    $("#btnClear").on("click", function() {
+//        $('#patient_question').val('');
+        location.reload();
+    });
+  });
+</script>
+
 
