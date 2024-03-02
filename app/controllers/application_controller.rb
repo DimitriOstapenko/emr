@@ -27,10 +27,11 @@ class ApplicationController < ActionController::Base
          patient_path(current_user.patient)
       end
     else
-      if current_user.doctor?
-        set_doc_session(current_user.doctor_id)
-      end
-      stored_location_for(resource) || root_path
+    root_path
+#      if current_user.doctor?
+#        set_doc_session(current_user.doctor_id)
+#      end
+#      stored_location_for(resource) || root_path
     end
   end
 
