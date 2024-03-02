@@ -3,17 +3,18 @@
   <font size=5 color='yellow'><i class="bi bi-info-square"></i> &nbsp; AI MED. EXPERT HELP</font>
   </div>
   <div class="card-body card-info">
-    <h5 class="card-title"> Got medical question? You can ask me anything in any language</b></h5>
+    <h6 class="card-title"> Got medical question? You can ask me anything in any language</h6>
   <p class="card-text">
 
+    <% @patient ||= Patient.new %>
     <%= simple_form_for @patient  do |f| %>
-      <%= f.input :question, label: false, placeholder: "Type your question here", class: "form-control col-md-2",  input_html: {value:''} %>
+      <%= f.input :question, as: :text, label: false, placeholder: "Type your question here", class: "form-control col-md-2",  input_html: {value:''} %>
     <%= f.button :submit, "Get answer", class:"btn btn-info col-md-2" %>
 
     <div class='pt-3'>
       <i>   <%= @patient.question %> </i> <p>
       <div class="pt-2">
-        <%= @patient.response %>
+        <%= @patient.response.gsub(/(\d+)./, '<p>\1.').html_safe %>
       </div>
     </div>
   <% end %>
