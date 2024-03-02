@@ -1,12 +1,8 @@
 class UserMailer < ApplicationMailer
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.user_mailer.password_reset.subject
-  #
-  #
-  #
+  default from:  FROM_NAME #'Stoney Creek Medical Walk-In Clinic'
+  default reply_to_name: REPLY_TO_NAME # 'Stoney Creek Walk-In clinic Staff'
+  default reply_to_address: REPLY_TO
 
   def account_activation(user, token)
      @user = user
