@@ -27,7 +27,7 @@ def filespec
 end
 
 def exists?
-    File.exists?(self.filespec) rescue false
+    File.exist?(self.filespec) rescue false
 end
 
 def default_values
