@@ -2,8 +2,8 @@
 <%= render 'shared/modal' %>
 
 <%
-    lname = (@sort == 'lname' && @direction == 'asc')?"Name &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-alphabet'></i>":"Name &nbsp;&nbsp;<i class='glyphicon glyphicon-sort-by-alphabet-alt'></i>" 
-    dob = (@sort == 'dob' && @direction == 'asc')?"DOB &nbsp;<i class='glyphicon glyphicon-sort-by-order-alt'></i>":"DOB &nbsp;<i class='glyphicon glyphicon-sort-by-order'></i>" 
+    lname = (@sort == 'lname' && @direction == 'asc')?"Name &nbsp;&nbsp;<i class='bi bi-sort-alpha-down'></i>":"Name &nbsp;&nbsp;<i class='bi bi-sort-alpha-up'></i>" 
+    dob = (@sort == 'dob' && @direction == 'asc')?"DOB &nbsp;<i class='bi bi-sort-numeric-down'></i>":"DOB &nbsp;<i class='bi bi-sort-numeric-up'></i>" 
 %>
 
 <table class="table table-hover table-striped table-bordered table-responsive"> 
@@ -26,7 +26,7 @@
 
 <div class="bottom_buttons">
 <% unless current_user.doctor? %>
-<%= button_to "New Patient", new_patient_path, remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window', class: "btn btn-primary col-md-2", method: "get"  %>
+<%= button_to "New Patient", new_patient_path, remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window', class: "btn btn-primary col-md-2", method: "get"  %>
 <% end %>
 </div>
 

@@ -1,4 +1,4 @@
-<b><%= link_to "Uploaded Documents (#{@patient.patient_docs.count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#patient_docs",  class: "drop-down-link" %> </b>
+<b><%= link_to "Uploaded Documents (#{@patient.patient_docs.count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-bs-toggle': "collapse", 'data-bs-target': "#patient_docs",  class: "drop-down-link" %> </b>
 <div class="collapse panel panel-info" id="patient_docs">
   <div class="tbl patient-dropdown-panel-body">
      <table class="table table-hover table-striped table-bordered">

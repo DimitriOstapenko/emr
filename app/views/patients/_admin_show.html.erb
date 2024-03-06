@@ -6,9 +6,9 @@
   <aside class="col-md-6">
 <pre class="pre-scrollable-lg">
 <% if @patient.pat_type == CASH_PATIENT %>
-<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
+<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <% else %>
-<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
+<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <%= hcnum if hcnum.present? %>
 <%= ifhnum if ifhnum.present? %>
 <% end %>

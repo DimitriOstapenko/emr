@@ -5,7 +5,7 @@
         <th></th><th>From</th><th>To</th><th>Date</th><th>Title</th><th></th>
         <% @patient.letters.each do |letter| %>
         <tr>
-          <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+          <td><%= link_to "Letter #{letter.id}", letter_path(letter), remote: true, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window' %></td>
           <td> <%= letter.from %> </td> 
           <td> <%= letter.to %> </td> 
           <td> <%= letter.date %> </td> 
@@ -13,7 +13,7 @@
           <% if current_user.patient? || current_user.doctor? %>
             <td></td>
           <% else %>
-            <td> <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td> 
+            <td> <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_letter_path(letter), remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get'  %> </td> 
           <% end %>
         </tr>
         <% end %>

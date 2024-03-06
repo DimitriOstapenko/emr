@@ -7,13 +7,13 @@
     <section class="user_info">
 <pre class="pre-scrollable">
 <% if @patient.pat_type == CASH_PATIENT %>
-<b>CASH PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
+<b>CASH PATIENT</b> <%= link_to '<i class="bi bi-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <% else %>
-<b>INSURED PATIENT</b> <%= link_to '<i class="glyphicon glyphicon-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
+<b>INSURED PATIENT</b> <%= link_to '<i class="bi bi-credit-card"></i>'.html_safe, label_patient_path(@patient), remote: remote, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get', onclick: "set_md_modal()" %>
 <%= hcnum if hcnum.present? %>
 <%= ifhnum if ifhnum.present? %>
 <% end %>
-<b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
+<b><%= @patient.full_name %>: <%= "(#{@patient.maid_name})" if @patient.maid_name %></b> <%= @patient.age_str %> <%= @patient.full_sex %>; Born: <%= @patient.dob %><% if @patient.chart.present? %> <%= link_to '<i class="bi bi-book"></i>'.html_safe, chart_patient_path(@patient) %> <% end %>
 <% if @patient.allergies.present? %>
 Allergies: <%= @patient.allergies %>
 <% end %>

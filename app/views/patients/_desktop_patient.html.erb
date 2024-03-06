@@ -8,8 +8,8 @@
 	<td class="text-center"><%= patient.hin_expiry_short %> </td>
 	<td class="text-center"><%= patient.dob %> </td>
 	<td class="text-center"><%= patient.mobile_or_home_phone %> </td> 
-        <td class="text-center"><%= link_to '<i class="glyphicon glyphicon-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
-        <td class="text-center"><%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_patient_path(patient), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %></td>
+        <td class="text-center"><%= link_to '<i class="bi bi-envelope"></i>'.html_safe, addrlabel_patient_path(patient), remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get'  %></td>
+        <td class="text-center"><%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_patient_path(patient), remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get'  %></td>
 
   	<% if current_user.admin?  %>
           <td class="text-center">  <%= link_to '<i class="bi bi-x-square"></i>'.html_safe, patient, method: :delete, data: { confirm: "Are you sure you want to delete #{patient.lname}?" } %>  </td> 
@@ -17,7 +17,7 @@
 
 	<td class="text-center">
 	<% if patient.chart.present? %>
-	  <%= link_to '<i class="glyphicon glyphicon-copy"></i>'.html_safe, chart_patient_path(patient) %>
+	  <%= link_to '<i class="bi bi-book "></i>'.html_safe, chart_patient_path(patient) %>
 	<% end %>
 	</td>
      </tr>

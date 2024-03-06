@@ -1,11 +1,11 @@
-<b><%= link_to "Referrals (#{@patient.referrals.size})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#referrals",  class: "drop-down-link" %> </b>
+<b><%= link_to "Referrals (#{@patient.referrals.size})<span class='caret'></span>".html_safe, '#', remote: true, 'data-bs-toggle': "collapse", 'data-bs-target': "#referrals",  class: "drop-down-link" %> </b>
 <div class="collapse panel panel-info" id="referrals">
   <div class="tbl patient-dropdown-panel-body">
      <table class="table table-hover table-striped table-bordered">
         <th></th><th>Date</th><th>From</th><th>To</th><th>Address</th><th></th>
         <% @patient.referrals.each do |ref| %>
         <tr>
-          <td><%= link_to "Referral #{ref.id}", patient_referral_path(@patient,ref), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %></td>
+          <td><%= link_to "Referral #{ref.id}", patient_referral_path(@patient,ref), remote: true, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window' %></td>
           <td> <%= ref.date %> </td>
           <td> <%= ref.doctor.lname %> </td>
           <td> <%= ref.to_doctor.lname %> </td>
@@ -13,7 +13,7 @@
           <% if current_user.patient? || current_user.doctor? %>
             <td></td>
           <% else %>
-            <td> <%= link_to '<i class="glyphicon glyphicon-edit"></i>'.html_safe, edit_referral_path(ref), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get'  %> </td>
+            <td> <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_referral_path(ref), remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get'  %> </td>
           <% end %>
         </tr>
         <% end %>

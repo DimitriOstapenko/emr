@@ -1,4 +1,4 @@
-<b><%= link_to "Prescriptions (#{@patient.prescription_count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-toggle': "collapse", 'data-target': "#prescriptions",  class: "drop-down-link" %> </b>
+<b><%= link_to "Prescriptions (#{@patient.prescription_count})<span class='caret'></span>".html_safe, '#', remote: true, 'data-bs-toggle': "collapse", 'data-bs-target': "#prescriptions",  class: "drop-down-link" %> </b>
 <div class="collapse panel panel-info" id="prescriptions">
 <div class="tbl patient-dropdown-panel-body">
  <table class="table table-hover table-striped table-bordered">
@@ -6,11 +6,11 @@
     <% @patient.prescriptions.each do |pr| %> 
     <%= form_with model: [@patient,pr] do |f| %>
      <tr>
-       <td> <%= link_to "Prescription #{pr.id}", patient_prescription_path(@patient,pr), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> </td> 
+       <td> <%= link_to "Prescription #{pr.id}", patient_prescription_path(@patient,pr), remote: true, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window' %> </td> 
        <td> <%= pr.date %></td> 
        <td>
        <% if pr.visit_id.present? %>
-         <%= link_to pr.visit_id, patient_visit_path(@patient,pr.visit_id), remote: true, 'data-toggle':  "modal", 'data-target': '#modal-window' %> 
+         <%= link_to pr.visit_id, patient_visit_path(@patient,pr.visit_id), remote: true, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window' %> 
        <% end %>
        </td>
        <td> <%= pr.ameds.count %> </td> 
@@ -24,7 +24,7 @@
        </td>
        <td>
        <% if pr.date == Date.today %>
-	  <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_patient_prescription_path(@patient,pr), remote: device_is_desktop?, 'data-toggle':  "modal", 'data-target': '#modal-window',  method: 'get' %>  
+	  <%= link_to '<i class="bi bi-pencil-square"></i>'.html_safe, edit_patient_prescription_path(@patient,pr), remote: device_is_desktop?, 'data-bs-toggle':  "modal", 'data-bs-target': '#modal-window',  method: 'get' %>  
        <% end %>
      <% end %>
      </td>

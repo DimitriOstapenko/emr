@@ -22,7 +22,7 @@
   
   <div class="col-sm-2" id="pat_type">
 	  <%= f.input :pat_type, collection: PATIENT_TYPES, label: 'Type', include_blank: false,
-	      label_html: { "data-toggle": 'tooltip', class: "has-tip", 
+	      label_html: { "data-bs-toggle": 'tooltip', class: "has-tip", 
               title: "HCP: OHIP covered;\n RMB: Out of Province;\n CSH: Cash; \n DEC: Deceased"}
           %>
   </div>
@@ -165,7 +165,7 @@
 <% end %>
 
 <script defer>
-$('body').tooltip({ selector: "[data-toggle~='tooltip']"});
+$('body').tooltip({ selector: "[data-bs-toggle~='tooltip']"});
 $(document).ready(function () {
 // Show maiden name text field for female patients 
    var sex = $('select[name="patient[sex]"]');
