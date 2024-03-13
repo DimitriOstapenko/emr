@@ -3,7 +3,7 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
     <%= f.input :doctor_id, collection: get_active_doctors, label_method: :lname, value_method: :id, label: "Doctor", include_blank: false %>
-    <%= f.input :dow, as: :weekday_select, label: 'Week Day: '  %>
+    <%= f.input :dow, as: :weekday_select, label: 'Week Day: ', index_as_value: true,  include_blank: false  %>
 
     <%= f.input :weeks, include_blank: "Every Week" %> <%# collection: ['1','2','3'], input_html: { multiple: true } %>
     <%= f.input :start_time, html5: true %>

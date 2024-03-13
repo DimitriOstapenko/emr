@@ -30,6 +30,7 @@ class SchedulesController < ApplicationController
   end
 
   def update
+    flash[:info] = params.inspect
     if @schedule.update(schedule_params)
       redirect_to schedules_url, notice: 'Schedule was updated.'
     else
