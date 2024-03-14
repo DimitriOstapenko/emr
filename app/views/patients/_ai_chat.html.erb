@@ -14,7 +14,8 @@
     <div class='pt-3'>
       <i>   <%= @patient.question %> </i> <p>
       <div class="pt-2">
-        <%= @patient.response.gsub(/(\d+)./, '<p>\1.').html_safe %>
+        <% response  = @patient.response %>
+        <%= response.gsub(/(\d+)./, '<p>\1.').html_safe if response %>
       </div>
     </div>
   <% end %>
